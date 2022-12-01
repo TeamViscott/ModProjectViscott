@@ -1,23 +1,23 @@
 #the mod name as displayed in-game
-displayName: "Java Mod Template"
+displayName: "Project Viscott"
 
 #the internal name of your mod
-name: "example-java-mod"
+name: "project-viscott"
 
 #your name
-author: "You"
+author: "Siede & Manuwar & Pew"
 
 #the fully qualified main class of the mod
-main: "example.ExampleJavaMod"
+main: "viscott.ViscottMod"
 
 #the mod description as seen in the mod dialog
-description: "A Mindustry Java mod template."
+description: "E"
 
 #the mod version
-version: 1.0
+version: 0.1
 
 #the minimum game build required to run this mod
-minGameVersion: 129
+minGameVersion: 140
 
 #this is a java mod
 java: true
