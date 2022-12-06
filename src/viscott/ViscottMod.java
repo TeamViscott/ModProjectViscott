@@ -7,6 +7,7 @@ import arc.util.Time;
 import mindustry.game.EventType;
 import mindustry.mod.Mod;
 import mindustry.ui.dialogs.BaseDialog;
+import viscott.content.PvBlocks;
 import viscott.content.PvItems;
 import viscott.content.PvLiquids;
 
@@ -20,6 +21,7 @@ public class ViscottMod extends Mod {
         Log.info("Loading some example content.");
         PvItems.load();
         PvLiquids.load();
+        PvBlocks.load();
     }
 
 }
