@@ -52,7 +52,7 @@ public class PvTurrets{
                         frontColor = Color.valueOf("ffa1a7");
                         hitEffect = despawnEffect = Fx.hitBulletColor;
                         status = StatusEffects.blasted;
-                        statusDuration = 120f
+                        statusDuration = 120f;
                     }},
             );
 
