@@ -20,7 +20,7 @@ public class PvTurrets{
         splinter = new ItemTurret("splinter"){{
             size = 2;
             health = 875;
-            requirements(Category.turret, with(PVItems.zirconium, 75));
+            requirements(Category.turret, with(PvItems.zirconium, 75));
             ammo(
                     PvItems.zirconium,  new BasicBulletType(6f, 14){{
                         knockback = 0.3f;
