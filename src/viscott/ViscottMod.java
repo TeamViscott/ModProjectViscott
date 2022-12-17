@@ -10,6 +10,7 @@ import mindustry.ui.dialogs.BaseDialog;
 import viscott.content.PvBlocks;
 import viscott.content.PvItems;
 import viscott.content.PvLiquids;
+import viscott.content.PvTurrets;
 
 public class ViscottMod extends Mod {
 
@@ -22,6 +23,7 @@ public class ViscottMod extends Mod {
         PvItems.load();
         PvLiquids.load();
         PvBlocks.load();
+        PvTurrets.load();
     }
 
 }

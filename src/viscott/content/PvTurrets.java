@@ -9,6 +9,7 @@ import mindustry.world.*;
 import mindustry.world.blocks.defense.turrets.ItemTurret;
 import mindustry.content.*;
 import mindustry.world.draw.DrawTurret;
+import viscott.utilitys.PvUtil;
 
 import static mindustry.type.ItemStack.*;
 
@@ -20,33 +21,34 @@ public class PvTurrets{
         splinter = new ItemTurret("splinter"){{
             size = 2;
             health = 875;
+            range = 26 * 8;
             requirements(Category.turret, with(PvItems.zirconium, 75));
             ammo(
                     PvItems.zirconium,  new BasicBulletType(6f, 14){{
+                        lifetime = PvUtil.GetRange(speed,range);
                         knockback = 0.3f;
                         width = 10f;
                         height = 14f;
-                        lifetime = 45f;
                         ammoMultiplier = 2;
                         hitColor = backColor = trailColor = Color.valueOf("6f6e80");
                         frontColor = Color.valueOf("9a9aa6");
                         hitEffect = despawnEffect = Fx.hitBulletColor;
                     }},
                     PvItems.platinum,  new BasicBulletType(6f, 37){{
+                        lifetime = PvUtil.GetRange(speed,range);
                         knockback = 0.3f;
                         width = 10f;
                         height = 14f;
-                        lifetime = 45f;
                         ammoMultiplier = 2;
                         hitColor = backColor = trailColor = Color.valueOf("aaadaf");
                         frontColor = Color.valueOf("d1d6db");
                         hitEffect = despawnEffect = Fx.hitBulletColor;
                     }},
                     PvItems.nobelium,  new BasicBulletType(6f, 32){{
+                        lifetime = PvUtil.GetRange(speed,range);
                         knockback = 0.2f;
                         width = 10f;
                         height = 14f;
-                        lifetime = 45f;
                         ammoMultiplier = 3;
                         hitColor = backColor = trailColor = Color.valueOf("ef525b");
                         frontColor = Color.valueOf("ffa1a7");
@@ -60,7 +62,6 @@ public class PvTurrets{
 
             shootY = 3f;
             reload = 60f;
-            range = 208;
             shootCone = 10f;
             ammoUseEffect = Fx.casing1;
             inaccuracy = 8f;
