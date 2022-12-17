@@ -5,6 +5,7 @@ import mindustry.world.blocks.environment.Floor;
 import mindustry.world.blocks.environment.OreBlock;
 import mindustry.world.blocks.environment.StaticWall;
 import mindustry.world.blocks.environment.TallBlock;
+import viscott.world.block.environment.DepositWall;
 
 public class PvBlocks {
     public static Block
@@ -59,39 +60,7 @@ public class PvBlocks {
                 }};
                 /*Ore's End*/
                 /*Deposit's Start*/
-                erbiumDepositLarge = new TallBlock("large-erbium-deposit")
-                {{
-                    variants = 0;
-                    size = 1;
-                    clipSize = 512;
-                    localizedName = "Large Erbium Deposit";
-                    itemDrop = PvItems.erbium;
-                }};
-                lithiumDepositLarge = new TallBlock("large-lithium-deposit")
-                {{
-                    variants = 0;
-                    size = 1;
-                    clipSize = 512;
-                    localizedName = "Large Lithium Deposit";
-                    itemDrop = PvItems.lithium;
-                }};
-                platinumDepositLarge = new TallBlock("large-platinum-deposit")
-                {{
-                    variants = 0;
-                    size = 1;
-                    clipSize = 512;
-                    localizedName = "Large Platinum Deposit";
-                    itemDrop = PvItems.platinum;
-                }};
-                zirconiumDepositLarge = new TallBlock("large-zirconium-deposit")
-                {{
-                    variants = 0;
-                    size = 1;
-                    clipSize = 512;
-                    localizedName = "Large Zirconium Deposit";
-                    itemDrop = PvItems.zirconium;
-                }};
-                erbiumDeposit = new TallBlock("erbium-deposit")
+                erbiumDeposit = new DepositWall("erbium-deposit")
                 {{
                     variants = 0;
                     size = 1;
@@ -99,7 +68,7 @@ public class PvBlocks {
                     localizedName = "Erbium Deposit";
                     itemDrop = PvItems.erbium;
                 }};
-                lithiumDeposit = new TallBlock("lithium-deposit")
+                lithiumDeposit = new DepositWall("lithium-deposit")
                 {{
                     variants = 0;
                     size = 1;
@@ -107,7 +76,7 @@ public class PvBlocks {
                     localizedName = "Lithium Deposit";
                     itemDrop = PvItems.lithium;
                 }};
-                platinumDeposit = new TallBlock("platinum-deposit")
+                platinumDeposit = new DepositWall("platinum-deposit")
                 {{
                     variants = 0;
                     size = 1;
@@ -115,13 +84,14 @@ public class PvBlocks {
                     localizedName = "Platinum Deposit";
                     itemDrop = PvItems.platinum;
                 }};
-                zirconiumDeposit = new TallBlock("zirconium-deposit")
+                zirconiumDeposit = new DepositWall("zirconium-deposit")
                 {{
                     variants = 0;
                     size = 1;
                     clipSize = 256;
                     localizedName = "Zirconium Deposit";
                     itemDrop = PvItems.zirconium;
+
                 }};
                 /*Deposit's End*/
             }
