@@ -5,4 +5,8 @@ public class PvUtil {
     {
         return DesiredRange/(speed/8f);
     }
+    public static String GetName(String added)
+    {
+        return "project-viscott-"+added;
+    }
 }

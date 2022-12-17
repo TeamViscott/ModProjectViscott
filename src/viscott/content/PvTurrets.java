@@ -24,6 +24,7 @@ public class PvTurrets{
             health = 875;
             range = 26 * 8;
             recoil = 2;
+            rotateSpeed = 6f;
             requirements(Category.turret, with(PvItems.zirconium, 75));
             ammo(
                     PvItems.zirconium,  new BasicBulletType(6f, 14){{
@@ -72,11 +73,10 @@ public class PvTurrets{
             reload = 60f;
             ammoUseEffect = Fx.casing1;
             inaccuracy = 1f;
-            rotateSpeed = 15f;
             coolant = consumeCoolant(0.2f);
             coolantMultiplier = 1.2f;
             researchCostMultiplier = 0.05f;
-            drawer = new DrawTurret(""){{
+            drawer = new DrawTurret(PvUtil.GetName("Pov")){{
                 parts.addAll(
                         parts.add(
                             new RegionPart("-l"){{
