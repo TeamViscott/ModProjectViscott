@@ -107,7 +107,7 @@ public class PvBlocks {
                     requirements(Category.distribution, ItemStack.with(PvItems.barium,1));
                     health = 50;
                     itemCapacity = 5;
-                    speed = 20f/60f;
+                    speed = 20f/(60f*itemCapacity);
                 }};
             }
 }

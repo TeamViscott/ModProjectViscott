@@ -4,6 +4,7 @@ import arc.fx.filters.FxaaFilter;
 import arc.graphics.Color;
 import mindustry.entities.abilities.MoveEffectAbility;
 import mindustry.entities.bullet.*;
+import mindustry.entities.effect.ExplosionEffect;
 import mindustry.entities.effect.MultiEffect;
 import mindustry.entities.effect.WaveEffect;
 import mindustry.entities.part.RegionPart;
@@ -127,23 +128,76 @@ public class PvTurrets{
             consumePower(120f/60f);
             reload = 60f/1.2f;
             rotateSpeed = 4f;
-            shootType = new MissileBulletType(6,26)
-            {{
+
+            shootType = new BasicBulletType(){{
+                shootEffect = new MultiEffect(Fx.shootTitan, new WaveEffect(){{
+                    colorTo = Pal.lancerLaser;
+                    sizeTo = 26f;
+                    lifetime = 14f;
+                    strokeFrom = 4f;
+                }});
+                smokeEffect = Fx.shootSmokeTitan;
+                hitColor = Pal.lancerLaser;
+
+                sprite = "large-orb";
+                trailEffect = Fx.missileTrail;
+                trailInterval = 3f;
+                trailParam = 4f;
+                pierceCap = 2;
+                fragOnHit = false;
+                speed = 5f;
+                damage = 26f;
                 lifetime = PvUtil.GetRange(this.speed,31);
-                trailWidth = 2;
-                trailLength = 10;
-                trailColor = backColor = frontColor = Pal.lancerLaser;
-                hitEffect = despawnEffect = Fx.hitBeam;
-                homingRange = 10*8;
-                homingDelay = 1f;
-                homingPower = 0.1f;
-                fragBullet = new BasicBulletType(4,6)
-                {{
-                    lifetime = PvUtil.GetRange(this.speed,6);
-                    trailLength = 6;
-                    trailWidth = 2;
-                    trailColor = backColor = frontColor = Pal.darkFlame;
+                width = height = 16f;
+                backColor = Pal.lancerLaser;
+                frontColor = Color.white;
+                shrinkX = shrinkY = 0f;
+                trailColor = Pal.lancerLaser;
+                trailLength = 12;
+                trailWidth = 2.2f;
+                despawnEffect = hitEffect = new ExplosionEffect(){{
+                    waveColor = Pal.lancerLaser;
+                    smokeColor = Color.gray;
+                    sparkColor = Pal.sap;
+                    waveStroke = 4f;
+                    waveRad = 40f;
                 }};
+                despawnSound = Sounds.dullExplosion;
+
+                //TODO shoot sound
+                shootSound = Sounds.cannon;
+
+                fragBullet = intervalBullet = new BasicBulletType(3f, 6){{
+                    width = 9f;
+                    hitSize = 5f;
+                    height = 15f;
+                    pierce = true;
+                    lifetime = PvUtil.GetRange(this.speed,6);
+                    pierceBuilding = true;
+                    hitColor = backColor = trailColor = Pal.lancerLaser;
+                    frontColor = Color.white;
+                    trailWidth = 2.1f;
+                    trailLength = 5;
+                    hitEffect = despawnEffect = new WaveEffect(){{
+                        colorFrom = colorTo = Pal.lancerLaser;
+                        sizeTo = 4f;
+                        strokeFrom = 4f;
+                        lifetime = 10f;
+                    }};
+                    buildingDamageMultiplier = 0.3f;
+                    homingPower = 0.2f;
+                }};
+
+                bulletInterval = 3f;
+                intervalRandomSpread = 20f;
+                intervalBullets = 2;
+                intervalAngle = 180f;
+                intervalSpread = 300f;
+
+                fragBullets = 20;
+                fragVelocityMin = 0.5f;
+                fragVelocityMax = 1.5f;
+                fragLifeMin = 0.5f;
             }};
 
             drawer = new DrawTurret(PvUtil.GetName("Pov")){{
@@ -187,7 +241,7 @@ public class PvTurrets{
                         smokeEffect = Fx.shootSmokeMissile;
                         ammoMultiplier = 1f;
 
-                        spawnUnit = new MissileUnitType("euro-missile"){{
+                        spawnUnit = new MissileUnitType("euro-missile1"){{
                             speed = 4.6f;
                             maxRange = 6f;
                             lifetime = PvUtil.GetRange(this.speed,87)+30;
@@ -229,13 +283,95 @@ public class PvTurrets{
 
                                     ammoMultiplier = 1f;
                                     fragLifeMin = 0.1f;
-                                    fragBullets = 7;
-                                    fragBullet = new ArtilleryBulletType(2f, 32){{
+                                    fragBullets = 3;
+                                    fragBullet = new ArtilleryBulletType(2f, 13){{
                                         drag = 0.02f;
                                         hitEffect = Fx.massiveExplosion;
                                         despawnEffect = Fx.scatheSlash;
                                         knockback = 0.8f;
                                         lifetime = PvUtil.GetRange(this.speed,1.2f);
+                                        width = height = 18f;
+                                        collidesTiles = false;
+                                        splashDamageRadius = 40f;
+                                        splashDamage = 80f;
+                                        backColor = trailColor = hitColor = Pal.bulletYellow;
+                                        frontColor = Color.white;
+                                        smokeEffect = Fx.shootBigSmoke2;
+                                        despawnShake = 1f;
+                                        lightRadius = 30f;
+                                        lightColor = Pal.redLight;
+                                        lightOpacity = 0.5f;
+
+                                        trailLength = 20;
+                                        trailWidth = 3.5f;
+                                        trailEffect = Fx.none;
+                                    }};
+                                }};
+                            }});
+
+                            abilities.add(new MoveEffectAbility(){{
+                                effect = Fx.missileTrailSmoke;
+                                rotation = 180f;
+                                y = -9f;
+                                color = Color.grays(0.6f).lerp(Pal.redLight, 0.5f).a(0.4f);
+                                interval = 10f;
+                            }});
+                        }};
+                    }},
+                    PvItems.nobelium, new BasicBulletType(0f, 1){{
+                        shootEffect = Fx.shootBig;
+                        smokeEffect = Fx.shootSmokeMissile;
+                        ammoMultiplier = 1f;
+
+                        spawnUnit = new MissileUnitType("euro-missile2"){{
+                            speed = 4.6f;
+                            maxRange = 6f;
+                            lifetime = PvUtil.GetRange(this.speed,87)+30;
+                            outlineColor = Pal.darkOutline;
+                            engineColor = trailColor = Pal.redLight;
+                            engineLayer = Layer.effect;
+                            engineSize = 3.1f;
+                            engineOffset = 10f;
+                            rotateSpeed = 0.25f;
+                            trailLength = 18;
+                            missileAccelTime = 50f;
+                            lowAltitude = true;
+                            loopSound = Sounds.missileTrail;
+                            loopSoundVolume = 0.6f;
+                            deathSound = Sounds.largeExplosion;
+                            targetAir = false;
+
+                            fogRadius = 6f;
+
+                            health = 210;
+
+                            weapons.add(new Weapon(){{
+                                shootCone = 360f;
+                                mirror = false;
+                                reload = 1f;
+                                deathExplosionEffect = Fx.massiveExplosion;
+                                shootOnDeath = true;
+                                shake = 10f;
+                                bullet = new ExplosionBulletType(65f, 6.4f*8f){{
+                                    hitColor = Pal.redLight;
+                                    shootEffect = new MultiEffect(Fx.massiveExplosion, Fx.scatheExplosion, Fx.scatheLight, new WaveEffect(){{
+                                        lifetime = 10f;
+                                        strokeFrom = 4f;
+                                        sizeTo = 130f;
+                                    }});
+
+                                    collidesAir = false;
+                                    buildingDamageMultiplier = 0.3f;
+
+                                    ammoMultiplier = 1f;
+                                    fragLifeMin = 0.1f;
+                                    fragBullets = 4;
+                                    fragBullet = new ArtilleryBulletType(2f, 20){{
+                                        drag = 0.02f;
+                                        hitEffect = Fx.massiveExplosion;
+                                        despawnEffect = Fx.scatheSlash;
+                                        knockback = 0.8f;
+                                        lifetime = PvUtil.GetRange(this.speed,2.7f);
                                         width = height = 18f;
                                         collidesTiles = false;
                                         splashDamageRadius = 40f;
