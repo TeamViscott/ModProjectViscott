@@ -1,6 +1,7 @@
 package viscott.content;
 
 import arc.graphics.Color;
+import mindustry.content.StatusEffects;
 import mindustry.type.Liquid;
 
 public class PvLiquids {
@@ -22,6 +23,7 @@ public class PvLiquids {
         {{
             localizedName = "Kerosene";
             color = Color.valueOf("E2DF80");
+            effect = StatusEffects.burning;
         }};
     }
 }

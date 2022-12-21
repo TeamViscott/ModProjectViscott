@@ -1,6 +1,9 @@
 package viscott.content;
 
+import mindustry.type.Category;
+import mindustry.type.ItemStack;
 import mindustry.world.Block;
+import mindustry.world.blocks.distribution.StackConveyor;
 import mindustry.world.blocks.environment.Floor;
 import mindustry.world.blocks.environment.OreBlock;
 import mindustry.world.blocks.environment.StaticWall;
@@ -19,7 +22,11 @@ public class PvBlocks {
 
             /*Deposit's*/
             erbiumDepositLarge,lithiumDepositLarge,platinumDepositLarge,zirconiumDepositLarge,
-                    erbiumDeposit,lithiumDeposit,platinumDeposit,zirconiumDeposit
+                    erbiumDeposit,lithiumDeposit,platinumDeposit,zirconiumDeposit,
+
+                    /*Buildings*/
+
+                    /*Conveyors*/micromassConveyor
     ;
             public static void load()
             {
@@ -94,5 +101,13 @@ public class PvBlocks {
 
                 }};
                 /*Deposit's End*/
+                /*Building start*/
+                micromassConveyor = new StackConveyor("micromass-conveyor")
+                {{
+                    requirements(Category.distribution, ItemStack.with(PvItems.barium,1));
+                    health = 50;
+                    itemCapacity = 5;
+                    speed = 20f/60f;
+                }};
             }
 }
