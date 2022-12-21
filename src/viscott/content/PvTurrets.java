@@ -27,7 +27,7 @@ import static mindustry.type.ItemStack.*;
 
 public class PvTurrets{
     public static Block
-            splinter,shatter,euro,snap;
+            splinter,shatter,euro,snap,hourglass;
 
     public static void load(){
         splinter = new ItemTurret("splinter"){{
@@ -413,7 +413,7 @@ public class PvTurrets{
                                     under = false;
                                     moveX = -1f;
                                     moveRot = 7f;
-                                    moves.add(new PartMove(PartProgress.recoil, 1f, 0f, 0f));
+                                    moves.add(new PartMove(PartProgress.recoil, 1f, 2f, 0f));
                                 }},
                                 new RegionPart("-r"){{
                                     progress = PartProgress.recoil;
@@ -448,6 +448,52 @@ public class PvTurrets{
                     }}
             );
             drawer = new DrawTurret(PvUtil.GetName("Pov"));
+        }};
+        hourglass = new ItemTurret("hourglass")
+        {{
+            size = 2;
+            reload = 60f/4f;
+            range = 26*8;
+            requirements(Category.turret,with(Items.copper,1)); //Todo
+            ammo(
+                    PvItems.zirconium,new BasicBulletType(6,0)
+                    {{
+                        trailColor = frontColor = backColor = Pal.sap;
+                        trailLength = 10;
+                        trailWidth = 2;
+                        lifetime = PvUtil.GetRange(this.speed,26);
+                        splashDamageRadius = 8.3f*8;
+                        status = PvStatusEffects.magnefied;
+                        statusDuration = 120;
+                        despawnEffect = hitEffect = PvEffects.slowEnergeticEffect;
+                    }}
+            );
+            drawer = new DrawTurret(PvUtil.GetName("Pov")){{
+                parts.addAll(
+                        parts.add(
+                                new RegionPart("-l"){{
+                                    progress = PartProgress.recoil;
+                                    heatProgress = PartProgress.recoil;
+                                    heatColor = Color.valueOf("ff6214");
+                                    mirror = false;
+                                    under = false;
+                                    moveX = -1f;
+                                    moveRot = 7f;
+                                    moves.add(new PartMove(PartProgress.recoil, 1f, 0f, 10f));
+                                }},
+                                new RegionPart("-r"){{
+                                    progress = PartProgress.recoil;
+                                    heatProgress = PartProgress.recoil;
+                                    heatColor = Color.valueOf("ff6214");
+                                    mirror = false;
+                                    under = false;
+                                    moveX = 1f;
+                                    moveRot = -7f;
+                                    moves.add(new PartMove(PartProgress.recoil, -1f, 0f, -10f));
+                                }}
+                        )
+                );
+            }};
         }};
     }
 }
