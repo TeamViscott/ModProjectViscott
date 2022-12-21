@@ -105,6 +105,7 @@ public class PvBlocks {
                 micromassConveyor = new StackConveyor("micromass-conveyor")
                 {{
                     requirements(Category.distribution, ItemStack.with(PvItems.barium,1));
+                    localizedName = "Micromass Conveyor";
                     health = 50;
                     itemCapacity = 5;
                     speed = 20f/(60f*itemCapacity);

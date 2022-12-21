@@ -428,31 +428,40 @@ public class PvTurrets{
                         )
                 );
             }};
+
         }};
         snap = new LiquidTurret("snap")
         {{
             requirements(Category.turret, with(Items.silicon, 100)); //Todo
             localizedName = "Snap";
             size = 2;
-            reload = 60f/4f;
+            reload = 60f/1f;
+            range = 20*8;
             ammo(
-                    Liquids.water,new LiquidBulletType(Liquids.water){{
-                        knockback = 0.7f;
-                        damage = 15;
-                        drag = 0.01f;
-                        layer = Layer.bullet - 2f;
+                    Liquids.water,new LaserBulletType(15) {{
+                            colors = new Color[3];
+                            colors[0] = colors[1] = colors[2] = Liquids.water.color;
+                            length = 20*8;
+                            status = StatusEffects.wet;
+                            statusDuration = 90;
+
                     }},
-                    PvLiquids.kerosene, new LiquidBulletType(PvLiquids.kerosene){{
-                        damage = 24;
-                        drag = 0.01f;
+                    PvLiquids.kerosene, new LaserBulletType(24){{
+                            colors = new Color[3];
+                            colors[0] = colors[1] = colors[2] = PvLiquids.kerosene.color;
+                            length = 20*8;
+                            status = PvStatusEffects.doused;
+                            statusDuration = 90;
+
                     }}
             );
             drawer = new DrawTurret(PvUtil.GetName("Pov"));
         }};
         hourglass = new ItemTurret("hourglass")
         {{
+            localizedName = "Hourglass";
             size = 2;
-            reload = 60f/4f;
+            reload = 60f/2f;
             range = 26*8;
             requirements(Category.turret,with(Items.copper,1)); //Todo
             ammo(
@@ -463,8 +472,8 @@ public class PvTurrets{
                         trailWidth = 2;
                         lifetime = PvUtil.GetRange(this.speed,26);
                         splashDamageRadius = 8.3f*8;
-                        status = PvStatusEffects.magnefied;
-                        statusDuration = 120;
+                        status = PvStatusEffects.timeWarped;
+                        statusDuration = 150;
                         despawnEffect = hitEffect = PvEffects.slowEnergeticEffect;
                     }}
             );
