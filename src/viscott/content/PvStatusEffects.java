@@ -12,11 +12,11 @@ public class PvStatusEffects {
     {
         timeWarped =new StatusEffectStack("time-warped"){{
             localizedName = "Time Warped";
-            speedMultiplier = 0.95f;
-            dragMultiplier = 0.95f;
-            reloadMultiplier = 0.95f;
-            buildSpeedMultiplier = 0.95f;
-            charges = 15;
+            speedMultiplier = 0.75f;
+            dragMultiplier = 0.75f;
+            reloadMultiplier = 0.75f;
+            buildSpeedMultiplier = 0.75f;
+            charges = 3;
             staticStat();
         }};
         doused = new StatusEffectStack("doused"){{
