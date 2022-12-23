@@ -5,6 +5,7 @@ import arc.util.Time;
 import arc.util.Tmp;
 import mindustry.Vars;
 import mindustry.content.Fx;
+import mindustry.game.Team;
 import mindustry.gen.Unit;
 import mindustry.type.StatusEffect;
 import mindustry.world.meta.Stat;
@@ -17,9 +18,11 @@ import java.util.Stack;
 
 public class StatusEffectStack extends StatusEffect {
     public int charges = 1;
-    public static HashMap<Unit, Integer> unitCharges = new HashMap<>();
-    public static HashMap<Unit, Float> unitTime = new HashMap<>();
+    public HashMap<Unit, Integer> unitCharges = new HashMap<>();
+    public HashMap<Unit, Float> unitTime = new HashMap<>();
+    public HashMap<Unit, Team> unitTeam = new HashMap<>();
     List<Float> statsStatic = new Stack<>();
+    public Team newTeam = null;
 
     public StatusEffectStack(String name)
     {
@@ -34,11 +37,13 @@ public class StatusEffectStack extends StatusEffect {
         statsStatic.add(speedMultiplier);
         statsStatic.add(reloadMultiplier);
         statsStatic.add(buildSpeedMultiplier);
+        statsStatic.add(dragMultiplier);
         damageMultiplier = 1;
         healthMultiplier = 1;
         speedMultiplier = 1;
         reloadMultiplier = 1;
         buildSpeedMultiplier = 1;
+        dragMultiplier = 1;
     }
 
     @Override
@@ -62,6 +67,10 @@ public class StatusEffectStack extends StatusEffect {
         if(statsStatic.get(4) != 1) {
             stats.addPercent(Stat.buildSpeedMultiplier, statsStatic.get(4));
             if (charges != 1)stats.addPercent(PvStats.maxBuildSpeedMultiplier, 1+(statsStatic.get(4)-1)*charges);
+        }
+        if(statsStatic.get(4) != 1) {
+            stats.addPercent(PvStats.dragMultiplier, statsStatic.get(5));
+            if (charges != 1)stats.addPercent(PvStats.maxDragMultiplier, 1+(statsStatic.get(5)-1)*charges);
         }
 
         if(damage > 0) {
@@ -112,6 +121,7 @@ public class StatusEffectStack extends StatusEffect {
         {{
                 unitCharges.put(unit, 1);
                 unitTime.put(unit,time);
+                unitTeam.put(unit,unit.team);
             }}
         else
             unitCharges.replace(unit,Mathf.clamp(unitCharges.get(unit)+1,0,charges));
@@ -121,6 +131,9 @@ public class StatusEffectStack extends StatusEffect {
     {
         unitCharges.remove(unit);
         unitTime.remove(unit);
+        if (newTeam != null)
+            unit.team(unitTeam.get(unit));
+        unitTeam.remove(unit);
     }
 
     @Override
@@ -141,6 +154,9 @@ public class StatusEffectStack extends StatusEffect {
         }else if(damage < 0){ //heal unit
             unit.heal(-1f * damage * unitCharges.get(unit) * Time.delta);
         }
+
+        if (newTeam != null)
+            unit.team(newTeam);
 
         if(effect != Fx.none && Mathf.chanceDelta(effectChance)){
             Tmp.v1.rnd(Mathf.range(unit.type.hitSize/2f));

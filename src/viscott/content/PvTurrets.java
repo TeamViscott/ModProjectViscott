@@ -27,7 +27,7 @@ import static mindustry.type.ItemStack.*;
 
 public class PvTurrets{
     public static Block
-            splinter,shatter,euro,snap,hourglass;
+            splinter,shatter,euro,snap,hourglass,phantom;
 
     public static void load(){
         splinter = new ItemTurret("splinter"){{
@@ -226,6 +226,7 @@ public class PvTurrets{
                         )
                 );
             }};
+
         }};
         euro = new ItemTurret("euro")
         {{
@@ -235,6 +236,8 @@ public class PvTurrets{
             inaccuracy = 10;
             reload = 120;
             size = 2;
+            coolant = consumeCoolant(0.2f);
+            coolantMultiplier = 1.2f;
             ammo(
                     Items.silicon, new BasicBulletType(0f, 1){{
                         shootEffect = Fx.shootBig;
@@ -428,7 +431,7 @@ public class PvTurrets{
                         )
                 );
             }};
-
+            limitRange();
         }};
         snap = new LiquidTurret("snap")
         {{
@@ -463,6 +466,8 @@ public class PvTurrets{
             size = 2;
             reload = 60f/2f;
             range = 26*8;
+            coolant = consumeCoolant(0.2f);
+            coolantMultiplier = 1.2f;
             requirements(Category.turret,with(Items.copper,1)); //Todo
             ammo(
                     PvItems.zirconium,new BasicBulletType(6,0)
@@ -503,6 +508,69 @@ public class PvTurrets{
                         )
                 );
             }};
+            limitRange();
+        }};
+        phantom = new ItemTurret("phantom")
+        {{
+            requirements(Category.turret,with(PvItems.erbium,1)); //Todo
+            localizedName = "Phantom";
+            size = 3;
+            health = 1980;
+            consumePower(290f/60f);
+            range = 56*8;
+            liquidCapacity = 35;
+            targetAir = true;
+            targetGround = false;
+            reload = 60f/0.9f;
+            coolant = consumeCoolant(0.1f);
+            coolantMultiplier = 1.2f;
+            ammo(
+                    PvItems.platinum,new BasicBulletType(8,360)
+                    {{
+                        lifetime = PvUtil.GetRange(this.speed,56);
+                        trailLength = 20;
+                        trailWidth = 2;
+                        width = 20;
+                        height = 20;
+                        trailColor = backColor = Pal.gray;
+                    }},
+                    PvItems.erbium,new BasicBulletType(8,500)
+                    {{
+                        lifetime = PvUtil.GetRange(this.speed,56);
+                        trailLength = 20;
+                        trailWidth = 2;
+                        width = 20;
+                        height = 20;
+                        trailColor = backColor = Pal.gray;
+                    }}
+            );
+            drawer = new DrawTurret(PvUtil.GetName("Pov")){{
+                parts.addAll(
+                        parts.add(
+                                new RegionPart("-l"){{
+                                    progress = PartProgress.recoil;
+                                    heatProgress = PartProgress.recoil;
+                                    heatColor = Color.valueOf("ff6214");
+                                    mirror = false;
+                                    under = false;
+                                    moveX = -1f;
+                                    moveY = -1f;
+                                    moveRot = 8f;
+                                }},
+                                new RegionPart("-r"){{
+                                    progress = PartProgress.recoil;
+                                    heatProgress = PartProgress.recoil;
+                                    heatColor = Color.valueOf("ff6214");
+                                    mirror = false;
+                                    under = false;
+                                    moveX = 1f;
+                                    moveY = -1f;
+                                    moveRot = -8f;
+                                }}
+                        )
+                );
+            }};
+            limitRange();
         }};
     }
 }

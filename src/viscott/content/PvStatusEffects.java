@@ -1,35 +1,35 @@
 package viscott.content;
 
-import mindustry.content.StatusEffects;
+import mindustry.game.Team;
 import mindustry.type.StatusEffect;
 import viscott.world.statusEffects.StatusEffectStack;
 
 public class PvStatusEffects {
     public static StatusEffect
-    timeWarped,doused,buffer
+    timeWarped,doused, disabled
             ;
     public static void load()
     {
         timeWarped =new StatusEffectStack("time-warped"){{
             localizedName = "Time Warped";
-            speedMultiplier = 0.75f;
-            dragMultiplier = 0.75f;
-            reloadMultiplier = 0.75f;
-            buildSpeedMultiplier = 0.75f;
-            charges = 3;
+            speedMultiplier = 0.98f;
+            dragMultiplier = 0.98f;
+            reloadMultiplier = 0.98f;
+            buildSpeedMultiplier = 0.98f;
+            charges = 20;
             staticStat();
         }};
         doused = new StatusEffectStack("doused"){{
             localizedName = "Doused";
             damage = 2f/60f;
-            charges = 10;
+            charges = 30;
             staticStat();
         }};
-        buffer = new StatusEffectStack("buffer"){{
-            localizedName = "Buffer";
-            damage = -1f/60f;
-            healthMultiplier = 1.1f;
-            charges = 90;
+        disabled = new StatusEffectStack("disabled"){{
+            localizedName = "Disabled";
+            newTeam = Team.derelict;
+            speedMultiplier = 0;
+            reloadMultiplier = 0;
             staticStat();
         }};
     }
