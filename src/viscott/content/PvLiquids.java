@@ -14,7 +14,7 @@ public class PvLiquids {
         {{
             localizedName = "Nitrogen";
             color = Color.valueOf("ECDCF5");
-            heatCapacity = 1;
+            heatCapacity = 2;
         }};
         xenon = new Liquid("liquid-xenon"){{
             localizedName = "Xenon";

@@ -238,8 +238,6 @@ public class PvTurrets{
             coolant = consumeCoolant(0.1f);
             ammo(
                     Items.silicon, new BasicBulletType(0f, 1){{
-                        shootEffect = Fx.shootBig;
-                        smokeEffect = Fx.shootSmokeMissile;
                         ammoMultiplier = 1f;
 
                         spawnUnit = new MissileUnitType("euro-missile1"){{
@@ -271,7 +269,7 @@ public class PvTurrets{
                                 deathExplosionEffect = Fx.massiveExplosion;
                                 shootOnDeath = true;
                                 shake = 10f;
-                                bullet = new ExplosionBulletType(42f, 4.8f*8f){{
+                                bullet = new ExplosionBulletType(32f, 4.8f*8f){{
                                     hitColor = Pal.redLight;
                                     shootEffect = new MultiEffect(Fx.massiveExplosion, Fx.scatheExplosion, Fx.scatheLight, new WaveEffect(){{
                                         lifetime = 10f;
@@ -310,13 +308,6 @@ public class PvTurrets{
                                 }};
                             }});
 
-                            abilities.add(new MoveEffectAbility(){{
-                                effect = Fx.missileTrailSmoke;
-                                rotation = 180f;
-                                y = -9f;
-                                color = Color.grays(0.6f).lerp(Pal.redLight, 0.5f).a(0.4f);
-                                interval = 10f;
-                            }});
                         }};
                     }},
                     PvItems.nobelium, new BasicBulletType(0f, 1){{
@@ -353,7 +344,7 @@ public class PvTurrets{
                                 deathExplosionEffect = Fx.massiveExplosion;
                                 shootOnDeath = true;
                                 shake = 10f;
-                                bullet = new ExplosionBulletType(65f, 6.4f*8f){{
+                                bullet = new ExplosionBulletType(40f, 6.4f*8f){{
                                     hitColor = Pal.redLight;
                                     shootEffect = new MultiEffect(Fx.massiveExplosion, Fx.scatheExplosion, Fx.scatheLight, new WaveEffect(){{
                                         lifetime = 10f;
@@ -392,13 +383,6 @@ public class PvTurrets{
                                 }};
                             }});
 
-                            abilities.add(new MoveEffectAbility(){{
-                                effect = Fx.missileTrailSmoke;
-                                rotation = 180f;
-                                y = -9f;
-                                color = Color.grays(0.6f).lerp(Pal.redLight, 0.5f).a(0.4f);
-                                interval = 10f;
-                            }});
                         }};
                     }}
             );
@@ -414,7 +398,7 @@ public class PvTurrets{
                                     under = false;
                                     moveX = -1f;
                                     moveRot = 7f;
-                                    moves.add(new PartMove(PartProgress.recoil, 1f, 2f, 0f));
+                                    moves.add(new PartMove(PartProgress.recoil, 1f, 1f, 0f));
                                 }},
                                 new RegionPart("-r"){{
                                     progress = PartProgress.recoil;
@@ -424,7 +408,7 @@ public class PvTurrets{
                                     under = false;
                                     moveX = 1f;
                                     moveRot = -7f;
-                                    moves.add(new PartMove(PartProgress.recoil, -1f, 2f, 0f));
+                                    moves.add(new PartMove(PartProgress.recoil, -1f, 1f, 0f));
                                 }}
                         )
                 );
@@ -529,6 +513,7 @@ public class PvTurrets{
                         width = 20;
                         height = 20;
                         trailColor = backColor = Pal.gray;
+
                     }},
                     PvItems.erbium,new BasicBulletType(8,500)
                     {{
@@ -549,7 +534,7 @@ public class PvTurrets{
                                     heatColor = Color.valueOf("ff6214");
                                     mirror = false;
                                     under = false;
-                                    moveX = -1f;
+                                    moveX = -2f;
                                     moveY = -1f;
                                     moveRot = 8f;
                                 }},
@@ -559,7 +544,7 @@ public class PvTurrets{
                                     heatColor = Color.valueOf("ff6214");
                                     mirror = false;
                                     under = false;
-                                    moveX = 1f;
+                                    moveX = 2f;
                                     moveY = -1f;
                                     moveRot = -8f;
                                 }}
@@ -583,7 +568,7 @@ public class PvTurrets{
             coolant = consumeCoolant(0.1f);
             shoot = new ShootAlternate(8);
             ammo(
-                    PvItems.platinum,new BasicBulletType(5,29)
+                    PvItems.platinum,new BasicBulletType(5,24)
                     {{
                         lifetime = PvUtil.GetRange(this.speed,34);
                         pierce = true;
@@ -592,7 +577,7 @@ public class PvTurrets{
                         trailWidth = 2;
                         trailColor = backColor = lightColor = Pal.heal;
                     }},
-                    Items.silicon,new BasicBulletType(5,26)
+                    Items.silicon,new BasicBulletType(5,21)
                     {{
                         lifetime = PvUtil.GetRange(this.speed,34);
                         pierce = true;
@@ -605,7 +590,7 @@ public class PvTurrets{
                         weaveRandom = true;
                         homingPower = 0.02f;
                     }},
-                    PvItems.erbium,new BasicBulletType(5,42)
+                    PvItems.erbium,new BasicBulletType(5,32)
                     {{
                         lifetime = PvUtil.GetRange(this.speed,34);
                         pierce = true;
@@ -633,7 +618,7 @@ public class PvTurrets{
                                     heatColor = Color.valueOf("ff6214");
                                     mirror = false;
                                     under = false;
-                                    moveY = -0.5f;
+                                    moveY = -1f;
                                     moveRot = 1f;
                                 }},
                                 new RegionPart("-r"){{
@@ -642,7 +627,7 @@ public class PvTurrets{
                                     heatColor = Color.valueOf("ff6214");
                                     mirror = false;
                                     under = false;
-                                    moveY = -0.5f;
+                                    moveY = -1f;
                                     moveRot = -1f;
                                 }}
                         )

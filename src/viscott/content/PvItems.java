@@ -15,7 +15,7 @@ public class PvItems {
             localizedName = "Barium";
         }};
         platinum = new Item("platinum"){{
-            localizedName = "Barium";
+            localizedName = "Platinum";
         }};
         lithium = new Item("lithium"){{
             localizedName = "Lithium";
