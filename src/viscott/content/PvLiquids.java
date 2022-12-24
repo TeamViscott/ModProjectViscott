@@ -14,16 +14,19 @@ public class PvLiquids {
         {{
             localizedName = "Nitrogen";
             color = Color.valueOf("ECDCF5");
+            heatCapacity = 1;
         }};
         xenon = new Liquid("liquid-xenon"){{
             localizedName = "Xenon";
             color = Color.valueOf("C080E2");
+            heatCapacity = 0.8f;
         }};
         kerosene = new Liquid("liquid-kerosene")
         {{
             localizedName = "Kerosene";
             color = Color.valueOf("E2DF80");
             effect = StatusEffects.burning;
+            heatCapacity = 1.2f;
         }};
     }
 }

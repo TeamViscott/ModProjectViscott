@@ -27,7 +27,7 @@ import static mindustry.type.ItemStack.*;
 
 public class PvTurrets{
     public static Block
-            splinter,shatter,euro,snap,hourglass,phantom;
+            splinter,shatter,euro,snap,hourglass,phantom,razor;
 
     public static void load(){
         splinter = new ItemTurret("splinter"){{
@@ -85,8 +85,7 @@ public class PvTurrets{
             reload = 60f;
             ammoUseEffect = Fx.casing1;
             inaccuracy = 1f;
-            coolant = consumeCoolant(0.2f);
-            coolantMultiplier = 1.2f;
+            coolant = consumeCoolant(0.1f);
             researchCostMultiplier = 0.05f;
             drawer = new DrawTurret(PvUtil.GetName("Pov")){{
                 parts.addAll(
@@ -236,8 +235,7 @@ public class PvTurrets{
             inaccuracy = 10;
             reload = 120;
             size = 2;
-            coolant = consumeCoolant(0.2f);
-            coolantMultiplier = 1.2f;
+            coolant = consumeCoolant(0.1f);
             ammo(
                     Items.silicon, new BasicBulletType(0f, 1){{
                         shootEffect = Fx.shootBig;
@@ -466,8 +464,7 @@ public class PvTurrets{
             size = 2;
             reload = 60f/2f;
             range = 26*8;
-            coolant = consumeCoolant(0.2f);
-            coolantMultiplier = 1.2f;
+            coolant = consumeCoolant(0.1f);
             requirements(Category.turret,with(Items.copper,1)); //Todo
             ammo(
                     PvItems.zirconium,new BasicBulletType(6,0)
@@ -523,7 +520,6 @@ public class PvTurrets{
             targetGround = false;
             reload = 60f/0.9f;
             coolant = consumeCoolant(0.1f);
-            coolantMultiplier = 1.2f;
             ammo(
                     PvItems.platinum,new BasicBulletType(8,360)
                     {{
@@ -549,7 +545,7 @@ public class PvTurrets{
                         parts.add(
                                 new RegionPart("-l"){{
                                     progress = PartProgress.recoil;
-                                    heatProgress = PartProgress.recoil;
+                                    heatProgress = PartProgress.heat;
                                     heatColor = Color.valueOf("ff6214");
                                     mirror = false;
                                     under = false;
@@ -559,7 +555,7 @@ public class PvTurrets{
                                 }},
                                 new RegionPart("-r"){{
                                     progress = PartProgress.recoil;
-                                    heatProgress = PartProgress.recoil;
+                                    heatProgress = PartProgress.heat;
                                     heatColor = Color.valueOf("ff6214");
                                     mirror = false;
                                     under = false;
@@ -571,6 +567,87 @@ public class PvTurrets{
                 );
             }};
             limitRange();
+        }};
+        razor = new ItemTurret("razor")
+        {{
+            requirements(Category.turret,with(PvItems.erbium,1)); //Todo
+            localizedName = "Razor";
+            size = 3;
+            health = 2175;
+            range = 34*8;
+            liquidCapacity = 20;
+            targetAir = true;
+            targetGround = true;
+            reload = 60f/4.8f;
+            recoil = 3;
+            coolant = consumeCoolant(0.1f);
+            shoot = new ShootAlternate(8);
+            ammo(
+                    PvItems.platinum,new BasicBulletType(5,29)
+                    {{
+                        lifetime = PvUtil.GetRange(this.speed,34);
+                        pierce = true;
+                        pierceCap = 10;
+                        trailLength = 15;
+                        trailWidth = 2;
+                        trailColor = backColor = lightColor = Pal.heal;
+                    }},
+                    Items.silicon,new BasicBulletType(5,26)
+                    {{
+                        lifetime = PvUtil.GetRange(this.speed,34);
+                        pierce = true;
+                        pierceCap = 10;
+                        trailLength = 15;
+                        trailWidth = 2;
+                        trailColor = backColor = lightColor = Pal.heal;
+                        weaveMag = 2;
+                        weaveScale = 2;
+                        weaveRandom = true;
+                        homingPower = 0.02f;
+                    }},
+                    PvItems.erbium,new BasicBulletType(5,42)
+                    {{
+                        lifetime = PvUtil.GetRange(this.speed,34);
+                        pierce = true;
+                        pierceCap = 10;
+                        trailLength = 15;
+                        trailWidth = 2;
+                        trailColor = backColor = lightColor = Pal.heal;
+                        fragBullets = 2;
+                        fragRandomSpread = 90;
+                        fragBullet = new BasicBulletType(4,15)
+                        {{
+                            lifetime = PvUtil.GetRange(this.speed,7);
+                            trailLength = 15;
+                            trailWidth = 2;
+                            trailColor = backColor = lightColor = Pal.heal;
+                        }};
+                    }}
+            );
+            drawer = new DrawTurret(PvUtil.GetName("Pov")){{
+                parts.addAll(
+                        parts.add(
+                                new RegionPart("-l"){{
+                                    progress = PartProgress.recoil;
+                                    heatProgress = PartProgress.recoil;
+                                    heatColor = Color.valueOf("ff6214");
+                                    mirror = false;
+                                    under = false;
+                                    moveY = -0.5f;
+                                    moveRot = 1f;
+                                }},
+                                new RegionPart("-r"){{
+                                    progress = PartProgress.recoil;
+                                    heatProgress = PartProgress.recoil;
+                                    heatColor = Color.valueOf("ff6214");
+                                    mirror = false;
+                                    under = false;
+                                    moveY = -0.5f;
+                                    moveRot = -1f;
+                                }}
+                        )
+                );
+            }};
         }};
     }
 }
