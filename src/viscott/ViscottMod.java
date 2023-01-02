@@ -17,7 +17,7 @@ public class ViscottMod extends Mod {
     @Override
     public void loadContent(){
         Log.info("Loading some example content.");
-        PvVanillaChanges.load();
+        PvAttributes.load();
         PvStats.load();
         PvEffects.load();
         PvItems.load();
@@ -25,6 +25,7 @@ public class ViscottMod extends Mod {
         PvLiquids.load();
         PvBlocks.load();
         PvTurrets.load();
+        PvVanillaChanges.load();
     }
 
 }

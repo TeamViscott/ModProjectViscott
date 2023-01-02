@@ -8,6 +8,9 @@ import mindustry.world.blocks.environment.Floor;
 import mindustry.world.blocks.environment.OreBlock;
 import mindustry.world.blocks.environment.StaticWall;
 import mindustry.world.blocks.environment.TallBlock;
+import mindustry.world.blocks.production.Drill;
+import viscott.world.block.PvBlock;
+import viscott.world.block.drill.Grinder;
 import viscott.world.block.environment.DepositWall;
 
 public class PvBlocks {
@@ -26,8 +29,10 @@ public class PvBlocks {
 
                     /*Buildings*/
 
-                    /*Conveyors*/micromassConveyor
-    ;
+                    /*Conveyors*/micromassConveyor,
+
+                            /*Drills*/harvestGrinder,harvestDrill
+                            ;
             public static void load()
             {
                 /*Floor's Start*/
@@ -109,6 +114,22 @@ public class PvBlocks {
                     health = 50;
                     itemCapacity = 5;
                     speed = 20f/(60f*itemCapacity);
+                }};
+
+                harvestGrinder = new Grinder("harvest-grinder")
+                {{
+                    requirements(Category.production, ItemStack.with(PvItems.barium,10));
+                    localizedName = "Harvest Grinder";
+                    size = 2;
+                }};
+                harvestDrill = new Drill("harvest-drill")
+                {{
+                    requirements(Category.production, ItemStack.with(PvItems.platinum,10));
+                    localizedName = "Harvest Grinder";
+                    size = 2;
+                    drillTime = 500;
+                    liquidBoostIntensity = 1;
+                    tier = 1;
                 }};
             }
 }
