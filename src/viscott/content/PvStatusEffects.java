@@ -6,7 +6,7 @@ import viscott.world.statusEffects.StatusEffectStack;
 
 public class PvStatusEffects {
     public static StatusEffect
-    timeWarped,doused, disabled
+    timeWarped,doused, disabled, expent
             ;
     public static void load()
     {
@@ -30,6 +30,13 @@ public class PvStatusEffects {
             newTeam = Team.derelict;
             speedMultiplier = 0;
             reloadMultiplier = 0;
+            staticStat();
+        }};
+        expent = new StatusEffectStack("expent")
+        {{
+            localizedName = "Expent";
+            reloadMultiplier = 0.95f;
+            charges = 12;
             staticStat();
         }};
     }

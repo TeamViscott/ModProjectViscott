@@ -23,6 +23,7 @@ public class ViscottMod extends Mod {
         PvItems.load();
         PvStatusEffects.load();
         PvLiquids.load();
+        PvUnits.load();
         PvBlocks.load();
         PvTurrets.load();
         PvVanillaChanges.load();
