@@ -8,10 +8,13 @@ import mindustry.world.blocks.environment.Floor;
 import mindustry.world.blocks.environment.OreBlock;
 import mindustry.world.blocks.environment.StaticWall;
 import mindustry.world.blocks.environment.TallBlock;
+import mindustry.world.blocks.power.PowerNode;
+import mindustry.world.blocks.power.SolarGenerator;
 import mindustry.world.blocks.production.Drill;
 import viscott.world.block.PvBlock;
 import viscott.world.block.drill.Grinder;
 import viscott.world.block.environment.DepositWall;
+import viscott.world.block.power.ConstGenerator;
 
 public class PvBlocks {
     public static Block
@@ -31,7 +34,10 @@ public class PvBlocks {
 
                     /*Conveyors*/micromassConveyor,
 
-                            /*Drills*/harvestGrinder,harvestDrill
+                    /*Drills*/harvestGrinder,harvestDrill,
+
+                    /*Power*/opticalNode,auditoryNode,
+                    /*Power Production*/smallCarbonPanel
                             ;
             public static void load()
             {
@@ -130,6 +136,32 @@ public class PvBlocks {
                     drillTime = 500;
                     liquidBoostIntensity = 1;
                     tier = 1;
+                }};
+                opticalNode = new PowerNode("optical-node")
+                {{
+                    requirements(Category.power, ItemStack.with(PvItems.barium,50));
+                    localizedName = "Harvest Grinder";
+                    size = 1;
+                    maxNodes = 4;
+                    laserRange = 18;
+                    health = 80;
+                }};
+                auditoryNode = new PowerNode("auditory-node")
+                {{
+                    requirements(Category.power, ItemStack.with(PvItems.barium,50));
+                    localizedName = "Harvest Grinder";
+                    size = 2;
+                    maxNodes = 6;
+                    laserRange = 35;
+                    health = 220;
+                }};
+                smallCarbonPanel = new ConstGenerator("small-carbon-panel")
+                {{
+                    requirements(Category.power, ItemStack.with(PvItems.barium,50));
+                    localizedName = "Harvest Grinder";
+                    size = 2;
+                    powerProduction = 32f/60f;
+                    health = 275;
                 }};
             }
 }
