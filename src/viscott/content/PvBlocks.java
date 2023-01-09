@@ -3,11 +3,14 @@ package viscott.content;
 import mindustry.type.Category;
 import mindustry.type.ItemStack;
 import mindustry.world.Block;
+import mindustry.world.blocks.distribution.DuctRouter;
+import mindustry.world.blocks.distribution.Junction;
 import mindustry.world.blocks.distribution.StackConveyor;
 import mindustry.world.blocks.environment.Floor;
 import mindustry.world.blocks.environment.OreBlock;
 import mindustry.world.blocks.environment.StaticWall;
 import mindustry.world.blocks.environment.TallBlock;
+import mindustry.world.blocks.liquid.Conduit;
 import mindustry.world.blocks.power.PowerNode;
 import mindustry.world.blocks.power.SolarGenerator;
 import mindustry.world.blocks.production.Drill;
@@ -32,12 +35,14 @@ public class PvBlocks {
 
                     /*Buildings*/
 
-                    /*Conveyors*/micromassConveyor,
+                    /*Conveyors*/micromassConveyor,massJunction,massRouter,
 
                     /*Drills*/harvestGrinder,harvestDrill,
 
                     /*Power*/opticalNode,auditoryNode,
-                    /*Power Production*/smallCarbonPanel
+                    /*Power Production*/smallCarbonPanel,
+
+                    /*Liquids*/concentratedConduit
                             ;
             public static void load()
             {
@@ -78,7 +83,7 @@ public class PvBlocks {
                 }};
                 /*Ore's End*/
                 /*Deposit's Start*/
-                erbiumDeposit = new DepositWall("erbium-deposit")
+                erbiumDeposit = new DepositWall("erbium-deposit") //Todo
                 {{
                     variants = 0;
                     size = 1;
@@ -86,7 +91,7 @@ public class PvBlocks {
                     localizedName = "Erbium Deposit";
                     itemDrop = PvItems.erbium;
                 }};
-                lithiumDeposit = new DepositWall("lithium-deposit")
+                lithiumDeposit = new DepositWall("lithium-deposit") //Todo
                 {{
                     variants = 0;
                     size = 1;
@@ -94,7 +99,7 @@ public class PvBlocks {
                     localizedName = "Lithium Deposit";
                     itemDrop = PvItems.lithium;
                 }};
-                platinumDeposit = new DepositWall("platinum-deposit")
+                platinumDeposit = new DepositWall("platinum-deposit") //Todo
                 {{
                     variants = 0;
                     size = 1;
@@ -102,7 +107,7 @@ public class PvBlocks {
                     localizedName = "Platinum Deposit";
                     itemDrop = PvItems.platinum;
                 }};
-                zirconiumDeposit = new DepositWall("zirconium-deposit")
+                zirconiumDeposit = new DepositWall("zirconium-deposit") //Todo
                 {{
                     variants = 0;
                     size = 1;
@@ -115,22 +120,38 @@ public class PvBlocks {
                 /*Building start*/
                 micromassConveyor = new StackConveyor("micromass-conveyor")
                 {{
-                    requirements(Category.distribution, ItemStack.with(PvItems.barium,1));
+                    requirements(Category.distribution, ItemStack.with(PvItems.barium,1)); //Todo
                     localizedName = "Micromass Conveyor";
                     health = 50;
                     itemCapacity = 5;
                     speed = 20f/(60f*itemCapacity);
                 }};
+                massJunction = new Junction("mass-junction")
+                {{
+                    requirements(Category.distribution, ItemStack.with(PvItems.barium,1)); //Todo
+                    localizedName = "Mass Junction";
+                    health = 90;
+                    capacity = 20;
+                    speed = 40;
+                }};
+                massRouter = new DuctRouter("mass-router")
+                {{
+                    requirements(Category.distribution, ItemStack.with(PvItems.barium,1)); //Todo
+                    localizedName = "Mass Router";
+                    health = 85;
+                    itemCapacity = 20;
+                    speed = 0;
+                }};
 
                 harvestGrinder = new Grinder("harvest-grinder")
                 {{
-                    requirements(Category.production, ItemStack.with(PvItems.barium,10));
+                    requirements(Category.production, ItemStack.with(PvItems.barium,10)); //Todo
                     localizedName = "Harvest Grinder";
                     size = 2;
                 }};
                 harvestDrill = new Drill("harvest-drill")
                 {{
-                    requirements(Category.production, ItemStack.with(PvItems.platinum,10));
+                    requirements(Category.production, ItemStack.with(PvItems.platinum,10)); //Todo
                     localizedName = "Harvest Grinder";
                     size = 2;
                     drillTime = 500;
@@ -139,7 +160,7 @@ public class PvBlocks {
                 }};
                 opticalNode = new PowerNode("optical-node")
                 {{
-                    requirements(Category.power, ItemStack.with(PvItems.barium,50));
+                    requirements(Category.power, ItemStack.with(PvItems.barium,50)); //Todo
                     localizedName = "Harvest Grinder";
                     size = 1;
                     maxNodes = 4;
@@ -148,7 +169,7 @@ public class PvBlocks {
                 }};
                 auditoryNode = new PowerNode("auditory-node")
                 {{
-                    requirements(Category.power, ItemStack.with(PvItems.barium,50));
+                    requirements(Category.power, ItemStack.with(PvItems.barium,50)); //Todo
                     localizedName = "Harvest Grinder";
                     size = 2;
                     maxNodes = 6;
@@ -157,11 +178,18 @@ public class PvBlocks {
                 }};
                 smallCarbonPanel = new ConstGenerator("small-carbon-panel")
                 {{
-                    requirements(Category.power, ItemStack.with(PvItems.barium,50));
+                    requirements(Category.power, ItemStack.with(PvItems.barium,50)); //Todo
                     localizedName = "Harvest Grinder";
                     size = 2;
                     powerProduction = 32f/60f;
                     health = 275;
+                }};
+                concentratedConduit = new Conduit("concentrated-conduit")
+                {{
+                    requirements(Category.liquid, ItemStack.with(PvItems.nobelium,50)); //Todo
+                    localizedName = "Harvest Grinder";
+                    health = 60;
+                    liquidCapacity = 30;
                 }};
             }
 }

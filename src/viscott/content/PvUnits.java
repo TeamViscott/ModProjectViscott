@@ -24,6 +24,7 @@ public class PvUnits {
             armor = 0;
             flying = true;
             buildSpeed = 0.75f;
+            mineTier = 2;
             mineSpeed = 4.5f;
             itemCapacity = 40;
             speed = 20.7f / 7.5f;
@@ -41,6 +42,9 @@ public class PvUnits {
                     shootStatusDuration = 120;
                     bullet = new LaserBoltBulletType(5,6)
                     {{
+                        homingPower = 0.008f;
+                        homingDelay = 1;
+                        homingRange = 8*17f;
                         lifetime = PvUtil.GetRange(this.speed,17);
                         lightColor = backColor = Pal.heal;
                         this.recoil = 0.1f;

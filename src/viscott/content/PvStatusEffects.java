@@ -36,7 +36,10 @@ public class PvStatusEffects {
         {{
             localizedName = "Expent";
             reloadMultiplier = 0.95f;
+            dragMultiplier = 1.2f;
+            speedMultiplier = 0.98f;
             charges = 12;
+            show = false;
             staticStat();
         }};
     }
