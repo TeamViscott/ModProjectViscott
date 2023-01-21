@@ -645,7 +645,7 @@ public class PvTurrets{
             range = 240;
             requirements(Category.turret,with(Items.copper,1)); //Todo
             ammo(
-                    silicon,new BasicBulletType(6,22)
+                    silicon,new BasicBulletType(6,30)
                     {{
                         trailColor = frontColor = backColor = Pal.sap;
                         shoot = new CyclicPatternRainmaker();
