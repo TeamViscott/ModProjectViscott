@@ -15,7 +15,7 @@ public class CyclicPatternRainmaker extends ShootSpread {
     @Override
     public void shoot(int totalShots, BulletHandler handler){
         ShotsPerCycle = 5;
-        spread = 1;
+        spread = 4;
         MaxCycleIteration = 9;
         shots = Cycle * ShotsPerCycle;
         for(int i = 0; i < shots; i++){
