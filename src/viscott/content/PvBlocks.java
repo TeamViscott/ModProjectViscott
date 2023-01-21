@@ -152,7 +152,7 @@ public class PvBlocks {
                 harvestDrill = new Drill("harvest-drill")
                 {{
                     requirements(Category.production, ItemStack.with(PvItems.platinum,10)); //Todo
-                    localizedName = "Harvest Grinder";
+                    localizedName = "Harvest Drill";
                     size = 2;
                     drillTime = 500;
                     liquidBoostIntensity = 1;
@@ -161,7 +161,7 @@ public class PvBlocks {
                 opticalNode = new PowerNode("optical-node")
                 {{
                     requirements(Category.power, ItemStack.with(PvItems.barium,50)); //Todo
-                    localizedName = "Harvest Grinder";
+                    localizedName = "Optical node";
                     size = 1;
                     maxNodes = 4;
                     laserRange = 18;
@@ -170,7 +170,7 @@ public class PvBlocks {
                 auditoryNode = new PowerNode("auditory-node")
                 {{
                     requirements(Category.power, ItemStack.with(PvItems.barium,50)); //Todo
-                    localizedName = "Harvest Grinder";
+                    localizedName = "Auditory node";
                     size = 2;
                     maxNodes = 6;
                     laserRange = 35;
@@ -179,7 +179,7 @@ public class PvBlocks {
                 smallCarbonPanel = new ConstGenerator("small-carbon-panel")
                 {{
                     requirements(Category.power, ItemStack.with(PvItems.barium,50)); //Todo
-                    localizedName = "Harvest Grinder";
+                    localizedName = "Carbon panel";
                     size = 2;
                     powerProduction = 32f/60f;
                     health = 275;
@@ -187,7 +187,7 @@ public class PvBlocks {
                 concentratedConduit = new Conduit("concentrated-conduit")
                 {{
                     requirements(Category.liquid, ItemStack.with(PvItems.nobelium,50)); //Todo
-                    localizedName = "Harvest Grinder";
+                    localizedName = "Concentrated conduit";
                     health = 60;
                     liquidCapacity = 30;
                 }};
