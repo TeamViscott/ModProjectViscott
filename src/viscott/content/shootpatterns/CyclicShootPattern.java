@@ -14,6 +14,8 @@ public class CyclicShootPattern extends ShootPattern {
 
     @Override
     public void shoot(int totalShots, BulletHandler handler){
+        ShotsPerCycle = 1;
+        MaxCycleIteration = 3;
         shots = Cycle / ShotsPerCycle;
         for(int i = 0; i < shots; i++){
             handler.shoot(0, 0, 0, firstShotDelay + shotDelay * i);
