@@ -1,12 +1,11 @@
 package viscott.content.shootpatterns;
 
-import mindustry.entities.*;
 import mindustry.entities.pattern.ShootPattern;
+import mindustry.entities.pattern.ShootSpread;
 
 /** copied from mindustry shoot pattern but modified a bit */
-/** keep this file to understand how cyclic system works*/
 
-public class CyclicShootPattern extends ShootPattern {
+public class CyclicPatternRainmaker extends ShootSpread {
     private int Cycle = 1;
     public int MaxCycleIteration = 3;
     /** sets how many shots should be called per cycle done */
@@ -15,11 +14,13 @@ public class CyclicShootPattern extends ShootPattern {
 
     @Override
     public void shoot(int totalShots, BulletHandler handler){
-        ShotsPerCycle = 1;
-        MaxCycleIteration = 3;
+        ShotsPerCycle = 5;
+        spread = 1;
+        MaxCycleIteration = 9;
         shots = Cycle * ShotsPerCycle;
         for(int i = 0; i < shots; i++){
-            handler.shoot(0, 0, 0, firstShotDelay + shotDelay * i);
+            float angleOffset = i * spread - (shots - 1) * spread / 2f;
+            handler.shoot(0, 0, angleOffset, firstShotDelay + shotDelay * i);
         }
         Cycle += 1;
         if (Cycle >= MaxCycleIteration + 1){

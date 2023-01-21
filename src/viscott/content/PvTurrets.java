@@ -21,14 +21,16 @@ import mindustry.content.*;
 import mindustry.world.blocks.defense.turrets.LiquidTurret;
 import mindustry.world.blocks.defense.turrets.PowerTurret;
 import mindustry.world.draw.DrawTurret;
+import viscott.content.shootpatterns.CyclicPatternRainmaker;
 import viscott.content.shootpatterns.CyclicShootPattern;
 import viscott.utilitys.PvUtil;
 
+import static mindustry.content.Items.silicon;
 import static mindustry.type.ItemStack.*;
 
 public class PvTurrets{
     public static Block
-            splinter,shatter,euro,snap,hourglass,phantom,razor,plhr;
+            splinter,shatter,euro,snap,hourglass,phantom,razor,rainmaker;
 
     public static void load(){
         splinter = new ItemTurret("splinter"){{
@@ -230,7 +232,7 @@ public class PvTurrets{
         }};
         euro = new ItemTurret("euro")
         {{
-            requirements(Category.turret, with(Items.silicon, 450)); //Todo
+            requirements(Category.turret, with(silicon, 450)); //Todo
             range = 87*8;
             localizedName = "Euro";
             inaccuracy = 10;
@@ -238,7 +240,7 @@ public class PvTurrets{
             size = 2;
             coolant = consumeCoolant(0.1f);
             ammo(
-                    Items.silicon, new BasicBulletType(0f, 1){{
+                    silicon, new BasicBulletType(0f, 1){{
                         ammoMultiplier = 1f;
 
                         spawnUnit = new MissileUnitType("euro-missile1"){{
@@ -418,7 +420,7 @@ public class PvTurrets{
         }};
         snap = new LiquidTurret("snap")
         {{
-            requirements(Category.turret, with(Items.silicon, 100)); //Todo
+            requirements(Category.turret, with(silicon, 100)); //Todo
             localizedName = "Snap";
             size = 2;
             reload = 60f/1f;
@@ -578,7 +580,7 @@ public class PvTurrets{
                         trailWidth = 2;
                         trailColor = backColor = lightColor = Pal.heal;
                     }},
-                    Items.silicon,new BasicBulletType(5,21)
+                    silicon,new BasicBulletType(5,21)
                     {{
                         lifetime = PvUtil.GetRange(this.speed,34);
                         pierce = true;
@@ -635,56 +637,24 @@ public class PvTurrets{
                 );
             }};
         }};
-        plhr = new ItemTurret("placeholder")
+        rainmaker = new ItemTurret("rainmaker")
         {{
-            localizedName = "placeholder";
+            localizedName = "Rainmaker";
             size = 2;
-            reload = 60f/2f;
-            range = 26*8;
-            coolant = consumeCoolant(0.1f);
+            reload = 60f;
+            range = 80;
             requirements(Category.turret,with(Items.copper,1)); //Todo
             ammo(
-                    PvItems.zirconium,new BasicBulletType(6,0)
+                    silicon,new BasicBulletType(6,5)
                     {{
                         trailColor = frontColor = backColor = Pal.sap;
-                        shoot = new CyclicShootPattern();
-                        trailLength = 10;
+                        shoot = new CyclicPatternRainmaker();
+                        trailLength = 8;
                         trailWidth = 2;
-                        shoot.shotDelay = 5;
-                        lifetime = PvUtil.GetRange(this.speed,26);
-                        splashDamageRadius = 8.3f*8;
-                        status = PvStatusEffects.timeWarped;
-                        statusDuration = 150;
-                        despawnEffect = hitEffect = PvEffects.slowEnergeticEffect;
+                        shoot.shotDelay = 3;
+                        lifetime = PvUtil.GetRange(this.speed,80);
                     }}
             );
-            drawer = new DrawTurret(PvUtil.GetName("Pov")){{
-                parts.addAll(
-                        parts.add(
-                                new RegionPart("-l"){{
-                                    progress = PartProgress.recoil;
-                                    heatProgress = PartProgress.recoil;
-                                    heatColor = Color.valueOf("ff6214");
-                                    mirror = false;
-                                    under = false;
-                                    moveX = -1f;
-                                    moveRot = 7f;
-                                    moves.add(new PartMove(PartProgress.recoil, 1f, 0f, 10f));
-                                }},
-                                new RegionPart("-r"){{
-                                    progress = PartProgress.recoil;
-                                    heatProgress = PartProgress.recoil;
-                                    heatColor = Color.valueOf("ff6214");
-                                    mirror = false;
-                                    under = false;
-                                    moveX = 1f;
-                                    moveRot = -7f;
-                                    moves.add(new PartMove(PartProgress.recoil, -1f, 0f, -10f));
-                                }}
-                        )
-                );
-            }};
-            limitRange();
         }};
     }
 }
