@@ -22,6 +22,7 @@ import mindustry.world.blocks.defense.turrets.LiquidTurret;
 import mindustry.world.blocks.defense.turrets.PowerTurret;
 import mindustry.world.draw.DrawTurret;
 import viscott.content.shootpatterns.CyclicPatternRainmaker;
+import viscott.content.shootpatterns.CyclicPatternStriker;
 import viscott.content.shootpatterns.CyclicShootPattern;
 import viscott.utilitys.PvUtil;
 
@@ -30,7 +31,7 @@ import static mindustry.type.ItemStack.*;
 
 public class PvTurrets{
     public static Block
-            splinter,shatter,euro,snap,hourglass,phantom,razor,rainmaker;
+            splinter,shatter,euro,snap,hourglass,phantom,razor,rainmaker,striker;
 
     public static void load(){
         splinter = new ItemTurret("splinter"){{
@@ -653,6 +654,26 @@ public class PvTurrets{
                         trailWidth = 2;
                         shoot.shotDelay = 0;
                         lifetime = PvUtil.GetRange(this.speed,60);
+                    }}
+            );
+        }};
+        striker = new ItemTurret("striker")
+        {{
+            /**Not final*/
+            localizedName = "Striker";
+            size = 3;
+            reload = 90f;
+            range = 240;
+            requirements(Category.turret,with(Items.copper,1)); //Todo
+            ammo(
+                    silicon,new BasicBulletType(6,30)
+                    {{
+                        trailColor = frontColor = backColor = Pal.techBlue;
+                        shoot = new CyclicPatternStriker();
+                        trailLength = 8;
+                        trailWidth = 2;
+                        shoot.shotDelay = 0;
+                        lifetime = PvUtil.GetRange(this.speed,30);
                     }}
             );
         }};
