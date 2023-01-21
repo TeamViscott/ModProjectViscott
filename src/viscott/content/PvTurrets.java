@@ -651,7 +651,7 @@ public class PvTurrets{
                         trailLength = 10;
                         trailWidth = 2;
                         shoot.shotDelay = 5;
-                        shoot.shotsPerCycle = 2;
+                        shoot.ShotsPerCycle = 2;
                         lifetime = PvUtil.GetRange(this.speed,26);
                         splashDamageRadius = 8.3f*8;
                         status = PvStatusEffects.timeWarped;
