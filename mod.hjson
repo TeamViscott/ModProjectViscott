@@ -11,13 +11,13 @@ author: "Siede & Manuwar & Pew"
 main: "viscott.ViscottMod"
 
 #the mod description as seen in the mod dialog
-description: "E"
+description: "Project viscott is a mindustry mod in development."
 
 #the mod version
 version: 0.1
 
 #the minimum game build required to run this mod
-minGameVersion: 140
+minGameVersion: 141
 
 #this is a java mod
 java: true
