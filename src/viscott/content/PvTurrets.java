@@ -642,7 +642,7 @@ public class PvTurrets{
             localizedName = "Rainmaker";
             size = 4;
             reload = 60f;
-            range = 240;
+            range = 320;
             requirements(Category.turret,with(Items.copper,1)); //Todo
             ammo(
                     silicon,new BasicBulletType(6,30)
