@@ -75,8 +75,6 @@ public class PvUnits {
                         reload = 60f/2f;
                         rotate = true;
                         rotationLimit = 30;
-                        shootStatus = PvStatusEffects.expent;
-                        shootStatusDuration = 120;
                         bullet = new LaserBoltBulletType(5,6)
                         {{
                             homingPower = 0.01f;
