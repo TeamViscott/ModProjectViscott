@@ -654,9 +654,9 @@ public class PvTurrets{
                         trailLength = 8;
                         trailWidth = 2;
                         shoot.shotDelay = 0;
-                        homingPower = 0.01f;
+                        homingPower = 0.02f;
                         homingRange = 80f;
-                        homingDelay = 40f;
+                        homingDelay = 10f;
                         lifetime = PvUtil.GetRange(this.speed,60);
                     }}
             );
@@ -668,7 +668,7 @@ public class PvTurrets{
                                     heatProgress = PartProgress.recoil;
                                     heatColor = Color.valueOf("ff6214");
                                     mirror = false;
-                                    under = true;
+                                    under = false;
                                     moveY = -1f;
                                     moveRot = 0f;
                                 }},
@@ -702,7 +702,7 @@ public class PvTurrets{
                         trailWidth = 2;
                         pierce = true;
                         pierceCap = 3;
-                        homingPower = 0.005f;
+                        homingPower = 0.03f;
                         shoot.shotDelay = 2.5f;
                         lifetime = PvUtil.GetRange(this.speed,30);
                     }}
