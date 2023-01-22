@@ -16,7 +16,7 @@ public class CyclicPatternStriker extends ShootPattern {
     @Override
     public void shoot(int totalShots, BulletHandler handler){
         ShotsPerCycle = 4;
-        MaxCycleIteration = 4;
+        MaxCycleIteration = 5;
         shots = Cycle * ShotsPerCycle;
         for(int i = 0; i < shots; i++){
             handler.shoot(0, 0, 0, firstShotDelay + shotDelay * i);

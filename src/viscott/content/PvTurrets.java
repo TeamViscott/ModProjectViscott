@@ -642,12 +642,12 @@ public class PvTurrets{
         {{
             localizedName = "Rainmaker";
             size = 4;
-            reload = 45f;
+            reload = 60f;
             range = 480;
             recoil = 12f;
             requirements(Category.turret,with(Items.copper,1)); //Todo
             ammo(
-                    silicon,new BasicBulletType(6,60)
+                    silicon,new BasicBulletType(6,40)
                     {{
                         trailColor = frontColor = backColor = Pal.surge;
                         shoot = new CyclicPatternRainmaker();
@@ -695,13 +695,16 @@ public class PvTurrets{
             inaccuracy = 2;
             requirements(Category.turret,with(Items.copper,1)); //Todo
             ammo(
-                    silicon,new BasicBulletType(6,30)
+                    silicon,new BasicBulletType(6,35)
                     {{
                         trailColor = frontColor = backColor = Pal.techBlue;
                         shoot = new CyclicPatternStriker();
                         trailLength = 8;
                         trailWidth = 2;
-                        shoot.shotDelay = 5;
+                        pierce = true;
+                        pierceCap = 3;
+                        homingPower = 0.005f;
+                        shoot.shotDelay = 2.5f;
                         lifetime = PvUtil.GetRange(this.speed,30);
                     }}
             );
