@@ -671,6 +671,7 @@ public class PvTurrets{
                                     under = false;
                                     moveY = -1f;
                                     moveRot = 0f;
+                                    suffix = "-down";
                                 }},
                                 new RegionPart("-up"){{
                                     progress = PartProgress.recoil;
@@ -680,6 +681,7 @@ public class PvTurrets{
                                     under = false;
                                     moveX = 2f;
                                     moveRot = 0f;
+                                    suffix = "up";
                                 }}
                         )
                 );
@@ -734,14 +736,14 @@ public class PvTurrets{
         }};
         marksman = new ItemTurret("marksman")
         {{
-            localizedName = "WIP Marksman";
+            localizedName = "Marksman";
             size = 5;
             reload = 300f;
             range = 1600;
             inaccuracy = 2;
             requirements(Category.turret,with(Items.copper,1)); //Todo
             ammo(
-                    silicon,new BasicBulletType(10,100) //ammo should be changed in the future
+                    silicon,new BasicBulletType(10,300) //ammo should be changed in the future
                     {{
                         trailColor = frontColor = backColor = Pal.missileYellow;
                         trailLength = 200;
@@ -750,6 +752,8 @@ public class PvTurrets{
                         drag = 0.001f;
                         pierceCap = 9999;
                         homingPower = 0.7f;
+                        homingDelay = 1;
+                        homingRange = 200;
                         shoot.shotDelay = 2.5f;
                         lifetime = 600;
                     }}
