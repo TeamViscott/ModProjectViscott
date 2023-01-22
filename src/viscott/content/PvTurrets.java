@@ -668,19 +668,18 @@ public class PvTurrets{
                                     heatProgress = PartProgress.recoil;
                                     heatColor = Color.valueOf("ff6214");
                                     mirror = false;
-                                    under = false;
+                                    under = true;
                                     moveY = -1f;
-                                    moveRot = 1f;
+                                    moveRot = 0f;
                                 }},
                                 new RegionPart("-front"){{
-                                    progress = PartProgress.reload;
+                                    progress = PartProgress.recoil;
                                     heatProgress = PartProgress.recoil;
                                     heatColor = Color.valueOf("ff6214");
                                     mirror = false;
                                     under = false;
-                                    moveX = -2f;
-                                    moveRot = -1f;
-                                    x = 2f;
+                                    moveX = 2f;
+                                    moveRot = 0f;
                                 }}
                         )
                 );
