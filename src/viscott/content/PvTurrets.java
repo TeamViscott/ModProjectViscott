@@ -646,24 +646,50 @@ public class PvTurrets{
             range = 480;
             requirements(Category.turret,with(Items.copper,1)); //Todo
             ammo(
-                    silicon,new BasicBulletType(6,50)
+                    silicon,new BasicBulletType(6,60)
                     {{
-                        trailColor = frontColor = backColor = Pal.sap;
+                        trailColor = frontColor = backColor = Pal.surge;
                         shoot = new CyclicPatternRainmaker();
                         trailLength = 8;
                         trailWidth = 2;
                         shoot.shotDelay = 0;
+                        homingPower = 0.04f;
                         lifetime = PvUtil.GetRange(this.speed,60);
                     }}
             );
+            drawer = new DrawTurret(PvUtil.GetName("Pov")){{
+                parts.addAll(
+                        parts.add(
+                                new RegionPart("-back"){{
+                                    progress = PartProgress.recoil;
+                                    heatProgress = PartProgress.recoil;
+                                    heatColor = Color.valueOf("ff6214");
+                                    mirror = true;
+                                    under = false;
+                                    moveY = -1f;
+                                    moveRot = 1f;
+                                }},
+                                new RegionPart("-front"){{
+                                    progress = PartProgress.reload;
+                                    heatProgress = PartProgress.recoil;
+                                    heatColor = Color.valueOf("ff6214");
+                                    mirror = true;
+                                    under = false;
+                                    moveX = -2f;
+                                    moveRot = -1f;
+                                    x = 2f;
+                                }}
+                        )
+                );
+            }};
         }};
         striker = new ItemTurret("striker")
         {{
-            /**Not final*/
             localizedName = "Striker";
             size = 3;
             reload = 90f;
             range = 240;
+            inaccuracy = 2;
             requirements(Category.turret,with(Items.copper,1)); //Todo
             ammo(
                     silicon,new BasicBulletType(6,30)
@@ -672,10 +698,34 @@ public class PvTurrets{
                         shoot = new CyclicPatternStriker();
                         trailLength = 8;
                         trailWidth = 2;
-                        shoot.shotDelay = 0;
+                        shoot.shotDelay = 5;
                         lifetime = PvUtil.GetRange(this.speed,30);
                     }}
             );
+            drawer = new DrawTurret(PvUtil.GetName("Pov")){{
+                parts.addAll(
+                        parts.add(
+                                new RegionPart("-l"){{
+                                    progress = PartProgress.recoil;
+                                    heatProgress = PartProgress.recoil;
+                                    heatColor = Color.valueOf("ff6214");
+                                    mirror = false;
+                                    under = false;
+                                    moveY = -1f;
+                                    moveRot = 1f;
+                                }},
+                                new RegionPart("-r"){{
+                                    progress = PartProgress.recoil;
+                                    heatProgress = PartProgress.recoil;
+                                    heatColor = Color.valueOf("ff6214");
+                                    mirror = false;
+                                    under = false;
+                                    moveY = -1f;
+                                    moveRot = -1f;
+                                }}
+                        )
+                );
+            }};
         }};
+        }
     }
-}
