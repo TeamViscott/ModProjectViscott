@@ -31,7 +31,7 @@ import static mindustry.type.ItemStack.*;
 
 public class PvTurrets{
     public static Block
-            splinter,shatter,euro,snap,hourglass,phantom,razor,rainmaker,striker;
+            splinter,shatter,euro,snap,hourglass,phantom,razor,rainmaker,striker,marksman;
 
     public static void load(){
         splinter = new ItemTurret("splinter"){{
@@ -663,7 +663,7 @@ public class PvTurrets{
             drawer = new DrawTurret(PvUtil.GetName("Pov")){{
                 parts.addAll(
                         parts.add(
-                                new RegionPart("-back"){{
+                                new RegionPart("-down"){{
                                     progress = PartProgress.recoil;
                                     heatProgress = PartProgress.recoil;
                                     heatColor = Color.valueOf("ff6214");
@@ -672,7 +672,7 @@ public class PvTurrets{
                                     moveY = -1f;
                                     moveRot = 0f;
                                 }},
-                                new RegionPart("-front"){{
+                                new RegionPart("-up"){{
                                     progress = PartProgress.recoil;
                                     heatProgress = PartProgress.recoil;
                                     heatColor = Color.valueOf("ff6214");
@@ -705,6 +705,53 @@ public class PvTurrets{
                         homingPower = 0.03f;
                         shoot.shotDelay = 2.5f;
                         lifetime = PvUtil.GetRange(this.speed,30);
+                    }}
+            );
+            drawer = new DrawTurret(PvUtil.GetName("Pov")){{
+                parts.addAll(
+                        parts.add(
+                                new RegionPart("-l"){{
+                                    progress = PartProgress.recoil;
+                                    heatProgress = PartProgress.recoil;
+                                    heatColor = Color.valueOf("ff6214");
+                                    mirror = false;
+                                    under = false;
+                                    moveY = -1f;
+                                    moveRot = 1f;
+                                }},
+                                new RegionPart("-r"){{
+                                    progress = PartProgress.recoil;
+                                    heatProgress = PartProgress.recoil;
+                                    heatColor = Color.valueOf("ff6214");
+                                    mirror = false;
+                                    under = false;
+                                    moveY = -1f;
+                                    moveRot = -1f;
+                                }}
+                        )
+                );
+            }};
+        }};
+        marksman = new ItemTurret("marksman")
+        {{
+            localizedName = "WIP Marksman";
+            size = 5;
+            reload = 300f;
+            range = 1600;
+            inaccuracy = 2;
+            requirements(Category.turret,with(Items.copper,1)); //Todo
+            ammo(
+                    silicon,new BasicBulletType(10,100) //ammo should be changed in the future
+                    {{
+                        trailColor = frontColor = backColor = Pal.missileYellow;
+                        trailLength = 200;
+                        trailWidth = 2;
+                        pierce = true;
+                        drag = 0.001f;
+                        pierceCap = 9999;
+                        homingPower = 0.7f;
+                        shoot.shotDelay = 2.5f;
+                        lifetime = 600;
                     }}
             );
             drawer = new DrawTurret(PvUtil.GetName("Pov")){{
