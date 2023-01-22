@@ -754,6 +754,8 @@ public class PvTurrets{
                         homingRange = 200;
                         shoot.shotDelay = 2.5f;
                         lifetime = 600;
+                        targetAir = false;
+                        buildingDamageMultiplier = 0;
                     }}
             );
             drawer = new DrawTurret(PvUtil.GetName("Pov")){{
