@@ -644,6 +644,7 @@ public class PvTurrets{
             size = 4;
             reload = 45f;
             range = 480;
+            recoil = 12f;
             requirements(Category.turret,with(Items.copper,1)); //Todo
             ammo(
                     silicon,new BasicBulletType(6,60)
@@ -653,7 +654,9 @@ public class PvTurrets{
                         trailLength = 8;
                         trailWidth = 2;
                         shoot.shotDelay = 0;
-                        homingPower = 0.04f;
+                        homingPower = 0.01f;
+                        homingRange = 80f;
+                        homingDelay = 40f;
                         lifetime = PvUtil.GetRange(this.speed,60);
                     }}
             );
@@ -664,7 +667,7 @@ public class PvTurrets{
                                     progress = PartProgress.recoil;
                                     heatProgress = PartProgress.recoil;
                                     heatColor = Color.valueOf("ff6214");
-                                    mirror = true;
+                                    mirror = false;
                                     under = false;
                                     moveY = -1f;
                                     moveRot = 1f;
@@ -673,7 +676,7 @@ public class PvTurrets{
                                     progress = PartProgress.reload;
                                     heatProgress = PartProgress.recoil;
                                     heatColor = Color.valueOf("ff6214");
-                                    mirror = true;
+                                    mirror = false;
                                     under = false;
                                     moveX = -2f;
                                     moveRot = -1f;
