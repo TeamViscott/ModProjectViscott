@@ -743,7 +743,7 @@ public class PvTurrets{
         marksman = new ItemTurret("marksman")
         {{
             localizedName = "Marksman";
-            size = 5;
+            size = 4;
             reload = 300f;
             range = 1600;
             inaccuracy = 2;
