@@ -20,6 +20,7 @@ import mindustry.world.blocks.defense.turrets.ItemTurret;
 import mindustry.content.*;
 import mindustry.world.blocks.defense.turrets.LiquidTurret;
 import mindustry.world.blocks.defense.turrets.PowerTurret;
+import mindustry.world.draw.DrawRegion;
 import mindustry.world.draw.DrawTurret;
 import viscott.content.shootpatterns.CyclicPatternRainmaker;
 import viscott.content.shootpatterns.CyclicPatternStriker;
@@ -666,18 +667,24 @@ public class PvTurrets{
                                 new RegionPart("-down"){{
                                     progress = PartProgress.recoil;
                                     heatProgress = PartProgress.recoil;
+                                    drawRegion = true;
                                     heatColor = Color.valueOf("ff6214");
                                     mirror = true;
                                     under = false;
+                                    y = 0;
+                                    x = 0;
                                     moveY = -1f;
                                     moveRot = 0f;
                                 }},
                                 new RegionPart("-up"){{
                                     progress = PartProgress.recoil;
                                     heatProgress = PartProgress.recoil;
+                                    drawRegion = true;
                                     heatColor = Color.valueOf("ff6214");
                                     mirror = true;
                                     under = false;
+                                    y = 0;
+                                    x = 0;
                                     moveX = 2f;
                                     moveRot = 0f;
                                 }}
@@ -725,6 +732,7 @@ public class PvTurrets{
                                     heatColor = Color.valueOf("ff6214");
                                     mirror = false;
                                     under = false;
+                                    drawRegion = true;
                                     moveY = -1f;
                                     moveRot = -1f;
                                 }}
