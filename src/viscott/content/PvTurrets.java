@@ -670,11 +670,11 @@ public class PvTurrets{
                                     drawRegion = true;
                                     heatColor = Color.valueOf("ff6214");
                                     mirror = true;
-                                    under = false;
+                                    under = true;
                                     y = 0;
                                     x = 0;
-                                    moveY = -1f;
-                                    moveRot = 0f;
+                                    moveY = -2f;
+                                    moveRot = 1f;
                                 }},
                                 new RegionPart("-up"){{
                                     progress = PartProgress.recoil;
@@ -682,11 +682,11 @@ public class PvTurrets{
                                     drawRegion = true;
                                     heatColor = Color.valueOf("ff6214");
                                     mirror = true;
-                                    under = false;
+                                    under = true;
                                     y = 0;
                                     x = 0;
-                                    moveX = 2f;
-                                    moveRot = 0f;
+                                    moveX = 3f;
+                                    moveRot = 1f;
                                 }}
                         )
                 );
@@ -763,6 +763,7 @@ public class PvTurrets{
                         shoot.shotDelay = 2.5f;
                         lifetime = 600;
                         targetAir = false;
+                        collidesAir = true;
                         buildingDamageMultiplier = 0;
                     }}
             );
