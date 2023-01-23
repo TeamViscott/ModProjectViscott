@@ -32,7 +32,7 @@ import static mindustry.type.ItemStack.*;
 
 public class PvTurrets{
     public static Block
-            splinter,shatter,euro,snap,hourglass,phantom,razor,rainmaker,striker,marksman;
+            splinter,shatter,euro,snap,hourglass,phantom,razor,rainmaker,striker,marksman, xacto;
 
     public static void load(){
         splinter = new ItemTurret("splinter"){{
@@ -791,5 +791,117 @@ public class PvTurrets{
                 );
             }};
         }};
+        xacto = new ItemTurret("xacto")
+        {{
+            requirements(Category.turret,with(PvItems.erbium,1)); //Todo
+            localizedName = "X-acto";
+            size = 5;
+            health = 8450;
+            range = 58*8;
+            liquidCapacity = 50;
+            targetAir = true;
+            targetGround = true;
+            reload = 60f/4.4f;
+            recoil = 4;
+            coolant = consumeCoolant(0.1f);
+            shoot = new ShootAlternate(8);
+            ammo(
+                    PvItems.platinum,new BasicBulletType(5,95)
+                    {{
+                        lifetime = PvUtil.GetRange(this.speed,58);
+                        pierce = true;
+                        pierceCap = 10;
+                        trailLength = 15;
+                        trailWidth = 2;
+                        trailColor = backColor = lightColor = Pal.heal;
+                    }},
+                    silicon,new BasicBulletType(5,87)
+                    {{
+                        lifetime = PvUtil.GetRange(this.speed,58);
+                        pierce = true;
+                        pierceCap = 10;
+                        trailLength = 15;
+                        trailWidth = 2;
+                        trailColor = backColor = lightColor = Pal.heal;
+                        weaveMag = 2;
+                        weaveScale = 2;
+                        weaveRandom = true;
+                        homingPower = 0.06f;
+                    }},
+                    PvItems.erbium,new BasicBulletType(5,130)
+                    {
+                        {
+                            lifetime = PvUtil.GetRange(this.speed, 58);
+                            pierce = true;
+                            pierceCap = 10;
+                            trailLength = 15;
+                            trailWidth = 2;
+                            trailColor = backColor = lightColor = Pal.heal;
+                            fragBullets = 4;
+                            fragRandomSpread = 45;
+                            fragBullet = new BasicBulletType(7, 20) {{
+                                lifetime = PvUtil.GetRange(this.speed, 12);
+                                trailLength = 15;
+                                trailWidth = 2;
+                                homingPower = 0.008f;
+                                homingRange = 12;
+                                trailColor = backColor = lightColor = Pal.heal;
+                            }};
+                        }},
+                    PvItems.carbonFiber,new BasicBulletType(5,215)
+                    {
+                        {
+                            lifetime = PvUtil.GetRange(this.speed, 58);
+                            pierce = true;
+                            pierceCap = 10;
+                            trailLength = 15;
+                            trailWidth = 2;
+                            trailColor = backColor = lightColor = Pal.heal;
+                        }}
+            );
+            drawer = new DrawTurret(PvUtil.GetName("Pov")){{
+                parts.addAll(
+                        parts.add(
+                                new RegionPart("-l"){{
+                                    progress = PartProgress.recoil;
+                                    heatProgress = PartProgress.recoil;
+                                    heatColor = Color.valueOf("ff6214");
+                                    mirror = false;
+                                    under = false;
+                                    moveY = -2.66f;
+                                    moveRot = 1f;
+                                }},
+                                new RegionPart("-r"){{
+                                        progress = PartProgress.recoil;
+                                        heatProgress = PartProgress.recoil;
+                                        heatColor = Color.valueOf("ff6214");
+                                        mirror = false;
+                                        under = false;
+                                        moveY = -2.66f;
+                                        moveRot = -1f;
+                                    }},
+                                    new RegionPart("-lb"){{
+                                        progress = PartProgress.warmup;
+                                        heatProgress = PartProgress.warmup;
+                                        heatColor = Color.valueOf("ff6214");
+                                        mirror = false;
+                                        under = true;
+                                        moveY = -3f;
+                                        moveRot = 4f;
+                                    }},
+                                            new RegionPart("-rb"){{
+                                                progress = PartProgress.warmup;
+                                                heatProgress = PartProgress.warmup;
+                                                heatColor = Color.valueOf("ff6214");
+                                                mirror = false;
+                                                under = true;
+                                                moveY = -3f;
+                                                moveRot = -4f;
+                                }}
+                        )
+                );
+            }};
+        }};
+
         }
     }
