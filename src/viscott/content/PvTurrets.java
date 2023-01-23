@@ -32,7 +32,8 @@ import static mindustry.type.ItemStack.*;
 
 public class PvTurrets{
     public static Block
-            splinter,shatter,euro,snap,hourglass,phantom,razor,rainmaker,striker,marksman, xacto;
+            splinter,shatter,euro,snap,hourglass,phantom,razor,rainmaker,striker,marksman, xacto,reaper
+            ;
 
     public static void load(){
         splinter = new ItemTurret("splinter"){{
@@ -898,6 +899,64 @@ public class PvTurrets{
                                                 under = true;
                                                 moveY = -3f;
                                                 moveRot = -4f;
+                                }}
+                        )
+                );
+            }};
+        }};
+        reaper = new ItemTurret("reaper")
+        {{
+            localizedName = "Reaper";
+            size = 5;
+            health = 8500;
+            consumePower(1100f/60f);
+            liquidCapacity = 60;
+            reload = 60f;
+            range = 1600;
+            shoot.shots = 5;
+            inaccuracy = 2;
+            range = 8*85;
+            targetAir = true;
+            targetGround = false;
+            coolantMultiplier = 1.5f;
+            requirements(Category.turret,with(Items.copper,1)); //Todo
+            ammo(
+                    PvItems.platinum,new BasicBulletType(8,1075)
+                    {{
+                        lifetime = PvUtil.GetRange(this.speed,85);
+                        collidesAir = true;
+                        collidesGround = false;
+
+                    }},
+                    PvItems.erbium,new BasicBulletType(8,1650)
+                    {{
+                        lifetime = PvUtil.GetRange(this.speed,85);
+                        reloadMultiplier = 0.7f;
+                        collidesAir = true;
+                        collidesGround = false;
+
+                    }}
+            );
+            drawer = new DrawTurret(PvUtil.GetName("Pov")){{
+                parts.addAll(
+                        parts.add(
+                                new RegionPart("-l"){{
+                                    progress = PartProgress.recoil;
+                                    heatProgress = PartProgress.recoil;
+                                    heatColor = Color.valueOf("ff6214");
+                                    mirror = false;
+                                    under = false;
+                                    moveY = -1f;
+                                    moveRot = 1f;
+                                }},
+                                new RegionPart("-r"){{
+                                    progress = PartProgress.recoil;
+                                    heatProgress = PartProgress.recoil;
+                                    heatColor = Color.valueOf("ff6214");
+                                    mirror = false;
+                                    under = false;
+                                    moveY = -1f;
+                                    moveRot = -1f;
                                 }}
                         )
                 );
