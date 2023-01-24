@@ -59,7 +59,7 @@ public class PressureItemTurret extends PressureTurret{
                 MultiReqImage image = new MultiReqImage();
                 content.items().each(i -> filter.get(i) && i.unlockedNow(),
                         item -> image.add(new ReqImage(new Image(item.uiIcon),
-                                () -> build instanceof ItemTurretBuild it && !it.ammo.isEmpty() && ((ItemEntry)it.ammo.peek()).item == item)));
+                                () -> build instanceof PressureItemTurretBuild it && !it.ammo.isEmpty() && ((ItemEntry)it.ammo.peek()).item == item)));
 
                 table.add(image).size(8 * 4);
             }
@@ -67,7 +67,7 @@ public class PressureItemTurret extends PressureTurret{
             @Override
             public float efficiency(Building build){
                 //valid when there's any ammo in the turret
-                return build instanceof ItemTurretBuild it && !it.ammo.isEmpty() ? 1f : 0f;
+                return build instanceof PressureItemTurretBuild it && !it.ammo.isEmpty() ? 1f : 0f;
             }
 
             @Override
@@ -81,7 +81,7 @@ public class PressureItemTurret extends PressureTurret{
         super.init();
     }
 
-    public class ItemTurretBuild extends TurretBuild{
+    public class PressureItemTurretBuild extends PressureTurretBuild{
 
         @Override
         public void onProximityAdded(){

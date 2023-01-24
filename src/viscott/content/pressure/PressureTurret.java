@@ -154,7 +154,7 @@ public class PressureTurret extends ReloadTurret {
         super.setBars();
 
         if(pressureRequirement > 0){
-            addBar("pressure", (TurretBuild entity) ->
+            addBar("pressure", (PressureTurretBuild entity) ->
                     new Bar(() ->
                             Core.bundle.format("bar.heatpercent", (int)entity.pressureReq, (int)(Math.min(entity.pressureReq / pressureRequirement, maxPressureEfficiency) * 100)),
                             () -> Pal.lightishGray,
@@ -201,7 +201,7 @@ public class PressureTurret extends ReloadTurret {
         public abstract BulletType type();
     }
 
-    public class TurretBuild extends ReloadTurretBuild implements ControlBlock{
+    public class PressureTurretBuild extends ReloadTurretBuild implements ControlBlock{
         //TODO storing these as instance variables is horrible design
         /** Turret sprite offset, based on recoil. Updated every frame. */
         public Vec2 recoilOffset = new Vec2();
