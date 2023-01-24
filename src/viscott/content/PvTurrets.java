@@ -879,31 +879,31 @@ public class PvTurrets{
                                     moveRot = 1f;
                                 }},
                                 new RegionPart("-r"){{
-                                        progress = PartProgress.recoil;
-                                        heatProgress = PartProgress.recoil;
-                                        heatColor = Color.valueOf("ff6214");
-                                        mirror = false;
-                                        under = false;
-                                        moveY = -2.66f;
-                                        moveRot = -1f;
+                                    progress = PartProgress.recoil;
+                                    heatProgress = PartProgress.recoil;
+                                    heatColor = Color.valueOf("ff6214");
+                                    mirror = false;
+                                    under = false;
+                                    moveY = -2.66f;
+                                    moveRot = -1f;
                                     }},
-                                    new RegionPart("-lb"){{
-                                        progress = PartProgress.warmup;
-                                        heatProgress = PartProgress.warmup;
-                                        heatColor = Color.valueOf("ff6214");
-                                        mirror = false;
-                                        under = true;
-                                        moveY = -3f;
-                                        moveRot = 4f;
-                                    }},
-                                            new RegionPart("-rb"){{
-                                                progress = PartProgress.warmup;
-                                                heatProgress = PartProgress.warmup;
-                                                heatColor = Color.valueOf("ff6214");
-                                                mirror = false;
-                                                under = true;
-                                                moveY = -3f;
-                                                moveRot = -4f;
+                                new RegionPart("-lb"){{
+                                    progress = PartProgress.warmup;
+                                    heatProgress = PartProgress.warmup;
+                                    heatColor = Color.valueOf("ff6214");
+                                    mirror = false;
+                                    under = true;
+                                    moveY = -2.5f;
+                                    moveX = -2.5f;
+                                }},
+                                new RegionPart("-rb"){{
+                                    progress = PartProgress.warmup;
+                                    heatProgress = PartProgress.warmup;
+                                    heatColor = Color.valueOf("ff6214");
+                                    mirror = false;
+                                    under = true;
+                                    moveY = -2.5f;
+                                    moveX = 2.5f;
                                 }}
                         )
                 );
