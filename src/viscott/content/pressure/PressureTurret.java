@@ -176,13 +176,13 @@ public class PressureTurret extends ReloadTurret {
     public void load(){
         super.load();
 
-        drawer.load(this);
+        //drawer.load(this);
     }
 
-    @Override
-    public TextureRegion[] icons(){
-        return drawer.finalIcons(this);
-    }
+    //@Override
+    //public TextureRegion[] icons(){
+    //    return drawer.finalIcons(this);
+    //}
 
     @Override
     public void getRegionsToOutline(Seq<TextureRegion> out){
