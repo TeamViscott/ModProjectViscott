@@ -22,6 +22,8 @@ import mindustry.world.blocks.defense.turrets.LiquidTurret;
 import mindustry.world.blocks.defense.turrets.PowerTurret;
 import mindustry.world.draw.DrawRegion;
 import mindustry.world.draw.DrawTurret;
+import viscott.content.pressure.PressureConsumer;
+import viscott.content.pressure.PressureItemTurret;
 import viscott.content.shootpatterns.CyclicPatternRainmaker;
 import viscott.content.shootpatterns.CyclicPatternStriker;
 import viscott.content.shootpatterns.CyclicShootPattern;
@@ -693,16 +695,19 @@ public class PvTurrets{
                 );
             }};
         }};
-        striker = new ItemTurret("striker")
+        striker = new PressureItemTurret("striker")
         {{
             localizedName = "Striker";
             size = 3;
             reload = 90f;
             range = 240;
             inaccuracy = 2;
+            pressureRequirement = 10;
+            maxPressureEfficiency = 3;
+
             requirements(Category.turret,with(Items.copper,1)); //Todo
             ammo(
-                    silicon,new BasicBulletType(6,35)
+                    silicon,new BasicBulletType(10,70)
                     {{
                         trailColor = frontColor = backColor = Pal.techBlue;
                         shoot = new CyclicPatternStriker();

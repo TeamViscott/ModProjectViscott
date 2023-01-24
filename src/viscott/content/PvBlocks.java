@@ -1,5 +1,6 @@
 package viscott.content;
 
+import mindustry.gen.Sounds;
 import mindustry.type.Category;
 import mindustry.type.ItemStack;
 import mindustry.world.Block;
@@ -14,10 +15,17 @@ import mindustry.world.blocks.liquid.Conduit;
 import mindustry.world.blocks.power.PowerNode;
 import mindustry.world.blocks.power.SolarGenerator;
 import mindustry.world.blocks.production.Drill;
+import mindustry.world.draw.DrawDefault;
+import mindustry.world.draw.DrawMulti;
+import mindustry.world.meta.BuildVisibility;
+import viscott.content.pressure.DrawPressureOutput;
+import viscott.content.pressure.PressureProducer;
 import viscott.world.block.PvBlock;
 import viscott.world.block.drill.Grinder;
 import viscott.world.block.environment.DepositWall;
 import viscott.world.block.power.ConstGenerator;
+
+import static mindustry.type.ItemStack.with;
 
 public class PvBlocks {
     public static Block
@@ -42,7 +50,8 @@ public class PvBlocks {
                     /*Power*/opticalNode,auditoryNode,
                     /*Power Production*/smallCarbonPanel,
 
-                    /*Liquids*/concentratedConduit
+                    /*Liquids*/concentratedConduit,
+                    /*Pressure related*/ pressureSource
                             ;
             public static void load()
             {
@@ -120,7 +129,7 @@ public class PvBlocks {
                 /*Building start*/
                 micromassConveyor = new StackConveyor("micromass-conveyor")
                 {{
-                    requirements(Category.distribution, ItemStack.with(PvItems.barium,1)); //Todo
+                    requirements(Category.distribution, with(PvItems.barium,1)); //Todo
                     localizedName = "Micromass Conveyor";
                     health = 50;
                     itemCapacity = 5;
@@ -128,7 +137,7 @@ public class PvBlocks {
                 }};
                 massJunction = new Junction("mass-junction")
                 {{
-                    requirements(Category.distribution, ItemStack.with(PvItems.barium,1)); //Todo
+                    requirements(Category.distribution, with(PvItems.barium,1)); //Todo
                     localizedName = "Mass Junction";
                     health = 90;
                     capacity = 20;
@@ -136,7 +145,7 @@ public class PvBlocks {
                 }};
                 massRouter = new DuctRouter("mass-router")
                 {{
-                    requirements(Category.distribution, ItemStack.with(PvItems.barium,1)); //Todo
+                    requirements(Category.distribution, with(PvItems.barium,1)); //Todo
                     localizedName = "Mass Router";
                     health = 85;
                     itemCapacity = 20;
@@ -145,13 +154,13 @@ public class PvBlocks {
 
                 harvestGrinder = new Grinder("harvest-grinder")
                 {{
-                    requirements(Category.production, ItemStack.with(PvItems.barium,10)); //Todo
+                    requirements(Category.production, with(PvItems.barium,10)); //Todo
                     localizedName = "Harvest Grinder";
                     size = 2;
                 }};
                 harvestDrill = new Drill("harvest-drill")
                 {{
-                    requirements(Category.production, ItemStack.with(PvItems.platinum,10)); //Todo
+                    requirements(Category.production, with(PvItems.platinum,10)); //Todo
                     localizedName = "Harvest Drill";
                     size = 2;
                     drillTime = 500;
@@ -160,7 +169,7 @@ public class PvBlocks {
                 }};
                 opticalNode = new PowerNode("optical-node")
                 {{
-                    requirements(Category.power, ItemStack.with(PvItems.barium,50)); //Todo
+                    requirements(Category.power, with(PvItems.barium,50)); //Todo
                     localizedName = "Optical node";
                     size = 1;
                     maxNodes = 4;
@@ -169,7 +178,7 @@ public class PvBlocks {
                 }};
                 auditoryNode = new PowerNode("auditory-node")
                 {{
-                    requirements(Category.power, ItemStack.with(PvItems.barium,50)); //Todo
+                    requirements(Category.power, with(PvItems.barium,50)); //Todo
                     localizedName = "Auditory node";
                     size = 2;
                     maxNodes = 6;
@@ -178,7 +187,7 @@ public class PvBlocks {
                 }};
                 smallCarbonPanel = new ConstGenerator("small-carbon-panel")
                 {{
-                    requirements(Category.power, ItemStack.with(PvItems.barium,50)); //Todo
+                    requirements(Category.power, with(PvItems.barium,50)); //Todo
                     localizedName = "Carbon panel";
                     size = 2;
                     powerProduction = 32f/60f;
@@ -186,10 +195,21 @@ public class PvBlocks {
                 }};
                 concentratedConduit = new Conduit("concentrated-conduit")
                 {{
-                    requirements(Category.liquid, ItemStack.with(PvItems.nobelium,50)); //Todo
+                    requirements(Category.liquid, with(PvItems.nobelium,50)); //Todo
                     localizedName = "Concentrated conduit";
                     health = 60;
                     liquidCapacity = 30;
+                }};
+                /*pressure*/
+                pressureSource = new PressureProducer("pressure-source"){{
+                    requirements(Category.crafting, BuildVisibility.sandboxOnly, with());
+                    drawer = new DrawMulti(new DrawDefault(), new DrawPressureOutput());
+                    rotateDraw = false;
+                    size = 1;
+                    pressureOutput = 1000f;
+                    warmupRate = 1000f;
+                    regionRotated1 = 1;
+                    ambientSound = Sounds.none;
                 }};
             }
 }
