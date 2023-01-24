@@ -931,6 +931,10 @@ public class PvTurrets{
                         lifetime = PvUtil.GetRange(this.speed,85);
                         collidesAir = true;
                         collidesGround = false;
+                        spin = 1;
+                        backColor = trailColor = Pal.redLight;
+                        trailWidth = 2;
+                        trailLength = 40;
 
                     }},
                     PvItems.erbium,new BasicBulletType(8,1650)
@@ -939,7 +943,10 @@ public class PvTurrets{
                         reloadMultiplier = 0.7f;
                         collidesAir = true;
                         collidesGround = false;
-
+                        spin = 1;
+                        backColor = trailColor = Pal.redLight;
+                        trailWidth = 2;
+                        trailLength = 40;
                     }}
             );
             drawer = new DrawTurret(PvUtil.GetName("Pov")){{
