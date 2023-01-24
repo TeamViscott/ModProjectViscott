@@ -156,7 +156,7 @@ public class PressureTurret extends ReloadTurret {
         if(pressureRequirement > 0){
             addBar("pressure", (PressureTurretBuild entity) ->
                     new Bar(() ->
-                            Core.bundle.format("bar.heatpercent", (int)entity.pressureReq, (int)(Math.min(entity.pressureReq / pressureRequirement, maxPressureEfficiency) * 100)),
+                            Core.bundle.format("bar.pressurepercent", (int)entity.pressureReq, (int)(Math.min(entity.pressureReq / pressureRequirement, maxPressureEfficiency) * 100)),
                             () -> Pal.lightishGray,
                             () -> entity.pressureReq / pressureRequirement));
         }
@@ -339,7 +339,7 @@ public class PressureTurret extends ReloadTurret {
 
         @Override
         public void draw(){
-            drawer.draw(this);
+            //drawer.draw(this);
         }
 
         @Override
