@@ -912,18 +912,19 @@ public class PvTurrets{
         reaper = new ItemTurret("reaper")
         {{
             localizedName = "Reaper";
+            description = "The Bringer of death to even the strongest T4. its only downside is that it can easily be overrun with a lot of enemys.";
             size = 5;
             health = 8500;
             consumePower(1100f/60f);
             liquidCapacity = 60;
             reload = 60f;
-            range = 1600;
-            shoot.shots = 5;
             inaccuracy = 2;
             range = 8*85;
             targetAir = true;
             targetGround = false;
             coolantMultiplier = 1.5f;
+            recoil = 5;
+            shake = 1;
             requirements(Category.turret,with(Items.copper,1)); //Todo
             ammo(
                     PvItems.platinum,new BasicBulletType(8,1075)
@@ -932,10 +933,31 @@ public class PvTurrets{
                         collidesAir = true;
                         collidesGround = false;
                         spin = 1;
-                        backColor = trailColor = Pal.redLight;
+                        width = 10;
+                        height = 10;
+                        backColor = trailColor = Pal.redderDust;
                         trailWidth = 2;
                         trailLength = 40;
-
+                        trailRotation = true;
+                        fragBullets = 3;
+                        bulletInterval = 2;
+                        intervalBullets = 3;
+                        weaveRandom = true;
+                        homingPower = 0.01f;
+                        weaveScale = 1;
+                        weaveMag = 1;
+                        intervalBullet = new LightningBulletType()
+                        {{
+                            lightningColor = lightColor = Pal.redderDust;
+                            lightningDamage = 15;
+                            lightningLength = 10;
+                        }};
+                        fragBullet = new LightningBulletType()
+                        {{
+                            lightningColor = lightColor = Pal.redderDust;
+                            lightningDamage = 15;
+                            lightningLength = 20;
+                        }};
                     }},
                     PvItems.erbium,new BasicBulletType(8,1650)
                     {{
@@ -944,9 +966,31 @@ public class PvTurrets{
                         collidesAir = true;
                         collidesGround = false;
                         spin = 1;
-                        backColor = trailColor = Pal.redLight;
+                        width = 10;
+                        height = 10;
+                        backColor = trailColor = Pal.redderDust;
                         trailWidth = 2;
                         trailLength = 40;
+                        trailRotation = true;
+                        fragBullets = 5;
+                        bulletInterval = 2;
+                        intervalBullets = 5;
+                        weaveRandom = true;
+                        homingPower = 0.01f;
+                        weaveScale = 1;
+                        weaveMag = 1;
+                        intervalBullet = new LightningBulletType()
+                        {{
+                            lightningColor = lightColor = Pal.redderDust;
+                            lightningDamage = 15;
+                            lightningLength = 10;
+                        }};
+                        fragBullet = new LightningBulletType()
+                        {{
+                            lightningColor = lightColor = Pal.redderDust;
+                            lightningDamage = 15;
+                            lightningLength = 20;
+                        }};
                     }}
             );
             drawer = new DrawTurret(PvUtil.GetName("Pov")){{
@@ -958,8 +1002,8 @@ public class PvTurrets{
                                     heatColor = Color.valueOf("ff6214");
                                     mirror = false;
                                     under = false;
-                                    moveY = -1f;
-                                    moveRot = 1f;
+                                    moveY = -4f;
+                                    moveRot = 4f;
                                 }},
                                 new RegionPart("-r"){{
                                     progress = PartProgress.recoil;
@@ -967,8 +1011,8 @@ public class PvTurrets{
                                     heatColor = Color.valueOf("ff6214");
                                     mirror = false;
                                     under = false;
-                                    moveY = -1f;
-                                    moveRot = -1f;
+                                    moveY = -4f;
+                                    moveRot = -4f;
                                 }}
                         )
                 );
