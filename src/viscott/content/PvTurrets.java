@@ -1002,8 +1002,9 @@ public class PvTurrets{
                                     heatColor = Color.valueOf("ff6214");
                                     mirror = false;
                                     under = false;
-                                    moveY = -4f;
-                                    moveRot = 4f;
+                                    moveY = 2f;
+                                    moveX = 1.5
+                                    moveRot = -25f;
                                 }},
                                 new RegionPart("-r"){{
                                     progress = PartProgress.recoil;
@@ -1011,9 +1012,10 @@ public class PvTurrets{
                                     heatColor = Color.valueOf("ff6214");
                                     mirror = false;
                                     under = false;
-                                    moveY = -4f;
-                                    moveRot = -4f;
-                                }}
+                                    moveY = 2f;
+                                    moveX = -1.5
+                                    moveRot = 25f;
+                                }},
                         )
                 );
             }};
