@@ -1003,7 +1003,7 @@ public class PvTurrets{
                                     mirror = false;
                                     under = false;
                                     moveY = 2f;
-                                    moveX = 1.5
+                                    moveX = 1.5f;
                                     moveRot = -25f;
                                 }},
                                 new RegionPart("-r"){{
@@ -1013,9 +1013,9 @@ public class PvTurrets{
                                     mirror = false;
                                     under = false;
                                     moveY = 2f;
-                                    moveX = -1.5
+                                    moveX = -1.5f;
                                     moveRot = 25f;
-                                }},
+                                }}
                         )
                 );
             }};
