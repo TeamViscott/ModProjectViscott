@@ -8,6 +8,7 @@ import mindustry.game.EventType;
 import mindustry.mod.Mod;
 import mindustry.ui.dialogs.BaseDialog;
 import viscott.content.*;
+import viscott.content.pressure.*;
 import viscott.content.shootpatterns.CyclicShootPattern;
 
 public class ViscottMod extends Mod {
