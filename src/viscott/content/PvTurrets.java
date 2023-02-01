@@ -1,8 +1,10 @@
 package viscott.content;
 
-import arc.fx.filters.FxaaFilter;
 import arc.graphics.Color;
-import mindustry.entities.abilities.MoveEffectAbility;
+import mindustry.content.Fx;
+import mindustry.content.Items;
+import mindustry.content.Liquids;
+import mindustry.content.StatusEffects;
 import mindustry.entities.bullet.*;
 import mindustry.entities.effect.ExplosionEffect;
 import mindustry.entities.effect.MultiEffect;
@@ -13,24 +15,20 @@ import mindustry.entities.pattern.ShootSpread;
 import mindustry.gen.Sounds;
 import mindustry.graphics.Layer;
 import mindustry.graphics.Pal;
-import mindustry.type.*;
+import mindustry.type.Category;
+import mindustry.type.Weapon;
 import mindustry.type.unit.MissileUnitType;
-import mindustry.world.*;
+import mindustry.world.Block;
 import mindustry.world.blocks.defense.turrets.ItemTurret;
-import mindustry.content.*;
 import mindustry.world.blocks.defense.turrets.LiquidTurret;
 import mindustry.world.blocks.defense.turrets.PowerTurret;
-import mindustry.world.draw.DrawRegion;
 import mindustry.world.draw.DrawTurret;
-import viscott.content.pressure.PressureConsumer;
-import viscott.content.pressure.PressureItemTurret;
 import viscott.content.shootpatterns.CyclicPatternRainmaker;
 import viscott.content.shootpatterns.CyclicPatternStriker;
-import viscott.content.shootpatterns.CyclicShootPattern;
 import viscott.utilitys.PvUtil;
 
 import static mindustry.content.Items.silicon;
-import static mindustry.type.ItemStack.*;
+import static mindustry.type.ItemStack.with;
 
 public class PvTurrets{
     public static Block
@@ -695,20 +693,17 @@ public class PvTurrets{
                 );
             }};
         }};
-        striker = new PressureItemTurret("striker")
+        striker = new ItemTurret("striker")
         {{
             localizedName = "Striker";
             size = 3;
             reload = 90f;
             range = 240;
             inaccuracy = 2;
-            pressureRequirement = 10;
-            maxPressureEfficiency = 3;
 
             requirements(Category.turret,with(Items.copper,1)); //Todo
-            ammo(
-                    silicon,new BasicBulletType(10,70)
-                    {{
+                    ammo(
+                        silicon, new BasicBulletType(10, 70){{
                         trailColor = frontColor = backColor = Pal.techBlue;
                         shoot = new CyclicPatternStriker();
                         trailLength = 8;
@@ -719,7 +714,7 @@ public class PvTurrets{
                         shoot.shotDelay = 2.5f;
                         lifetime = PvUtil.GetRange(this.speed,30);
                     }}
-            );
+                            );
             drawer = new DrawTurret(PvUtil.GetName("Pov")){{
                 parts.addAll(
                         parts.add(
@@ -879,31 +874,31 @@ public class PvTurrets{
                                     moveRot = 1f;
                                 }},
                                 new RegionPart("-r"){{
-                                        progress = PartProgress.recoil;
-                                        heatProgress = PartProgress.recoil;
-                                        heatColor = Color.valueOf("ff6214");
-                                        mirror = false;
-                                        under = false;
-                                        moveY = -2.66f;
-                                        moveRot = -1f;
+                                    progress = PartProgress.recoil;
+                                    heatProgress = PartProgress.recoil;
+                                    heatColor = Color.valueOf("ff6214");
+                                    mirror = false;
+                                    under = false;
+                                    moveY = -2.66f;
+                                    moveRot = -1f;
                                     }},
-                                    new RegionPart("-lb"){{
-                                        progress = PartProgress.warmup;
-                                        heatProgress = PartProgress.warmup;
-                                        heatColor = Color.valueOf("ff6214");
-                                        mirror = false;
-                                        under = true;
-                                        moveY = -3f;
-                                        moveRot = 4f;
-                                    }},
-                                            new RegionPart("-rb"){{
-                                                progress = PartProgress.warmup;
-                                                heatProgress = PartProgress.warmup;
-                                                heatColor = Color.valueOf("ff6214");
-                                                mirror = false;
-                                                under = true;
-                                                moveY = -3f;
-                                                moveRot = -4f;
+                                new RegionPart("-lb"){{
+                                    progress = PartProgress.warmup;
+                                    heatProgress = PartProgress.warmup;
+                                    heatColor = Color.valueOf("ff6214");
+                                    mirror = false;
+                                    under = true;
+                                    moveY = -2.5f;
+                                    moveX = -2.5f;
+                                }},
+                                new RegionPart("-rb"){{
+                                    progress = PartProgress.warmup;
+                                    heatProgress = PartProgress.warmup;
+                                    heatColor = Color.valueOf("ff6214");
+                                    mirror = false;
+                                    under = true;
+                                    moveY = -2.5f;
+                                    moveX = 2.5f;
                                 }}
                         )
                 );
@@ -1002,8 +997,9 @@ public class PvTurrets{
                                     heatColor = Color.valueOf("ff6214");
                                     mirror = false;
                                     under = false;
-                                    moveY = -4f;
-                                    moveRot = 4f;
+                                    moveY = 2f;
+                                    moveX = 1.5f;
+                                    moveRot = -25f;
                                 }},
                                 new RegionPart("-r"){{
                                     progress = PartProgress.recoil;
@@ -1011,8 +1007,9 @@ public class PvTurrets{
                                     heatColor = Color.valueOf("ff6214");
                                     mirror = false;
                                     under = false;
-                                    moveY = -4f;
-                                    moveRot = -4f;
+                                    moveY = 2f;
+                                    moveX = -1.5f;
+                                    moveRot = 25f;
                                 }}
                         )
                 );
