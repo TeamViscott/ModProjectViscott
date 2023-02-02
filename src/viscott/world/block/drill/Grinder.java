@@ -16,6 +16,9 @@ import viscott.world.block.environment.DepositWall;
 
 import static mindustry.Vars.*;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Stack;
+import java.util.stream.Stream;
 
 public class Grinder extends PvBlock {
 
@@ -25,7 +28,9 @@ public class Grinder extends PvBlock {
     public Grinder(String name)
     {
         super(name);
-        update = true;;
+        update = true;
+        hasItems = true;
+        itemCapacity = 10;
     }
 
     @Override
@@ -45,12 +50,12 @@ public class Grinder extends PvBlock {
         super.setBars();
 
         addBar("grindspeed", (GrinderBuild e) ->
-                new Bar(() -> Core.bundle.format("bar.grindspeed", Strings.fixed(e.progress * 60 * e.timeScale(), 2)), () -> Pal.lighterOrange, () -> e.progress));
+                new Bar(() -> Core.bundle.format("bar.grindspeed", Strings.fixed(e.maxMineSpeed * 60 / 100 * e.timeScale(), 2)), () -> Pal.lighterOrange, () -> e.progress));
     }
 
     public class GrinderBuild extends Building
     {
-        public Block[] mineable;
+        public List<Block> mineable;
         float maxMineSpeed;
 
         @Override
@@ -58,18 +63,23 @@ public class Grinder extends PvBlock {
         {
             super.created();
             mineable = visibleBlocks();
-            maxMineSpeed = Arrays.stream(mineable).filter(a -> a instanceof DepositWall).count() * speedPerOre;
+            List<Block> newMineable = new Stack<>();
+            for(Block m : mineable)
+                if (m instanceof DepositWall)
+                    newMineable.add(m);
+            mineable = newMineable;
+            maxMineSpeed = mineable.size() * speedPerOre;
         }
 
-        public Block[] visibleBlocks()
+        public List<Block> visibleBlocks()
         {
             int ix = ((int)x/8)-(int)Math.floor((size-1)/2)-range,
                     iy = ((int)y/8)-(int)Math.floor((size-1)/2)-range,
                     rangeSize = size + range * 2;
-            Block[] newBlockList = new Block[rangeSize*rangeSize];
+            List<Block> newBlockList = new Stack<>();
             for (int i1 = 0;i1<rangeSize;i1++)
                 for (int i2 = 0;i2<rangeSize;i2++)
-                    newBlockList[i1*rangeSize+i2] = world.tiles.get(ix+i1,iy+i2).block();
+                    newBlockList.add(world.tiles.get(ix+i1,iy+i2).block());
             return newBlockList;
         }
 
@@ -78,6 +88,11 @@ public class Grinder extends PvBlock {
         public void update()
         {
             progress = Mathf.approachDelta(progress,1,maxMineSpeed/100);
+            if (progress == 1) {
+                mineable.forEach(a -> items.add(a.itemDrop, 1));
+                progress = 0;
+            }
+            cdump();
         }
     }
 }

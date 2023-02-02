@@ -15,6 +15,7 @@ import mindustry.world.blocks.liquid.Conduit;
 import mindustry.world.blocks.power.PowerNode;
 import mindustry.world.blocks.power.SolarGenerator;
 import mindustry.world.blocks.production.Drill;
+import mindustry.world.blocks.storage.CoreBlock;
 import mindustry.world.draw.DrawDefault;
 import mindustry.world.draw.DrawMulti;
 import mindustry.world.meta.BuildVisibility;
@@ -49,7 +50,8 @@ public class PvBlocks {
                     /*Power Production*/smallCarbonPanel,
 
                     /*Liquids*/concentratedConduit,
-                    /*Pressure related*/ pressureSource
+                    /*Pressure related*/ pressureSource,
+                    /*Core's*/coreHover
                             ;
             public static void load()
             {
@@ -197,6 +199,16 @@ public class PvBlocks {
                     localizedName = "Concentrated conduit";
                     health = 60;
                     liquidCapacity = 30;
+                }};
+                coreHover = new CoreBlock("core-hover")
+                {{
+                    requirements(Category.effect, with(PvItems.lithium,200)); //Todo
+                    localizedName = "Core Hover";
+                    unitType = PvUnits.micro;
+                    health = 1350;
+                    size = 3;
+                    unitCapModifier = 10;
+                    itemCapacity = 6000;
                 }};
             }
 }
