@@ -50,6 +50,8 @@ public class PvTurrets{
         loadSize4();
         loadSize5();
         loadSize6();
+        loadSize7();
+        loadSize8();
 };
 
     public static void loadSize2() //cuz u guys cant sort stuff by size i did it 4 u.
@@ -1495,6 +1497,13 @@ public class PvTurrets{
                 );
             }};
         }};
+    }
+    public static void loadSize7()
+    {
+
+    }
+    public static void loadSize8()
+    {
         xterminium = new ItemTurret("xterminium")
         {{
             requirements(Category.turret,with(Items.copper,1)); //Todo
@@ -1502,7 +1511,7 @@ public class PvTurrets{
             buildVisibility = BuildVisibility.sandboxOnly;
             shoot = new AlternateShootPatternTurret(20);
             reload = 200;
-            inaccuracy = 2;
+            inaccuracy = 4;
             recoilTime = 30;
             size = 8;
             health = 100000;
@@ -1517,30 +1526,48 @@ public class PvTurrets{
             ammo(
                     PvItems.carbonFiber,new ArtilleryBulletType(2,0)
                     {{
+                        trailLength = 50;
+                        trailWidth = 2;
                         fragBullets = 10;
                         fragRandomSpread = 0;
                         fragSpread = 36;
                         fragVelocityMin = 1;
                         fragOnHit = false;
-                        trailLength = 16;
                         lifetime = PvUtil.GetRange(2, 100);
                         frontColor = backColor = trailColor = Pal.slagOrange;
+                        hitEffect = despawnEffect = Fx.bigShockwave;
+                        shake = 2;
                         fragBullet = new BasicBulletType(3,200){{
-                            fragBullets = 3;
+                            fragBullets = 6;
                             fragRandomSpread = 0;
                             fragSpread = 36;
                             fragVelocityMin = 1;
+                            weaveRandom = true;
+                            weaveMag = 2;
+                            weaveScale = 5;
                             fragOnHit = false;
-                            drag = 1/100f;
+                            drag = 0.006f;
                             lifetime = 120;
-                            trailLength = 8;
+                            trailLength = 120;
+                            trailWidth = 2;
                             frontColor = backColor = trailColor = Pal.redDust;
                             fragBullet = new BasicBulletType(5, 300){{
                                 frontColor = backColor = trailColor = Pal.redderDust;
-                                trailLength = 32;
-                                homingPower = 1;
+                                trailLength = 50;
+                                homingPower = 0.05f;
                                 homingRange = 100*8;
                                 lifetime = PvUtil.GetRange(5, 100);
+                                hitShake = 4;
+                                fragBullets = 10;
+                                fragBullet = new BasicBulletType(8,200)
+                                {{
+                                    frontColor = backColor = trailColor = Pal.redderDust;
+                                    trailLength = 25;
+                                    homingPower = 0.05f;
+                                    homingRange = 100*8;
+                                    lifetime = PvUtil.GetRange(8, 50);
+                                    hitShake = 2;
+                                }};
                             }};
                         }};
                     }}
@@ -1569,9 +1596,9 @@ public class PvTurrets{
                                 //Summoning Circles
                                 new ShapePart(){{
                                     progress = PartProgress.warmup;
-                                    rotateSpeed = -5;
+                                    rotateSpeed = 2;
                                     color = Color.valueOf("875aab");
-                                    sides = 4;
+                                    sides = 3;
                                     hollow = true;
                                     stroke = 0f;
                                     strokeTo = 1.6f;
@@ -1581,9 +1608,9 @@ public class PvTurrets{
                                 }},
                                 new ShapePart(){{
                                     progress = PartProgress.warmup;
-                                    rotateSpeed = 5;
+                                    rotateSpeed = -2;
                                     color = Color.valueOf("875aab");
-                                    sides = 4;
+                                    sides = 3;
                                     hollow = true;
                                     stroke = 0f;
                                     strokeTo = 1.6f;
@@ -1619,9 +1646,9 @@ public class PvTurrets{
                                 }},
                                 new ShapePart(){{
                                     progress = PartProgress.warmup;
-                                    rotateSpeed = -5;
+                                    rotateSpeed = -2;
                                     color = Color.valueOf("57d87e");
-                                    sides = 4;
+                                    sides = 3;
                                     hollow = true;
                                     stroke = 0f;
                                     strokeTo = 1.6f;
@@ -1631,9 +1658,9 @@ public class PvTurrets{
                                 }},
                                 new ShapePart(){{
                                     progress = PartProgress.warmup;
-                                    rotateSpeed = 5;
+                                    rotateSpeed = 2;
                                     color = Color.valueOf("57d87e");
-                                    sides = 4;
+                                    sides = 3;
                                     hollow = true;
                                     stroke = 0f;
                                     strokeTo = 1.6f;
@@ -1663,7 +1690,7 @@ public class PvTurrets{
                                     strokeTo = 4f;
                                     radius = 1f;
                                     haloRadius = 13f;
-                                    haloRotateSpeed = 1;
+                                    haloRotateSpeed = -1;
                                     layer = Layer.effect;
                                     x = 40;
                                 }}
