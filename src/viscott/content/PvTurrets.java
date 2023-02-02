@@ -1247,12 +1247,13 @@ public class PvTurrets{
             shoot = new AlternateShootPatternTurret(20);
             reload = 4*60;
             inaccuracy = 2;
+            recoilTime = 10;
             size = 4;
             health = 3000;
             minWarmup = 0.9f;
             range = 87*8;
             shootY = 16;
-            recoil = 4;
+            recoil = 8;
             heatRequirement = 8;
             maxHeatEfficiency = 4;
             ammo(
@@ -1260,8 +1261,8 @@ public class PvTurrets{
                     {{
                         shoot.shotDelay = 10;
                         shoot.shots = 4;
-                        shootEffect = Fx.shootBig;
-                        smokeEffect = Fx.shootSmokeMissile;
+                        shootEffect = Fx.shootSmall;
+                        smokeEffect = Fx.shootSmallSmoke;
                         ammoMultiplier = 1f;
 
                         spawnUnit = new MissileUnitType("nuero-missile"){{
@@ -1388,7 +1389,7 @@ public class PvTurrets{
                                     strokeTo = 1.6f;
                                     radius = 6f;
                                     layer = Layer.effect;
-                                    x = -10;
+                                    x = -20;
                                 }},
                                 new ShapePart(){{
                                     progress = PartProgress.warmup;
@@ -1400,7 +1401,7 @@ public class PvTurrets{
                                     strokeTo = 1.6f;
                                     radius = 11f;
                                     layer = Layer.effect;
-                                    x = -10;
+                                    x = -20;
                                 }},
                                 new HaloPart(){{
                                     progress = PartProgress.warmup;
@@ -1414,7 +1415,7 @@ public class PvTurrets{
                                     haloRadius = 13f;
                                     haloRotateSpeed = 1;
                                     layer = Layer.effect;
-                                    x = -10;
+                                    x = -20;
                                 }},
                 new ShapePart(){{
                     progress = PartProgress.warmup;
@@ -1426,7 +1427,7 @@ public class PvTurrets{
                     strokeTo = 1.6f;
                     radius = 10f;
                     layer = Layer.effect;
-                    x = 10;
+                    x = 20;
                 }},
                         new ShapePart(){{
                             progress = PartProgress.warmup;
@@ -1438,7 +1439,7 @@ public class PvTurrets{
                             strokeTo = 1.6f;
                             radius = 6f;
                             layer = Layer.effect;
-                            x = 10;
+                            x = 20;
                         }},
                         new ShapePart(){{
                             progress = PartProgress.warmup;
@@ -1450,7 +1451,7 @@ public class PvTurrets{
                             strokeTo = 1.6f;
                             radius = 11f;
                             layer = Layer.effect;
-                            x = 10;
+                            x = 20;
                         }},
                         new HaloPart(){{
                             progress = PartProgress.warmup;
@@ -1464,7 +1465,7 @@ public class PvTurrets{
                             haloRadius = 13f;
                             haloRotateSpeed = 1;
                             layer = Layer.effect;
-                            x = 10;
+                            x = 20;
                         }}
                         )
                 );
