@@ -1481,21 +1481,21 @@ public class PvTurrets{
             localizedName = "X-terminium";
             buildVisibility = BuildVisibility.sandboxOnly;
             shoot = new AlternateShootPatternTurret(20);
-            reload = 300;
+            reload = 200;
             inaccuracy = 2;
             recoilTime = 30;
             size = 8;
             health = 100000;
-            minWarmup = 0.9f;
+            minWarmup = 0.7f;
             range = 100*8;
-            shootWarmupSpeed = 1/300f;
-            warmupMaintainTime = 300f;
+            shootWarmupSpeed = 1/240f;
+            warmupMaintainTime = 100f;
             shootY = 16;
             recoil = 8;
             heatRequirement = 1000;
             maxHeatEfficiency = 20;
             ammo(
-                    PvItems.carbonFiber,new ArtilleryBulletType(5,0)
+                    PvItems.carbonFiber,new ArtilleryBulletType(2,0)
                     {{
                         fragBullets = 10;
                         fragRandomSpread = 0;
@@ -1503,22 +1503,24 @@ public class PvTurrets{
                         fragVelocityMin = 1;
                         fragOnHit = false;
                         trailLength = 16;
-                        lifetime = PvUtil.GetRange(5, 100);
+                        lifetime = PvUtil.GetRange(2, 100);
                         frontColor = backColor = trailColor = Pal.slagOrange;
-                        fragBullet = new BasicBulletType(4,200){{
+                        fragBullet = new BasicBulletType(3,200){{
                             fragBullets = 2;
                             fragRandomSpread = 0;
                             fragSpread = 36;
                             fragVelocityMin = 1;
                             fragOnHit = false;
-                            drag = 1/300f;
+                            drag = 1/100f;
                             lifetime = 360;
                             trailLength = 8;
                             frontColor = backColor = trailColor = Pal.redDust;
-                            fragBullet = new BasicBulletType(7, 300){{
+                            fragBullet = new BasicBulletType(5, 300){{
                                 frontColor = backColor = trailColor = Pal.redderDust;
                                 trailLength = 32;
                                 homingPower = 1;
+                                homingRange = 75*8;
+                                lifetime = PvUtil.GetRange(5, 100);
                             }};
                         }};
                     }}
