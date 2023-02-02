@@ -1296,7 +1296,7 @@ public class PvTurrets{
                                 deathExplosionEffect = Fx.massiveExplosion;
                                 shootOnDeath = true;
                                 shake = 30f;
-                                bullet = new ExplosionBulletType(200f, 9.2f*8f){{
+                                bullet = new ExplosionBulletType(124f, 9.2f*8f){{
                                     hitColor = Pal.missileYellow;
                                     shootEffect = new MultiEffect(Fx.massiveExplosion, Fx.scatheExplosion, Fx.scatheLight, new WaveEffect(){{
                                         lifetime = 30f;
@@ -1310,7 +1310,7 @@ public class PvTurrets{
                                     ammoMultiplier = 1f;
                                     fragLifeMin = 0.1f;
                                     fragBullets = 7;
-                                    fragBullet = new ArtilleryBulletType(2f, 40){{
+                                    fragBullet = new ArtilleryBulletType(2f, 20){{
                                         drag = 0.02f;
                                         hitEffect = Fx.massiveExplosion;
                                         despawnEffect = Fx.scatheSlash;
