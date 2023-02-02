@@ -997,16 +997,15 @@ public class PvTurrets{
             );
             drawer = new DrawTurret(PvUtil.GetName("Pov")){{
                 parts.addAll(
-                        parts.add(
                                 new RegionPart("-l"){{
                                     progress = PartProgress.recoil;
                                     heatProgress = PartProgress.recoil;
                                     heatColor = Color.valueOf("ff6214");
                                     mirror = false;
                                     under = false;
-                                    moveY = 2f;
-                                    moveX = 1.5f;
-                                    moveRot = -25f;
+                                    moveY = -2f;
+                                    moveX = -1.5f;
+                                    moveRot = 10f;
                                 }},
                                 new RegionPart("-r"){{
                                     progress = PartProgress.recoil;
@@ -1014,11 +1013,60 @@ public class PvTurrets{
                                     heatColor = Color.valueOf("ff6214");
                                     mirror = false;
                                     under = false;
-                                    moveY = 2f;
-                                    moveX = -1.5f;
-                                    moveRot = 25f;
+                                    moveY = -2f;
+                                    moveX = 1.5f;
+                                    moveRot = -10f;
+                                }},
+                                new ShapePart(){{
+                                    progress = PartProgress.warmup;
+                                    rotateSpeed = -5;
+                                    color = Pal.lightishGray;
+                                    sides = 7;
+                                    hollow = true;
+                                    stroke = 0f;
+                                    strokeTo = 1.6f;
+                                    radius = 12f;
+                                    layer = Layer.effect;
+                                    y = -25;
+                                }},
+                                new ShapePart(){{
+                                    progress = PartProgress.warmup;
+                                    rotateSpeed = 4;
+                                    color = Pal.lightishGray;
+                                    sides = 4;
+                                    hollow = true;
+                                    stroke = 0f;
+                                    strokeTo = 1.6f;
+                                    radius = 8f;
+                                    layer = Layer.effect;
+                                    y = -25;
+                                }},
+                                new ShapePart(){{
+                                    progress = PartProgress.warmup;
+                                    rotateSpeed = -5;
+                                    color = Pal.lightishGray;
+                                    sides = 20;
+                                    hollow = true;
+                                    stroke = 0f;
+                                    strokeTo = 1.6f;
+                                    radius = 14f;
+                                    layer = Layer.effect;
+                                    y = -25;
+                                }},
+                                new HaloPart(){{
+                                    progress = PartProgress.warmup;
+                                    color = Pal.lightishGray;
+                                    sides = 3;
+                                    hollow = true;
+                                    shapes = 3;
+                                    stroke = 0f;
+                                    strokeTo = 4f;
+                                    radius = 3f;
+                                    haloRadius = 13f;
+                                    haloRotateSpeed = 1;
+                                    layer = Layer.effect;
+                                    y = -25;
                                 }}
-                        )
                 );
             }};
         }};
