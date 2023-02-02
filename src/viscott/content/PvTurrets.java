@@ -1,6 +1,7 @@
 package viscott.content;
 
 import arc.graphics.Color;
+import arc.struct.Seq;
 import mindustry.content.Fx;
 import mindustry.content.Items;
 import mindustry.content.Liquids;
@@ -1026,6 +1027,7 @@ public class PvTurrets{
             reload = 60;
             size = 6;
             health = 12000;
+            minWarmup = 0.9f;
             consumePower(840f/60f);
             range = 87*8;
             shootY = 16;
@@ -1038,14 +1040,14 @@ public class PvTurrets{
             );
             drawer = new DrawTurret(PvUtil.GetName("Pov")){{
                 parts.addAll(
-                        parts.add(
+                        Seq.with(
                                 new RegionPart("-l1"){{
                                     progress = PartProgress.recoil.mul(((AlternateShootPatternTurret)shoot).selectedBarrel1);
                                     heatProgress = PartProgress.recoil;
                                     heatColor = Color.valueOf("ff6214");
                                     mirror = false;
                                     under = false;
-                                    moveY = -2f;
+                                    moveY = -6f;
                                 }},
                                 new RegionPart("-r1"){{
                                     progress = PartProgress.recoil.mul(((AlternateShootPatternTurret)shoot).selectedBarrel2);
@@ -1053,7 +1055,47 @@ public class PvTurrets{
                                     heatColor = Color.valueOf("ff6214");
                                     mirror = false;
                                     under = false;
-                                    moveY = -2f;
+                                    moveY = -6f;
+                                }},
+                                new RegionPart("-l2"){{
+                                    progress = PartProgress.recoil;
+                                    heatProgress = PartProgress.recoil;
+                                    heatColor = Color.valueOf("ff6214");
+                                    mirror = false;
+                                    under = false;
+                                    moveY = 2f;
+                                    moveX = -8f;
+                                    moveRot = 30;
+                                }},
+                                new RegionPart("-r2"){{
+                                    progress = PartProgress.recoil;
+                                    heatProgress = PartProgress.recoil;
+                                    heatColor = Color.valueOf("ff6214");
+                                    mirror = false;
+                                    under = false;
+                                    moveY = 2f;
+                                    moveX = 8f;
+                                    moveRot = -30;
+                                }},
+                                new RegionPart("-l3"){{
+                                    progress = PartProgress.warmup;
+                                    heatProgress = PartProgress.recoil;
+                                    heatColor = Color.valueOf("ff6214");
+                                    mirror = false;
+                                    under = false;
+                                    moveY = 4f;
+                                    moveX = -10f;
+                                    moveRot = 30;
+                                }},
+                                new RegionPart("-r3"){{
+                                    progress = PartProgress.warmup;
+                                    heatProgress = PartProgress.recoil;
+                                    heatColor = Color.valueOf("ff6214");
+                                    mirror = false;
+                                    under = false;
+                                    moveY = 4f;
+                                    moveX = 10f;
+                                    moveRot = -30;
                                 }}
                         )
                 );
