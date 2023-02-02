@@ -43,6 +43,15 @@ public class PvTurrets{
             ;
 
     public static void load(){
+        loadSize2();
+        loadSize3();
+        loadSize4();
+        loadSize5();
+        loadSize6();
+};
+
+    public static void loadSize2() //cuz u guys cant sort stuff by size i did it 4 u.
+    {
         splinter = new ItemTurret("splinter"){{
             localizedName = "Splinter";
             size = 2;
@@ -103,16 +112,16 @@ public class PvTurrets{
             drawer = new DrawTurret(PvUtil.GetName("Pov")){{
                 parts.addAll(
                         parts.add(
-                            new RegionPart("-l"){{
-                                progress = PartProgress.recoil;
-                                heatProgress = PartProgress.recoil;
-                                heatColor = Color.valueOf("ff6214");
-                                mirror = false;
-                                under = false;
-                                moveX = -1f;
-                                moveRot = 7f;
-                                moves.add(new PartMove(PartProgress.recoil, 0f, -2f, -3f));
-                            }},
+                                new RegionPart("-l"){{
+                                    progress = PartProgress.recoil;
+                                    heatProgress = PartProgress.recoil;
+                                    heatColor = Color.valueOf("ff6214");
+                                    mirror = false;
+                                    under = false;
+                                    moveX = -1f;
+                                    moveRot = 7f;
+                                    moves.add(new PartMove(PartProgress.recoil, 0f, -2f, -3f));
+                                }},
                                 new RegionPart("-r"){{
                                     progress = PartProgress.recoil;
                                     heatProgress = PartProgress.recoil;
@@ -437,19 +446,19 @@ public class PvTurrets{
             range = 20*8;
             ammo(
                     Liquids.water,new LaserBulletType(15) {{
-                            colors = new Color[3];
-                            colors[0] = colors[1] = colors[2] = Liquids.water.color;
-                            length = 20*8;
-                            status = StatusEffects.wet;
-                            statusDuration = 90;
+                        colors = new Color[3];
+                        colors[0] = colors[1] = colors[2] = Liquids.water.color;
+                        length = 20*8;
+                        status = StatusEffects.wet;
+                        statusDuration = 90;
 
                     }},
                     PvLiquids.kerosene, new LaserBulletType(24){{
-                            colors = new Color[3];
-                            colors[0] = colors[1] = colors[2] = PvLiquids.kerosene.color;
-                            length = 20*8;
-                            status = PvStatusEffects.doused;
-                            statusDuration = 90;
+                        colors = new Color[3];
+                        colors[0] = colors[1] = colors[2] = PvLiquids.kerosene.color;
+                        length = 20*8;
+                        status = PvStatusEffects.doused;
+                        statusDuration = 90;
 
                     }}
             );
@@ -504,6 +513,9 @@ public class PvTurrets{
             }};
             limitRange();
         }};
+    }
+    public static void loadSize3()
+    {
         phantom = new ItemTurret("phantom")
         {{
             requirements(Category.turret,with(PvItems.erbium,1)); //Todo
@@ -647,6 +659,57 @@ public class PvTurrets{
                 );
             }};
         }};
+        striker = new ItemTurret("striker")
+        {{
+            localizedName = "Striker";
+            size = 3;
+            reload = 90f;
+            range = 480;
+            inaccuracy = 2;
+
+            requirements(Category.turret,with(Items.copper,1)); //Todo
+            ammo(
+                    silicon, new BasicBulletType(10, 70){{
+                        trailColor = frontColor = backColor = Pal.techBlue;
+                        shoot = new CyclicPatternStriker();
+                        trailLength = 8;
+                        trailWidth = 2;
+                        pierce = true;
+                        pierceCap = 3;
+                        homingPower = 0.03f;
+                        shoot.shotDelay = 2.5f;
+                        lifetime = PvUtil.GetRange(this.speed,60);
+                    }}
+            );
+            drawer = new DrawTurret(PvUtil.GetName("Pov")){{
+                parts.addAll(
+                        parts.add(
+                                new RegionPart("-l"){{
+                                    progress = PartProgress.recoil;
+                                    heatProgress = PartProgress.recoil;
+                                    heatColor = Color.valueOf("ff6214");
+                                    mirror = false;
+                                    under = false;
+                                    moveY = -1f;
+                                    moveRot = 1f;
+                                }},
+                                new RegionPart("-r"){{
+                                    progress = PartProgress.recoil;
+                                    heatProgress = PartProgress.recoil;
+                                    heatColor = Color.valueOf("ff6214");
+                                    mirror = false;
+                                    under = false;
+                                    drawRegion = true;
+                                    moveY = -1f;
+                                    moveRot = -1f;
+                                }}
+                        )
+                );
+            }};
+        }};
+    }
+    public static void loadSize4()
+    {
         rainmaker = new ItemTurret("rainmaker")
         {{
             localizedName = "Rainmaker";
@@ -700,54 +763,6 @@ public class PvTurrets{
                 );
             }};
         }};
-        striker = new ItemTurret("striker")
-        {{
-            localizedName = "Striker";
-            size = 3;
-            reload = 90f;
-            range = 480;
-            inaccuracy = 2;
-
-            requirements(Category.turret,with(Items.copper,1)); //Todo
-                    ammo(
-                        silicon, new BasicBulletType(10, 70){{
-                        trailColor = frontColor = backColor = Pal.techBlue;
-                        shoot = new CyclicPatternStriker();
-                        trailLength = 8;
-                        trailWidth = 2;
-                        pierce = true;
-                        pierceCap = 3;
-                        homingPower = 0.03f;
-                        shoot.shotDelay = 2.5f;
-                        lifetime = PvUtil.GetRange(this.speed,60);
-                    }}
-                            );
-            drawer = new DrawTurret(PvUtil.GetName("Pov")){{
-                parts.addAll(
-                        parts.add(
-                                new RegionPart("-l"){{
-                                    progress = PartProgress.recoil;
-                                    heatProgress = PartProgress.recoil;
-                                    heatColor = Color.valueOf("ff6214");
-                                    mirror = false;
-                                    under = false;
-                                    moveY = -1f;
-                                    moveRot = 1f;
-                                }},
-                                new RegionPart("-r"){{
-                                    progress = PartProgress.recoil;
-                                    heatProgress = PartProgress.recoil;
-                                    heatColor = Color.valueOf("ff6214");
-                                    mirror = false;
-                                    under = false;
-                                    drawRegion = true;
-                                    moveY = -1f;
-                                    moveRot = -1f;
-                                }}
-                        )
-                );
-            }};
-        }};
         marksman = new ItemTurret("marksman")
         {{
             localizedName = "Marksman";
@@ -795,446 +810,6 @@ public class PvTurrets{
                                     under = false;
                                     moveY = -1f;
                                     moveRot = -1f;
-                                }}
-                        )
-                );
-            }};
-        }};
-        xacto = new ItemTurret("xacto")
-        {{
-            requirements(Category.turret,with(PvItems.erbium,1)); //Todo
-            localizedName = "X-acto";
-            size = 5;
-            health = 8450;
-            range = 58*8;
-            liquidCapacity = 50;
-            targetAir = true;
-            targetGround = true;
-            reload = 60f/4.4f;
-            recoil = 4;
-            coolant = consumeCoolant(0.1f);
-            shoot = new ShootAlternate(8);
-            ammo(
-                    PvItems.platinum,new BasicBulletType(5,95)
-                    {{
-                        lifetime = PvUtil.GetRange(this.speed,58);
-                        pierce = true;
-                        pierceCap = 10;
-                        trailLength = 15;
-                        trailWidth = 2;
-                        trailColor = backColor = lightColor = Pal.heal;
-                    }},
-                    silicon,new BasicBulletType(5,87)
-                    {{
-                        lifetime = PvUtil.GetRange(this.speed,58);
-                        pierce = true;
-                        pierceCap = 10;
-                        trailLength = 15;
-                        trailWidth = 2;
-                        trailColor = backColor = lightColor = Pal.heal;
-                        weaveMag = 2;
-                        weaveScale = 2;
-                        weaveRandom = true;
-                        homingPower = 0.06f;
-                    }},
-                    PvItems.erbium,new BasicBulletType(5,130)
-                    {
-                        {
-                            lifetime = PvUtil.GetRange(this.speed, 58);
-                            pierce = true;
-                            pierceCap = 10;
-                            trailLength = 15;
-                            trailWidth = 2;
-                            trailColor = backColor = lightColor = Pal.heal;
-                            fragBullets = 4;
-                            fragRandomSpread = 45;
-                            fragBullet = new BasicBulletType(7, 20) {{
-                                lifetime = PvUtil.GetRange(this.speed, 12);
-                                trailLength = 15;
-                                trailWidth = 2;
-                                homingPower = 0.008f;
-                                homingRange = 12;
-                                trailColor = backColor = lightColor = Pal.heal;
-                            }};
-                        }},
-                    PvItems.carbonFiber,new BasicBulletType(5,215)
-                    {
-                        {
-                            lifetime = PvUtil.GetRange(this.speed, 58);
-                            pierce = true;
-                            pierceCap = 10;
-                            trailLength = 15;
-                            trailWidth = 2;
-                            trailColor = backColor = lightColor = Pal.heal;
-                        }}
-            );
-            drawer = new DrawTurret(PvUtil.GetName("Pov")){{
-                parts.addAll(
-                        parts.add(
-                                new RegionPart("-l"){{
-                                    progress = PartProgress.recoil;
-                                    heatProgress = PartProgress.recoil;
-                                    heatColor = Color.valueOf("ff6214");
-                                    mirror = false;
-                                    under = false;
-                                    moveY = -2.66f;
-                                    moveRot = 1f;
-                                }},
-                                new RegionPart("-r"){{
-                                    progress = PartProgress.recoil;
-                                    heatProgress = PartProgress.recoil;
-                                    heatColor = Color.valueOf("ff6214");
-                                    mirror = false;
-                                    under = false;
-                                    moveY = -2.66f;
-                                    moveRot = -1f;
-                                    }},
-                                new RegionPart("-lb"){{
-                                    progress = PartProgress.warmup;
-                                    heatProgress = PartProgress.warmup;
-                                    heatColor = Color.valueOf("ff6214");
-                                    mirror = false;
-                                    under = true;
-                                    moveY = -2.5f;
-                                    moveX = -2.5f;
-                                }},
-                                new RegionPart("-rb"){{
-                                    progress = PartProgress.warmup;
-                                    heatProgress = PartProgress.warmup;
-                                    heatColor = Color.valueOf("ff6214");
-                                    mirror = false;
-                                    under = true;
-                                    moveY = -2.5f;
-                                    moveX = 2.5f;
-                                }}
-                        )
-                );
-            }};
-        }};
-        reaper = new ItemTurret("reaper")
-        {{
-            localizedName = "Reaper";
-            description = "The Bringer of death to even the strongest T4. its only downside is that it can easily be overrun with a lot of enemies.";
-            size = 5;
-            health = 8500;
-            consumePower(1100f/60f);
-            liquidCapacity = 60;
-            reload = 60f;
-            inaccuracy = 2;
-            range = 8*85;
-            shootCone = 90;
-            targetAir = true;
-            targetGround = false;
-            coolantMultiplier = 1.5f;
-            recoil = 5;
-            shake = 1;
-            requirements(Category.turret,with(Items.copper,1)); //Todo
-            ammo(
-                    PvItems.platinum,new BasicBulletType(8,1075)
-                    {{
-                        lifetime = PvUtil.GetRange(this.speed,85);
-                        collidesAir = true;
-                        collidesGround = false;
-                        spin = 1;
-                        width = 10;
-                        height = 10;
-                        backColor = trailColor = Pal.redderDust;
-                        trailWidth = 2;
-                        trailLength = 40;
-                        trailRotation = true;
-                        fragBullets = 3;
-                        bulletInterval = 2;
-                        intervalBullets = 3;
-                        weaveRandom = true;
-                        homingPower = 0.01f;
-                        weaveScale = 1;
-                        weaveMag = 1;
-                        intervalBullet = new LightningBulletType()
-                        {{
-                            lightningColor = lightColor = Pal.redderDust;
-                            lightningDamage = 15;
-                            lightningLength = 10;
-                        }};
-                        fragBullet = new LightningBulletType()
-                        {{
-                            lightningColor = lightColor = Pal.redderDust;
-                            lightningDamage = 15;
-                            lightningLength = 20;
-                        }};
-                    }},
-                    PvItems.erbium,new BasicBulletType(8,1650)
-                    {{
-                        lifetime = PvUtil.GetRange(this.speed,85);
-                        reloadMultiplier = 0.7f;
-                        collidesAir = true;
-                        collidesGround = false;
-                        spin = 1;
-                        width = 10;
-                        height = 10;
-                        backColor = trailColor = Pal.redderDust;
-                        trailWidth = 2;
-                        trailLength = 40;
-                        trailRotation = true;
-                        fragBullets = 5;
-                        bulletInterval = 2;
-                        intervalBullets = 5;
-                        weaveRandom = true;
-                        homingPower = 0.01f;
-                        weaveScale = 1;
-                        weaveMag = 1;
-                        intervalBullet = new LightningBulletType()
-                        {{
-                            lightningColor = lightColor = Pal.redderDust;
-                            lightningDamage = 15;
-                            lightningLength = 10;
-                        }};
-                        fragBullet = new LightningBulletType()
-                        {{
-                            lightningColor = lightColor = Pal.redderDust;
-                            lightningDamage = 15;
-                            lightningLength = 20;
-                        }};
-                    }}
-            );
-            drawer = new DrawTurret(PvUtil.GetName("Pov")){{
-                parts.addAll(
-                                new RegionPart("-l"){{
-                                    progress = PartProgress.recoil;
-                                    heatProgress = PartProgress.recoil;
-                                    heatColor = Color.valueOf("ff6214");
-                                    mirror = false;
-                                    under = false;
-                                    moveY = -2f;
-                                    moveX = -1.5f;
-                                    moveRot = 10f;
-                                }},
-                                new RegionPart("-r"){{
-                                    progress = PartProgress.recoil;
-                                    heatProgress = PartProgress.recoil;
-                                    heatColor = Color.valueOf("ff6214");
-                                    mirror = false;
-                                    under = false;
-                                    moveY = -2f;
-                                    moveX = 1.5f;
-                                    moveRot = -10f;
-                                }},
-                                new ShapePart(){{
-                                    progress = PartProgress.warmup;
-                                    rotateSpeed = -5;
-                                    color = Pal.lightishGray;
-                                    sides = 7;
-                                    hollow = true;
-                                    stroke = 0f;
-                                    strokeTo = 1.6f;
-                                    radius = 12f;
-                                    layer = Layer.effect;
-                                    y = -25;
-                                }},
-                                new ShapePart(){{
-                                    progress = PartProgress.warmup;
-                                    rotateSpeed = 4;
-                                    color = Pal.lightishGray;
-                                    sides = 4;
-                                    hollow = true;
-                                    stroke = 0f;
-                                    strokeTo = 1.6f;
-                                    radius = 8f;
-                                    layer = Layer.effect;
-                                    y = -25;
-                                }},
-                                new ShapePart(){{
-                                    progress = PartProgress.warmup;
-                                    rotateSpeed = -5;
-                                    color = Pal.lightishGray;
-                                    sides = 20;
-                                    hollow = true;
-                                    stroke = 0f;
-                                    strokeTo = 1.6f;
-                                    radius = 14f;
-                                    layer = Layer.effect;
-                                    y = -25;
-                                }},
-                                new HaloPart(){{
-                                    progress = PartProgress.warmup;
-                                    color = Pal.lightishGray;
-                                    sides = 5;
-                                    hollow = true;
-                                    shapes = 3;
-                                    stroke = 0f;
-                                    strokeTo = 4f;
-                                    radius = 3f;
-                                    haloRadius = 13f;
-                                    haloRotateSpeed = 1;
-                                    layer = Layer.effect;
-                                    y = -25;
-                                }}
-                );
-            }};
-        }};
-        shuttle = new ItemTurret("shuttle")
-        {{
-            requirements(Category.turret,with(Items.copper,1)); //Todo
-            localizedName = "Shuttle";
-            shoot = new AlternateShootPatternTurret(8);
-            reload = 60f/4.6f;
-            inaccuracy = 2;
-            size = 6;
-            health = 12000;
-            minWarmup = 0.9f;
-            consumePower(840f/60f);
-            range = 87*8;
-            shootY = 16;
-            recoil = 4;
-            ammo(
-                    PvItems.carbonFiber,new BasicBulletType(8,200)
-                    {{
-                        sprite = "missile-large";
-                        status = PvStatusEffects.resiliant;
-                        statusDuration = 600;
-                        shootEffect = Fx.shootSmokeSquareBig;
-                        smokeEffect = Fx.shootSmokeDisperse;
-                        trailWidth = 4;
-                        width *= 2;
-                        height *= 2;
-                        trailLength = 40;
-                        lifetime = PvUtil.GetRange(8,87);
-                        hitShake = despawnShake = 4;
-                        shake = 2;
-                        backColor = trailColor = lightColor = Pal.lighterOrange;
-                        trailInterval = 5;
-                        trailChance = 90f;
-                        weaveMag = 2;
-                        weaveScale = 5f;
-                        weaveRandom = true;
-                        trailEffect = Fx.missileTrail;
-                        pierceCap = 10;
-                        pierce = true;
-                        laserAbsorb = true;
-                        buildingDamageMultiplier = 0.1f;
-                        fragBullets = 8;
-                        homingPower = 0.02f;
-                        homingRange = 87*8f;
-                        fragBullet = new LightningBulletType()
-                        {{
-                            lightColor = lightningColor = Pal.lighterOrange;
-                            lightningDamage = 20;
-                            damage = 20;
-                            lightningLength = 8*3;
-                            status = PvStatusEffects.resiliant;
-                            statusDuration = 180;
-                        }};
-                    }}
-            );
-            drawer = new DrawTurret(PvUtil.GetName("Pov")){{
-                parts.addAll(
-                        Seq.with(
-                                //Arms and Barrels
-                                new RegionPart("-l1"){{
-                                    progress = PartProgress.recoil.mul(((AlternateShootPatternTurret)shoot).selectedBarrel1);
-                                    heatProgress = PartProgress.recoil;
-                                    heatColor = Color.valueOf("ff6214");
-                                    mirror = false;
-                                    under = false;
-                                    moveY = -6f;
-                                }},
-                                new RegionPart("-r1"){{
-                                    progress = PartProgress.recoil.mul(((AlternateShootPatternTurret)shoot).selectedBarrel2);
-                                    heatProgress = PartProgress.recoil;
-                                    heatColor = Color.valueOf("ff6214");
-                                    mirror = false;
-                                    under = false;
-                                    moveY = -6f;
-                                }},
-                                new RegionPart("-l2"){{
-                                    progress = PartProgress.recoil;
-                                    heatProgress = PartProgress.recoil;
-                                    heatColor = Color.valueOf("ff6214");
-                                    mirror = false;
-                                    under = false;
-                                    moveY = -2f;
-                                    moveX = -4f;
-                                    moveRot = 3;
-                                }},
-                                new RegionPart("-r2"){{
-                                    progress = PartProgress.recoil;
-                                    heatProgress = PartProgress.recoil;
-                                    heatColor = Color.valueOf("ff6214");
-                                    mirror = false;
-                                    under = false;
-                                    moveY = -2f;
-                                    moveX = 4f;
-                                    moveRot = -3;
-                                }},
-                                new RegionPart("-l3"){{
-                                    progress = PartProgress.warmup;
-                                    heatProgress = PartProgress.recoil;
-                                    heatColor = Color.valueOf("ff6214");
-                                    mirror = false;
-                                    under = false;
-                                    moveY = 4f;
-                                    moveX = -10f;
-                                    moveRot = 30;
-                                }},
-                                new RegionPart("-r3"){{
-                                    progress = PartProgress.warmup;
-                                    heatProgress = PartProgress.recoil;
-                                    heatColor = Color.valueOf("ff6214");
-                                    mirror = false;
-                                    under = false;
-                                    moveY = 4f;
-                                    moveX = 10f;
-                                    moveRot = -30;
-                                }},
-                                //Summoning Circle
-                                new ShapePart(){{
-                                    progress = PartProgress.warmup;
-                                    rotateSpeed = -5;
-                                    color = Pal.lighterOrange;
-                                    sides = 4;
-                                    hollow = true;
-                                    stroke = 0f;
-                                    strokeTo = 1.6f;
-                                    radius = 10f;
-                                    layer = Layer.effect;
-                                    y = -25;
-                                }},
-                                new ShapePart(){{
-                                    progress = PartProgress.warmup;
-                                    rotateSpeed = 5;
-                                    color = Pal.lighterOrange;
-                                    sides = 4;
-                                    hollow = true;
-                                    stroke = 0f;
-                                    strokeTo = 1.6f;
-                                    radius = 6f;
-                                    layer = Layer.effect;
-                                    y = -25;
-                                }},
-                                new ShapePart(){{
-                                    progress = PartProgress.warmup;
-                                    rotateSpeed = -5;
-                                    color = Pal.lighterOrange;
-                                    sides = 20;
-                                    hollow = true;
-                                    stroke = 0f;
-                                    strokeTo = 1.6f;
-                                    radius = 11f;
-                                    layer = Layer.effect;
-                                    y = -25;
-                                }},
-                                new HaloPart(){{
-                                    progress = PartProgress.warmup;
-                                    color = Pal.lighterOrange;
-                                    sides = 3;
-                                    hollow = true;
-                                    shapes = 3;
-                                    stroke = 0f;
-                                    strokeTo = 4f;
-                                    radius = 1f;
-                                    haloRadius = 13f;
-                                    haloRotateSpeed = 1;
-                                    layer = Layer.effect;
-                                    y = -25;
                                 }}
                         )
                 );
@@ -1417,61 +992,506 @@ public class PvTurrets{
                                     layer = Layer.effect;
                                     x = -20;
                                 }},
-                new ShapePart(){{
-                    progress = PartProgress.warmup;
-                    rotateSpeed = -5;
-                    color = Pal.lighterOrange;
-                    sides = 4;
-                    hollow = true;
-                    stroke = 0f;
-                    strokeTo = 1.6f;
-                    radius = 10f;
-                    layer = Layer.effect;
-                    x = 20;
-                }},
-                        new ShapePart(){{
-                            progress = PartProgress.warmup;
-                            rotateSpeed = 5;
-                            color = Pal.lighterOrange;
-                            sides = 4;
-                            hollow = true;
-                            stroke = 0f;
-                            strokeTo = 1.6f;
-                            radius = 6f;
-                            layer = Layer.effect;
-                            x = 20;
+                                new ShapePart(){{
+                                    progress = PartProgress.warmup;
+                                    rotateSpeed = -5;
+                                    color = Pal.lighterOrange;
+                                    sides = 4;
+                                    hollow = true;
+                                    stroke = 0f;
+                                    strokeTo = 1.6f;
+                                    radius = 10f;
+                                    layer = Layer.effect;
+                                    x = 20;
+                                }},
+                                new ShapePart(){{
+                                    progress = PartProgress.warmup;
+                                    rotateSpeed = 5;
+                                    color = Pal.lighterOrange;
+                                    sides = 4;
+                                    hollow = true;
+                                    stroke = 0f;
+                                    strokeTo = 1.6f;
+                                    radius = 6f;
+                                    layer = Layer.effect;
+                                    x = 20;
+                                }},
+                                new ShapePart(){{
+                                    progress = PartProgress.warmup;
+                                    rotateSpeed = -5;
+                                    color = Pal.lighterOrange;
+                                    sides = 20;
+                                    hollow = true;
+                                    stroke = 0f;
+                                    strokeTo = 1.6f;
+                                    radius = 11f;
+                                    layer = Layer.effect;
+                                    x = 20;
+                                }},
+                                new HaloPart(){{
+                                    progress = PartProgress.warmup;
+                                    color = Pal.lighterOrange;
+                                    sides = 3;
+                                    hollow = true;
+                                    shapes = 3;
+                                    stroke = 0f;
+                                    strokeTo = 4f;
+                                    radius = 1f;
+                                    haloRadius = 13f;
+                                    haloRotateSpeed = 1;
+                                    layer = Layer.effect;
+                                    x = 20;
+                                }}
+                        )
+                );
+            }
+            };
+        }};
+    }
+    public static void loadSize5()
+    {
+        xacto = new ItemTurret("xacto")
+        {{
+            requirements(Category.turret,with(PvItems.erbium,1)); //Todo
+            localizedName = "X-acto";
+            size = 5;
+            health = 8450;
+            range = 58*8;
+            liquidCapacity = 50;
+            targetAir = true;
+            targetGround = true;
+            reload = 60f/4.4f;
+            recoil = 4;
+            coolant = consumeCoolant(0.1f);
+            shoot = new ShootAlternate(8);
+            ammo(
+                    PvItems.platinum,new BasicBulletType(5,95)
+                    {{
+                        lifetime = PvUtil.GetRange(this.speed,58);
+                        pierce = true;
+                        pierceCap = 10;
+                        trailLength = 15;
+                        trailWidth = 2;
+                        trailColor = backColor = lightColor = Pal.heal;
+                    }},
+                    silicon,new BasicBulletType(5,87)
+                    {{
+                        lifetime = PvUtil.GetRange(this.speed,58);
+                        pierce = true;
+                        pierceCap = 10;
+                        trailLength = 15;
+                        trailWidth = 2;
+                        trailColor = backColor = lightColor = Pal.heal;
+                        weaveMag = 2;
+                        weaveScale = 2;
+                        weaveRandom = true;
+                        homingPower = 0.06f;
+                    }},
+                    PvItems.erbium,new BasicBulletType(5,130)
+                    {
+                        {
+                            lifetime = PvUtil.GetRange(this.speed, 58);
+                            pierce = true;
+                            pierceCap = 10;
+                            trailLength = 15;
+                            trailWidth = 2;
+                            trailColor = backColor = lightColor = Pal.heal;
+                            fragBullets = 4;
+                            fragRandomSpread = 45;
+                            fragBullet = new BasicBulletType(7, 20) {{
+                                lifetime = PvUtil.GetRange(this.speed, 12);
+                                trailLength = 15;
+                                trailWidth = 2;
+                                homingPower = 0.008f;
+                                homingRange = 12;
+                                trailColor = backColor = lightColor = Pal.heal;
+                            }};
+                        }},
+                    PvItems.carbonFiber,new BasicBulletType(5,215)
+                    {
+                        {
+                            lifetime = PvUtil.GetRange(this.speed, 58);
+                            pierce = true;
+                            pierceCap = 10;
+                            trailLength = 15;
+                            trailWidth = 2;
+                            trailColor = backColor = lightColor = Pal.heal;
+                        }}
+            );
+            drawer = new DrawTurret(PvUtil.GetName("Pov")){{
+                parts.addAll(
+                        parts.add(
+                                new RegionPart("-l"){{
+                                    progress = PartProgress.recoil;
+                                    heatProgress = PartProgress.recoil;
+                                    heatColor = Color.valueOf("ff6214");
+                                    mirror = false;
+                                    under = false;
+                                    moveY = -2.66f;
+                                    moveRot = 1f;
+                                }},
+                                new RegionPart("-r"){{
+                                    progress = PartProgress.recoil;
+                                    heatProgress = PartProgress.recoil;
+                                    heatColor = Color.valueOf("ff6214");
+                                    mirror = false;
+                                    under = false;
+                                    moveY = -2.66f;
+                                    moveRot = -1f;
+                                }},
+                                new RegionPart("-lb"){{
+                                    progress = PartProgress.warmup;
+                                    heatProgress = PartProgress.warmup;
+                                    heatColor = Color.valueOf("ff6214");
+                                    mirror = false;
+                                    under = true;
+                                    moveY = -2.5f;
+                                    moveX = -2.5f;
+                                }},
+                                new RegionPart("-rb"){{
+                                    progress = PartProgress.warmup;
+                                    heatProgress = PartProgress.warmup;
+                                    heatColor = Color.valueOf("ff6214");
+                                    mirror = false;
+                                    under = true;
+                                    moveY = -2.5f;
+                                    moveX = 2.5f;
+                                }}
+                        )
+                );
+            }};
+        }};
+        reaper = new ItemTurret("reaper")
+        {{
+            localizedName = "Reaper";
+            description = "The Bringer of death to even the strongest T4. its only downside is that it can easily be overrun with a lot of enemies.";
+            size = 5;
+            health = 8500;
+            consumePower(1100f/60f);
+            liquidCapacity = 60;
+            reload = 60f;
+            inaccuracy = 2;
+            range = 8*85;
+            shootCone = 90;
+            targetAir = true;
+            targetGround = false;
+            coolantMultiplier = 1.5f;
+            recoil = 5;
+            shake = 1;
+            requirements(Category.turret,with(Items.copper,1)); //Todo
+            ammo(
+                    PvItems.platinum,new BasicBulletType(8,1075)
+                    {{
+                        lifetime = PvUtil.GetRange(this.speed,85);
+                        collidesAir = true;
+                        collidesGround = false;
+                        spin = 1;
+                        width = 10;
+                        height = 10;
+                        backColor = trailColor = Pal.redderDust;
+                        trailWidth = 2;
+                        trailLength = 40;
+                        trailRotation = true;
+                        fragBullets = 3;
+                        bulletInterval = 2;
+                        intervalBullets = 3;
+                        weaveRandom = true;
+                        homingPower = 0.01f;
+                        weaveScale = 1;
+                        weaveMag = 1;
+                        intervalBullet = new LightningBulletType()
+                        {{
+                            lightningColor = lightColor = Pal.redderDust;
+                            lightningDamage = 15;
+                            lightningLength = 10;
+                        }};
+                        fragBullet = new LightningBulletType()
+                        {{
+                            lightningColor = lightColor = Pal.redderDust;
+                            lightningDamage = 15;
+                            lightningLength = 20;
+                        }};
+                    }},
+                    PvItems.erbium,new BasicBulletType(8,1650)
+                    {{
+                        lifetime = PvUtil.GetRange(this.speed,85);
+                        reloadMultiplier = 0.7f;
+                        collidesAir = true;
+                        collidesGround = false;
+                        spin = 1;
+                        width = 10;
+                        height = 10;
+                        backColor = trailColor = Pal.redderDust;
+                        trailWidth = 2;
+                        trailLength = 40;
+                        trailRotation = true;
+                        fragBullets = 5;
+                        bulletInterval = 2;
+                        intervalBullets = 5;
+                        weaveRandom = true;
+                        homingPower = 0.01f;
+                        weaveScale = 1;
+                        weaveMag = 1;
+                        intervalBullet = new LightningBulletType()
+                        {{
+                            lightningColor = lightColor = Pal.redderDust;
+                            lightningDamage = 15;
+                            lightningLength = 10;
+                        }};
+                        fragBullet = new LightningBulletType()
+                        {{
+                            lightningColor = lightColor = Pal.redderDust;
+                            lightningDamage = 15;
+                            lightningLength = 20;
+                        }};
+                    }}
+            );
+            drawer = new DrawTurret(PvUtil.GetName("Pov")){{
+                parts.addAll(
+                        new RegionPart("-l"){{
+                            progress = PartProgress.recoil;
+                            heatProgress = PartProgress.recoil;
+                            heatColor = Color.valueOf("ff6214");
+                            mirror = false;
+                            under = false;
+                            moveY = -2f;
+                            moveX = -1.5f;
+                            moveRot = 10f;
+                        }},
+                        new RegionPart("-r"){{
+                            progress = PartProgress.recoil;
+                            heatProgress = PartProgress.recoil;
+                            heatColor = Color.valueOf("ff6214");
+                            mirror = false;
+                            under = false;
+                            moveY = -2f;
+                            moveX = 1.5f;
+                            moveRot = -10f;
                         }},
                         new ShapePart(){{
                             progress = PartProgress.warmup;
                             rotateSpeed = -5;
-                            color = Pal.lighterOrange;
+                            color = Pal.lightishGray;
+                            sides = 7;
+                            hollow = true;
+                            stroke = 0f;
+                            strokeTo = 1.6f;
+                            radius = 12f;
+                            layer = Layer.effect;
+                            y = -25;
+                        }},
+                        new ShapePart(){{
+                            progress = PartProgress.warmup;
+                            rotateSpeed = 4;
+                            color = Pal.lightishGray;
+                            sides = 4;
+                            hollow = true;
+                            stroke = 0f;
+                            strokeTo = 1.6f;
+                            radius = 8f;
+                            layer = Layer.effect;
+                            y = -25;
+                        }},
+                        new ShapePart(){{
+                            progress = PartProgress.warmup;
+                            rotateSpeed = -5;
+                            color = Pal.lightishGray;
                             sides = 20;
                             hollow = true;
                             stroke = 0f;
                             strokeTo = 1.6f;
-                            radius = 11f;
+                            radius = 14f;
                             layer = Layer.effect;
-                            x = 20;
+                            y = -25;
                         }},
                         new HaloPart(){{
                             progress = PartProgress.warmup;
-                            color = Pal.lighterOrange;
-                            sides = 3;
+                            color = Pal.lightishGray;
+                            sides = 5;
                             hollow = true;
                             shapes = 3;
                             stroke = 0f;
                             strokeTo = 4f;
-                            radius = 1f;
+                            radius = 3f;
                             haloRadius = 13f;
                             haloRotateSpeed = 1;
                             layer = Layer.effect;
-                            x = 20;
+                            y = -25;
                         }}
+                );
+            }};
+        }};
+    }
+    public static void loadSize6()
+    {
+        shuttle = new ItemTurret("shuttle")
+        {{
+            requirements(Category.turret,with(Items.copper,1)); //Todo
+            localizedName = "Shuttle";
+            shoot = new AlternateShootPatternTurret(8);
+            reload = 60f/4.6f;
+            inaccuracy = 2;
+            size = 6;
+            health = 12000;
+            minWarmup = 0.9f;
+            consumePower(840f/60f);
+            range = 87*8;
+            shootY = 16;
+            recoil = 4;
+            ammo(
+                    PvItems.carbonFiber,new BasicBulletType(8,200)
+                    {{
+                        sprite = "missile-large";
+                        status = PvStatusEffects.resiliant;
+                        statusDuration = 600;
+                        shootEffect = Fx.shootSmokeSquareBig;
+                        smokeEffect = Fx.shootSmokeDisperse;
+                        trailWidth = 4;
+                        width *= 2;
+                        height *= 2;
+                        trailLength = 40;
+                        lifetime = PvUtil.GetRange(8,87);
+                        hitShake = despawnShake = 4;
+                        shake = 2;
+                        backColor = trailColor = lightColor = Pal.lighterOrange;
+                        trailInterval = 5;
+                        trailChance = 90f;
+                        weaveMag = 2;
+                        weaveScale = 5f;
+                        weaveRandom = true;
+                        trailEffect = Fx.missileTrail;
+                        pierceCap = 10;
+                        pierce = true;
+                        laserAbsorb = true;
+                        buildingDamageMultiplier = 0.1f;
+                        fragBullets = 8;
+                        homingPower = 0.02f;
+                        homingRange = 87*8f;
+                        fragBullet = new LightningBulletType()
+                        {{
+                            lightColor = lightningColor = Pal.lighterOrange;
+                            lightningDamage = 20;
+                            damage = 20;
+                            lightningLength = 8*3;
+                            status = PvStatusEffects.resiliant;
+                            statusDuration = 180;
+                        }};
+                    }}
+            );
+            drawer = new DrawTurret(PvUtil.GetName("Pov")){{
+                parts.addAll(
+                        Seq.with(
+                                //Arms and Barrels
+                                new RegionPart("-l1"){{
+                                    progress = PartProgress.recoil.mul(((AlternateShootPatternTurret)shoot).selectedBarrel1);
+                                    heatProgress = PartProgress.recoil;
+                                    heatColor = Color.valueOf("ff6214");
+                                    mirror = false;
+                                    under = false;
+                                    moveY = -6f;
+                                }},
+                                new RegionPart("-r1"){{
+                                    progress = PartProgress.recoil.mul(((AlternateShootPatternTurret)shoot).selectedBarrel2);
+                                    heatProgress = PartProgress.recoil;
+                                    heatColor = Color.valueOf("ff6214");
+                                    mirror = false;
+                                    under = false;
+                                    moveY = -6f;
+                                }},
+                                new RegionPart("-l2"){{
+                                    progress = PartProgress.recoil;
+                                    heatProgress = PartProgress.recoil;
+                                    heatColor = Color.valueOf("ff6214");
+                                    mirror = false;
+                                    under = false;
+                                    moveY = -2f;
+                                    moveX = -4f;
+                                    moveRot = 3;
+                                }},
+                                new RegionPart("-r2"){{
+                                    progress = PartProgress.recoil;
+                                    heatProgress = PartProgress.recoil;
+                                    heatColor = Color.valueOf("ff6214");
+                                    mirror = false;
+                                    under = false;
+                                    moveY = -2f;
+                                    moveX = 4f;
+                                    moveRot = -3;
+                                }},
+                                new RegionPart("-l3"){{
+                                    progress = PartProgress.warmup;
+                                    heatProgress = PartProgress.recoil;
+                                    heatColor = Color.valueOf("ff6214");
+                                    mirror = false;
+                                    under = false;
+                                    moveY = 4f;
+                                    moveX = -10f;
+                                    moveRot = 30;
+                                }},
+                                new RegionPart("-r3"){{
+                                    progress = PartProgress.warmup;
+                                    heatProgress = PartProgress.recoil;
+                                    heatColor = Color.valueOf("ff6214");
+                                    mirror = false;
+                                    under = false;
+                                    moveY = 4f;
+                                    moveX = 10f;
+                                    moveRot = -30;
+                                }},
+                                //Summoning Circle
+                                new ShapePart(){{
+                                    progress = PartProgress.warmup;
+                                    rotateSpeed = -5;
+                                    color = Pal.lighterOrange;
+                                    sides = 4;
+                                    hollow = true;
+                                    stroke = 0f;
+                                    strokeTo = 1.6f;
+                                    radius = 10f;
+                                    layer = Layer.effect;
+                                    y = -25;
+                                }},
+                                new ShapePart(){{
+                                    progress = PartProgress.warmup;
+                                    rotateSpeed = 5;
+                                    color = Pal.lighterOrange;
+                                    sides = 4;
+                                    hollow = true;
+                                    stroke = 0f;
+                                    strokeTo = 1.6f;
+                                    radius = 6f;
+                                    layer = Layer.effect;
+                                    y = -25;
+                                }},
+                                new ShapePart(){{
+                                    progress = PartProgress.warmup;
+                                    rotateSpeed = -5;
+                                    color = Pal.lighterOrange;
+                                    sides = 20;
+                                    hollow = true;
+                                    stroke = 0f;
+                                    strokeTo = 1.6f;
+                                    radius = 11f;
+                                    layer = Layer.effect;
+                                    y = -25;
+                                }},
+                                new HaloPart(){{
+                                    progress = PartProgress.warmup;
+                                    color = Pal.lighterOrange;
+                                    sides = 3;
+                                    hollow = true;
+                                    shapes = 3;
+                                    stroke = 0f;
+                                    strokeTo = 4f;
+                                    radius = 1f;
+                                    haloRadius = 13f;
+                                    haloRotateSpeed = 1;
+                                    layer = Layer.effect;
+                                    y = -25;
+                                }}
                         )
                 );
-        }
-    };
-}
-};
-}
+            }};
+        }};
+    }
 }
