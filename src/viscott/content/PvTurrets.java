@@ -23,6 +23,7 @@ import mindustry.world.blocks.defense.turrets.ItemTurret;
 import mindustry.world.blocks.defense.turrets.LiquidTurret;
 import mindustry.world.blocks.defense.turrets.PowerTurret;
 import mindustry.world.draw.DrawTurret;
+import viscott.content.shootpatterns.AlternateShootPatternTurret;
 import viscott.content.shootpatterns.CyclicPatternRainmaker;
 import viscott.content.shootpatterns.CyclicPatternStriker;
 import viscott.utilitys.PvUtil;
@@ -32,7 +33,9 @@ import static mindustry.type.ItemStack.with;
 
 public class PvTurrets{
     public static Block
-            splinter,shatter,euro,snap,hourglass,phantom,razor,rainmaker,striker,marksman, xacto,reaper
+            splinter,shatter,euro,snap,hourglass,
+            phantom,razor,rainmaker,striker,
+            marksman, xacto,reaper,shuttle
             ;
 
     public static void load(){
@@ -1015,6 +1018,46 @@ public class PvTurrets{
                 );
             }};
         }};
-
+        shuttle = new ItemTurret("shuttle")
+        {{
+            requirements(Category.turret,with(Items.copper,1)); //Todo
+            localizedName = "Shuttle";
+            shoot = new AlternateShootPatternTurret(8);
+            reload = 60;
+            size = 6;
+            health = 12000;
+            consumePower(840f/60f);
+            range = 87*8;
+            shootY = 16;
+            ammo(
+                    PvItems.carbonFiber,new BasicBulletType(8,360)
+                    {{
+                        trailWidth = 2;
+                        trailLength = 20;
+                    }}
+            );
+            drawer = new DrawTurret(PvUtil.GetName("Pov")){{
+                parts.addAll(
+                        parts.add(
+                                new RegionPart("-l1"){{
+                                    progress = PartProgress.recoil.mul(((AlternateShootPatternTurret)shoot).selectedBarrel1);
+                                    heatProgress = PartProgress.recoil;
+                                    heatColor = Color.valueOf("ff6214");
+                                    mirror = false;
+                                    under = false;
+                                    moveY = -2f;
+                                }},
+                                new RegionPart("-r1"){{
+                                    progress = PartProgress.recoil.mul(((AlternateShootPatternTurret)shoot).selectedBarrel2);
+                                    heatProgress = PartProgress.recoil;
+                                    heatColor = Color.valueOf("ff6214");
+                                    mirror = false;
+                                    under = false;
+                                    moveY = -2f;
+                                }}
+                        )
+                );
+            }};
+        }};
         }
     }
