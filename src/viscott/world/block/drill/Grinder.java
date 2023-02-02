@@ -1,11 +1,14 @@
 package viscott.world.block.drill;
 
 
+import arc.Core;
 import arc.math.Mathf;
+import arc.util.Strings;
 import mindustry.game.Team;
 import mindustry.gen.Building;
 import mindustry.graphics.Drawf;
 import mindustry.graphics.Pal;
+import mindustry.ui.Bar;
 import mindustry.world.Block;
 import mindustry.world.Tile;
 import viscott.world.block.PvBlock;
@@ -37,14 +40,32 @@ public class Grinder extends PvBlock {
         Drawf.dashRect(Pal.lighterOrange,x*8-offset-range*8-fix,y*8-offset-range*8-fix,size * 8 + range * 16,size * 8 + range * 16);
     }
 
+    @Override
+    public void setBars(){
+        super.setBars();
+
+        addBar("grindspeed", (GrinderBuild e) ->
+                new Bar(() -> Core.bundle.format("bar.grindspeed", Strings.fixed(e.progress * 60 * e.timeScale(), 2)), () -> Pal.lighterOrange, () -> e.progress));
+    }
+
     public class GrinderBuild extends Building
     {
-        public Block[] mineable = visibleBlocks();
+        public Block[] mineable;
+        float maxMineSpeed;
+
+        @Override
+        public void created()
+        {
+            super.created();
+            mineable = visibleBlocks();
+            maxMineSpeed = Arrays.stream(mineable).filter(a -> a instanceof DepositWall).count() * speedPerOre;
+        }
+
         public Block[] visibleBlocks()
         {
             int ix = ((int)x/8)-(int)Math.floor((size-1)/2)-range,
-            iy = ((int)y/8)-(int)Math.floor((size-1)/2)-range,
-            rangeSize = size + range * 2;
+                    iy = ((int)y/8)-(int)Math.floor((size-1)/2)-range,
+                    rangeSize = size + range * 2;
             Block[] newBlockList = new Block[rangeSize*rangeSize];
             for (int i1 = 0;i1<rangeSize;i1++)
                 for (int i2 = 0;i2<rangeSize;i2++)
@@ -52,12 +73,11 @@ public class Grinder extends PvBlock {
             return newBlockList;
         }
 
-        float maxMineSpeed = Arrays.stream(mineable).filter(a -> a instanceof DepositWall).count() * speedPerOre;
         float progress;
         @Override
         public void update()
         {
-            progress = Mathf.approachDelta(progress,100,maxMineSpeed);
+            progress = Mathf.approachDelta(progress,1,maxMineSpeed/100);
         }
     }
 }
