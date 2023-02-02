@@ -27,6 +27,7 @@ import mindustry.world.blocks.defense.turrets.ItemTurret;
 import mindustry.world.blocks.defense.turrets.LiquidTurret;
 import mindustry.world.blocks.defense.turrets.PowerTurret;
 import mindustry.world.draw.DrawTurret;
+import mindustry.world.meta.BuildVisibility;
 import viscott.content.shootpatterns.AlternateShootPatternTurret;
 import viscott.content.shootpatterns.CyclicPatternRainmaker;
 import viscott.content.shootpatterns.CyclicPatternStriker;
@@ -39,7 +40,8 @@ public class PvTurrets{
     public static Block
             splinter,shatter,euro,snap,hourglass,
             phantom,razor,rainmaker,striker,
-            marksman, xacto,reaper,shuttle, nuero
+            marksman, xacto,reaper,shuttle, nuero,
+            xterminium
             ;
 
     public static void load(){
@@ -1377,7 +1379,7 @@ public class PvTurrets{
                                     strokeTo = 1.6f;
                                     radius = 10f;
                                     layer = Layer.effect;
-                                    x = -10;
+                                    x = -20;
                                 }},
                                 new ShapePart(){{
                                     progress = PartProgress.warmup;
@@ -1473,5 +1475,181 @@ public class PvTurrets{
     };
 }
 };
+        xterminium = new ItemTurret("xterminium")
+        {{
+            requirements(Category.turret,with(Items.copper,1)); //Todo
+            localizedName = "X-terminium";
+            buildVisibility = BuildVisibility.sandboxOnly;
+            shoot = new AlternateShootPatternTurret(20);
+            reload = 300;
+            inaccuracy = 2;
+            recoilTime = 30;
+            size = 8;
+            health = 100000;
+            minWarmup = 0.9f;
+            range = 100*8;
+            shootWarmupSpeed = 1/300f;
+            warmupMaintainTime = 300f;
+            shootY = 16;
+            recoil = 8;
+            heatRequirement = 1000;
+            maxHeatEfficiency = 20;
+            ammo(
+                    PvItems.carbonFiber,new ArtilleryBulletType(5,0)
+                    {{
+                        fragBullets = 10;
+                        fragRandomSpread = 0;
+                        fragSpread = 36;
+                        fragVelocityMin = 1;
+                        fragOnHit = false;
+                        trailLength = 16;
+                        lifetime = PvUtil.GetRange(5, 100);
+                        frontColor = backColor = trailColor = Pal.slagOrange;
+                        fragBullet = new BasicBulletType(4,200){{
+                            fragBullets = 2;
+                            fragRandomSpread = 0;
+                            fragSpread = 36;
+                            fragVelocityMin = 1;
+                            fragOnHit = false;
+                            drag = 1/300f;
+                            lifetime = 360;
+                            trailLength = 8;
+                            frontColor = backColor = trailColor = Pal.redDust;
+                            fragBullet = new BasicBulletType(7, 300){{
+                                frontColor = backColor = trailColor = Pal.redderDust;
+                                trailLength = 32;
+                                homingPower = 1;
+                            }};
+                        }};
+                    }}
+            );
+            drawer = new DrawTurret(PvUtil.GetName("Pov")){{
+                parts.addAll(
+                        Seq.with(
+                                //Arms and Barrels
+                                new RegionPart("-l"){{
+                                    progress = PartProgress.recoil.mul(((AlternateShootPatternTurret)shoot).selectedBarrel1);
+                                    heatProgress = PartProgress.recoil;
+                                    heatColor = Color.valueOf("ff6214");
+                                    mirror = false;
+                                    under = false;
+                                    moveY = -4f;
+                                }},
+                                new RegionPart("-r"){{
+                                    progress = PartProgress.recoil.mul(((AlternateShootPatternTurret)shoot).selectedBarrel2);
+                                    heatProgress = PartProgress.recoil;
+                                    heatColor = Color.valueOf("ff6214");
+                                    mirror = false;
+                                    under = false;
+                                    moveY = -4f;
+                                }},
+
+                                //Summoning Circles
+                                new ShapePart(){{
+                                    progress = PartProgress.warmup;
+                                    rotateSpeed = -5;
+                                    color = Color.valueOf("875aab");
+                                    sides = 4;
+                                    hollow = true;
+                                    stroke = 0f;
+                                    strokeTo = 1.6f;
+                                    radius = 10f;
+                                    layer = Layer.effect;
+                                    x = -40;
+                                }},
+                                new ShapePart(){{
+                                    progress = PartProgress.warmup;
+                                    rotateSpeed = 5;
+                                    color = Color.valueOf("875aab");
+                                    sides = 4;
+                                    hollow = true;
+                                    stroke = 0f;
+                                    strokeTo = 1.6f;
+                                    radius = 6f;
+                                    layer = Layer.effect;
+                                    x = -40;
+                                }},
+                                new ShapePart(){{
+                                    progress = PartProgress.warmup;
+                                    rotateSpeed = -5;
+                                    color = Color.valueOf("875aab");
+                                    sides = 20;
+                                    hollow = true;
+                                    stroke = 0f;
+                                    strokeTo = 1.6f;
+                                    radius = 11f;
+                                    layer = Layer.effect;
+                                    x = -40;
+                                }},
+                                new HaloPart(){{
+                                    progress = PartProgress.warmup;
+                                    color = Color.valueOf("875aab");
+                                    sides = 3;
+                                    hollow = true;
+                                    shapes = 3;
+                                    stroke = 0f;
+                                    strokeTo = 4f;
+                                    radius = 1f;
+                                    haloRadius = 13f;
+                                    haloRotateSpeed = 1;
+                                    layer = Layer.effect;
+                                    x = -40;
+                                }},
+                                new ShapePart(){{
+                                    progress = PartProgress.warmup;
+                                    rotateSpeed = -5;
+                                    color = Color.valueOf("57d87e");
+                                    sides = 4;
+                                    hollow = true;
+                                    stroke = 0f;
+                                    strokeTo = 1.6f;
+                                    radius = 10f;
+                                    layer = Layer.effect;
+                                    x = 40;
+                                }},
+                                new ShapePart(){{
+                                    progress = PartProgress.warmup;
+                                    rotateSpeed = 5;
+                                    color = Color.valueOf("57d87e");
+                                    sides = 4;
+                                    hollow = true;
+                                    stroke = 0f;
+                                    strokeTo = 1.6f;
+                                    radius = 6f;
+                                    layer = Layer.effect;
+                                    x = 40;
+                                }},
+                                new ShapePart(){{
+                                    progress = PartProgress.warmup;
+                                    rotateSpeed = -5;
+                                    color = Color.valueOf("57d87e");
+                                    sides = 20;
+                                    hollow = true;
+                                    stroke = 0f;
+                                    strokeTo = 1.6f;
+                                    radius = 11f;
+                                    layer = Layer.effect;
+                                    x = 40;
+                                }},
+                                new HaloPart(){{
+                                    progress = PartProgress.warmup;
+                                    color = Color.valueOf("57d87e");
+                                    sides = 3;
+                                    hollow = true;
+                                    shapes = 3;
+                                    stroke = 0f;
+                                    strokeTo = 4f;
+                                    radius = 1f;
+                                    haloRadius = 13f;
+                                    haloRotateSpeed = 1;
+                                    layer = Layer.effect;
+                                    x = 40;
+                                }}
+                        )
+                );
+            }
+            };
+        }
+        };
 }
 }
