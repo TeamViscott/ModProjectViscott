@@ -1152,7 +1152,7 @@ public class PvTurrets{
                                     mirror = false;
                                     under = false;
                                     moveY = -2f;
-                                    moveX = -10f;
+                                    moveX = -4f;
                                     moveRot = 3;
                                 }},
                                 new RegionPart("-r2"){{
@@ -1161,8 +1161,8 @@ public class PvTurrets{
                                     heatColor = Color.valueOf("ff6214");
                                     mirror = false;
                                     under = false;
-                                    moveY = -22f;
-                                    moveX = 10f;
+                                    moveY = -2f;
+                                    moveX = 4f;
                                     moveRot = -3;
                                 }},
                                 new RegionPart("-l3"){{
@@ -1248,11 +1248,13 @@ public class PvTurrets{
             reload = 4*60;
             inaccuracy = 2;
             size = 4;
-            health = 6000;
+            health = 3000;
             minWarmup = 0.9f;
             range = 87*8;
             shootY = 16;
             recoil = 4;
+            heatRequirement = 8;
+            maxHeatEfficiency = 4;
             ammo(
                     PvItems.carbonFiber,new BasicBulletType(0,0)
                     {{
@@ -1337,7 +1339,7 @@ public class PvTurrets{
                 parts.addAll(
                         Seq.with(
                                 //Arms and Barrels
-                                new RegionPart("-l1"){{
+                                new RegionPart("-l"){{
                                     progress = PartProgress.recoil.mul(((AlternateShootPatternTurret)shoot).selectedBarrel1);
                                     heatProgress = PartProgress.recoil;
                                     heatColor = Color.valueOf("ff6214");
@@ -1345,7 +1347,7 @@ public class PvTurrets{
                                     under = false;
                                     moveY = -4f;
                                 }},
-                                new RegionPart("-r1"){{
+                                new RegionPart("-r"){{
                                     progress = PartProgress.recoil.mul(((AlternateShootPatternTurret)shoot).selectedBarrel2);
                                     heatProgress = PartProgress.recoil;
                                     heatColor = Color.valueOf("ff6214");
@@ -1353,47 +1355,17 @@ public class PvTurrets{
                                     under = false;
                                     moveY = -4f;
                                 }},
-                                new RegionPart("-l2"){{
+                                new RegionPart("-top"){{
                                     progress = PartProgress.recoil;
                                     heatProgress = PartProgress.recoil;
                                     heatColor = Color.valueOf("ff6214");
                                     mirror = false;
                                     under = false;
-                                    moveY = -2f;
-                                    moveX = -10f;
-                                    moveRot = 3;
+                                    moveY = -4f;
+                                    moveX = 0f;
+                                    moveRot = 0;
                                 }},
-                                new RegionPart("-r2"){{
-                                    progress = PartProgress.recoil;
-                                    heatProgress = PartProgress.recoil;
-                                    heatColor = Color.valueOf("ff6214");
-                                    mirror = false;
-                                    under = false;
-                                    moveY = -22f;
-                                    moveX = 10f;
-                                    moveRot = -3;
-                                }},
-                                new RegionPart("-l3"){{
-                                    progress = PartProgress.warmup;
-                                    heatProgress = PartProgress.recoil;
-                                    heatColor = Color.valueOf("ff6214");
-                                    mirror = false;
-                                    under = false;
-                                    moveY = 4f;
-                                    moveX = -10f;
-                                    moveRot = 30;
-                                }},
-                                new RegionPart("-r3"){{
-                                    progress = PartProgress.warmup;
-                                    heatProgress = PartProgress.recoil;
-                                    heatColor = Color.valueOf("ff6214");
-                                    mirror = false;
-                                    under = false;
-                                    moveY = 4f;
-                                    moveX = 10f;
-                                    moveRot = -30;
-                                }},
-                                //Summoning Circle
+                                //Summoning Circles
                                 new ShapePart(){{
                                     progress = PartProgress.warmup;
                                     rotateSpeed = -5;
@@ -1404,7 +1376,7 @@ public class PvTurrets{
                                     strokeTo = 1.6f;
                                     radius = 10f;
                                     layer = Layer.effect;
-                                    y = -25;
+                                    x = -10;
                                 }},
                                 new ShapePart(){{
                                     progress = PartProgress.warmup;
@@ -1416,7 +1388,7 @@ public class PvTurrets{
                                     strokeTo = 1.6f;
                                     radius = 6f;
                                     layer = Layer.effect;
-                                    y = -25;
+                                    x = -10;
                                 }},
                                 new ShapePart(){{
                                     progress = PartProgress.warmup;
@@ -1428,7 +1400,7 @@ public class PvTurrets{
                                     strokeTo = 1.6f;
                                     radius = 11f;
                                     layer = Layer.effect;
-                                    y = -25;
+                                    x = -10;
                                 }},
                                 new HaloPart(){{
                                     progress = PartProgress.warmup;
@@ -1442,8 +1414,58 @@ public class PvTurrets{
                                     haloRadius = 13f;
                                     haloRotateSpeed = 1;
                                     layer = Layer.effect;
-                                    y = -25;
-                                }}
+                                    x = -10;
+                                }},
+                new ShapePart(){{
+                    progress = PartProgress.warmup;
+                    rotateSpeed = -5;
+                    color = Pal.lighterOrange;
+                    sides = 4;
+                    hollow = true;
+                    stroke = 0f;
+                    strokeTo = 1.6f;
+                    radius = 10f;
+                    layer = Layer.effect;
+                    x = 10;
+                }},
+                        new ShapePart(){{
+                            progress = PartProgress.warmup;
+                            rotateSpeed = 5;
+                            color = Pal.lighterOrange;
+                            sides = 4;
+                            hollow = true;
+                            stroke = 0f;
+                            strokeTo = 1.6f;
+                            radius = 6f;
+                            layer = Layer.effect;
+                            x = 10;
+                        }},
+                        new ShapePart(){{
+                            progress = PartProgress.warmup;
+                            rotateSpeed = -5;
+                            color = Pal.lighterOrange;
+                            sides = 20;
+                            hollow = true;
+                            stroke = 0f;
+                            strokeTo = 1.6f;
+                            radius = 11f;
+                            layer = Layer.effect;
+                            x = 10;
+                        }},
+                        new HaloPart(){{
+                            progress = PartProgress.warmup;
+                            color = Pal.lighterOrange;
+                            sides = 3;
+                            hollow = true;
+                            shapes = 3;
+                            stroke = 0f;
+                            strokeTo = 4f;
+                            radius = 1f;
+                            haloRadius = 13f;
+                            haloRotateSpeed = 1;
+                            layer = Layer.effect;
+                            x = 10;
+                        }}
                         )
                 );
         }
