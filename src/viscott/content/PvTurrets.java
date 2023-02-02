@@ -914,7 +914,7 @@ public class PvTurrets{
         reaper = new ItemTurret("reaper")
         {{
             localizedName = "Reaper";
-            description = "The Bringer of death to even the strongest T4. its only downside is that it can easily be overrun with a lot of enemys.";
+            description = "The Bringer of death to even the strongest T4. its only downside is that it can easily be overrun with a lot of enemies.";
             size = 5;
             health = 8500;
             consumePower(1100f/60f);
@@ -922,6 +922,7 @@ public class PvTurrets{
             reload = 60f;
             inaccuracy = 2;
             range = 8*85;
+            shootCone = 90;
             targetAir = true;
             targetGround = false;
             coolantMultiplier = 1.5f;
@@ -1056,7 +1057,7 @@ public class PvTurrets{
                                 new HaloPart(){{
                                     progress = PartProgress.warmup;
                                     color = Pal.lightishGray;
-                                    sides = 3;
+                                    sides = 5;
                                     hollow = true;
                                     shapes = 3;
                                     stroke = 0f;
@@ -1150,9 +1151,9 @@ public class PvTurrets{
                                     heatColor = Color.valueOf("ff6214");
                                     mirror = false;
                                     under = false;
-                                    moveY = 2f;
-                                    moveX = -8f;
-                                    moveRot = 30;
+                                    moveY = -2f;
+                                    moveX = -10f;
+                                    moveRot = 3;
                                 }},
                                 new RegionPart("-r2"){{
                                     progress = PartProgress.recoil;
@@ -1160,9 +1161,9 @@ public class PvTurrets{
                                     heatColor = Color.valueOf("ff6214");
                                     mirror = false;
                                     under = false;
-                                    moveY = 2f;
-                                    moveX = 8f;
-                                    moveRot = -30;
+                                    moveY = -22f;
+                                    moveX = 10f;
+                                    moveRot = -3;
                                 }},
                                 new RegionPart("-l3"){{
                                     progress = PartProgress.warmup;
