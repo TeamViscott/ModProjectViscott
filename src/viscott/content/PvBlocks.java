@@ -18,8 +18,6 @@ import mindustry.world.blocks.production.Drill;
 import mindustry.world.draw.DrawDefault;
 import mindustry.world.draw.DrawMulti;
 import mindustry.world.meta.BuildVisibility;
-import viscott.content.pressure.DrawPressureOutput;
-import viscott.content.pressure.PressureProducer;
 import viscott.world.block.PvBlock;
 import viscott.world.block.drill.Grinder;
 import viscott.world.block.environment.DepositWall;
@@ -45,7 +43,7 @@ public class PvBlocks {
 
                     /*Conveyors*/micromassConveyor,massJunction,massRouter,
 
-                    /*Drills*/harvestGrinder,harvestDrill,testGrinder,
+                    /*Drills*/harvestGrinder,harvestDrill,
 
                     /*Power*/opticalNode,auditoryNode,
                     /*Power Production*/smallCarbonPanel,
@@ -199,23 +197,6 @@ public class PvBlocks {
                     localizedName = "Concentrated conduit";
                     health = 60;
                     liquidCapacity = 30;
-                }};
-                /*pressure*/
-                pressureSource = new PressureProducer("pressure-source"){{
-                    requirements(Category.crafting, BuildVisibility.sandboxOnly, with());
-                    drawer = new DrawMulti(new DrawDefault(), new DrawPressureOutput());
-                    rotateDraw = false;
-                    size = 1;
-                    pressureOutput = 1000f;
-                    warmupRate = 1000f;
-                    regionRotated1 = 1;
-                    ambientSound = Sounds.none;
-                }};
-                testGrinder = new Grinder("test-grinder")
-                {{
-                    requirements(Category.production, with());
-                    size = 1;
-                    range = 2;
                 }};
             }
 }
