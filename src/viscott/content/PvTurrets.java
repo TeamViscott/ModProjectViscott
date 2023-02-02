@@ -10,7 +10,10 @@ import mindustry.entities.bullet.*;
 import mindustry.entities.effect.ExplosionEffect;
 import mindustry.entities.effect.MultiEffect;
 import mindustry.entities.effect.WaveEffect;
+import mindustry.entities.part.DrawPart;
+import mindustry.entities.part.HaloPart;
 import mindustry.entities.part.RegionPart;
+import mindustry.entities.part.ShapePart;
 import mindustry.entities.pattern.ShootAlternate;
 import mindustry.entities.pattern.ShootSpread;
 import mindustry.gen.Sounds;
@@ -1024,18 +1027,49 @@ public class PvTurrets{
             requirements(Category.turret,with(Items.copper,1)); //Todo
             localizedName = "Shuttle";
             shoot = new AlternateShootPatternTurret(8);
-            reload = 60;
+            reload = 60f/4.6f;
+            inaccuracy = 2;
             size = 6;
             health = 12000;
             minWarmup = 0.9f;
             consumePower(840f/60f);
             range = 87*8;
             shootY = 16;
+            recoil = 4;
             ammo(
-                    PvItems.carbonFiber,new BasicBulletType(8,360)
+                    PvItems.carbonFiber,new BasicBulletType(8,200)
                     {{
-                        trailWidth = 2;
-                        trailLength = 20;
+                        sprite = "missile-large";
+                        shootEffect = Fx.shootSmokeSquareBig;
+                        smokeEffect = Fx.shootSmokeDisperse;
+                        trailWidth = 4;
+                        width *= 2;
+                        height *= 2;
+                        trailLength = 40;
+                        lifetime = PvUtil.GetRange(8,87);
+                        hitShake = despawnShake = 4;
+                        shake = 2;
+                        backColor = trailColor = lightColor = Pal.lighterOrange;
+                        trailInterval = 5;
+                        trailChance = 90f;
+                        weaveMag = 2;
+                        weaveScale = 5f;
+                        weaveRandom = true;
+                        trailEffect = Fx.missileTrail;
+                        pierceCap = 10;
+                        pierce = true;
+                        laserAbsorb = true;
+                        buildingDamageMultiplier = 0.1f;
+                        fragBullets = 8;
+                        homingPower = 0.02f;
+                        homingRange = 87*8f;
+                        fragBullet = new LightningBulletType()
+                        {{
+                            lightColor = lightningColor = Pal.lighterOrange;
+                            lightningDamage = 20;
+                            damage = 20;
+                            lightningLength = 8*3;
+                        }};
                     }}
             );
             drawer = new DrawTurret(PvUtil.GetName("Pov")){{
@@ -1096,6 +1130,56 @@ public class PvTurrets{
                                     moveY = 4f;
                                     moveX = 10f;
                                     moveRot = -30;
+                                }},
+                                new ShapePart(){{
+                                    progress = PartProgress.warmup;
+                                    rotateSpeed = -5;
+                                    color = Pal.lighterOrange;
+                                    sides = 4;
+                                    hollow = true;
+                                    stroke = 0f;
+                                    strokeTo = 1.6f;
+                                    radius = 10f;
+                                    layer = Layer.effect;
+                                    y = -25;
+                                }},
+                                new ShapePart(){{
+                                    progress = PartProgress.warmup;
+                                    rotateSpeed = 5;
+                                    color = Pal.lighterOrange;
+                                    sides = 4;
+                                    hollow = true;
+                                    stroke = 0f;
+                                    strokeTo = 1.6f;
+                                    radius = 6f;
+                                    layer = Layer.effect;
+                                    y = -25;
+                                }},
+                                new ShapePart(){{
+                                    progress = PartProgress.warmup;
+                                    rotateSpeed = -5;
+                                    color = Pal.lighterOrange;
+                                    sides = 20;
+                                    hollow = true;
+                                    stroke = 0f;
+                                    strokeTo = 1.6f;
+                                    radius = 11f;
+                                    layer = Layer.effect;
+                                    y = -25;
+                                }},
+                                new HaloPart(){{
+                                    progress = PartProgress.warmup;
+                                    color = Pal.lighterOrange;
+                                    sides = 3;
+                                    hollow = true;
+                                    shapes = 3;
+                                    stroke = 0f;
+                                    strokeTo = 4f;
+                                    radius = 1f;
+                                    haloRadius = 13f;
+                                    haloRotateSpeed = 1;
+                                    layer = Layer.effect;
+                                    y = -25;
                                 }}
                         )
                 );
