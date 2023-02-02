@@ -1506,20 +1506,20 @@ public class PvTurrets{
                         lifetime = PvUtil.GetRange(2, 100);
                         frontColor = backColor = trailColor = Pal.slagOrange;
                         fragBullet = new BasicBulletType(3,200){{
-                            fragBullets = 2;
+                            fragBullets = 3;
                             fragRandomSpread = 0;
                             fragSpread = 36;
                             fragVelocityMin = 1;
                             fragOnHit = false;
                             drag = 1/100f;
-                            lifetime = 360;
+                            lifetime = 120;
                             trailLength = 8;
                             frontColor = backColor = trailColor = Pal.redDust;
                             fragBullet = new BasicBulletType(5, 300){{
                                 frontColor = backColor = trailColor = Pal.redderDust;
                                 trailLength = 32;
                                 homingPower = 1;
-                                homingRange = 75*8;
+                                homingRange = 100*8;
                                 lifetime = PvUtil.GetRange(5, 100);
                             }};
                         }};
