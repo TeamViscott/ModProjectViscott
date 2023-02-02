@@ -84,15 +84,29 @@ public class Grinder extends PvBlock {
         }
 
         float progress;
+        float mine = 0;
         @Override
         public void update()
         {
             progress = Mathf.approachDelta(progress,1,maxMineSpeed/100);
+            mine = Mathf.approachDelta(mine,0,timeScale()*delta()/20);
             if (progress == 1) {
-                mineable.forEach(a -> items.add(a.itemDrop, 1));
+                mineable.forEach(a ->
+                {
+                    if (items.get(a.itemDrop) < itemCapacity)
+                        items.add(a.itemDrop, 1);
+                });
                 progress = 0;
+                mine = 1;
             }
-            cdump();
+            dump();
+        }
+
+        @Override
+        public void draw()
+        {
+            super.draw();
+            Drawf.dashRect(Pal.lighterOrange,x-mine*4,y-mine*4,mine*8,mine*8);
         }
     }
 }
