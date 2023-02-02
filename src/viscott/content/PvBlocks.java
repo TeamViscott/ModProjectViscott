@@ -45,7 +45,7 @@ public class PvBlocks {
 
                     /*Conveyors*/micromassConveyor,massJunction,massRouter,
 
-                    /*Drills*/harvestGrinder,harvestDrill,
+                    /*Drills*/harvestGrinder,harvestDrill,testGrinder,
 
                     /*Power*/opticalNode,auditoryNode,
                     /*Power Production*/smallCarbonPanel,
@@ -210,6 +210,12 @@ public class PvBlocks {
                     warmupRate = 1000f;
                     regionRotated1 = 1;
                     ambientSound = Sounds.none;
+                }};
+                testGrinder = new Grinder("test-grinder")
+                {{
+                    requirements(Category.production, with());
+                    size = 1;
+                    range = 2;
                 }};
             }
 }
