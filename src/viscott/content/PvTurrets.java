@@ -1040,6 +1040,8 @@ public class PvTurrets{
                     PvItems.carbonFiber,new BasicBulletType(8,200)
                     {{
                         sprite = "missile-large";
+                        status = PvStatusEffects.resiliant;
+                        statusDuration = 600;
                         shootEffect = Fx.shootSmokeSquareBig;
                         smokeEffect = Fx.shootSmokeDisperse;
                         trailWidth = 4;
@@ -1069,12 +1071,15 @@ public class PvTurrets{
                             lightningDamage = 20;
                             damage = 20;
                             lightningLength = 8*3;
+                            status = PvStatusEffects.resiliant;
+                            statusDuration = 180;
                         }};
                     }}
             );
             drawer = new DrawTurret(PvUtil.GetName("Pov")){{
                 parts.addAll(
                         Seq.with(
+                                //Arms and Barrels
                                 new RegionPart("-l1"){{
                                     progress = PartProgress.recoil.mul(((AlternateShootPatternTurret)shoot).selectedBarrel1);
                                     heatProgress = PartProgress.recoil;
@@ -1131,6 +1136,7 @@ public class PvTurrets{
                                     moveX = 10f;
                                     moveRot = -30;
                                 }},
+                                //Summoning Circle
                                 new ShapePart(){{
                                     progress = PartProgress.warmup;
                                     rotateSpeed = -5;

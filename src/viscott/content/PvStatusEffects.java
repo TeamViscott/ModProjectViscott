@@ -6,7 +6,7 @@ import viscott.world.statusEffects.StatusEffectStack;
 
 public class PvStatusEffects {
     public static StatusEffect
-    timeWarped,doused, disabled, expent
+    timeWarped,doused, disabled, expent, resiliant, ungratefull
             ;
     public static void load()
     {
@@ -40,6 +40,24 @@ public class PvStatusEffects {
             speedMultiplier = 0.98f;
             charges = 12;
             show = false;
+            staticStat();
+        }};
+        resiliant = new StatusEffectStack("resiliant")
+        {{
+            localizedName = "Resiliant";
+            description = "The Lava on you is cooling off jamming your Weapons but allowing bigger resistance to Damage.";
+            reloadMultiplier = 0.99f;
+            dragMultiplier = 0.99f;
+            healthMultiplier = 1.01f;
+            speedMultiplier = 0.99f;
+            charges = 10;
+            staticStat();
+        }};
+        ungratefull = new StatusEffectStack("ungratefull")
+        {{
+            localizedName="Ungratefull";
+            description = "The enemy of everyone";
+            newTeam = Team.get(250);
             staticStat();
         }};
     }

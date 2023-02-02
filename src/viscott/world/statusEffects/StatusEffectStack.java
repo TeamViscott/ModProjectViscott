@@ -49,7 +49,7 @@ public class StatusEffectStack extends StatusEffect {
 
     @Override
     public void setStats(){
-        if(newTeam == null)
+        if(newTeam != null)
             stats.add(PvStats.newTeam,newTeam.emoji+" "+newTeam.name);
         if(statsStatic.get(0) != 1) {
             stats.addPercent(Stat.damageMultiplier, statsStatic.get(0));
