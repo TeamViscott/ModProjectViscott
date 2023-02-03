@@ -132,7 +132,6 @@ public class Grinder extends PvBlock {
         }
         float hardness = 0;
         float progress;
-        float mine = 0;
 
         @Override
         public void drawSelect() {
@@ -140,21 +139,27 @@ public class Grinder extends PvBlock {
             int fix = 4 + Mathf.floor((size-1)/2)*8;
             Drawf.dashRect(Pal.lighterOrange,x-offset-range*8-fix,y-offset-range*8-fix,size * 8 + range * 16,size * 8 + range * 16);
         }
+
         @Override
-        public void update()
+        public boolean enabled()
         {
-            progress = Mathf.approachDelta(progress,1,(maxMineSpeed-hardness)/60);
-            mine = Mathf.approachDelta(mine,0,timeScale()*delta()/20);
-            if (progress == 1) {
-                mineable.forEach(a ->
-                {
-                    if (items.get(a.itemDrop) < itemCapacity)
-                        items.add(a.itemDrop, 1);
-                });
-                if (updateEffect != null)
-                    updateEffect.at(x,y,0);
-                progress = 0;
-                mine = 1;
+            return super.enabled();
+        }
+        @Override
+        public void updateTile()
+        {
+            if (efficiency > 0) {
+                progress = Mathf.approachDelta(progress, 1, ((maxMineSpeed - hardness) / 60)*efficiency);
+                if (progress == 1) {
+                    mineable.forEach(a ->
+                    {
+                        if (items.get(a.itemDrop) < itemCapacity)
+                            items.add(a.itemDrop, 1);
+                    });
+                    if (updateEffect != null)
+                        updateEffect.at(x, y, 0);
+                    progress = 0;
+                }
             }
             dump();
         }

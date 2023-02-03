@@ -57,13 +57,13 @@ public class PvTurrets{
     public static void loadSize2() //cuz u guys cant sort stuff by size i did it 4 u.
     {
         splinter = new ItemTurret("splinter"){{
+            requirements(Category.turret, with(PvItems.lithium,50,PvItems.zirconium,20,PvItems.nobelium,100));
             localizedName = "Splinter";
             size = 2;
             health = 875;
             range = 26 * 8;
             recoil = 2;
             rotateSpeed = 6f;
-            requirements(Category.turret, with(PvItems.zirconium, 75));
             ammo(
                     PvItems.zirconium,  new BasicBulletType(6f, 14){{
                         lifetime = PvUtil.GetRange(speed,range-1);
@@ -143,7 +143,7 @@ public class PvTurrets{
         }};
         shatter = new PowerTurret("shatter")
         {{
-            requirements(Category.turret, with(PvItems.zirconium, 75)); //Todo
+            requirements(Category.turret, with( PvItems.lithium,250,PvItems.zirconium,100,PvItems.barium,100)); //Todo
             range = 31*8;
             health = 800;
             size = 2;
@@ -255,7 +255,7 @@ public class PvTurrets{
         }};
         euro = new ItemTurret("euro")
         {{
-            requirements(Category.turret, with(silicon, 450)); //Todo
+            requirements(Category.turret, with(silicon, 400,PvItems.lithium,200,PvItems.platinum,100)); //Todo
             range = 87*8;
             localizedName = "Euro";
             inaccuracy = 10;
@@ -443,7 +443,7 @@ public class PvTurrets{
         }};
         snap = new LiquidTurret("snap")
         {{
-            requirements(Category.turret, with(silicon, 100)); //Todo
+            requirements(Category.turret, with(silicon, 300,PvItems.zirconium,200,PvItems.lithium,250)); //Todo
             localizedName = "Snap";
             size = 2;
             reload = 60f/1f;
@@ -470,12 +470,12 @@ public class PvTurrets{
         }};
         hourglass = new ItemTurret("hourglass")
         {{
+            requirements(Category.turret,with(PvItems.lithium,400,PvItems.nobelium,100,silicon,250,PvItems.platinum,500)); //Todo
             localizedName = "Hourglass";
             size = 2;
             reload = 60f/2f;
             range = 26*8;
             coolant = consumeCoolant(0.1f);
-            requirements(Category.turret,with(Items.copper,1)); //Todo
             ammo(
                     PvItems.zirconium,new BasicBulletType(6,0)
                     {{
@@ -522,7 +522,7 @@ public class PvTurrets{
     {
         phantom = new ItemTurret("phantom")
         {{
-            requirements(Category.turret,with(PvItems.erbium,1)); //Todo
+            requirements(Category.turret,with(PvItems.erbium,2000)); //Todo
             localizedName = "Phantom";
             size = 3;
             health = 1980;
@@ -584,7 +584,7 @@ public class PvTurrets{
         }};
         razor = new ItemTurret("razor")
         {{
-            requirements(Category.turret,with(PvItems.erbium,1)); //Todo
+            requirements(Category.turret,with(PvItems.erbium,2000)); //Todo
             localizedName = "Razor";
             size = 3;
             health = 2175;
@@ -665,13 +665,13 @@ public class PvTurrets{
         }};
         striker = new ItemTurret("striker")
         {{
+            requirements(Category.turret,with(PvItems.erbium,2000)); //Todo
             localizedName = "Striker";
             size = 3;
             reload = 90f;
             range = 480;
             inaccuracy = 2;
 
-            requirements(Category.turret,with(Items.copper,1)); //Todo
             ammo(
                     silicon, new BasicBulletType(10, 70){{
                         trailColor = frontColor = backColor = Pal.techBlue;
@@ -716,12 +716,12 @@ public class PvTurrets{
     {
         rainmaker = new ItemTurret("rainmaker")
         {{
+            requirements(Category.turret,with(PvItems.erbium,2000)); //Todo
             localizedName = "Rainmaker";
             size = 4;
             reload = 60f;
             range = 480;
             recoil = 12f;
-            requirements(Category.turret,with(Items.copper,1)); //Todo
             ammo(
                     silicon,new BasicBulletType(6,40)
                     {{
@@ -769,12 +769,12 @@ public class PvTurrets{
         }};
         marksman = new ItemTurret("marksman")
         {{
+            requirements(Category.turret,with(PvItems.erbium,2000)); //Todo
             localizedName = "Marksman";
             size = 4;
             reload = 300f;
             range = 1600;
             inaccuracy = 2;
-            requirements(Category.turret,with(Items.copper,1)); //Todo
             ammo(
                     silicon,new BasicBulletType(10,300) //ammo should be changed in the future
                     {{
@@ -821,7 +821,7 @@ public class PvTurrets{
         }};
         nuero = new ItemTurret("nuero")
         {{
-            requirements(Category.turret,with(Items.copper,1)); //Todo
+            requirements(Category.turret,with(PvItems.erbium,2000)); //Todo
             localizedName = "Nuero";
             shoot = new AlternateShootPatternTurret(20);
             reload = 4*60;
@@ -1056,7 +1056,7 @@ public class PvTurrets{
     {
         xacto = new ItemTurret("xacto")
         {{
-            requirements(Category.turret,with(PvItems.erbium,1)); //Todo
+            requirements(Category.turret,with(PvItems.carbonFiber,1000)); //Todo
             localizedName = "X-acto";
             size = 5;
             health = 8450;
@@ -1167,6 +1167,7 @@ public class PvTurrets{
         }};
         reaper = new ItemTurret("reaper")
         {{
+            requirements(Category.turret,with(PvItems.carbonFiber,1000)); //Todo
             localizedName = "Reaper";
             description = "The Bringer of death to even the strongest T4. its only downside is that it can easily be overrun with a lot of enemies.";
             size = 5;
@@ -1182,7 +1183,6 @@ public class PvTurrets{
             coolantMultiplier = 1.5f;
             recoil = 5;
             shake = 1;
-            requirements(Category.turret,with(Items.copper,1)); //Todo
             ammo(
                     PvItems.platinum,new BasicBulletType(8,1075)
                     {{
@@ -1330,7 +1330,7 @@ public class PvTurrets{
     {
         shuttle = new ItemTurret("shuttle")
         {{
-            requirements(Category.turret,with(Items.copper,1)); //Todo
+            requirements(Category.turret,with(PvItems.carbonFiber,1000)); //Todo
             localizedName = "Shuttle";
             shoot = new AlternateShootPatternTurret(8);
             reload = 60f/4.6f;
@@ -1506,7 +1506,7 @@ public class PvTurrets{
     {
         xterminium = new ItemTurret("xterminium")
         {{
-            requirements(Category.turret,with(Items.copper,1)); //Todo
+            requirements(Category.turret,with(PvItems.carbonFiber,2500,PvItems.erbium,5000)); //Todo
             localizedName = "X-terminium";
             buildVisibility = BuildVisibility.sandboxOnly;
             shoot = new AlternateShootPatternTurret(20);
