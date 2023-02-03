@@ -45,7 +45,7 @@ public class PvBlocks {
 
                     /*Conveyors*/micromassConveyor,massJunction,massRouter,
 
-                    /*Drills*/harvestGrinder,harvestDrill,
+                    /*Drills*/harvestGrinder,behemothGrinder,harvestDrill,
 
                     /*Power*/opticalNode,auditoryNode,
                     /*Power Production*/smallCarbonPanel,
@@ -116,6 +116,7 @@ public class PvBlocks {
                     clipSize = 256;
                     localizedName = "Platinum Deposit";
                     itemDrop = PvItems.platinum;
+                    tier = 2;
                 }};
                 zirconiumDeposit = new DepositWall("zirconium-deposit") //Todo
                 {{
@@ -124,13 +125,13 @@ public class PvBlocks {
                     clipSize = 256;
                     localizedName = "Zirconium Deposit";
                     itemDrop = PvItems.zirconium;
-
+                    tier = 2;
                 }};
                 /*Deposit's End*/
                 /*Building start*/
                 micromassConveyor = new StackConveyor("micromass-conveyor")
                 {{
-                    requirements(Category.distribution, with(PvItems.barium,1)); //Todo
+                    requirements(Category.distribution, with(PvItems.lithium,1)); //Todo
                     localizedName = "Micromass Conveyor";
                     health = 50;
                     itemCapacity = 5;
@@ -155,10 +156,20 @@ public class PvBlocks {
 
                 harvestGrinder = new Grinder("harvest-grinder")
                 {{
-                    requirements(Category.production, with(PvItems.barium,10)); //Todo
+                    requirements(Category.production, with(PvItems.lithium,50)); //Todo
                     localizedName = "Harvest Grinder";
                     size = 2;
                     updateEffect = Fx.smokeCloud;
+                }};
+                behemothGrinder = new Grinder("behemoth-grinder")
+                {{
+                    requirements(Category.production, with(PvItems.lithium,200,PvItems.erbium,100,PvItems.zirconium,25)); //Todo
+                    localizedName = "Harvest Grinder";
+                    size = 3;
+                    tier = 2;
+                    range = 2;
+                    itemCapacity = 25;
+                    updateEffect = Fx.smeltsmoke;
                 }};
                 harvestDrill = new Drill("harvest-drill")
                 {{

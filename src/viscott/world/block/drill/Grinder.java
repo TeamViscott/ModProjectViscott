@@ -2,6 +2,8 @@ package viscott.world.block.drill;
 
 
 import arc.Core;
+import arc.graphics.g2d.Draw;
+import arc.graphics.g2d.Lines;
 import arc.math.Mathf;
 import arc.util.Strings;
 import mindustry.entities.Effect;
@@ -38,6 +40,8 @@ public class Grinder extends PvBlock {
         update = true;
         hasItems = true;
         itemCapacity = 10;
+        canOverdrive = true;
+        drawDisabled = false;
     }
 
     @Override
@@ -48,7 +52,7 @@ public class Grinder extends PvBlock {
 
     public void drawPlace(int x, int y, int rotation, boolean valid) {
         super.drawPlace(x,y,rotation,valid);
-        int fix = (size % 2) * 4;
+        int fix = (size % 2) * 4 + Mathf.floor((size-1)/2)*8;
         Drawf.dashRect(Pal.lighterOrange,x*8-offset-range*8-fix,y*8-offset-range*8-fix,size * 8 + range * 16,size * 8 + range * 16);
     }
     @Override
@@ -98,6 +102,13 @@ public class Grinder extends PvBlock {
 
         float progress;
         float mine = 0;
+
+        @Override
+        public void drawSelect() {
+            super.drawSelect();
+            int fix = 4 + Mathf.floor((size-1)/2)*8;
+            Drawf.dashRect(Pal.lighterOrange,x-offset-range*8-fix,y-offset-range*8-fix,size * 8 + range * 16,size * 8 + range * 16);
+        }
         @Override
         public void update()
         {
