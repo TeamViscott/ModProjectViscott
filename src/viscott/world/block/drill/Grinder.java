@@ -54,6 +54,20 @@ public class Grinder extends PvBlock {
         super.drawPlace(x,y,rotation,valid);
         int fix = (size % 2) * 4 + Mathf.floor((size-1)/2)*8;
         Drawf.dashRect(Pal.lighterOrange,x*8-offset-range*8-fix,y*8-offset-range*8-fix,size * 8 + range * 16,size * 8 + range * 16);
+        float width = drawPlaceText(Core.bundle.format("bar.grindspeed", Strings.fixed(getMineSpeed(x,y) * 60 / 100, 2)),x,y+size/2,true);
+    }
+    public float getMineSpeed(float x,float y)
+    {
+        int ix = ((int)x)-(int)Math.floor((size-1)/2)-range,
+                iy = ((int)y)-(int)Math.floor((size-1)/2)-range,
+                rangeSize = size + range * 2;
+        List<Block> newBlockList = new Stack<>();
+        for (int i1 = 0;i1<rangeSize;i1++)
+            for (int i2 = 0;i2<rangeSize;i2++)
+                if (world.tiles.get(ix+i1,iy+i2) != null)
+                    if (world.tiles.get(ix+i1,iy+i2).block() instanceof DepositWall)
+                        newBlockList.add(world.tiles.get(ix+i1,iy+i2).block());
+        return newBlockList.size() * speedPerOre;
     }
     @Override
     public void setStats()
@@ -96,7 +110,8 @@ public class Grinder extends PvBlock {
             List<Block> newBlockList = new Stack<>();
             for (int i1 = 0;i1<rangeSize;i1++)
                 for (int i2 = 0;i2<rangeSize;i2++)
-                    newBlockList.add(world.tiles.get(ix+i1,iy+i2).block());
+                    if (world.tiles.get(ix+i1,iy+i2) != null)
+                        newBlockList.add(world.tiles.get(ix+i1,iy+i2).block());
             return newBlockList;
         }
 
