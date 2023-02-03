@@ -1,5 +1,6 @@
 package viscott.content;
 
+import mindustry.content.Fx;
 import mindustry.gen.Sounds;
 import mindustry.type.Category;
 import mindustry.type.ItemStack;
@@ -157,6 +158,7 @@ public class PvBlocks {
                     requirements(Category.production, with(PvItems.barium,10)); //Todo
                     localizedName = "Harvest Grinder";
                     size = 2;
+                    updateEffect = Fx.smokeCloud;
                 }};
                 harvestDrill = new Drill("harvest-drill")
                 {{

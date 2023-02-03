@@ -4,13 +4,18 @@ package viscott.world.block.drill;
 import arc.Core;
 import arc.math.Mathf;
 import arc.util.Strings;
+import mindustry.entities.Effect;
 import mindustry.game.Team;
 import mindustry.gen.Building;
 import mindustry.graphics.Drawf;
 import mindustry.graphics.Pal;
+import mindustry.type.Item;
 import mindustry.ui.Bar;
 import mindustry.world.Block;
 import mindustry.world.Tile;
+import mindustry.world.meta.StatValue;
+import mindustry.world.meta.StatValues;
+import viscott.content.PvStats;
 import viscott.world.block.PvBlock;
 import viscott.world.block.environment.DepositWall;
 
@@ -25,6 +30,8 @@ public class Grinder extends PvBlock {
     public int range = 1;
     public float speedPerOre = 0.2f;
     public float maxProgress = 100;
+    public Effect updateEffect = null;
+    public float tier = 1;
     public Grinder(String name)
     {
         super(name);
@@ -44,7 +51,12 @@ public class Grinder extends PvBlock {
         int fix = (size % 2) * 4;
         Drawf.dashRect(Pal.lighterOrange,x*8-offset-range*8-fix,y*8-offset-range*8-fix,size * 8 + range * 16,size * 8 + range * 16);
     }
-
+    @Override
+    public void setStats()
+    {
+        super.setStats();
+        stats.add(PvStats.grinderTier,StatValues.blocks(b -> b instanceof DepositWall d && d.tier <= tier));
+    }
     @Override
     public void setBars(){
         super.setBars();
@@ -65,8 +77,9 @@ public class Grinder extends PvBlock {
             mineable = visibleBlocks();
             List<Block> newMineable = new Stack<>();
             for(Block m : mineable)
-                if (m instanceof DepositWall)
-                    newMineable.add(m);
+                if (m instanceof DepositWall d)
+                    if (d.tier <= tier)
+                        newMineable.add(m);
             mineable = newMineable;
             maxMineSpeed = mineable.size() * speedPerOre;
         }
@@ -96,17 +109,12 @@ public class Grinder extends PvBlock {
                     if (items.get(a.itemDrop) < itemCapacity)
                         items.add(a.itemDrop, 1);
                 });
+                if (updateEffect != null)
+                    updateEffect.at(x,y,0);
                 progress = 0;
                 mine = 1;
             }
             dump();
-        }
-
-        @Override
-        public void draw()
-        {
-            super.draw();
-            Drawf.dashRect(Pal.lighterOrange,x-mine*4,y-mine*4,mine*8,mine*8);
         }
     }
 }
