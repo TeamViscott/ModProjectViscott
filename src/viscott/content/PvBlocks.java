@@ -117,6 +117,7 @@ public class PvBlocks {
                     localizedName = "Platinum Deposit";
                     itemDrop = PvItems.platinum;
                     tier = 2;
+                    hardness = 0.1f;
                 }};
                 zirconiumDeposit = new DepositWall("zirconium-deposit") //Todo
                 {{
@@ -126,6 +127,7 @@ public class PvBlocks {
                     localizedName = "Zirconium Deposit";
                     itemDrop = PvItems.zirconium;
                     tier = 2;
+                    hardness = 0.06f;
                 }};
                 /*Deposit's End*/
                 /*Building start*/

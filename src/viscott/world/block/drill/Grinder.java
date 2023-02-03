@@ -54,7 +54,7 @@ public class Grinder extends PvBlock {
         super.drawPlace(x,y,rotation,valid);
         int fix = (size % 2) * 4 + Mathf.floor((size-1)/2)*8;
         Drawf.dashRect(Pal.lighterOrange,x*8-offset-range*8-fix,y*8-offset-range*8-fix,size * 8 + range * 16,size * 8 + range * 16);
-        float width = drawPlaceText(Core.bundle.format("bar.grindspeed", Strings.fixed(getMineSpeed(x,y) * 60 / 100, 2)),x,y+size/2,true);
+        float width = drawPlaceText(Core.bundle.format("bar.grindspeed", Strings.fixed(getMineSpeed(x,y)-getHardness(x,y), 2)),x,y+size/2,true);
     }
     public float getMineSpeed(float x,float y)
     {
@@ -67,8 +67,22 @@ public class Grinder extends PvBlock {
                 if (world.tiles.get(ix+i1,iy+i2) != null)
                     if (world.tiles.get(ix+i1,iy+i2).block() instanceof DepositWall d)
                         if (d.tier <= tier)
-                            newBlockList.add(world.tiles.get(ix+i1,iy+i2).block());
-        return newBlockList.size() * speedPerOre;
+                            newBlockList.add(d);
+        return newBlockList.size() * speedPerOre * 60 / 100;
+    }
+    public float getHardness(float x,float y)
+    {
+        int ix = ((int)x)-(int)Math.floor((size-1)/2)-range,
+                iy = ((int)y)-(int)Math.floor((size-1)/2)-range,
+                rangeSize = size + range * 2;
+        float newBlockList = 0;
+        for (int i1 = 0;i1<rangeSize;i1++)
+            for (int i2 = 0;i2<rangeSize;i2++)
+                if (world.tiles.get(ix+i1,iy+i2) != null)
+                    if (world.tiles.get(ix+i1,iy+i2).block() instanceof DepositWall d)
+                        if (d.tier <= tier)
+                            newBlockList += d.hardness;
+        return newBlockList;
     }
     @Override
     public void setStats()
@@ -81,7 +95,7 @@ public class Grinder extends PvBlock {
         super.setBars();
 
         addBar("grindspeed", (GrinderBuild e) ->
-                new Bar(() -> Core.bundle.format("bar.grindspeed", Strings.fixed(e.maxMineSpeed * 60 / 100 * e.timeScale(), 2)), () -> Pal.lighterOrange, () -> e.progress));
+                new Bar(() -> Core.bundle.format("bar.grindspeed", Strings.fixed((e.maxMineSpeed - getHardness(e.x/8,e.y/8)) * e.timeScale(), 2)), () -> Pal.lighterOrange, () -> e.progress));
     }
 
     public class GrinderBuild extends Building
@@ -100,7 +114,8 @@ public class Grinder extends PvBlock {
                     if (d.tier <= tier)
                         newMineable.add(m);
             mineable = newMineable;
-            maxMineSpeed = mineable.size() * speedPerOre;
+            maxMineSpeed = mineable.size() * speedPerOre * 60 / 100;
+            hardness = getHardness(x/8,y/8);
         }
 
         public List<Block> visibleBlocks()
@@ -115,7 +130,7 @@ public class Grinder extends PvBlock {
                         newBlockList.add(world.tiles.get(ix+i1,iy+i2).block());
             return newBlockList;
         }
-
+        float hardness = 0;
         float progress;
         float mine = 0;
 
@@ -128,7 +143,7 @@ public class Grinder extends PvBlock {
         @Override
         public void update()
         {
-            progress = Mathf.approachDelta(progress,1,maxMineSpeed/60);
+            progress = Mathf.approachDelta(progress,1,(maxMineSpeed-hardness)/60);
             mine = Mathf.approachDelta(mine,0,timeScale()*delta()/20);
             if (progress == 1) {
                 mineable.forEach(a ->
