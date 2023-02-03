@@ -1,5 +1,6 @@
 package viscott.content;
 
+import arc.struct.Seq;
 import mindustry.content.Fx;
 import mindustry.gen.Sounds;
 import mindustry.type.Category;
@@ -17,6 +18,7 @@ import mindustry.world.blocks.power.PowerNode;
 import mindustry.world.blocks.power.SolarGenerator;
 import mindustry.world.blocks.production.Drill;
 import mindustry.world.blocks.storage.CoreBlock;
+import mindustry.world.blocks.units.UnitFactory;
 import mindustry.world.draw.DrawDefault;
 import mindustry.world.draw.DrawMulti;
 import mindustry.world.meta.BuildVisibility;
@@ -52,6 +54,7 @@ public class PvBlocks {
 
                     /*Liquids*/concentratedConduit,
                     /*Pressure related*/ pressureSource,
+                    /**/nueroSpawnPad,
                     /*Core's*/coreHover
                             ;
             public static void load()
@@ -68,7 +71,13 @@ public class PvBlocks {
                 damagedDensePlate = new Floor("damaged-dense-plate",3);
                 denseMetalWall = new StaticWall("dense-metal-wall"){{variants = 2; localizedName = "Dense Metal Wall";}};
                 bariumWall = new StaticWall("barium-wall"){{variants = 2; localizedName = "Barium Wall";}};
-                bariumPowder = new Floor("barium-powder",3){{localizedName = "Barium Powder";}};
+                bariumPowder = new Floor("barium-powder",3)
+                {{
+                    localizedName = "Barium Powder";
+                    itemDrop = PvItems.barium;
+                    playerUnmineable = true;
+
+                }};
                 /*Floor's End*/
                 /*Ore's Start*/
                 erbiumOre = new OreBlock("erbium-ore",PvItems.erbium)
@@ -164,6 +173,7 @@ public class PvBlocks {
                     size = 2;
                     range = 2;
                     speedPerOre = 0.1f;
+                    itemCapacity = 20;
                     updateEffect = Fx.smokeCloud;
                 }};
                 behemothGrinder = new Grinder("behemoth-grinder")
@@ -177,7 +187,7 @@ public class PvBlocks {
                     tier = 2;
                     range = 4;
                     speedPerOre = 0.2f;
-                    itemCapacity = 20;
+                    itemCapacity = 40;
                     updateEffect = Fx.smeltsmoke;
                 }};
                 harvestDrill = new Drill("harvest-drill")
@@ -221,6 +231,19 @@ public class PvBlocks {
                     localizedName = "Concentrated conduit";
                     health = 60;
                     liquidCapacity = 30;
+                }};
+                nueroSpawnPad = new UnitFactory("nuero-spawn-pad")
+                {{
+                    requirements(Category.units,with(PvItems.lithium,100,PvItems.zirconium,50));
+                    localizedName = "Nuero Spawn Pad";
+                    health = 1600;
+                    size = 5;
+                    consumePower(130f/60f);
+                    itemCapacity = 3000;
+                    liquidCapacity = 200;
+                    plans = new Seq<>().with(
+                        new UnitPlan(PvUnits.particle,15*60f,with(PvItems.lithium,20))
+                    );
                 }};
                 coreHover = new CoreBlock("core-hover")
                 {{
