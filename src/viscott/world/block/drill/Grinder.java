@@ -112,7 +112,7 @@ public class Grinder extends PvBlock {
         @Override
         public void update()
         {
-            progress = Mathf.approachDelta(progress,1,maxMineSpeed/100);
+            progress = Mathf.approachDelta(progress,1,maxMineSpeed/60);
             mine = Mathf.approachDelta(mine,0,timeScale()*delta()/20);
             if (progress == 1) {
                 mineable.forEach(a ->
