@@ -1196,24 +1196,37 @@ public class PvTurrets{
                         trailWidth = 2;
                         trailLength = 40;
                         trailRotation = true;
-                        fragBullets = 3;
+                        fragBullets = 1;
+                        fragAngle = 180;
+                        fragSpread = 0;
+                        fragRandomSpread = 0;
+                        fragVelocityMax = fragVelocityMin = 1;
+                        fragLifeMin = fragLifeMax = 1;
                         bulletInterval = 2;
                         intervalBullets = 3;
                         weaveRandom = true;
                         homingPower = 0.01f;
                         weaveScale = 1;
                         weaveMag = 1;
+                        fragOnAbsorb = false;
                         intervalBullet = new LightningBulletType()
                         {{
+                            damage = 15;
                             lightningColor = lightColor = Pal.redderDust;
+                            collideFloor = false;
                             lightningDamage = 15;
                             lightningLength = 10;
                         }};
-                        fragBullet = new LightningBulletType()
+                        fragBullet = new LaserBoltBulletType(8,0)
                         {{
-                            lightningColor = lightColor = Pal.redderDust;
-                            lightningDamage = 15;
-                            lightningLength = 20;
+                            lifetime = PvUtil.GetRange(this.speed,85);
+                            backColor = trailColor = Pal.heal;
+                            collidesTeam = true;
+                            collides = true;
+                            healPercent = 4f;
+                            trailLength = 10;
+                            trailWidth = 4f;
+                            width *= 2;
                         }};
                     }},
                     PvItems.erbium,new BasicBulletType(8,1650)
@@ -1229,24 +1242,37 @@ public class PvTurrets{
                         trailWidth = 2;
                         trailLength = 40;
                         trailRotation = true;
-                        fragBullets = 5;
                         bulletInterval = 2;
                         intervalBullets = 5;
                         weaveRandom = true;
                         homingPower = 0.01f;
                         weaveScale = 1;
                         weaveMag = 1;
+                        fragBullets = 1;
+                        fragAngle = 180;
+                        fragSpread = 0;
+                        fragRandomSpread = 0;
+                        fragVelocityMax = fragVelocityMin = 1;
+                        fragLifeMin = fragLifeMax = 1;
+                        fragOnAbsorb = false;
                         intervalBullet = new LightningBulletType()
                         {{
+                            damage = 15;
                             lightningColor = lightColor = Pal.redderDust;
+                            collideFloor = false;
                             lightningDamage = 15;
                             lightningLength = 10;
                         }};
-                        fragBullet = new LightningBulletType()
+                        fragBullet = new LaserBoltBulletType(8,0)
                         {{
-                            lightningColor = lightColor = Pal.redderDust;
-                            lightningDamage = 15;
-                            lightningLength = 20;
+                            lifetime = PvUtil.GetRange(this.speed,85);
+                            backColor = trailColor = Pal.heal;
+                            collidesTeam = true;
+                            collides = true;
+                            healPercent = 4f;
+                            trailLength = 10;
+                            trailWidth = 4f;
+                            width *= 2;
                         }};
                     }}
             );

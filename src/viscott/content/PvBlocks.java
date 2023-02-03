@@ -2,6 +2,7 @@ package viscott.content;
 
 import arc.struct.Seq;
 import mindustry.content.Fx;
+import mindustry.content.Items;
 import mindustry.gen.Sounds;
 import mindustry.type.Category;
 import mindustry.type.ItemStack;
@@ -13,10 +14,13 @@ import mindustry.world.blocks.environment.Floor;
 import mindustry.world.blocks.environment.OreBlock;
 import mindustry.world.blocks.environment.StaticWall;
 import mindustry.world.blocks.environment.TallBlock;
+import mindustry.world.blocks.heat.HeatProducer;
 import mindustry.world.blocks.liquid.Conduit;
 import mindustry.world.blocks.power.PowerNode;
 import mindustry.world.blocks.power.SolarGenerator;
 import mindustry.world.blocks.production.Drill;
+import mindustry.world.blocks.production.GenericCrafter;
+import mindustry.world.blocks.production.HeatCrafter;
 import mindustry.world.blocks.storage.CoreBlock;
 import mindustry.world.blocks.units.UnitFactory;
 import mindustry.world.draw.DrawDefault;
@@ -51,7 +55,7 @@ public class PvBlocks {
 
                     /*Power*/opticalNode,auditoryNode,
                     /*Power Production*/smallCarbonPanel,
-
+                    /*Production*/siliconMassForge,particalAccelerator,
                     /*Liquids*/concentratedConduit,
                     /*Pressure related*/ pressureSource,
                     /**/nueroSpawnPad,
@@ -224,6 +228,32 @@ public class PvBlocks {
                     size = 2;
                     powerProduction = 32f/60f;
                     health = 275;
+                }};
+                siliconMassForge = new GenericCrafter("silicon-mass-forge")
+                {{
+                    requirements(Category.crafting, with(PvItems.lithium,140)); //Todo
+                    localizedName = "Silicon Mass Forge";
+                    health = 175;
+                    size = 2;
+                    consumePower(45f/60f);
+                    itemCapacity = 20;
+                    craftTime = 3.3f*60f;
+                    consumeItems(with(PvItems.barium,3,Items.coal,5));
+                    outputItem = new ItemStack(Items.silicon,5);
+                }};
+                particalAccelerator = new HeatCrafter("partical-accelerator")
+                {{
+                    requirements(Category.crafting, with(PvItems.lithium,320, Items.silicon,20)); //Todo
+                    localizedName = "Partical Accelerator";
+                    health = 230;
+                    size = 2;
+                    consumePower(60f/60f);
+                    itemCapacity = 10;
+                    craftTime = 5.8f*60f;
+                    heatRequirement = 6;
+                    maxEfficiency = 5;
+                    consumeItems(with(PvItems.zirconium,5));
+                    outputItem = new ItemStack(PvItems.nobelium,3);
                 }};
                 concentratedConduit = new Conduit("concentrated-conduit")
                 {{
