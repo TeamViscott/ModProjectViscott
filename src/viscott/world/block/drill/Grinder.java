@@ -65,8 +65,9 @@ public class Grinder extends PvBlock {
         for (int i1 = 0;i1<rangeSize;i1++)
             for (int i2 = 0;i2<rangeSize;i2++)
                 if (world.tiles.get(ix+i1,iy+i2) != null)
-                    if (world.tiles.get(ix+i1,iy+i2).block() instanceof DepositWall)
-                        newBlockList.add(world.tiles.get(ix+i1,iy+i2).block());
+                    if (world.tiles.get(ix+i1,iy+i2).block() instanceof DepositWall d)
+                        if (d.tier <= tier)
+                            newBlockList.add(world.tiles.get(ix+i1,iy+i2).block());
         return newBlockList.size() * speedPerOre;
     }
     @Override
