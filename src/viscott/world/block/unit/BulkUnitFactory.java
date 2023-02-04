@@ -11,7 +11,7 @@ public class BulkUnitFactory extends UnitFactory {
     3. have liquid requirements per unit. not per standers :/
     So ye. im too lazy to do it rn. if anyone wants to work on it feel free to.
      */
-    BulkUnitFactory(String name)
+    public BulkUnitFactory(String name)
     {
         super(name);
     }

@@ -3,7 +3,6 @@ package viscott.content;
 import arc.struct.Seq;
 import mindustry.content.Fx;
 import mindustry.content.Items;
-import mindustry.gen.Sounds;
 import mindustry.type.Category;
 import mindustry.type.ItemStack;
 import mindustry.world.Block;
@@ -13,23 +12,16 @@ import mindustry.world.blocks.distribution.StackConveyor;
 import mindustry.world.blocks.environment.Floor;
 import mindustry.world.blocks.environment.OreBlock;
 import mindustry.world.blocks.environment.StaticWall;
-import mindustry.world.blocks.environment.TallBlock;
-import mindustry.world.blocks.heat.HeatProducer;
 import mindustry.world.blocks.liquid.Conduit;
 import mindustry.world.blocks.power.PowerNode;
-import mindustry.world.blocks.power.SolarGenerator;
 import mindustry.world.blocks.production.Drill;
 import mindustry.world.blocks.production.GenericCrafter;
 import mindustry.world.blocks.production.HeatCrafter;
 import mindustry.world.blocks.storage.CoreBlock;
-import mindustry.world.blocks.units.UnitFactory;
-import mindustry.world.draw.DrawDefault;
-import mindustry.world.draw.DrawMulti;
-import mindustry.world.meta.BuildVisibility;
-import viscott.world.block.PvBlock;
 import viscott.world.block.drill.Grinder;
 import viscott.world.block.environment.DepositWall;
 import viscott.world.block.power.ConstGenerator;
+import viscott.world.block.unit.BulkUnitFactory;
 
 import static mindustry.type.ItemStack.with;
 
@@ -58,8 +50,10 @@ public class PvBlocks {
                     /*Production*/siliconMassForge,particalAccelerator,
                     /*Liquids*/concentratedConduit,
                     /*Pressure related*/ pressureSource,
-                    /**/nueroSpawnPad,
-                    /*Core's*/coreHover
+                    /*Unit Creation*/nueroSpawnPad,
+                    /*Core's*/coreHover,
+
+                            /*Testing*/nuroModifier
                             ;
             public static void load()
             {
@@ -235,10 +229,10 @@ public class PvBlocks {
                     localizedName = "Silicon Mass Forge";
                     health = 175;
                     size = 2;
+                    consumeItems(with(PvItems.barium,3,Items.coal,5));
                     consumePower(45f/60f);
                     itemCapacity = 20;
                     craftTime = 3.3f*60f;
-                    consumeItems(with(PvItems.barium,3,Items.coal,5));
                     outputItem = new ItemStack(Items.silicon,5);
                 }};
                 particalAccelerator = new HeatCrafter("partical-accelerator")
@@ -247,12 +241,12 @@ public class PvBlocks {
                     localizedName = "Partical Accelerator";
                     health = 230;
                     size = 2;
+                    consumeItems(with(PvItems.zirconium,5));
                     consumePower(60f/60f);
                     itemCapacity = 10;
                     craftTime = 5.8f*60f;
                     heatRequirement = 6;
                     maxEfficiency = 5;
-                    consumeItems(with(PvItems.zirconium,5));
                     outputItem = new ItemStack(PvItems.nobelium,3);
                 }};
                 concentratedConduit = new Conduit("concentrated-conduit")
@@ -262,7 +256,7 @@ public class PvBlocks {
                     health = 60;
                     liquidCapacity = 30;
                 }};
-                nueroSpawnPad = new UnitFactory("nuero-spawn-pad")
+                nueroSpawnPad = new BulkUnitFactory("nuero-spawn-pad")
                 {{
                     requirements(Category.units,with(PvItems.lithium,100,PvItems.zirconium,50));
                     localizedName = "Nuero Spawn Pad";
