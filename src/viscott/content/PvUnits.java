@@ -1,5 +1,6 @@
 package viscott.content;
 
+import mindustry.content.StatusEffects;
 import mindustry.entities.bullet.BasicBulletType;
 import mindustry.entities.bullet.LaserBoltBulletType;
 import mindustry.entities.bullet.LaserBulletType;
@@ -12,9 +13,16 @@ import viscott.utilitys.PvUtil;
 
 public class PvUnits {
     public static UnitType
-        micro,infrared
+        /*Core Units*/micro,infrared,
+
+        /*Flying Ion Path*/particle
             ;
     public static void load()
+    {
+        loadFlyingIonPath();
+        loadCorePath();
+    }
+    public static void loadCorePath()
     {
         micro = new UnitType("micro")
         {{
@@ -31,26 +39,26 @@ public class PvUnits {
             drag = 0.02f;
             range = 17*8;
             weapons.add(
-                new Weapon("micro-weapon")
-                {{
-                    reload = 60f/8f;
-                    x = 2;
-                    y = 2;
-                    mirror = true;
-                    rotationLimit = 30;
-                    shootStatus = PvStatusEffects.expent;
-                    shootStatusDuration = 120;
-                    bullet = new LaserBoltBulletType(5,6)
+                    new Weapon("micro-weapon")
                     {{
-                        homingPower = 0.008f;
-                        homingDelay = 1;
-                        homingRange = 8*17f;
-                        lifetime = PvUtil.GetRange(this.speed,17);
-                        lightColor = backColor = Pal.engine;
-                        this.recoil = 0.1f;
-                        despawnShake = hitShake = 0.5f;
-                    }};
-                }}
+                        reload = 60f/8f;
+                        x = 2;
+                        y = 2;
+                        mirror = true;
+                        rotationLimit = 30;
+                        shootStatus = PvStatusEffects.expent;
+                        shootStatusDuration = 120;
+                        bullet = new LaserBoltBulletType(5,6)
+                        {{
+                            homingPower = 0.008f;
+                            homingDelay = 1;
+                            homingRange = 8*17f;
+                            lifetime = PvUtil.GetRange(this.speed,17);
+                            lightColor = backColor = Pal.engine;
+                            this.recoil = 0.1f;
+                            despawnShake = hitShake = 0.5f;
+                        }};
+                    }}
             );
         }};
         infrared = new UnitType("infrared")
@@ -87,6 +95,41 @@ public class PvUnits {
                             despawnShake = hitShake = 0.5f;
                         }};
                     }}
+            );
+        }};
+    }
+    public static void loadFlyingIonPath()
+    {
+        particle = new UnitType("particle")
+        {{
+            localizedName = "Particle";
+            constructor = EntityMapping.map("flare");
+            health = 180;
+            armor = 0;
+            drag = 0.92f;
+            flying = true;
+            speed = 27f/7.5f;
+            canBoost = false;
+            itemCapacity = 15;
+            range = 21 * 8;
+            weapons.add(
+                new Weapon()
+                {{
+                    mirror = true;
+                    top = false;
+                    x = 4;
+                    y = 0;
+                    reload = 60f/2.6f;
+                    bullet = new LaserBoltBulletType(8,17)
+                    {{
+                        trailColor = backColor = lightColor = Pal.lancerLaser;
+                        trailWidth = 2;
+                        trailLength = 25;
+                        lifetime = PvUtil.GetRange(8,21);
+                        status = StatusEffects.electrified;
+                        statusDuration = 90;
+                    }};
+                }}
             );
         }};
     }

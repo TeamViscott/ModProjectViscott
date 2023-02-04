@@ -6,14 +6,16 @@ import arc.math.Mathf;
 import mindustry.world.Tile;
 import mindustry.world.blocks.environment.Floor;
 import mindustry.world.blocks.environment.StaticWall;
+import viscott.world.block.drill.Grinder;
 
 import static mindustry.Vars.world;
 
 public class DepositWall extends StaticWall {
+    public float tier = 1;
+    public float hardness = 0;
     public DepositWall(String name)
     {
         super(name);
-
     }
 
     @Override

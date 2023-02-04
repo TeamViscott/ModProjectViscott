@@ -1,6 +1,8 @@
 package viscott.content;
 
-import mindustry.gen.Sounds;
+import arc.struct.Seq;
+import mindustry.content.Fx;
+import mindustry.content.Items;
 import mindustry.type.Category;
 import mindustry.type.ItemStack;
 import mindustry.world.Block;
@@ -10,18 +12,16 @@ import mindustry.world.blocks.distribution.StackConveyor;
 import mindustry.world.blocks.environment.Floor;
 import mindustry.world.blocks.environment.OreBlock;
 import mindustry.world.blocks.environment.StaticWall;
-import mindustry.world.blocks.environment.TallBlock;
 import mindustry.world.blocks.liquid.Conduit;
 import mindustry.world.blocks.power.PowerNode;
-import mindustry.world.blocks.power.SolarGenerator;
 import mindustry.world.blocks.production.Drill;
-import mindustry.world.draw.DrawDefault;
-import mindustry.world.draw.DrawMulti;
-import mindustry.world.meta.BuildVisibility;
-import viscott.world.block.PvBlock;
+import mindustry.world.blocks.production.GenericCrafter;
+import mindustry.world.blocks.production.HeatCrafter;
+import mindustry.world.blocks.storage.CoreBlock;
 import viscott.world.block.drill.Grinder;
 import viscott.world.block.environment.DepositWall;
 import viscott.world.block.power.ConstGenerator;
+import viscott.world.block.unit.BulkUnitFactory;
 
 import static mindustry.type.ItemStack.with;
 
@@ -43,13 +43,17 @@ public class PvBlocks {
 
                     /*Conveyors*/micromassConveyor,massJunction,massRouter,
 
-                    /*Drills*/harvestGrinder,harvestDrill,
+                    /*Drills*/harvestGrinder,behemothGrinder,harvestDrill,
 
                     /*Power*/opticalNode,auditoryNode,
                     /*Power Production*/smallCarbonPanel,
-
+                    /*Production*/siliconMassForge,particalAccelerator,
                     /*Liquids*/concentratedConduit,
-                    /*Pressure related*/ pressureSource
+                    /*Pressure related*/ pressureSource,
+                    /*Unit Creation*/nueroSpawnPad,
+                    /*Core's*/coreHover,
+
+                            /*Testing*/nuroModifier
                             ;
             public static void load()
             {
@@ -65,7 +69,13 @@ public class PvBlocks {
                 damagedDensePlate = new Floor("damaged-dense-plate",3);
                 denseMetalWall = new StaticWall("dense-metal-wall"){{variants = 2; localizedName = "Dense Metal Wall";}};
                 bariumWall = new StaticWall("barium-wall"){{variants = 2; localizedName = "Barium Wall";}};
-                bariumPowder = new Floor("barium-powder",3){{localizedName = "Barium Powder";}};
+                bariumPowder = new Floor("barium-powder",3)
+                {{
+                    localizedName = "Barium Powder";
+                    itemDrop = PvItems.barium;
+                    playerUnmineable = true;
+
+                }};
                 /*Floor's End*/
                 /*Ore's Start*/
                 erbiumOre = new OreBlock("erbium-ore",PvItems.erbium)
@@ -113,6 +123,8 @@ public class PvBlocks {
                     clipSize = 256;
                     localizedName = "Platinum Deposit";
                     itemDrop = PvItems.platinum;
+                    tier = 2;
+                    hardness = 0.06f;
                 }};
                 zirconiumDeposit = new DepositWall("zirconium-deposit") //Todo
                 {{
@@ -121,13 +133,13 @@ public class PvBlocks {
                     clipSize = 256;
                     localizedName = "Zirconium Deposit";
                     itemDrop = PvItems.zirconium;
-
+                    hardness = 0.02f;
                 }};
                 /*Deposit's End*/
                 /*Building start*/
                 micromassConveyor = new StackConveyor("micromass-conveyor")
                 {{
-                    requirements(Category.distribution, with(PvItems.barium,1)); //Todo
+                    requirements(Category.distribution, with(PvItems.lithium,1)); //Todo
                     localizedName = "Micromass Conveyor";
                     health = 50;
                     itemCapacity = 5;
@@ -135,7 +147,7 @@ public class PvBlocks {
                 }};
                 massJunction = new Junction("mass-junction")
                 {{
-                    requirements(Category.distribution, with(PvItems.barium,1)); //Todo
+                    requirements(Category.distribution, with(PvItems.lithium,5)); //Todo
                     localizedName = "Mass Junction";
                     health = 90;
                     capacity = 20;
@@ -143,7 +155,7 @@ public class PvBlocks {
                 }};
                 massRouter = new DuctRouter("mass-router")
                 {{
-                    requirements(Category.distribution, with(PvItems.barium,1)); //Todo
+                    requirements(Category.distribution, with(PvItems.lithium,4)); //Todo
                     localizedName = "Mass Router";
                     health = 85;
                     itemCapacity = 20;
@@ -152,13 +164,33 @@ public class PvBlocks {
 
                 harvestGrinder = new Grinder("harvest-grinder")
                 {{
-                    requirements(Category.production, with(PvItems.barium,10)); //Todo
+                    requirements(Category.production, with(PvItems.lithium,50)); //Todo
                     localizedName = "Harvest Grinder";
+                    health = 200;
+                    liquidCapacity = 20;
                     size = 2;
+                    range = 2;
+                    speedPerOre = 0.1f;
+                    itemCapacity = 20;
+                    updateEffect = Fx.smokeCloud;
+                }};
+                behemothGrinder = new Grinder("behemoth-grinder")
+                {{
+                    requirements(Category.production, with(PvItems.lithium,200,PvItems.erbium,100,PvItems.zirconium,25)); //Todo
+                    localizedName = "Harvest Grinder";
+                    health = 570;
+                    liquidCapacity = 20;
+                    consumePower(50f/60f);
+                    size = 3;
+                    tier = 2;
+                    range = 4;
+                    speedPerOre = 0.2f;
+                    itemCapacity = 40;
+                    updateEffect = Fx.smeltsmoke;
                 }};
                 harvestDrill = new Drill("harvest-drill")
                 {{
-                    requirements(Category.production, with(PvItems.platinum,10)); //Todo
+                    requirements(Category.production, with(PvItems.lithium,10,PvItems.platinum,5)); //Todo
                     localizedName = "Harvest Drill";
                     size = 2;
                     drillTime = 500;
@@ -167,7 +199,7 @@ public class PvBlocks {
                 }};
                 opticalNode = new PowerNode("optical-node")
                 {{
-                    requirements(Category.power, with(PvItems.barium,50)); //Todo
+                    requirements(Category.power, with(PvItems.platinum,5)); //Todo
                     localizedName = "Optical node";
                     size = 1;
                     maxNodes = 4;
@@ -176,7 +208,7 @@ public class PvBlocks {
                 }};
                 auditoryNode = new PowerNode("auditory-node")
                 {{
-                    requirements(Category.power, with(PvItems.barium,50)); //Todo
+                    requirements(Category.power, with(PvItems.platinum,100,PvItems.barium,10)); //Todo
                     localizedName = "Auditory node";
                     size = 2;
                     maxNodes = 6;
@@ -185,18 +217,67 @@ public class PvBlocks {
                 }};
                 smallCarbonPanel = new ConstGenerator("small-carbon-panel")
                 {{
-                    requirements(Category.power, with(PvItems.barium,50)); //Todo
+                    requirements(Category.power, with(PvItems.lithium,20,PvItems.barium,50)); //Todo
                     localizedName = "Carbon panel";
                     size = 2;
                     powerProduction = 32f/60f;
                     health = 275;
                 }};
+                siliconMassForge = new GenericCrafter("silicon-mass-forge")
+                {{
+                    requirements(Category.crafting, with(PvItems.lithium,140)); //Todo
+                    localizedName = "Silicon Mass Forge";
+                    health = 175;
+                    size = 2;
+                    consumeItems(with(PvItems.barium,3,Items.coal,5));
+                    consumePower(45f/60f);
+                    itemCapacity = 20;
+                    craftTime = 3.3f*60f;
+                    outputItem = new ItemStack(Items.silicon,5);
+                }};
+                particalAccelerator = new HeatCrafter("partical-accelerator")
+                {{
+                    requirements(Category.crafting, with(PvItems.lithium,320, Items.silicon,20)); //Todo
+                    localizedName = "Partical Accelerator";
+                    health = 230;
+                    size = 2;
+                    consumeItems(with(PvItems.zirconium,5));
+                    consumePower(60f/60f);
+                    itemCapacity = 10;
+                    craftTime = 5.8f*60f;
+                    heatRequirement = 6;
+                    maxEfficiency = 5;
+                    outputItem = new ItemStack(PvItems.nobelium,3);
+                }};
                 concentratedConduit = new Conduit("concentrated-conduit")
                 {{
-                    requirements(Category.liquid, with(PvItems.nobelium,50)); //Todo
+                    requirements(Category.liquid, with(PvItems.lithium,4,PvItems.nobelium,2)); //Todo
                     localizedName = "Concentrated conduit";
                     health = 60;
                     liquidCapacity = 30;
+                }};
+                nueroSpawnPad = new BulkUnitFactory("nuero-spawn-pad")
+                {{
+                    requirements(Category.units,with(PvItems.lithium,100,PvItems.zirconium,50));
+                    localizedName = "Nuero Spawn Pad";
+                    health = 1600;
+                    size = 5;
+                    consumePower(130f/60f);
+                    itemCapacity = 3000;
+                    liquidCapacity = 200;
+                    plans = new Seq<>().with(
+                        new UnitPlan(PvUnits.particle,15*60f,with(PvItems.lithium,20))
+                    );
+                }};
+                coreHover = new CoreBlock("core-hover")
+                {{
+                    requirements(Category.effect, with(PvItems.lithium,500,PvItems.platinum,2000,PvItems.barium,1000)); //Todo
+                    localizedName = "Core Hover";
+                    unitType = PvUnits.micro;
+                    health = 1350;
+                    size = 3;
+                    unitCapModifier = 10;
+                    itemCapacity = 6000;
                 }};
             }
 }
