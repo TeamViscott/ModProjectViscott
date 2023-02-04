@@ -153,8 +153,7 @@ public class Grinder extends PvBlock {
                 if (progress == 1) {
                     mineable.forEach(a ->
                     {
-                        if (items.get(a.itemDrop) < itemCapacity)
-                            items.add(a.itemDrop, 1);
+                        craft(a);
                     });
                     if (updateEffect != null)
                         updateEffect.at(x, y, 0);
@@ -162,6 +161,11 @@ public class Grinder extends PvBlock {
                 }
             }
             dump();
+        }
+        public void craft(Block d)
+        {
+            if (items.get(d.itemDrop) < itemCapacity)
+                items.add(d.itemDrop, 1);
         }
     }
 }

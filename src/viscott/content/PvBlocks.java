@@ -3,8 +3,10 @@ package viscott.content;
 import arc.struct.Seq;
 import mindustry.content.Fx;
 import mindustry.content.Items;
+import mindustry.content.Liquids;
 import mindustry.type.Category;
 import mindustry.type.ItemStack;
+import mindustry.type.LiquidStack;
 import mindustry.world.Block;
 import mindustry.world.blocks.distribution.DuctRouter;
 import mindustry.world.blocks.distribution.Junction;
@@ -19,6 +21,7 @@ import mindustry.world.blocks.production.GenericCrafter;
 import mindustry.world.blocks.production.HeatCrafter;
 import mindustry.world.blocks.storage.CoreBlock;
 import viscott.world.block.drill.Grinder;
+import viscott.world.block.drill.LiquidGrinder;
 import viscott.world.block.environment.DepositWall;
 import viscott.world.block.power.ConstGenerator;
 import viscott.world.block.unit.BulkUnitFactory;
@@ -43,7 +46,7 @@ public class PvBlocks {
 
                     /*Conveyors*/micromassConveyor,massJunction,massRouter,
 
-                    /*Drills*/harvestGrinder,behemothGrinder,harvestDrill,
+                    /*Drills*/harvestGrinder,behemothGrinder,harvestDrill,oilGrinder,
 
                     /*Power*/opticalNode,auditoryNode,
                     /*Power Production*/smallCarbonPanel,
@@ -51,9 +54,9 @@ public class PvBlocks {
                     /*Liquids*/concentratedConduit,
                     /*Pressure related*/ pressureSource,
                     /*Unit Creation*/nueroSpawnPad,
-                    /*Core's*/coreHover,
+                    /*Core's*/coreHover
 
-                            /*Testing*/nuroModifier
+                            /*Testing*/
                             ;
             public static void load()
             {
@@ -278,6 +281,16 @@ public class PvBlocks {
                     size = 3;
                     unitCapModifier = 10;
                     itemCapacity = 6000;
+                }};
+                oilGrinder = new LiquidGrinder("oil-grinder")
+                {{
+                    requirements(Category.production, with(PvItems.lithium,500,PvItems.platinum,2000,PvItems.barium,1000)); //Todo
+                    localizedName = "Oil Grinder";
+                    extractedLiquid = new LiquidStack(Liquids.oil,8f);
+                    range = 2;
+                    size = 2;
+                    health = 190;
+                    liquidCapacity = 20;
                 }};
             }
 }
