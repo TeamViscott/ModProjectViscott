@@ -8,6 +8,7 @@ import mindustry.type.Category;
 import mindustry.type.ItemStack;
 import mindustry.type.LiquidStack;
 import mindustry.world.Block;
+import mindustry.world.blocks.defense.Wall;
 import mindustry.world.blocks.distribution.DuctRouter;
 import mindustry.world.blocks.distribution.Junction;
 import mindustry.world.blocks.distribution.StackConveyor;
@@ -15,11 +16,13 @@ import mindustry.world.blocks.environment.Floor;
 import mindustry.world.blocks.environment.OreBlock;
 import mindustry.world.blocks.environment.StaticWall;
 import mindustry.world.blocks.liquid.Conduit;
+import mindustry.world.blocks.power.Battery;
 import mindustry.world.blocks.power.PowerNode;
 import mindustry.world.blocks.production.Drill;
 import mindustry.world.blocks.production.GenericCrafter;
 import mindustry.world.blocks.production.HeatCrafter;
 import mindustry.world.blocks.storage.CoreBlock;
+import viscott.world.block.defense.PvWall;
 import viscott.world.block.drill.Grinder;
 import viscott.world.block.drill.LiquidGrinder;
 import viscott.world.block.environment.DepositWall;
@@ -54,8 +57,13 @@ public class PvBlocks {
                     /*Liquids*/concentratedConduit,
                     /*Pressure related*/ pressureSource,
                     /*Unit Creation*/nueroSpawnPad,
-                    /*Core's*/coreHover
-
+                    /*Core's*/coreHover,
+                            /*Walls*/
+                            zirconWall,zirconWallLarge,
+                            siliconeWall,siliconeWallLarge,
+                            platinumWall,platinumWallLarge,
+                            erbiumWall,erbiumWallLarge,
+                            carbonWall,carbonWallLarge
                             /*Testing*/
                             ;
             public static void load()
@@ -287,10 +295,84 @@ public class PvBlocks {
                     requirements(Category.production, with(PvItems.lithium,500,PvItems.platinum,2000,PvItems.barium,1000)); //Todo
                     localizedName = "Oil Grinder";
                     extractedLiquid = new LiquidStack(Liquids.oil,8f);
-                    range = 2;
+                    range = 3;
+                    tier = 2;
                     size = 2;
                     health = 190;
                     liquidCapacity = 20;
+                }};
+                zirconWall = new Wall("zircon-wall")
+                {{
+                    requirements(Category.defense, with(PvItems.zirconium,10)); //Todo
+                    localizedName = "Zircon Wall";
+                    health = 400;
+                }};
+                zirconWallLarge = new Wall("zircon-wall-large")
+                {{
+                    requirements(Category.defense, with(PvItems.zirconium,80)); //Todo
+                    localizedName = "Large Zircon Wall";
+                    health = 1680;
+                    size = 2;
+                }};
+                siliconeWall = new Battery("silicone-wall")
+                {{
+                    requirements(Category.defense, with(Items.silicon,10)); //Todo
+                    localizedName = "Silicone Wall";
+                    health = 260;
+                    consumePowerBuffered(500);
+                }};
+                siliconeWallLarge = new Battery("silicone-wall-large")
+                {{
+                    requirements(Category.defense, with(Items.silicon,80)); //Todo
+                    localizedName = "Large Silicone Wall";
+                    health = 1175;
+                    size = 2;
+                    consumePowerBuffered(2000);
+                }};
+                platinumWall = new PvWall("platinum-wall")
+                {{
+                    requirements(Category.defense, with(PvItems.platinum,10)); //Todo
+                    localizedName = "Platinum Wall";
+                    health = 575;
+                    pierceReduction = 1;
+                }};
+                platinumWallLarge = new PvWall("platinum-wall-large")
+                {{
+                    requirements(Category.defense, with(PvItems.platinum,80)); //Todo
+                    localizedName = "Large Platinum Wall";
+                    health = 2240;
+                    pierceReduction = 2;
+                    size = 2;
+                }};
+                erbiumWall = new PvWall("erbium-wall")
+                {{
+                    requirements(Category.defense, with(PvItems.erbium,10)); //Todo
+                    localizedName = "Erbium Wall";
+                    health = 930;
+                    absorbLasers = true;
+                }};
+                erbiumWallLarge = new PvWall("erbium-wall-large")
+                {{
+                    requirements(Category.defense, with(PvItems.erbium,80)); //Todo
+                    localizedName = "Large Erbium Wall";
+                    health = 3800;
+                    size = 2;
+                    absorbLasers = true;
+                }};
+                carbonWall = new PvWall("carbon-wall")
+                {{
+                    requirements(Category.defense, with(PvItems.carbonFiber,10)); //Todo
+                    localizedName = "Carbon Wall";
+                    health = 1120;
+                    pierceReduction = 1;
+                }};
+                carbonWallLarge = new PvWall("carbon-wall-large")
+                {{
+                    requirements(Category.defense, with(PvItems.carbonFiber,80)); //Todo
+                    localizedName = "Large Carbon Wall";
+                    health = 5250;
+                    size = 2;
+                    pierceReduction = 2;
                 }};
             }
 }
