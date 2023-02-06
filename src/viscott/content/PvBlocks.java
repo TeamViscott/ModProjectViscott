@@ -52,7 +52,7 @@ public class PvBlocks {
                     /*Drills*/harvestGrinder,behemothGrinder,harvestDrill,oilGrinder,
 
                     /*Power*/opticalNode,auditoryNode,
-                    /*Power Production*/smallCarbonPanel,
+                    /*Power Production*/smallCarbonPanel,largeCarbonPanel,
                     /*Production*/siliconMassForge,particalAccelerator,
                     /*Liquids*/concentratedConduit,
                     /*Pressure related*/ pressureSource,
@@ -233,6 +233,14 @@ public class PvBlocks {
                     size = 2;
                     powerProduction = 32f/60f;
                     health = 275;
+                }};
+                largeCarbonPanel = new ConstGenerator("large-carbon-panel")
+                {{
+                    requirements(Category.power, with(PvItems.lithium,100,PvItems.barium,200,PvItems.platinum,50,PvItems.nobelium,20)); //Todo
+                    localizedName = "Large Carbon panel";
+                    size = 4;
+                    powerProduction = 130f/60f;
+                    health = 780;
                 }};
                 siliconMassForge = new GenericCrafter("silicon-mass-forge")
                 {{

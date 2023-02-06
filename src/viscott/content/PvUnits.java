@@ -106,6 +106,7 @@ public class PvUnits {
             constructor = EntityMapping.map("flare");
             health = 180;
             armor = 0;
+            hitSize = 8;
             drag = 0.92f;
             flying = true;
             speed = 27f/7.5f;
