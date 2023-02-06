@@ -1,5 +1,6 @@
 package viscott.content;
 
+import arc.graphics.Color;
 import arc.struct.Seq;
 import mindustry.content.Fx;
 import mindustry.content.Items;
@@ -51,7 +52,7 @@ public class PvBlocks {
 
                     /*Drills*/harvestGrinder,behemothGrinder,harvestDrill,oilGrinder,
 
-                    /*Power*/opticalNode,auditoryNode,
+                    /*Power*/opticalNode,auditoryNode,compressedBattery,
                     /*Power Production*/smallCarbonPanel,largeCarbonPanel,
                     /*Production*/siliconMassForge,particalAccelerator,
                     /*Liquids*/concentratedConduit,
@@ -226,6 +227,16 @@ public class PvBlocks {
                     laserRange = 35;
                     health = 220;
                 }};
+                compressedBattery = new Battery("compressed-battery")
+                {{
+                    requirements(Category.power, with(PvItems.lithium,200,PvItems.platinum,100,PvItems.erbium,40)); //Todo
+                    localizedName = "Compressed Battery";
+                    consumePowerBuffered(75000);
+                    size = 2;
+                    health = 410;
+                    emptyLightColor = Color.black;
+                    fullLightColor = Color.valueOf("8fcaf2");
+                }};
                 smallCarbonPanel = new ConstGenerator("small-carbon-panel")
                 {{
                     requirements(Category.power, with(PvItems.lithium,20,PvItems.barium,50)); //Todo
@@ -285,7 +296,7 @@ public class PvBlocks {
                     itemCapacity = 3000;
                     liquidCapacity = 200;
                     plans = new Seq<>().with(
-                        new UnitPlan(PvUnits.particle,15*60f,with(PvItems.lithium,20))
+                        new UnitPlan(PvUnits.particle,15*60f,with(PvItems.lithium,20,PvItems.platinum,10))
                     );
                 }};
                 coreHover = new CoreBlock("core-hover")
