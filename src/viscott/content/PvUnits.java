@@ -107,7 +107,7 @@ public class PvUnits {
             health = 180;
             armor = 0;
             hitSize = 8;
-            drag = 0.92f;
+            drag = 0.1f;
             flying = true;
             speed = 27f/7.5f;
             canBoost = false;

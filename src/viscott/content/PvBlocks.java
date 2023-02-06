@@ -277,7 +277,7 @@ public class PvBlocks {
                 }};
                 keroseneGenerator = new ConsumeGenerator("kerosene-generator")
                 {{
-                    requirements(Category.crafting, with(PvItems.platinum,300)); //Todo
+                    requirements(Category.power, with(PvItems.platinum,300)); //Todo
                     localizedName = "Kerosene Generator";
                     health = 270;
                     size = 2;
