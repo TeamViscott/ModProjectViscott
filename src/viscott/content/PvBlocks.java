@@ -24,6 +24,10 @@ import mindustry.world.blocks.production.Drill;
 import mindustry.world.blocks.production.GenericCrafter;
 import mindustry.world.blocks.production.HeatCrafter;
 import mindustry.world.blocks.storage.CoreBlock;
+import mindustry.world.draw.DrawDefault;
+import mindustry.world.draw.DrawMulti;
+import mindustry.world.draw.DrawRegion;
+import mindustry.world.draw.DrawWarmupRegion;
 import viscott.world.block.defense.PvWall;
 import viscott.world.block.drill.Grinder;
 import viscott.world.block.drill.LiquidGrinder;
@@ -55,6 +59,7 @@ public class PvBlocks {
 
                     /*Power*/opticalNode,auditoryNode,compressedBattery,
                     /*Power Production*/smallCarbonPanel,largeCarbonPanel,lithiumDegenerator,
+                                        keroseneGenerator,
                     /*Production*/siliconMassForge,particalAccelerator,
                     /*Liquids*/concentratedConduit,
                     /*Pressure related*/ pressureSource,
@@ -267,7 +272,29 @@ public class PvBlocks {
                     liquidCapacity = 10;
                     itemCapacity = 5;
                     itemDuration = 1.8f*60f;
+                    outputLiquid = new LiquidStack(Liquids.nitrogen,5f/60f);
                     generateEffect = Fx.generate;
+                }};
+                keroseneGenerator = new ConsumeGenerator("kerosene-generator")
+                {{
+                    requirements(Category.crafting, with(PvItems.platinum,300)); //Todo
+                    localizedName = "Kerosene Generator";
+                    health = 270;
+                    size = 2;
+                    consumeLiquid(PvLiquids.kerosene,8f/60f);
+                    liquidCapacity = 30;
+                    powerProduction = 875f/60f;
+                    itemDuration = 60f;
+                    generateEffect = Fx.smokeCloud;
+                    drawer = new DrawMulti(
+                        new DrawDefault(),
+                        new DrawWarmupRegion(),
+                            new DrawRegion("-rotator")
+                            {{
+                                rotateSpeed = 2;
+                            }},
+                            new DrawRegion("-top")
+                    );
                 }};
                 siliconMassForge = new GenericCrafter("silicon-mass-forge")
                 {{
