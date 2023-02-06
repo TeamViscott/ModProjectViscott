@@ -1,13 +1,12 @@
 package viscott.content;
 
-import mindustry.content.TechTree;
-
-import static mindustry.content.TechTree.nodeRoot;
+import static mindustry.content.TechTree.*;
+import static viscott.content.PvBlocks.*;
 
 public class ProjectViscottTechTree {
     public static void load()
     {
-        PvPlanets.vercilus.techTree = nodeRoot("Vercilus",PvBlocks.coreHover,() -> {
+        PvPlanets.vercilus.techTree = nodeRoot("Vercilus",coreHover,() -> {
 
         });
     }

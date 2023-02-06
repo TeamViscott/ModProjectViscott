@@ -346,6 +346,7 @@ public class PvBlocks {
                 {{
                     requirements(Category.effect, with(PvItems.lithium,500,PvItems.platinum,2000,PvItems.barium,1000)); //Todo
                     localizedName = "Core Hover";
+                    alwaysUnlocked = true;
                     unitType = PvUnits.micro;
                     health = 1350;
                     size = 3;

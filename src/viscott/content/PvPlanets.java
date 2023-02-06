@@ -1,8 +1,12 @@
 package viscott.content;
 
+import arc.graphics.Color;
 import mindustry.content.Planets;
 import mindustry.graphics.Pal;
+import mindustry.graphics.g3d.HexMesh;
 import mindustry.type.Planet;
+
+import static mindustry.Vars.content;
 
 public class PvPlanets {
     public static Planet
@@ -12,6 +16,24 @@ public class PvPlanets {
     {
         vercilus = new Planet("Vercilus", Planets.sun,1.4f,2)
         {{
+            localizedName = "Exhiber";
+            //generator = new ExhiberPlanetGenerator();
+            lightColor = Color.valueOf("ffffff");
+            alwaysUnlocked = true;
+            tidalLock = false;
+            accessible = true;
+            meshLoader = () -> new HexMesh(this, 5);
+            System.out.println(sectors.size);
+            atmosphereColor = Color.valueOf("ffffff");
+            startSector = 15;
+            totalRadius = 50f;
+            clipRadius = 4;
+            lightColor = Color.valueOf("aaaaaa");
+            atmosphereRadIn = -0.01f;
+            atmosphereRadOut = 0.5f;
+            landCloudColor = Color.valueOf("ffffff");
+            bloom = true;
+            hiddenItems.addAll(content.items()).removeAll(PvItems.vercilusItems);
             iconColor = atmosphereColor = Pal.heal;
             alwaysUnlocked = true;
         }};
