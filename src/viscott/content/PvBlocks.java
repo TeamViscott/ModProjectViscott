@@ -18,6 +18,7 @@ import mindustry.world.blocks.environment.OreBlock;
 import mindustry.world.blocks.environment.StaticWall;
 import mindustry.world.blocks.liquid.Conduit;
 import mindustry.world.blocks.power.Battery;
+import mindustry.world.blocks.power.ConsumeGenerator;
 import mindustry.world.blocks.power.PowerNode;
 import mindustry.world.blocks.production.Drill;
 import mindustry.world.blocks.production.GenericCrafter;
@@ -53,7 +54,7 @@ public class PvBlocks {
                     /*Drills*/harvestGrinder,behemothGrinder,harvestDrill,oilGrinder,
 
                     /*Power*/opticalNode,auditoryNode,compressedBattery,
-                    /*Power Production*/smallCarbonPanel,largeCarbonPanel,
+                    /*Power Production*/smallCarbonPanel,largeCarbonPanel,lithiumDegenerator,
                     /*Production*/siliconMassForge,particalAccelerator,
                     /*Liquids*/concentratedConduit,
                     /*Pressure related*/ pressureSource,
@@ -237,6 +238,7 @@ public class PvBlocks {
                     emptyLightColor = Color.black;
                     fullLightColor = Color.valueOf("8fcaf2");
                 }};
+
                 smallCarbonPanel = new ConstGenerator("small-carbon-panel")
                 {{
                     requirements(Category.power, with(PvItems.lithium,20,PvItems.barium,50)); //Todo
@@ -252,6 +254,20 @@ public class PvBlocks {
                     size = 4;
                     powerProduction = 130f/60f;
                     health = 780;
+                }};
+                lithiumDegenerator = new ConsumeGenerator("lithium-degenerator")
+                {{
+                    requirements(Category.power, with(PvItems.lithium,100,PvItems.barium,200,PvItems.platinum,50,PvItems.nobelium,20)); //Todo
+                    localizedName = "Lithium Degenerator";
+                    size = 2;
+                    powerProduction = 120/60f;
+                    health = 250;
+                    consumeLiquid(Liquids.water,4f/60f);
+                    consumeItem(PvItems.lithium);
+                    liquidCapacity = 10;
+                    itemCapacity = 5;
+                    itemDuration = 1.8f*60f;
+                    generateEffect = Fx.generate;
                 }};
                 siliconMassForge = new GenericCrafter("silicon-mass-forge")
                 {{
