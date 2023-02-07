@@ -122,6 +122,7 @@ public class PvBlocks {
                 {{
                     variants = 0;
                     size = 1;
+                    tier = 2;
                     clipSize = 256;
                     localizedName = "Erbium Deposit";
                     itemDrop = PvItems.erbium;
@@ -157,7 +158,7 @@ public class PvBlocks {
                 /*Building start*/
                 micromassConveyor = new StackConveyor("micromass-conveyor")
                 {{
-                    requirements(Category.distribution, with(PvItems.lithium,1)); //Todo
+                    requirements(Category.distribution, with(PvItems.zirconium,1));
                     localizedName = "Micromass Conveyor";
                     health = 50;
                     itemCapacity = 5;
@@ -165,24 +166,23 @@ public class PvBlocks {
                 }};
                 massJunction = new Junction("mass-junction")
                 {{
-                    requirements(Category.distribution, with(PvItems.lithium,5)); //Todo
+                    requirements(Category.distribution, with(PvItems.zirconium,10));
                     localizedName = "Mass Junction";
                     health = 90;
                     capacity = 20;
-                    speed = 40;
+                    speed = 20;
                 }};
                 massRouter = new DuctRouter("mass-router")
                 {{
-                    requirements(Category.distribution, with(PvItems.lithium,4)); //Todo
+                    requirements(Category.distribution, with(PvItems.zirconium,10));
                     localizedName = "Mass Router";
                     health = 85;
-                    itemCapacity = 20;
                     speed = 0;
                 }};
 
                 harvestGrinder = new Grinder("harvest-grinder")
                 {{
-                    requirements(Category.production, with(PvItems.lithium,50)); //Todo
+                    requirements(Category.production, with(PvItems.zirconium,35));
                     localizedName = "Harvest Grinder";
                     health = 200;
                     liquidCapacity = 20;
@@ -194,7 +194,7 @@ public class PvBlocks {
                 }};
                 behemothGrinder = new Grinder("behemoth-grinder")
                 {{
-                    requirements(Category.production, with(PvItems.lithium,200,PvItems.erbium,100,PvItems.zirconium,25)); //Todo
+                    requirements(Category.production, with(PvItems.zirconium,100,PvItems.platinum,100)); //Todo
                     localizedName = "Harvest Grinder";
                     health = 570;
                     liquidCapacity = 20;
@@ -208,7 +208,7 @@ public class PvBlocks {
                 }};
                 harvestDrill = new Drill("harvest-drill")
                 {{
-                    requirements(Category.production, with(PvItems.lithium,10,PvItems.platinum,5)); //Todo
+                    requirements(Category.production, with(PvItems.zirconium,15));
                     localizedName = "Harvest Drill";
                     size = 2;
                     drillTime = 500;
@@ -217,7 +217,7 @@ public class PvBlocks {
                 }};
                 opticalNode = new PowerNode("optical-node")
                 {{
-                    requirements(Category.power, with(PvItems.platinum,5)); //Todo
+                    requirements(Category.power, with(PvItems.zirconium,10,PvItems.lithium,5));
                     localizedName = "Optical node";
                     size = 1;
                     maxNodes = 4;
@@ -226,7 +226,7 @@ public class PvBlocks {
                 }};
                 auditoryNode = new PowerNode("auditory-node")
                 {{
-                    requirements(Category.power, with(PvItems.platinum,100,PvItems.barium,10)); //Todo
+                    requirements(Category.power, with(PvItems.zirconium,40,Items.silicon,10,PvItems.platinum,15));
                     localizedName = "Auditory node";
                     size = 2;
                     maxNodes = 6;
@@ -235,7 +235,7 @@ public class PvBlocks {
                 }};
                 compressedBattery = new Battery("compressed-battery")
                 {{
-                    requirements(Category.power, with(PvItems.lithium,200,PvItems.platinum,100,PvItems.erbium,40)); //Todo
+                    requirements(Category.power, with(PvItems.lithium,50,PvItems.platinum,25,Items.silicon,25));
                     localizedName = "Compressed Battery";
                     consumePowerBuffered(75000);
                     size = 2;
@@ -246,15 +246,15 @@ public class PvBlocks {
 
                 smallCarbonPanel = new ConstGenerator("small-carbon-panel")
                 {{
-                    requirements(Category.power, with(PvItems.lithium,20,PvItems.barium,50)); //Todo
+                    requirements(Category.power, with(Items.silicon,15,PvItems.carbonFiber,5));
                     localizedName = "Carbon panel";
                     size = 2;
-                    powerProduction = 32f/60f;
+                    powerProduction = 24f/60f;
                     health = 275;
                 }};
                 largeCarbonPanel = new ConstGenerator("large-carbon-panel")
                 {{
-                    requirements(Category.power, with(PvItems.lithium,100,PvItems.barium,200,PvItems.platinum,50,PvItems.nobelium,20)); //Todo
+                    requirements(Category.power, with(Items.silicon,65,PvItems.carbonFiber,30));
                     localizedName = "Large Carbon panel";
                     size = 4;
                     powerProduction = 130f/60f;
@@ -262,7 +262,7 @@ public class PvBlocks {
                 }};
                 lithiumDegenerator = new ConsumeGenerator("lithium-degenerator")
                 {{
-                    requirements(Category.power, with(PvItems.lithium,100,PvItems.barium,200,PvItems.platinum,50,PvItems.nobelium,20)); //Todo
+                    requirements(Category.power, with(PvItems.zirconium,110,PvItems.barium,65,PvItems.nobelium,25)); //Todo
                     localizedName = "Lithium Degenerator";
                     size = 2;
                     powerProduction = 120/60f;
@@ -277,13 +277,13 @@ public class PvBlocks {
                 }};
                 keroseneGenerator = new ConsumeGenerator("kerosene-generator")
                 {{
-                    requirements(Category.power, with(PvItems.platinum,300)); //Todo
+                    requirements(Category.power, with(PvItems.zirconium,140,PvItems.nobelium,60,PvItems.lithium,100)); //Todo
                     localizedName = "Kerosene Generator";
                     health = 270;
                     size = 2;
                     consumeLiquid(PvLiquids.kerosene,8f/60f);
                     liquidCapacity = 30;
-                    powerProduction = 875f/60f;
+                    powerProduction = 430f/60f;
                     itemDuration = 60f;
                     generateEffect = Fx.smokeCloud;
                     drawer = new DrawMulti(
@@ -298,11 +298,12 @@ public class PvBlocks {
                 }};
                 siliconMassForge = new GenericCrafter("silicon-mass-forge")
                 {{
-                    requirements(Category.crafting, with(PvItems.lithium,140)); //Todo
+                    requirements(Category.crafting, with(PvItems.zirconium,35,PvItems.lithium,20));
                     localizedName = "Silicon Mass Forge";
                     health = 175;
                     size = 2;
-                    consumeItems(with(PvItems.barium,3,Items.coal,5));
+                    consumeItems(with(PvItems.barium,3));
+                    consumeLiquid(Liquids.oil,15f);
                     consumePower(45f/60f);
                     itemCapacity = 20;
                     craftTime = 3.3f*60f;
@@ -310,8 +311,8 @@ public class PvBlocks {
                 }};
                 particalAccelerator = new HeatCrafter("partical-accelerator")
                 {{
-                    requirements(Category.crafting, with(PvItems.lithium,320, Items.silicon,20)); //Todo
-                    localizedName = "Partical Accelerator";
+                    requirements(Category.crafting, with(PvItems.zirconium,50,PvItems.platinum,30,Items.silicon,50));
+                    localizedName = "Particle Accelerator";
                     health = 230;
                     size = 2;
                     consumeItems(with(PvItems.zirconium,5));
@@ -324,14 +325,14 @@ public class PvBlocks {
                 }};
                 concentratedConduit = new Conduit("concentrated-conduit")
                 {{
-                    requirements(Category.liquid, with(PvItems.lithium,4,PvItems.nobelium,2)); //Todo
+                    requirements(Category.liquid, with(PvItems.lithium,4,PvItems.zirconium,2));
                     localizedName = "Concentrated conduit";
                     health = 60;
                     liquidCapacity = 30;
                 }};
                 nueroSpawnPad = new BulkUnitFactory("nuero-spawn-pad")
                 {{
-                    requirements(Category.units,with(PvItems.lithium,100,PvItems.zirconium,50));
+                    requirements(Category.units,with(PvItems.zirconium,250,Items.silicon,75,PvItems.platinum,40)); //Todo
                     localizedName = "Nuero Spawn Pad";
                     health = 1600;
                     size = 5;
@@ -344,7 +345,7 @@ public class PvBlocks {
                 }};
                 coreHover = new CoreBlock("core-hover")
                 {{
-                    requirements(Category.effect, with(PvItems.lithium,500,PvItems.platinum,2000,PvItems.barium,1000)); //Todo
+                    requirements(Category.effect, with(PvItems.zirconium,1000,PvItems.lithium,1500,Items.silicon,300));
                     localizedName = "Core Hover";
                     alwaysUnlocked = true;
                     unitType = PvUnits.micro;
@@ -355,38 +356,38 @@ public class PvBlocks {
                 }};
                 oilGrinder = new LiquidGrinder("oil-grinder")
                 {{
-                    requirements(Category.production, with(PvItems.lithium,500,PvItems.platinum,2000,PvItems.barium,1000)); //Todo
+                    requirements(Category.production, with(PvItems.zirconium,35,PvItems.lithium,5,Items.silicon,25)); //Todo
                     localizedName = "Oil Grinder";
-                    extractedLiquid = new LiquidStack(Liquids.oil,8f);
+                    extractedLiquid = new LiquidStack(Liquids.oil,4f);
                     range = 3;
                     tier = 2;
                     size = 2;
                     health = 190;
-                    liquidCapacity = 20;
+                    liquidCapacity = 40;
                 }};
                 zirconWall = new Wall("zircon-wall")
                 {{
-                    requirements(Category.defense, with(PvItems.zirconium,10)); //Todo
+                    requirements(Category.defense, with(PvItems.zirconium,4));
                     localizedName = "Zircon Wall";
                     health = 400;
                 }};
                 zirconWallLarge = new Wall("zircon-wall-large")
                 {{
-                    requirements(Category.defense, with(PvItems.zirconium,80)); //Todo
+                    requirements(Category.defense, with(PvItems.zirconium,24));
                     localizedName = "Large Zircon Wall";
                     health = 1680;
                     size = 2;
                 }};
                 siliconeWall = new Battery("silicone-wall")
                 {{
-                    requirements(Category.defense, with(Items.silicon,10)); //Todo
+                    requirements(Category.defense, with(Items.silicon,4));
                     localizedName = "Silicone Wall";
                     health = 260;
                     consumePowerBuffered(500);
                 }};
                 siliconeWallLarge = new Battery("silicone-wall-large")
                 {{
-                    requirements(Category.defense, with(Items.silicon,80)); //Todo
+                    requirements(Category.defense, with(Items.silicon,24));
                     localizedName = "Large Silicone Wall";
                     health = 1175;
                     size = 2;
@@ -394,14 +395,14 @@ public class PvBlocks {
                 }};
                 platinumWall = new PvWall("platinum-wall")
                 {{
-                    requirements(Category.defense, with(PvItems.platinum,10)); //Todo
+                    requirements(Category.defense, with(PvItems.platinum,4));
                     localizedName = "Platinum Wall";
                     health = 575;
                     pierceReduction = 1;
                 }};
                 platinumWallLarge = new PvWall("platinum-wall-large")
                 {{
-                    requirements(Category.defense, with(PvItems.platinum,80)); //Todo
+                    requirements(Category.defense, with(PvItems.platinum,24));
                     localizedName = "Large Platinum Wall";
                     health = 2240;
                     pierceReduction = 2;
@@ -409,14 +410,14 @@ public class PvBlocks {
                 }};
                 erbiumWall = new PvWall("erbium-wall")
                 {{
-                    requirements(Category.defense, with(PvItems.erbium,10)); //Todo
+                    requirements(Category.defense, with(PvItems.erbium,4));
                     localizedName = "Erbium Wall";
                     health = 930;
                     absorbLasers = true;
                 }};
                 erbiumWallLarge = new PvWall("erbium-wall-large")
                 {{
-                    requirements(Category.defense, with(PvItems.erbium,80)); //Todo
+                    requirements(Category.defense, with(PvItems.erbium,24));
                     localizedName = "Large Erbium Wall";
                     health = 3800;
                     size = 2;
@@ -424,14 +425,14 @@ public class PvBlocks {
                 }};
                 carbonWall = new PvWall("carbon-wall")
                 {{
-                    requirements(Category.defense, with(PvItems.carbonFiber,10)); //Todo
+                    requirements(Category.defense, with(PvItems.carbonFiber,6));
                     localizedName = "Carbon Wall";
                     health = 1120;
                     pierceReduction = 1;
                 }};
                 carbonWallLarge = new PvWall("carbon-wall-large")
                 {{
-                    requirements(Category.defense, with(PvItems.carbonFiber,80)); //Todo
+                    requirements(Category.defense, with(PvItems.carbonFiber,30));
                     localizedName = "Large Carbon Wall";
                     health = 5250;
                     size = 2;

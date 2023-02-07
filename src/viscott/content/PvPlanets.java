@@ -4,6 +4,7 @@ import arc.graphics.Color;
 import mindustry.content.Planets;
 import mindustry.graphics.Pal;
 import mindustry.graphics.g3d.HexMesh;
+import mindustry.maps.planet.AsteroidGenerator;
 import mindustry.type.Planet;
 
 import static mindustry.Vars.content;
@@ -14,10 +15,10 @@ public class PvPlanets {
             ;
     public static void load()
     {
-        vercilus = new Planet("Vercilus", Planets.sun,1.4f,2)
+        vercilus = new Planet("vercilus", Planets.sun,1f,2)
         {{
-            localizedName = "Exhiber";
-            //generator = new ExhiberPlanetGenerator();
+            localizedName = "Vercilus";
+            generator = new AsteroidGenerator();
             lightColor = Color.valueOf("ffffff");
             alwaysUnlocked = true;
             tidalLock = false;
