@@ -77,14 +77,14 @@ public class PvBlocks {
             public static void load()
             {
                 /*Floor's Start*/
-                densePlate1 = new Floor("dense-panel-1",1){{localizedName = "Dense Panel 1";}};
-                densePlate2 = new Floor("dense-panel-2",1){{localizedName = "Dense Panel 2";}};
-                densePlate3 = new Floor("dense-panel-3",1){{localizedName = "Dense Panel 3";}};
-                densePlate4 = new Floor("dense-panel-4",1){{localizedName = "Dense Panel 4";}};
-                densePlate5 = new Floor("dense-panel-5",1){{localizedName = "Dense Panel 5";}};
-                densePlate6 = new Floor("dense-panel-6",1){{localizedName = "Dense Panel 6";}};
-                densePlate7 = new Floor("dense-panel-7",1){{localizedName = "Dense Panel 7";}};
-                densePlate8 = new Floor("dense-panel-8",1){{localizedName = "Dense Panel 8";}};
+                densePlate1 = new Floor("dense-panel1",0){{localizedName = "Dense Panel 1";}};
+                densePlate2 = new Floor("dense-panel2",0){{localizedName = "Dense Panel 2";}};
+                densePlate3 = new Floor("dense-panel3",0){{localizedName = "Dense Panel 3";}};
+                densePlate4 = new Floor("dense-panel4",0){{localizedName = "Dense Panel 4";}};
+                densePlate5 = new Floor("dense-panel5",0){{localizedName = "Dense Panel 5";}};
+                densePlate6 = new Floor("dense-panel6",0){{localizedName = "Dense Panel 6";}};
+                densePlate7 = new Floor("dense-panel7",0){{localizedName = "Dense Panel 7";}};
+                densePlate8 = new Floor("dense-panel8",0){{localizedName = "Dense Panel 8";}};
                 damagedDensePlate = new Floor("damaged-dense-plate",3);
                 denseMetalWall = new StaticWall("dense-metal-wall"){{variants = 2; localizedName = "Dense Metal Wall";}};
                 bariumWall = new StaticWall("barium-wall"){{variants = 2; localizedName = "Barium Wall";}};
