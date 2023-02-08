@@ -23,6 +23,7 @@ import mindustry.world.blocks.power.PowerNode;
 import mindustry.world.blocks.production.Drill;
 import mindustry.world.blocks.production.GenericCrafter;
 import mindustry.world.blocks.production.HeatCrafter;
+import mindustry.world.blocks.production.Pump;
 import mindustry.world.blocks.storage.CoreBlock;
 import mindustry.world.draw.DrawDefault;
 import mindustry.world.draw.DrawMulti;
@@ -61,7 +62,7 @@ public class PvBlocks {
                     /*Power Production*/smallCarbonPanel,largeCarbonPanel,lithiumDegenerator,
                                         keroseneGenerator,
                     /*Production*/siliconMassForge,particalAccelerator,
-                    /*Liquids*/concentratedConduit,
+                    /*Liquids*/concentratedConduit,micropulsePump,
                     /*Pressure related*/ pressureSource,
                     /*Unit Creation*/nueroSpawnPad,
                     /*Core's*/coreHover,
@@ -292,6 +293,8 @@ public class PvBlocks {
                             new DrawRegion("-rotator")
                             {{
                                 rotateSpeed = 2;
+                                spinSprite = true;
+
                             }},
                             new DrawRegion("-top")
                     );
@@ -303,7 +306,7 @@ public class PvBlocks {
                     health = 175;
                     size = 2;
                     consumeItems(with(PvItems.barium,3));
-                    consumeLiquid(Liquids.oil,15f);
+                    consumeLiquid(Liquids.oil,15f/60f);
                     consumePower(45f/60f);
                     itemCapacity = 20;
                     craftTime = 3.3f*60f;
@@ -437,6 +440,14 @@ public class PvBlocks {
                     health = 5250;
                     size = 2;
                     pierceReduction = 2;
+                }};
+                micropulsePump = new Pump("micropulse-pump")
+                {{
+                    requirements(Category.liquid, with(PvItems.zirconium,40,PvItems.lithium,60,PvItems.erbium,10));
+                    localizedName = "MicroPulse Pump";
+                    size = 2;
+                    pumpAmount = 0.1f;
+                    liquidCapacity = 40;
                 }};
             }
 }
