@@ -56,7 +56,8 @@ public class PvBlocks {
 
                     /*Conveyors*/micromassConveyor,massJunction,massRouter,
 
-                    /*Drills*/harvestGrinder,behemothGrinder,harvestDrill,oilGrinder,
+                    /*Drills*/harvestDrill,tetraDrill,spectrumDrill,
+                    /*Grinders*/harvestGrinder,behemothGrinder,oilGrinder,
 
                     /*Power*/opticalNode,auditoryNode,compressedBattery,
                     /*Power Production*/smallCarbonPanel,largeCarbonPanel,lithiumDegenerator,
@@ -213,8 +214,36 @@ public class PvBlocks {
                     localizedName = "Harvest Drill";
                     size = 2;
                     drillTime = 500;
-                    liquidBoostIntensity = 1;
                     tier = 1;
+                    liquidBoostIntensity = 2.5f;
+                    health = 225;
+                    liquidCapacity = 5;
+                    consumeLiquid(Liquids.water,2.5f/60f).boost();
+                }};
+                tetraDrill = new Drill("tetra-drill")
+                {{
+                    requirements(Category.production, with(PvItems.zirconium,60,PvItems.platinum,25)); //Todo
+                    localizedName = "Harvest Drill";
+                    size = 3;
+                    drillTime = 200;
+                    tier = 2;
+                    liquidBoostIntensity = 2.5f;
+                    health = 400;
+                    liquidCapacity = 20;
+                    consumePower(70f/60f);
+                    consumeLiquid(PvLiquids.kerosene,2.5f/60f).boost();
+                }};
+                spectrumDrill = new Drill("spectrum-drill")
+                {{
+                    requirements(Category.production, with(PvItems.zirconium,160,PvItems.platinum,65,PvItems.nobelium,40)); //Todo
+                    localizedName = "Harvest Drill";
+                    size = 4;
+                    drillTime = 160;
+                    tier = 3;
+                    liquidBoostIntensity = 1f;
+                    health = 790;
+                    liquidCapacity = 5;
+                    consumePower(195f/60f);
                 }};
                 opticalNode = new PowerNode("optical-node")
                 {{
