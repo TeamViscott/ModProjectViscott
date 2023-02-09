@@ -38,10 +38,14 @@ public class BulkUnitFactory extends UnitFactory {
     {
         super(name);
         clearOnDoubleTap = true;
+        config(PvUtil.DoubleIntStack.class,(BulkUnitFactoryBuild tile, PvUtil.DoubleIntStack i) -> {
+            tile.amount = Math.round(i.i1);
+            tile.currentPlan = i.i2;
+        });
         config(Float.class,(BulkUnitFactoryBuild tile, Float i) -> {
             tile.amount = Math.round(i);
         });
-        configClear((BulkUnitFactoryBuild tile) -> tile.amount = 1);
+        configClear((BulkUnitFactoryBuild tile) -> {tile.amount = 1f;});
     }
 
     public class BulkUnitFactoryBuild extends UnitFactoryBuild
@@ -68,8 +72,16 @@ public class BulkUnitFactory extends UnitFactory {
         }
 
         @Override
+        public Object config()
+        {{
+            return new PvUtil.DoubleIntStack(Math.round(amount),currentPlan);
+        }}
+
+        @Override
         public void updateTile()
         {
+            rotation = Mathf.approachDelta(rotation,1,edelta()*0.01f/amount);
+            rotation %= 1;
             if(!configurable){
                 currentPlan = 0;
             }
@@ -144,8 +156,6 @@ public class BulkUnitFactory extends UnitFactory {
         @Override
         public void draw(){
             super.draw();
-            rotation = Mathf.approachDelta(rotation,1,edelta()*0.01f/amount);
-            rotation %= 1;
             if (currentPlan != -1) {
                 UnitPlan plan = plans.get(currentPlan);
 

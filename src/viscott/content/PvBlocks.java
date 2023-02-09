@@ -17,6 +17,8 @@ import mindustry.world.blocks.environment.Floor;
 import mindustry.world.blocks.environment.OreBlock;
 import mindustry.world.blocks.environment.StaticWall;
 import mindustry.world.blocks.liquid.Conduit;
+import mindustry.world.blocks.liquid.LiquidJunction;
+import mindustry.world.blocks.liquid.LiquidRouter;
 import mindustry.world.blocks.power.Battery;
 import mindustry.world.blocks.power.ConsumeGenerator;
 import mindustry.world.blocks.power.PowerNode;
@@ -64,9 +66,10 @@ public class PvBlocks {
                     /*Power Production*/smallCarbonPanel,largeCarbonPanel,lithiumDegenerator,
                                         keroseneGenerator,
                     /*Production*/siliconMassForge,particalAccelerator,
-                    /*Liquids*/concentratedConduit,micropulsePump,
+                    /*Liquids*/concentratedJunction,concentratedRouter,concentratedConduit,
+                            micropulsePump,
                     /*Pressure related*/ pressureSource,
-                    /*Unit Creation*/nueroSpawnPad,
+                    /*Unit Creation*/nueroSpawnPad,eliteSpawnPad,
                     /*Core's*/coreHover,
                             /*Walls*/
                             zirconWall,zirconWallLarge,
@@ -357,12 +360,27 @@ public class PvBlocks {
                     maxEfficiency = 5;
                     outputItem = new ItemStack(PvItems.nobelium,3);
                 }};
+                concentratedRouter = new LiquidRouter("concentrated-router")
+                {{
+                    requirements(Category.liquid, with(PvItems.lithium,4,PvItems.zirconium,4));
+                    localizedName = "Concentrated Router";
+                    health = 60;
+                    liquidCapacity = 40;
+                }};
+                concentratedJunction = new LiquidJunction("concentrated-junction")
+                {{
+                    requirements(Category.liquid, with(PvItems.lithium,4,PvItems.zirconium,4));
+                    localizedName = "Concentrated Junction";
+                    health = 60;
+                    liquidCapacity = 40;
+                }};
                 concentratedConduit = new Conduit("concentrated-conduit")
                 {{
                     requirements(Category.liquid, with(PvItems.lithium,4,PvItems.zirconium,2));
                     localizedName = "Concentrated conduit";
                     health = 60;
                     liquidCapacity = 30;
+                    junctionReplacement = concentratedJunction;
                 }};
                 nueroSpawnPad = new BulkUnitFactory("nuero-spawn-pad")
                 {{
@@ -375,6 +393,20 @@ public class PvBlocks {
                     liquidCapacity = 200;
                     plans = new Seq<>().with(
                         new UnitPlan(PvUnits.particle,15*60f,with(PvItems.lithium,20,PvItems.platinum,10))
+                    );
+                }};
+                eliteSpawnPad = new BulkUnitFactory("elite-spawn-pad")
+                {{
+                    requirements(Category.units,with(PvItems.zirconium,600,Items.silicon,210,PvItems.platinum,80,PvItems.nobelium,120)); //Todo
+                    localizedName = "Elite Spawn Pad";
+                    health = 3400;
+                    size = 7;
+                    consumePower(480f/60f);
+                    itemCapacity = 8000;
+                    liquidCapacity = 500;
+                    maxAmount = 20;
+                    plans = new Seq<>().with(
+                            new UnitPlan(PvUnits.particle,15*60f,with(PvItems.lithium,20,PvItems.platinum,10))
                     );
                 }};
                 coreHover = new CoreBlock("core-hover")
@@ -474,7 +506,7 @@ public class PvBlocks {
                 }};
                 micropulsePump = new Pump("micropulse-pump")
                 {{
-                    requirements(Category.liquid, with(PvItems.zirconium,40,PvItems.lithium,60,PvItems.erbium,10));
+                    requirements(Category.liquid, with(PvItems.zirconium,40,PvItems.lithium,60));
                     localizedName = "MicroPulse Pump";
                     size = 2;
                     pumpAmount = 0.1f;
@@ -482,8 +514,9 @@ public class PvBlocks {
                 }};
                 sus = new PvWall("sus")
                 {{
-                    requirements(Category.defense, BuildVisibility.sandboxOnly, with(PvItems.carbonFiber,1));
+                    requirements(Category.defense, BuildVisibility.sandboxOnly, with(PvItems.nobelium,1));
                     localizedName = "Sus";
+                    description = "its litteraly 1 peice of nobelium wi-\n[red]Emergency Meeting[]\n[orange]Orange :[] [red]Red[] is Sus!\n[red]Red :[] What.\n[grey]Red was the Imposter[]";
                     health = 8000;
                     armor = 10;
                     pierceReduction = 99;

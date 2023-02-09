@@ -1,10 +1,7 @@
 package viscott.content;
 
 import mindustry.content.StatusEffects;
-import mindustry.entities.bullet.BasicBulletType;
 import mindustry.entities.bullet.LaserBoltBulletType;
-import mindustry.entities.bullet.LaserBulletType;
-import mindustry.entities.pattern.ShootAlternate;
 import mindustry.gen.EntityMapping;
 import mindustry.graphics.Pal;
 import mindustry.type.UnitType;
@@ -113,6 +110,7 @@ public class PvUnits {
             canBoost = false;
             itemCapacity = 15;
             range = 21 * 8;
+            deathExplosionEffect = PvEffects.particleDeath;
             weapons.add(
                 new Weapon()
                 {{
@@ -123,7 +121,7 @@ public class PvUnits {
                     reload = 60f/2.6f;
                     bullet = new LaserBoltBulletType(8,17)
                     {{
-                        trailColor = backColor = lightColor = Pal.lancerLaser;
+                        trailColor = backColor = lightColor = Pal.sap;
                         trailWidth = 2;
                         trailLength = 25;
                         lifetime = PvUtil.GetRange(8,21);
