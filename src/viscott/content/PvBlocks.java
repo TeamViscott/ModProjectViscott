@@ -29,6 +29,7 @@ import mindustry.world.draw.DrawDefault;
 import mindustry.world.draw.DrawMulti;
 import mindustry.world.draw.DrawRegion;
 import mindustry.world.draw.DrawWarmupRegion;
+import mindustry.world.meta.BuildVisibility;
 import viscott.world.block.defense.PvWall;
 import viscott.world.block.drill.Grinder;
 import viscott.world.block.drill.LiquidGrinder;
@@ -72,8 +73,9 @@ public class PvBlocks {
                             siliconeWall,siliconeWallLarge,
                             platinumWall,platinumWallLarge,
                             erbiumWall,erbiumWallLarge,
-                            carbonWall,carbonWallLarge
+                            carbonWall,carbonWallLarge,
                             /*Testing*/
+                                    sus
                             ;
             public static void load()
             {
@@ -477,6 +479,15 @@ public class PvBlocks {
                     size = 2;
                     pumpAmount = 0.1f;
                     liquidCapacity = 40;
+                }};
+                sus = new PvWall("sus")
+                {{
+                    requirements(Category.defense, BuildVisibility.sandboxOnly, with(PvItems.carbonFiber,1));
+                    localizedName = "Sus";
+                    health = 8000;
+                    armor = 10;
+                    pierceReduction = 99;
+                    absorbLasers = true;
                 }};
             }
 }
