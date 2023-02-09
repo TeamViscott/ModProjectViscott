@@ -146,15 +146,17 @@ public class BulkUnitFactory extends UnitFactory {
             super.draw();
             rotation = Mathf.approachDelta(rotation,1,edelta()*0.01f/amount);
             rotation %= 1;
-            UnitPlan plan = plans.get(currentPlan);
-            float revProg = (progress/plan.time-1)*-1;
-            if (progress > 0)
-                for(int i = (int)amount-1;i>=0;i--)
-                {
-                    Draw.color(Pal.lighterOrange);
-                    Lines.stroke(progress/plan.time);
-                    Lines.circle(x+Math.round(Math.sin((Mathf.pi*2)*(i/(amount))+(Mathf.pi*2*rotation))*Math.sqrt((amount-1)*size))*revProg,y+Math.round(Math.cos((Mathf.pi*2)*(i/(amount))+(Mathf.pi*2*rotation))*Math.sqrt((amount-1)*size))*revProg,2);
-                }
+            if (currentPlan != -1) {
+                UnitPlan plan = plans.get(currentPlan);
+
+                float revProg = (progress / plan.time - 1) * -1;
+                if (progress > 0)
+                    for (int i = (int) amount - 1; i >= 0; i--) {
+                        Draw.color(Pal.lighterOrange);
+                        Lines.stroke(progress / plan.time);
+                        Lines.circle(x + Math.round(Math.sin((Mathf.pi * 2) * (i / (amount)) + (Mathf.pi * 2 * rotation)) * Math.sqrt((amount - 1) * size)) * revProg, y + Math.round(Math.cos((Mathf.pi * 2) * (i / (amount)) + (Mathf.pi * 2 * rotation)) * Math.sqrt((amount - 1) * size)) * revProg, 2);
+                    }
+            }
         }
 
         @Override
