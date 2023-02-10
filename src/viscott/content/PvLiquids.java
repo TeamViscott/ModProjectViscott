@@ -12,7 +12,7 @@ public class PvLiquids {
     {
         liquidNitrogen = new Liquid("liquid-nitrogen")
         {{
-            localizedName = "Nitrogen";
+            localizedName = "Liquid Nitrogen";
             color = Color.valueOf("ECDCF5");
             heatCapacity = 2;
         }};

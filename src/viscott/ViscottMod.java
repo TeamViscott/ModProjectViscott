@@ -30,6 +30,7 @@ public class ViscottMod extends Mod {
         PvTurrets.load();
         PvPlanets.load();
         PvVanillaChanges.load();
+        ProjectViscottTechTree.load();
     }
 
 }

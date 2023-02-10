@@ -1,12 +1,14 @@
 package viscott.content;
 
 import arc.graphics.Color;
+import arc.struct.Seq;
 import mindustry.type.Item;
 
 public class PvItems {
     public static Item
     zirconium,lithium,barium,nobelium,platinum,erbium,carbonFiber
     ;
+    public static Seq<Item> vercilusItems = new Seq<Item>();
     public static void load()
     {
         nobelium = new Item("nobelium"){{
@@ -37,5 +39,7 @@ public class PvItems {
             localizedName = "Zirconium";
             color = Color.valueOf("6f6e80");
         }};
+
+        vercilusItems.addAll(zirconium,lithium,barium,nobelium,platinum,erbium,carbonFiber);
     }
 }

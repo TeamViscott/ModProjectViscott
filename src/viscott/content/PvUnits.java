@@ -1,10 +1,9 @@
 package viscott.content;
 
+import mindustry.content.Fx;
 import mindustry.content.StatusEffects;
 import mindustry.entities.bullet.BasicBulletType;
 import mindustry.entities.bullet.LaserBoltBulletType;
-import mindustry.entities.bullet.LaserBulletType;
-import mindustry.entities.pattern.ShootAlternate;
 import mindustry.gen.EntityMapping;
 import mindustry.graphics.Pal;
 import mindustry.type.UnitType;
@@ -15,12 +14,16 @@ public class PvUnits {
     public static UnitType
         /*Core Units*/micro,infrared,
 
-        /*Flying Ion Path*/particle
-            ;
+        /*Flying Ion Path*/particle,
+
+        /*Extra Paths : */
+        routerTank
+                ;
     public static void load()
     {
         loadFlyingIonPath();
         loadCorePath();
+        loadExtra();
     }
     public static void loadCorePath()
     {
@@ -106,12 +109,14 @@ public class PvUnits {
             constructor = EntityMapping.map("flare");
             health = 180;
             armor = 0;
-            drag = 0.92f;
+            hitSize = 8;
+            drag = 0.1f;
             flying = true;
             speed = 27f/7.5f;
             canBoost = false;
             itemCapacity = 15;
             range = 21 * 8;
+            deathExplosionEffect = PvEffects.particleDeath;
             weapons.add(
                 new Weapon()
                 {{
@@ -122,7 +127,7 @@ public class PvUnits {
                     reload = 60f/2.6f;
                     bullet = new LaserBoltBulletType(8,17)
                     {{
-                        trailColor = backColor = lightColor = Pal.lancerLaser;
+                        trailColor = backColor = lightColor = Pal.sap;
                         trailWidth = 2;
                         trailLength = 25;
                         lifetime = PvUtil.GetRange(8,21);
@@ -130,6 +135,43 @@ public class PvUnits {
                         statusDuration = 90;
                     }};
                 }}
+            );
+        }};
+    }
+
+    public static void loadExtra()
+    {
+        routerTank = new UnitType("router-tank")
+        {{
+            localizedName = "Router Tank";
+            constructor = EntityMapping.map("stell");
+            health = 6280;
+            armor = 12;
+            drag = 0.5f;
+            hitSize = 8*2f;
+            weapons.add(
+                    new Weapon(){{
+                        reload = 10;
+                        inaccuracy = 5;
+                        mirror = false;
+                        top = false;
+                        shootY = 14;
+                        shootX = 0;
+                        x = 0;
+                        y = 0;
+                        bullet = new BasicBulletType(4,280)
+                        {{
+                            sprite = PvUtil.GetName("router-bullet");
+                            trailWidth = 2;
+                            trailLength = 20;
+                            trailColor = lightColor = Pal.lancerLaser;
+                            splashDamageRadius = 8*4f;
+                            splashDamage = 100;
+                            despawnEffect = hitEffect = Fx.massiveExplosion;
+                            hitShake = despawnShake = 1;
+                            shake = 1;
+                        }};
+                    }}
             );
         }};
     }
