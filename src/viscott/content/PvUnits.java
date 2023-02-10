@@ -8,7 +8,6 @@ import mindustry.entities.bullet.LaserBoltBulletType;
 import mindustry.entities.bullet.LaserBulletType;
 import mindustry.entities.bullet.PointLaserBulletType;
 import mindustry.gen.EntityMapping;
-import mindustry.gen.Sounds;
 import mindustry.graphics.Pal;
 import mindustry.type.StatusEffect;
 import mindustry.type.UnitType;
@@ -108,43 +107,6 @@ public class PvUnits {
     }
     public static void loadFlyingIonPath()
     {
-        snippet = new UnitType("snippet")
-        {{
-            localizedName = "Snippet";
-            constructor = EntityMapping.map("flare");
-            health = 800;
-            armor = 1;
-            hitSize = 8;
-            drag = 0.1f;
-            flying = true;
-            speed = 25f/7.5f;
-            canBoost = false;
-            itemCapacity = 15;
-            range = 9 * 8;
-            deathExplosionEffect = PvEffects.particleDeath;
-            weapons.add(
-                new Weapon()
-                {{
-                    mirror = true;
-                    top = false;
-                    x = 4;
-                    range = 9*8;
-                    y = 0;
-                    reload = 0.1f;
-                    shootSound = Sounds.none;
-                    bullet = new LaserBulletType()
-                    {{
-                        damage = 1;
-                        hitColor = Color.valueOf("990acd");
-                        buildingDamageMultiplier = 0.2f;
-                        status = StatusEffects.sapped;
-                        statusDuration = 120f;
-                        length = 9*8f;
-                        width = 4f;
-                    }};
-                }}
-            );
-        }};
         particle = new UnitType("particle")
         {{
             localizedName = "Particle";
@@ -175,6 +137,44 @@ public class PvUnits {
                             lifetime = PvUtil.GetRange(8,21);
                             status = StatusEffects.electrified;
                             statusDuration = 90;
+                        }};
+                    }}
+            );
+        }};
+
+        snippet = new UnitType("snippet")
+        {{
+            localizedName = "Snippet";
+            constructor = EntityMapping.map("flare");
+            health = 800;
+            armor = 1;
+            hitSize = 8;
+            drag = 0.1f;
+            flying = true;
+            speed = 25f/7.5f;
+            canBoost = false;
+            itemCapacity = 15;
+            range = 9 * 8;
+            deathExplosionEffect = PvEffects.particleDeath;
+            weapons.add(
+                    new Weapon()
+                    {{
+                        mirror = true;
+                        top = false;
+                        x = 4;
+                        range = 9*8;
+                        y = 0;
+                        reload = 0.1f;
+                        shootSound = null;
+                        bullet = new LaserBulletType()
+                        {{
+                            damage = 1;
+                            hitColor = Color.valueOf("990acd");
+                            buildingDamageMultiplier = 0.2f;
+                            status = StatusEffects.sapped;
+                            statusDuration = 120f;
+                            length = 9*8f;
+                            width = 4f;
                         }};
                     }}
             );
