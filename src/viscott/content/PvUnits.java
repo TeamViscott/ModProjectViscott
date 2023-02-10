@@ -106,39 +106,10 @@ public class PvUnits {
     }
     public static void loadFlyingIonPath()
     {
-        snippet = new UnitType("snippet")
-        {{
-            localizedName = "Snippet";
-            constructor = EntityMapping.map("flare");
-            health = 800;
-            armor = 1;
-            hitSize = 8;
-            drag = 0.1f;
-            flying = true;
-            speed = 25f/7.5f;
-            canBoost = false;
-            itemCapacity = 15;
-            range = 9 * 8;
-            deathExplosionEffect = PvEffects.particleDeath;
-            weapons.add(
-                new Weapon()
-                {{
-                    mirror = true;
-                    top = false;
-                    x = 4;
-                    y = 0;
-                    reload = 1f;
-                    bullet = new PointLaserBulletType()
-                    {{
-                        damage = 10;
-                        hitColor = Color.valueOf("990acd");
-                        buildingDamageMultiplier = 0.2f;
-                        status = StatusEffects.sapped;
-                        statusDuration = 120f;
-                    }};
-                }}
-            );
-        }};
+        /*
+            Mindustry works in such way in that the top one gets loaded first and then the others.
+            so if you want the ui and all to look correctly please put the T1 above the T2 and so on.
+         */
         particle = new UnitType("particle")
         {{
             localizedName = "Particle";
@@ -169,6 +140,40 @@ public class PvUnits {
                             lifetime = PvUtil.GetRange(8,21);
                             status = StatusEffects.electrified;
                             statusDuration = 90;
+                        }};
+                    }}
+            );
+        }};
+
+        snippet = new UnitType("snippet")
+        {{
+            localizedName = "Snippet";
+            constructor = EntityMapping.map("flare");
+            health = 800;
+            armor = 1;
+            hitSize = 8;
+            drag = 0.1f;
+            flying = true;
+            speed = 25f/7.5f;
+            canBoost = false;
+            itemCapacity = 15;
+            range = 9 * 8;
+            deathExplosionEffect = PvEffects.particleDeath;
+            weapons.add(
+                    new Weapon()
+                    {{
+                        mirror = true;
+                        top = false;
+                        x = 4;
+                        y = 0;
+                        reload = 1f;
+                        bullet = new PointLaserBulletType()
+                        {{
+                            damage = 10;
+                            hitColor = Color.valueOf("990acd");
+                            buildingDamageMultiplier = 0.2f;
+                            status = StatusEffects.sapped;
+                            statusDuration = 120f;
                         }};
                     }}
             );
