@@ -5,6 +5,7 @@ import mindustry.content.Fx;
 import mindustry.content.StatusEffects;
 import mindustry.entities.bullet.BasicBulletType;
 import mindustry.entities.bullet.LaserBoltBulletType;
+import mindustry.entities.bullet.LaserBulletType;
 import mindustry.entities.bullet.PointLaserBulletType;
 import mindustry.gen.EntityMapping;
 import mindustry.graphics.Pal;
@@ -126,15 +127,19 @@ public class PvUnits {
                     mirror = true;
                     top = false;
                     x = 4;
+                    range = 9*8;
                     y = 0;
-                    reload = 1f;
-                    bullet = new PointLaserBulletType()
+                    reload = 0.1f;
+                    shootSound = null;
+                    bullet = new LaserBulletType()
                     {{
-                        damage = 10;
+                        damage = 1;
                         hitColor = Color.valueOf("990acd");
                         buildingDamageMultiplier = 0.2f;
                         status = StatusEffects.sapped;
                         statusDuration = 120f;
+                        length = 9*8f;
+                        width = 4f;
                     }};
                 }}
             );
