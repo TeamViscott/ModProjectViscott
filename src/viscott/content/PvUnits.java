@@ -11,10 +11,7 @@ import mindustry.graphics.Pal;
 import mindustry.type.StatusEffect;
 import mindustry.type.UnitType;
 import mindustry.type.Weapon;
-import mindustry.world.blocks.units.UnitFactory;
 import viscott.utilitys.PvUtil;
-
-import static mindustry.type.ItemStack.with;
 
 public class PvUnits {
     public static UnitType
@@ -130,17 +127,11 @@ public class PvUnits {
                     top = false;
                     x = 4;
                     y = 0;
-                    range = 9*8;
-                    targetAir = true;
-                    targetGround = true;
-                    reload = 0.1f;
+                    reload = 1f;
                     bullet = new PointLaserBulletType()
                     {{
-                        damage = 1;
-                        shootSound = null;
+                        damage = 10;
                         hitColor = Color.valueOf("990acd");
-                        trailColor = Color.valueOf("990acd");
-                        lightColor = Color.valueOf("990acd");
                         buildingDamageMultiplier = 0.2f;
                         status = StatusEffects.sapped;
                         statusDuration = 120f;
