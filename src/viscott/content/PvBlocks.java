@@ -392,7 +392,7 @@ public class PvBlocks {
                     itemCapacity = 3000;
                     liquidCapacity = 200;
                     plans = new Seq<>().with(
-                        new UnitPlan(PvUnits.particle,15*60f,with(PvItems.lithium,20,PvItems.platinum,10))
+                        new UnitPlan(PvUnits.particle,15*60f,with(PvItems.lithium,20,PvItems.platinum,10)),
                     new UnitPlan(PvUnits.snippet,15*60f,with(PvItems.lithium,30,PvItems.platinum,20,PvItems.nobelium,10))
                     );
                 }};
@@ -407,8 +407,8 @@ public class PvBlocks {
                     liquidCapacity = 500;
                     maxAmount = 20;
                     plans = new Seq<>().with(
-                            new UnitPlan(PvUnits.particle,15*60f,with(PvItems.lithium,20,PvItems.platinum,10))
-                    new UnitPlan(PvUnits.snippet,20*60f,with(PvItems.lithium,30,PvItems.platinum,20,PvItems.nobelium,10))
+                            new UnitPlan(PvUnits.particle,15*60f,with(PvItems.lithium,20,PvItems.platinum,10)),
+                                    new UnitPlan(PvUnits.snippet,20*60f,with(PvItems.lithium,30,PvItems.platinum,20,PvItems.nobelium,10))
                     );
                 }};
                 coreHover = new CoreBlock("core-hover")
