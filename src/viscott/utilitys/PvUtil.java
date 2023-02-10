@@ -13,15 +13,4 @@ public class PvUtil {
     {
         return "project-viscott-"+added;
     }
-
-    public static class DoubleIntStack
-    {
-        public DoubleIntStack(int i1,int i2)
-        {
-            this.i1 = i1;
-            this.i2 = i2;
-        }
-        public int i1 = 0;
-        public int i2 = 0;
-    }
 }

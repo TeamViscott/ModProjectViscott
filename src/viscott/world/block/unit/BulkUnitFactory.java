@@ -34,18 +34,25 @@ public class BulkUnitFactory extends UnitFactory {
     So ye. im too lazy to do it rn. if anyone wants to work on it feel free to.
      */
     public int maxAmount = 10;
+
+    public class conf
+    {
+        int amount = 1;
+        int currentConfig = -1;
+    }
+
     public BulkUnitFactory(String name)
     {
         super(name);
         clearOnDoubleTap = true;
-        config(PvUtil.DoubleIntStack.class,(BulkUnitFactoryBuild tile, PvUtil.DoubleIntStack i) -> {
-            tile.amount = Math.round(i.i1);
-            tile.currentPlan = i.i2;
+        config(String.class,(BulkUnitFactoryBuild tile, String i) -> {
+            tile.amount = Integer.parseInt(i.split(";")[0]);
+            tile.currentPlan = Integer.parseInt(i.split(";")[1]);
         });
         config(Float.class,(BulkUnitFactoryBuild tile, Float i) -> {
             tile.amount = Math.round(i);
         });
-        configClear((BulkUnitFactoryBuild tile) -> {tile.amount = 1f;});
+        configClear((BulkUnitFactoryBuild tile) -> {tile.amount = 1f;tile.currentPlan = -1;});
     }
 
     public class BulkUnitFactoryBuild extends UnitFactoryBuild
@@ -73,9 +80,9 @@ public class BulkUnitFactory extends UnitFactory {
 
         @Override
         public Object config()
-        {{
-            return new PvUtil.DoubleIntStack(Math.round(amount),currentPlan);
-        }}
+        {
+            return amount + ";" + currentPlan;
+        }
 
         @Override
         public void updateTile()
