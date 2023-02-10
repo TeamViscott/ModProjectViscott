@@ -393,6 +393,7 @@ public class PvBlocks {
                     liquidCapacity = 200;
                     plans = new Seq<>().with(
                         new UnitPlan(PvUnits.particle,15*60f,with(PvItems.lithium,20,PvItems.platinum,10))
+                    new UnitPlan(PvUnits.snippet,15*60f,with(PvItems.lithium,30,PvItems.platinum,20,PvItems.nobelium,10))
                     );
                 }};
                 eliteSpawnPad = new BulkUnitFactory("elite-spawn-pad")
@@ -407,6 +408,7 @@ public class PvBlocks {
                     maxAmount = 20;
                     plans = new Seq<>().with(
                             new UnitPlan(PvUnits.particle,15*60f,with(PvItems.lithium,20,PvItems.platinum,10))
+                    new UnitPlan(PvUnits.snippet,20*60f,with(PvItems.lithium,30,PvItems.platinum,20,PvItems.nobelium,10))
                     );
                 }};
                 coreHover = new CoreBlock("core-hover")

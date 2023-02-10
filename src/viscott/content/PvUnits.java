@@ -1,11 +1,14 @@
 package viscott.content;
 
+import arc.graphics.Color;
 import mindustry.content.Fx;
 import mindustry.content.StatusEffects;
 import mindustry.entities.bullet.BasicBulletType;
 import mindustry.entities.bullet.LaserBoltBulletType;
+import mindustry.entities.bullet.PointLaserBulletType;
 import mindustry.gen.EntityMapping;
 import mindustry.graphics.Pal;
+import mindustry.type.StatusEffect;
 import mindustry.type.UnitType;
 import mindustry.type.Weapon;
 import viscott.utilitys.PvUtil;
@@ -14,7 +17,7 @@ public class PvUnits {
     public static UnitType
         /*Core Units*/micro,infrared,
 
-        /*Flying Ion Path*/particle,
+        /*Flying Ion Path*/particle, snippet,
 
         /*Extra Paths : */
         routerTank
@@ -103,6 +106,39 @@ public class PvUnits {
     }
     public static void loadFlyingIonPath()
     {
+        snippet = new UnitType("snippet")
+        {{
+            localizedName = "Snippet";
+            constructor = EntityMapping.map("flare");
+            health = 800;
+            armor = 1;
+            hitSize = 8;
+            drag = 0.1f;
+            flying = true;
+            speed = 25f/7.5f;
+            canBoost = false;
+            itemCapacity = 15;
+            range = 9 * 8;
+            deathExplosionEffect = PvEffects.particleDeath;
+            weapons.add(
+                new Weapon()
+                {{
+                    mirror = true;
+                    top = false;
+                    x = 4;
+                    y = 0;
+                    reload = 1f;
+                    bullet = new PointLaserBulletType()
+                    {{
+                        damage = 10;
+                        hitColor = Color.valueOf("990acd");
+                        buildingDamageMultiplier = 0.2f;
+                        status = StatusEffects.sapped;
+                        statusDuration = 120f;
+                    }};
+                }}
+            );
+        }};
         particle = new UnitType("particle")
         {{
             localizedName = "Particle";
@@ -118,23 +154,23 @@ public class PvUnits {
             range = 21 * 8;
             deathExplosionEffect = PvEffects.particleDeath;
             weapons.add(
-                new Weapon()
-                {{
-                    mirror = true;
-                    top = false;
-                    x = 4;
-                    y = 0;
-                    reload = 60f/2.6f;
-                    bullet = new LaserBoltBulletType(8,17)
+                    new Weapon()
                     {{
-                        trailColor = backColor = lightColor = Pal.sap;
-                        trailWidth = 2;
-                        trailLength = 25;
-                        lifetime = PvUtil.GetRange(8,21);
-                        status = StatusEffects.electrified;
-                        statusDuration = 90;
-                    }};
-                }}
+                        mirror = true;
+                        top = false;
+                        x = 4;
+                        y = 0;
+                        reload = 60f/2.6f;
+                        bullet = new LaserBoltBulletType(8,17)
+                        {{
+                            trailColor = backColor = lightColor = Pal.sap;
+                            trailWidth = 2;
+                            trailLength = 25;
+                            lifetime = PvUtil.GetRange(8,21);
+                            status = StatusEffects.electrified;
+                            statusDuration = 90;
+                        }};
+                    }}
             );
         }};
     }
