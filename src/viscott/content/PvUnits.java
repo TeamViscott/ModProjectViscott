@@ -8,6 +8,7 @@ import mindustry.entities.bullet.LaserBoltBulletType;
 import mindustry.entities.bullet.LaserBulletType;
 import mindustry.entities.bullet.PointLaserBulletType;
 import mindustry.gen.EntityMapping;
+import mindustry.gen.Sounds;
 import mindustry.graphics.Pal;
 import mindustry.type.StatusEffect;
 import mindustry.type.UnitType;
@@ -165,7 +166,7 @@ public class PvUnits {
                         range = 9*8;
                         y = 0;
                         reload = 0.1f;
-                        shootSound = null;
+                        shootSound = Sounds.none;
                         bullet = new LaserBulletType()
                         {{
                             damage = 1;
