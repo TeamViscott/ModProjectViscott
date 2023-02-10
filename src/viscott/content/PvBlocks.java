@@ -419,7 +419,7 @@ public class PvBlocks {
                     unitType = PvUnits.micro;
                     health = 1350;
                     size = 3;
-                    unitCapModifier = 10;
+                    unitCapModifier = 30;
                     itemCapacity = 6000;
                 }};
                 oilGrinder = new LiquidGrinder("oil-grinder")
