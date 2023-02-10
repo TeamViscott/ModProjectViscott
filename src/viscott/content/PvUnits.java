@@ -3,10 +3,7 @@ package viscott.content;
 import arc.graphics.Color;
 import mindustry.content.Fx;
 import mindustry.content.StatusEffects;
-import mindustry.entities.bullet.BasicBulletType;
-import mindustry.entities.bullet.LaserBoltBulletType;
-import mindustry.entities.bullet.LaserBulletType;
-import mindustry.entities.bullet.PointLaserBulletType;
+import mindustry.entities.bullet.*;
 import mindustry.gen.EntityMapping;
 import mindustry.gen.Sounds;
 import mindustry.graphics.Pal;
@@ -163,18 +160,19 @@ public class PvUnits {
                         mirror = true;
                         top = false;
                         x = 4;
-                        range = 9*8;
+                        range = 15*8;
                         y = 0;
-                        reload = 0.1f;
+                        reload = 2f;
                         shootSound = Sounds.none;
-                        bullet = new LaserBulletType()
+                        bullet = new ContinuousLaserBulletType()
                         {{
-                            damage = 1;
+                            damage = 20;
                             hitColor = Color.valueOf("990acd");
+                            lightColor = Color.valueOf("990acd");
                             buildingDamageMultiplier = 0.2f;
                             status = StatusEffects.sapped;
                             statusDuration = 120f;
-                            length = 9*8f;
+                            length = 14*8f;
                             width = 4f;
                         }};
                     }}
