@@ -6,6 +6,7 @@ import mindustry.content.UnitTypes;
 import mindustry.type.Category;
 import mindustry.type.UnitType;
 import mindustry.world.Block;
+import mindustry.world.blocks.defense.OverdriveProjector;
 import mindustry.world.blocks.distribution.Conveyor;
 import mindustry.world.blocks.distribution.Router;
 import mindustry.world.blocks.heat.HeatProducer;
@@ -27,14 +28,15 @@ import static mindustry.type.ItemStack.with;
 public class PvMaptools {
     public static Block
     basicsource, normalsource, advancedsource, ultrasource, ultrarouter, ultraliquidrouter, omegarouter, omegaliquidrouter, ultraconveyor,
-    ultraconduit, basicliquidsource, advancedliquidsource, ultraliquidsource, normalliquidsource, coreIntrusion, ultraheatsource, ultrapowersource;
+    ultraconduit, basicliquidsource, advancedliquidsource, ultraliquidsource, normalliquidsource, coreIntrusion, ultraheatsource, ultrapowersource,
+    tier1overdrive, tier2overdrive, tier3overdrive, tier4overdrive;
     public static void load()
     {
         basicsource = new ItemSource("basicsource")
         {{
             size = 1;
             localizedName = "Basic Source";
-            itemsPerSecond = 2;
+            itemsPerSecond = 10;
             health = 600;
             buildVisibility = BuildVisibility.sandboxOnly;
 
@@ -43,7 +45,7 @@ public class PvMaptools {
         {{
             size = 2;
             localizedName = "Medium Source";
-            itemsPerSecond = 5;
+            itemsPerSecond = 20;
             health = 1000;
             buildVisibility = BuildVisibility.sandboxOnly;
 
@@ -52,7 +54,7 @@ public class PvMaptools {
         {{
             size = 3;
             localizedName = "Advanced Source";
-            itemsPerSecond = 7;
+            itemsPerSecond = 25;
             health = 4000;
             buildVisibility = BuildVisibility.sandboxOnly;
 
@@ -61,7 +63,7 @@ public class PvMaptools {
         {{
             size = 5;
             localizedName = "Indestructible Source";
-            itemsPerSecond = 10;
+            itemsPerSecond = 30;
             health = 2147483647;
             buildVisibility = BuildVisibility.sandboxOnly;
 
@@ -169,6 +171,7 @@ public class PvMaptools {
             drawer = new DrawMulti(new DrawDefault(), new DrawHeatOutput());
             heatOutput = 1000;
             buildVisibility = BuildVisibility.sandboxOnly;
+            category = Category.production;
 
         }};
         ultrapowersource = new PowerSource("ultrapowersource")
@@ -179,7 +182,52 @@ public class PvMaptools {
             powerProduction = 10000000;
             laserRange = 1;
             buildVisibility = BuildVisibility.sandboxOnly;
+            category = Category.power;
 
+        }};
+        tier1overdrive = new OverdriveProjector("tier1overdrive"){{
+            requirements(Category.effect, with());
+            consumePower(10f);
+            size = 3;
+            localizedName = "Tier 1 Overdrive";
+            range = 200f;
+            speedBoost = 3.25f;
+            useTime = 300f;
+            hasBoost = false;
+            buildVisibility = BuildVisibility.sandboxOnly;
+        }};
+        tier2overdrive = new OverdriveProjector("tier2overdrive"){{
+            requirements(Category.effect, with());
+            consumePower(10f);
+            size = 3;
+            localizedName = "Tier 2 Overdrive";
+            range = 200f;
+            speedBoost = 4.5f;
+            useTime = 300f;
+            hasBoost = false;
+            buildVisibility = BuildVisibility.sandboxOnly;
+        }};
+        tier3overdrive = new OverdriveProjector("tier3overdrive"){{
+            requirements(Category.effect, with());
+            consumePower(10f);
+            size = 3;
+            localizedName = "Tier 3 Overdrive";
+            range = 200f;
+            speedBoost = 7.25f;
+            useTime = 300f;
+            hasBoost = false;
+            buildVisibility = BuildVisibility.sandboxOnly;
+        }};
+        tier4overdrive = new OverdriveProjector("tier4overdrive"){{
+            requirements(Category.effect, with());
+            consumePower(10f);
+            size = 3;
+            localizedName = "Tier 4 Overdrive";
+            range = 200f;
+            speedBoost = 10f;
+            useTime = 300f;
+            hasBoost = false;
+            buildVisibility = BuildVisibility.sandboxOnly;
         }};
         }
 }
