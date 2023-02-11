@@ -163,11 +163,12 @@ public class PvUnits {
                         range = 15*8;
                         y = 0;
                         continuous = true;
-                        reload = 60f;
-                        shootSound = Sounds.none;
+                        reload = 5f;
+                        shootSound = Sounds.laserbeam;
                         bullet = new ContinuousLaserBulletType()
                         {{
-                            damage = 10;
+                            damage = 14;
+                            incendChance = 0;
                             hitColor = Color.valueOf("990acd");
                             lifetime = 60f;
                             lightColor = Color.valueOf("990acd");
