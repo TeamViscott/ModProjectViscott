@@ -28,6 +28,8 @@ import mindustry.world.blocks.defense.turrets.ContinuousTurret;
 import mindustry.world.blocks.defense.turrets.ItemTurret;
 import mindustry.world.blocks.defense.turrets.LiquidTurret;
 import mindustry.world.blocks.defense.turrets.PowerTurret;
+import mindustry.world.blocks.heat.HeatBlock;
+import mindustry.world.blocks.heat.HeatConsumer;
 import mindustry.world.draw.DrawTurret;
 import mindustry.world.meta.BuildVisibility;
 import viscott.content.shootpatterns.AlternateShootPatternTurret;
@@ -779,16 +781,19 @@ public class PvTurrets{
             aimChangeSpeed = 1.3f;
             inaccuracy = 0;
             unitSort = UnitSorts.strongest;
-            heatRequirement = 13;
+            heatRequirement = 30;
+            shootCone = 360;
 
             requirements(Category.turret,with(Items.copper,1)); //Todo
 
             shootType = new PointLaserBulletType()
                     {{
-                        trailColor = lightColor = color = Pal.redDust;
-                        trailLength = 200;
+                        lightColor = color = Pal.techBlue;
+                        trailLength = 2000;
                         trailWidth = 2;
-                        damage = 500;
+                        trailColor = Pal.sap;
+                        damage = 750;
+                        maxHeatEfficiency = 7;
                         buildingDamageMultiplier = 0.001f;
                     }};
             drawer = new DrawTurret(PvUtil.GetName("Pov")){{
