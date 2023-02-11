@@ -6,6 +6,7 @@ import mindustry.content.Fx;
 import mindustry.content.Items;
 import mindustry.content.Liquids;
 import mindustry.content.StatusEffects;
+import mindustry.entities.UnitSorts;
 import mindustry.entities.bullet.*;
 import mindustry.entities.effect.ExplosionEffect;
 import mindustry.entities.effect.MultiEffect;
@@ -23,6 +24,7 @@ import mindustry.type.Category;
 import mindustry.type.Weapon;
 import mindustry.type.unit.MissileUnitType;
 import mindustry.world.Block;
+import mindustry.world.blocks.defense.turrets.ContinuousTurret;
 import mindustry.world.blocks.defense.turrets.ItemTurret;
 import mindustry.world.blocks.defense.turrets.LiquidTurret;
 import mindustry.world.blocks.defense.turrets.PowerTurret;
@@ -666,12 +668,12 @@ public class PvTurrets{
             localizedName = "Striker";
             size = 3;
             reload = 90f;
-            range = 480;
+            range = 25*8;
             inaccuracy = 2;
 
             requirements(Category.turret,with(Items.copper,1)); //Todo
             ammo(
-                    silicon, new BasicBulletType(10, 70){{
+                    silicon, new BasicBulletType(10, 50){{
                         trailColor = frontColor = backColor = Pal.techBlue;
                         shoot = new CyclicPatternStriker();
                         trailLength = 8;
@@ -679,8 +681,10 @@ public class PvTurrets{
                         pierce = true;
                         pierceCap = 3;
                         homingPower = 0.03f;
-                        shoot.shotDelay = 2.5f;
-                        lifetime = PvUtil.GetRange(this.speed,60);
+                        heatRequirement = 10;
+                        maxHeatEfficiency = 3;
+                        shoot.shotDelay = 1f;
+                        lifetime = PvUtil.GetRange(this.speed,25);
                     }}
             );
             drawer = new DrawTurret(PvUtil.GetName("Pov")){{
@@ -765,33 +769,29 @@ public class PvTurrets{
                 );
             }};
         }};
-        marksman = new ItemTurret("marksman")
+        marksman = new ContinuousTurret("marksman")
         {{
             localizedName = "Marksman";
             size = 4;
-            reload = 300f;
-            range = 1600;
-            inaccuracy = 2;
+            consumePower(30);
+            range = 800;
+            rotateSpeed = 0.2f;
+            aimChangeSpeed = 1.3f;
+            inaccuracy = 0;
+            unitSort = UnitSorts.strongest;
+            heatRequirement = 13;
+
             requirements(Category.turret,with(Items.copper,1)); //Todo
-            ammo(
-                    silicon,new BasicBulletType(10,300) //ammo should be changed in the future
+
+            shootType = new PointLaserBulletType()
                     {{
-                        trailColor = frontColor = backColor = Pal.missileYellow;
+                        trailColor = lightColor = color = Pal.redDust;
                         trailLength = 200;
                         trailWidth = 2;
-                        pierce = true;
-                        drag = 0.001f;
-                        pierceCap = 9999;
-                        homingPower = 0.7f;
-                        homingDelay = 1;
-                        homingRange = 200;
-                        shoot.shotDelay = 2.5f;
-                        lifetime = 600;
-                        targetAir = false;
-                        collidesAir = true;
+                        damage = 100;
+                        damageInterval = 5;
                         buildingDamageMultiplier = 0;
-                    }}
-            );
+                    }};
             drawer = new DrawTurret(PvUtil.GetName("Pov")){{
                 parts.addAll(
                         parts.add(
