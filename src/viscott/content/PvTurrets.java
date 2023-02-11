@@ -788,9 +788,8 @@ public class PvTurrets{
                         trailColor = lightColor = color = Pal.redDust;
                         trailLength = 200;
                         trailWidth = 2;
-                        damage = 100;
-                        damageInterval = 5;
-                        buildingDamageMultiplier = 0;
+                        damage = 500;
+                        buildingDamageMultiplier = 0.001f;
                     }};
             drawer = new DrawTurret(PvUtil.GetName("Pov")){{
                 parts.addAll(

@@ -78,14 +78,14 @@ public class PvUnits {
             mineSpeed = 6.5f;
             itemCapacity = 65;
             speed = 22.8f / 7.5f;
-            drag = 0.02f;
+            drag = 0.05f;
             range = 18*8;
             weapons.add(
                     new Weapon("")
                     {{
                         x = 0;
                         y = 5;
-                        reload = 60f/2f;
+                        reload = 60f;
                         rotate = true;
                         rotationLimit = 30;
                         bullet = new LaserBoltBulletType(5,6)
