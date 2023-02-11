@@ -162,14 +162,17 @@ public class PvUnits {
                         x = 4;
                         range = 15*8;
                         y = 0;
-                        reload = 0.1f;
+                        continuous = true;
+                        reload = 60f;
                         shootSound = Sounds.none;
                         bullet = new ContinuousLaserBulletType()
                         {{
-                            damage = 1;
+                            damage = 10;
                             hitColor = Color.valueOf("990acd");
+                            lifetime = 60f;
                             lightColor = Color.valueOf("990acd");
                             trailColor = Color.valueOf("990acd");
+                            colors = new Color[]{Pal.sap.cpy().a(.2f), Pal.sap.cpy().a(.5f), Pal.sap.cpy().mul(1.2f), Color.white};
                             buildingDamageMultiplier = 0.2f;
                             shake = 0;
                             status = StatusEffects.sapped;
