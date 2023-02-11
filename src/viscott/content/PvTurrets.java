@@ -789,7 +789,7 @@ public class PvTurrets{
             shootType = new PointLaserBulletType()
                     {{
                         lightColor = color = Pal.techBlue;
-                        trailLength = 2000;
+                                trailLength = 2000;
                         trailWidth = 2;
                         trailColor = Pal.sap;
                         damage = 750;

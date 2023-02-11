@@ -17,9 +17,10 @@ public class ViscottMod extends Mod {
 
     @Override
     public void loadContent(){
-        Log.info("Loading some example content.");
+        Log.info("Loading PV content");
         PvAttributes.load();
         PvStats.load();
+        PvMaptools.load();
         PvEffects.load();
         PvItems.load();
         PvStatusEffects.load();
@@ -31,6 +32,7 @@ public class ViscottMod extends Mod {
         PvPlanets.load();
         PvVanillaChanges.load();
         ProjectViscottTechTree.load();
+        Log.info("PV content load finished");
     }
 
 }
