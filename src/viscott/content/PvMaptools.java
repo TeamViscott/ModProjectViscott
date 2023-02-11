@@ -172,6 +172,7 @@ public class PvMaptools {
             heatOutput = 1000;
             buildVisibility = BuildVisibility.sandboxOnly;
             category = Category.production;
+            warmupRate = 100;
 
         }};
         ultrapowersource = new PowerSource("ultrapowersource")
