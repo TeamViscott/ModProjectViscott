@@ -126,26 +126,32 @@ public class PvUnits {
                             mirror = true;
                             rotationLimit = 30;
                             shootStatus = PvStatusEffects.crescendo;
-                            shootStatusDuration = 120;
+                            shootStatusDuration = 30;
                             bullet = new LaserBoltBulletType(8, 20) {{
                                 homingPower = 0.01f;
                                 homingDelay = 1;
+                                buildingDamageMultiplier = 0.01f;
+                                trailLength = 10;
+                                trailWidth = 1;
                                 pierce = true;
                                 pierceCap = 3;
                                 sprite = "circle-bullet";
                                 homingRange = 8 * 28f;
                                 lifetime = PvUtil.GetRange(this.speed, 28);
-                                lightColor = backColor = Pal.engine;
+                                trailColor = lightColor = backColor = Pal.engine;
                                 this.recoil = 0f;
                                 despawnShake = hitShake = 0.5f;
-                                fragBullets = 6;
+                                fragBullets = 3;
                                 fragBullet = new LaserBoltBulletType(6, 6) {{
                                     homingPower = 0.01f;
                                     homingDelay = 1;
+                                    buildingDamageMultiplier = 0.01f;
+                                    trailLength = 10;
+                                    trailWidth = 1;
                                     sprite = "circle-bullet";
                                     homingRange = 8 * 28f;
-                                    lifetime = PvUtil.GetRange(this.speed, 28);
-                                    lightColor = backColor = Pal.engine;
+                                    lifetime = PvUtil.GetRange(this.speed, 14);
+                                    trailColor = lightColor = backColor = Pal.engine;
                                     this.recoil = 0f;
                                     despawnShake = hitShake = 0.5f;
                                 }};

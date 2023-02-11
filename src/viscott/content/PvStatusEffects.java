@@ -44,8 +44,8 @@ public class PvStatusEffects {
                 crescendo = new StatusEffectStack("crescendo") {{
                     localizedName = "Crescendo";
                     reloadMultiplier = 1.05f;
-                    dragMultiplier = 1f;
-                    speedMultiplier = 1.0005f;
+                    dragMultiplier = 1.01f;
+                    speedMultiplier = 0.995f;
                     charges = 80;
                     show = false;
                     staticStat();
