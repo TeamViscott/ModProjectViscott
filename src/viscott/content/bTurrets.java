@@ -25,18 +25,20 @@ import static mindustry.type.ItemStack.with;
 
 public class bTurrets {
     public static Block
-    bDuo, bLancer, bForeshadow, bScorch;
+    bScatter, bLancer, bForeshadow;
     public static void load(){
-        bDuo = new ItemTurret("b-duo"){{
+        bScatter = new ItemTurret("b-scatter"){{
             requirements(Category.turret, with(Items.copper, 35));
             localizedName = "Photon";
             ammo(
                     Items.copper,  new BasicBulletType(5f, 19){{
                         width = 7f;
+                        shoot.shots = 3;
+                        shoot.shotDelay = 3;
                         height = 9f;
                         lifetime = 60f;
                         ammoMultiplier = 2;
-                        lightning = 10;
+                        lightning = 5;
                         lightningDamage = 5;
                         lightningCone = 180;
                         lightningLengthRand = 40;
@@ -49,21 +51,25 @@ public class bTurrets {
                         reloadMultiplier = 0.6f;
                         ammoMultiplier = 4;
                         lifetime = 60f;
-                        lightning = 10;
+                        lightning = 5;
                         lightningDamage = 5;
                         lightningCone = 180;
                         lightningLengthRand = 40;
                         lightningLength = 16;
                         lightningColor = Color.valueOf("9bc4e4");
+                        shoot.shots = 3;
+                        shoot.shotDelay = 3;
                     }},
                     Items.silicon, new BasicBulletType(6f, 22){{
                         width = 7f;
                         height = 9f;
                         homingPower = 0.2f;
+                        shoot.shots = 3;
+                        shoot.shotDelay = 3;
                         reloadMultiplier = 1.5f;
                         ammoMultiplier = 5;
                         lifetime = 60f;
-                        lightning = 7;
+                        lightning = 5;
                         lightningDamage = 10;
                         lightningCone = 360;
                         lightningLengthRand = 30;
@@ -80,7 +86,7 @@ public class bTurrets {
             shootCone = 15f;
             ammoUseEffect = Fx.casing1;
             health = 450;
-            inaccuracy = 2f;
+            inaccuracy = 5f;
             rotateSpeed = 10f;
             coolant = consumeCoolant(0.1f);
 
@@ -119,6 +125,7 @@ public class bTurrets {
                 hitEffect = Fx.hitLancer;
                 hitSize = 4;
                 lifetime = 16f;
+                width = 8;
                 drawSize = 400f;
                 collidesAir = false;
                 length = 173f;
@@ -127,7 +134,7 @@ public class bTurrets {
                 lightning = 3;
                 lightningCone = 22.5f;
                 lightningDamage = 30;
-                lightningLength = 5;
+                lightningLength = 16;
                 lightningColor = Pal.redDust;
 
                 status = PvStatusEffects.doused;
@@ -135,17 +142,13 @@ public class bTurrets {
             }};
         }};
         bForeshadow = new ItemTurret("b-foreshadow"){{
-            range = 500f;
+            range = 400f;
             localizedName = "Cryo";
 
             requirements(Category.turret, with(Items.copper, 1000, Items.metaglass, 600, Items.surgeAlloy, 300, Items.plastanium, 200, Items.silicon, 600));
             ammo(
                     Items.surgeAlloy, new BasicBulletType(){{
                         shootEffect = Fx.instShoot;
-                        hitEffect = Fx.instHit;
-                        smokeEffect = Fx.smokeCloud;
-                        trailEffect = Fx.instTrail;
-                        despawnEffect = Fx.instBomb;
                         damage = 500;
                         buildingDamageMultiplier = 0.2f;
                         speed = range/180f;
@@ -156,7 +159,7 @@ public class bTurrets {
                         intervalAngle = 60;
                         bulletInterval = 60;
                         scaleLife = true;
-                        lifetime = (speed/60f) * range;
+                        lifetime = PvUtil.GetRange(5, 100);
                     ammoMultiplier = 1f;
                     intervalBullet = new BasicBulletType(5,100)
                     {{
@@ -185,50 +188,6 @@ public class bTurrets {
 
             coolant = consumeCoolant(1f);
             consumePower(10f);
-        }};
-        bScorch = new ItemTurret("b-scorch"){{
-            requirements(Category.turret, with(Items.copper, 25, Items.graphite, 22));
-            localizedName = "Igniter";
-            //todo everything should change
-            ammo(
-                    Items.coal, new BulletType(3.35f, 17f){{
-                        ammoMultiplier = 3f;
-                        hitSize = 7f;
-                        lifetime = 18f;
-                        pierce = true;
-                        collidesAir = false;
-                        statusDuration = 60f * 4;
-                        shootEffect = Fx.shootSmallFlame;
-                        hitEffect = Fx.hitFlameSmall;
-                        despawnEffect = Fx.none;
-                        status = StatusEffects.burning;
-                        keepVelocity = false;
-                        hittable = false;
-                    }},
-                    Items.pyratite, new BulletType(4f, 60f){{
-                        ammoMultiplier = 6f;
-                        hitSize = 7f;
-                        lifetime = 18f;
-                        pierce = true;
-                        collidesAir = false;
-                        statusDuration = 60f * 10;
-                        shootEffect = Fx.shootPyraFlame;
-                        hitEffect = Fx.hitFlameSmall;
-                        despawnEffect = Fx.none;
-                        status = StatusEffects.burning;
-                        hittable = false;
-                    }}
-            );
-            recoil = 0f;
-            reload = 6f;
-            coolantMultiplier = 1.5f;
-            range = 60f;
-            shootCone = 50f;
-            targetAir = false;
-            ammoUseEffect = Fx.none;
-            health = 400;
-            shootSound = Sounds.flame;
-            coolant = consumeCoolant(0.1f);
         }};
     }
 }
