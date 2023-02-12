@@ -150,15 +150,15 @@ public class bTurrets {
                         shootEffect = Fx.instShoot;
                         damage = 500;
                         buildingDamageMultiplier = 0.2f;
-                        speed = 5;
+                        speed = 2;
                         hitShake = 6f;
                         intervalBullets = 6;
                         intervalRandomSpread = 0;
                         intervalSpread = 60;
                         intervalAngle = 60;
-                        bulletInterval = 60;
+                        bulletInterval = 20;
                         scaleLife = true;
-                        lifetime = PvUtil.GetRange(5, 100);
+                        lifetime = PvUtil.GetRange(2, 100);
                     ammoMultiplier = 1f;
                     intervalBullet = new BasicBulletType(5,100)
                     {{
