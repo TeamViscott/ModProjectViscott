@@ -5,10 +5,7 @@ import mindustry.content.Fx;
 import mindustry.content.Items;
 import mindustry.content.StatusEffects;
 import mindustry.entities.UnitSorts;
-import mindustry.entities.bullet.BasicBulletType;
-import mindustry.entities.bullet.BulletType;
-import mindustry.entities.bullet.LaserBulletType;
-import mindustry.entities.bullet.PointBulletType;
+import mindustry.entities.bullet.*;
 import mindustry.entities.effect.MultiEffect;
 import mindustry.entities.pattern.ShootAlternate;
 import mindustry.entities.pattern.ShootSpread;
@@ -25,7 +22,7 @@ import static mindustry.type.ItemStack.with;
 
 public class bTurrets {
     public static Block
-    bScatter, bLancer, bForeshadow;
+    bScatter, bLancer, bForeshadow, bFuse;
     public static void load(){
         bScatter = new ItemTurret("b-scatter"){{
             requirements(Category.turret, with(Items.copper, 35));
@@ -188,5 +185,41 @@ public class bTurrets {
             coolant = consumeCoolant(1f);
             consumePower(10f);
         }};
+        bFuse = new ItemTurret("b-fuse"){{
+            requirements(Category.turret, with(Items.copper, 225, Items.graphite, 225, Items.thorium, 100));
+localizedName = "OverBurner";
+            reload = 20f;
+            shake = 4f;
+            range = 160f;
+            recoil = 5f;
+
+            shoot = new ShootSpread(5, 15f);
+
+            shootCone = 30;
+            size = 3;
+            envEnabled |= Env.space;
+
+            scaledHealth = 240;
+            shootSound = Sounds.shotgun;
+            coolant = consumeCoolant(0.3f);
+
+            float brange = range + 10f;
+
+            ammo(
+                    Items.pyratite, new ShrapnelBulletType(){{
+                        length = brange;
+                        damage = 150f;
+                        ammoMultiplier = 5f;
+                        incendChance = 1;
+                        incendAmount = 1;
+                        incendSpread = 1;
+                        status = PvStatusEffects.doused;
+                        statusDuration = 1200;
+                        toColor = Pal.lightPyraFlame;
+                        shootEffect = smokeEffect = Fx.shootPyraFlame;
+                    }}
+            );
+        }};
+
     }
 }
