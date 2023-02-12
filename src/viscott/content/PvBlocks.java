@@ -1,5 +1,6 @@
 package viscott.content;
 
+import arc.audio.Sound;
 import arc.graphics.Color;
 import arc.struct.Seq;
 import mindustry.content.Fx;
@@ -13,6 +14,7 @@ import mindustry.world.Block;
 import mindustry.world.blocks.defense.Wall;
 import mindustry.world.blocks.distribution.DuctRouter;
 import mindustry.world.blocks.distribution.Junction;
+import mindustry.world.blocks.distribution.MassDriver;
 import mindustry.world.blocks.distribution.StackConveyor;
 import mindustry.world.blocks.environment.Floor;
 import mindustry.world.blocks.environment.OreBlock;
@@ -184,6 +186,30 @@ public class PvBlocks {
                     localizedName = "Mass Router";
                     health = 85;
                     speed = 0;
+                }};
+                microTransportGate = new MassDriver("micro-transport-gate"){{
+                    requirements(Category.distribution, with(PvItems.zirconium, 20, PvItems.nobelium, 5));
+                    size = 1;
+                    localizedName = "Micro transport gate";
+                    health = 180;
+                    itemCapacity = 10;
+                    reload = 0f;
+                    range = 5*8f;
+                consumePower(5/60f);
+                shootSound = Sounds.none;
+                shake = 0;
+                }};
+                megaTransportGate = new MassDriver("mega-transport-gate"){{
+                    requirements(Category.distribution, with(PvItems.zirconium, 50, PvItems.nobelium, 25, PvItems.lithium, 10));
+                    size = 3;
+                    localizedName = "Mega transport gate";
+                    health = 180;
+                    itemCapacity = 20;
+                    reload = 0f;
+                    range = 120*8f;
+                    consumePower(330/60f);
+                    shootSound = Sounds.none;
+                    shake = 0;
                 }};
 
                 harvestGrinder = new Grinder("harvest-grinder")
@@ -366,12 +392,12 @@ public class PvBlocks {
                     health = 185;
                     size = 2;
                     consumeItems(with(PvItems.zirconium,2));
-                    consumeLiquid(Liquids.oil, 20f);
+                    consumeLiquid(Liquids.oil, 20/(60*2f));
                     consumePower(20f/60f);
                     itemCapacity = 10;
                     liquidCapacity = 10;
                     craftTime = 2f*60f;
-                    outputLiquid = new LiquidStack(PvLiquids.kerosene, 15);
+                    outputLiquid = new LiquidStack(PvLiquids.kerosene, 15/(60*2f));
                 }};
                 keroseneHeater = new HeatProducer("kerosene-heater"){{
                     requirements(Category.crafting, with(PvItems.zirconium, 20, PvItems.platinum, 30));
@@ -385,7 +411,7 @@ public class PvBlocks {
                     ambientSound = Sounds.hum;
                     liquidCapacity = 10;
                     craftTime = 5.8f*60;
-                    consumeLiquid(PvLiquids.kerosene, 5);
+                    consumeLiquid(PvLiquids.kerosene, 5/(60*5.8f));
                 }};
                 concentratedRouter = new LiquidRouter("concentrated-router")
                 {{
