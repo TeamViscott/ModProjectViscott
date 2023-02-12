@@ -5,6 +5,7 @@ import arc.struct.Seq;
 import mindustry.content.Fx;
 import mindustry.content.Items;
 import mindustry.content.Liquids;
+import mindustry.gen.Sounds;
 import mindustry.type.Category;
 import mindustry.type.ItemStack;
 import mindustry.type.LiquidStack;
@@ -16,6 +17,7 @@ import mindustry.world.blocks.distribution.StackConveyor;
 import mindustry.world.blocks.environment.Floor;
 import mindustry.world.blocks.environment.OreBlock;
 import mindustry.world.blocks.environment.StaticWall;
+import mindustry.world.blocks.heat.HeatProducer;
 import mindustry.world.blocks.liquid.Conduit;
 import mindustry.world.blocks.liquid.LiquidJunction;
 import mindustry.world.blocks.liquid.LiquidRouter;
@@ -27,10 +29,7 @@ import mindustry.world.blocks.production.GenericCrafter;
 import mindustry.world.blocks.production.HeatCrafter;
 import mindustry.world.blocks.production.Pump;
 import mindustry.world.blocks.storage.CoreBlock;
-import mindustry.world.draw.DrawDefault;
-import mindustry.world.draw.DrawMulti;
-import mindustry.world.draw.DrawRegion;
-import mindustry.world.draw.DrawWarmupRegion;
+import mindustry.world.draw.*;
 import mindustry.world.meta.BuildVisibility;
 import viscott.world.block.defense.PvWall;
 import viscott.world.block.drill.Grinder;
@@ -65,7 +64,7 @@ public class PvBlocks {
                     /*Power*/opticalNode,auditoryNode,compressedBattery,
                     /*Power Production*/smallCarbonPanel,largeCarbonPanel,lithiumDegenerator,
                                         keroseneGenerator,
-                    /*Production*/siliconMassForge,particalAccelerator,
+                    /*Production*/siliconMassForge,particalAccelerator, keroseneMixer, keroseneHeater,
                     /*Liquids*/concentratedJunction,concentratedRouter,concentratedConduit,
                             micropulsePump,
                     /*Pressure related*/ pressureSource,
@@ -359,6 +358,34 @@ public class PvBlocks {
                     heatRequirement = 6;
                     maxEfficiency = 5;
                     outputItem = new ItemStack(PvItems.nobelium,3);
+                }};
+                keroseneMixer = new GenericCrafter("kerosene-mixer")
+                {{
+                    requirements(Category.crafting, with(PvItems.zirconium,50,PvItems.platinum,30,Items.silicon,50));
+                    localizedName = "Kerosene mixer";
+                    health = 185;
+                    size = 2;
+                    consumeItems(with(PvItems.zirconium,2));
+                    consumeLiquid(Liquids.oil, 20f);
+                    consumePower(20f/60f);
+                    itemCapacity = 10;
+                    liquidCapacity = 10;
+                    craftTime = 2f*60f;
+                    outputLiquid = new LiquidStack(PvLiquids.kerosene, 15);
+                }};
+                keroseneHeater = new HeatProducer("kerosene-heater"){{
+                    requirements(Category.crafting, with(PvItems.zirconium, 20, PvItems.platinum, 30));
+
+                    drawer = new DrawMulti(new DrawDefault(), new DrawHeatOutput());
+                    rotateDraw = false;
+                    size = 2;
+                    localizedName = "Kerosene Heater";
+                    heatOutput = 4f;
+                    regionRotated1 = 1;
+                    ambientSound = Sounds.hum;
+                    liquidCapacity = 10;
+                    craftTime = 5.8f*60;
+                    consumeLiquid(PvLiquids.kerosene, 5);
                 }};
                 concentratedRouter = new LiquidRouter("concentrated-router")
                 {{
