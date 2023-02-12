@@ -78,8 +78,6 @@ public class bTurrets {
                     }}
             );
 
-            shoot = new ShootAlternate(3.5f);
-
             shootY = 3f;
             reload = 10f;
             range = 220;
@@ -87,6 +85,7 @@ public class bTurrets {
             ammoUseEffect = Fx.casing1;
             health = 450;
             inaccuracy = 5f;
+            size = 2;
             rotateSpeed = 10f;
             coolant = consumeCoolant(0.1f);
 
@@ -151,7 +150,7 @@ public class bTurrets {
                         shootEffect = Fx.instShoot;
                         damage = 500;
                         buildingDamageMultiplier = 0.2f;
-                        speed = range/180f;
+                        speed = 5;
                         hitShake = 6f;
                         intervalBullets = 6;
                         intervalRandomSpread = 0;
