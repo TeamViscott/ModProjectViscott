@@ -58,7 +58,7 @@ public class PvBlocks {
 
                     /*Buildings*/
 
-                    /*Conveyors*/micromassConveyor,massJunction,massRouter,
+                    /*Conveyors*/micromassConveyor,massJunction,massRouter, microTransportGate, megaTransportGate,
 
                     /*Drills*/harvestDrill,tetraDrill,spectrumDrill,
                     /*Grinders*/harvestGrinder,behemothGrinder,oilGrinder,
