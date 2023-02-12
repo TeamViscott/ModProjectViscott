@@ -10,6 +10,8 @@ import mindustry.ui.dialogs.BaseDialog;
 import viscott.content.*;
 import viscott.content.shootpatterns.CyclicShootPattern;
 
+import java.beans.beancontext.BeanContextServiceAvailableEvent;
+
 public class ViscottMod extends Mod {
 
     public ViscottMod(){
@@ -32,6 +34,7 @@ public class ViscottMod extends Mod {
         PvPlanets.load();
         PvVanillaChanges.load();
         ProjectViscottTechTree.load();
+        bTurrets.load();
         Log.info("PV content load finished");
     }
 
