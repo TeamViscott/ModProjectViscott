@@ -131,7 +131,6 @@ public class PvBlocks {
                 erbiumDeposit = new DepositWall("erbium-deposit") //Todo
                 {{
                     variants = 0;
-                    size = 1;
                     tier = 2;
                     clipSize = 256;
                     localizedName = "Erbium Deposit";
@@ -140,7 +139,6 @@ public class PvBlocks {
                 lithiumDeposit = new DepositWall("lithium-deposit") //Todo
                 {{
                     variants = 0;
-                    size = 1;
                     clipSize = 256;
                     localizedName = "Lithium Deposit";
                     itemDrop = PvItems.lithium;
@@ -148,7 +146,6 @@ public class PvBlocks {
                 platinumDeposit = new DepositWall("platinum-deposit") //Todo
                 {{
                     variants = 0;
-                    size = 1;
                     clipSize = 256;
                     localizedName = "Platinum Deposit";
                     itemDrop = PvItems.platinum;
@@ -158,7 +155,6 @@ public class PvBlocks {
                 zirconiumDeposit = new DepositWall("zirconium-deposit") //Todo
                 {{
                     variants = 0;
-                    size = 1;
                     clipSize = 256;
                     localizedName = "Zirconium Deposit";
                     itemDrop = PvItems.zirconium;
