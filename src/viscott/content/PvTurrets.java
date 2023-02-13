@@ -800,21 +800,23 @@ public class PvTurrets{
                 parts.addAll(
                         parts.add(
                                 new RegionPart("-l"){{
-                                    progress = PartProgress.recoil;
-                                    heatProgress = PartProgress.recoil;
+                                    progress = PartProgress.warmup;
+                                    heatProgress = PartProgress.warmup;
                                     heatColor = Color.valueOf("ff6214");
                                     mirror = false;
                                     under = false;
                                     moveY = -1f;
+                                    moveX = -3f;
                                     moveRot = 1f;
                                 }},
                                 new RegionPart("-r"){{
-                                    progress = PartProgress.recoil;
-                                    heatProgress = PartProgress.recoil;
+                                    progress = PartProgress.warmup;
+                                    heatProgress = PartProgress.warmup;
                                     heatColor = Color.valueOf("ff6214");
                                     mirror = false;
                                     under = false;
                                     moveY = -1f;
+                                    moveX = 3f;
                                     moveRot = -1f;
                                 }}
                         )
