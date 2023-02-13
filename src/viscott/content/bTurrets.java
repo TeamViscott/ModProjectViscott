@@ -155,16 +155,23 @@ public class bTurrets {
                         intervalAngle = 36;
                         bulletInterval = 15;
                         scaleLife = true;
+                        trailWidth = 2;
+                        trailLength = 20;
+                        trailColor = backColor = lightColor = Pal.lancerLaser;
                         lifetime = PvUtil.GetRange(2, 100);
                     ammoMultiplier = 1f;
-                    intervalBullet = new BasicBulletType(8,200)
+                    intervalBullet = new BasicBulletType(1,200)
                     {{
-                        lifetime = PvUtil.GetRange(8, 15);
+                        lifetime = PvUtil.GetRange(4, 15);
                         buildingDamageMultiplier = 0.1f;
+                        drag = -0.05f;
                         intervalBullets = 5;
                         intervalRandomSpread = 0;
                         intervalSpread = 72;
                         intervalAngle = 72;
+                        trailWidth = 2;
+                        trailLength = 20;
+                        trailColor = backColor = lightColor = Pal.lancerLaser;
                         bulletInterval = 10;
                         buildingDamageMultiplier = 0.1f;
                     }};
