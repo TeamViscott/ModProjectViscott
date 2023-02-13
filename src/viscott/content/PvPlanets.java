@@ -1,6 +1,7 @@
 package viscott.content;
 
 import arc.graphics.Color;
+import mindustry.content.Items;
 import mindustry.content.Planets;
 import mindustry.graphics.Pal;
 import mindustry.graphics.g3d.HexMesh;
@@ -35,6 +36,7 @@ public class PvPlanets {
             landCloudColor = Color.valueOf("ffffff");
             bloom = true;
             hiddenItems.addAll(content.items()).removeAll(PvItems.vercilusItems);
+            hiddenItems.remove(Items.silicon);
             iconColor = atmosphereColor = Pal.heal;
             alwaysUnlocked = true;
         }};

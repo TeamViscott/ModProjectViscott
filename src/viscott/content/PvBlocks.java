@@ -33,6 +33,7 @@ import mindustry.world.blocks.production.GenericCrafter;
 import mindustry.world.blocks.production.HeatCrafter;
 import mindustry.world.blocks.production.Pump;
 import mindustry.world.blocks.storage.CoreBlock;
+import mindustry.world.consumers.ConsumeLiquid;
 import mindustry.world.draw.*;
 import mindustry.world.meta.BuildVisibility;
 import viscott.world.block.defense.PvWall;
@@ -68,7 +69,7 @@ public class PvBlocks {
                     /*Power*/opticalNode,auditoryNode,compressedBattery,
                     /*Power Production*/smallCarbonPanel,largeCarbonPanel,lithiumDegenerator,
                                         keroseneGenerator,
-                    /*Production*/siliconMassForge,particalAccelerator, keroseneMixer, keroseneHeater,
+                    /*Production*/siliconMassForge,particalAccelerator, keroseneMixer, keroseneHeater, carbonWeaver,
                     /*Liquids*/concentratedJunction,concentratedRouter,concentratedConduit,
                             micropulsePump,
                     /*Pressure related*/ pressureSource,
@@ -241,7 +242,7 @@ public class PvBlocks {
                     health = 180;
                     liquidCapacity = 200;
                     //todo power consume
-                    range = 120*8;
+                    range = 120;
                     consumePower(330/60f);
                 }};
                 microLiquidTransportGate = new LiquidBridge("micro-liquid-transport-gate"){{
@@ -251,7 +252,7 @@ public class PvBlocks {
                 localizedName = "Micro liquid transport gate";
                 health = 180;
                 liquidCapacity = 200;
-                range = 10*8;
+                range = 10;
                 //todo power consume
                 consumePower(330/60f);
             }};
@@ -430,18 +431,33 @@ public class PvBlocks {
                     outputItem = new ItemStack(PvItems.nobelium,3);
                 }};
                 keroseneMixer = new GenericCrafter("kerosene-mixer")
-                {{
-                    requirements(Category.crafting, with(PvItems.zirconium,50,PvItems.platinum,30,Items.silicon,50));
-                    localizedName = "Kerosene mixer";
-                    health = 185;
-                    size = 2;
-                    consumeItems(with(PvItems.zirconium,2));
-                    consumeLiquid(Liquids.oil, 20/(60*2f));
-                    consumePower(20f/60f);
-                    itemCapacity = 10;
-                    liquidCapacity = 10;
-                    craftTime = 2f*60f;
-                    outputLiquid = new LiquidStack(PvLiquids.kerosene, 15/(60*2f));
+                {
+                    {
+                        requirements(Category.crafting, with(PvItems.zirconium, 50, PvItems.platinum, 30, Items.silicon, 50));
+                        localizedName = "Kerosene mixer";
+                        health = 185;
+                        size = 2;
+                        consumeItems(with(PvItems.zirconium, 2));
+                        consumeLiquid(Liquids.oil, 20 / (60 * 2f));
+                        consumePower(20f / 60f);
+                        itemCapacity = 10;
+                        liquidCapacity = 10;
+                        craftTime = 2f * 60f;
+                        outputLiquid = new LiquidStack(PvLiquids.kerosene, 15 / (60 * 2f));
+                    }};
+                    carbonWeaver = new GenericCrafter("carbon-weaver")
+                    {{
+                        requirements(Category.crafting, with(PvItems.zirconium,50,PvItems.platinum,30,Items.silicon,50));
+                        localizedName = "Kerosene mixer";
+                        health = 1300;
+                        size = 3;
+                        consumeItems(with(PvItems.zirconium,7, Items.silicon, 5, PvItems.platinum, 5));
+                        consumeLiquid(PvLiquids.kerosene, 25/(60*6.7f));
+                        consumePower(280f/60f);
+                        itemCapacity = 10;
+                        liquidCapacity = 10;
+                        craftTime = 6.7f*60f;
+                        outputItem = new ItemStack(PvItems.carbonFiber, 3);
                 }};
                 keroseneHeater = new HeatProducer("kerosene-heater"){{
                     requirements(Category.crafting, with(PvItems.zirconium, 20, PvItems.platinum, 30));
