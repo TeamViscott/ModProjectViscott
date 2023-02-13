@@ -780,6 +780,8 @@ public class PvTurrets{
             rotateSpeed = 0.2f;
             aimChangeSpeed = 1.3f;
             inaccuracy = 0;
+            shootX = 0;
+            shootY = 0;
             unitSort = UnitSorts.strongest;
             heatRequirement = 30;
             shootCone = 360;
