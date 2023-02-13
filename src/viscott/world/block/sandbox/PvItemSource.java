@@ -25,9 +25,7 @@ public class PvItemSource extends ItemSource {
         @Override
         public void draw(){
             if(outputItem == null){
-                Draw.color(Pal.gray);
-                Fill.square(x, y, (tilesize/2f - 0.00001f)*size);
-                Draw.color();
+                Draw.rect(name+"-bottom",x,y);
                 Draw.rect("cross-full", x, y);
             }else{
                 Draw.color(outputItem.color);

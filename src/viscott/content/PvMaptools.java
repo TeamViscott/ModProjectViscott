@@ -21,6 +21,7 @@ import mindustry.world.draw.DrawHeatOutput;
 import mindustry.world.draw.DrawMulti;
 import mindustry.world.meta.BuildVisibility;
 import viscott.world.block.sandbox.PvItemSource;
+import viscott.world.block.sandbox.PvLiquidSource;
 
 import javax.xml.transform.Source;
 
@@ -66,7 +67,39 @@ public class PvMaptools {
             size = 5;
             localizedName = "Indestructible Source";
             itemsPerSecond = 30;
-            health = 2147483647;
+            health = Integer.MAX_VALUE;
+            buildVisibility = BuildVisibility.sandboxOnly;
+
+        }};
+        basicliquidsource = new PvLiquidSource("basicliquidsource")
+        {{
+            size = 1;
+            localizedName = "Basic Liquid Source";
+            health = 600;
+            buildVisibility = BuildVisibility.sandboxOnly;
+
+        }};
+        normalliquidsource = new PvLiquidSource("normalliquidsource")
+        {{
+            size = 2;
+            localizedName = "Medium Liquid Source";
+            health = 1000;
+            buildVisibility = BuildVisibility.sandboxOnly;
+
+        }};
+        advancedliquidsource = new PvLiquidSource("advancedliquidsource")
+        {{
+            size = 3;
+            localizedName = "Advanced Liquid Source";
+            health = 4000;
+            buildVisibility = BuildVisibility.sandboxOnly;
+
+        }};
+        ultraliquidsource = new PvLiquidSource("ultraliquidsource")
+        {{
+            size = 5;
+            localizedName = "Indestructible Liquid Source";
+            health = Integer.MAX_VALUE;
             buildVisibility = BuildVisibility.sandboxOnly;
 
         }};
@@ -87,38 +120,6 @@ public class PvMaptools {
             liquidCapacity = 1f;
             health = 2147483647;
             buildVisibility = BuildVisibility.sandboxOnly;
-        }};
-        basicliquidsource = new LiquidSource("basicliquidsource")
-        {{
-            size = 1;
-            localizedName = "Basic Liquid Source";
-            health = 600;
-            buildVisibility = BuildVisibility.sandboxOnly;
-
-        }};
-        normalliquidsource = new LiquidSource("normalliquidsource")
-        {{
-            size = 2;
-            localizedName = "Medium Liquid Source";
-            health = 1000;
-            buildVisibility = BuildVisibility.sandboxOnly;
-
-        }};
-        advancedliquidsource = new LiquidSource("advancedliquidsource")
-        {{
-            size = 3;
-            localizedName = "Advanced Liquid Source";
-            health = 4000;
-            buildVisibility = BuildVisibility.sandboxOnly;
-
-        }};
-        ultraliquidsource = new LiquidSource("ultraliquidsource")
-        {{
-            size = 5;
-            localizedName = "Indestructible Liquid Source";
-            health = 2147483647;
-            buildVisibility = BuildVisibility.sandboxOnly;
-
         }};
         ultraliquidrouter = new LiquidRouter("ultraliquidrouter")
         {{
