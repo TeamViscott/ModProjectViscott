@@ -22,6 +22,7 @@ import mindustry.world.blocks.environment.OreBlock;
 import mindustry.world.blocks.environment.StaticWall;
 import mindustry.world.blocks.heat.HeatProducer;
 import mindustry.world.blocks.liquid.Conduit;
+import mindustry.world.blocks.liquid.LiquidBridge;
 import mindustry.world.blocks.liquid.LiquidJunction;
 import mindustry.world.blocks.liquid.LiquidRouter;
 import mindustry.world.blocks.power.Battery;
@@ -59,7 +60,7 @@ public class PvBlocks {
 
                     /*Buildings*/
 
-                    /*Conveyors*/micromassConveyor,massJunction,massRouter, microTransportGate, megaTransportGate, megaLiquidTransportGate,
+                    /*Conveyors*/micromassConveyor,massJunction,massRouter, microTransportGate, megaTransportGate, megaLiquidTransportGate, microLiquidTransportGate,
 
                     /*Drills*/harvestDrill,tetraDrill,spectrumDrill,
                     /*Grinders*/harvestGrinder,behemothGrinder,oilGrinder,
@@ -129,7 +130,7 @@ public class PvBlocks {
                 /*Deposit's Start*/
                 erbiumDeposit = new DepositWall("erbium-deposit") //Todo
                 {{
-                    variants = 1;
+                    variants = 0;
                     size = 1;
                     tier = 2;
                     clipSize = 256;
@@ -138,7 +139,7 @@ public class PvBlocks {
                 }};
                 lithiumDeposit = new DepositWall("lithium-deposit") //Todo
                 {{
-                    variants = 1;
+                    variants = 0;
                     size = 1;
                     clipSize = 256;
                     localizedName = "Lithium Deposit";
@@ -146,7 +147,7 @@ public class PvBlocks {
                 }};
                 platinumDeposit = new DepositWall("platinum-deposit") //Todo
                 {{
-                    variants = 1;
+                    variants = 0;
                     size = 1;
                     clipSize = 256;
                     localizedName = "Platinum Deposit";
@@ -156,7 +157,7 @@ public class PvBlocks {
                 }};
                 zirconiumDeposit = new DepositWall("zirconium-deposit") //Todo
                 {{
-                    variants = 1;
+                    variants = 0;
                     size = 1;
                     clipSize = 256;
                     localizedName = "Zirconium Deposit";
@@ -232,28 +233,28 @@ public class PvBlocks {
                         speed = 100;
                     }};
                 }};
-                megaLiquidTransportGate = new MassDriver("mega-liquid-transport-gate"){{
-                    requirements(Category.distribution, with(PvItems.zirconium, 50, PvItems.nobelium, 25, PvItems.lithium, 10));
+                megaLiquidTransportGate = new LiquidBridge("mega-liquid-transport-gate"){{
+                    //todo adjust items
+                    requirements(Category.liquid, with(PvItems.zirconium, 50, PvItems.nobelium, 25, PvItems.lithium, 10));
                     size = 3;
                     localizedName = "Mega liquid transport gate";
                     health = 180;
                     liquidCapacity = 200;
-                    rotateSpeed = 360;
-                    reload = 0f;
-                    range = 120*8f;
+                    //todo power consume
+                    range = 120*8;
                     consumePower(330/60f);
-                    shootSound = Sounds.none;
-                    shake = 0;
-                    bullet = new MassDriverBolt(){{
-                        lightOpacity = 0;
-                        shake = 0;
-                        hasColor = false;
-                        trailWidth = 0;
-                        trailLength = 0;
-                        drawDisabled = true;
-                        speed = 100;
-                    }};
                 }};
+                microLiquidTransportGate = new LiquidBridge("micro-liquid-transport-gate"){{
+                    //todo adjust items
+                requirements(Category.liquid, with(PvItems.zirconium, 50, PvItems.nobelium, 25, PvItems.lithium, 10));
+                size = 1;
+                localizedName = "Micro liquid transport gate";
+                health = 180;
+                liquidCapacity = 200;
+                range = 10*8;
+                //todo power consume
+                consumePower(330/60f);
+            }};
 
                 harvestGrinder = new Grinder("harvest-grinder")
                 {{
