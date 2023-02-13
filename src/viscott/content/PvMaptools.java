@@ -20,6 +20,7 @@ import mindustry.world.draw.DrawDefault;
 import mindustry.world.draw.DrawHeatOutput;
 import mindustry.world.draw.DrawMulti;
 import mindustry.world.meta.BuildVisibility;
+import viscott.world.block.sandbox.PvItemSource;
 
 import javax.xml.transform.Source;
 
@@ -32,7 +33,7 @@ public class PvMaptools {
     tier1overdrive, tier2overdrive, tier3overdrive, tier4overdrive;
     public static void load()
     {
-        basicsource = new ItemSource("basicsource")
+        basicsource = new PvItemSource("basicsource")
         {{
             size = 1;
             localizedName = "Basic Source";
@@ -41,16 +42,17 @@ public class PvMaptools {
             buildVisibility = BuildVisibility.sandboxOnly;
 
         }};
-        normalsource = new ItemSource("normalsource")
+        normalsource = new PvItemSource("normalsource")
         {{
             size = 2;
             localizedName = "Medium Source";
+
             itemsPerSecond = 20;
             health = 1000;
             buildVisibility = BuildVisibility.sandboxOnly;
 
         }};
-        advancedsource = new ItemSource("advancedsource")
+        advancedsource = new PvItemSource("advancedsource")
         {{
             size = 3;
             localizedName = "Advanced Source";
@@ -59,7 +61,7 @@ public class PvMaptools {
             buildVisibility = BuildVisibility.sandboxOnly;
 
         }};
-        ultrasource = new ItemSource("ultrasource")
+        ultrasource = new PvItemSource("ultrasource")
         {{
             size = 5;
             localizedName = "Indestructible Source";
