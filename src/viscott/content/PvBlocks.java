@@ -187,7 +187,7 @@ public class PvBlocks {
                     speed = 0;
                 }};
                 microTransportGate = new MassDriver("micro-transport-gate"){{
-                    requirements(Category.distribution, with(PvItems.zirconium, 20, PvItems.nobelium, 5));
+                    requirements(Category.distribution, with(PvItems.zirconium, 20, PvItems.erbium, 30));
                     size = 1;
                     localizedName = "Micro transport gate";
                     health = 180;
@@ -243,7 +243,7 @@ public class PvBlocks {
                 }};
                 microLiquidTransportGate = new LiquidBridge("micro-liquid-transport-gate"){{
                     //todo adjust items
-                requirements(Category.liquid, with(PvItems.zirconium, 50, PvItems.nobelium, 25, PvItems.lithium, 10));
+                requirements(Category.liquid, with(PvItems.zirconium, 50, PvItems.erbium, 25, PvItems.lithium, 10));
                 size = 1;
                 localizedName = "Micro liquid transport gate";
                 health = 180;
