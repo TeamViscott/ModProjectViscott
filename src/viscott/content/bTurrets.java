@@ -157,9 +157,15 @@ public class bTurrets {
                         scaleLife = true;
                         lifetime = PvUtil.GetRange(2, 100);
                     ammoMultiplier = 1f;
-                    intervalBullet = new BasicBulletType(8,100)
+                    intervalBullet = new BasicBulletType(1,200)
                     {{
-                        lifetime = PvUtil.GetRange(8, 15);
+                        lifetime = PvUtil.GetRange(1, 15);
+                        buildingDamageMultiplier = 0.1f;
+                        intervalBullets = 5;
+                        intervalRandomSpread = 0;
+                        intervalSpread = 72;
+                        intervalAngle = 72;
+                        bulletInterval = 10;
                         buildingDamageMultiplier = 0.1f;
                     }};
                     }}
