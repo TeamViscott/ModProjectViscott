@@ -6,6 +6,7 @@ import arc.struct.Seq;
 import mindustry.content.Fx;
 import mindustry.content.Items;
 import mindustry.content.Liquids;
+import mindustry.entities.bullet.MassDriverBolt;
 import mindustry.gen.Sounds;
 import mindustry.type.Category;
 import mindustry.type.ItemStack;
@@ -58,7 +59,7 @@ public class PvBlocks {
 
                     /*Buildings*/
 
-                    /*Conveyors*/micromassConveyor,massJunction,massRouter, microTransportGate, megaTransportGate,
+                    /*Conveyors*/micromassConveyor,massJunction,massRouter, microTransportGate, megaTransportGate, megaLiquidTransportGate,
 
                     /*Drills*/harvestDrill,tetraDrill,spectrumDrill,
                     /*Grinders*/harvestGrinder,behemothGrinder,oilGrinder,
@@ -195,6 +196,15 @@ public class PvBlocks {
                     itemCapacity = 10;
                     reload = 0f;
                     range = 5*8f;
+                    bullet = new MassDriverBolt(){{
+                        lightOpacity = 0;
+                        shake = 0;
+                        hasColor = false;
+                        trailWidth = 0;
+                        trailLength = 0;
+                        drawDisabled = true;
+                        speed = 100;
+                    }};
                 consumePower(5/60f);
                 shootSound = Sounds.none;
                 shake = 0;
@@ -210,6 +220,36 @@ public class PvBlocks {
                     consumePower(330/60f);
                     shootSound = Sounds.none;
                     shake = 0;
+                    bullet = new MassDriverBolt(){{
+                        lightOpacity = 0;
+                        shake = 0;
+                        hasColor = false;
+                        trailWidth = 0;
+                        trailLength = 0;
+                        drawDisabled = true;
+                        speed = 100;
+                    }};
+                }};
+                megaLiquidTransportGate = new MassDriver("mega-liquid-transport-gate"){{
+                    requirements(Category.distribution, with(PvItems.zirconium, 50, PvItems.nobelium, 25, PvItems.lithium, 10));
+                    size = 3;
+                    localizedName = "Mega liquid transport gate";
+                    health = 180;
+                    liquidCapacity = 200;
+                    reload = 0f;
+                    range = 120*8f;
+                    consumePower(330/60f);
+                    shootSound = Sounds.none;
+                    shake = 0;
+                    bullet = new MassDriverBolt(){{
+                        lightOpacity = 0;
+                        shake = 0;
+                        hasColor = false;
+                        trailWidth = 0;
+                        trailLength = 0;
+                        drawDisabled = true;
+                        speed = 100;
+                    }};
                 }};
 
                 harvestGrinder = new Grinder("harvest-grinder")
