@@ -195,7 +195,8 @@ public class PvBlocks {
                     health = 180;
                     itemCapacity = 10;
                     reload = 0f;
-                    range = 5*8f;
+                    range = 10*8f;
+                    rotateSpeed = 360;
                     bullet = new MassDriverBolt(){{
                         lightOpacity = 0;
                         shake = 0;
@@ -215,6 +216,7 @@ public class PvBlocks {
                     localizedName = "Mega transport gate";
                     health = 180;
                     itemCapacity = 20;
+                    rotateSpeed = 360;
                     reload = 0f;
                     range = 120*8f;
                     consumePower(330/60f);
@@ -236,6 +238,7 @@ public class PvBlocks {
                     localizedName = "Mega liquid transport gate";
                     health = 180;
                     liquidCapacity = 200;
+                    rotateSpeed = 360;
                     reload = 0f;
                     range = 120*8f;
                     consumePower(330/60f);
