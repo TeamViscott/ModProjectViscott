@@ -6,6 +6,7 @@ import mindustry.content.UnitTypes;
 import mindustry.type.Category;
 import mindustry.type.UnitType;
 import mindustry.world.Block;
+import mindustry.world.Build;
 import mindustry.world.blocks.defense.OverdriveProjector;
 import mindustry.world.blocks.distribution.Conveyor;
 import mindustry.world.blocks.distribution.Router;
@@ -73,34 +74,34 @@ public class PvMaptools {
         }};
         basicliquidsource = new PvLiquidSource("basicliquidsource")
         {{
+            requirements(Category.liquid, BuildVisibility.sandboxOnly,with());
             size = 1;
             localizedName = "Basic Liquid Source";
             health = 600;
-            buildVisibility = BuildVisibility.sandboxOnly;
 
         }};
         normalliquidsource = new PvLiquidSource("normalliquidsource")
         {{
+            requirements(Category.liquid, BuildVisibility.sandboxOnly,with());
             size = 2;
             localizedName = "Medium Liquid Source";
             health = 1000;
-            buildVisibility = BuildVisibility.sandboxOnly;
 
         }};
         advancedliquidsource = new PvLiquidSource("advancedliquidsource")
         {{
+            requirements(Category.liquid, BuildVisibility.sandboxOnly,with());
             size = 3;
             localizedName = "Advanced Liquid Source";
             health = 4000;
-            buildVisibility = BuildVisibility.sandboxOnly;
 
         }};
         ultraliquidsource = new PvLiquidSource("ultraliquidsource")
         {{
+            requirements(Category.liquid, BuildVisibility.sandboxOnly,with());
             size = 5;
             localizedName = "Indestructible Liquid Source";
             health = Integer.MAX_VALUE;
-            buildVisibility = BuildVisibility.sandboxOnly;
 
         }};
         ultraconveyor = new Conveyor("ultraconveyor")
