@@ -378,7 +378,7 @@ public class PvBlocks {
                 }};
                 keroseneGenerator = new ConsumeGenerator("kerosene-generator")
                 {{
-                    requirements(Category.power, with(PvItems.zirconium,140,PvItems.nobelium,60,PvItems.lithium,100)); //Todo
+                    requirements(Category.power, with(PvItems.zirconium,140,PvItems.platinum,25,PvItems.lithium,100)); //Todo
                     localizedName = "Kerosene Generator";
                     health = 270;
                     size = 2;
@@ -429,7 +429,7 @@ public class PvBlocks {
                 keroseneMixer = new GenericCrafter("kerosene-mixer")
                 {
                     {
-                        requirements(Category.crafting, with(PvItems.zirconium, 50, PvItems.platinum, 30, Items.silicon, 50));
+                        requirements(Category.crafting, with(PvItems.zirconium, 50, PvItems.platinum, 30, PvItems.lithium, 30));
                         localizedName = "Kerosene mixer";
                         health = 185;
                         size = 2;
