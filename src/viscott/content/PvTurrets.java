@@ -45,7 +45,7 @@ public class PvTurrets{
             splinter,shatter,euro,snap,hourglass,
             phantom,razor,rainmaker,striker,
             marksman, xacto,reaper,shuttle, nuero,
-            xterminium
+            xterminium,hel
             ;
 
     public static void load(){
@@ -954,6 +954,61 @@ public class PvTurrets{
             }
             };
         }};
+        hel = new LiquidTurret("hel")
+        {
+            {
+                requirements(Category.turret, with(PvItems.zirconium, 1000, PvItems.carbonFiber, 500, PvItems.nobelium, 100)); //Todo
+                localizedName = "Hel";
+                description = "Crystalizes liquid nitrogen to turn them into deadly projectiles with armor piercing";
+                reload = 60 / 1;
+                inaccuracy = 2;
+                size = 4;
+                health = 2800;
+                range = 8 * 60;
+                shootY = 16;
+                recoil = 4;
+                ammo(
+                        PvLiquids.liquidNitrogen, new BasicBulletType(4,60) {{
+                            lifetime = PvUtil.GetRange(4,60);
+                            trailLength = 20;
+                            trailWidth = 2;
+                            trailColor = backColor = lightColor = Pal.lancerLaser;
+                            trailInterval = 10;
+                            intervalRandomSpread = 0;
+                            intervalSpread = 360f/8f;
+                            intervalAngle = 0;
+                            intervalBullets = 8;
+                            fragRandomSpread = 0;
+                            fragSpread = 360f/8f;
+                            fragAngle = 0;
+                            fragBullets = 8;
+                            fragVelocityMax = 1.8f;
+                            fragVelocityMin = 0.8f;
+                            fragBullet = intervalBullet = new BasicBulletType(4,40)
+                            {{
+                                trailLength = 10;
+                                trailWidth = 2;
+                                trailColor = backColor = lightColor = Pal.lancerLaser;
+                                lifetime = PvUtil.GetRange(4,40);
+                                drag = 0.1f;
+                            }};
+
+                        }}
+                );
+                drawer = new DrawTurret(PvUtil.GetName("Pov")) {{
+                    parts.addAll(
+                            Seq.with(
+                                    new RegionPart("-barrel") {{
+                                        progress = PartProgress.recoil;
+                                        moveY = -4;
+                                        under= true;
+                                        mirror = false;
+
+                                    }}
+                            )
+                    );
+                }};
+            }};
     }
     public static void loadSize5()
     {
