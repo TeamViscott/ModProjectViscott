@@ -226,7 +226,6 @@ public class PvUnits {
                         {{
                             incendChance = 0;
                             hitColor = Color.valueOf("990acd");
-                            lifetime = 60f;
                             lightColor = Color.valueOf("990acd");
                             trailColor = Color.valueOf("990acd");
                             buildingDamageMultiplier = 0.2f;
@@ -234,13 +233,13 @@ public class PvUnits {
                             status = StatusEffects.sapped;
                             statusDuration = 120f;
                             sapStrength = 0.85f;
-                            length = 55f;
-                            damage = 20;
+                            length = 15*8f;
+                            damage = 50;
                             shootEffect = Fx.shootSmall;
                             hitColor = color = Color.valueOf("bf92f9");
                             despawnEffect = Fx.none;
                             width = 0.55f;
-                            lifetime = 30f;
+                            lifetime = 10f;
                             knockback = -1f;
                         }};
                     }}
