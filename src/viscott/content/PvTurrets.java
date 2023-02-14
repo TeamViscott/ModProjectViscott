@@ -672,11 +672,12 @@ public class PvTurrets{
             reload = 90f;
             range = 25*8;
             inaccuracy = 2;
+            heatColor  = Color.valueOf( "d237a6");
 
             requirements(Category.turret,with(Items.copper,1)); //Todo
             ammo(
-                    silicon, new BasicBulletType(10, 50){{
-                        trailColor = frontColor = backColor = Pal.techBlue;
+                    silicon, new BasicBulletType(10, 40){{
+                        trailColor = frontColor = backColor = Color.valueOf( "d237a6");
                         shoot = new CyclicPatternStriker();
                         trailLength = 8;
                         trailWidth = 2;
@@ -692,24 +693,16 @@ public class PvTurrets{
             drawer = new DrawTurret(PvUtil.GetName("Pov")){{
                 parts.addAll(
                         parts.add(
-                                new RegionPart("-l"){{
+                                new RegionPart("-barrel"){{
                                     progress = PartProgress.recoil;
                                     heatProgress = PartProgress.recoil;
                                     heatColor = Color.valueOf("ff6214");
                                     mirror = false;
                                     under = false;
-                                    moveY = -1f;
-                                    moveRot = 1f;
-                                }},
-                                new RegionPart("-r"){{
-                                    progress = PartProgress.recoil;
-                                    heatProgress = PartProgress.recoil;
-                                    heatColor = Color.valueOf("ff6214");
-                                    mirror = false;
-                                    under = false;
-                                    drawRegion = true;
-                                    moveY = -1f;
-                                    moveRot = -1f;
+                                    moveY = -2f;
+                                    moveRot = 0f;
+                                    x = 0;
+                                    y = 0;
                                 }}
                         )
                 );
