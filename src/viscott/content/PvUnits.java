@@ -222,21 +222,26 @@ public class PvUnits {
                         continuous = true;
                         reload = 5f;
                         shootSound = Sounds.laserbeam;
-                        bullet = new ContinuousLaserBulletType()
+                        bullet = new SapBulletType()
                         {{
-                            damage = 14;
                             incendChance = 0;
                             hitColor = Color.valueOf("990acd");
                             lifetime = 60f;
                             lightColor = Color.valueOf("990acd");
                             trailColor = Color.valueOf("990acd");
-                            colors = new Color[]{Pal.sap.cpy().a(.2f), Pal.sap.cpy().a(.5f), Pal.sap.cpy().mul(1.2f), Color.white};
                             buildingDamageMultiplier = 0.2f;
                             shake = 0;
                             status = StatusEffects.sapped;
                             statusDuration = 120f;
-                            length = 14*8f;
-                            width = 4f;
+                            sapStrength = 0.85f;
+                            length = 55f;
+                            damage = 20;
+                            shootEffect = Fx.shootSmall;
+                            hitColor = color = Color.valueOf("bf92f9");
+                            despawnEffect = Fx.none;
+                            width = 0.55f;
+                            lifetime = 30f;
+                            knockback = -1f;
                         }};
                     }}
             );
