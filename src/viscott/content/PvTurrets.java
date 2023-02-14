@@ -672,6 +672,7 @@ public class PvTurrets{
             reload = 90f;
             range = 25*8;
             inaccuracy = 2;
+            recoil = 4;
             heatColor  = Color.valueOf( "d237a6");
 
             requirements(Category.turret,with(Items.copper,1)); //Todo
@@ -699,7 +700,7 @@ public class PvTurrets{
                                     heatColor = Color.valueOf("ff6214");
                                     mirror = false;
                                     under = false;
-                                    moveY = -2f;
+                                    moveY = -3f;
                                     moveRot = 0f;
                                     x = 0;
                                     y = 0;
