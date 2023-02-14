@@ -670,7 +670,10 @@ public class PvTurrets{
             localizedName = "Striker";
             size = 3;
             reload = 90f;
+            outlineColor = Color.valueOf("343434");
+            outlineRadius = 3;
             range = 25*8;
+            shootY = 4f;
             inaccuracy = 2;
             recoil = 4;
             heatColor  = Color.valueOf( "d237a6");
@@ -683,6 +686,7 @@ public class PvTurrets{
                         trailLength = 8;
                         trailWidth = 2;
                         pierce = true;
+                        offset = 4f;
                         pierceCap = 3;
                         homingPower = 0.03f;
                         heatRequirement = 10;
@@ -699,7 +703,7 @@ public class PvTurrets{
                                     heatProgress = PartProgress.recoil;
                                     heatColor = Color.valueOf("ff6214");
                                     mirror = false;
-                                    under = false;
+                                    under = true;
                                     moveY = -3f;
                                     moveRot = 0f;
                                     x = 0;
