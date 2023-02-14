@@ -673,6 +673,7 @@ public class PvTurrets{
             outlineColor = Color.valueOf("343434");
             outlineRadius = 3;
             range = 25*8;
+            shootY = 4f;
             inaccuracy = 2;
             recoil = 4;
             heatColor  = Color.valueOf( "d237a6");
