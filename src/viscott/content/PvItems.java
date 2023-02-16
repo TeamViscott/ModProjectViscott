@@ -2,11 +2,12 @@ package viscott.content;
 
 import arc.graphics.Color;
 import arc.struct.Seq;
+import mindustry.graphics.Pal;
 import mindustry.type.Item;
 
 public class PvItems {
     public static Item
-    zirconium,lithium,barium,nobelium,platinum,erbium,carbonFiber
+    zirconium,lithium,barium,nobelium,platinum,erbium,carbonFiber,copium
     ;
     public static Seq<Item> vercilusItems = new Seq<Item>();
     public static void load()
@@ -38,6 +39,15 @@ public class PvItems {
         zirconium = new Item("zirconium"){{
             localizedName = "Zirconium";
             color = Color.valueOf("6f6e80");
+        }};
+        copium = new Item("copium")
+        {{
+            localizedName = "Copium";
+            color = Pal.redLight;
+            explosiveness = 10;
+            flammability = 1;
+            charge = 100;
+            radioactivity = -2;
         }};
 
         vercilusItems.addAll(zirconium,lithium,barium,nobelium,platinum,erbium,carbonFiber);
