@@ -7,7 +7,6 @@ import mindustry.entities.bullet.*;
 import mindustry.gen.EntityMapping;
 import mindustry.gen.Sounds;
 import mindustry.graphics.Pal;
-import mindustry.type.StatusEffect;
 import mindustry.type.UnitType;
 import mindustry.type.Weapon;
 import viscott.utilitys.PvUtil;
@@ -19,7 +18,7 @@ public class PvUnits {
         /*Flying Ion Path*/particle, snippet,
 
         /*Extra Paths : */
-        routerTank
+        routerTank, routerBastion
                 ;
     public static void load()
     {
@@ -184,6 +183,7 @@ public class PvUnits {
                         x = 4;
                         y = 0;
                         reload = 60f/2.6f;
+                        alternate = false;
                         bullet = new LaserBoltBulletType(8,17)
                         {{
                             trailColor = backColor = lightColor = Pal.sap;
@@ -225,9 +225,14 @@ public class PvUnits {
                         bullet = new SapBulletType()
                         {{
                             incendChance = 0;
-                            hitColor = Color.valueOf("990acd");
-                            lightColor = Color.valueOf("990acd");
-                            trailColor = Color.valueOf("990acd");
+                            //tip. you can stack them.
+                            // this is long and uncanny
+                            //hitColor = Color.valueOf("990acd");
+                            //lightColor = Color.valueOf("990acd");
+                            //trailColor = Color.valueOf("990acd");
+
+                            // this is more canny
+                            //hitColor = lightColor = trailColor = Color.valueOf("990acd");
                             buildingDamageMultiplier = 0.2f;
                             shake = 0;
                             status = StatusEffects.sapped;
@@ -257,6 +262,7 @@ public class PvUnits {
             armor = 12;
             drag = 0.5f;
             hitSize = 8*2f;
+            range = 20*8;
             weapons.add(
                     new Weapon(){{
                         reload = 10;
@@ -269,6 +275,7 @@ public class PvUnits {
                         y = 0;
                         bullet = new BasicBulletType(4,280)
                         {{
+                            lifetime = PvUtil.GetRange(4,20);
                             sprite = PvUtil.GetName("router-bullet");
                             trailWidth = 2;
                             trailLength = 20;
@@ -278,6 +285,135 @@ public class PvUnits {
                             despawnEffect = hitEffect = Fx.massiveExplosion;
                             hitShake = despawnShake = 1;
                             shake = 1;
+                            spin = 4f;
+                        }};
+                    }}
+            );
+        }};
+        routerBastion = new UnitType("router-bastion")
+        {{
+            localizedName = "Router Bastion";
+            constructor = EntityMapping.map("stell");
+            health = 16840;
+            armor = 14;
+            drag = 0.6f;
+            hitSize = 8*3f;
+            speed = 7 / 7.5f;
+            range = 30*8;
+            weapons.add(
+                    new Weapon(){{
+                        reload = 10;
+                        inaccuracy = 10;
+                        mirror = true;
+                        alternate = true;
+                        top = false;
+                        shootY = 10;
+                        shootX = 0;
+                        x = 6;
+                        y = 0;
+                        bullet = new BasicBulletType(4,100)
+                        {{
+                            lifetime = PvUtil.GetRange(4,30);
+                            width = height /= 2;
+                            shrinkX = shrinkY = 0;
+                            sprite = PvUtil.GetName("router-bullet");
+                            trailWidth = 1;
+                            trailLength = 10;
+                            trailColor = lightColor = Pal.lancerLaser;
+                            splashDamageRadius = 8*2f;
+                            splashDamage = 20;
+                            despawnEffect = hitEffect = Fx.massiveExplosion;
+                            hitShake = despawnShake = 0.5f;
+                            shake = 0.5f;
+                            spin = 2f;
+                            fragBullets = 1;
+                            fragVelocityMax = fragVelocityMin = 0;
+                            fragBullet = new BasicBulletType(0,50)
+                            {{
+                                lifetime = 60 * 2.6f;
+                                width = height /= 2;
+                                shrinkX = shrinkY = 0;
+                                sprite = PvUtil.GetName("router-bullet");
+                                trailWidth = 1;
+                                trailLength = 10;
+                                trailColor = lightColor = Pal.lancerLaser;
+                                hitShake = despawnShake = 0.5f;
+                            }};
+                        }};
+                    }},
+                    new Weapon(){{
+                        reload = 9;
+                        inaccuracy = 10;
+                        mirror = true;
+                        alternate = true;
+                        top = false;
+                        shootY = 14;
+                        shootX = 0;
+                        x = 10;
+                        y = 0;
+                        bullet = new BasicBulletType(4,100)
+                        {{
+                            lifetime = PvUtil.GetRange(4,30);
+                            width = height /= 2;
+                            shrinkX = shrinkY = 0;
+                            sprite = PvUtil.GetName("router-bullet");
+                            trailWidth = 1;
+                            trailLength = 10;
+                            trailColor = lightColor = Pal.lancerLaser;
+                            splashDamageRadius = 8*2f;
+                            splashDamage = 20;
+                            despawnEffect = hitEffect = Fx.massiveExplosion;
+                            hitShake = despawnShake = 0.5f;
+                            shake = 0.5f;
+                            spin = 2f;
+                            fragBullets = 1;
+                            fragVelocityMax = fragVelocityMin = 0;
+                            fragBullet = new BasicBulletType(0,50)
+                            {{
+                                lifetime = 60 * 2.6f;
+
+                                width = height /= 2;
+                                shrinkX = shrinkY = 0;
+                                sprite = PvUtil.GetName("router-bullet");
+                                trailWidth = 1;
+                                trailLength = 10;
+                                trailColor = lightColor = Pal.lancerLaser;
+                                hitShake = despawnShake = 0.5f;
+                            }};
+                        }};
+                    }},
+                    new Weapon(){{
+                        reload = 60;
+                        inaccuracy = 5;
+                        mirror = true;
+                        alternate = true;
+                        top = false;
+                        shootY = 14;
+                        shootX = 0;
+                        x = 0;
+                        y = 0;
+                        parentizeEffects = true;
+                        continuous = true;
+                        cooldownTime = 60f;
+                        bullet = new ContinuousLaserBulletType(){{
+                            damage = 45f;
+                            length = 8*34f;
+                            hitEffect = Fx.hitMeltHeal;
+                            drawSize = 420f;
+                            lifetime = 60f * 2.5f;
+                            shake = 1f;
+                            despawnEffect = Fx.smokeCloud;
+                            smokeEffect = Fx.none;
+
+                            chargeEffect = Fx.greenLaserChargeSmall;
+
+                            incendChance = 0.1f;
+                            incendSpread = 5f;
+                            incendAmount = 1;
+
+                            //constant healing
+
+                            colors = new Color[]{Pal.lancerLaser.cpy().a(.2f), Pal.lancerLaser.cpy().a(.5f), Pal.lancerLaser.cpy().mul(1.2f), Color.white};
                         }};
                     }}
             );

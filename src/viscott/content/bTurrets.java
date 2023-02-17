@@ -154,7 +154,6 @@ public class bTurrets {
                         intervalSpread = 36;
                         intervalAngle = 36;
                         bulletInterval = 15;
-                        scaleLife = true;
                         trailWidth = 2;
                         trailLength = 20;
                         trailColor = backColor = lightColor = Pal.lancerLaser;

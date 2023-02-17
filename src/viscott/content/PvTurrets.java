@@ -972,6 +972,8 @@ public class PvTurrets{
                             lifetime = PvUtil.GetRange(4,60);
                             trailLength = 20;
                             trailWidth = 2;
+                            status = StatusEffects.freezing;
+                            statusDuration = 120;
                             trailColor = backColor = lightColor = Pal.lancerLaser;
                             trailInterval = 10;
                             intervalRandomSpread = 0;
