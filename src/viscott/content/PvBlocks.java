@@ -37,6 +37,7 @@ import mindustry.world.consumers.ConsumeLiquid;
 import mindustry.world.draw.*;
 import mindustry.world.meta.BuildVisibility;
 import viscott.world.block.defense.PvWall;
+import viscott.world.block.distribution.MassConveyor;
 import viscott.world.block.drill.Grinder;
 import viscott.world.block.drill.LiquidGrinder;
 import viscott.world.block.environment.DepositWall;
@@ -61,7 +62,9 @@ public class PvBlocks {
 
                     /*Buildings*/
 
-                    /*Conveyors*/micromassConveyor,massJunction,massRouter, microTransportGate, megaTransportGate, megaLiquidTransportGate, microLiquidTransportGate,
+                    /*Conveyors*/micromassConveyor,massJunction,massRouter, microTransportGate,
+                            megaTransportGate, megaLiquidTransportGate, microLiquidTransportGate,
+                            megaMassConveyor,megaMassJunction,megaMassRouter,
 
                     /*Drills*/harvestDrill,tetraDrill,spectrumDrill,
                     /*Grinders*/harvestGrinder,behemothGrinder,oilGrinder,
@@ -163,7 +166,7 @@ public class PvBlocks {
                 }};
                 /*Deposit's End*/
                 /*Building start*/
-                micromassConveyor = new StackConveyor("micromass-conveyor")
+                micromassConveyor = new MassConveyor("micromass-conveyor")
                 {{
                     requirements(Category.distribution, with(PvItems.zirconium,1));
                     localizedName = "Micromass Conveyor";
@@ -178,12 +181,38 @@ public class PvBlocks {
                     health = 90;
                     capacity = 20;
                     speed = 20;
+                    ((MassConveyor)micromassConveyor).junction = this;
                 }};
                 massRouter = new DuctRouter("mass-router")
                 {{
                     requirements(Category.distribution, with(PvItems.zirconium,10));
                     localizedName = "Mass Router";
                     health = 85;
+                    speed = 0;
+                }};
+                megaMassConveyor = new MassConveyor("megamass-conveyor")
+                {{
+                    requirements(Category.distribution, with(PvItems.carbonFiber,1));
+                    localizedName = "MegaMass Conveyor";
+                    health = 150;
+                    itemCapacity = 20;
+                    speed = 80f/(60f*itemCapacity);
+                }};
+                megaMassJunction = new Junction("megamass-junction")
+                {{
+                    requirements(Category.distribution, with(PvItems.zirconium,10));
+                    localizedName = "MegaMass Junction";
+                    health = 155;
+                    capacity = 40;
+                    speed = 1;
+                    ((MassConveyor)megaMassConveyor).junction = this;
+                }};
+                megaMassRouter = new DuctRouter("megamass-router")
+                {{
+                    requirements(Category.distribution, with(PvItems.zirconium,10));
+                    localizedName = "MegaMass Router";
+                    health = 140;
+                    itemCapacity = 40;
                     speed = 0;
                 }};
                 microTransportGate = new MassDriver("micro-transport-gate"){{
@@ -204,9 +233,9 @@ public class PvBlocks {
                         drawDisabled = true;
                         speed = 100;
                     }};
-                consumePower(5/60f);
-                shootSound = Sounds.none;
-                shake = 0;
+                    consumePower(5/60f);
+                    shootSound = Sounds.none;
+                    shake = 0;
                 }};
                 megaTransportGate = new MassDriver("mega-transport-gate"){{
                     requirements(Category.distribution, with(PvItems.zirconium, 50, PvItems.nobelium, 25, PvItems.lithium, 10));
