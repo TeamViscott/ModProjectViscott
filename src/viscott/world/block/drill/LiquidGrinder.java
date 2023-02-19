@@ -16,6 +16,7 @@ public class LiquidGrinder extends Grinder{
         hasLiquids = true;
         liquidCapacity = 25;
         outputsLiquid = true;
+
     }
     @Override
     public void setStats()

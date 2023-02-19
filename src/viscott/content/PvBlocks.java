@@ -1,6 +1,7 @@
 package viscott.content;
 
 import arc.audio.Sound;
+import arc.func.Prov;
 import arc.graphics.Color;
 import arc.struct.Seq;
 import mindustry.content.Fx;
@@ -8,6 +9,7 @@ import mindustry.content.Items;
 import mindustry.content.Liquids;
 import mindustry.entities.bullet.MassDriverBolt;
 import mindustry.gen.Sounds;
+import mindustry.logic.LStatements;
 import mindustry.type.Category;
 import mindustry.type.ItemStack;
 import mindustry.type.LiquidStack;
@@ -25,6 +27,7 @@ import mindustry.world.blocks.liquid.Conduit;
 import mindustry.world.blocks.liquid.LiquidBridge;
 import mindustry.world.blocks.liquid.LiquidJunction;
 import mindustry.world.blocks.liquid.LiquidRouter;
+import mindustry.world.blocks.logic.LogicBlock;
 import mindustry.world.blocks.power.Battery;
 import mindustry.world.blocks.power.ConsumeGenerator;
 import mindustry.world.blocks.power.PowerNode;
@@ -41,6 +44,7 @@ import viscott.world.block.distribution.MassConveyor;
 import viscott.world.block.drill.Grinder;
 import viscott.world.block.drill.LiquidGrinder;
 import viscott.world.block.environment.DepositWall;
+import viscott.world.block.logic.PvLogicBlock;
 import viscott.world.block.power.ConstGenerator;
 import viscott.world.block.unit.BulkUnitFactory;
 
@@ -84,6 +88,8 @@ public class PvBlocks {
                             platinumWall,platinumWallLarge,
                             erbiumWall,erbiumWallLarge,
                             carbonWall,carbonWallLarge,
+                    /*Logic*/
+                            piscoProcessor,
                             /*Testing*/
                                     sus
                             ;
@@ -651,6 +657,19 @@ public class PvBlocks {
                     size = 2;
                     pumpAmount = 0.1f;
                     liquidCapacity = 40;
+                }};
+                piscoProcessor = new PvLogicBlock("pisco-processor")
+                {{
+                    requirements(Category.logic, with(PvItems.zirconium,75,PvItems.lithium,50,PvItems.nobelium,20));
+                    localizedName = "Pisco Processor";
+                    range = 8*10;
+                    health = 90;
+                    instructionsPerTick = 1;
+                    maxInstructionsPerTick = 1;
+                    allStatements= Seq.with(
+                            new Prov[]{
+                                    LStatements.SetStatement::new
+                            });
                 }};
                 sus = new PvWall("sus")
                 {{
