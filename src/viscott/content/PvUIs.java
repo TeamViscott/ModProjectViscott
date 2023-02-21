@@ -1,11 +1,17 @@
 package viscott.content;
 
-import viscott.types.logic.PvLogicDialog;
+import mindustry.core.UI;
+import viscott.world.ui.PvUI;
 
 public class PvUIs {
-    public static PvLogicDialog pvLogic;
+    public static PvUI
+        extraUI;
     public static void load()
     {
-        //pvLogic = new PvLogicDialog();
+        extraUI = new PvUI();
+    }
+    public static void init()
+    {
+        extraUI.init();
     }
 }

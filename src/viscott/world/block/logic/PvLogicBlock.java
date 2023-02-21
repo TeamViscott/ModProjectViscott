@@ -3,16 +3,16 @@ package viscott.world.block.logic;
 import arc.func.Prov;
 import arc.scene.ui.layout.Table;
 import arc.struct.Seq;
+import mindustry.Vars;
+import mindustry.core.UI;
 import mindustry.gen.Icon;
-import mindustry.logic.LExecutor;
 import mindustry.logic.LStatement;
 import mindustry.logic.LStatements;
 import mindustry.ui.Styles;
 import mindustry.world.blocks.logic.LogicBlock;
-import viscott.content.PvUIs;
-import viscott.types.logic.PvLogicDialog;
+import viscott.world.ui.PvUI;
 
-import static mindustry.Vars.ui;
+import static viscott.content.PvUIs.*;
 
 public class PvLogicBlock extends LogicBlock {
     public Seq<Prov<LStatement>> allStatements;
@@ -69,7 +69,7 @@ public class PvLogicBlock extends LogicBlock {
             }
 
             table.button(Icon.pencil, Styles.cleari, () -> {
-                PvUIs.pvLogic.show(allStatements,code, executor, privileged, code -> configure(compress(code, relativeConnections())));
+                extraUI.customLogic.show(allStatements,code, executor, privileged, code -> configure(compress(code, relativeConnections())));
             }).size(40);
         }
     }

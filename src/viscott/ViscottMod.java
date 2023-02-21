@@ -38,5 +38,10 @@ public class ViscottMod extends Mod {
         bTurrets.load();
         Log.info("PV content load finished");
     }
+    @Override
+    public void init(){
+        super.init();
+        PvUIs.init();
+    }
 
 }

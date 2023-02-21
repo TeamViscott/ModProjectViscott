@@ -38,7 +38,7 @@ public class PvLogicDialog extends BaseDialog {
     Seq<Prov<LStatement>> statements;
 
     public PvLogicDialog(){
-        super("logic");
+        super("Plogic");
 
         clearChildren();
 
@@ -54,11 +54,11 @@ public class PvLogicDialog extends BaseDialog {
             canvas.rebuild();
         });
 
-        add(canvas).grow().name("canvas");
+        add(canvas).grow().name("Pcanvas");
 
         row();
 
-        add(buttons).growX().name("canvas");
+        add(buttons).growX().name("Pcanvas");
     }
 
     private Color typeColor(LExecutor.Var s, Color color){
