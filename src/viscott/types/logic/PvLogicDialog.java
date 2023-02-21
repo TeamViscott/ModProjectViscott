@@ -64,28 +64,28 @@ public class PvLogicDialog extends BaseDialog {
     private Color typeColor(LExecutor.Var s, Color color){
         return color.set(
                 !s.isobj ? Pal.place :
-                        s.objval == null ? Color.darkGray :
-                                s.objval instanceof String ? Pal.ammo :
-                                        s.objval instanceof Content ? Pal.logicOperations :
-                                                s.objval instanceof Building ? Pal.logicBlocks :
-                                                        s.objval instanceof Unit ? Pal.logicUnits :
-                                                                s.objval instanceof Team ? Pal.logicUnits :
-                                                                        s.objval instanceof Enum<?> ? Pal.logicIo :
-                                                                                Color.white
+                s.objval == null ? Color.darkGray :
+                s.objval instanceof String ? Pal.ammo :
+                s.objval instanceof Content ? Pal.logicOperations :
+                s.objval instanceof Building ? Pal.logicBlocks :
+                s.objval instanceof Unit ? Pal.logicUnits :
+                s.objval instanceof Team ? Pal.logicUnits :
+                s.objval instanceof Enum<?> ? Pal.logicIo :
+                Color.white
         );
     }
 
     private String typeName(LExecutor.Var s){
         return
                 !s.isobj ? "number" :
-                        s.objval == null ? "null" :
-                                s.objval instanceof String ? "string" :
-                                        s.objval instanceof Content ? "content" :
-                                                s.objval instanceof Building ? "building" :
-                                                        s.objval instanceof Team ? "team" :
-                                                                s.objval instanceof Unit ? "unit" :
-                                                                        s.objval instanceof Enum<?> ? "enum" :
-                                                                                "unknown";
+                s.objval == null ? "null" :
+                s.objval instanceof String ? "string" :
+                s.objval instanceof Content ? "content" :
+                s.objval instanceof Building ? "building" :
+                s.objval instanceof Team ? "team" :
+                s.objval instanceof Unit ? "unit" :
+                s.objval instanceof Enum<?> ? "enum" :
+                "unknown";
     }
 
     private void setup(){
