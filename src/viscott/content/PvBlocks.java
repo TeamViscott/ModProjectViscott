@@ -672,7 +672,7 @@ public class PvBlocks {
                 {{
                     requirements(Category.logic, with(PvItems.zirconium,75,PvItems.lithium,50,PvItems.nobelium,20));
                     localizedName = "Pisco Processor";
-                    range = 8*10;
+                    range = 8*6;
                     health = 90;
                     instructionsPerTick = 1;
                     maxInstructionsPerTick = 1;

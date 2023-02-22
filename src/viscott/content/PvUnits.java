@@ -248,7 +248,7 @@ public class PvUnits {
             constructor = EntityMapping.map("horizon");
             health = 1650;
             armor = 2;
-            hitSize = 8;
+            hitSize = 16;
             drag = 0.1f;
             flying = true;
             speed = 19f/7.5f;
@@ -291,7 +291,7 @@ public class PvUnits {
                     {{
                         x = 0;
                         y = 4;
-                        reload = 60/0.6f;
+                        reload = 60/0.5f;
                         mirror = false;
                         shootSound = Sounds.laserbeam;
                         bullet = new RailBulletType(){{
@@ -303,7 +303,8 @@ public class PvUnits {
                             hitEffect = Fx.massiveExplosion;
                             smokeEffect = Fx.shootBig2;
                             lightningColor = trailColor = lightColor = Pal.sap;
-                            damage = 1250;
+                            damage = 230;
+                            pierceCap = 10;
                             pierceDamageFactor = 0.5f;
                         }};
                     }}
