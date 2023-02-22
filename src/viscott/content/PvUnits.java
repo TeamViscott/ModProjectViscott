@@ -1,8 +1,11 @@
 package viscott.content;
 
 import arc.graphics.Color;
+import arc.struct.ObjectSet;
+import arc.struct.Seq;
 import mindustry.content.Fx;
 import mindustry.content.StatusEffects;
+import mindustry.content.UnitTypes;
 import mindustry.entities.bullet.*;
 import mindustry.gen.EntityMapping;
 import mindustry.gen.Sounds;
@@ -15,7 +18,7 @@ public class PvUnits {
     public static UnitType
         /*Core Units*/micro,infrared, spectrum,
 
-        /*Flying Ion Path*/ particle, snippet, fragment,
+        /*Flying Ion Path*/ particle, snippet, fragment, excerpt,
 
         /*Extra Paths : */
         routerTank, routerBastion
@@ -288,6 +291,72 @@ public class PvUnits {
                     }}
             );
         }};
+        excerpt = new UnitType("excerpt")
+        {{
+            localizedName = "Excerpt";
+            constructor = EntityMapping.map("mega");
+            health = 15000;
+            armor = 4;
+            hitSize = 8;
+            drag = 0.1f;
+            flying = true;
+            speed = 14f/7.5f;
+            itemCapacity = 25;
+            canBoost = false;
+            range = 48 * 8;
+            deathExplosionEffect = PvEffects.particleDeath;
+            weapons.add(
+                    new Weapon(PvUtil.GetName("excerpt-barrage"))
+                    {{
+                        x = 4;
+                        y = -2;
+                        shoot.shots = 2;
+                        shoot.shotDelay = 5;
+                        reload = 60/1.8f;
+                        mirror = true;
+                        recoil = 3;
+                        inaccuracy = 5;
+                        shootSound = Sounds.laserbeam;
+                        bullet = new LaserBoltBulletType(5.2f, 67){{
+                            lifetime = 60f;
+                            healPercent = 5f;
+                            collidesTeam = true;
+                            backColor = Pal.sap;
+                            frontColor = Pal.sap;
+
+                        }};
+                    }},
+            new Weapon(PvUtil.GetName("excerpt-rail-gun"))
+            {{
+                x = 0;
+                y = 0;
+                shoot.shots = 1;
+                shoot.shotDelay = 5;
+                reload = 120;
+                mirror = false;
+                recoil = 3;
+                inaccuracy = 0;
+                bullet = new PointBulletType(){{
+                    shootEffect = Fx.instShoot;
+                    hitEffect = Fx.instHit;
+                    smokeEffect = Fx.smokeCloud;
+                    trailEffect = Fx.instTrail;
+                    despawnEffect = Fx.instBomb;
+                    trailSpacing = 20f;
+                    damage = 1350;
+                    buildingDamageMultiplier = 0.2f;
+                    speed = 48*8;
+                    trailColor = Pal.sap;
+                    hitShake = 6f;
+                    ammoMultiplier = 1f;
+                }};
+            }}
+            );
+        }};
+
+    }
+    public static void loadTarredNavalTree(){
+
     }
 
     public static void loadExtra()
