@@ -82,7 +82,8 @@ public class PvBlocks {
                             micropulsePump,
                     /*Pressure related*/ pressureSource,
                     /*Unit Creation*/nueroSpawnPad,eliteSpawnPad,
-                    /*Core's*/coreHover,
+                    /*Core's*/coreHover,coreElevate,coreUpraise,
+
                             /*Walls*/
                             zirconWall,zirconWallLarge,
                             siliconeWall,siliconeWallLarge,
@@ -575,6 +576,28 @@ public class PvBlocks {
                     size = 3;
                     unitCapModifier = 30;
                     itemCapacity = 6000;
+                }};
+                coreElevate = new CoreBlock("core-elevate")
+                {{
+                    requirements(Category.effect, with(PvItems.zirconium,5000,PvItems.lithium,4000,Items.silicon,900,PvItems.carbonFiber,500));
+                    localizedName = "Core Elevate";
+                    alwaysUnlocked = true;
+                    unitType = PvUnits.infrared;
+                    health = 3700;
+                    size = 4;
+                    unitCapModifier = 50;
+                    itemCapacity = 11000;
+                }};
+                coreUpraise = new CoreBlock("core-upraise")
+                {{
+                    requirements(Category.effect, with(PvItems.zirconium,10000,PvItems.lithium,7000,Items.silicon,1500,PvItems.carbonFiber,1200,PvItems.nobelium,400));
+                    localizedName = "Core Upraise";
+                    alwaysUnlocked = true;
+                    unitType = PvUnits.spectrum;
+                    health = 7300;
+                    size = 5;
+                    unitCapModifier = 84;
+                    itemCapacity = 16000;
                 }};
                 oilGrinder = new LiquidGrinder("oil-grinder")
                 {{

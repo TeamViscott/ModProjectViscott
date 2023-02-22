@@ -326,7 +326,7 @@ public class PvUnits {
             itemCapacity = 25;
             canBoost = false;
             range = 48 * 8;
-            deathExplosionEffect = PvEffects.particleDeath;
+            deathExplosionEffect = PvEffects.particleDeath3;
             weapons.add(
                     new Weapon(PvUtil.GetName("excerpt-barrage"))
                     {{
