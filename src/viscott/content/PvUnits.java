@@ -177,7 +177,7 @@ public class PvUnits {
             canBoost = false;
             itemCapacity = 15;
             range = 21 * 8;
-            deathExplosionEffect = PvEffects.particleDeath;
+            deathExplosionEffect = PvEffects.particleDeath1;
             weapons.add(
                     new Weapon()
                     {{
@@ -213,7 +213,7 @@ public class PvUnits {
             canBoost = false;
             itemCapacity = 15;
             range = 9 * 8;
-            deathExplosionEffect = PvEffects.particleDeath;
+            deathExplosionEffect = PvEffects.particleDeath2;
             weapons.add(
                     new Weapon()
                     {{
@@ -258,7 +258,7 @@ public class PvUnits {
             itemCapacity = 25;
             canBoost = false;
             range = 48 * 8;
-            deathExplosionEffect = PvEffects.particleDeath;
+            deathExplosionEffect = PvEffects.particleDeath3;
             weapons.add(
                     new Weapon(PvUtil.GetName("fragment-mount"))
                     {{
@@ -279,14 +279,35 @@ public class PvUnits {
                             status = StatusEffects.sapped;
                             statusDuration = 120f;
                             sapStrength = 0.85f;
-                            length = 15*8f;
+                            healPercent = 0.05f;
+                            length = 24*8f;
                             damage = 50;
                             shootEffect = Fx.shootSmall;
                             hitColor = color = Color.valueOf("bf92f9");
                             despawnEffect = Fx.none;
                             width = 0.55f;
-                            lifetime = 10f;
+                            lifetime = 15f;
                             knockback = -1f;
+                        }};
+                    }},
+                    new Weapon()
+                    {{
+                        x = 0;
+                        y = 4;
+                        reload = 60/0.6f;
+                        mirror = false;
+                        shootSound = Sounds.laserbeam;
+                        bullet = new RailBulletType(){{
+                            shootEffect = Fx.lancerLaserShoot;
+                            length = 48*8;
+                            pointEffectSpace = 60f;
+                            pierceEffect = Fx.railHit;
+                            pointEffect = PvEffects.railFrag;
+                            hitEffect = Fx.massiveExplosion;
+                            smokeEffect = Fx.shootBig2;
+                            lightningColor = trailColor = lightColor = Pal.sap;
+                            damage = 1250;
+                            pierceDamageFactor = 0.5f;
                         }};
                     }}
             );

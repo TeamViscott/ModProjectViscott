@@ -69,6 +69,7 @@ public class PvBlocks {
                     /*Conveyors*/micromassConveyor,massJunction,massRouter, microTransportGate,
                             megaTransportGate, megaLiquidTransportGate, microLiquidTransportGate,
                             megaMassConveyor,megaMassJunction,megaMassRouter,
+                            nueromassConveyor,
 
                     /*Drills*/harvestDrill,tetraDrill,spectrumDrill,
                     /*Grinders*/harvestGrinder,behemothGrinder,oilGrinder,
@@ -178,7 +179,23 @@ public class PvBlocks {
                     localizedName = "Micromass Conveyor";
                     health = 50;
                     itemCapacity = 5;
-                    speed = 20f/(60f*itemCapacity);
+                    speed = 20f/(300);
+                }};
+                nueromassConveyor = new MassConveyor("nueromass-conveyor")
+                {{
+                    requirements(Category.distribution, with(PvItems.barium,2,PvItems.zirconium,1));
+                    localizedName = "NueroMass Conveyor";
+                    health = 110;
+                    itemCapacity = 10;
+                    speed = 40f/(300);
+                }};
+                megaMassConveyor = new MassConveyor("megamass-conveyor")
+                {{
+                    requirements(Category.distribution, with(PvItems.carbonFiber,1));
+                    localizedName = "MegaMass Conveyor";
+                    health = 150;
+                    itemCapacity = 20;
+                    speed = 80f/(300);
                 }};
                 massJunction = new Junction("mass-junction")
                 {{
@@ -188,6 +205,7 @@ public class PvBlocks {
                     capacity = 20;
                     speed = 20;
                     ((MassConveyor)micromassConveyor).junction = this;
+                    ((MassConveyor)nueromassConveyor).junction = this;
                 }};
                 massRouter = new DuctRouter("mass-router")
                 {{
@@ -195,14 +213,6 @@ public class PvBlocks {
                     localizedName = "Mass Router";
                     health = 85;
                     speed = 0;
-                }};
-                megaMassConveyor = new MassConveyor("megamass-conveyor")
-                {{
-                    requirements(Category.distribution, with(PvItems.carbonFiber,1));
-                    localizedName = "MegaMass Conveyor";
-                    health = 150;
-                    itemCapacity = 20;
-                    speed = 80f/(60f*itemCapacity);
                 }};
                 megaMassJunction = new Junction("megamass-junction")
                 {{
