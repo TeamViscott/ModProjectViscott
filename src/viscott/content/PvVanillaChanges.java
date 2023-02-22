@@ -7,6 +7,8 @@ import mindustry.gen.LogicIO;
 import mindustry.logic.*;
 import mindustry.ui.Styles;
 import mindustry.world.blocks.heat.HeatProducer;
+import viscott.world.block.logic.PvLogicBlock;
+
 public class PvVanillaChanges {
     public static void load()
     {

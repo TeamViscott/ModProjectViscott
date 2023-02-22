@@ -15,7 +15,7 @@ public class PvUnits {
     public static UnitType
         /*Core Units*/micro,infrared, spectrum,
 
-        /*Flying Ion Path*/particle, snippet,
+        /*Flying Ion Path*/ particle, snippet, fragment,
 
         /*Extra Paths : */
         routerTank, routerBastion
@@ -225,14 +225,52 @@ public class PvUnits {
                         bullet = new SapBulletType()
                         {{
                             incendChance = 0;
-                            //tip. you can stack them.
-                            // this is long and uncanny
-                            //hitColor = Color.valueOf("990acd");
-                            //lightColor = Color.valueOf("990acd");
-                            //trailColor = Color.valueOf("990acd");
-
-                            // this is more canny
-                            //hitColor = lightColor = trailColor = Color.valueOf("990acd");
+                            buildingDamageMultiplier = 0.2f;
+                            shake = 0;
+                            status = StatusEffects.sapped;
+                            statusDuration = 120f;
+                            sapStrength = 0.85f;
+                            length = 15*8f;
+                            damage = 50;
+                            shootEffect = Fx.shootSmall;
+                            hitColor = color = Color.valueOf("bf92f9");
+                            despawnEffect = Fx.none;
+                            width = 0.55f;
+                            lifetime = 10f;
+                            knockback = -1f;
+                        }};
+                    }}
+            );
+        }};
+        fragment = new UnitType("fragment")
+        {{
+            localizedName = "Fragment";
+            constructor = EntityMapping.map("horizon");
+            health = 1650;
+            armor = 2;
+            hitSize = 8;
+            drag = 0.1f;
+            flying = true;
+            speed = 19f/7.5f;
+            itemCapacity = 25;
+            canBoost = false;
+            range = 48 * 8;
+            deathExplosionEffect = PvEffects.particleDeath;
+            weapons.add(
+                    new Weapon(PvUtil.GetName("fragment-mount"))
+                    {{
+                        x = 0;
+                        y = 0;
+                        shoot.shots = 3;
+                        shoot.shotDelay = 5;
+                        reload = 60/1.7f;
+                        mirror = false;
+                        recoil = 3;
+                        inaccuracy = 5;
+                        shootSound = Sounds.laserbeam;
+                        bullet = new SapBulletType()
+                        {{
+                            incendChance = 0;
                             buildingDamageMultiplier = 0.2f;
                             shake = 0;
                             status = StatusEffects.sapped;

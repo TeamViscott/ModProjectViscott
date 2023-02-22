@@ -20,6 +20,7 @@ public class ViscottMod extends Mod {
     @Override
     public void loadContent(){
         Log.info("Loading PV content");
+        PvLogic.load();
         PvUIs.load();
         PvAttributes.load();
         PvStats.load();

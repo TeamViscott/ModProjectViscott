@@ -668,7 +668,8 @@ public class PvBlocks {
                     maxInstructionsPerTick = 1;
                     allStatements= Seq.with(
                             new Prov[]{
-                                    LStatements.SetStatement::new
+                                    LStatements.SetStatement::new,
+                                    PvLogic.CommentStatement::new
                             });
                 }};
                 sus = new PvWall("sus")

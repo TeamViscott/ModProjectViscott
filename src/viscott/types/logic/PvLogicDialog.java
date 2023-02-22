@@ -30,7 +30,7 @@ import static mindustry.Vars.*;
 import static mindustry.logic.LCanvas.tooltip;
 
 public class PvLogicDialog extends BaseDialog {
-    public LCanvas canvas;
+    public PvCanvas canvas;
     Cons<String> consumer = s -> {};
     boolean privileged;
     @Nullable LExecutor executor;
@@ -42,7 +42,7 @@ public class PvLogicDialog extends BaseDialog {
 
         clearChildren();
 
-        canvas = new LCanvas();
+        canvas = new PvCanvas();
         shouldPause = true;
 
         addCloseListener();
@@ -109,6 +109,7 @@ public class PvLogicDialog extends BaseDialog {
                     t.button("@schematic.copy.import", Icon.download, style, () -> {
                         dialog.hide();
                         try{
+                            canvas.allStatements = statements;
                             canvas.load(Core.app.getClipboardText().replace("\r\n", "\n"));
                         }catch(Throwable e){
                             ui.showException(e);
