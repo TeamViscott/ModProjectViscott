@@ -986,6 +986,9 @@ public class PvTurrets{
                             fragBullets = 8;
                             fragVelocityMax = 1.8f;
                             fragVelocityMin = 0.8f;
+                            pierce = true;
+                            pierceCap = 3;
+                            pierceBuilding = true;
                             fragBullet = intervalBullet = new BasicBulletType(4,40)
                             {{
                                 trailLength = 10;

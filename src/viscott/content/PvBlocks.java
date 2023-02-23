@@ -409,7 +409,7 @@ public class PvBlocks {
                 }};
                 lithiumDegenerator = new ConsumeGenerator("lithium-degenerator")
                 {{
-                    requirements(Category.power, with(PvItems.zirconium,110,PvItems.barium,65,PvItems.nobelium,25)); //Todo
+                    requirements(Category.power, with(PvItems.zirconium,110,PvItems.barium,65)); //Todo
                     localizedName = "Lithium Degenerator";
                     size = 2;
                     powerProduction = 120/60f;
@@ -548,7 +548,8 @@ public class PvBlocks {
                     liquidCapacity = 200;
                     plans = new Seq<>().with(
                         new UnitPlan(PvUnits.particle,15*60f,with(PvItems.lithium,20,PvItems.platinum,10)),
-                    new UnitPlan(PvUnits.snippet,15*60f,with(PvItems.lithium,30,PvItems.platinum,20,PvItems.nobelium,10))
+                        new UnitPlan(PvUnits.snippet,30*60f,with(PvItems.lithium,50,PvItems.platinum,25,PvItems.nobelium,10)),
+                        new UnitPlan(PvUnits.fragment,45*60f,with(PvItems.lithium,80,PvItems.platinum,50,PvItems.nobelium,20,PvItems.carbonFiber,10))
                     );
                 }};
                 eliteSpawnPad = new BulkUnitFactory("elite-spawn-pad")
@@ -563,7 +564,8 @@ public class PvBlocks {
                     maxAmount = 20;
                     plans = new Seq<>().with(
                             new UnitPlan(PvUnits.particle,15*60f,with(PvItems.lithium,20,PvItems.platinum,10)),
-                                    new UnitPlan(PvUnits.snippet,20*60f,with(PvItems.lithium,30,PvItems.platinum,20,PvItems.nobelium,10))
+                            new UnitPlan(PvUnits.snippet,30*60f,with(PvItems.lithium,50,PvItems.platinum,25,PvItems.nobelium,10)),
+                            new UnitPlan(PvUnits.fragment,45*60f,with(PvItems.lithium,80,PvItems.platinum,50,PvItems.nobelium,20,PvItems.carbonFiber,10))
                     );
                 }};
                 coreHover = new CoreBlock("core-hover")

@@ -147,6 +147,9 @@ public class bTurrets {
                         shootEffect = Fx.instShoot;
                         damage = 500;
                         buildingDamageMultiplier = 0.2f;
+                        pierce = true;
+                        pierceCap = 3;
+                        pierceBuilding = true;
                         speed = 2;
                         hitShake = 6f;
                         intervalBullets = 10;
