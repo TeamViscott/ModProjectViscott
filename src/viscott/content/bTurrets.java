@@ -138,7 +138,7 @@ public class bTurrets {
             }};
         }};
         bForeshadow = new ItemTurret("b-foreshadow"){{
-            range = 400f;
+            range = 8*80f;
             localizedName = "Cryo";
 
             requirements(Category.turret, with(Items.copper, 1000, Items.metaglass, 600, Items.surgeAlloy, 300, Items.plastanium, 200, Items.silicon, 600));
@@ -160,7 +160,7 @@ public class bTurrets {
                         trailWidth = 2;
                         trailLength = 20;
                         trailColor = backColor = lightColor = Pal.lancerLaser;
-                        lifetime = PvUtil.GetRange(2, 100);
+                        lifetime = PvUtil.GetRange(2, 80);
                     ammoMultiplier = 1f;
                     intervalBullet = new BasicBulletType(1,200)
                     {{
