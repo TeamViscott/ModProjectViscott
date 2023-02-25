@@ -412,7 +412,7 @@ public class PvBlocks {
                 {{
                     requirements(Category.power, with(PvItems.zirconium,110,PvItems.barium,65)); //Todo
                     localizedName = "Radiator";
-                    powerProduction = 20/60f;
+                    powerProduction = 5/60f;
                     health = 195;
                     size = 2;
                     range = 2;
