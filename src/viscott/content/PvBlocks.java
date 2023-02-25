@@ -25,6 +25,8 @@ import mindustry.world.blocks.liquid.Conduit;
 import mindustry.world.blocks.liquid.LiquidBridge;
 import mindustry.world.blocks.liquid.LiquidJunction;
 import mindustry.world.blocks.liquid.LiquidRouter;
+import mindustry.world.blocks.payloads.PayloadConveyor;
+import mindustry.world.blocks.payloads.PayloadRouter;
 import mindustry.world.blocks.power.Battery;
 import mindustry.world.blocks.power.ConsumeGenerator;
 import mindustry.world.blocks.power.PowerNode;
@@ -79,6 +81,8 @@ public class PvBlocks {
                             micropulsePump,
                     /*Pressure related*/ pressureSource,
                     /*Unit Creation*/nueroSpawnPad,eliteSpawnPad,
+
+                    /*Payload*/densePayloadConveyor,densePayloadRouter,
                     /*Core's*/coreHover,coreElevate,coreUpraise,
 
                             /*Walls*/
@@ -501,7 +505,7 @@ public class PvBlocks {
                     carbonWeaver = new GenericCrafter("carbon-weaver")
                     {{
                         requirements(Category.crafting, with(PvItems.zirconium,50,PvItems.platinum,30,Items.silicon,50));
-                        localizedName = "Kerosene mixer";
+                        localizedName = "Carbon Weaver";
                         health = 1300;
                         size = 3;
                         consumeItems(with(PvItems.zirconium,7, Items.silicon, 5, PvItems.platinum, 5));
@@ -576,8 +580,19 @@ public class PvBlocks {
                     plans = new Seq<>().with(
                             new UnitPlan(PvUnits.particle,15*60f,with(PvItems.lithium,20,PvItems.platinum,10)),
                             new UnitPlan(PvUnits.snippet,30*60f,with(PvItems.lithium,50,PvItems.platinum,25,PvItems.nobelium,10)),
-                            new UnitPlan(PvUnits.fragment,45*60f,with(PvItems.lithium,80,PvItems.platinum,50,PvItems.nobelium,20,PvItems.carbonFiber,10))
+                            new UnitPlan(PvUnits.fragment,45*60f,with(PvItems.lithium,80,PvItems.platinum,50,PvItems.nobelium,20,PvItems.carbonFiber,10)),
+                            new UnitPlan(PvUnits.spectrum,45*60f,with(PvItems.lithium,200,PvItems.platinum,120,PvItems.nobelium,60,PvItems.carbonFiber,30,PvItems.lithium,15))
                     );
+                }};
+                densePayloadConveyor = new PayloadConveyor("dense-payload-conveyor")
+                {{
+                    requirements(Category.units,with(PvItems.carbonFiber,20)); //Todo
+                    size = 3;
+                }};
+                densePayloadRouter = new PayloadRouter("dense-payload-router")
+                {{
+                    requirements(Category.units,with(PvItems.carbonFiber,20)); //Todo
+                    size = 3;
                 }};
                 coreHover = new CoreBlock("core-hover")
                 {{
