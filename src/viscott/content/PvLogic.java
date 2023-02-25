@@ -1,6 +1,7 @@
 package viscott.content;
 
 import arc.scene.ui.layout.Table;
+import arc.util.Time;
 import mindustry.gen.Unit;
 import mindustry.logic.LAssembler;
 import mindustry.logic.LCategory;
@@ -8,15 +9,17 @@ import mindustry.logic.LExecutor;
 import mindustry.logic.LStatement;
 import mindustry.ui.Styles;
 import viscott.types.logic.PvParser;
+import viscott.world.block.logic.PvLogicBlock;
 
-import static mindustry.Vars.content;
-import static mindustry.Vars.net;
+import static mindustry.Vars.*;
+import static mindustry.Vars.state;
+import static mindustry.logic.LExecutor.varCounter;
 
 public class PvLogic {
     public static void load()
     {
         PvParser.addLoad("com",1,new CommentStatement());
-        PvParser.addLoad("hurt",2,new HurtStatement());
+        PvParser.addLoad("hurt",2,new HealStatement());
     }
     public static class CommentStatement extends LStatement
     {
@@ -56,16 +59,16 @@ public class PvLogic {
             return null;
         }
     }
-    public static class HurtStatement extends LStatement
+    public static class HealStatement extends LStatement
     {
-        public String damage = "10", unit = "@unit";
+        public String heal = "10", unit = "@unit";
 
-        public HurtStatement() {
+        public HealStatement() {
             super();
         }
-        public HurtStatement(String damage,String unit) {
+        public HealStatement(String damage, String unit) {
             super();
-            this.damage = damage;
+            this.heal = damage;
             this.unit = unit;
         }
 
@@ -74,51 +77,65 @@ public class PvLogic {
         }
         @Override
         public void build(Table table){
-            table.add(" unit :");
+            table.add(" unit");
             fields(table, unit, str -> unit = str);
-            table.add(" damage :");
-            fields(table, damage, str -> damage = str);
+            table.add(" healing");
+            fields(table, heal, str -> heal = str);
         }
 
         @Override
         public LStatement copy()
         {
-            return new HurtStatement(damage,unit);
+            return new HealStatement(heal,unit);
         }
 
         @Override
         public void write(StringBuilder builder){
-            builder.append("hurt " + damage + " " + unit);
+            builder.append("hurt " + heal + " " + unit);
         }
         @Override
         public void afterRead()
         {
-            damage = PvParser.allToken[1];
+            heal = PvParser.allToken[1];
             unit = PvParser.allToken[2];
         }
 
         @Override
         public LExecutor.LInstruction build(LAssembler builder) {
-            return new HurtI(builder.var(damage),builder.var(unit));
+            return new HealI(builder.var(heal),builder.var(unit));
         }
 
-        public static class HurtI implements LExecutor.LInstruction {
-            public int unit, damage;
+        public static class HealI implements LExecutor.LInstruction {
+            public int unit, healing;
 
-            public HurtI(int damage, int unit){
+            public float curTime;
+            public long frameId;
+
+            public HealI(int damage, int unit){
                 this.unit = unit;
-                this.damage = damage;
+                this.healing = damage;
             }
 
-            public HurtI(){
+            public HealI(){
             }
 
             @Override
             public void run(LExecutor exec) {
-                if (net.client()) return;
+                if(curTime >= exec.num(healing)/5f){
+                    curTime = 0f;
+                    if (net.client()) return;
 
-                if (exec.obj(unit) instanceof Unit unit)
-                    unit.health -= exec.numf(damage);
+                    if (exec.obj(unit) instanceof Unit unit && unit.team == exec.team)
+                        unit.health += exec.numf(healing);
+                }else{
+                    //skip back to self.
+                    exec.var(varCounter).numval --;
+                }
+
+                if(state.updateId != frameId){
+                    curTime += Time.delta / 60f * ((PvLogicBlock)exec.build.block).instructionsPerTick;
+                    frameId = state.updateId;
+                }
             }
         }
     }

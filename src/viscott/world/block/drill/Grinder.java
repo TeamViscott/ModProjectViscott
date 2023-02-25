@@ -52,9 +52,11 @@ public class Grinder extends PvBlock {
 
     public void drawPlace(int x, int y, int rotation, boolean valid) {
         super.drawPlace(x,y,rotation,valid);
-        int fix = (size % 2) * 4 + Mathf.floor((size-1)/2)*8;
-        Drawf.dashRect(Pal.lighterOrange,x*8-offset-range*8-fix,y*8-offset-range*8-fix,size * 8 + range * 16,size * 8 + range * 16);
-        float width = drawPlaceText(Core.bundle.format("bar.grindspeed", Strings.fixed(getMineSpeed(x,y)-getHardness(x,y), 2)),x,y+size/2,true);
+        if (itemCapacity != 0) {
+            int fix = (size % 2) * 4 + Mathf.floor((size - 1) / 2) * 8;
+            Drawf.dashRect(Pal.lighterOrange, x * 8 - offset - range * 8 - fix, y * 8 - offset - range * 8 - fix, size * 8 + range * 16, size * 8 + range * 16);
+            float width = drawPlaceText(Core.bundle.format("bar.grindspeed", Strings.fixed(getMineSpeed(x, y) - getHardness(x, y), 2)), x, y + size / 2, true);
+        }
     }
     public float getMineSpeed(float x,float y)
     {
@@ -93,7 +95,7 @@ public class Grinder extends PvBlock {
     @Override
     public void setBars(){
         super.setBars();
-
+        if (itemCapacity != 0)
         addBar("grindspeed", (GrinderBuild e) ->
                 new Bar(() -> Core.bundle.format("bar.grindspeed", Strings.fixed((e.maxMineSpeed - getHardness(e.x/8,e.y/8)) * e.timeScale(), 2)), () -> Pal.lighterOrange, () -> e.progress));
     }

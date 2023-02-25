@@ -1,6 +1,5 @@
 package viscott.content;
 
-import arc.audio.Sound;
 import arc.func.Prov;
 import arc.graphics.Color;
 import arc.struct.Seq;
@@ -18,7 +17,6 @@ import mindustry.world.blocks.defense.Wall;
 import mindustry.world.blocks.distribution.DuctRouter;
 import mindustry.world.blocks.distribution.Junction;
 import mindustry.world.blocks.distribution.MassDriver;
-import mindustry.world.blocks.distribution.StackConveyor;
 import mindustry.world.blocks.environment.Floor;
 import mindustry.world.blocks.environment.OreBlock;
 import mindustry.world.blocks.environment.StaticWall;
@@ -27,7 +25,6 @@ import mindustry.world.blocks.liquid.Conduit;
 import mindustry.world.blocks.liquid.LiquidBridge;
 import mindustry.world.blocks.liquid.LiquidJunction;
 import mindustry.world.blocks.liquid.LiquidRouter;
-import mindustry.world.blocks.logic.LogicBlock;
 import mindustry.world.blocks.power.Battery;
 import mindustry.world.blocks.power.ConsumeGenerator;
 import mindustry.world.blocks.power.PowerNode;
@@ -36,13 +33,13 @@ import mindustry.world.blocks.production.GenericCrafter;
 import mindustry.world.blocks.production.HeatCrafter;
 import mindustry.world.blocks.production.Pump;
 import mindustry.world.blocks.storage.CoreBlock;
-import mindustry.world.consumers.ConsumeLiquid;
 import mindustry.world.draw.*;
 import mindustry.world.meta.BuildVisibility;
 import viscott.world.block.defense.PvWall;
 import viscott.world.block.distribution.MassConveyor;
 import viscott.world.block.drill.Grinder;
 import viscott.world.block.drill.LiquidGrinder;
+import viscott.world.block.drill.PowerGrinder;
 import viscott.world.block.environment.DepositWall;
 import viscott.world.block.logic.PvLogicBlock;
 import viscott.world.block.power.ConstGenerator;
@@ -76,7 +73,7 @@ public class PvBlocks {
 
                     /*Power*/opticalNode,auditoryNode,compressedBattery,
                     /*Power Production*/smallCarbonPanel,largeCarbonPanel,lithiumDegenerator,
-                                        keroseneGenerator,
+                                        keroseneGenerator,radiator,
                     /*Production*/siliconMassForge,particalAccelerator, keroseneMixer, keroseneHeater, carbonWeaver,
                     /*Liquids*/concentratedJunction,concentratedRouter,concentratedConduit,
                             micropulsePump,
@@ -147,6 +144,8 @@ public class PvBlocks {
                     clipSize = 256;
                     localizedName = "Erbium Deposit";
                     itemDrop = PvItems.erbium;
+                    hardness = 0.02f;
+                    attributes.set(PvAttributes.power,0.8f);
                 }};
                 lithiumDeposit = new DepositWall("lithium-deposit") //Todo
                 {{
@@ -154,6 +153,7 @@ public class PvBlocks {
                     clipSize = 256;
                     localizedName = "Lithium Deposit";
                     itemDrop = PvItems.lithium;
+                    attributes.set(PvAttributes.power,0.3f);
                 }};
                 platinumDeposit = new DepositWall("platinum-deposit") //Todo
                 {{
@@ -163,6 +163,7 @@ public class PvBlocks {
                     itemDrop = PvItems.platinum;
                     tier = 2;
                     hardness = 0.06f;
+                    attributes.set(PvAttributes.power,0.5f);
                 }};
                 zirconiumDeposit = new DepositWall("zirconium-deposit") //Todo
                 {{
@@ -170,7 +171,7 @@ public class PvBlocks {
                     clipSize = 256;
                     localizedName = "Zirconium Deposit";
                     itemDrop = PvItems.zirconium;
-                    hardness = 0.02f;
+                    attributes.set(PvAttributes.power,0.1f);
                 }};
                 /*Deposit's End*/
                 /*Building start*/
@@ -406,6 +407,16 @@ public class PvBlocks {
                     size = 4;
                     powerProduction = 130f/60f;
                     health = 780;
+                }};
+                radiator = new PowerGrinder("radiator")
+                {{
+                    requirements(Category.power, with(PvItems.zirconium,110,PvItems.barium,65)); //Todo
+                    localizedName = "Radiator";
+                    powerProduction = 20/60f;
+                    health = 195;
+                    size = 2;
+                    range = 2;
+                    tier = 10;
                 }};
                 lithiumDegenerator = new ConsumeGenerator("lithium-degenerator")
                 {{
@@ -704,8 +715,13 @@ public class PvBlocks {
                     allStatements= Seq.with(
                             new Prov[]{
                                     LStatements.UnitBindStatement::new,
-                                    PvLogic.CommentStatement::new,
-                                    PvLogic.HurtStatement::new
+                                    PvLogic.HealStatement::new,
+                                    LStatements.UnitControlStatement::new,
+                                    LStatements.SensorStatement::new,
+                                    LStatements.SetStatement::new,
+                                    LStatements.WriteStatement::new,
+                                    LStatements.ReadStatement::new,
+                                    PvLogic.CommentStatement::new
                             });
                 }};
                 sus = new PvWall("sus")
