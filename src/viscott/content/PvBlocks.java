@@ -20,6 +20,7 @@ import mindustry.world.blocks.distribution.MassDriver;
 import mindustry.world.blocks.environment.Floor;
 import mindustry.world.blocks.environment.OreBlock;
 import mindustry.world.blocks.environment.StaticWall;
+import mindustry.world.blocks.heat.HeatConductor;
 import mindustry.world.blocks.heat.HeatProducer;
 import mindustry.world.blocks.liquid.Conduit;
 import mindustry.world.blocks.liquid.LiquidBridge;
@@ -76,9 +77,13 @@ public class PvBlocks {
                     /*Power*/opticalNode,auditoryNode,compressedBattery,
                     /*Power Production*/smallCarbonPanel,largeCarbonPanel,lithiumDegenerator,
                                         keroseneGenerator,radiator,
-                    /*Production*/siliconMassForge,particalAccelerator, keroseneMixer, keroseneHeater, carbonWeaver,
+                    /*Production*/siliconMassForge,particalAccelerator, keroseneMixer, carbonWeaver,
+
+                    /*Heaters*/keroseneHeater,
+                                heatPathfinder,
                     /*Liquids*/concentratedJunction,concentratedRouter,concentratedConduit,
-                            micropulsePump,
+                    smallConcentratedTank,largeConcentratedTank,
+                            micropulsePump,effluxPump,
                     /*Pressure related*/ pressureSource,
                     /*Unit Creation*/nueroSpawnPad,eliteSpawnPad,
 
@@ -530,6 +535,12 @@ public class PvBlocks {
                     craftTime = 5.8f*60;
                     consumeLiquid(PvLiquids.kerosene, 5/(60*5.8f));
                 }};
+                heatPathfinder = new HeatConductor("heat-pathfinder"){{
+                    requirements(Category.crafting, with(PvItems.zirconium, 100, PvItems.carbonFiber, 20));
+                    size = 2;
+                    drawer = new DrawMulti(new DrawDefault(), new DrawHeatOutput(), new DrawHeatInput("-heat"));
+                    regionRotated1 = 1;
+                }};
                 concentratedRouter = new LiquidRouter("concentrated-router")
                 {{
                     requirements(Category.liquid, with(PvItems.lithium,4,PvItems.zirconium,4));
@@ -551,6 +562,20 @@ public class PvBlocks {
                     health = 60;
                     liquidCapacity = 30;
                     junctionReplacement = concentratedJunction;
+                }};
+                smallConcentratedTank = new LiquidRouter("small-concentrated-tank"){{
+                    requirements(Category.liquid, with(PvItems.barium, 30,PvItems.lithium,10));
+                    size = 2;
+                    solid = true;
+                    liquidCapacity = 1500f;
+                    health = 500;
+                }};
+                largeConcentratedTank = new LiquidRouter("large-concentrated-tank"){{
+                    requirements(Category.liquid, with(PvItems.barium, 100,PvItems.lithium,50,PvItems.nobelium,20));
+                    size = 4;
+                    solid = true;
+                    liquidCapacity = 6000f;
+                    health = 1230;
                 }};
                 nueroSpawnPad = new BulkUnitFactory("nuero-spawn-pad")
                 {{
@@ -581,17 +606,19 @@ public class PvBlocks {
                             new UnitPlan(PvUnits.particle,15*60f,with(PvItems.lithium,20,PvItems.platinum,10)),
                             new UnitPlan(PvUnits.snippet,30*60f,with(PvItems.lithium,50,PvItems.platinum,25,PvItems.nobelium,10)),
                             new UnitPlan(PvUnits.fragment,45*60f,with(PvItems.lithium,80,PvItems.platinum,50,PvItems.nobelium,20,PvItems.carbonFiber,10)),
-                            new UnitPlan(PvUnits.spectrum,45*60f,with(PvItems.lithium,200,PvItems.platinum,120,PvItems.nobelium,60,PvItems.carbonFiber,30,PvItems.lithium,15))
+                            new UnitPlan(PvUnits.excerpt,45*60f,with(PvItems.lithium,200,PvItems.platinum,120,PvItems.nobelium,60,PvItems.carbonFiber,30,PvItems.lithium,15))
                     );
                 }};
                 densePayloadConveyor = new PayloadConveyor("dense-payload-conveyor")
                 {{
                     requirements(Category.units,with(PvItems.carbonFiber,20)); //Todo
+                    payloadLimit = 5;
                     size = 3;
                 }};
                 densePayloadRouter = new PayloadRouter("dense-payload-router")
                 {{
                     requirements(Category.units,with(PvItems.carbonFiber,20)); //Todo
+                    payloadLimit = 5;
                     size = 3;
                 }};
                 coreHover = new CoreBlock("core-hover")
@@ -717,6 +744,14 @@ public class PvBlocks {
                     localizedName = "MicroPulse Pump";
                     size = 2;
                     pumpAmount = 0.1f;
+                    liquidCapacity = 40;
+                }};
+                effluxPump = new Pump("efflux-pump")
+                {{
+                    requirements(Category.liquid, with(PvItems.zirconium,140,PvItems.lithium,100,PvItems.nobelium,40));
+                    localizedName = "Efflux Pump";
+                    size = 3;
+                    pumpAmount = 14.5f/60f;
                     liquidCapacity = 40;
                 }};
                 piscoProcessor = new PvLogicBlock("pisco-processor")
