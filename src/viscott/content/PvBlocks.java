@@ -20,6 +20,7 @@ import mindustry.world.blocks.distribution.MassDriver;
 import mindustry.world.blocks.environment.Floor;
 import mindustry.world.blocks.environment.OreBlock;
 import mindustry.world.blocks.environment.StaticWall;
+import mindustry.world.blocks.heat.HeatConductor;
 import mindustry.world.blocks.heat.HeatProducer;
 import mindustry.world.blocks.liquid.Conduit;
 import mindustry.world.blocks.liquid.LiquidBridge;
@@ -76,7 +77,10 @@ public class PvBlocks {
                     /*Power*/opticalNode,auditoryNode,compressedBattery,
                     /*Power Production*/smallCarbonPanel,largeCarbonPanel,lithiumDegenerator,
                                         keroseneGenerator,radiator,
-                    /*Production*/siliconMassForge,particalAccelerator, keroseneMixer, keroseneHeater, carbonWeaver,
+                    /*Production*/siliconMassForge,particalAccelerator, keroseneMixer, carbonWeaver,
+
+                    /*Heaters*/keroseneHeater,
+                                heatPathfinder,
                     /*Liquids*/concentratedJunction,concentratedRouter,concentratedConduit,
                     smallConcentratedTank,largeConcentratedTank,
                             micropulsePump,effluxPump,
@@ -530,6 +534,12 @@ public class PvBlocks {
                     liquidCapacity = 10;
                     craftTime = 5.8f*60;
                     consumeLiquid(PvLiquids.kerosene, 5/(60*5.8f));
+                }};
+                heatPathfinder = new HeatConductor("heat-pathfinder"){{
+                    requirements(Category.crafting, with(PvItems.zirconium, 100, PvItems.carbonFiber, 20));
+                    size = 2;
+                    drawer = new DrawMulti(new DrawDefault(), new DrawHeatOutput(), new DrawHeatInput("-heat"));
+                    regionRotated1 = 1;
                 }};
                 concentratedRouter = new LiquidRouter("concentrated-router")
                 {{
