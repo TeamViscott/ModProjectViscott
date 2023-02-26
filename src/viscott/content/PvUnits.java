@@ -43,7 +43,7 @@ public class PvUnits {
             mineSpeed = 4.5f;
             itemCapacity = 40;
             speed = 20.7f / 7.5f;
-            drag = 0.02f;
+            drag = 0.15f;
             range = 17*8;
             weapons.add(
                     new Weapon("micro-weapon")
@@ -80,7 +80,7 @@ public class PvUnits {
             mineSpeed = 6.5f;
             itemCapacity = 65;
             speed = 22.8f / 7.5f;
-            drag = 0.05f;
+            drag = 0.15f;
             range = 18*8;
             weapons.add(
                     new Weapon("")
@@ -116,7 +116,7 @@ public class PvUnits {
             mineSpeed = 7.25f;
             itemCapacity = 90;
             speed = 30.7f / 7.5f;
-            drag = 0.02f;
+            drag = 0.15f;
             range = 17*8;
             weapons.add(
                     new Weapon("spectrum-weapon")
