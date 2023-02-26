@@ -43,7 +43,7 @@ public class PvUnits {
             mineSpeed = 4.5f;
             itemCapacity = 40;
             speed = 20.7f / 7.5f;
-            drag = 0.02f;
+            drag = 0.15f;
             range = 17*8;
             weapons.add(
                     new Weapon("micro-weapon")
