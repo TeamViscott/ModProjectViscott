@@ -7,8 +7,12 @@ import mindustry.content.Fx;
 import mindustry.content.StatusEffects;
 import mindustry.content.UnitTypes;
 import mindustry.entities.bullet.*;
+import mindustry.entities.part.HaloPart;
+import mindustry.entities.part.RegionPart;
+import mindustry.entities.part.ShapePart;
 import mindustry.gen.EntityMapping;
 import mindustry.gen.Sounds;
+import mindustry.graphics.Layer;
 import mindustry.graphics.Pal;
 import mindustry.type.UnitType;
 import mindustry.type.Weapon;
@@ -18,7 +22,7 @@ public class PvUnits {
     public static UnitType
         /*Core Units*/micro,infrared, spectrum,
 
-        /*Flying Ion Path*/ particle, snippet, fragment, excerpt,
+        /*Flying Ion Path*/ particle, snippet, fragment, excerpt, pericope,
 
         /*Extra Paths : */
         routerTank, routerBastion
@@ -373,6 +377,140 @@ public class PvUnits {
                     ammoMultiplier = 1f;
                 }};
             }}
+            );
+        }};
+        pericope = new UnitType("pericope")
+        {{
+            localizedName = "Pericope";
+            constructor = EntityMapping.map("eclipse");
+            health = 46000;
+            armor = 4;
+            engineSize = 10;
+            engineOffset = 35;
+            hitSize = 8*5;
+            drag = 0.14f;
+            flying = true;
+            speed = 8f/7.5f;
+            itemCapacity = 100;
+            range = 47 * 8;
+            deathExplosionEffect = PvEffects.particleDeath3;
+            weapons.add(
+                new Weapon()
+                {{
+
+                }}
+            );
+            parts.addAll(
+                new RegionPart("-arm-1")
+                {{
+                    progress = PartProgress.warmup;
+                    moveRot = 15;
+                    mirror = true;
+                    x = -20;
+                    y = 15;
+                    moveX = -5;
+                    moveY = -2.5f;
+                }},
+                    new ShapePart(){{
+                        progress = PartProgress.warmup;
+                        rotateSpeed = -5;
+                        color = Color.valueOf("875aab");
+                        sides = 4;
+                        hollow = true;
+                        stroke = 0f;
+                        strokeTo = 1.6f;
+                        radius = 10f;
+                        layer = Layer.effect;
+                        under = false;
+                    }},
+                    new ShapePart(){{
+                        progress = PartProgress.warmup;
+                        rotateSpeed = 5;
+                        color = Color.valueOf("875aab");
+                        sides = 4;
+                        hollow = true;
+                        stroke = 0f;
+                        strokeTo = 1.6f;
+                        radius = 6f;
+                        layer = Layer.effect;
+                        under = false;
+                    }},
+                    new ShapePart(){{
+                        progress = PartProgress.warmup;
+                        rotateSpeed = -5;
+                        color = Color.valueOf("875aab");
+                        sides = 20;
+                        hollow = true;
+                        stroke = 0f;
+                        strokeTo = 1.6f;
+                        radius = 11f;
+                        layer = Layer.effect;
+                        under = false;
+                    }},
+                    new HaloPart(){{
+                        progress = PartProgress.warmup;
+                        color = Color.valueOf("875aab");
+                        sides = 3;
+                        hollow = true;
+                        shapes = 3;
+                        stroke = 0f;
+                        strokeTo = 4f;
+                        radius = 1f;
+                        haloRadius = 13f;
+                        haloRotateSpeed = 1;
+                        layer = Layer.effect;
+                        under = false;
+                    }},
+                    new ShapePart(){{
+                        progress = PartProgress.warmup;
+                        rotateSpeed = -5;
+                        color = Color.valueOf("57d87e");
+                        sides = 4;
+                        hollow = true;
+                        stroke = 0f;
+                        strokeTo = 1.6f;
+                        radius = 10f;
+                        layer = Layer.effect;
+                        under = false;
+                    }},
+                    new ShapePart(){{
+                        progress = PartProgress.warmup;
+                        rotateSpeed = 5;
+                        color = Color.valueOf("57d87e");
+                        sides = 4;
+                        hollow = true;
+                        stroke = 0f;
+                        strokeTo = 1.6f;
+                        radius = 6f;
+                        layer = Layer.effect;
+                        under = false;
+                    }},
+                    new ShapePart(){{
+                        progress = PartProgress.warmup;
+                        rotateSpeed = -5;
+                        color = Color.valueOf("57d87e");
+                        sides = 20;
+                        hollow = true;
+                        stroke = 0f;
+                        strokeTo = 1.6f;
+                        radius = 11f;
+                        layer = Layer.effect;
+                        under = false;
+                    }},
+                    new HaloPart(){{
+                        progress = PartProgress.warmup;
+                        color = Color.valueOf("57d87e");
+                        sides = 3;
+                        hollow = true;
+                        shapes = 3;
+                        stroke = 0f;
+                        strokeTo = 4f;
+                        radius = 1f;
+                        haloRadius = 13f;
+                        haloRotateSpeed = 1;
+                        layer = Layer.effect;
+                        under = false;
+                    }}
             );
         }};
 
