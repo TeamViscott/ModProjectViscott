@@ -78,6 +78,7 @@ public class PvBlocks {
                     /*Power Production*/smallCarbonPanel,largeCarbonPanel,lithiumDegenerator,
                                         keroseneGenerator,radiator,
                     /*Production*/siliconMassForge,particalAccelerator, keroseneMixer, carbonWeaver,
+                            fractionIonizer,
 
                     /*Heaters*/keroseneHeater,
                                 heatPathfinder,
@@ -521,6 +522,21 @@ public class PvBlocks {
                         craftTime = 6.7f*60f;
                         outputItem = new ItemStack(PvItems.carbonFiber, 3);
                 }};
+                    fractionIonizer = new HeatCrafter("fraction-ionizer")
+                    {{
+                        requirements(Category.crafting, with(PvItems.zirconium,50,PvItems.platinum,30,Items.silicon,50));
+                        localizedName = "Fraction Ionizer";
+                        health = 775;
+                        size = 3;
+                        consumePower(145f/60f);
+                        liquidCapacity = 50;
+                        heatRequirement = 8;
+                        maxEfficiency = 4;
+                        consumeLiquid(Liquids.nitrogen,25f/60f);
+                        outputLiquid = new LiquidStack(PvLiquids.xenon,15f/60f);
+                        craftTime = 1.3f*60f;
+
+                    }};
                 keroseneHeater = new HeatProducer("kerosene-heater"){{
                     requirements(Category.crafting, with(PvItems.zirconium, 20, PvItems.platinum, 30));
 
