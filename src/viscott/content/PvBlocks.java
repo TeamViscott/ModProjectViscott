@@ -79,7 +79,7 @@ public class PvBlocks {
                     /*Power Production*/smallCarbonPanel,largeCarbonPanel,lithiumDegenerator,
                                         keroseneGenerator,radiator,
                     /*Production*/siliconMassForge,particalAccelerator, keroseneMixer, carbonWeaver,
-                            fractionIonizer,
+                            fractionIonizer,nitrogenDistiller,
 
                     /*Heaters*/keroseneHeater,
                                 heatPathfinder,
@@ -494,6 +494,10 @@ public class PvBlocks {
                     heatRequirement = 6;
                     maxEfficiency = 5;
                     outputItem = new ItemStack(PvItems.nobelium,3);
+                }};
+                nitrogenDistiller = new GenericCrafter("nitrogenDistiller")
+                {{
+
                 }};
                 keroseneMixer = new GenericCrafter("kerosene-mixer")
                 {
