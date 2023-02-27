@@ -133,6 +133,8 @@ public class PvLogic {
                         float y = exec.build.y;
                         if (Mathf.len(x-unit.x,y-unit.y) <= (exec.build.range()))
                             unit.health += exec.numf(healing);
+                            if (unit.health > unit.maxHealth)
+                                unit.health = unit.maxHealth;
                     }
                 }else{
                     //skip back to self.

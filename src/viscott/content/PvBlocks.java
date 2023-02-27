@@ -524,7 +524,7 @@ public class PvBlocks {
                 }};
                     fractionIonizer = new HeatCrafter("fraction-ionizer")
                     {{
-                        requirements(Category.crafting, with(PvItems.zirconium,50,PvItems.platinum,30,Items.silicon,50));
+                        requirements(Category.crafting, with(PvItems.zirconium,50,PvItems.platinum,30,Items.silicon,50)); //TODO
                         localizedName = "Fraction Ionizer";
                         health = 775;
                         size = 3;
