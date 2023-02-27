@@ -764,13 +764,15 @@ public class PvBlocks {
                     maxInstructionsPerTick = 1;
                     allStatements= Seq.with(
                             new Prov[]{
+                                    LStatements.WriteStatement::new,
+                                    LStatements.ReadStatement::new,
                                     LStatements.UnitBindStatement::new,
                                     PvLogic.HealStatement::new,
                                     LStatements.UnitControlStatement::new,
                                     LStatements.SensorStatement::new,
                                     LStatements.SetStatement::new,
-                                    LStatements.WriteStatement::new,
-                                    LStatements.ReadStatement::new,
+                                    LStatements.OperationStatement::new,
+                                    PvLogic.DynamicJumpStatement::new,
                                     PvLogic.CommentStatement::new
                             });
                 }};

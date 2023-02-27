@@ -22,6 +22,7 @@ public class PvLogic {
     {
         PvParser.addLoad("com",1,new CommentStatement());
         PvParser.addLoad("hurt",2,new HealStatement());
+        PvParser.addLoad("dj",1,new DynamicJumpStatement());
     }
     public static class CommentStatement extends LStatement
     {
@@ -131,7 +132,7 @@ public class PvLogic {
                         float x = exec.build.x;
                         float y = exec.build.y;
                         if (Mathf.len(x-unit.x,y-unit.y) <= (exec.build.range()))
-                        unit.health += exec.numf(healing);
+                            unit.health += exec.numf(healing);
                     }
                 }else{
                     //skip back to self.
@@ -144,6 +145,68 @@ public class PvLogic {
                     curTime += Time.delta / 60f * ((PvLogicBlock)exec.build.block).instructionsPerTick;
                     frameId = state.updateId;
                 }
+            }
+        }
+    }
+    public static class DynamicJumpStatement extends LStatement
+    {
+        public String jump = "0";
+
+        public DynamicJumpStatement() {
+            super();
+        }
+        public DynamicJumpStatement(String jump) {
+            super();
+            this.jump = jump;
+        }
+
+        public LCategory category(){
+            return LCategory.control;
+        }
+        @Override
+        public void build(Table table){
+            table.add("Jump ");
+            fields(table, jump, str -> jump = str);
+            table.add(" Blocks relative to This");
+        }
+
+        @Override
+        public LStatement copy()
+        {
+            return new DynamicJumpStatement(jump);
+        }
+
+        @Override
+        public void write(StringBuilder builder){
+            builder.append("dj " + jump);
+        }
+        @Override
+        public void afterRead()
+        {
+            jump = PvParser.allToken[1];
+        }
+
+        @Override
+        public LExecutor.LInstruction build(LAssembler builder) {
+            return new DJumpI(builder.var(jump));
+        }
+
+        public static class DJumpI implements LExecutor.LInstruction {
+            public int jump;
+
+            public float curTime;
+            public long frameId;
+
+            public DJumpI(int jump){
+                this.jump = jump;
+            }
+
+            public DJumpI(){
+            }
+
+            @Override
+            public void run(LExecutor exec) {
+                exec.var(varCounter).numval += exec.numi(jump);
             }
         }
     }
