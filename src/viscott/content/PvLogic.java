@@ -1,5 +1,6 @@
 package viscott.content;
 
+import arc.math.Mathf;
 import arc.scene.ui.layout.Table;
 import arc.util.Time;
 import mindustry.gen.Unit;
@@ -8,6 +9,7 @@ import mindustry.logic.LCategory;
 import mindustry.logic.LExecutor;
 import mindustry.logic.LStatement;
 import mindustry.ui.Styles;
+import mindustry.world.blocks.logic.LogicBlock;
 import viscott.types.logic.PvParser;
 import viscott.world.block.logic.PvLogicBlock;
 
@@ -125,12 +127,18 @@ public class PvLogic {
                     curTime = 0f;
                     if (net.client()) return;
 
-                    if (exec.obj(unit) instanceof Unit unit && unit.team == exec.team)
+                    if (exec.obj(unit) instanceof Unit unit && unit.team == exec.team) {
+                        float x = exec.build.x;
+                        float y = exec.build.y;
+                        if (Mathf.len(x-unit.x,y-unit.y) <= (exec.build.range()))
                         unit.health += exec.numf(healing);
+                    }
                 }else{
                     //skip back to self.
                     exec.var(varCounter).numval --;
                 }
+
+
 
                 if(state.updateId != frameId){
                     curTime += Time.delta / 60f * ((PvLogicBlock)exec.build.block).instructionsPerTick;
