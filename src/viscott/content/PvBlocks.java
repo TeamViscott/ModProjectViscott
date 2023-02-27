@@ -36,6 +36,7 @@ import mindustry.world.blocks.production.GenericCrafter;
 import mindustry.world.blocks.production.HeatCrafter;
 import mindustry.world.blocks.production.Pump;
 import mindustry.world.blocks.storage.CoreBlock;
+import mindustry.world.blocks.storage.Unloader;
 import mindustry.world.draw.*;
 import mindustry.world.meta.BuildVisibility;
 import viscott.world.block.defense.PvWall;
@@ -90,6 +91,7 @@ public class PvBlocks {
 
                     /*Payload*/densePayloadConveyor,densePayloadRouter,
                     /*Core's*/coreHover,coreElevate,coreUpraise,
+                            bulkUnloader,
 
                             /*Walls*/
                             zirconWall,zirconWallLarge,
@@ -636,6 +638,14 @@ public class PvBlocks {
                     requirements(Category.units,with(PvItems.carbonFiber,20)); //Todo
                     payloadLimit = 5;
                     size = 3;
+                }};
+                bulkUnloader = new Unloader("bulk-unloader")
+                {{
+                    requirements(Category.effect, with(PvItems.zirconium,100,PvItems.lithium,150,Items.silicon,30));
+                    localizedName = "Bulk Unloader";
+                    health = 100;
+                    size = 1;
+                    itemCapacity = 5;
                 }};
                 coreHover = new CoreBlock("core-hover")
                 {{
