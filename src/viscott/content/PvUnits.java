@@ -7,15 +7,20 @@ import mindustry.content.Fx;
 import mindustry.content.StatusEffects;
 import mindustry.content.UnitTypes;
 import mindustry.entities.bullet.*;
+import mindustry.entities.effect.ExplosionEffect;
+import mindustry.entities.effect.MultiEffect;
+import mindustry.entities.effect.WaveEffect;
 import mindustry.entities.part.HaloPart;
 import mindustry.entities.part.RegionPart;
 import mindustry.entities.part.ShapePart;
+import mindustry.entities.pattern.ShootHelix;
 import mindustry.gen.EntityMapping;
 import mindustry.gen.Sounds;
 import mindustry.graphics.Layer;
 import mindustry.graphics.Pal;
 import mindustry.type.UnitType;
 import mindustry.type.Weapon;
+import viscott.abilitys.EnemyStatusFieldAbility;
 import viscott.utilitys.PvUtil;
 
 public class PvUnits {
@@ -399,8 +404,90 @@ public class PvUnits {
             weapons.add(
                 new Weapon()
                 {{
+                    shootSound = Sounds.shockBlast;
+                    x = 0f;
+                    y = -2f;
+                    shootY = 0f;
+                    reload = 2.5f*60f;
+                    mirror = false;
+                    minWarmup = 0.95f;
+                    shake = 3f;
+                    cooldownTime = reload - 10f;
 
+                    bullet = new BasicBulletType(){{
+                        shoot = new ShootHelix(){{
+                            mag = 3f;
+                            scl = 7f;
+                            shoot.shots = 3;
+                        }};
+
+                        shootEffect = new MultiEffect(Fx.shootTitan, new WaveEffect(){{
+                            colorTo = Pal.sapBulletBack;
+                            sizeTo = 26f;
+                            lifetime = 14f;
+                            strokeFrom = 4f;
+                        }});
+                        smokeEffect = Fx.shootSmokeTitan;
+                        hitColor = Pal.sapBullet;
+                        despawnSound = Sounds.spark;
+
+                        sprite = "large-orb";
+                        trailEffect = Fx.missileTrail;
+                        trailInterval = 3f;
+                        trailParam = 4f;
+                        speed = 1.5f;
+                        damage = 1300f;
+                        lifetime = 120f;
+                        width = height = 20f;
+                        backColor = Pal.sapBulletBack;
+                        frontColor = Pal.sapBullet;
+                        shrinkX = shrinkY = 0f;
+                        trailColor = Pal.sapBulletBack;
+                        trailLength = 12;
+                        trailWidth = 2.2f;
+                        despawnEffect = hitEffect = new ExplosionEffect(){{
+                            waveColor = Pal.sapBullet;
+                            smokeColor = Color.gray;
+                            sparkColor = Pal.sap;
+                            waveStroke = 4f;
+                            waveRad = 40f;
+                        }};
+
+                        intervalBullet = new LightningBulletType(){{
+                            damage = 25;
+                            collidesAir = false;
+                            ammoMultiplier = 1f;
+                            lightningColor = Pal.sapBullet;
+                            lightningLength = 3;
+                            lightningLengthRand = 6;
+
+                            //for visual stats only.
+                            buildingDamageMultiplier = 0.25f;
+
+                            lightningType = new BulletType(0.0001f, 0f){{
+                                lifetime = Fx.lightning.lifetime;
+                                hitEffect = Fx.hitLancer;
+                                despawnEffect = Fx.none;
+                                status = StatusEffects.shocked;
+                                statusDuration = 10f;
+                                hittable = false;
+                                lightColor = Color.white;
+                                buildingDamageMultiplier = 0.25f;
+                            }};
+                        }};
+
+                        bulletInterval = 0.04f*120f;
+
+                        lightningColor = Pal.sapBullet;
+                        lightningDamage = 25;
+                        lightning = 3;
+                        lightningLength = 2;
+                        lightningLengthRand = 8;
+                    }};
                 }}
+            );
+            abilities.add(
+                    new EnemyStatusFieldAbility(PvStatusEffects.timeWarped, 1200, 60, 37*8)
             );
             parts.addAll(
                 new RegionPart("-arm-1")
