@@ -418,7 +418,6 @@ public class PvUnits {
                         shoot = new ShootHelix(){{
                             mag = 1f;
                             scl = 3.2f;
-                            shoot.shots = 3;
                         }};
 
                         shootEffect = new MultiEffect(Fx.shootTitan, new WaveEffect(){{
