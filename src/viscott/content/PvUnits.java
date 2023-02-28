@@ -402,7 +402,7 @@ public class PvUnits {
             range = 47 * 8;
             deathExplosionEffect = PvEffects.particleDeath3;
             weapons.add(
-                new Weapon()
+                new Weapon("side-shooters")
                 {{
                     shootSound = Sounds.shockBlast;
                     x = 0f;
@@ -416,8 +416,8 @@ public class PvUnits {
 
                     bullet = new BasicBulletType(){{
                         shoot = new ShootHelix(){{
-                            mag = 3f;
-                            scl = 7f;
+                            mag = 1f;
+                            scl = 3.2f;
                             shoot.shots = 3;
                         }};
 
@@ -484,7 +484,85 @@ public class PvUnits {
                         lightningLength = 2;
                         lightningLengthRand = 8;
                     }};
-                }}
+                }},
+            new Weapon("mid-bullet")
+            {{
+                shootSound = Sounds.shockBlast;
+                x = 0f;
+                y = -2f;
+                shootY = 0f;
+                reload = 2.5f*60f;
+                mirror = false;
+                minWarmup = 0.95f;
+                shake = 3f;
+                cooldownTime = reload - 10f;
+
+                bullet = new BasicBulletType(){{
+
+                    shootEffect = new MultiEffect(Fx.shootTitan, new WaveEffect(){{
+                        colorTo = Pal.sapBulletBack;
+                        sizeTo = 26f;
+                        lifetime = 14f;
+                        strokeFrom = 4f;
+                    }});
+                    smokeEffect = Fx.shootSmokeTitan;
+                    hitColor = Pal.sapBullet;
+                    despawnSound = Sounds.spark;
+
+                    sprite = "large-orb";
+                    trailEffect = Fx.missileTrail;
+                    trailInterval = 3f;
+                    trailParam = 4f;
+                    speed = 1.5f;
+                    damage = 1300f;
+                    lifetime = 120f;
+                    width = height = 20f;
+                    backColor = Pal.sapBulletBack;
+                    frontColor = Pal.sapBullet;
+                    shrinkX = shrinkY = 0f;
+                    trailColor = Pal.sapBulletBack;
+                    trailLength = 12;
+                    trailWidth = 2.2f;
+                    despawnEffect = hitEffect = new ExplosionEffect(){{
+                        waveColor = Pal.sapBullet;
+                        smokeColor = Color.gray;
+                        sparkColor = Pal.sap;
+                        waveStroke = 4f;
+                        waveRad = 40f;
+                    }};
+
+                    intervalBullet = new LightningBulletType(){{
+                        damage = 25;
+                        collidesAir = false;
+                        ammoMultiplier = 1f;
+                        lightningColor = Pal.sapBullet;
+                        lightningLength = 3;
+                        lightningLengthRand = 6;
+
+                        //for visual stats only.
+                        buildingDamageMultiplier = 0.25f;
+
+                        lightningType = new BulletType(0.0001f, 0f){{
+                            lifetime = Fx.lightning.lifetime;
+                            hitEffect = Fx.hitLancer;
+                            despawnEffect = Fx.none;
+                            status = StatusEffects.shocked;
+                            statusDuration = 10f;
+                            hittable = false;
+                            lightColor = Color.white;
+                            buildingDamageMultiplier = 0.25f;
+                        }};
+                    }};
+
+                    bulletInterval = 0.04f*120f;
+
+                    lightningColor = Pal.sapBullet;
+                    lightningDamage = 25;
+                    lightning = 3;
+                    lightningLength = 2;
+                    lightningLengthRand = 8;
+                }};
+            }}
             );
             abilities.add(
                     new EnemyStatusFieldAbility(PvStatusEffects.timeWarped, 1200, 60, 37*8)
