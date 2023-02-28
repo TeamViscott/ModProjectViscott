@@ -436,7 +436,7 @@ public class PvUnits {
                         trailParam = 4f;
                         speed = 1.5f;
                         damage = 1300f;
-                        lifetime = 120f;
+                        lifetime = 180f;
                         width = height = 20f;
                         backColor = Pal.sapBulletBack;
                         frontColor = Pal.sapBullet;
@@ -514,13 +514,13 @@ public class PvUnits {
                     trailParam = 4f;
                     speed = 1.5f;
                     damage = 1300f;
-                    lifetime = 120f;
-                    width = height = 20f;
+                    lifetime = 185f;
+                    width = height = 22f;
                     backColor = Pal.sapBulletBack;
                     frontColor = Pal.sapBullet;
                     shrinkX = shrinkY = 0f;
                     trailColor = Pal.sapBulletBack;
-                    trailLength = 12;
+                    trailLength = 24;
                     trailWidth = 2.2f;
                     despawnEffect = hitEffect = new ExplosionEffect(){{
                         waveColor = Pal.sapBullet;
