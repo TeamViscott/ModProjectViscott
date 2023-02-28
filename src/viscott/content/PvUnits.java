@@ -416,8 +416,8 @@ public class PvUnits {
 
                     bullet = new BasicBulletType(){{
                         shoot = new ShootHelix(){{
-                            mag = 1f;
-                            scl = 3.2f;
+                            mag = 1.5f;
+                            scl = 5f;
                         }};
 
                         shootEffect = new MultiEffect(Fx.shootTitan, new WaveEffect(){{
