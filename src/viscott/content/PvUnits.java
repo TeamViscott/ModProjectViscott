@@ -358,6 +358,7 @@ public class PvUnits {
                 y = 0;
                 shoot.shots = 1;
                 shoot.shotDelay = 5;
+                range = 48*8;
                 reload = 120;
                 mirror = false;
                 recoil = 3;
@@ -372,6 +373,7 @@ public class PvUnits {
                     damage = 1350;
                     buildingDamageMultiplier = 0.2f;
                     speed = 48*8;
+                    lifetime = 1;
                     trailColor = Pal.sap;
                     hitShake = 6f;
                     ammoMultiplier = 1f;
