@@ -47,6 +47,7 @@ import viscott.world.block.drill.PowerGrinder;
 import viscott.world.block.environment.DepositWall;
 import viscott.world.block.logic.PvLogicBlock;
 import viscott.world.block.power.ConstGenerator;
+import viscott.world.block.production.MultiCrafter;
 import viscott.world.block.unit.BulkUnitFactory;
 
 import static mindustry.type.ItemStack.with;
@@ -495,9 +496,15 @@ public class PvBlocks {
                     maxEfficiency = 5;
                     outputItem = new ItemStack(PvItems.nobelium,3);
                 }};
-                nitrogenDistiller = new GenericCrafter("nitrogenDistiller")
+                nitrogenDistiller = new MultiCrafter("nitrogen-distiller")
                 {{
-
+                    requirements(Category.crafting, with(PvItems.zirconium,50,PvItems.platinum,30,Items.silicon,50)); //Todo
+                    localizedName = "Nitrogen Distiller";
+                    size = 2;
+                    newConsumer(Liquids.nitrogen);
+                    consumeItem(Items.silicon,1);
+                    newConsumer(PvLiquids.liquidNitrogen);
+                    consumeItem(Items.copper,2);
                 }};
                 keroseneMixer = new GenericCrafter("kerosene-mixer")
                 {
