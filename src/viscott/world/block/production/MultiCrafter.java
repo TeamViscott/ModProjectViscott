@@ -103,14 +103,14 @@ public class MultiCrafter extends GenericCrafter {
             buildIOEntry(t, index, true);
             // Time
             Table time = new Table();
-            final float[] duration = {0f};
-            float visualCraftTime = craftTime;
-            time.update(() -> {
-                duration[0] += Time.delta;
-                if (duration[0] > visualCraftTime) duration[0] = 0f;
-            });
             if (consumerItems.get(index).size != 0 || outputerItems.get(index).size != 0) {
                 {
+                    final float[] duration = {0f};
+                    float visualCraftTime = craftTime;
+                    time.update(() -> {
+                        duration[0] += Time.delta;
+                        if (duration[0] > visualCraftTime) duration[0] = 0f;
+                    });
                     String craftTime = this.craftTime == 0 ? "0" : String.format("%.2f", this.craftTime / 60f);
                     Cell<Bar> barCell = time.add(new Bar(() -> craftTime,
                                     () -> Pal.accent,
@@ -121,8 +121,18 @@ public class MultiCrafter extends GenericCrafter {
                     else
                         barCell.width(250f);
                 }}
+            else
+            {{
+                Cell<Bar> barCell = time.add(new Bar(() -> "=>",
+                                () -> Pal.accent,
+                                () -> Interp.smooth.apply(0)))
+                        .height(0f);
+                if (Vars.mobile)
+                    barCell.width(220f);
+                else
+                    barCell.width(250f);
+            }}
             Cell<Table> timeCell = t.add(time).pad(12f);
-            timeCell.tooltip(Stat.productionTime.localized() + ": " + craftTime + " " + StatUnit.seconds.localized());
             // Output
             buildIOEntry(t, index, false);
             stat.add(t).pad(10f).grow();
