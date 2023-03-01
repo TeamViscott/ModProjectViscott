@@ -502,9 +502,12 @@ public class PvBlocks {
                     localizedName = "Nitrogen Distiller";
                     size = 2;
                     newConsumer(Liquids.nitrogen);
-                    consumeItem(Items.silicon,1);
+                    outputLiquid(Liquids.nitrogen,10f/60f);
+                    consumeLiquid(Liquids.water,20f/60f);
                     newConsumer(PvLiquids.liquidNitrogen);
-                    consumeItem(Items.copper,2);
+                    consumeLiquid(Liquids.water,10f/60f);
+                    consumeLiquid(Liquids.nitrogen,10f/60f);
+                    outputLiquid(PvLiquids.liquidNitrogen,10f/60f);
                 }};
                 keroseneMixer = new GenericCrafter("kerosene-mixer")
                 {
