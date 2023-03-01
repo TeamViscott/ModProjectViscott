@@ -600,6 +600,7 @@ public class PvBlocks {
                     size = 2;
                     solid = true;
                     liquidCapacity = 1500f;
+                    liquidPadding = 1.5f;
                     health = 500;
                 }};
                 largeConcentratedTank = new LiquidRouter("large-concentrated-tank"){{
@@ -607,6 +608,7 @@ public class PvBlocks {
                     size = 4;
                     solid = true;
                     liquidCapacity = 6000f;
+                    liquidPadding = 3.5f;
                     health = 1230;
                 }};
                 nueroSpawnPad = new BulkUnitFactory("nuero-spawn-pad")
