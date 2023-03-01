@@ -495,7 +495,8 @@ public class PvUnits {
                 minWarmup = 0.95f;
                 shake = 3f;
                 cooldownTime = reload - 10f;
-
+                shootStatus = StatusEffects.slow;
+                shootStatusDuration = 60f;
                 bullet = new BasicBulletType(){{
 
                     shootEffect = new MultiEffect(Fx.shootTitan, new WaveEffect(){{
@@ -564,7 +565,7 @@ public class PvUnits {
             }}
             );
             abilities.add(
-                    new EnemyStatusFieldAbility(PvStatusEffects.timeWarped, 1200, 60, 37*8)
+                    new EnemyStatusFieldAbility(PvStatusEffects.timeWarped, 60*5, 90, 37*8)
             );
             parts.addAll(
                 new RegionPart("-arm-1")
@@ -576,23 +577,22 @@ public class PvUnits {
                     y = 15;
                     moveX = -5;
                     moveY = -2.5f;
+                    children.add(
+                            new RegionPart("-arm-2")
+                            {{
+                                progress = PartProgress.reload;
+                                mirror = true;
+                                y = 5;
+                                x = -2.5f;
+                                moveY = -5f;
+                                moveX = -5f;
+                            }}
+                    );
                 }},
                     new ShapePart(){{
                         progress = PartProgress.warmup;
-                        rotateSpeed = -5;
-                        color = Color.valueOf("875aab");
-                        sides = 4;
-                        hollow = true;
-                        stroke = 0f;
-                        strokeTo = 1.6f;
-                        radius = 10f;
-                        layer = Layer.effect;
-                        under = false;
-                    }},
-                    new ShapePart(){{
-                        progress = PartProgress.warmup;
                         rotateSpeed = 5;
-                        color = Color.valueOf("875aab");
+                        color = Pal.sap;
                         sides = 4;
                         hollow = true;
                         stroke = 0f;
@@ -604,25 +604,25 @@ public class PvUnits {
                     new ShapePart(){{
                         progress = PartProgress.warmup;
                         rotateSpeed = -5;
-                        color = Color.valueOf("875aab");
+                        color = Pal.sap;
                         sides = 20;
                         hollow = true;
                         stroke = 0f;
                         strokeTo = 1.6f;
-                        radius = 11f;
+                        radius = 7f;
                         layer = Layer.effect;
                         under = false;
                     }},
                     new HaloPart(){{
                         progress = PartProgress.warmup;
-                        color = Color.valueOf("875aab");
+                        color = Pal.sap;
                         sides = 3;
                         hollow = true;
                         shapes = 3;
                         stroke = 0f;
                         strokeTo = 4f;
-                        radius = 1f;
-                        haloRadius = 13f;
+                        radius = 1.4f;
+                        haloRadius = 9f;
                         haloRotateSpeed = 1;
                         layer = Layer.effect;
                         under = false;
@@ -630,50 +630,12 @@ public class PvUnits {
                     new ShapePart(){{
                         progress = PartProgress.warmup;
                         rotateSpeed = -5;
-                        color = Color.valueOf("57d87e");
+                        color = Pal.sap;
                         sides = 4;
                         hollow = true;
                         stroke = 0f;
                         strokeTo = 1.6f;
                         radius = 10f;
-                        layer = Layer.effect;
-                        under = false;
-                    }},
-                    new ShapePart(){{
-                        progress = PartProgress.warmup;
-                        rotateSpeed = 5;
-                        color = Color.valueOf("57d87e");
-                        sides = 4;
-                        hollow = true;
-                        stroke = 0f;
-                        strokeTo = 1.6f;
-                        radius = 6f;
-                        layer = Layer.effect;
-                        under = false;
-                    }},
-                    new ShapePart(){{
-                        progress = PartProgress.warmup;
-                        rotateSpeed = -5;
-                        color = Color.valueOf("57d87e");
-                        sides = 20;
-                        hollow = true;
-                        stroke = 0f;
-                        strokeTo = 1.6f;
-                        radius = 11f;
-                        layer = Layer.effect;
-                        under = false;
-                    }},
-                    new HaloPart(){{
-                        progress = PartProgress.warmup;
-                        color = Color.valueOf("57d87e");
-                        sides = 3;
-                        hollow = true;
-                        shapes = 3;
-                        stroke = 0f;
-                        strokeTo = 4f;
-                        radius = 1f;
-                        haloRadius = 13f;
-                        haloRotateSpeed = 1;
                         layer = Layer.effect;
                         under = false;
                     }}
