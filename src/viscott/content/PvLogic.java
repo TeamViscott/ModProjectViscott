@@ -21,7 +21,7 @@ public class PvLogic {
     {
         PvParser.addLoad("com",1,new CommentStatement());
         PvParser.addLoad("heal",2,new HealStatement());
-        PvParser.addLoad("shield",2,new HealStatement());
+        PvParser.addLoad("shield",3,new ShieldStatement());
         PvParser.addLoad("dj",1,new DynamicJumpStatement());
     }
     public static class CommentStatement extends LStatement
@@ -126,7 +126,6 @@ public class PvLogic {
             public void run(LExecutor exec) {
                 if(curTime >= exec.num(healing)/5f){
                     curTime = 0f;
-                    if (net.client()) return;
 
                     if (exec.obj(unit) instanceof Unit unit && unit.team == exec.team) {
                         float x = exec.build.x;
@@ -152,15 +151,16 @@ public class PvLogic {
     }
     public static class ShieldStatement extends LStatement
     {
-        public String shield = "10", unit = "@unit";
+        public String shield = "10", unit = "@unit", output = "result";
 
         public ShieldStatement() {
             super();
         }
-        public ShieldStatement(String damage, String unit) {
+        public ShieldStatement(String damage, String unit,String output) {
             super();
             this.shield = damage;
             this.unit = unit;
+            this.output = output;
         }
 
         public LCategory category(){
@@ -173,39 +173,44 @@ public class PvLogic {
             table.add(" shield");
             fields(table, shield, str -> shield = str);
             table.add(" max shield = 10% of hp");
+            table.row();
+            table.add(" result");
+            fields(table, output, str -> output = str);
         }
 
         @Override
         public LStatement copy()
         {
-            return new HealStatement(shield,unit);
+            return new ShieldStatement(shield,unit,output);
         }
 
         @Override
         public void write(StringBuilder builder){
-            builder.append("shield " + shield + " " + unit);
+            builder.append("shield " + shield + " " + unit + " " + output);
         }
         @Override
         public void afterRead()
         {
             shield = PvParser.allToken[1];
             unit = PvParser.allToken[2];
+            output = PvParser.allToken[3];
         }
 
         @Override
         public LExecutor.LInstruction build(LAssembler builder) {
-            return new ShieldI(builder.var(shield),builder.var(unit));
+            return new ShieldI(builder.var(shield),builder.var(unit),builder.var(output));
         }
 
         public static class ShieldI implements LExecutor.LInstruction {
-            public int unit, shieldGiven;
+            public int unit, shieldGiven,result;
 
             public float curTime;
             public long frameId;
 
-            public ShieldI(int damage, int unit){
+            public ShieldI(int damage, int unit,int result){
                 this.unit = unit;
                 this.shieldGiven = damage;
+                this.result = result;
             }
 
             public ShieldI(){
@@ -215,7 +220,6 @@ public class PvLogic {
             public void run(LExecutor exec) {
                 if(curTime >= exec.num(shieldGiven)/5f){
                     curTime = 0f;
-                    if (net.client()) return;
 
                     if (exec.obj(unit) instanceof Unit unit && unit.team == exec.team) {
                         float x = exec.build.x;
@@ -224,6 +228,7 @@ public class PvLogic {
                             unit.shield += exec.numf(shieldGiven);
                         if (unit.shield > unit.health * 0.1f)
                             unit.shield = unit.health * 0.1f;
+                        exec.setnum(result,unit.shield);
                     }
                 }else{
                     //skip back to self.
