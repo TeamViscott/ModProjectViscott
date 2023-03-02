@@ -9,7 +9,6 @@ import mindustry.logic.LCategory;
 import mindustry.logic.LExecutor;
 import mindustry.logic.LStatement;
 import mindustry.ui.Styles;
-import mindustry.world.blocks.logic.LogicBlock;
 import viscott.types.logic.PvParser;
 import viscott.world.block.logic.PvLogicBlock;
 
@@ -21,7 +20,8 @@ public class PvLogic {
     public static void load()
     {
         PvParser.addLoad("com",1,new CommentStatement());
-        PvParser.addLoad("hurt",2,new HealStatement());
+        PvParser.addLoad("heal",2,new HealStatement());
+        PvParser.addLoad("shield",2,new HealStatement());
         PvParser.addLoad("dj",1,new DynamicJumpStatement());
     }
     public static class CommentStatement extends LStatement
@@ -94,7 +94,7 @@ public class PvLogic {
 
         @Override
         public void write(StringBuilder builder){
-            builder.append("hurt " + heal + " " + unit);
+            builder.append("heal " + heal + " " + unit);
         }
         @Override
         public void afterRead()
@@ -131,10 +131,99 @@ public class PvLogic {
                     if (exec.obj(unit) instanceof Unit unit && unit.team == exec.team) {
                         float x = exec.build.x;
                         float y = exec.build.y;
-                        if (Mathf.len(x-unit.x,y-unit.y) <= (exec.build.range()))
+                        if (Mathf.len(x-unit.x,y-unit.y) <= (exec.build.range()) && exec.numf(healing) > 0)
                             unit.health += exec.numf(healing);
                             if (unit.health > unit.maxHealth)
                                 unit.health = unit.maxHealth;
+                    }
+                }else{
+                    //skip back to self.
+                    exec.var(varCounter).numval --;
+                }
+
+
+
+                if(state.updateId != frameId){
+                    curTime += Time.delta / 60f * ((PvLogicBlock)exec.build.block).instructionsPerTick;
+                    frameId = state.updateId;
+                }
+            }
+        }
+    }
+    public static class ShieldStatement extends LStatement
+    {
+        public String shield = "10", unit = "@unit";
+
+        public ShieldStatement() {
+            super();
+        }
+        public ShieldStatement(String damage, String unit) {
+            super();
+            this.shield = damage;
+            this.unit = unit;
+        }
+
+        public LCategory category(){
+            return LCategory.unit;
+        }
+        @Override
+        public void build(Table table){
+            table.add(" unit");
+            fields(table, unit, str -> unit = str);
+            table.add(" shield");
+            fields(table, shield, str -> shield = str);
+            table.add(" max shield = 10% of hp");
+        }
+
+        @Override
+        public LStatement copy()
+        {
+            return new HealStatement(shield,unit);
+        }
+
+        @Override
+        public void write(StringBuilder builder){
+            builder.append("shield " + shield + " " + unit);
+        }
+        @Override
+        public void afterRead()
+        {
+            shield = PvParser.allToken[1];
+            unit = PvParser.allToken[2];
+        }
+
+        @Override
+        public LExecutor.LInstruction build(LAssembler builder) {
+            return new ShieldI(builder.var(shield),builder.var(unit));
+        }
+
+        public static class ShieldI implements LExecutor.LInstruction {
+            public int unit, shieldGiven;
+
+            public float curTime;
+            public long frameId;
+
+            public ShieldI(int damage, int unit){
+                this.unit = unit;
+                this.shieldGiven = damage;
+            }
+
+            public ShieldI(){
+            }
+
+            @Override
+            public void run(LExecutor exec) {
+                if(curTime >= exec.num(shieldGiven)/5f){
+                    curTime = 0f;
+                    if (net.client()) return;
+
+                    if (exec.obj(unit) instanceof Unit unit && unit.team == exec.team) {
+                        float x = exec.build.x;
+                        float y = exec.build.y;
+                        if (Mathf.len(x-unit.x,y-unit.y) <= (exec.build.range()))
+                            unit.shield += exec.numf(shieldGiven);
+                        if (unit.shield > unit.health * 0.1f)
+                            unit.shield = unit.health * 0.1f;
                     }
                 }else{
                     //skip back to self.

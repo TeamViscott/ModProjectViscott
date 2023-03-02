@@ -810,6 +810,7 @@ public class PvBlocks {
                                     LStatements.ReadStatement::new,
                                     LStatements.UnitBindStatement::new,
                                     PvLogic.HealStatement::new,
+                                    PvLogic.ShieldStatement::new,
                                     LStatements.UnitControlStatement::new,
                                     LStatements.SensorStatement::new,
                                     LStatements.SetStatement::new,
