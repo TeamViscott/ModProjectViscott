@@ -800,22 +800,33 @@ public class PvBlocks {
                 {{
                     requirements(Category.logic, with(PvItems.zirconium,75,PvItems.lithium,50,PvItems.nobelium,20));
                     localizedName = "Pisco Processor";
-                    range = 8*6;
+                    range = 8*20;
                     health = 90;
                     instructionsPerTick = 1;
                     maxInstructionsPerTick = 1;
                     allStatements= Seq.with(
                             new Prov[]{
+                                    //Input && Output
                                     LStatements.WriteStatement::new,
                                     LStatements.ReadStatement::new,
+                                    //Unit Controll
                                     LStatements.UnitBindStatement::new,
                                     PvLogic.HealStatement::new,
                                     PvLogic.ShieldStatement::new,
                                     LStatements.UnitControlStatement::new,
+                                    LStatements.UnitLocateStatement::new,
+                                    LStatements.UnitRadarStatement::new,
+                                    //Block Controll
                                     LStatements.SensorStatement::new,
+                                    //Operator
                                     LStatements.SetStatement::new,
                                     LStatements.OperationStatement::new,
+                                    LStatements.LookupStatement::new,
+                                    //Flow Controll
+                                    LStatements.EndStatement::new,
+                                    LStatements.JumpStatement::new,
                                     PvLogic.DynamicJumpStatement::new,
+                                    //Undefined
                                     PvLogic.CommentStatement::new
                             });
                 }};

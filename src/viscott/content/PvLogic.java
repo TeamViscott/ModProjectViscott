@@ -24,6 +24,13 @@ public class PvLogic {
         PvParser.addLoad("shield",3,new ShieldStatement());
         PvParser.addLoad("dj",1,new DynamicJumpStatement());
     }
+    public static String tokens(String... token)
+    {
+        String tokenList = "";
+            for (String r : token)
+                tokenList += r + " ";
+        return tokenList;
+    }
     public static class CommentStatement extends LStatement
     {
         public String comment = "";
@@ -94,7 +101,7 @@ public class PvLogic {
 
         @Override
         public void write(StringBuilder builder){
-            builder.append("heal " + heal + " " + unit);
+            builder.append("heal " + tokens(heal,unit));
         }
         @Override
         public void afterRead()
@@ -186,7 +193,7 @@ public class PvLogic {
 
         @Override
         public void write(StringBuilder builder){
-            builder.append("shield " + shield + " " + unit + " " + output);
+            builder.append("shield " + tokens(shield,unit,output));
         }
         @Override
         public void afterRead()
@@ -274,7 +281,7 @@ public class PvLogic {
 
         @Override
         public void write(StringBuilder builder){
-            builder.append("dj " + jump);
+            builder.append("dj " + tokens(jump));
         }
         @Override
         public void afterRead()
