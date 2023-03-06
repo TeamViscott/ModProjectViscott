@@ -107,20 +107,20 @@ public class PvBlocks {
             public static void load()
             {
                 /*Floor's Start*/
-                densePlate1 = new Floor("dense-panel1",0){{localizedName = "Dense Panel 1";}};
-                densePlate2 = new Floor("dense-panel2",0){{localizedName = "Dense Panel 2";}};
-                densePlate3 = new Floor("dense-panel3",0){{localizedName = "Dense Panel 3";}};
-                densePlate4 = new Floor("dense-panel4",0){{localizedName = "Dense Panel 4";}};
+                densePlate = new Floor("dense-plate"){{mapColor = Color.valueOf("2D2F3F"); localizedName = "Dense Plate";}};
+                densePlate2 = new Floor("dense-metal-2",0){{mapColor = Color.valueOf("323544"); localizedName = "Dense Metal 2";}};
+                densePlate3 = new Floor("dense-metal-3",0){{mapColor = Color.valueOf("363948"); localizedName = "Dense Metal 3";}};
+                densePlate4 = new Floor("dense-metal-4",0){{mapColor = Color.valueOf("202033"); localizedName = "Dense Metal 4";}};
               //densePlate5 = new Floor("dense-panel5",0){{localizedName = "Dense Panel 5";}};
               //densePlate6 = new Floor("dense-panel6",0){{localizedName = "Dense Panel 6";}};
               //densePlate7 = new Floor("dense-panel7",0){{localizedName = "Dense Panel 7";}};
               //densePlate8 = new Floor("dense-panel8",0){{localizedName = "Dense Panel 8";}};
-                damagedDensePlate = new Floor("damaged-dense-plate",3);
-                patternedDensePlate = new Floor("patterned-dense-plate",3);
-                denseMetalWall = new StaticWall("dense-metal-wall", 3){{localizedName = "Dense Metal Wall";}};
+                damagedDensePlate = new Floor("damaged-dense-plate",3){{mapColor = Color.valueOf("2B2D3D"); localizedName = "Damaged Dense Plate";}};
+                patternedDensePlate = new Floor("patterned-dense-plate",3){{mapColor = Color.valueOf("303241"); localizedName = "Patterned Dense Plate";}};
+                denseMetalWall = new StaticWall("dense-metal-wall", 3){{mapColor = Color.valueOf("545864"); localizedName = "Dense Metal Wall";}};
                 tenebrousStone = new Floor("tenebrous-stone", 4){{mapColor = Color.valueOf("3A3553"); localizedName = "Tenebrous Stone";}};
                 tenebrousWall = new Floor("tenebrous-wall", 3){{mapColor = Color.valueOf("67607A"); localizedName = "Tenebrous Wall";}};
-                bariumWall = new StaticWall("barium-wall"){{variants = 2; mapColor = Color.valueOf("666558"); localizedName = "Barium Wall";}};
+                bariumWall = new StaticWall("barium-wall", 2){{mapColor = Color.valueOf("666558"); localizedName = "Barium Wall";}};
                 bariumPowder = new Floor("barium-powder",3){{mapColor = Color.valueOf("47463D"); localizedName = "Barium Powder"; itemDrop = PvItems.barium; playerUnmineable = true;}};
                 /*Floor's End*/
                 /*Ore's Start*/
