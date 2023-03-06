@@ -82,7 +82,7 @@ public class PvBlocks {
                     /*Production*/siliconMassForge,particalAccelerator, keroseneMixer, carbonWeaver,
                             fractionIonizer,nitrogenDistiller,
 
-                    /*Heaters*/keroseneHeater,
+                    /*Heaters*/keroseneHeater,blastHeater, hybridHeater, xeroPointHeater,
                                 heatPathfinder,
                     /*Liquids*/concentratedJunction,concentratedRouter,concentratedConduit,
                     smallConcentratedTank,largeConcentratedTank,
@@ -554,7 +554,7 @@ public class PvBlocks {
 
                     }};
                 keroseneHeater = new HeatProducer("kerosene-heater"){{
-                    requirements(Category.crafting, with(PvItems.zirconium, 20, PvItems.platinum, 30));
+                    requirements(Category.crafting, with(PvItems.zirconium, 20, PvItems.platinum, 30)); //Todo
 
                     drawer = new DrawMulti(new DrawDefault(), new DrawHeatOutput());
                     rotateDraw = false;
@@ -566,6 +566,43 @@ public class PvBlocks {
                     liquidCapacity = 10;
                     craftTime = 5.8f*60;
                     consumeLiquid(PvLiquids.kerosene, 5/(60*5.8f));
+                }};
+                blastHeater = new HeatProducer("blast-heater")
+                {{
+                    requirements(Category.crafting, with(PvItems.zirconium, 80, PvItems.platinum, 150)); //Todo
+                    localizedName = "Blast Heater";
+                    health = 400;
+                    size = 2;
+                    liquidCapacity = 10;
+                    consumeItem(PvItems.nobelium,1);
+                    heatOutput = 8;
+                    craftTime = 3.8f * 60f;
+
+                }};
+                xeroPointHeater = new HeatProducer("xero-point-heater")
+                {{
+                    requirements(Category.crafting, with(PvItems.zirconium,200,PvItems.nobelium,150,PvItems.platinum,50)); //Todo
+                    localizedName = "Xero Point Heater";
+                    health = 1120;
+                    heatOutput = 15;
+                    consumeLiquid(PvLiquids.xenon,10f/60f);
+                    craftTime = 60*8.8f;
+                    liquidCapacity = 30;
+                    size = 3;
+                }};
+
+                hybridHeater = new HeatProducer("hybrid-heater")
+                {{
+                    requirements(Category.crafting, with(PvItems.zirconium, 50, PvItems.platinum, 100,PvItems.barium,60)); //Todo
+                    localizedName = "Hybrid Heater";
+                    health = 1085;
+                    size = 3;
+                    itemCapacity = 10;
+                    liquidCapacity = 10;
+                    consumeLiquid(PvLiquids.kerosene,10f/60f);
+                    consumeItem(PvItems.nobelium,1);
+                    heatOutput = 18;
+                    craftTime = 6.5f * 60f;
                 }};
                 heatPathfinder = new HeatConductor("heat-pathfinder"){{
                     requirements(Category.crafting, with(PvItems.zirconium, 100, PvItems.carbonFiber, 20));
