@@ -19,14 +19,16 @@ public class PvLiquids {
         xenon = new Liquid("liquid-xenon"){{
             localizedName = "Xenon";
             color = Color.valueOf("C080E2");
-            heatCapacity = 0.8f;
+            gas = true;
+            coolant = false;
         }};
         kerosene = new Liquid("liquid-kerosene")
         {{
             localizedName = "Kerosene";
-            color = Color.valueOf("E2DF80");
-            effect = StatusEffects.burning;
-            heatCapacity = 1.2f;
+            color = Color.valueOf("FED894");
+            effect = PvStatusEffects.doused;
+            flammability = 1f;
+            heatCapacity = 1.25f;
         }};
     }
 }
