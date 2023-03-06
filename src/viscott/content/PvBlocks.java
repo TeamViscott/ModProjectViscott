@@ -606,6 +606,7 @@ public class PvBlocks {
                 }};
                 heatPathfinder = new HeatConductor("heat-pathfinder"){{
                     requirements(Category.crafting, with(PvItems.zirconium, 100, PvItems.carbonFiber, 20));
+                    localizedName = "Heat Pathfinder";
                     size = 2;
                     drawer = new DrawMulti(new DrawDefault(), new DrawHeatOutput(), new DrawHeatInput("-heat"));
                     regionRotated1 = 1;
