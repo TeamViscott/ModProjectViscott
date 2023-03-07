@@ -45,7 +45,7 @@ public class PvTurrets{
             splinter,shatter,euro,snap,hourglass,
             phantom,razor,rainmaker,striker,
             marksman, xacto,reaper,shuttle, nuero,
-            xterminium,hel
+            xterminium,hel,falarica
             ;
 
     public static void load(){
@@ -664,6 +664,19 @@ public class PvTurrets{
                         )
                 );
             }};
+        }};
+
+        falarica = new ItemTurret("falarica")
+        {{
+            requirements(Category.turret,with(Items.copper,1)); //Todo
+            localizedName = "Falarica";
+            size = 3;
+            health = 2045;
+            consumePower(560f/60f);
+            liquidCapacity = 50;
+            range = 39*8;
+            targetAir = true;
+            targetGround = true;
         }};
         striker = new ItemTurret("striker")
         {{

@@ -55,7 +55,7 @@ import static mindustry.type.ItemStack.with;
 public class PvBlocks {
     public static Block
             /*Floor's*/
-            densePlate1,densePlate2,densePlate3,densePlate4,
+            densePlate,densePlate2,densePlate3,densePlate4,
             damagedDensePlate, patternedDensePlate, denseMetalWall, bariumWall, bariumPowder, tenebrousStone, tenebrousWall,
 
             /*Ore's*/
@@ -70,7 +70,7 @@ public class PvBlocks {
                     /*Conveyors*/micromassConveyor,massJunction,massRouter, microTransportGate,
                             megaTransportGate, megaLiquidTransportGate, microLiquidTransportGate,
                             megaMassConveyor,megaMassJunction,megaMassRouter,
-                            nueromassConveyor,
+                            nueromassConveyor,expomassConveyor,
 
                     /*Drills*/harvestDrill,tetraDrill,spectrumDrill,
                     /*Grinders*/harvestGrinder,behemothGrinder,oilGrinder,
@@ -117,10 +117,10 @@ public class PvBlocks {
               //densePlate8 = new Floor("dense-panel8",0){{localizedName = "Dense Panel 8";}};
                 damagedDensePlate = new Floor("damaged-dense-plate",3){{mapColor = Color.valueOf("2B2D3D"); localizedName = "Damaged Dense Plate";}};
                 patternedDensePlate = new Floor("patterned-dense-plate",3){{mapColor = Color.valueOf("303241"); localizedName = "Patterned Dense Plate";}};
-                denseMetalWall = new StaticWall("dense-metal-wall", 3){{mapColor = Color.valueOf("545864"); localizedName = "Dense Metal Wall";}};
+                denseMetalWall = new StaticWall("dense-metal-wall"){{variants = 3;mapColor = Color.valueOf("545864"); localizedName = "Dense Metal Wall";}};
                 tenebrousStone = new Floor("tenebrous-stone", 4){{mapColor = Color.valueOf("3A3553"); localizedName = "Tenebrous Stone";}};
                 tenebrousWall = new Floor("tenebrous-wall", 3){{mapColor = Color.valueOf("67607A"); localizedName = "Tenebrous Wall";}};
-                bariumWall = new StaticWall("barium-wall", 2){{mapColor = Color.valueOf("666558"); localizedName = "Barium Wall";}};
+                bariumWall = new StaticWall("barium-wall"){{variants = 2;mapColor = Color.valueOf("666558"); localizedName = "Barium Wall";}};
                 bariumPowder = new Floor("barium-powder",3){{mapColor = Color.valueOf("47463D"); localizedName = "Barium Powder"; itemDrop = PvItems.barium; playerUnmineable = true;}};
                 /*Floor's End*/
                 /*Ore's Start*/
@@ -176,15 +176,23 @@ public class PvBlocks {
                     itemCapacity = 5;
                     speed = 20f/(300);
                 }};
+                nueromassConveyor = new MassConveyor("nueromass-conveyor")
+                {{
+                    requirements(Category.distribution, with(Items.silicon,2,PvItems.platinum,1));
+                    localizedName = "Neuromass Conveyor";
+                    health = 100;
+                    itemCapacity = 10;
+                    speed = 40f/(300);
+                }};
                 expomassConveyor = new MassConveyor("expomass-conveyor")
                 {{
                     requirements(Category.distribution, with(Items.silicon,2,PvItems.platinum,1));
                     localizedName = "Expomass Conveyor";
                     health = 120;
-                    itemCapacity = 10;
+                    itemCapacity = 15;
                     speed = 35f/(300);
                 }};
-                megamassConveyor = new MassConveyor("megamass-conveyor")
+                megaMassConveyor = new MassConveyor("megamass-conveyor")
                 {{
                     requirements(Category.distribution, with(Items.silicon, 3, PvItems.carbonFiber,1));
                     localizedName = "Megamass Conveyor";

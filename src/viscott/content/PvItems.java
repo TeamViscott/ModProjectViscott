@@ -5,6 +5,8 @@ import arc.struct.Seq;
 import mindustry.graphics.Pal;
 import mindustry.type.Item;
 
+import static mindustry.content.Items.silicon;
+
 public class PvItems {
     public static Item
     zirconium,lithium,barium,nobelium,platinum,erbium,carbonFiber,copium
@@ -50,6 +52,6 @@ public class PvItems {
             radioactivity = -2;
         }};
 
-        vercilusItems.addAll(zirconium,lithium,barium,Items.silicon,nobelium,platinum,erbium,carbonFiber);
+        vercilusItems.addAll(zirconium,lithium,barium,silicon,nobelium,platinum,erbium,carbonFiber);
     }
 }
