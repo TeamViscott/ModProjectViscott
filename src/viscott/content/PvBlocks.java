@@ -107,7 +107,7 @@ public class PvBlocks {
             public static void load()
             {
                 /*Floor's Start*/
-                densePlate = new Floor("dense-plate"){{mapColor = Color.valueOf("2D2F3F"); localizedName = "Dense Plate";}};
+                densePlate = new Floor("dense-plate",0){{mapColor = Color.valueOf("2D2F3F"); localizedName = "Dense Plate";}};
                 densePlate2 = new Floor("dense-metal-2",0){{mapColor = Color.valueOf("323544"); localizedName = "Dense Metal 2";}};
                 densePlate3 = new Floor("dense-metal-3",0){{mapColor = Color.valueOf("363948"); localizedName = "Dense Metal 3";}};
                 densePlate4 = new Floor("dense-metal-4",0){{mapColor = Color.valueOf("202033"); localizedName = "Dense Metal 4";}};
