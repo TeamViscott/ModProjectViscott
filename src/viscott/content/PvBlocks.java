@@ -119,7 +119,7 @@ public class PvBlocks {
                 patternedDensePlate = new Floor("patterned-dense-plate",3){{mapColor = Color.valueOf("303241"); localizedName = "Patterned Dense Plate";}};
                 denseMetalWall = new StaticWall("dense-metal-wall"){{variants = 3;mapColor = Color.valueOf("545864"); localizedName = "Dense Metal Wall";}};
                 tenebrousStone = new Floor("tenebrous-stone", 4){{mapColor = Color.valueOf("3A3553"); localizedName = "Tenebrous Stone";}};
-                tenebrousWall = new Floor("tenebrous-wall", 3){{mapColor = Color.valueOf("67607A"); localizedName = "Tenebrous Wall";}};
+                tenebrousWall = new StaticWall("tenebrous-wall"){{variants = 3;mapColor = Color.valueOf("67607A"); localizedName = "Tenebrous Wall";}};
                 bariumWall = new StaticWall("barium-wall"){{variants = 2;mapColor = Color.valueOf("666558"); localizedName = "Barium Wall";}};
                 bariumPowder = new Floor("barium-powder",3){{mapColor = Color.valueOf("47463D"); localizedName = "Barium Powder"; itemDrop = PvItems.barium; playerUnmineable = true;}};
                 /*Floor's End*/
