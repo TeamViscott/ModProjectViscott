@@ -18,11 +18,11 @@ public class PvItems {
         }};
         barium = new Item("barium"){{
             localizedName = "Barium";
-            color = Color.valueOf("3d3e47");
+            color = Color.valueOf("666558");
         }};
         platinum = new Item("platinum"){{
             localizedName = "Platinum";
-            color = Color.valueOf("aaadaf");
+            color = Color.valueOf("d0d6db");
         }};
         lithium = new Item("lithium"){{
             localizedName = "Lithium";
@@ -38,7 +38,7 @@ public class PvItems {
         }};
         zirconium = new Item("zirconium"){{
             localizedName = "Zirconium";
-            color = Color.valueOf("6f6e80");
+            color = Color.valueOf("6f6d83");
         }};
         copium = new Item("copium")
         {{
@@ -50,6 +50,6 @@ public class PvItems {
             radioactivity = -2;
         }};
 
-        vercilusItems.addAll(zirconium,lithium,barium,nobelium,platinum,erbium,carbonFiber);
+        vercilusItems.addAll(zirconium,lithium,barium,Items.silicon,nobelium,platinum,erbium,carbonFiber);
     }
 }

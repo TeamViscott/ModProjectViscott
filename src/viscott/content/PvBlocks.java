@@ -56,8 +56,7 @@ public class PvBlocks {
     public static Block
             /*Floor's*/
             densePlate1,densePlate2,densePlate3,densePlate4,
-            densePlate5,densePlate6,densePlate7,densePlate8,
-            damagedDensePlate,denseMetalWall,bariumWall,bariumPowder,
+            damagedDensePlate, patternedDensePlate, denseMetalWall, bariumWall, bariumPowder, tenebrousStone, tenebrousWall,
 
             /*Ore's*/
             erbiumOre,lithiumOre,zirconiumOre,platinumOre,
@@ -108,46 +107,27 @@ public class PvBlocks {
             public static void load()
             {
                 /*Floor's Start*/
-                densePlate1 = new Floor("dense-panel1",0){{localizedName = "Dense Panel 1";}};
-                densePlate2 = new Floor("dense-panel2",0){{localizedName = "Dense Panel 2";}};
-                densePlate3 = new Floor("dense-panel3",0){{localizedName = "Dense Panel 3";}};
-                densePlate4 = new Floor("dense-panel4",0){{localizedName = "Dense Panel 4";}};
-                densePlate5 = new Floor("dense-panel5",0){{localizedName = "Dense Panel 5";}};
-                densePlate6 = new Floor("dense-panel6",0){{localizedName = "Dense Panel 6";}};
-                densePlate7 = new Floor("dense-panel7",0){{localizedName = "Dense Panel 7";}};
-                densePlate8 = new Floor("dense-panel8",0){{localizedName = "Dense Panel 8";}};
-                damagedDensePlate = new Floor("damaged-dense-plate",3);
-                denseMetalWall = new StaticWall("dense-metal-wall"){{variants = 2; localizedName = "Dense Metal Wall";}};
-                bariumWall = new StaticWall("barium-wall"){{variants = 2; localizedName = "Barium Wall";}};
-                bariumPowder = new Floor("barium-powder",3)
-                {{
-                    localizedName = "Barium Powder";
-                    itemDrop = PvItems.barium;
-                    playerUnmineable = true;
-
-                }};
+                densePlate = new Floor("dense-plate"){{mapColor = Color.valueOf("2D2F3F"); localizedName = "Dense Plate";}};
+                densePlate2 = new Floor("dense-metal-2",0){{mapColor = Color.valueOf("323544"); localizedName = "Dense Metal 2";}};
+                densePlate3 = new Floor("dense-metal-3",0){{mapColor = Color.valueOf("363948"); localizedName = "Dense Metal 3";}};
+                densePlate4 = new Floor("dense-metal-4",0){{mapColor = Color.valueOf("202033"); localizedName = "Dense Metal 4";}};
+              //densePlate5 = new Floor("dense-panel5",0){{localizedName = "Dense Panel 5";}};
+              //densePlate6 = new Floor("dense-panel6",0){{localizedName = "Dense Panel 6";}};
+              //densePlate7 = new Floor("dense-panel7",0){{localizedName = "Dense Panel 7";}};
+              //densePlate8 = new Floor("dense-panel8",0){{localizedName = "Dense Panel 8";}};
+                damagedDensePlate = new Floor("damaged-dense-plate",3){{mapColor = Color.valueOf("2B2D3D"); localizedName = "Damaged Dense Plate";}};
+                patternedDensePlate = new Floor("patterned-dense-plate",3){{mapColor = Color.valueOf("303241"); localizedName = "Patterned Dense Plate";}};
+                denseMetalWall = new StaticWall("dense-metal-wall", 3){{mapColor = Color.valueOf("545864"); localizedName = "Dense Metal Wall";}};
+                tenebrousStone = new Floor("tenebrous-stone", 4){{mapColor = Color.valueOf("3A3553"); localizedName = "Tenebrous Stone";}};
+                tenebrousWall = new Floor("tenebrous-wall", 3){{mapColor = Color.valueOf("67607A"); localizedName = "Tenebrous Wall";}};
+                bariumWall = new StaticWall("barium-wall", 2){{mapColor = Color.valueOf("666558"); localizedName = "Barium Wall";}};
+                bariumPowder = new Floor("barium-powder",3){{mapColor = Color.valueOf("47463D"); localizedName = "Barium Powder"; itemDrop = PvItems.barium; playerUnmineable = true;}};
                 /*Floor's End*/
                 /*Ore's Start*/
-                erbiumOre = new OreBlock("erbium-ore",PvItems.erbium)
-                {{
-                    variants = 3;
-                    localizedName = "Erbium Ore";
-                }};
-                lithiumOre = new OreBlock("lithium-ore",PvItems.lithium)
-                {{
-                    variants = 3;
-                    localizedName = "Lithium Ore";
-                }};
-                platinumOre = new OreBlock("platinum-ore",PvItems.platinum)
-                {{
-                    variants = 3;
-                    localizedName = "Platinum Ore";
-                }};
-                zirconiumOre = new OreBlock("zirconium-ore",PvItems.zirconium)
-                {{
-                    variants = 3;
-                    localizedName = "Zirconium Ore";
-                }};
+                erbiumOre = new OreBlock("erbium-ore",PvItems.erbium){{variants = 3; localizedName = "Erbium Ore";}};
+                lithiumOre = new OreBlock("lithium-ore",PvItems.lithium){{variants = 3; localizedName = "Lithium Ore";}};
+                platinumOre = new OreBlock("platinum-ore",PvItems.platinum){{variants = 3; localizedName = "Platinum Ore";}};
+                zirconiumOre = new OreBlock("zirconium-ore",PvItems.zirconium){{variants = 3; localizedName = "Zirconium Ore";}};
                 /*Ore's End*/
                 /*Deposit's Start*/
                 erbiumDeposit = new DepositWall("erbium-deposit") //Todo
@@ -170,7 +150,7 @@ public class PvBlocks {
                 }};
                 platinumDeposit = new DepositWall("platinum-deposit") //Todo
                 {{
-                    variants = 0;
+                    variants = 2;
                     clipSize = 256;
                     localizedName = "Platinum Deposit";
                     itemDrop = PvItems.platinum;
@@ -180,7 +160,7 @@ public class PvBlocks {
                 }};
                 zirconiumDeposit = new DepositWall("zirconium-deposit") //Todo
                 {{
-                    variants = 0;
+                    variants = 2;
                     clipSize = 256;
                     localizedName = "Zirconium Deposit";
                     itemDrop = PvItems.zirconium;
@@ -192,25 +172,25 @@ public class PvBlocks {
                 {{
                     requirements(Category.distribution, with(PvItems.zirconium,1));
                     localizedName = "Micromass Conveyor";
-                    health = 50;
+                    health = 60;
                     itemCapacity = 5;
                     speed = 20f/(300);
                 }};
-                nueromassConveyor = new MassConveyor("nueromass-conveyor")
+                expomassConveyor = new MassConveyor("expomass-conveyor")
                 {{
-                    requirements(Category.distribution, with(PvItems.barium,2,PvItems.zirconium,1));
-                    localizedName = "NueroMass Conveyor";
-                    health = 110;
+                    requirements(Category.distribution, with(Items.silicon,2,PvItems.platinum,1));
+                    localizedName = "Expomass Conveyor";
+                    health = 120;
                     itemCapacity = 10;
-                    speed = 40f/(300);
+                    speed = 35f/(300);
                 }};
-                megaMassConveyor = new MassConveyor("megamass-conveyor")
+                megamassConveyor = new MassConveyor("megamass-conveyor")
                 {{
-                    requirements(Category.distribution, with(PvItems.carbonFiber,1));
-                    localizedName = "MegaMass Conveyor";
-                    health = 150;
+                    requirements(Category.distribution, with(Items.silicon, 3, PvItems.carbonFiber,1));
+                    localizedName = "Megamass Conveyor";
+                    health = 200;
                     itemCapacity = 20;
-                    speed = 80f/(300);
+                    speed = 50f/(300);
                 }};
                 massJunction = new Junction("mass-junction")
                 {{
@@ -220,30 +200,30 @@ public class PvBlocks {
                     capacity = 20;
                     speed = 20;
                     ((MassConveyor)micromassConveyor).junction = this;
-                    ((MassConveyor)nueromassConveyor).junction = this;
+                    ((MassConveyor)expomassConveyor).junction = this;
                 }};
                 massRouter = new DuctRouter("mass-router")
                 {{
-                    requirements(Category.distribution, with(PvItems.zirconium,10));
+                    requirements(Category.distribution, with(Items.silicon,7,PvItems.zirconium, 5, PvItems.carbonFiber, 3));
                     localizedName = "Mass Router";
                     health = 85;
                     speed = 0;
                 }};
                 megaMassJunction = new Junction("megamass-junction")
                 {{
-                    requirements(Category.distribution, with(PvItems.zirconium,10));
+                    requirements(Category.distribution, with(Items.silicon,7,PvItems.zirconium, 5, PvItems.carbonFiber, 3));
                     localizedName = "MegaMass Junction";
-                    health = 155;
-                    capacity = 40;
-                    speed = 1;
+                    health = 200;
+                    capacity = 50;
+                    speed = 20f/(3);
                     ((MassConveyor)megaMassConveyor).junction = this;
                 }};
                 megaMassRouter = new DuctRouter("megamass-router")
                 {{
                     requirements(Category.distribution, with(PvItems.zirconium,10));
                     localizedName = "MegaMass Router";
-                    health = 140;
-                    itemCapacity = 40;
+                    health = 200;
+                    itemCapacity = 50;
                     speed = 0;
                 }};
                 microTransportGate = new MassDriver("micro-transport-gate"){{
