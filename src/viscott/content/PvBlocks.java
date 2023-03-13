@@ -460,12 +460,16 @@ public class PvBlocks {
                 blastReactor = new ConsumeGenerator("blast-reactor")
                 {{
                     requirements(Category.power, with(PvItems.zirconium,35,PvItems.lithium,20)); //todo
+                    localizedName = "Blast Reactor";
                     health = 780;
                     size = 3;
                     powerProduction = 940f/60f;
                     itemCapacity = 20;
                     consumeItem(PvItems.nobelium,2);
                     itemDuration = 4.2f*60f;
+                    generateEffect = Fx.fireSmoke;
+                    effectChance = 0.5f;
+                    consumeEffect = Fx.smokeCloud;
                 }};
                 siliconMassForge = new GenericCrafter("silicon-mass-forge")
                 {{
