@@ -28,9 +28,7 @@ import mindustry.world.blocks.liquid.LiquidJunction;
 import mindustry.world.blocks.liquid.LiquidRouter;
 import mindustry.world.blocks.payloads.PayloadConveyor;
 import mindustry.world.blocks.payloads.PayloadRouter;
-import mindustry.world.blocks.power.Battery;
-import mindustry.world.blocks.power.ConsumeGenerator;
-import mindustry.world.blocks.power.PowerNode;
+import mindustry.world.blocks.power.*;
 import mindustry.world.blocks.production.Drill;
 import mindustry.world.blocks.production.GenericCrafter;
 import mindustry.world.blocks.production.HeatCrafter;
@@ -47,6 +45,7 @@ import viscott.world.block.drill.PowerGrinder;
 import viscott.world.block.environment.DepositWall;
 import viscott.world.block.logic.PvLogicBlock;
 import viscott.world.block.power.ConstGenerator;
+import viscott.world.block.production.ItemVariableReactor;
 import viscott.world.block.production.MultiCrafter;
 import viscott.world.block.unit.BulkUnitFactory;
 
@@ -77,7 +76,7 @@ public class PvBlocks {
 
                     /*Power*/opticalNode,auditoryNode,compressedBattery,
                     /*Power Production*/smallCarbonPanel,largeCarbonPanel,lithiumDegenerator,
-                                        keroseneGenerator,radiator,blastReactor,subzeroReactor,
+                                        keroseneGenerator,radiator,blastReactor,subzeroReactor,feverReactor,
                     /*Production*/siliconMassForge,particalAccelerator, keroseneMixer, carbonWeaver,
                             fractionIonizer,nitrogenDistiller,
 
@@ -500,6 +499,29 @@ public class PvBlocks {
                     generateEffect = Fx.smoke;
                     consumeEffect = Fx.smokeCloud;
                     warmupSpeed = 0.0001f;
+                }};
+                feverReactor = new ItemVariableReactor("fever-reactor")
+                {{
+                    requirements(Category.power, with(PvItems.zirconium,35,PvItems.lithium,20)); //todo
+                    localizedName = "Fever Reactor";
+                    maxHeat = 40;
+                    health = 3050;
+                    size = 5;
+                    powerProduction = 12700f/60f;
+                    itemCapacity = 30;
+                    liquidCapacity = 50;
+                    consumeItem(PvItems.erbium,5);
+                    consumeLiquid(PvLiquids.liquidNitrogen,25f/60f);
+                    explosionMinWarmup = 0.5f;
+                    explosionRadius = 8*20;
+                    explosionDamage = 3050;
+                    itemDuration = 2.2f*60f;
+                    consumeEffect = Fx.smokeCloud;
+                    drawer = new DrawMulti(
+                            new DrawRegion("-bottom"),
+                            new DrawLiquidTile(PvLiquids.liquidNitrogen, 4f),
+                            new DrawRegion()
+                    );
                 }};
                 siliconMassForge = new GenericCrafter("silicon-mass-forge")
                 {{
