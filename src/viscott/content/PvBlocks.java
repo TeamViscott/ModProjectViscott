@@ -77,7 +77,7 @@ public class PvBlocks {
 
                     /*Power*/opticalNode,auditoryNode,compressedBattery,
                     /*Power Production*/smallCarbonPanel,largeCarbonPanel,lithiumDegenerator,
-                                        keroseneGenerator,radiator,blastReactor,
+                                        keroseneGenerator,radiator,blastReactor,subzeroReactor,
                     /*Production*/siliconMassForge,particalAccelerator, keroseneMixer, carbonWeaver,
                             fractionIonizer,nitrogenDistiller,
 
@@ -470,6 +470,36 @@ public class PvBlocks {
                     generateEffect = Fx.fireSmoke;
                     effectChance = 0.5f;
                     consumeEffect = Fx.smokeCloud;
+                }};
+                subzeroReactor = new ConsumeGenerator("subzero-reactor")
+                {{
+                    requirements(Category.power, with(PvItems.zirconium,35,PvItems.lithium,20)); //todo
+                    localizedName = "SubZero Reactor";
+                    health = 980;
+                    size = 4;
+                    powerProduction = 5200f/60f;
+                    liquidCapacity = 50;
+
+                    consumeLiquid(PvLiquids.liquidNitrogen,10f/60f);
+                    consumeLiquid(Liquids.nitrogen,25f/60f);
+                    itemDuration = 10.4f*60f;
+                    drawer = new DrawMulti(
+                            new DrawRegion("-bottom"),
+                            new DrawLiquidTile(Liquids.nitrogen, 4f),
+                            new DrawLiquidTile(PvLiquids.liquidNitrogen, 4f),
+                            new DrawBubbles(Liquids.nitrogen.color.add(-0.2f,-0.2f,-0.2f)){{
+                                sides = 10;
+                                recurrence = 3f;
+                                spread = 12;
+                                radius = 2f;
+                                amount = 40;
+                            }},
+                            new DrawRegion()
+                    );
+                    effectChance = 0.2f;
+                    generateEffect = Fx.smoke;
+                    consumeEffect = Fx.smokeCloud;
+                    warmupSpeed = 0.0001f;
                 }};
                 siliconMassForge = new GenericCrafter("silicon-mass-forge")
                 {{
