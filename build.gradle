@@ -1,6 +1,4 @@
 apply plugin: "java"
-apply plugin: 'maven-publish'
-group = 'com.github.teamViscott'
 version '1.0'
 
 targetCompatibility = 8
@@ -10,7 +8,6 @@ sourceSets.main.java.srcDirs = ["src"]
 
 
 repositories{
-    mavenLocal()
     mavenCentral()
     maven{ url 'https://www.jitpack.io' }
 }
