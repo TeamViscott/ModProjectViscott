@@ -77,7 +77,7 @@ public class PvBlocks {
 
                     /*Power*/opticalNode,auditoryNode,compressedBattery,
                     /*Power Production*/smallCarbonPanel,largeCarbonPanel,lithiumDegenerator,
-                                        keroseneGenerator,radiator,
+                                        keroseneGenerator,radiator,blastReactor,
                     /*Production*/siliconMassForge,particalAccelerator, keroseneMixer, carbonWeaver,
                             fractionIonizer,nitrogenDistiller,
 
@@ -457,9 +457,19 @@ public class PvBlocks {
                             new DrawRegion("-top")
                     );
                 }};
+                blastReactor = new ConsumeGenerator("blast-reactor")
+                {{
+                    requirements(Category.power, with(PvItems.zirconium,35,PvItems.lithium,20)); //todo
+                    health = 780;
+                    size = 3;
+                    powerProduction = 940f/60f;
+                    itemCapacity = 20;
+                    consumeItem(PvItems.nobelium,2);
+                    itemDuration = 4.2f*60f;
+                }};
                 siliconMassForge = new GenericCrafter("silicon-mass-forge")
                 {{
-                    requirements(Category.crafting, with(PvItems.zirconium,35,PvItems.lithium,20));
+                    requirements(Category.crafting, with(PvItems.zirconium,35,PvItems.lithium,20)); //todo
                     localizedName = "Silicon Mass Forge";
                     health = 175;
                     size = 2;
