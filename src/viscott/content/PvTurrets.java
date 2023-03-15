@@ -675,11 +675,21 @@ public class PvTurrets{
             consumePower(560f/60f);
             liquidCapacity = 50;
             range = 39*8;
+            reload = 60f/0.7f;
             targetAir = true;
             targetGround = true;
             shootType = new LaserBulletType(275)
             {{
                  length = 39*8;
+                 collidesAir = true;
+                 collidesGround = true;
+                 pierce = true;
+                 pierceCap = 10;
+                 pierceBuilding = true;
+                 lightning = 3;
+                 lightningColor = colors[0];
+                 lightningSpacing = 30;
+                 lightningDamage = 35;
             }};
             drawer = new DrawTurret(PvUtil.GetName("Pov")){{
                 parts.addAll(
