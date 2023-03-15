@@ -7,6 +7,7 @@ import mindustry.content.Fx;
 import mindustry.content.Items;
 import mindustry.content.Liquids;
 import mindustry.entities.bullet.MassDriverBolt;
+import mindustry.entities.effect.MultiEffect;
 import mindustry.gen.Sounds;
 import mindustry.logic.LStatements;
 import mindustry.type.Category;
@@ -466,8 +467,9 @@ public class PvBlocks {
                     itemCapacity = 20;
                     consumeItem(PvItems.nobelium,2);
                     itemDuration = 4.2f*60f;
-                    generateEffect = Fx.fireSmoke;
-                    effectChance = 0.5f;
+                    generateEffect = new MultiEffect(Fx.fire,Fx.fireSmoke);
+                    generateEffectRange = 2;
+                    effectChance = 0.3f;
                     consumeEffect = Fx.smokeCloud;
                 }};
                 subzeroReactor = new ConsumeGenerator("subzero-reactor")

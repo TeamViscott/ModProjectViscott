@@ -666,7 +666,7 @@ public class PvTurrets{
             }};
         }};
 
-        falarica = new ItemTurret("falarica")
+        falarica = new PowerTurret("falarica")
         {{
             requirements(Category.turret,with(Items.copper,1)); //Todo
             localizedName = "Falarica";
@@ -677,6 +677,32 @@ public class PvTurrets{
             range = 39*8;
             targetAir = true;
             targetGround = true;
+            shootType = new LaserBulletType(275)
+            {{
+                 length = 39*8;
+            }};
+            drawer = new DrawTurret(PvUtil.GetName("Pov")){{
+                parts.addAll(
+                        parts.add(
+                                new RegionPart("-l"){{
+                                    progress = PartProgress.warmup;
+                                    heatProgress = PartProgress.warmup;
+                                    heatColor = Color.valueOf("ff6214");
+                                    mirror = false;
+                                    under = false;
+                                    moveY = -4f;
+                                }},
+                                new RegionPart("-r"){{
+                                    progress = PartProgress.warmup;
+                                    heatProgress = PartProgress.warmup;
+                                    heatColor = Color.valueOf("ff6214");
+                                    mirror = false;
+                                    under = false;
+                                    moveY = -4f;
+                                }}
+                        )
+                );
+            }};
         }};
         striker = new ItemTurret("striker")
         {{
