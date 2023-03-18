@@ -44,6 +44,7 @@ import viscott.world.block.drill.Grinder;
 import viscott.world.block.drill.LiquidGrinder;
 import viscott.world.block.drill.PowerGrinder;
 import viscott.world.block.environment.DepositWall;
+import viscott.world.block.liquids.SingleConduit;
 import viscott.world.block.logic.PvLogicBlock;
 import viscott.world.block.power.ConstGenerator;
 import viscott.world.block.production.ItemVariableReactor;
@@ -102,7 +103,7 @@ public class PvBlocks {
                     /*Logic*/
                             piscoProcessor,
                             /*Testing*/
-                                    sus
+                                    sus,testConduit
                             ;
             public static void load()
             {
@@ -933,6 +934,13 @@ public class PvBlocks {
                     armor = 10;
                     pierceReduction = 99;
                     absorbLasers = true;
+                }};
+                testConduit = new SingleConduit("iluminati-conduit")
+                {{
+                    requirements(Category.liquid, with(PvItems.nobelium,1));
+                    localizedName = "Iluminati Conduit";
+                    lightRange = 10;
+                    liquidCapacity = 10;
                 }};
             }
 }

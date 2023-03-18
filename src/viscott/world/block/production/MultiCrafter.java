@@ -11,6 +11,7 @@ import arc.util.io.Reads;
 import arc.util.io.Writes;
 import mindustry.Vars;
 import mindustry.content.Fx;
+import mindustry.content.Items;
 import mindustry.ctype.UnlockableContent;
 import mindustry.gen.Building;
 import mindustry.gen.Sounds;
@@ -239,6 +240,7 @@ public class MultiCrafter extends GenericCrafter {
 
         public boolean gotLiquids()
         {
+
             AtomicBoolean enough = new AtomicBoolean(true);
             consumerLiquids.get(selected).forEach(liquid -> {if (liquids.get(liquid.liquid) < liquid.amount) enough.set(false);});
             return enough.get();
