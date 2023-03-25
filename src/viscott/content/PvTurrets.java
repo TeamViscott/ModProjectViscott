@@ -678,18 +678,29 @@ public class PvTurrets{
             reload = 60f/0.7f;
             targetAir = true;
             targetGround = true;
-            shootType = new LaserBulletType(275)
+            shootType = new BasicBulletType(8,275)
             {{
-                 length = 39*8;
+                lifetime = PvUtil.GetRange(speed,39);
                  collidesAir = true;
                  collidesGround = true;
                  pierce = true;
                  pierceCap = 10;
                  pierceBuilding = true;
-                 lightning = 3;
-                 lightningColor = colors[0];
-                 lightningSpacing = 30;
-                 lightningDamage = 35;
+                 trailInterval = 0;
+                 trailChance = 100;
+                 bulletInterval = 10;
+                 intervalBullets = 2;
+                 trailLength = 40;
+                 trailWidth = 2;
+                 trailColor = lightColor = backColor = Pal.lancerLaser;
+                 trailEffect = PvEffects.waveBullet;
+                 trailRotation = true;
+                 intervalBullet = new LightningBulletType()
+                {{
+                    damage = 50;
+                    lightningLength = 15;
+
+                }};
             }};
             drawer = new DrawTurret(PvUtil.GetName("Pov")){{
                 parts.addAll(
@@ -1159,8 +1170,9 @@ public class PvTurrets{
                                     progress = PartProgress.warmup;
                                     heatProgress = PartProgress.warmup;
                                     heatColor = Color.valueOf("ff6214");
+                                    layer = Layer.turret-1.2f;
+                                    turretHeatLayer = Layer.turret-0.1f;
                                     mirror = false;
-                                    under = true;
                                     moveY = -2.5f;
                                     moveX = -2.5f;
                                 }},
@@ -1168,8 +1180,9 @@ public class PvTurrets{
                                     progress = PartProgress.warmup;
                                     heatProgress = PartProgress.warmup;
                                     heatColor = Color.valueOf("ff6214");
+                                    layer = Layer.turret-1.2f;
+                                    turretHeatLayer = Layer.turret-0.1f;
                                     mirror = false;
-                                    under = true;
                                     moveY = -2.5f;
                                     moveX = 2.5f;
                                 }}
@@ -1265,22 +1278,22 @@ public class PvTurrets{
             drawer = new DrawTurret(PvUtil.GetName("Pov")){{
                 parts.addAll(
                         new RegionPart("-l"){{
-                            progress = PartProgress.recoil;
+                            progress = PartProgress.warmup;
                             heatProgress = PartProgress.recoil;
                             heatColor = Color.valueOf("ff6214");
                             mirror = false;
                             under = false;
-                            moveY = -2f;
+                            moveY = -2.5f;
                             moveX = -1.5f;
                             moveRot = 10f;
                         }},
                         new RegionPart("-r"){{
-                            progress = PartProgress.recoil;
+                            progress = PartProgress.warmup;
                             heatProgress = PartProgress.recoil;
                             heatColor = Color.valueOf("ff6214");
                             mirror = false;
                             under = false;
-                            moveY = -2f;
+                            moveY = -2.5f;
                             moveX = 1.5f;
                             moveRot = -10f;
                         }},

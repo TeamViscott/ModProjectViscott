@@ -1,5 +1,6 @@
 package viscott.content;
 
+import arc.Core;
 import arc.func.Prov;
 import arc.graphics.Color;
 import arc.struct.Seq;
@@ -27,8 +28,7 @@ import mindustry.world.blocks.liquid.Conduit;
 import mindustry.world.blocks.liquid.LiquidBridge;
 import mindustry.world.blocks.liquid.LiquidJunction;
 import mindustry.world.blocks.liquid.LiquidRouter;
-import mindustry.world.blocks.payloads.PayloadConveyor;
-import mindustry.world.blocks.payloads.PayloadRouter;
+import mindustry.world.blocks.payloads.*;
 import mindustry.world.blocks.power.*;
 import mindustry.world.blocks.production.Drill;
 import mindustry.world.blocks.production.GenericCrafter;
@@ -38,6 +38,7 @@ import mindustry.world.blocks.storage.CoreBlock;
 import mindustry.world.blocks.storage.Unloader;
 import mindustry.world.draw.*;
 import mindustry.world.meta.BuildVisibility;
+import viscott.utilitys.PvUtil;
 import viscott.world.block.defense.PvWall;
 import viscott.world.block.distribution.MassConveyor;
 import viscott.world.block.drill.Grinder;
@@ -91,6 +92,7 @@ public class PvBlocks {
                     /*Unit Creation*/nueroSpawnPad,eliteSpawnPad,
 
                     /*Payload*/densePayloadConveyor,densePayloadRouter,
+                            denseConstructor,denseDeconstructor,denseUnloader,denseLoader,
                     /*Core's*/coreHover,coreElevate,coreUpraise,
                             bulkUnloader,
 
@@ -741,14 +743,41 @@ public class PvBlocks {
                 densePayloadConveyor = new PayloadConveyor("dense-payload-conveyor")
                 {{
                     requirements(Category.units,with(PvItems.carbonFiber,20)); //Todo
+                    localizedName = "Dense Payload Conveyor";
                     payloadLimit = 5;
                     size = 3;
                 }};
                 densePayloadRouter = new PayloadRouter("dense-payload-router")
                 {{
                     requirements(Category.units,with(PvItems.carbonFiber,20)); //Todo
+                    localizedName = "Dense Payload Router";
                     payloadLimit = 5;
                     size = 3;
+                }};
+                denseConstructor = new Constructor("dense-constructor")
+                {{
+                    requirements(Category.units,with(PvItems.carbonFiber,20)); //Todo
+                    localizedName = "Dense Constructor";
+                    size = 3;
+                }};
+                denseDeconstructor = new PayloadDeconstructor("dense-deconstructor")
+                {{
+                    requirements(Category.units,with(PvItems.carbonFiber,20)); //Todo
+                    localizedName = "Dense Deconstructor";
+                    size = 3;
+                }};
+                denseLoader = new PayloadLoader("dense-loader")
+                {{
+                    requirements(Category.units,with(PvItems.carbonFiber,20)); //Todo
+                    localizedName = "Dense Loader";
+                    size = 3;
+                }};
+                denseUnloader = new PayloadUnloader("dense-unloader")
+                {{
+                    requirements(Category.units,with(PvItems.carbonFiber,20)); //Todo
+                    localizedName = "Dense Unloader";
+                    size = 3;
+                    consumePower(100f/60f);
                 }};
                 bulkUnloader = new Unloader("bulk-unloader")
                 {{

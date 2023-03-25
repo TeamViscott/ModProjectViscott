@@ -1,5 +1,6 @@
 package viscott.content;
 
+import arc.graphics.g2d.Fill;
 import arc.math.Mathf;
 import mindustry.entities.Effect;
 import mindustry.graphics.Drawf;
@@ -11,7 +12,7 @@ import static arc.graphics.g2d.Lines.*;
 
 public class PvEffects {
     public static Effect
-        slowEnergeticEffect, particleDeath1,particleDeath2,particleDeath3,railFrag
+        slowEnergeticEffect, particleDeath1,particleDeath2,particleDeath3,railFrag,waveBullet
             ;
     public static void load()
     {
@@ -50,6 +51,16 @@ public class PvEffects {
             }
 
             Drawf.light(e.x, e.y, 60f * e.fout(), Pal.orangeSpark, 0.5f);
+        });
+        waveBullet = new Effect(120f,e -> {
+            color(Pal.lancerLaser);
+
+            float x1 = e.x + Mathf.sin(e.rotation/180*Mathf.pi) * Mathf.sin(e.fin()*6*Mathf.pi) * 8;
+            float y1 = e.y - Mathf.cos(e.rotation/180*Mathf.pi) * Mathf.sin(e.fin()*6*Mathf.pi) * 8;
+            float x2 = e.x - Mathf.sin(e.rotation/180*Mathf.pi) * Mathf.sin(e.fin()*6*Mathf.pi) * 8;
+            float y2 = e.y + Mathf.cos(e.rotation/180*Mathf.pi) * Mathf.sin(e.fin()*6*Mathf.pi) * 8;
+            Fill.circle(x1,y1,e.fout());
+            Fill.circle(x2,y2,e.fout());
         });
     }
 }
