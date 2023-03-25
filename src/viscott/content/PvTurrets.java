@@ -678,6 +678,8 @@ public class PvTurrets{
             reload = 60f/0.7f;
             targetAir = true;
             targetGround = true;
+            shootY = 10;
+
             shootType = new BasicBulletType(8,275)
             {{
                 lifetime = PvUtil.GetRange(speed,39);
@@ -687,8 +689,8 @@ public class PvTurrets{
                  pierceCap = 10;
                  pierceBuilding = true;
                  trailInterval = 0;
-                 trailChance = 100;
-                 bulletInterval = 10;
+                 trailChance = Integer.MAX_VALUE;
+                 bulletInterval = 3;
                  intervalBullets = 2;
                  trailLength = 40;
                  trailWidth = 2;

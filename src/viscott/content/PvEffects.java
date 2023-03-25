@@ -52,15 +52,26 @@ public class PvEffects {
 
             Drawf.light(e.x, e.y, 60f * e.fout(), Pal.orangeSpark, 0.5f);
         });
-        waveBullet = new Effect(120f,e -> {
+        waveBullet = new Effect(40f,e -> {
             color(Pal.lancerLaser);
-
-            float x1 = e.x + Mathf.sin(e.rotation/180*Mathf.pi) * Mathf.sin(e.fin()*6*Mathf.pi) * 8;
-            float y1 = e.y - Mathf.cos(e.rotation/180*Mathf.pi) * Mathf.sin(e.fin()*6*Mathf.pi) * 8;
-            float x2 = e.x - Mathf.sin(e.rotation/180*Mathf.pi) * Mathf.sin(e.fin()*6*Mathf.pi) * 8;
-            float y2 = e.y + Mathf.cos(e.rotation/180*Mathf.pi) * Mathf.sin(e.fin()*6*Mathf.pi) * 8;
-            Fill.circle(x1,y1,e.fout());
-            Fill.circle(x2,y2,e.fout());
+            float waves = 2.5f;
+            float x1 = e.x + Mathf.sin(e.rotation/180*Mathf.pi) * Mathf.sin(e.fin()*waves *Mathf.pi) * 8;
+            float y1 = e.y - Mathf.cos(e.rotation/180*Mathf.pi) * Mathf.sin(e.fin()*waves *Mathf.pi) * 8;
+            float x2 = e.x - Mathf.sin(e.rotation/180*Mathf.pi) * Mathf.sin(e.fin()*waves *Mathf.pi) * 8;
+            float y2 = e.y + Mathf.cos(e.rotation/180*Mathf.pi) * Mathf.sin(e.fin()*waves *Mathf.pi) * 8;
+            float fin = (e.time+1)/e.lifetime;
+            float xn = e.x - Mathf.cos(e.rotation/180*Mathf.pi) * 10;
+            float yn = e.y - Mathf.sin(e.rotation/180*Mathf.pi) * 10;
+            float xn1 = xn + Mathf.sin(e.rotation/180*Mathf.pi) * Mathf.sin(fin*waves *Mathf.pi) * 8;
+            float yn1 = yn - Mathf.cos(e.rotation/180*Mathf.pi) * Mathf.sin(fin*waves *Mathf.pi) * 8;
+            float xn2 = xn - Mathf.sin(e.rotation/180*Mathf.pi) * Mathf.sin(fin*waves *Mathf.pi) * 8;
+            float yn2 = yn + Mathf.cos(e.rotation/180*Mathf.pi) * Mathf.sin(fin*waves *Mathf.pi) * 8;
+            // Fill.circle(x1,y1,e.fout()*2);
+            // Fill.circle(x2,y2,e.fout()*2);
+            stroke(e.fout()*2);
+            line(x1, y1, xn1, yn1);
+            line(x2, y2, xn2, yn2);
+            // Lifetime = max lifetime || time = time alive
         });
     }
 }
