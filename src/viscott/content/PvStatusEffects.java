@@ -2,11 +2,12 @@ package viscott.content;
 
 import mindustry.game.Team;
 import mindustry.type.StatusEffect;
+import viscott.world.statusEffects.AlterStatusEffect;
 import viscott.world.statusEffects.StatusEffectStack;
 
 public class PvStatusEffects {
     public static StatusEffect
-    timeWarped,doused, disabled, expent, resiliant, ungratefull, crescendo
+    timeWarped,doused, disabled, expent, resiliant, ungratefull, crescendo ,tick ,tock
             ;
     public static void load() {
         timeWarped = new StatusEffectStack("time-warped") {{
@@ -40,31 +41,53 @@ public class PvStatusEffects {
                 charges = 12;
                 show = false;
                 staticStat();
-            }};
-                crescendo = new StatusEffectStack("crescendo") {{
-                    localizedName = "Crescendo";
-                    reloadMultiplier = 1.05f;
-                    dragMultiplier = 1.01f;
-                    speedMultiplier = 0.995f;
-                    charges = 80;
-                    show = false;
-                    staticStat();
-                }};
-                resiliant = new StatusEffectStack("resiliant") {{
-                    localizedName = "Resiliant";
-                    description = "The Lava on you is cooling off jamming your Weapons but allowing bigger resistance to Damage.";
-                    reloadMultiplier = 0.99f;
-                    dragMultiplier = 0.99f;
-                    healthMultiplier = 1.01f;
-                    speedMultiplier = 0.99f;
-                    charges = 10;
-                    staticStat();
-                }};
-                ungratefull = new StatusEffectStack("ungratefull") {{
-                    localizedName = "Ungratefull";
-                    description = "The enemy of everyone";
-                    newTeam = Team.get(250);
-                    staticStat();
-                }};
             }
-        }
+        };
+        crescendo = new StatusEffectStack("crescendo") {{
+            localizedName = "Crescendo";
+            reloadMultiplier = 1.05f;
+            dragMultiplier = 1.01f;
+            speedMultiplier = 0.995f;
+            charges = 80;
+            show = false;
+            staticStat();
+        }};
+        resiliant = new StatusEffectStack("resiliant") {{
+            localizedName = "Resiliant";
+            description = "The Lava on you is cooling off jamming your Weapons but allowing bigger resistance to Damage.";
+            reloadMultiplier = 0.99f;
+            dragMultiplier = 0.99f;
+            healthMultiplier = 1.01f;
+            speedMultiplier = 0.99f;
+            charges = 10;
+            staticStat();
+        }};
+        ungratefull = new StatusEffectStack("ungratefull") {{
+            localizedName = "Ungratefull";
+            description = "The enemy of everyone";
+            newTeam = Team.get(250);
+            staticStat();
+        }};
+        tick = new AlterStatusEffect("tick") {{
+            localizedName = "Tick";
+            description = "Tick and Tock it goes back and forth";
+            speedMultiplier = 0.5f;
+            reloadMultiplier = 0.5f;
+            dragMultiplier = 0.5f;
+            buildSpeedMultiplier = 0.5f;
+            afterStatusEffectDuration = 60;
+        }};
+        tock = new AlterStatusEffect("tock"){{
+            localizedName = "Tock";
+            description = "Tick and Tock it goes back and forth";
+            speedMultiplier = 2f;
+            reloadMultiplier = 2f;
+            dragMultiplier = 2f;
+            buildSpeedMultiplier = 2f;
+            ((AlterStatusEffect)tick).afterStatusEffect = this;
+            afterStatusEffect = tick;
+            afterStatusEffectDuration = 60;
+
+        }};
+    }
+}

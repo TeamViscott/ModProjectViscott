@@ -35,10 +35,10 @@ public class PvBullet extends Bullet {
 
         this.type.update(this);
         if (this.type.collidesTiles && this.type.collides && this.type.collidesGround) {
-            float speed = Mathf.sqrt(Mathf.pow(this.vel.x,2)+Mathf.pow(this.vel.y,2));
-            float itterations = Mathf.floor(speed / 8);
-            for(int i = 0;i < itterations;i++)
-                this.tileRaycast(World.toTile(this.lastX+(this.vel.x*(i/itterations))), World.toTile(this.lastY+(this.vel.y*(i/itterations))), this.tileX(), this.tileY());
+            //float speed = Mathf.sqrt(Mathf.pow(this.vel.x,2)+Mathf.pow(this.vel.y,2));
+            //float itterations = Mathf.floor(speed / 8);
+            //for(int i = 0;i < itterations;i++)
+            this.tileRaycast(World.toTile(this.lastX/*+(this.vel.x*(i/itterations))*/), World.toTile(this.lastY/*+(this.vel.y*(i/itterations))*/), this.tileX(), this.tileY());
         }
 
         if (this.type.removeAfterPierce && this.type.pierceCap != -1 && this.collided.size >= this.type.pierceCap) {

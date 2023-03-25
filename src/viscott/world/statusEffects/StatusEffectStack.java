@@ -166,7 +166,7 @@ public class StatusEffectStack extends StatusEffect {
             effect.at(unit.x + Tmp.v1.x, unit.y + Tmp.v1.y, 0, color, parentizeEffect ? unit : null);
         }
 
-        if (unitCharges.containsKey(unit) && time <= 1)
+        if (unitCharges.containsKey(unit) && time <= Time.delta * 2f)
         {{
             end(unit);
         }}
