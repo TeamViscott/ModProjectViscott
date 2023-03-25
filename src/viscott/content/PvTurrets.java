@@ -36,6 +36,7 @@ import viscott.content.shootpatterns.AlternateShootPatternTurret;
 import viscott.content.shootpatterns.CyclicPatternRainmaker;
 import viscott.content.shootpatterns.CyclicPatternStriker;
 import viscott.utilitys.PvUtil;
+import viscott.world.bullets.PvBasicBulletType;
 
 import static mindustry.content.Items.silicon;
 import static mindustry.type.ItemStack.with;
@@ -680,7 +681,7 @@ public class PvTurrets{
             targetGround = true;
             shootY = 10;
 
-            shootType = new BasicBulletType(8,275)
+            shootType = new BasicBulletType(14,275)
             {{
                 lifetime = PvUtil.GetRange(speed,39);
                  collidesAir = true;
@@ -697,7 +698,8 @@ public class PvTurrets{
                  trailColor = lightColor = backColor = Pal.lancerLaser;
                  trailEffect = PvEffects.waveBullet;
                  trailRotation = true;
-                 intervalBullet = new LightningBulletType()
+                 fragBullets = 4;
+                 fragBullet = intervalBullet = new LightningBulletType()
                 {{
                     damage = 50;
                     lightningLength = 15;
@@ -713,7 +715,9 @@ public class PvTurrets{
                                     heatColor = Color.valueOf("ff6214");
                                     mirror = false;
                                     under = false;
-                                    moveY = -4f;
+                                    moveY = 1f;
+                                    moveX = -2;
+                                    moveRot = 15;
                                 }},
                                 new RegionPart("-r"){{
                                     progress = PartProgress.warmup;
@@ -721,7 +725,9 @@ public class PvTurrets{
                                     heatColor = Color.valueOf("ff6214");
                                     mirror = false;
                                     under = false;
-                                    moveY = -4f;
+                                    moveY = 1f;
+                                    moveX = 2;
+                                    moveRot = -15;
                                 }}
                         )
                 );
