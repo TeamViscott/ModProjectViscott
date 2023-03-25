@@ -417,7 +417,7 @@ public class PvUnits {
                     bullet = new BasicBulletType(){{
                         shoot = new ShootHelix(){{
                             mag = 1.5f;
-                            scl = 5f;
+                            scl = 8f;
                         }};
 
                         shootEffect = new MultiEffect(Fx.shootTitan, new WaveEffect(){{
@@ -434,7 +434,7 @@ public class PvUnits {
                         trailEffect = Fx.missileTrail;
                         trailInterval = 3f;
                         trailParam = 4f;
-                        speed = 1.5f;
+                        speed = 3f;
                         damage = 1300f;
                         lifetime = 180f;
                         width = height = 20f;
@@ -513,7 +513,7 @@ public class PvUnits {
                     trailEffect = Fx.missileTrail;
                     trailInterval = 3f;
                     trailParam = 4f;
-                    speed = 1.5f;
+                    speed = 3f;
                     damage = 1300f;
                     lifetime = 185f;
                     width = height = 22f;
