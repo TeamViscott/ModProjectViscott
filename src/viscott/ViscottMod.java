@@ -1,16 +1,8 @@
 package viscott;
 
-import arc.Core;
-import arc.Events;
 import arc.util.Log;
-import arc.util.Time;
-import mindustry.game.EventType;
 import mindustry.mod.Mod;
-import mindustry.ui.dialogs.BaseDialog;
 import viscott.content.*;
-import viscott.content.shootpatterns.CyclicShootPattern;
-
-import java.beans.beancontext.BeanContextServiceAvailableEvent;
 
 public class ViscottMod extends Mod {
 

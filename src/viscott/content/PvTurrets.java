@@ -11,7 +11,6 @@ import mindustry.entities.bullet.*;
 import mindustry.entities.effect.ExplosionEffect;
 import mindustry.entities.effect.MultiEffect;
 import mindustry.entities.effect.WaveEffect;
-import mindustry.entities.part.DrawPart;
 import mindustry.entities.part.HaloPart;
 import mindustry.entities.part.RegionPart;
 import mindustry.entities.part.ShapePart;
@@ -28,15 +27,11 @@ import mindustry.world.blocks.defense.turrets.ContinuousTurret;
 import mindustry.world.blocks.defense.turrets.ItemTurret;
 import mindustry.world.blocks.defense.turrets.LiquidTurret;
 import mindustry.world.blocks.defense.turrets.PowerTurret;
-import mindustry.world.blocks.heat.HeatBlock;
-import mindustry.world.blocks.heat.HeatConsumer;
 import mindustry.world.draw.DrawTurret;
 import mindustry.world.meta.BuildVisibility;
 import viscott.content.shootpatterns.AlternateShootPatternTurret;
-import viscott.content.shootpatterns.CyclicPatternRainmaker;
-import viscott.content.shootpatterns.CyclicPatternStriker;
+import viscott.content.shootpatterns.CyclicShootPattern;
 import viscott.utilitys.PvUtil;
-import viscott.world.bullets.PvBasicBulletType;
 
 import static mindustry.content.Items.silicon;
 import static mindustry.type.ItemStack.with;
@@ -750,7 +745,7 @@ public class PvTurrets{
             ammo(
                     silicon, new BasicBulletType(10, 40){{
                         trailColor = frontColor = backColor = Color.valueOf( "d237a6");
-                        shoot = new CyclicPatternStriker();
+                        shoot = new CyclicShootPattern(4,5,0);
                         trailLength = 8;
                         trailWidth = 2;
                         pierce = true;
@@ -796,7 +791,7 @@ public class PvTurrets{
                     silicon,new BasicBulletType(6,40)
                     {{
                         trailColor = frontColor = backColor = Pal.surge;
-                        shoot = new CyclicPatternRainmaker();
+                        shoot = new CyclicShootPattern(5,9,45);
                         trailLength = 8;
                         trailWidth = 2;
                         shoot.shotDelay = 0;
