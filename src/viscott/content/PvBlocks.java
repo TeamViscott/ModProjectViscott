@@ -103,6 +103,7 @@ public class PvBlocks {
                             erbiumWall,erbiumWallLarge,
                             carbonWall,carbonWallLarge,
                     /*Logic*/
+                            /*Replacements*/microProcessorReplacement,logicProcessorReplacement,hyperProcessorReplacement,
                             piscoProcessor,
                             /*Testing*/
                                     sus,testConduit
@@ -919,6 +920,31 @@ public class PvBlocks {
                     size = 3;
                     pumpAmount = 14.5f/60f;
                     liquidCapacity = 40;
+                }};
+                microProcessorReplacement = new PvLogicBlock("micro-processor-replacement"){{
+                    requirements(Category.logic, with(Items.copper, 90, Items.lead, 50, Items.silicon, 50));
+                    localizedName = "Micro Processor";
+                    instructionsPerTick = 2;
+                    size = 1;
+                }};
+
+                logicProcessorReplacement = new PvLogicBlock("logic-processor-replacement"){{
+                    requirements(Category.logic, with(Items.lead, 320, Items.silicon, 80, Items.graphite, 60, Items.thorium, 50));
+                    localizedName = "Logic Processor";
+                    instructionsPerTick = 8;
+                    range = 8 * 22;
+                    size = 2;
+                }};
+
+                hyperProcessorReplacement = new PvLogicBlock("hyper-processor-replacement"){{
+                    requirements(Category.logic, with(Items.lead, 450, Items.silicon, 150, Items.thorium, 75, Items.surgeAlloy, 50));
+                    localizedName = "Hyper Processor";
+                    consumeLiquid(Liquids.cryofluid, 0.08f);
+                    hasLiquids = true;
+
+                    instructionsPerTick = 25;
+                    range = 8 * 42;
+                    size = 3;
                 }};
                 piscoProcessor = new PvLogicBlock("pisco-processor")
                 {{

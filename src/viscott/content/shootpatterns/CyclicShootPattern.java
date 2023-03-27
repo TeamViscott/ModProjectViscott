@@ -33,9 +33,7 @@ public class CyclicShootPattern extends ShootSpread {
         int cutShots = totalShots % maxSum;
         while(Cycle < maxCycleIteration)
         {
-            int sum = (int)(Cycle / 2f * ((Cycle+1)*shots));
-            //Log.info(sum + " / " + maxSum + " | " + cutShots + " || " + Cycle + "/ 2 * ((" +Cycle + "+1)*" + shots+")","");
-            Cycle++;
+            int sum = (int)(Cycle / 2f * (++Cycle*shots));
             if (cutShots == sum)
                 break;
         }

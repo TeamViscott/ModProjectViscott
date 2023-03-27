@@ -38,7 +38,7 @@ public class PvLogicDialog extends BaseDialog {
     Seq<Prov<LStatement>> statements;
 
     public PvLogicDialog(){
-        super("Plogic");
+        super("Pvlogic");
 
         clearChildren();
 
