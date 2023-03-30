@@ -13,4 +13,7 @@ public class PvUtil {
     {
         return "project-viscott-"+added;
     }
+    public static float GetDamage(float DPS, float fireRate){
+        return DPS/fireRate;
+    }
 }
