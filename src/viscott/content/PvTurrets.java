@@ -1024,27 +1024,26 @@ public class PvTurrets{
                 localizedName = "Hel";
                 description = "Crystalizes liquid nitrogen to turn them into deadly projectiles with armor piercing";
                 reload = 60 / 1;
-                inaccuracy = 2;
+                inaccuracy = 0;
                 size = 4;
                 health = 2800;
                 range = 8 * 60;
                 shootY = 16;
                 recoil = 4;
                 ammo(
-                        PvLiquids.liquidNitrogen, new BasicBulletType(4,60) {{
-                            lifetime = PvUtil.GetRange(4,60);
+                        PvLiquids.liquidNitrogen, new BasicBulletType(1,200) {{
+                            lifetime = PvUtil.GetRange(1,60);
                             trailLength = 20;
                             trailWidth = 2;
                             status = StatusEffects.freezing;
                             statusDuration = 120;
                             trailColor = backColor = lightColor = Pal.lancerLaser;
                             trailInterval = 10;
-                            intervalRandomSpread = 0;
-                            intervalSpread = 360f/8f;
-                            intervalAngle = 0;
-                            intervalBullets = 8;
-                            fragRandomSpread = 0;
-                            fragSpread = 360f/8f;
+                            intervalRandomSpread = 90;
+                            intervalAngle = -45;
+                            intervalBullets = 1;
+                            fragRandomSpread = 4;
+                            fragSpread = 90f/8f;
                             fragAngle = 0;
                             fragBullets = 8;
                             fragVelocityMax = 1.8f;
@@ -1052,7 +1051,7 @@ public class PvTurrets{
                             pierce = true;
                             pierceCap = 3;
                             pierceBuilding = true;
-                            fragBullet = intervalBullet = new BasicBulletType(4,40)
+                            fragBullet = intervalBullet = new BasicBulletType(4,75)
                             {{
                                 trailLength = 10;
                                 trailWidth = 2;

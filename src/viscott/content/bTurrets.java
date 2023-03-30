@@ -235,6 +235,5 @@ localizedName = "OverBurner";
                     }}
             );
         }};
-
     }
 }
