@@ -265,6 +265,7 @@ public class PvUnits {
             flying = true;
             speed = 19f/7.5f;
             itemCapacity = 25;
+            lowAltitude = true;
             canBoost = false;
             range = 48 * 8;
             deathExplosionEffect = PvEffects.particleDeath3;

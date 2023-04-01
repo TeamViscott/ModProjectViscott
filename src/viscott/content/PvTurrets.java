@@ -1,6 +1,7 @@
 package viscott.content;
 
 import arc.graphics.Color;
+import arc.graphics.g2d.TextureAtlas;
 import arc.struct.Seq;
 import mindustry.content.Fx;
 import mindustry.content.Items;
@@ -41,7 +42,9 @@ public class PvTurrets{
             splinter,shatter,euro,snap,hourglass,
             phantom,razor,rainmaker,striker,
             marksman, xacto,reaper,shuttle, nuero,
-            xterminium,hel,falarica
+            xterminium,hel,falarica,spring,shredder,
+
+            fracture,javelin
             ;
 
     public static void load(){
@@ -675,6 +678,7 @@ public class PvTurrets{
             targetAir = true;
             targetGround = true;
             shootY = 10;
+            recoil = 5;
 
             shootType = new BasicBulletType(14,275)
             {{
@@ -691,7 +695,7 @@ public class PvTurrets{
                  trailLength = 40;
                  trailWidth = 2;
                  trailColor = lightColor = backColor = Pal.lancerLaser;
-                 trailEffect = PvEffects.waveBullet;
+                 trailEffect = PvEffects.waveBulletFalerica;
                  trailRotation = true;
                  fragBullets = 4;
                  fragBullet = intervalBullet = new LightningBulletType()
@@ -779,6 +783,215 @@ public class PvTurrets{
     }
     public static void loadSize4()
     {
+        shredder = new ItemTurret("shredder")
+        {{
+            localizedName = "Shredder";
+            size = 4;
+            health = 2900;
+            range = 40 * 8;
+            recoil = 6;
+            rotateSpeed = 4f;
+            requirements(Category.turret, with(PvItems.zirconium, 75)); //Todo
+            ammo(
+                    PvItems.zirconium,  new BasicBulletType(6f, 48){{
+                        lifetime = PvUtil.GetRange(speed,range-1);
+                        knockback = 0.7f;
+                        width = 10f;
+                        height = 14f;
+                        ammoMultiplier = 3;
+                        hitColor = backColor = trailColor = Color.valueOf("6f6e80");
+                        frontColor = Color.valueOf("9a9aa6");
+                        hitEffect = despawnEffect = Fx.hitBulletColor;
+                        trailWidth = 2.5f;
+                        trailLength = 30;
+                    }},
+                    PvItems.platinum,  new BasicBulletType(6f, 64){{
+                        lifetime = PvUtil.GetRange(speed,range-1);
+                        knockback = 0.9f;
+                        width = 10f;
+                        height = 14f;
+                        ammoMultiplier = 3;
+                        hitColor = backColor = trailColor = Color.valueOf("aaadaf");
+                        frontColor = Color.valueOf("d1d6db");
+                        hitEffect = despawnEffect = Fx.hitBulletColor;
+                        trailWidth = 2.5f;
+                        trailLength = 30;
+                    }},
+                    PvItems.nobelium,  new BasicBulletType(6f, 58){{
+                        lifetime = PvUtil.GetRange(speed,range-1);
+                        width = 10f;
+                        height = 14f;
+                        ammoMultiplier = 3;
+                        hitColor = backColor = trailColor = Color.valueOf("ef525b");
+                        frontColor = Color.valueOf("ffa1a7");
+                        hitEffect = despawnEffect = Fx.hitBulletColor;
+                        status = StatusEffects.blasted;
+                        statusDuration = 120f;
+                        trailWidth = 2.5f;
+                        trailLength = 30;
+                    }},
+                    PvItems.carbonFiber, new BasicBulletType(6f, 97){{
+                        lifetime = PvUtil.GetRange(speed,range-1);
+                        knockback = 1.2f;
+                        width = 10f;
+                        height = 14f;
+                        ammoMultiplier = 5;
+                        hitColor = backColor = trailColor = Color.valueOf("ef525b");
+                        frontColor = Color.valueOf("ffa1a7");
+                        hitEffect = despawnEffect = Fx.hitBulletColor;
+                        trailWidth = 2.5f;
+                        trailLength = 30;
+                    }}
+            );
+
+            shoot = new ShootSpread(3, 1f);
+
+            shootY = 6f;
+            reload = 60f;
+            ammoUseEffect = Fx.casing1;
+            inaccuracy = 1f;
+            coolant = consumeCoolant(0.1f);
+            researchCostMultiplier = 0.05f;
+            drawer = new DrawTurret(PvUtil.GetName("Pov")){{
+                parts.addAll(
+                        parts.add(
+                                new RegionPart("-l"){{
+                                    progress = PartProgress.recoil;
+                                    heatProgress = PartProgress.recoil;
+                                    heatColor = Color.valueOf("ff6214");
+                                    mirror = false;
+                                    under = false;
+                                    moveX = -1f;
+                                    moveRot = 7f;
+                                    moves.add(new PartMove(PartProgress.recoil, 0f, -2f, -3f));
+                                }},
+                                new RegionPart("-r"){{
+                                    progress = PartProgress.recoil;
+                                    heatProgress = PartProgress.recoil;
+                                    heatColor = Color.valueOf("ff6214");
+                                    mirror = false;
+                                    under = false;
+                                    moveX = 1f;
+                                    moveRot = -7f;
+                                    moves.add(new PartMove(PartProgress.recoil, 0f, -2f, 3f));
+                                }}
+                        )
+                );
+            }};
+            limitRange();
+        }};
+        fracture = new PowerTurret("fracture")
+        {{
+            requirements(Category.turret, with(PvItems.zirconium, 75)); //Todo
+            range = 52*8;
+            health = 2820;
+            size = 4;
+            localizedName = "Fracture";
+            targetAir = true;
+            targetGround = true;
+            consumePower(630f/60f);
+            reload = 60f/0.5f;
+            rotateSpeed = 5f;
+            inaccuracy = 9;
+
+            shootType = new BasicBulletType(){{
+                shootEffect = new MultiEffect(Fx.shootTitan, new WaveEffect(){{
+                    colorTo = Pal.lancerLaser;
+                    sizeTo = 26f;
+                    lifetime = 14f;
+                    strokeFrom = 4f;
+                }});
+                smokeEffect = Fx.shootSmokeTitan;
+                hitColor = Pal.lancerLaser;
+
+                sprite = "large-orb";
+                trailEffect = Fx.missileTrail;
+                trailInterval = 3f;
+                trailParam = 4f;
+                pierceCap = 2;
+                fragOnHit = false;
+                speed = 5f;
+                damage = 150f;
+                lifetime = PvUtil.GetRange(this.speed,59);
+                width = height = 16f;
+                backColor = Pal.lancerLaser;
+                frontColor = Color.white;
+                shrinkX = shrinkY = 0f;
+                trailColor = Pal.lancerLaser;
+                trailLength = 12;
+                trailWidth = 2.2f;
+                despawnEffect = hitEffect = new ExplosionEffect(){{
+                    waveColor = Pal.lancerLaser;
+                    smokeColor = Color.gray;
+                    sparkColor = Pal.sap;
+                    waveStroke = 4f;
+                    waveRad = 40f;
+                }};
+                splashDamage = 35;
+                splashDamageRadius = 8*2.5f;
+                despawnSound = Sounds.dullExplosion;
+
+                //TODO shoot sound
+                shootSound = Sounds.cannon;
+
+                fragBullet = intervalBullet = new BasicBulletType(3f, 20){{
+                    width = 9f;
+                    hitSize = 5f;
+                    height = 15f;
+                    pierce = true;
+                    lifetime = PvUtil.GetRange(this.speed,6);
+                    pierceBuilding = true;
+                    hitColor = backColor = trailColor = Pal.lancerLaser;
+                    frontColor = Color.white;
+                    trailWidth = 2.1f;
+                    trailLength = 5;
+                    hitEffect = despawnEffect = new WaveEffect(){{
+                        colorFrom = colorTo = Pal.lancerLaser;
+                        sizeTo = 4f;
+                        strokeFrom = 4f;
+                        lifetime = 10f;
+                    }};
+                    buildingDamageMultiplier = 0.3f;
+                    homingPower = 0.2f;
+                }};
+
+                bulletInterval = 3f;
+                intervalRandomSpread = 20f;
+                intervalBullets = 2;
+                intervalAngle = 180f;
+                intervalSpread = 300f;
+
+                fragBullets = 10;
+                fragVelocityMin = 0.5f;
+                fragVelocityMax = 1.5f;
+                fragLifeMin = 0.5f;
+            }};
+
+            drawer = new DrawTurret(PvUtil.GetName("Pov")){{
+                parts.addAll(
+                        parts.add(
+                                new RegionPart("-barrel"){{
+                                    progress = PartProgress.recoil;
+                                    heatProgress = PartProgress.recoil;
+                                    heatColor = Color.valueOf("ff6214");
+                                    mirror = false;
+                                    under = true;
+                                    moveY = -4f;
+                                    parts.add(
+                                        new RegionPart("-peak"){{
+                                            progress = PartProgress.recoil;
+                                            heatProgress = PartProgress.recoil;
+                                            heatColor = Color.valueOf("ff6214");
+                                            mirror = false;
+                                            under = true;
+                                            moveY = -8f;
+                                        }}
+                                    );
+                                }}
+                        )
+                );
+            }};
+        }};
         rainmaker = new ItemTurret("rainmaker")
         {{
             localizedName = "Rainmaker";
@@ -1076,9 +1289,107 @@ public class PvTurrets{
                     );
                 }};
             }};
+        spring = new LiquidTurret("spring")
+        {{
+            requirements(Category.turret, with(silicon, 100)); //Todo
+            localizedName = "Spring";
+            health = 2600;
+            size = 4;
+            reload = 60f/1.5f;
+            heatRequirement = 12;
+            maxHeatEfficiency = 10;
+            range = 47*8;
+            ammo(
+                    Liquids.water,new LaserBulletType(72) {{
+                        colors = new Color[3];
+                        colors[0] = colors[1] = colors[2] = Liquids.water.color;
+                        length = 20*8;
+                        width *= 1.4f;
+                        status = StatusEffects.wet;
+                        statusDuration = 90;
+                    }},
+                    PvLiquids.kerosene, new LaserBulletType(103){{
+                        colors = new Color[3];
+                        colors[0] = colors[1] = colors[2] = PvLiquids.kerosene.color;
+                        length = 20*8;
+                        width *= 1.4f;
+                        status = PvStatusEffects.doused;
+                        statusDuration = 90;
+
+                    }}
+            );
+            drawer = new DrawTurret(PvUtil.GetName("Pov"));
+        }};
     }
     public static void loadSize5()
     {
+        javelin = new PowerTurret("javelin")
+        {{
+            requirements(Category.turret,with(Items.copper,1)); //Todo
+            localizedName = "Javelin";
+            size = 5;
+            health = 8700;
+            consumePower(1350f/60f);
+            liquidCapacity = 60;
+            range = 67*8;
+            reload = 60f/0.8f;
+            targetAir = true;
+            targetGround = true;
+            shootY = 10;
+            recoil = 10;
+            consumeLiquid(PvLiquids.xenon,30/60f);
+            shootType = new BasicBulletType(20,830)
+            {{
+                lifetime = PvUtil.GetRange(speed,67);
+                collidesAir = true;
+                collidesGround = true;
+                pierce = true;
+                pierceCap = 10;
+                pierceBuilding = true;
+                trailInterval = 0;
+                trailChance = Integer.MAX_VALUE;
+                bulletInterval = 3;
+                intervalBullets = 2;
+                trailLength = 40;
+                trailWidth = 2;
+                trailColor = lightColor = backColor = Pal.lancerLaser;
+                trailEffect = PvEffects.waveBulletJavelin;
+                trailRotation = true;
+                fragBullets = 7;
+                fragBullet = intervalBullet = new LightningBulletType()
+                {{
+                    damage = 38;
+                    lightningLength = 15;
+
+                }};
+            }};
+            drawer = new DrawTurret(PvUtil.GetName("Pov")){{
+                parts.addAll(
+                        parts.add(
+                                new RegionPart("-l"){{
+                                    progress = PartProgress.warmup;
+                                    heatProgress = PartProgress.warmup;
+                                    heatColor = Color.valueOf("ff6214");
+                                    mirror = false;
+                                    under = false;
+                                    moveY = 1f;
+                                    moveX = -2;
+                                    moveRot = 15;
+                                }},
+                                new RegionPart("-r"){{
+                                    progress = PartProgress.warmup;
+                                    heatProgress = PartProgress.warmup;
+                                    heatColor = Color.valueOf("ff6214");
+                                    mirror = false;
+                                    under = false;
+                                    moveY = 1f;
+                                    moveX = 2;
+                                    moveRot = -15;
+                                }}
+                        )
+                );
+            }};
+        }};
         xacto = new ItemTurret("xacto")
         {{
             requirements(Category.turret,with(PvItems.erbium,1)); //Todo
