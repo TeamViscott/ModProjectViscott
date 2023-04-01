@@ -924,6 +924,7 @@ public class PvBlocks {
                 microProcessorReplacement = new PvLogicBlock("micro-processor-replacement"){{
                     requirements(Category.logic, with(Items.copper, 90, Items.lead, 50, Items.silicon, 50));
                     localizedName = "Micro Processor";
+                    allStatements.add(PvLogic.CommentStatement::new);
                     instructionsPerTick = 2;
                     size = 1;
                 }};
@@ -931,6 +932,7 @@ public class PvBlocks {
                 logicProcessorReplacement = new PvLogicBlock("logic-processor-replacement"){{
                     requirements(Category.logic, with(Items.lead, 320, Items.silicon, 80, Items.graphite, 60, Items.thorium, 50));
                     localizedName = "Logic Processor";
+                    allStatements.add(PvLogic.CommentStatement::new);
                     instructionsPerTick = 8;
                     range = 8 * 22;
                     size = 2;
@@ -941,7 +943,7 @@ public class PvBlocks {
                     localizedName = "Hyper Processor";
                     consumeLiquid(Liquids.cryofluid, 0.08f);
                     hasLiquids = true;
-
+                    allStatements.add(PvLogic.CommentStatement::new);
                     instructionsPerTick = 25;
                     range = 8 * 42;
                     size = 3;
