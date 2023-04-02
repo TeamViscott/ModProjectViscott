@@ -6,7 +6,9 @@ import mindustry.content.Planets;
 import mindustry.graphics.Pal;
 import mindustry.graphics.g3d.HexMesh;
 import mindustry.maps.planet.AsteroidGenerator;
+import mindustry.maps.planet.SerpuloPlanetGenerator;
 import mindustry.type.Planet;
+import viscott.gen.VercilusPlanetGenerator;
 
 import static mindustry.Vars.content;
 
@@ -16,16 +18,16 @@ public class PvPlanets {
             ;
     public static void load()
     {
+        content.planets().forEach(p -> p.hiddenItems.addAll(PvItems.vercilusOnlyItems));
         vercilus = new Planet("vercilus", Planets.sun,1f,2)
         {{
             localizedName = "Vercilus";
-            generator = new AsteroidGenerator();
+            generator = new VercilusPlanetGenerator();
             lightColor = Color.valueOf("ffffff");
             alwaysUnlocked = true;
             tidalLock = false;
             accessible = true;
             meshLoader = () -> new HexMesh(this, 5);
-            System.out.println(sectors.size);
             atmosphereColor = Color.valueOf("ffffff");
             startSector = 15;
             totalRadius = 50f;
@@ -36,7 +38,6 @@ public class PvPlanets {
             landCloudColor = Color.valueOf("ffffff");
             bloom = true;
             hiddenItems.addAll(content.items()).removeAll(PvItems.vercilusItems);
-            hiddenItems.remove(Items.silicon);
             iconColor = atmosphereColor = Pal.heal;
             alwaysUnlocked = true;
         }};

@@ -11,7 +11,8 @@ public class PvItems {
     public static Item
     zirconium,lithium,barium,nobelium,platinum,erbium,carbonFiber,copium
     ;
-    public static Seq<Item> vercilusItems = new Seq<Item>();
+    public static Seq<Item> vercilusItems = new Seq<Item>(),
+                            vercilusOnlyItems = new Seq<Item>();
     public static void load()
     {
         nobelium = new Item("nobelium"){{
@@ -53,5 +54,6 @@ public class PvItems {
         }};
 
         vercilusItems.addAll(zirconium,lithium,barium,silicon,nobelium,platinum,erbium,carbonFiber);
+        vercilusOnlyItems.addAll(zirconium,lithium,barium,nobelium,platinum,erbium,carbonFiber);
     }
 }
