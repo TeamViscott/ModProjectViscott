@@ -21,6 +21,7 @@ import mindustry.graphics.Pal;
 import mindustry.type.UnitType;
 import mindustry.type.Weapon;
 import viscott.abilitys.EnemyStatusFieldAbility;
+import viscott.types.PvUnitType;
 import viscott.utilitys.PvUtil;
 
 public class PvUnits {
@@ -40,7 +41,7 @@ public class PvUnits {
     }
     public static void loadCorePath()
     {
-        micro = new UnitType("micro")
+        micro = new PvUnitType("micro")
         {{
             localizedName = "Micro";
             constructor = EntityMapping.map("alpha");
@@ -77,7 +78,7 @@ public class PvUnits {
                     }}
             );
         }};
-        infrared = new UnitType("infrared")
+        infrared = new PvUnitType("infrared")
         {{
             localizedName = "Infrared";
             constructor = EntityMapping.map("beta");
@@ -113,7 +114,7 @@ public class PvUnits {
                     }}
             );
         }};
-        spectrum = new UnitType("spectrum")
+        spectrum = new PvUnitType("spectrum")
         {{
             localizedName = "Spectrum";
             constructor = EntityMapping.map("alpha");
@@ -173,7 +174,7 @@ public class PvUnits {
     }
     public static void loadFlyingIonPath()
     {
-        particle = new UnitType("particle")
+        particle = new PvUnitType("particle")
         {{
             localizedName = "Particle";
             constructor = EntityMapping.map("flare");
@@ -209,7 +210,7 @@ public class PvUnits {
             );
         }};
 
-        snippet = new UnitType("snippet")
+        snippet = new PvUnitType("snippet")
         {{
             localizedName = "Snippet";
             constructor = EntityMapping.map("flare");
@@ -254,7 +255,7 @@ public class PvUnits {
                     }}
             );
         }};
-        fragment = new UnitType("fragment")
+        fragment = new PvUnitType("fragment")
         {{
             localizedName = "Fragment";
             constructor = EntityMapping.map("horizon");
@@ -323,27 +324,31 @@ public class PvUnits {
                     }}
             );
         }};
-        excerpt = new UnitType("excerpt")
+        excerpt = new PvUnitType("excerpt")
         {{
             localizedName = "Excerpt";
             constructor = EntityMapping.map("mega");
             health = 15000;
             armor = 4;
             hitSize = 8;
-            drag = 0.1f;
+            drag = 0.02f;
+            lowAltitude = true;
             flying = true;
+            engineOffset = 18;
+            engineSize = 10;
             speed = 14f/7.5f;
+            accel = 0.1f;
             itemCapacity = 25;
             canBoost = false;
             range = 48 * 8;
             deathExplosionEffect = PvEffects.particleDeath3;
             weapons.add(
-                    new Weapon(PvUtil.GetName("excerpt-barrage"))
+                    new Weapon(PvUtil.GetName("excerpt-minigun"))
                     {{
-                        x = 4;
-                        y = -2;
-                        shoot.shots = 2;
-                        shoot.shotDelay = 5;
+                        x = 8;
+                        y = -4;
+                        shoot.shots = 4;
+                        shoot.shotDelay = 2.5f;
                         reload = 60/1.8f;
                         mirror = true;
                         recoil = 3;
@@ -351,9 +356,12 @@ public class PvUnits {
                         shootSound = Sounds.laserbeam;
                         bullet = new LaserBoltBulletType(5.2f, 67){{
                             lifetime = 60f;
+                            trailWidth = 1.8f;
+                            trailLength = 20;
                             healPercent = 5f;
+                            despawnEffect = hitEffect = Fx.hitFuse;
                             collidesTeam = true;
-                            backColor = Pal.sap;
+                            trailColor = lightColor = backColor = Pal.sap;
                             frontColor = Pal.sap;
 
                         }};
@@ -362,32 +370,32 @@ public class PvUnits {
             {{
                 x = 0;
                 y = 0;
-                shoot.shots = 1;
-                shoot.shotDelay = 5;
                 range = 48*8;
                 reload = 120;
                 mirror = false;
                 recoil = 3;
+                top = true;
                 inaccuracy = 0;
-                bullet = new PointBulletType(){{
-                    shootEffect = Fx.instShoot;
-                    hitEffect = Fx.instHit;
-                    smokeEffect = Fx.smokeCloud;
-                    trailEffect = Fx.instTrail;
-                    despawnEffect = Fx.instBomb;
-                    trailSpacing = 20f;
+                bullet = new RailBulletType(){{
+                    recoil = 2;
                     damage = 1350;
                     buildingDamageMultiplier = 0.2f;
-                    speed = 48*8;
-                    lifetime = 1;
-                    trailColor = Pal.sap;
                     hitShake = 6f;
-                    ammoMultiplier = 1f;
+                    shootEffect = Fx.lancerLaserShoot;
+                    length = 48*8;
+                    pointEffectSpace = 60f;
+                    pierceEffect = Fx.railHit;
+                    pointEffect = PvEffects.railFrag;
+                    hitEffect = Fx.massiveExplosion;
+                    smokeEffect = Fx.shootBig2;
+                    lightningColor = trailColor = lightColor = Pal.sap;
+                    pierceCap = 10;
+                    pierceDamageFactor = 0.5f;
                 }};
             }}
             );
         }};
-        pericope = new UnitType("pericope")
+        pericope = new PvUnitType("pericope")
         {{
             localizedName = "Pericope";
             constructor = EntityMapping.map("eclipse");
@@ -650,7 +658,7 @@ public class PvUnits {
 
     public static void loadExtra()
     {
-        routerTank = new UnitType("router-tank")
+        routerTank = new PvUnitType("router-tank")
         {{
             localizedName = "Router Tank";
             constructor = EntityMapping.map("stell");
@@ -686,7 +694,7 @@ public class PvUnits {
                     }}
             );
         }};
-        routerBastion = new UnitType("router-bastion")
+        routerBastion = new PvUnitType("router-bastion")
         {{
             localizedName = "Router Bastion";
             constructor = EntityMapping.map("stell");
