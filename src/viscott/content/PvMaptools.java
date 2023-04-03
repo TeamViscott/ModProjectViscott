@@ -104,60 +104,9 @@ public class PvMaptools {
             health = Integer.MAX_VALUE;
 
         }};
-        ultraconveyor = new Conveyor("ultraconveyor")
-        {{
-            localizedName = "Indestructible Conveyor Belt";
-            size = 1;
-            speed = 10/60f;
-
-            displayedSpeed = 11f;
-            health = 2147483647;
-            buildVisibility = BuildVisibility.sandboxOnly;
-        }};
-        ultraconduit = new Conduit("ultraconduit")
-        {{
-            localizedName = "Indestructible Conduit";
-            size = 1;
-            liquidCapacity = 1f;
-            health = 2147483647;
-            buildVisibility = BuildVisibility.sandboxOnly;
-        }};
-        ultraliquidrouter = new LiquidRouter("ultraliquidrouter")
-        {{
-            size = 1;
-            localizedName = "Indestructible Liquid Router";
-            health = 2147483647;
-            buildVisibility = BuildVisibility.sandboxOnly;
-
-        }};
-        ultrarouter = new Router("ultrarouter")
-        {
-            {
-                localizedName = "Indestructible router";
-                size = 1;
-                speed = 10 / 60f;
-                health = 2147483647;
-                buildVisibility = BuildVisibility.sandboxOnly;
-            }};
-        omegarouter = new Router("omegarouter")
-        {
-            {
-                localizedName = "Indestructible Distributor";
-                size = 2;
-                speed = 10 / 60f;
-                health = 2147483647;
-                buildVisibility = BuildVisibility.sandboxOnly;
-            }};
-        omegaliquidrouter = new LiquidRouter("omegaliquidrouter")
-        {
-            {
-                size = 2;
-                localizedName = "Indestructible Liquid Distributor";
-                health = 2147483647;
-                buildVisibility = BuildVisibility.sandboxOnly;
-            }};
         coreIntrusion = new CoreBlock("core-intrusion")
         {{
+            requirements(Category.effect,BuildVisibility.sandboxOnly,with());
             localizedName = "Core: Intrusion";
             alwaysUnlocked = true;
             unitType = UnitTypes.emanate; //todo emanate like unit for invasion mode
@@ -165,33 +114,18 @@ public class PvMaptools {
             size = 6;
             unitCapModifier = 100;
             itemCapacity = 10000;
-            buildVisibility = BuildVisibility.sandboxOnly;
-        }};
-        ultraheatsource = new HeatProducer("ultraheatsource")
-        {{
-            size = 1;
-            localizedName = "Indestructible Heat Source";
-            health = 2147483647;
-            drawer = new DrawMulti(new DrawDefault(), new DrawHeatOutput());
-            heatOutput = 1000;
-            buildVisibility = BuildVisibility.sandboxOnly;
-            category = Category.production;
-            warmupRate = 100;
-
         }};
         ultrapowersource = new PowerSource("ultrapowersource")
         {{
+            requirements(Category.power,BuildVisibility.sandboxOnly,with());
             size = 1;
             localizedName = "Indestructible Power Source";
             health = 2147483647;
             powerProduction = 10000000;
             laserRange = 1;
-            buildVisibility = BuildVisibility.sandboxOnly;
-            category = Category.power;
-
         }};
         tier1overdrive = new OverdriveProjector("tier1overdrive"){{
-            requirements(Category.effect, with());
+            requirements(Category.effect,BuildVisibility.sandboxOnly, with());
             consumePower(10f);
             size = 3;
             localizedName = "Tier 1 Overdrive";
@@ -202,7 +136,7 @@ public class PvMaptools {
             buildVisibility = BuildVisibility.sandboxOnly;
         }};
         tier2overdrive = new OverdriveProjector("tier2overdrive"){{
-            requirements(Category.effect, with());
+            requirements(Category.effect,BuildVisibility.sandboxOnly, with());
             consumePower(10f);
             size = 3;
             localizedName = "Tier 2 Overdrive";
@@ -213,7 +147,7 @@ public class PvMaptools {
             buildVisibility = BuildVisibility.sandboxOnly;
         }};
         tier3overdrive = new OverdriveProjector("tier3overdrive"){{
-            requirements(Category.effect, with());
+            requirements(Category.effect,BuildVisibility.sandboxOnly, with());
             consumePower(10f);
             size = 3;
             localizedName = "Tier 3 Overdrive";
@@ -224,7 +158,7 @@ public class PvMaptools {
             buildVisibility = BuildVisibility.sandboxOnly;
         }};
         tier4overdrive = new OverdriveProjector("tier4overdrive"){{
-            requirements(Category.effect, with());
+            requirements(Category.effect,BuildVisibility.sandboxOnly, with());
             consumePower(10f);
             size = 3;
             localizedName = "Tier 4 Overdrive";
@@ -232,7 +166,6 @@ public class PvMaptools {
             speedBoost = 10f;
             useTime = 300f;
             hasBoost = false;
-            buildVisibility = BuildVisibility.sandboxOnly;
         }};
         }
 }

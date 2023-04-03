@@ -144,7 +144,7 @@ public class PvTurrets{
         }};
         shatter = new PowerTurret("shatter")
         {{
-            requirements(Category.turret, with(PvItems.zirconium, 75)); //Todo
+            requirements(Category.turret, with(PvItems.zirconium, 100,PvItems.lithium,100)); //Todo 2
             range = 31*8;
             health = 800;
             size = 2;
@@ -256,7 +256,7 @@ public class PvTurrets{
         }};
         euro = new ItemTurret("euro")
         {{
-            requirements(Category.turret, with(silicon, 450)); //Todo
+            requirements(Category.turret, with(silicon, 300,PvItems.lithium,150)); //Todo 2
             range = 87*8;
             localizedName = "Euro";
             inaccuracy = 10;
@@ -444,7 +444,7 @@ public class PvTurrets{
         }};
         snap = new LiquidTurret("snap")
         {{
-            requirements(Category.turret, with(silicon, 100)); //Todo
+            requirements(Category.turret, with(silicon, 100)); //Todo 2
             localizedName = "Snap";
             size = 2;
             reload = 60f/1f;
@@ -476,7 +476,7 @@ public class PvTurrets{
             reload = 60f/2f;
             range = 26*8;
             coolant = consumeCoolant(0.1f);
-            requirements(Category.turret,with(Items.copper,1)); //Todo
+            requirements(Category.turret,with(PvItems.zirconium,100,silicon,50)); //Todo 2
             ammo(
                     PvItems.zirconium,new BasicBulletType(6,0)
                     {{
@@ -523,7 +523,7 @@ public class PvTurrets{
     {
         phantom = new ItemTurret("phantom")
         {{
-            requirements(Category.turret,with(PvItems.erbium,1)); //Todo
+            requirements(Category.turret,with(PvItems.erbium,150,PvItems.zirconium,100)); //Todo 2
             localizedName = "Phantom";
             size = 3;
             health = 1980;
@@ -585,7 +585,7 @@ public class PvTurrets{
         }};
         razor = new ItemTurret("razor")
         {{
-            requirements(Category.turret,with(PvItems.erbium,1)); //Todo
+            requirements(Category.turret,with(PvItems.nobelium,30,PvItems.lithium,140)); //Todo 2
             localizedName = "Razor";
             size = 3;
             health = 2175;
@@ -667,7 +667,7 @@ public class PvTurrets{
 
         falarica = new PowerTurret("falarica")
         {{
-            requirements(Category.turret,with(Items.copper,1)); //Todo
+            requirements(Category.turret,with(silicon,100,PvItems.nobelium,80,PvItems.zirconium,120)); //Todo 2
             localizedName = "Falarica";
             size = 3;
             health = 2045;
@@ -745,7 +745,7 @@ public class PvTurrets{
             recoil = 4;
             heatColor  = Color.valueOf( "d237a6");
 
-            requirements(Category.turret,with(Items.copper,1)); //Todo
+            requirements(Category.turret,with(PvItems.zirconium,120,PvItems.nobelium,50,PvItems.lithium,200,PvItems.barium,50)); //Todo 2
             ammo(
                     silicon, new BasicBulletType(10, 40){{
                         trailColor = frontColor = backColor = Color.valueOf( "d237a6");
@@ -791,7 +791,7 @@ public class PvTurrets{
             range = 40 * 8;
             recoil = 6;
             rotateSpeed = 4f;
-            requirements(Category.turret, with(PvItems.zirconium, 75)); //Todo
+            requirements(Category.turret, with(PvItems.zirconium, 250,PvItems.barium,500,PvItems.nobelium,100)); //Todo 2
             ammo(
                     PvItems.zirconium,  new BasicBulletType(6f, 48){{
                         lifetime = PvUtil.GetRange(speed,range-1);
@@ -882,7 +882,7 @@ public class PvTurrets{
         }};
         fracture = new PowerTurret("fracture")
         {{
-            requirements(Category.turret, with(PvItems.zirconium, 75)); //Todo
+            requirements(Category.turret, with(PvItems.zirconium, 150,PvItems.lithium,200,PvItems.nobelium,50,silicon,100)); //Todo 2
             range = 52*8;
             health = 2820;
             size = 4;
@@ -999,7 +999,7 @@ public class PvTurrets{
             reload = 60f;
             range = 480;
             recoil = 12f;
-            requirements(Category.turret,with(Items.copper,1)); //Todo
+            requirements(Category.turret,with(PvItems.zirconium, 100,PvItems.lithium,150,PvItems.nobelium,150,silicon,50)); //Todo 2
             ammo(
                     silicon,new BasicBulletType(6,40)
                     {{
@@ -1060,7 +1060,7 @@ public class PvTurrets{
             heatRequirement = 30;
             shootCone = 360;
 
-            requirements(Category.turret,with(Items.copper,1)); //Todo
+            requirements(Category.turret,with(PvItems.zirconium, 100,PvItems.lithium,300,PvItems.nobelium,100,PvItems.platinum,100)); //Todo 2
 
             shootType = new PointLaserBulletType()
                     {{
@@ -1101,7 +1101,7 @@ public class PvTurrets{
         }};
         nuero = new ItemTurret("nuero")
         {{
-            requirements(Category.turret,with(Items.copper,1)); //Todo
+            requirements(Category.turret,with(PvItems.zirconium, 120,PvItems.lithium,100,PvItems.platinum,50,silicon,200)); //Todo 2
             localizedName = "Nuero";
             shoot = new AlternateShootPatternTurret(20);
             reload = 4*60;
@@ -1233,7 +1233,7 @@ public class PvTurrets{
         hel = new LiquidTurret("hel")
         {
             {
-                requirements(Category.turret, with(PvItems.zirconium, 1000, PvItems.carbonFiber, 500, PvItems.nobelium, 100)); //Todo
+                requirements(Category.turret, with(PvItems.zirconium, 50,PvItems.lithium,150,PvItems.carbonFiber,30)); //Todo 2
                 localizedName = "Hel";
                 description = "Crystalizes liquid nitrogen to turn them into deadly projectiles with armor piercing";
                 reload = 60 / 1;
@@ -1278,12 +1278,25 @@ public class PvTurrets{
                 drawer = new DrawTurret(PvUtil.GetName("Pov")) {{
                     parts.addAll(
                             Seq.with(
-                                    new RegionPart("-barrel") {{
-                                        progress = PartProgress.recoil;
-                                        moveY = -4;
-                                        under= true;
+                                    new RegionPart("-l"){{
+                                        progress = PartProgress.warmup;
+                                        heatProgress = PartProgress.warmup;
+                                        heatColor = Color.valueOf("ff6214");
                                         mirror = false;
-
+                                        under = false;
+                                        moveY = 1f;
+                                        moveX = -2;
+                                        moveRot = 15;
+                                    }},
+                                    new RegionPart("-r"){{
+                                        progress = PartProgress.warmup;
+                                        heatProgress = PartProgress.warmup;
+                                        heatColor = Color.valueOf("ff6214");
+                                        mirror = false;
+                                        under = false;
+                                        moveY = 1f;
+                                        moveX = 2;
+                                        moveRot = -15;
                                     }}
                             )
                     );
@@ -1291,7 +1304,7 @@ public class PvTurrets{
             }};
         spring = new LiquidTurret("spring")
         {{
-            requirements(Category.turret, with(silicon, 100)); //Todo
+            requirements(Category.turret, with(PvItems.zirconium, 100,PvItems.lithium,300,PvItems.nobelium,100,silicon,300)); //Todo 2
             localizedName = "Spring";
             health = 2600;
             size = 4;
@@ -1325,7 +1338,7 @@ public class PvTurrets{
     {
         javelin = new PowerTurret("javelin")
         {{
-            requirements(Category.turret,with(Items.copper,1)); //Todo
+            requirements(Category.turret,with(PvItems.zirconium, 500,PvItems.lithium,100,PvItems.carbonFiber,30,PvItems.platinum,100,PvItems.nobelium,100)); //Todo 2
             localizedName = "Javelin";
             size = 5;
             health = 8700;
@@ -1392,7 +1405,7 @@ public class PvTurrets{
         }};
         xacto = new ItemTurret("xacto")
         {{
-            requirements(Category.turret,with(PvItems.erbium,1)); //Todo
+            requirements(Category.turret,with(PvItems.zirconium, 200,PvItems.erbium,1000,PvItems.carbonFiber,50,PvItems.nobelium,200)); //Todo 2
             localizedName = "X-acto";
             size = 5;
             health = 8450;
@@ -1520,7 +1533,7 @@ public class PvTurrets{
             coolantMultiplier = 1.5f;
             recoil = 5;
             shake = 1;
-            requirements(Category.turret,with(Items.copper,1)); //Todo
+            requirements(Category.turret,with(PvItems.platinum, 500,PvItems.erbium,300,PvItems.carbonFiber,100,PvItems.nobelium,200,silicon,100)); //Todo 2
             ammo(
                     PvItems.platinum,new BasicBulletType(8,1075)
                     {{
@@ -1668,7 +1681,7 @@ public class PvTurrets{
     {
         shuttle = new ItemTurret("shuttle")
         {{
-            requirements(Category.turret,with(Items.copper,1)); //Todo
+            requirements(Category.turret,with(PvItems.platinum, 200,PvItems.erbium,600,PvItems.carbonFiber,50,PvItems.nobelium,500,silicon,500)); //Todo 2
             localizedName = "Shuttle";
             shoot = new AlternateShootPatternTurret(8);
             reload = 60f/4.6f;
@@ -1837,9 +1850,8 @@ public class PvTurrets{
         }};
         xterminium = new ItemTurret("xterminium")
         {{
-            requirements(Category.turret,with(Items.copper,1)); //Todo
+            requirements(Category.turret,BuildVisibility.sandboxOnly,with(PvItems.platinum, 1000,PvItems.erbium,1000,PvItems.carbonFiber,1000,PvItems.nobelium,1000,silicon,1000)); //Todo 2
             localizedName = "X-terminium";
-            buildVisibility = BuildVisibility.sandboxOnly;
             shoot = new AlternateShootPatternTurret(20);
             reload = 200;
             inaccuracy = 2;

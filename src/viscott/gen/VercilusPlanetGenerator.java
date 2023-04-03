@@ -55,7 +55,7 @@ public class VercilusPlanetGenerator extends PlanetGenerator {
 
     @Override
     public float getHeight(Vec3 position) {
-        return Simplex.noise3d(seed,7,0.5f,1f/3f,position.x,position.y,position.z)*1f;
+        return Simplex.noise3d(seed,7,0.5f,1f/3f,position.x,position.y,position.z)*2f-2f;
     }
 
     @Override
