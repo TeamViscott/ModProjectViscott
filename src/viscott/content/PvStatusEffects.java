@@ -98,7 +98,7 @@ public class PvStatusEffects {
             localizedName = "Mend";
             color = Pal.heal;
             description = "Mends a unit over time";
-            damage = -5f/60f;
+            damage = -3f/60f;
         }};
 
         shield = new PvStatusEffect("shield")

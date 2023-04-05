@@ -76,7 +76,7 @@ public class PvBlocks {
                     /*Conveyors*/micromassConveyor,massJunction,massRouter, microTransportGate,
                             megaTransportGate, megaLiquidTransportGate, microLiquidTransportGate,
                             megaMassConveyor,megaMassJunction,megaMassRouter,
-                            nueromassConveyor,expomassConveyor,
+                            nueromassConveyor,
 
                     /*Drills*/harvestDrill,tetraDrill,spectrumDrill,
                     /*Grinders*/harvestGrinder,behemothGrinder,oilGrinder,
@@ -193,14 +193,6 @@ public class PvBlocks {
                     itemCapacity = 10;
                     speed = 40f/(300);
                 }};
-                expomassConveyor = new MassConveyor("expomass-conveyor")
-                {{
-                    requirements(Category.distribution, with(Items.silicon,2,PvItems.platinum,1));
-                    localizedName = "Expomass Conveyor";
-                    health = 120;
-                    itemCapacity = 15;
-                    speed = 35f/(300);
-                }};
                 megaMassConveyor = new MassConveyor("megamass-conveyor")
                 {{
                     requirements(Category.distribution, with(Items.silicon, 3, PvItems.carbonFiber,1));
@@ -217,7 +209,6 @@ public class PvBlocks {
                     capacity = 20;
                     speed = 20;
                     ((MassConveyor)micromassConveyor).junction = this;
-                    ((MassConveyor)expomassConveyor).junction = this;
                 }};
                 massRouter = new DuctRouter("mass-router")
                 {{

@@ -69,6 +69,7 @@ public class UtilityProjector extends Block {
     @Override
     public void init()
     {
+        updateClipRadius(range);
         super.init();
         topRegion = Core.atlas.find(name+"-top");
     }
@@ -87,12 +88,6 @@ public class UtilityProjector extends Block {
 
         boolean shieldUp = false;
 
-        @Override
-        public void created()
-        {
-            super.created();
-            topRegion = Core.atlas.find(name+"-top");
-        }
 
         @Override
         public void updateTile()
@@ -112,7 +107,7 @@ public class UtilityProjector extends Block {
                     charge%=60;
                     if (statusEffects.get(selectedEffect) == PvStatusEffects.mend) {
                         indexer.eachBlock(this, realRange, b -> b.damaged() && !b.isHealSuppressed(), other -> {
-                            other.heal(-PvStatusEffects.mend.damage * efficiency*60);
+                            other.heal(50 * efficiency);
                             other.recentlyHealed();
                             Fx.healBlockFull.at(other.x, other.y, other.block.size, Pal.heal, other.block);
                         });
