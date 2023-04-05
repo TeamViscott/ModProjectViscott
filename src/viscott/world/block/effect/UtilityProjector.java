@@ -4,6 +4,7 @@ import arc.Core;
 import arc.graphics.Color;
 import arc.graphics.g2d.Draw;
 import arc.graphics.g2d.Lines;
+import arc.graphics.g2d.TextureRegion;
 import arc.math.Mathf;
 import arc.scene.ui.layout.Table;
 import arc.struct.Seq;
@@ -20,6 +21,7 @@ import mindustry.type.Category;
 import mindustry.type.StatusEffect;
 import mindustry.world.Block;
 import mindustry.world.blocks.ItemSelection;
+import viscott.utilitys.PvUtil;
 
 import javax.swing.text.AbstractDocument;
 
@@ -27,6 +29,7 @@ public class UtilityProjector extends Block {
     public Seq<StatusEffect> statusEffects = new Seq<StatusEffect>();
     public float range = 60;
     Seq<Ability> abilities = new Seq<Ability>();
+    TextureRegion topRegion = new TextureRegion();
     public UtilityProjector(String name)
     {
         super(name);
@@ -54,12 +57,20 @@ public class UtilityProjector extends Block {
     public void init()
     {
         super.init();
+        topRegion = Core.atlas.find(name+"-top");
     }
     public class UtilityProjectorBuild extends Building
     {
         Integer selectedEffect = -1;
         float smoothEff = 0;
         float waveEff = 0;
+
+        @Override
+        public void created()
+        {
+            super.created();
+            topRegion = Core.atlas.find(name+"-top");
+        }
 
         @Override
         public void updateTile()
@@ -88,9 +99,13 @@ public class UtilityProjector extends Block {
         @Override
         public void draw()
         {
-            Color col = selectedEffect > -1 ? statusEffects.get(selectedEffect).color : Pal.gray;
             super.draw();
+            Draw.z(Layer.blockBuilding+1);
+            Draw.alpha(smoothEff);
+            Draw.rect(topRegion,x,y);
+            Color col = selectedEffect > -1 ? statusEffects.get(selectedEffect).color : Pal.gray;
             Draw.z(Layer.buildBeam-1);
+            Draw.alpha(1);
             Lines.stroke(smoothEff,col);
             Lines.circle(x,y,range*smoothEff);
             int trail = 10;
@@ -101,6 +116,7 @@ public class UtilityProjector extends Block {
                 Lines.line(x,y,x+Mathf.cos((waveEff-i*0.2f)/2,Mathf.PI,length),y+Mathf.sin((waveEff-i*0.2f)/2,Mathf.PI,length));
             }
         }
+
 
         @Override
         public Object config()
