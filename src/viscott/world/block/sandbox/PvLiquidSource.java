@@ -4,17 +4,25 @@ import arc.Core;
 import arc.graphics.g2d.Draw;
 import arc.graphics.g2d.Fill;
 import arc.graphics.g2d.TextureRegion;
+import arc.scene.ui.layout.Table;
+import mindustry.game.Gamemode;
 import mindustry.graphics.Pal;
 import mindustry.world.blocks.liquid.LiquidBlock;
 import mindustry.world.blocks.sandbox.LiquidSource;
 import viscott.utilitys.PvUtil;
 
+import static mindustry.Vars.state;
 import static mindustry.Vars.tilesize;
 
 public class PvLiquidSource extends LiquidSource {
+    public boolean sandboxEditOnly = false;
     public PvLiquidSource(String name)
     {
         super(name);
+        configClear((PvLiquidSourceBuild b) -> {
+            if (b.canConfig())
+                b.source = null;
+        });
     }
 
     @Override
@@ -38,5 +46,13 @@ public class PvLiquidSource extends LiquidSource {
 
             Draw.rect(block.region, x, y);
         }
+
+        @Override
+        public void buildConfiguration(Table table) {
+            if (canConfig())
+                super.buildConfiguration(table);
+        }
+
+        public boolean canConfig() {return !sandboxEditOnly || (state.rules.mode() == Gamemode.sandbox || state.rules.editor);}
     }
 }

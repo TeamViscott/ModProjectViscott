@@ -21,6 +21,7 @@ public class PvStatusEffects {
             reloadMultiplier = 0.98f;
             buildSpeedMultiplier = 0.98f;
             charges = 20;
+            color = Pal.sap;
             staticStat();
         }};
         doused = new StatusEffectStack("doused") {{
@@ -34,6 +35,7 @@ public class PvStatusEffects {
             newTeam = Team.derelict;
             speedMultiplier = 0;
             reloadMultiplier = 0;
+            color = Color.valueOf("af3a30");
             staticStat();
         }};
         expent = new StatusEffectStack("expent") {
@@ -79,6 +81,7 @@ public class PvStatusEffects {
             reloadMultiplier = 0.5f;
             dragMultiplier = 0.5f;
             buildSpeedMultiplier = 0.5f;
+            color = Color.valueOf("dbc5c5");
             afterStatusEffectDuration = 60;
         }};
         tock = new AlterStatusEffect("tock"){{
@@ -88,6 +91,7 @@ public class PvStatusEffects {
             reloadMultiplier = 2f;
             dragMultiplier = 2f;
             buildSpeedMultiplier = 2f;
+            color = Color.valueOf("dbc5c5");
             ((AlterStatusEffect)tick).afterStatusEffect = this;
             afterStatusEffect = tick;
             afterStatusEffectDuration = 60;

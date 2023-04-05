@@ -198,13 +198,13 @@ public class UtilityProjector extends Block {
                 Draw.color(team.color, Color.white, Mathf.clamp(hit?1:0));
 
                 if(renderer.animateShields){
-                    Fill.poly(x, y, 15, radius);
+                    Fill.poly(x, y, 16, radius);
                 }else{
                     Lines.stroke(1.5f);
                     Draw.alpha(0.09f + Mathf.clamp(0.08f * (hit?1:0)));
-                    Fill.poly(x, y, 15, radius);
+                    Fill.poly(x, y, 16, radius);
                     Draw.alpha(1f);
-                    Lines.poly(x, y, 15, radius);
+                    Lines.poly(x, y, 16, radius);
                     Draw.reset();
                 }
             }

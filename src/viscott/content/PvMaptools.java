@@ -70,6 +70,7 @@ public class PvMaptools {
             itemsPerSecond = 30;
             health = Integer.MAX_VALUE;
             buildVisibility = BuildVisibility.sandboxOnly;
+            sandboxEditOnly = true;
 
         }};
         basicliquidsource = new PvLiquidSource("basicliquidsource")
@@ -78,7 +79,7 @@ public class PvMaptools {
             size = 1;
             localizedName = "Basic Liquid Source";
             health = 600;
-
+            sandboxEditOnly = true;
         }};
         normalliquidsource = new PvLiquidSource("normalliquidsource")
         {{
@@ -86,7 +87,7 @@ public class PvMaptools {
             size = 2;
             localizedName = "Medium Liquid Source";
             health = 1000;
-
+            sandboxEditOnly = true;
         }};
         advancedliquidsource = new PvLiquidSource("advancedliquidsource")
         {{
@@ -94,7 +95,7 @@ public class PvMaptools {
             size = 3;
             localizedName = "Advanced Liquid Source";
             health = 4000;
-
+            sandboxEditOnly = true;
         }};
         ultraliquidsource = new PvLiquidSource("ultraliquidsource")
         {{
@@ -102,7 +103,7 @@ public class PvMaptools {
             size = 5;
             localizedName = "Indestructible Liquid Source";
             health = Integer.MAX_VALUE;
-
+            sandboxEditOnly = true;
         }};
         coreIntrusion = new CoreBlock("core-intrusion")
         {{
