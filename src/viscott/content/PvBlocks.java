@@ -54,6 +54,7 @@ import viscott.world.block.power.ConstGenerator;
 import viscott.world.block.production.ItemVariableReactor;
 import viscott.world.block.production.MultiCrafter;
 import viscott.world.block.unit.BulkUnitFactory;
+import viscott.world.statusEffects.PvStatusEffect;
 
 import static mindustry.type.ItemStack.with;
 
@@ -1008,9 +1009,13 @@ public class PvBlocks {
                 {{
                     requirements(Category.effect,with());
                     size = 2;
+                    range = 28*8;
+                    consumePower(180f/60f);
                     localizedName = "Utility Projector";
                     statusEffects.addAll(
-
+                            PvStatusEffects.mend,
+                            PvStatusEffects.shield,
+                            StatusEffects.overclock
                     );
                 }};
             }

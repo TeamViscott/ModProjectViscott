@@ -1,5 +1,6 @@
 package viscott.content;
 
+import arc.graphics.Color;
 import mindustry.game.Team;
 import mindustry.graphics.Pal;
 import mindustry.type.StatusEffect;
@@ -95,6 +96,7 @@ public class PvStatusEffects {
         mend = new StatusEffect("mend")
         {{
             localizedName = "Mend";
+            color = Pal.heal;
             description = "Mends a unit over time";
             damage = -5f/60f;
         }};
@@ -102,7 +104,7 @@ public class PvStatusEffects {
         shield = new PvStatusEffect("shield")
         {{
             localizedName = "Shield";
-            color = Pal.heal;
+            color = Color.valueOf("77a9f3");
             description = "Applies a small amount of shield to the unit";
             shield = 5f/60f;
             maxShield = 60;

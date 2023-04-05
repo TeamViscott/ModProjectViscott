@@ -233,7 +233,8 @@ public class PvLogic {
                         float y = exec.build.y;
                         float shieldDiff = unit.health*0.1f - unit.shield;
                         if (Mathf.len(x-unit.x,y-unit.y) <= (exec.build.range()))
-                            unit.shield += Math.min(exec.numf(shieldGiven),shieldDiff);
+                            if (shieldDiff > 0)
+                                unit.shield += Math.min(exec.numf(shieldGiven),shieldDiff);
                         exec.setnum(result,unit.shield);
                     }
                 }else{
