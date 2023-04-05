@@ -17,7 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Stack;
 
-public class StatusEffectStack extends StatusEffect {
+public class StatusEffectStack extends PvStatusEffect {
     public int charges = 1;
     public HashMap<Unit, Integer> unitCharges = new HashMap<>();
     public HashMap<Unit, Float> unitTime = new HashMap<>();
@@ -151,6 +151,10 @@ public class StatusEffectStack extends StatusEffect {
         unit.speedMultiplier *= 1+(statsStatic.get(2)-1)*unitCharges.get(unit);
         unit.reloadMultiplier *= 1+(statsStatic.get(3)-1)*unitCharges.get(unit);
         unit.buildSpeedMultiplier *= 1+(statsStatic.get(4)-1)*unitCharges.get(unit);
+
+        float shieldDiff = maxShield - shield;
+        if (shieldDiff > 0)
+            unit.shield += Math.min(shield,shieldDiff);
 
         if(damage > 0){
             unit.damageContinuousPierce(damage*unitCharges.get(unit));

@@ -1,13 +1,16 @@
 package viscott.content;
 
 import mindustry.game.Team;
+import mindustry.graphics.Pal;
 import mindustry.type.StatusEffect;
 import viscott.world.statusEffects.AlterStatusEffect;
+import viscott.world.statusEffects.InstantStatusEffect;
+import viscott.world.statusEffects.PvStatusEffect;
 import viscott.world.statusEffects.StatusEffectStack;
 
 public class PvStatusEffects {
     public static StatusEffect
-    timeWarped,doused, disabled, expent, resiliant, ungratefull, crescendo ,tick ,tock
+    timeWarped,doused, disabled, expent, resiliant, ungratefull, crescendo ,tick ,tock,mend,shield
             ;
     public static void load() {
         timeWarped = new StatusEffectStack("time-warped") {{
@@ -88,6 +91,21 @@ public class PvStatusEffects {
             afterStatusEffect = tick;
             afterStatusEffectDuration = 60;
 
+        }};
+        mend = new StatusEffect("mend")
+        {{
+            localizedName = "Mend";
+            description = "Mends a unit over time";
+            damage = -5f/60f;
+        }};
+
+        shield = new PvStatusEffect("shield")
+        {{
+            localizedName = "Shield";
+            color = Pal.heal;
+            description = "Applies a small amount of shield to the unit";
+            shield = 5f/60f;
+            maxShield = 60;
         }};
     }
 }

@@ -231,10 +231,9 @@ public class PvLogic {
                     if (exec.obj(unit) instanceof Unit unit && unit.team == exec.team) {
                         float x = exec.build.x;
                         float y = exec.build.y;
+                        float shieldDiff = unit.health*0.1f - unit.shield;
                         if (Mathf.len(x-unit.x,y-unit.y) <= (exec.build.range()))
-                            unit.shield += exec.numf(shieldGiven);
-                        if (unit.shield > unit.health * 0.1f)
-                            unit.shield = unit.health * 0.1f;
+                            unit.shield += Math.min(exec.numf(shieldGiven),shieldDiff);
                         exec.setnum(result,unit.shield);
                     }
                 }else{

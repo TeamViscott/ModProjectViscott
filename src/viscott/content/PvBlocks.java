@@ -7,6 +7,7 @@ import arc.struct.Seq;
 import mindustry.content.Fx;
 import mindustry.content.Items;
 import mindustry.content.Liquids;
+import mindustry.content.StatusEffects;
 import mindustry.entities.bullet.MassDriverBolt;
 import mindustry.entities.effect.MultiEffect;
 import mindustry.gen.Sounds;
@@ -14,6 +15,7 @@ import mindustry.logic.LStatements;
 import mindustry.type.Category;
 import mindustry.type.ItemStack;
 import mindustry.type.LiquidStack;
+import mindustry.type.StatusEffect;
 import mindustry.world.Block;
 import mindustry.world.blocks.defense.Wall;
 import mindustry.world.blocks.distribution.DuctRouter;
@@ -44,6 +46,7 @@ import viscott.world.block.distribution.MassConveyor;
 import viscott.world.block.drill.Grinder;
 import viscott.world.block.drill.LiquidGrinder;
 import viscott.world.block.drill.PowerGrinder;
+import viscott.world.block.effect.UtilityProjector;
 import viscott.world.block.environment.DepositWall;
 import viscott.world.block.liquids.SingleConduit;
 import viscott.world.block.logic.PvLogicBlock;
@@ -95,6 +98,7 @@ public class PvBlocks {
                             denseConstructor,denseDeconstructor,denseUnloader,denseLoader,
                     /*Core's*/coreHover,coreElevate,coreUpraise,
                             bulkUnloader,
+                    /*Effects*/utilityProjector,
 
                             /*Walls*/
                             zirconWall,zirconWallLarge,
@@ -999,6 +1003,15 @@ public class PvBlocks {
                     localizedName = "Iluminati Conduit";
                     lightRange = 10;
                     liquidCapacity = 10;
+                }};
+                utilityProjector = new UtilityProjector("utility-projector")
+                {{
+                    requirements(Category.effect,with());
+                    size = 2;
+                    localizedName = "Utility Projector";
+                    statusEffects.addAll(
+
+                    );
                 }};
             }
 }

@@ -4,7 +4,7 @@ import arc.util.Time;
 import mindustry.gen.Unit;
 import mindustry.type.StatusEffect;
 
-public class AlterStatusEffect extends StatusEffect {
+public class AlterStatusEffect extends PvStatusEffect {
     public AlterStatusEffect(String name)
     {
         super(name);
@@ -20,6 +20,7 @@ public class AlterStatusEffect extends StatusEffect {
 
     @Override
     public void update(Unit unit, float time){
+        super.update(unit,time);
         if (time <= Time.delta * 2f)
         {{
             end(unit);
