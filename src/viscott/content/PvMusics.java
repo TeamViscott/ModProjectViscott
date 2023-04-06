@@ -19,8 +19,4 @@ public class PvMusics {
         };
     }
 
-    public static void init()
-    {
-        control.sound = new PvSoundControl();
-    }
 }

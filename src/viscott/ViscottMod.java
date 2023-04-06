@@ -1,8 +1,16 @@
 package viscott;
 
+import arc.Events;
+import arc.math.Mathf;
 import arc.util.Log;
+import arc.util.Time;
+import mindustry.entities.part.DrawPart;
+import mindustry.game.EventType;
 import mindustry.mod.Mod;
 import viscott.content.*;
+import viscott.sounds.PvSoundControl;
+
+import static mindustry.Vars.control;
 
 public class ViscottMod extends Mod {
 
@@ -35,8 +43,16 @@ public class ViscottMod extends Mod {
     @Override
     public void init(){
         super.init();
-        PvMusics.init();
+        //overRideOldSound();
         PvUIs.init();
+    }
+
+    public void overRideOldSound()
+    {
+        control.sound.bossMusic.clear();
+        control.sound.ambientMusic.clear();
+        control.sound.darkMusic.clear();
+        control.sound = new PvSoundControl();
     }
 
 }
