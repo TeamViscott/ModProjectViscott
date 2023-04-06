@@ -12,6 +12,7 @@ public class ViscottMod extends Mod {
     @Override
     public void loadContent(){
         Log.info("Loading PV content");
+        PvMusics.load();
         PvLogic.load();
         PvUIs.load();
         PvAttributes.load();
@@ -34,6 +35,7 @@ public class ViscottMod extends Mod {
     @Override
     public void init(){
         super.init();
+        PvMusics.init();
         PvUIs.init();
     }
 
