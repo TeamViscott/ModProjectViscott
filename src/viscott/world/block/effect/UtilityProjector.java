@@ -11,6 +11,8 @@ import arc.scene.ui.layout.Table;
 import arc.struct.DelayedRemovalSeq;
 import arc.struct.Seq;
 import arc.util.Strings;
+import arc.util.io.Reads;
+import arc.util.io.Writes;
 import mindustry.content.Fx;
 import mindustry.content.StatusEffects;
 import mindustry.ctype.Content;
@@ -220,6 +222,18 @@ public class UtilityProjector extends Block {
         @Override
         public void buildConfiguration(Table table) {
             ItemSelection.buildTable(UtilityProjector.this, table, statusEffects,() -> selectedEffect > -1 ? statusEffects.get(selectedEffect) : null, icon -> configure(statusEffects.indexOf(icon)),selectionRows,selectionColumns);
+        }
+
+        @Override
+        public void write(Writes write) {
+            super.write(write);
+            write.i(selectedEffect);
+        }
+
+        @Override
+        public void read(Reads read, byte revision) {
+            super.read(read, revision);
+            this.selectedEffect = read.i();
         }
     }
 }
