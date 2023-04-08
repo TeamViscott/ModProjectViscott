@@ -43,15 +43,12 @@ public class ViscottMod extends Mod {
     @Override
     public void init(){
         super.init();
-        //overRideOldSound();
+        overRideOldSound();
         PvUIs.init();
     }
 
     public void overRideOldSound()
     {
-        control.sound.bossMusic.clear();
-        control.sound.ambientMusic.clear();
-        control.sound.darkMusic.clear();
         control.sound = new PvSoundControl();
     }
 

@@ -998,7 +998,7 @@ public class PvBlocks {
                 }};
                 utilityProjector = new UtilityProjector("utility-projector")
                 {{
-                    requirements(Category.effect,with());
+                    requirements(Category.effect,with(PvItems.zirconium,250,PvItems.lithium,100,PvItems.nobelium,50));
                     size = 2;
                     range = 28*8;
                     consumePower(180f/60f);
