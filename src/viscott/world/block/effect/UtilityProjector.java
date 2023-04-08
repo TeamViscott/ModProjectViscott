@@ -44,7 +44,7 @@ public class UtilityProjector extends Block {
     TextureRegion topRegion = new TextureRegion();
 
     float shieldMaxHealth = 800;
-    float shieldDownTime = 60;
+    float shieldDownTime = 300;
     public UtilityProjector(String name)
     {
         super(name);
@@ -141,7 +141,7 @@ public class UtilityProjector extends Block {
                     if (shieldDT >= shieldDownTime)
                     {
                         shieldDT = 0;
-                        shieldHealth = 1;
+                        shieldHealth = 200;
                         shieldUp = true;
                     }
                 }
