@@ -91,7 +91,7 @@ public class Grinder extends PvBlock {
         if (itemCapacity != 0) {
             int fix = (size % 2) * 4 + Mathf.floor((size - 1) / 2) * 8;
             Drawf.dashRect(Pal.lighterOrange, x * 8 - offset - range * 8 - fix, y * 8 - offset - range * 8 - fix, size * 8 + range * 16, size * 8 + range * 16);
-            float width = drawPlaceText(Core.bundle.format("bar.grindspeed", Strings.fixed(getMineSpeed(x+sizeOffset, y+sizeOffset) - getHardness(x+sizeOffset, y+sizeOffset), 2)), x, y + size / 2, true);
+            float width = drawPlaceText(Core.bundle.format("bar.grindspeed", Strings.fixed(getMineSpeed(x, y) - getHardness(x, y), 2)), x, y + size / 2, true);
         }
     }
 
@@ -115,12 +115,12 @@ public class Grinder extends PvBlock {
     }
     public float getMineSpeed(int x,int y)
     {
-        List<Block> newBlockList = ScanRect.getMinableBlocks.get(checkPattern,x,y,tier);
+        List<Block> newBlockList = ScanRect.getMinableBlocks.get(checkPattern,x+sizeOffset,y+sizeOffset,tier);
         return newBlockList.size() * speedPerOre * 60 / 100;
     }
     public float getHardness(int x,int y)
     {
-        List<Block> newBlockList = ScanRect.getMinableBlocks.get(checkPattern,x,y,tier);
+        List<Block> newBlockList = ScanRect.getMinableBlocks.get(checkPattern,x+sizeOffset,y+sizeOffset,tier);
         float totalHardness = 0;
         for (Block b : newBlockList)
             if(b instanceof DepositWall d)
@@ -143,16 +143,13 @@ public class Grinder extends PvBlock {
 
     public class GrinderBuild extends Building
     {
-        public List<Block> mineable = new Stack<>();
         float maxMineSpeed;
 
         @Override
         public void created()
         {
             super.created();
-            mineable.clear();
-            mineable.addAll(ScanRect.getMinableBlocks.get(checkPattern,Math.round(x/8),Math.round(y/8),tier));
-            maxMineSpeed = mineable.size() * speedPerOre * 60 / 100;
+            maxMineSpeed = getMineSpeed((int)x/8+sizeOffset,(int)y/8+sizeOffset) * 60 / 100;
             hardness = getHardness((int)x/8,(int)y/8);
         }
         float hardness = 0;
@@ -176,7 +173,9 @@ public class Grinder extends PvBlock {
             if (efficiency > 0) {
                 progress = Mathf.approachDelta(progress, 1, ((maxMineSpeed - hardness) / 60)*efficiency);
                 if (progress == 1) {
-                    mineable.forEach(a -> craft(a));
+                    List<Block> blockList = ScanRect.getMinableBlocks.get(checkPattern,(int)x/8+sizeOffset,(int)x/8+sizeOffset,tier);
+                    for(Block b : blockList)
+                        craft(b);
                     if (updateEffect != null)
                         updateEffect.at(x, y, 0);
                     progress = 0;
@@ -193,10 +192,8 @@ public class Grinder extends PvBlock {
         @Override
         public void read(Reads read, byte revision) {
             super.read(read, revision);
-            mineable.clear();
-            mineable.addAll(ScanRect.getMinableBlocks.get(checkPattern,(int)x/8+sizeOffset,(int)y/8+sizeOffset,tier));
-            maxMineSpeed = mineable.size() * speedPerOre * 60 / 100;
-            hardness = getHardness((int)x/8+sizeOffset,(int)y/8+sizeOffset);
+            maxMineSpeed = getMineSpeed((int)x/8+sizeOffset,(int)y/8+sizeOffset) * 60 / 100;
+            hardness = getHardness((int)x/8,(int)y/8);
         }
     }
 }

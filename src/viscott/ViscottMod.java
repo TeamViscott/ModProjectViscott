@@ -49,6 +49,7 @@ public class ViscottMod extends Mod {
 
     public void overRideOldSound()
     {
+        PvSoundControl.ogSoundControl = control.sound;
         control.sound = new PvSoundControl();
     }
 

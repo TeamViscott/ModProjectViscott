@@ -112,7 +112,7 @@ public class BulkUnitFactory extends UnitFactory {
                 consume();
                 payload = new UnitPayload(unit);
                 payloadAmount--;
-                if (Vars.net.client()) return;
+                //if (Vars.net.client()) return;
                 Events.fire(new EventType.UnitCreateEvent(payload.unit, this));
             }
             moveOutPayload();
@@ -137,7 +137,7 @@ public class BulkUnitFactory extends UnitFactory {
                     payVector.setZero();
                     consume();
                     payloadAmount += amount-1;
-                    if (Vars.net.client()) return;
+                    //if (Vars.net.client()) return;
                     Events.fire(new EventType.UnitCreateEvent(payload.unit, this));
                 }
 

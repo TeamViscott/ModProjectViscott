@@ -83,7 +83,7 @@ public class PowerGrinder extends Grinder{
 
         @Override
         public float warmup(){
-            return mineable.size();
+            return ScanRect.getMinableBlocks.get(checkPattern,(int)x/8+sizeOffset,(int)x/8+sizeOffset,tier).size();
         }
 
         @Override

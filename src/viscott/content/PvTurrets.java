@@ -744,12 +744,11 @@ public class PvTurrets{
             inaccuracy = 2;
             recoil = 4;
             heatColor  = Color.valueOf( "d237a6");
-
+            shoot = new CyclicShootPattern(4,5,0);
             requirements(Category.turret,with(PvItems.zirconium,120,PvItems.nobelium,50,PvItems.lithium,200,PvItems.barium,50)); //Todo 2
             ammo(
                     silicon, new BasicBulletType(10, 40){{
                         trailColor = frontColor = backColor = Color.valueOf( "d237a6");
-                        shoot = new CyclicShootPattern(4,5,0);
                         trailLength = 8;
                         trailWidth = 2;
                         pierce = true;
@@ -775,6 +774,20 @@ public class PvTurrets{
                                     moveRot = 0f;
                                     x = 0;
                                     y = 0;
+                                }},
+                                new RegionPart("-l"){{
+                                    progress = PartProgress.warmup;
+                                    heatProgress = PartProgress.warmup;
+                                    heatColor = Color.valueOf("ff6214");
+                                    mirror = false;
+                                    under = false;
+                                }},
+                                new RegionPart("-r"){{
+                                    progress = PartProgress.warmup;
+                                    heatProgress = PartProgress.warmup;
+                                    heatColor = Color.valueOf("ff6214");
+                                    mirror = false;
+                                    under = false;
                                 }}
                         )
                 );
@@ -1000,11 +1013,11 @@ public class PvTurrets{
             range = 480;
             recoil = 12f;
             requirements(Category.turret,with(PvItems.zirconium, 100,PvItems.lithium,150,PvItems.nobelium,150,silicon,50)); //Todo 2
+            shoot = new CyclicShootPattern(5,9,45);
             ammo(
                     silicon,new BasicBulletType(6,40)
                     {{
                         trailColor = frontColor = backColor = Pal.surge;
-                        shoot = new CyclicShootPattern(5,9,45);
                         trailLength = 8;
                         trailWidth = 2;
                         shoot.shotDelay = 0;
@@ -1103,7 +1116,7 @@ public class PvTurrets{
         {{
             requirements(Category.turret,with(PvItems.zirconium, 120,PvItems.lithium,100,PvItems.platinum,50,silicon,200)); //Todo 2
             localizedName = "Nuero";
-            shoot = new AlternateShootPatternTurret(20);
+            shoot = new AlternateShootPatternTurret(20,2);
             reload = 4*60;
             inaccuracy = 2;
             recoilTime = 10;
@@ -1200,7 +1213,7 @@ public class PvTurrets{
                         Seq.with(
                                 //Arms and Barrels
                                 new RegionPart("-l"){{
-                                    progress = PartProgress.recoil.mul(((AlternateShootPatternTurret)shoot).selectedBarrel1);
+                                    progress = PartProgress.recoil.mul(((AlternateShootPatternTurret)shoot).barrelPos.Run(0));
                                     heatProgress = PartProgress.recoil;
                                     heatColor = Color.valueOf("ff6214");
                                     mirror = false;
@@ -1208,7 +1221,7 @@ public class PvTurrets{
                                     moveY = -4f;
                                 }},
                                 new RegionPart("-r"){{
-                                    progress = PartProgress.recoil.mul(((AlternateShootPatternTurret)shoot).selectedBarrel2);
+                                    progress = PartProgress.recoil.mul(((AlternateShootPatternTurret)shoot).barrelPos.Run(1));
                                     heatProgress = PartProgress.recoil;
                                     heatColor = Color.valueOf("ff6214");
                                     mirror = false;
@@ -1683,7 +1696,7 @@ public class PvTurrets{
         {{
             requirements(Category.turret,with(PvItems.platinum, 200,PvItems.erbium,600,PvItems.carbonFiber,50,PvItems.nobelium,500,silicon,500)); //Todo 2
             localizedName = "Shuttle";
-            shoot = new AlternateShootPatternTurret(8);
+            shoot = new AlternateShootPatternTurret(8,2);
             reload = 60f/4.6f;
             inaccuracy = 2;
             size = 6;
@@ -1738,7 +1751,7 @@ public class PvTurrets{
                         Seq.with(
                                 //Arms and Barrels
                                 new RegionPart("-l1"){{
-                                    progress = PartProgress.recoil.mul(((AlternateShootPatternTurret)shoot).selectedBarrel1);
+                                    progress = PartProgress.recoil.mul(((AlternateShootPatternTurret)shoot).barrelPos.Run(0));
                                     heatProgress = PartProgress.recoil;
                                     heatColor = Color.valueOf("ff6214");
                                     mirror = false;
@@ -1746,7 +1759,7 @@ public class PvTurrets{
                                     moveY = -6f;
                                 }},
                                 new RegionPart("-r1"){{
-                                    progress = PartProgress.recoil.mul(((AlternateShootPatternTurret)shoot).selectedBarrel2);
+                                    progress = PartProgress.recoil.mul(((AlternateShootPatternTurret)shoot).barrelPos.Run(1));
                                     heatProgress = PartProgress.recoil;
                                     heatColor = Color.valueOf("ff6214");
                                     mirror = false;
@@ -1852,7 +1865,7 @@ public class PvTurrets{
         {{
             requirements(Category.turret,BuildVisibility.sandboxOnly,with(PvItems.platinum, 1000,PvItems.erbium,1000,PvItems.carbonFiber,1000,PvItems.nobelium,1000,silicon,1000)); //Todo 2
             localizedName = "X-terminium";
-            shoot = new AlternateShootPatternTurret(20);
+            shoot = new AlternateShootPatternTurret(20,2);
             reload = 200;
             inaccuracy = 2;
             recoilTime = 30;
@@ -1902,7 +1915,7 @@ public class PvTurrets{
                         Seq.with(
                                 //Arms and Barrels
                                 new RegionPart("-l"){{
-                                    progress = PartProgress.recoil.mul(((AlternateShootPatternTurret)shoot).selectedBarrel1);
+                                    progress = PartProgress.recoil.mul(((AlternateShootPatternTurret)shoot).barrelPos.Run(0));
                                     heatProgress = PartProgress.recoil;
                                     heatColor = Color.valueOf("ff6214");
                                     mirror = false;
@@ -1910,7 +1923,7 @@ public class PvTurrets{
                                     moveY = -4f;
                                 }},
                                 new RegionPart("-r"){{
-                                    progress = PartProgress.recoil.mul(((AlternateShootPatternTurret)shoot).selectedBarrel2);
+                                    progress = PartProgress.recoil.mul(((AlternateShootPatternTurret)shoot).barrelPos.Run(1));
                                     heatProgress = PartProgress.recoil;
                                     heatColor = Color.valueOf("ff6214");
                                     mirror = false;
