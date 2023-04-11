@@ -149,7 +149,7 @@ public class Grinder extends PvBlock {
         public void created()
         {
             super.created();
-            maxMineSpeed = getMineSpeed((int)x/8+sizeOffset,(int)y/8+sizeOffset) * 60 / 100;
+            maxMineSpeed = getMineSpeed((int)x/8,(int)y/8);
             hardness = getHardness((int)x/8,(int)y/8);
         }
         float hardness = 0;
@@ -170,6 +170,11 @@ public class Grinder extends PvBlock {
         @Override
         public void updateTile()
         {
+            if (hardness == -1)
+            {
+                maxMineSpeed = getMineSpeed((int)x/8,(int)y/8);
+                hardness = getHardness((int)x/8,(int)y/8);
+            }
             if (efficiency > 0) {
                 progress = Mathf.approachDelta(progress, 1, ((maxMineSpeed - hardness) / 60)*efficiency);
                 if (progress == 1) {
@@ -192,8 +197,8 @@ public class Grinder extends PvBlock {
         @Override
         public void read(Reads read, byte revision) {
             super.read(read, revision);
-            maxMineSpeed = getMineSpeed((int)x/8+sizeOffset,(int)y/8+sizeOffset) * 60 / 100;
-            hardness = getHardness((int)x/8,(int)y/8);
+            maxMineSpeed = -1;
+            hardness = -1 ;
         }
     }
 }
