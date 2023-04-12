@@ -19,6 +19,8 @@ import mindustry.type.StatusEffect;
 import viscott.content.PvMusics;
 import viscott.content.PvPlanets;
 
+import java.util.List;
+
 import static mindustry.Vars.state;
 
 public class PvSoundControl extends SoundControl {
@@ -27,13 +29,19 @@ public class PvSoundControl extends SoundControl {
     {
         super();
         ObjectMap<Object, Seq<Cons<?>>> events = Reflect.get(Events.class,"events");
-        var a = events.get(EventType.WaveEvent.class).pop();
-        var b = events.get(EventType.WaveEvent.class).pop();
-        var c = events.get(EventType.WaveEvent.class).pop();
-        events.get(EventType.WaveEvent.class).pop();
-        events.get(EventType.WaveEvent.class).add(a);
-        events.get(EventType.WaveEvent.class).add(b);
-        events.get(EventType.WaveEvent.class).add(c);
+        if (events.get(EventType.WaveEvent.class).size == 5) {
+            popAt(3,events.get(EventType.WaveEvent.class));
+        }
+    }
+
+    void popAt(int index,Seq<Cons<?>> seq)
+    {
+        Seq<Cons<?>> seq2 = new Seq<>();
+        for(int i = 0;i < index;i++)
+            seq2.add(seq.pop());
+        seq.pop();
+        for(int i = 0;i < index;i++)
+            seq.add(seq2.pop());
     }
     @Override
     public void playRandom(){

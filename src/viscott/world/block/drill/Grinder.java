@@ -106,7 +106,7 @@ public class Grinder extends PvBlock {
             positions.forEach(pos -> {
                 int aX = x - pos.x,
                         aY = y - pos.y;
-                if (aX >= 0 && aX < world.height() && aY >= 0 && aY < world.width() )
+                if (aX >= 0 && aX < world.width() && aY >= 0 && aY < world.height() )
                     if (world.tile(aX,aY).block() instanceof DepositWall d && d.tier <= tier)
                         newBlockList.add(d);
             });

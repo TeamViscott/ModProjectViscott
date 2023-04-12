@@ -22,6 +22,7 @@ public class ViscottMod extends Mod {
         Log.info("Loading PV content");
         PvMusics.load();
         PvLogic.load();
+        PvTeams.load();
         PvUIs.load();
         PvAttributes.load();
         PvStats.load();

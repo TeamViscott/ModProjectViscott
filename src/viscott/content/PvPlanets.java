@@ -3,16 +3,19 @@ package viscott.content;
 import arc.graphics.Color;
 import mindustry.content.Items;
 import mindustry.content.Planets;
+import mindustry.content.Weathers;
+import mindustry.game.Team;
 import mindustry.graphics.Pal;
 import mindustry.graphics.g3d.HexMesh;
 import mindustry.maps.planet.AsteroidGenerator;
 import mindustry.maps.planet.SerpuloPlanetGenerator;
 import mindustry.type.Planet;
+import mindustry.type.Weather;
 import viscott.gen.VercilusPlanetGenerator;
 
 import static mindustry.Vars.content;
 
-public class PvPlanets {
+public class PvPlanets{
     public static Planet
         vercilus
             ;
@@ -40,6 +43,15 @@ public class PvPlanets {
             hiddenItems.addAll(content.items()).removeAll(PvItems.vercilusItems);
             iconColor = atmosphereColor = Pal.heal;
             alwaysUnlocked = true;
+            ruleSetter = r -> {
+                r.waveTeam = PvTeams.Mortikai;
+                r.defaultTeam = PvTeams.Xeal;
+                r.placeRangeCheck = false;
+                r.showSpawns = true;
+                r.lighting = true;
+                r.weather.add(new Weather.WeatherEntry(Weathers.rain,10,60,10,60));
+                r.coreDestroyClear = true;
+            };
         }};
     }
 }
