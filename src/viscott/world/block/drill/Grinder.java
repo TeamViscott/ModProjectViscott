@@ -18,6 +18,7 @@ import mindustry.graphics.Pal;
 import mindustry.type.Item;
 import mindustry.ui.Bar;
 import mindustry.world.Block;
+import mindustry.world.Build;
 import mindustry.world.Tile;
 import mindustry.world.meta.StatValue;
 import mindustry.world.meta.StatValues;
@@ -97,12 +98,12 @@ public class Grinder extends PvBlock {
 
     public interface RectCons
     {
-        List<Block> get(Seq<Pos> positions,Integer x,Integer y,Float tier);
+        Seq<Block> get(Seq<Pos> positions,Integer x,Integer y,Float tier);
     }
     public interface ScanRect
     {
         RectCons getMinableBlocks = (positions,x,y,tier) -> {
-            List<Block> newBlockList = new Stack<>();
+            Seq<Block> newBlockList = new Seq<>();
             positions.forEach(pos -> {
                 int aX = x - pos.x,
                         aY = y - pos.y;
@@ -115,17 +116,21 @@ public class Grinder extends PvBlock {
     }
     public float getMineSpeed(int x,int y)
     {
-        List<Block> newBlockList = ScanRect.getMinableBlocks.get(checkPattern,x+sizeOffset,y+sizeOffset,tier);
-        return newBlockList.size() * speedPerOre * 60 / 100;
+        Seq<Block> newBlockList = ScanRect.getMinableBlocks.get(checkPattern,x+sizeOffset,y+sizeOffset,tier);
+        return newBlockList.size * speedPerOre * 60 / 100;
     }
     public float getHardness(int x,int y)
     {
-        List<Block> newBlockList = ScanRect.getMinableBlocks.get(checkPattern,x+sizeOffset,y+sizeOffset,tier);
+        Seq<Block> newBlockList = ScanRect.getMinableBlocks.get(checkPattern,x+sizeOffset,y+sizeOffset,tier);
         float totalHardness = 0;
         for (Block b : newBlockList)
             if(b instanceof DepositWall d)
                 totalHardness += d.hardness;
         return totalHardness;
+    }
+    public Seq<Block> getBlocks(int x,int y)
+    {
+        return ScanRect.getMinableBlocks.get(checkPattern,x+sizeOffset,y+sizeOffset,tier);
     }
     @Override
     public void setStats()
@@ -178,18 +183,19 @@ public class Grinder extends PvBlock {
             if (efficiency > 0) {
                 progress = Mathf.approachDelta(progress, 1, ((maxMineSpeed - hardness) / 60)*efficiency);
                 if (progress == 1) {
-                    List<Block> blockList = ScanRect.getMinableBlocks.get(checkPattern,(int)x/8+sizeOffset,(int)x/8+sizeOffset,tier);
-                    for(Block b : blockList)
-                        craft(b);
+                    Log.warn("Something wrong",0);
+                    Seq<Block> blockList = getBlocks((int)x/8,(int)y/8);
+                    blockList.forEach(b -> craft(b));
                     if (updateEffect != null)
                         updateEffect.at(x, y, 0);
-                    progress = 0;
+                    progress %= 1;
                 }
             }
             dump();
         }
         public void craft(Block d)
         {
+            Log.warn("crafted : " + d,0);
             if (items.get(d.itemDrop) < itemCapacity)
                 items.add(d.itemDrop, 1);
         }
