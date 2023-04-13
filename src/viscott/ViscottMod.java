@@ -4,11 +4,13 @@ import arc.Events;
 import arc.math.Mathf;
 import arc.util.Log;
 import arc.util.Time;
+import mindustry.content.TechTree;
 import mindustry.entities.part.DrawPart;
 import mindustry.game.EventType;
 import mindustry.mod.Mod;
 import viscott.content.*;
 import viscott.sounds.PvSoundControl;
+import viscott.types.PvTeam;
 
 import static mindustry.Vars.control;
 
@@ -46,6 +48,11 @@ public class ViscottMod extends Mod {
         super.init();
         overRideOldSound();
         PvUIs.init();
+
+        PvTeam.all.forEach(team -> {
+            if (team.techTree != null && TechTree.roots.contains(team.techTree))
+                TechTree.roots.remove(team.techTree);
+        });
     }
 
     public void overRideOldSound()

@@ -68,7 +68,6 @@ public class PvBlocks {
             erbiumOre,lithiumOre,zirconiumOre,platinumOre,
 
             /*Deposit's*/
-            erbiumDepositLarge,lithiumDepositLarge,platinumDepositLarge,zirconiumDepositLarge,
                     erbiumDeposit,lithiumDeposit,platinumDeposit,zirconiumDeposit,
 
                     /*Buildings*/

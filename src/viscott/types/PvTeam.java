@@ -8,13 +8,19 @@ import mindustry.content.TechTree;
 import mindustry.game.EventType;
 import mindustry.game.Team;
 import viscott.content.PvPlanets;
+import viscott.world.teamResearch;
 
 public class PvTeam extends Team {
 
     public TechTree.TechNode techTree = null;
-    protected TechTree.TechNode btt = null;
+    public String description = "";
+    public String info = "";
+    public static Seq<PvTeam> all = new Seq<>();
+    public teamResearch icon;
     public PvTeam(int id, String name, Color color)
     {
         super(id,name,color);
+        icon = new teamResearch(name,this);
+        all.add(this);
     }
 }

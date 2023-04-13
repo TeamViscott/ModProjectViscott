@@ -1,9 +1,13 @@
 package viscott.content;
 
+import arc.graphics.Color;
+import arc.graphics.g2d.Draw;
 import arc.graphics.g2d.Fill;
 import arc.math.Mathf;
+import mindustry.content.UnitTypes;
 import mindustry.entities.Effect;
 import mindustry.graphics.Drawf;
+import mindustry.graphics.Layer;
 import mindustry.graphics.Pal;
 
 import static arc.graphics.g2d.Draw.rect;
@@ -12,7 +16,8 @@ import static arc.graphics.g2d.Lines.*;
 
 public class PvEffects {
     public static Effect
-        slowEnergeticEffect, particleDeath1,particleDeath2,particleDeath3,railFrag,waveBulletFalerica,waveBulletJavelin
+        slowEnergeticEffect, particleDeath1,particleDeath2,particleDeath3,
+            railFrag,waveBulletFalerica,waveBulletJavelin,nullisDeath
             ;
     public static void load()
     {
@@ -94,5 +99,18 @@ public class PvEffects {
             line(x2, y2, xn2, yn2);
             // Lifetime = max lifetime || time = time alive
         });
+        nullisDeath = new Effect(60f,e -> {
+            float waves = 1;
+            float size = e.data;
+            float wave = Math.abs(Mathf.sin(e.fin()*waves*Mathf.pi));
+            Draw.z(Layer.effect);
+            Draw.color(Color.cyan);
+            Fill.circle(e.x,e.y,wave*size+1);
+            Draw.z(Layer.effect+5);
+            Draw.color(Color.black);
+            Fill.circle(e.x,e.y,wave*size);
+            Draw.reset();
+        });
+        UnitTypes.gamma.deathExplosionEffect = nullisDeath;
     }
 }

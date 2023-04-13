@@ -183,7 +183,6 @@ public class Grinder extends PvBlock {
             if (efficiency > 0) {
                 progress = Mathf.approachDelta(progress, 1, ((maxMineSpeed - hardness) / 60)*efficiency);
                 if (progress == 1) {
-                    Log.warn("Something wrong",0);
                     Seq<Block> blockList = getBlocks((int)x/8,(int)y/8);
                     blockList.forEach(b -> craft(b));
                     if (updateEffect != null)
@@ -195,7 +194,6 @@ public class Grinder extends PvBlock {
         }
         public void craft(Block d)
         {
-            Log.warn("crafted : " + d,0);
             if (items.get(d.itemDrop) < itemCapacity)
                 items.add(d.itemDrop, 1);
         }
