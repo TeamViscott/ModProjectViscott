@@ -4,8 +4,10 @@ import arc.graphics.Color;
 import arc.graphics.g2d.Draw;
 import arc.graphics.g2d.Fill;
 import arc.math.Mathf;
+import arc.struct.Seq;
 import mindustry.content.UnitTypes;
 import mindustry.entities.Effect;
+import mindustry.entities.Units;
 import mindustry.graphics.Drawf;
 import mindustry.graphics.Layer;
 import mindustry.graphics.Pal;
@@ -17,8 +19,9 @@ import static arc.graphics.g2d.Lines.*;
 public class PvEffects {
     public static Effect
         slowEnergeticEffect, particleDeath1,particleDeath2,particleDeath3,
-            railFrag,waveBulletFalerica,waveBulletJavelin,nullisDeath
+            railFrag,waveBulletFalerica,waveBulletJavelin
             ;
+    public static Seq<Effect> nullisDeath = new Seq<>();
     public static void load()
     {
         slowEnergeticEffect = new Effect(32,e -> {
@@ -99,18 +102,24 @@ public class PvEffects {
             line(x2, y2, xn2, yn2);
             // Lifetime = max lifetime || time = time alive
         });
-        nullisDeath = new Effect(60f,e -> {
+        for(int i = 1;i<=5;i++)
+            nullisDeath.add(newNullisDeath(i));
+        UnitTypes.gamma.deathExplosionEffect = nullisDeath.get(0);
+    }
+
+    public static Effect newNullisDeath(int blockSize)
+    {
+        return new Effect(60f,e -> {
             float waves = 1;
-            float size = e.data;
+            float size = blockSize*4;
             float wave = Math.abs(Mathf.sin(e.fin()*waves*Mathf.pi));
             Draw.z(Layer.effect);
-            Draw.color(Color.cyan);
+            Draw.color(Color.white);
             Fill.circle(e.x,e.y,wave*size+1);
             Draw.z(Layer.effect+5);
             Draw.color(Color.black);
             Fill.circle(e.x,e.y,wave*size);
             Draw.reset();
         });
-        UnitTypes.gamma.deathExplosionEffect = nullisDeath;
     }
 }
