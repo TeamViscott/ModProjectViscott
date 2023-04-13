@@ -52,6 +52,7 @@ public class PvPlanets{
                 r.weather.add(new Weather.WeatherEntry(Weathers.rain,10,60,10,60));
                 r.coreDestroyClear = true;
             };
+            clearSectorOnLose = true;
         }};
     }
 }

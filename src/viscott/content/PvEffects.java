@@ -104,7 +104,6 @@ public class PvEffects {
         });
         for(int i = 1;i<=5;i++)
             nullisDeath.add(newNullisDeath(i));
-        UnitTypes.gamma.deathExplosionEffect = nullisDeath.get(0);
     }
 
     public static Effect newNullisDeath(int blockSize)

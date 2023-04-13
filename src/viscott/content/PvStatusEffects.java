@@ -5,13 +5,12 @@ import mindustry.game.Team;
 import mindustry.graphics.Pal;
 import mindustry.type.StatusEffect;
 import viscott.world.statusEffects.AlterStatusEffect;
-import viscott.world.statusEffects.InstantStatusEffect;
 import viscott.world.statusEffects.PvStatusEffect;
 import viscott.world.statusEffects.StatusEffectStack;
 
 public class PvStatusEffects {
     public static StatusEffect
-    timeWarped,doused, disabled, expent, resiliant, ungratefull, crescendo ,tick ,tock,mend,shield
+    timeWarped,doused, disabled, expent, resiliant, ungratefull, crescendo ,tick ,tock,mend,shield, malfunction
             ;
     public static void load() {
         timeWarped = new StatusEffectStack("time-warped") {{
@@ -112,6 +111,13 @@ public class PvStatusEffects {
             description = "Applies a small amount of shield to the unit";
             shield = 5f/60f;
             maxShield = 60;
+        }};
+        malfunction = new PvStatusEffect("malfunction")
+        {{
+            localizedName = "Malfunction";
+            description = "Any healing / damage recieved will be applied at the end of this status effect\nlose 1 hp per second that its active.";
+            damage = 1f/60f;
+            numbness = true;
         }};
     }
 }

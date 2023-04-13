@@ -24,6 +24,7 @@ public class AlterStatusEffect extends PvStatusEffect {
         if (time <= Time.delta * 2f)
         {{
             end(unit);
+            unit.unapply(this);
         }}
     }
 }

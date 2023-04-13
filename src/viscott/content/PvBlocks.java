@@ -1,13 +1,9 @@
 package viscott.content;
 
-import arc.Core;
 import arc.func.Prov;
 import arc.graphics.Color;
 import arc.struct.Seq;
-import mindustry.content.Fx;
-import mindustry.content.Items;
-import mindustry.content.Liquids;
-import mindustry.content.StatusEffects;
+import mindustry.content.*;
 import mindustry.entities.bullet.MassDriverBolt;
 import mindustry.entities.effect.MultiEffect;
 import mindustry.gen.Sounds;
@@ -15,7 +11,6 @@ import mindustry.logic.LStatements;
 import mindustry.type.Category;
 import mindustry.type.ItemStack;
 import mindustry.type.LiquidStack;
-import mindustry.type.StatusEffect;
 import mindustry.world.Block;
 import mindustry.world.blocks.defense.Wall;
 import mindustry.world.blocks.distribution.DuctRouter;
@@ -40,21 +35,17 @@ import mindustry.world.blocks.storage.CoreBlock;
 import mindustry.world.blocks.storage.Unloader;
 import mindustry.world.draw.*;
 import mindustry.world.meta.BuildVisibility;
-import viscott.utilitys.PvUtil;
 import viscott.world.block.defense.PvWall;
 import viscott.world.block.distribution.MassConveyor;
-import viscott.world.block.drill.Grinder;
-import viscott.world.block.drill.LiquidGrinder;
-import viscott.world.block.drill.PowerGrinder;
+import viscott.world.block.drill.*;
+import viscott.world.block.effect.NullisCore;
 import viscott.world.block.effect.UtilityProjector;
 import viscott.world.block.environment.DepositWall;
-import viscott.world.block.liquids.SingleConduit;
 import viscott.world.block.logic.PvLogicBlock;
 import viscott.world.block.power.ConstGenerator;
 import viscott.world.block.production.ItemVariableReactor;
 import viscott.world.block.production.MultiCrafter;
 import viscott.world.block.unit.BulkUnitFactory;
-import viscott.world.statusEffects.PvStatusEffect;
 
 import static mindustry.type.ItemStack.with;
 
@@ -97,7 +88,7 @@ public class PvBlocks {
                     /*Payload*/densePayloadConveyor,densePayloadRouter,
                             denseConstructor,denseDeconstructor,denseUnloader,denseLoader,
                     /*Core's*/coreHover,coreElevate,coreUpraise,
-                            bulkUnloader,
+                            bulkUnloader,nullisCore,
                     /*Effects*/utilityProjector,
 
                             /*Walls*/
@@ -110,7 +101,7 @@ public class PvBlocks {
                             /*Replacements*/microProcessorReplacement,logicProcessorReplacement,hyperProcessorReplacement,
                             piscoProcessor,
                             /*Testing*/
-                                    sus,testConduit
+                                    sus
                             ;
             public static void load()
             {
@@ -817,6 +808,18 @@ public class PvBlocks {
                     unitCapModifier = 84;
                     itemCapacity = 16000;
                 }};
+                nullisCore = new NullisCore("core-null")
+                {{
+                    requirements(Category.effect,with());
+                    localizedName = "Core Null";
+                    unitType = UnitTypes.gamma;
+                    size = 3;
+                    health = 2100;
+                    unitCapModifier = 60;
+                    itemCapacity = 10;
+                    voidRadius = 16;
+                    voidDamage = 10f/60f;
+                }};
                 oilGrinder = new LiquidGrinder("oil-grinder")
                 {{
                     requirements(Category.production, with(PvItems.zirconium,35,PvItems.lithium,5,Items.silicon,25)); //Todo
@@ -987,13 +990,6 @@ public class PvBlocks {
                     armor = 10;
                     pierceReduction = 99;
                     absorbLasers = true;
-                }};
-                testConduit = new SingleConduit("iluminati-conduit")
-                {{
-                    requirements(Category.liquid, with(PvItems.nobelium,1));
-                    localizedName = "Iluminati Conduit";
-                    lightRange = 10;
-                    liquidCapacity = 10;
                 }};
                 utilityProjector = new UtilityProjector("utility-projector")
                 {{
