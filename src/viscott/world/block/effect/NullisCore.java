@@ -45,6 +45,7 @@ import mindustry.world.meta.Env;
 import mindustry.world.meta.Stat;
 import mindustry.world.modules.ItemModule;
 import viscott.content.PvEffects;
+import viscott.content.PvStatusEffects;
 
 import static mindustry.Vars.*;
 import static mindustry.Vars.state;
@@ -55,6 +56,13 @@ public class NullisCore extends CoreBlock {
     public NullisCore(String name)
     {
         super(name);
+    }
+
+    @Override
+    public void init()
+    {
+        updateClipRadius(voidRadius*8);
+        super.init();
     }
     public class NullisCoreBlock extends CoreBuild {
         public float pulsing = 0;
@@ -71,6 +79,7 @@ public class NullisCore extends CoreBlock {
                                 transferItems(unit);
                             if (Mathf.len(x-unit.x,y-unit.y) <= 8*voidRadius) {
                                 unit.buildSpeedMultiplier*= 10;
+                                unit.apply(PvStatusEffects.voidShield,30);
                             }
                         } else {
                             if (Mathf.len(x-unit.x,y-unit.y) <= 8*voidRadius) {
@@ -104,6 +113,22 @@ public class NullisCore extends CoreBlock {
             Draw.z(Layer.effect);
             Lines.stroke(1+wave,Color.white);
             Lines.circle(x,y,8*voidRadius);
+            int spikes = 20;
+            float voidRad = voidRadius*8;
+            float prog = Mathf.sin(pulsing*2*Mathf.pi);
+            for(int i = 0;i < spikes ;i++)
+            {
+                float acW = (prog + (float)i/(float)spikes) % 1;
+                float radian = acW*Mathf.pi*2;
+                float sx = x + Mathf.cos(radian)*voidRad;
+                float sy = y + Mathf.sin(radian)*voidRad;
+                acW = (prog + (float)(i+1)/(float)spikes) % 1;
+                radian = acW*Mathf.pi*2;
+                float sx2 = x + Mathf.cos(radian)*(voidRad+4);
+                float sy2 = y + Mathf.sin(radian)*(voidRad+4);
+                Lines.stroke(wave,Color.white);
+                Lines.line(sx,sy,sx2,sy2);
+            }
         }
         @Override
         public void requestSpawn(Player player)

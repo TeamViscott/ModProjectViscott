@@ -55,16 +55,16 @@ public class PvStatusEffect extends StatusEffect {
             start(unit);
             effectOn.add(unit);
         }
-        float shieldDiff = maxShield - shield;
         if (numbness) {
+            healthMultiplier*=20;
             if(damageNumbness.containsKey(unit)) {
                 float staticHealth = damageNumbness.get(unit).health;
-                float healthDiff = staticHealth - unit.health;
-                Log.info(healthDiff+"",0);
+                float healthDiff = (staticHealth - unit.health)*20;
                 unit.health = staticHealth;
                 damageNumbness.get(unit).dmg+=healthDiff;
             }
         }
+        float shieldDiff = maxShield - unit.shield;
         if (shieldDiff > 0)
             unit.shield += Math.min(shield,shieldDiff);
         super.update(unit,time);

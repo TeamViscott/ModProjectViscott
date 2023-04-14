@@ -2,6 +2,7 @@ package viscott.content;
 
 import arc.func.Prov;
 import arc.graphics.Color;
+import arc.math.Interp;
 import arc.struct.Seq;
 import mindustry.content.*;
 import mindustry.entities.bullet.MassDriverBolt;
@@ -37,6 +38,7 @@ import mindustry.world.draw.*;
 import mindustry.world.meta.BuildVisibility;
 import viscott.world.block.defense.PvWall;
 import viscott.world.block.distribution.MassConveyor;
+import viscott.world.block.distribution.UnitPackerBlock;
 import viscott.world.block.drill.*;
 import viscott.world.block.effect.NullisCore;
 import viscott.world.block.effect.UtilityProjector;
@@ -74,6 +76,7 @@ public class PvBlocks {
                     /*Power*/opticalNode,auditoryNode,compressedBattery,
                     /*Power Production*/smallCarbonPanel,largeCarbonPanel,lithiumDegenerator,
                                         keroseneGenerator,radiator,blastReactor,subzeroReactor,feverReactor,
+                            /*Nullis*/harvestor,
                     /*Production*/siliconMassForge,particalAccelerator, keroseneMixer, carbonWeaver,
                             fractionIonizer,nitrogenDistiller,
 
@@ -84,6 +87,9 @@ public class PvBlocks {
                             micropulsePump,effluxPump,
                     /*Pressure related*/ pressureSource,
                     /*Unit Creation*/nueroSpawnPad,eliteSpawnPad,
+
+                    /*Nullis*/
+                        packer,
 
                     /*Payload*/densePayloadConveyor,densePayloadRouter,
                             denseConstructor,denseDeconstructor,denseUnloader,denseLoader,
@@ -819,6 +825,23 @@ public class PvBlocks {
                     itemCapacity = 10;
                     voidRadius = 16;
                     voidDamage = 10f/60f;
+                }};
+                harvestor = new PowerGrinder("harvestor")
+                {{
+                    requirements(Category.power,with());
+                    localizedName = "Harvestor";
+                    size = 1;
+                    range = 6;
+                    tier = 10;
+                    powerProduction = 1f/60f;
+                }};
+                packer = new UnitPackerBlock("packer")
+                {{
+                    requirements(Category.units,with());
+                    localizedName = "Packer";
+                    range = 16;
+                    size = 1;
+                    itemCapacity = 20;
                 }};
                 oilGrinder = new LiquidGrinder("oil-grinder")
                 {{

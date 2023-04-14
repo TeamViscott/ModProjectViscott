@@ -21,6 +21,7 @@ import mindustry.graphics.Pal;
 import mindustry.type.UnitType;
 import mindustry.type.Weapon;
 import viscott.abilitys.EnemyStatusFieldAbility;
+import viscott.types.NullisUnitType;
 import viscott.types.PvUnitType;
 import viscott.utilitys.PvUtil;
 
@@ -30,6 +31,9 @@ public class PvUnits {
 
         /*Flying Ion Path*/ particle, snippet, fragment, excerpt, pericope,
 
+        /*Nullis*/
+            /*Storage Con Path*/pocket,container,
+
         /*Extra Paths : */
         routerTank, routerBastion
                 ;
@@ -37,6 +41,7 @@ public class PvUnits {
     {
         loadFlyingIonPath();
         loadCorePath();
+        loadStoragePath();
         loadExtra();
     }
     public static void loadCorePath()
@@ -820,6 +825,53 @@ public class PvUnits {
                             colors = new Color[]{Pal.lancerLaser.cpy().a(.2f), Pal.lancerLaser.cpy().a(.5f), Pal.lancerLaser.cpy().mul(1.2f), Color.white};
                         }};
                     }}
+            );
+        }};
+    }
+    public static void loadStoragePath()
+    {
+        pocket = new NullisUnitType("pocket")
+        {{
+            localizedName = "Pocket";
+            constructor = EntityMapping.map("dagger");
+            health = 200;
+            armor = 2;
+            flying = false;
+            canBoost = true;
+            buildSpeed = 0.1f;
+            itemCapacity = 80;
+            speed = 2f / 7.5f / 60;
+            boostMultiplier = 60;
+            drag = 0.2f;
+            range = 10*8;
+            engineSize = 0;
+            engines = Seq.with(
+                    new UnitEngine(6,6,4,45),
+                    new UnitEngine(-6,6,4,90+45),
+                    new UnitEngine(-6,-6,4,180+45),
+                    new UnitEngine(6,-6,4,270+45)
+            );
+        }};
+        container = new NullisUnitType("container")
+        {{
+            localizedName = "Container";
+            constructor = EntityMapping.map("dagger");
+            health = 1800;
+            armor = 4;
+            flying = false;
+            hitSize = 8*2;
+            canBoost = true;
+            itemCapacity = 300;
+            speed = 2f / 7.5f / 60;
+            boostMultiplier = 40;
+            drag = 0.05f;
+            range = 12*8;
+            engineSize = 0;
+            engines = Seq.with(
+                    new UnitEngine(10,10,6,45),
+                    new UnitEngine(-10,10,6,90+45),
+                    new UnitEngine(-10,-10,6,180+45),
+                    new UnitEngine(10,-10,6,270+45)
             );
         }};
     }
