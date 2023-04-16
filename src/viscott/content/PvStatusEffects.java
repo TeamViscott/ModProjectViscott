@@ -11,7 +11,7 @@ import viscott.world.statusEffects.StatusEffectStack;
 public class PvStatusEffects {
     public static StatusEffect
     timeWarped,doused, disabled, expent, resiliant, ungratefull, crescendo ,tick ,tock,mend,shield, malfunction,
-    voidShield
+    voidShield,voidDecay
             ;
     public static void load() {
         timeWarped = new StatusEffectStack("time-warped") {{
@@ -117,9 +117,17 @@ public class PvStatusEffects {
         {{
              localizedName = "Void Shield";
              color = Color.valueOf("000000");
-             description = "a shield made of Void that reduces taken damage by 10.";
-             shield = 10;
-             maxShield = 10;
+             description = "a shield made of Void that reduces taken damage by 5.";
+             shield = 5;
+             maxShield = 5;
+             damage = -0.1f/60f;
+        }};
+        voidDecay = new PvStatusEffect("void-decay")
+        {{
+            localizedName = "Void Decay";
+            color = Color.valueOf("000000");
+            description = "the result of a non void unit entering the void.";
+            damage = 20f/60f;
         }};
         malfunction = new PvStatusEffect("malfunction")
         {{

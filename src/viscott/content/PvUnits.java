@@ -1,11 +1,9 @@
 package viscott.content;
 
 import arc.graphics.Color;
-import arc.struct.ObjectSet;
 import arc.struct.Seq;
 import mindustry.content.Fx;
 import mindustry.content.StatusEffects;
-import mindustry.content.UnitTypes;
 import mindustry.entities.bullet.*;
 import mindustry.entities.effect.ExplosionEffect;
 import mindustry.entities.effect.MultiEffect;
@@ -23,11 +21,12 @@ import mindustry.type.Weapon;
 import viscott.abilitys.EnemyStatusFieldAbility;
 import viscott.types.NullisUnitType;
 import viscott.types.PvUnitType;
+import viscott.world.bullets.VoidBulletType;
 import viscott.utilitys.PvUtil;
 
 public class PvUnits {
     public static UnitType
-        /*Core Units*/micro,infrared, spectrum,
+        /*Core Units*/micro,infrared, spectrum,vessel,
 
         /*Flying Ion Path*/ particle, snippet, fragment, excerpt, pericope,
 
@@ -174,6 +173,47 @@ public class PvUnits {
                                 }};
                             }};
                         }}
+            );
+        }};
+
+        //Nullis
+
+        vessel = new NullisUnitType("vessel")
+        {{
+            localizedName = "Vessel";
+            constructor = EntityMapping.map("beta");
+            health = 320;
+            armor = 0;
+            flying = true;
+            buildSpeed = 1.2f;
+            mineTier = 2;
+            mineSpeed = 7f;
+            itemCapacity = 50;
+            speed = 22.8f / 7.5f;
+            healColor = Color.black;
+            drag = 0.1f;
+            range = 20*8;
+            weapons.add(
+                    new Weapon()
+                    {{
+                        x = 0;
+                        reload = 60f;
+                        shoot.shots = 3;
+                        shoot.shotDelay = 10;
+                        inaccuracy = 4;
+                        rotate = true;
+                        rotationLimit = 30;
+                        bullet = new VoidBulletType(6,30)
+                        {{
+                            recoil = 0.5f;
+                            homingPower = 0.01f;
+                            trailLength = 20;
+                            trailWidth = 2;
+                            lifetime = 3;
+                            homingDelay = 1;
+                            homingRange = 8*17f;
+                        }};
+                    }}
             );
         }};
     }
@@ -838,7 +878,7 @@ public class PvUnits {
             armor = 2;
             flying = false;
             canBoost = true;
-            buildSpeed = 0.1f;
+            buildSpeed = 0.01f;
             itemCapacity = 80;
             speed = 2f / 7.5f / 60;
             boostMultiplier = 60;

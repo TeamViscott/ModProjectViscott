@@ -42,6 +42,7 @@ public class PvStatusEffect extends StatusEffect {
 
     @Override
     public void setStats(){
+        super.setStats();
         if (shield != 0) {
             stats.add(PvStats.shield, shield * 60 + "/sec");
             stats.add(PvStats.maxShield, maxShield + "");
@@ -56,10 +57,9 @@ public class PvStatusEffect extends StatusEffect {
             effectOn.add(unit);
         }
         if (numbness) {
-            healthMultiplier*=20;
             if(damageNumbness.containsKey(unit)) {
                 float staticHealth = damageNumbness.get(unit).health;
-                float healthDiff = (staticHealth - unit.health)*20;
+                float healthDiff = staticHealth - unit.health;
                 unit.health = staticHealth;
                 damageNumbness.get(unit).dmg+=healthDiff;
             }

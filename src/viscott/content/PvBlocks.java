@@ -4,6 +4,7 @@ import arc.func.Prov;
 import arc.graphics.Color;
 import arc.math.Interp;
 import arc.struct.Seq;
+import mindustry.Vars;
 import mindustry.content.*;
 import mindustry.entities.bullet.MassDriverBolt;
 import mindustry.entities.effect.MultiEffect;
@@ -36,6 +37,8 @@ import mindustry.world.blocks.storage.CoreBlock;
 import mindustry.world.blocks.storage.Unloader;
 import mindustry.world.draw.*;
 import mindustry.world.meta.BuildVisibility;
+import viscott.types.PvTeam;
+import viscott.world.block.VoidBlock;
 import viscott.world.block.defense.PvWall;
 import viscott.world.block.distribution.MassConveyor;
 import viscott.world.block.distribution.UnitPackerBlock;
@@ -107,7 +110,7 @@ public class PvBlocks {
                             /*Replacements*/microProcessorReplacement,logicProcessorReplacement,hyperProcessorReplacement,
                             piscoProcessor,
                             /*Testing*/
-                                    sus
+                                    sus,voidNode
                             ;
             public static void load()
             {
@@ -208,7 +211,7 @@ public class PvBlocks {
                 }};
                 massRouter = new DuctRouter("mass-router")
                 {{
-                    requirements(Category.distribution, with(Items.silicon,7,PvItems.zirconium, 5, PvItems.carbonFiber, 3));
+                    requirements(Category.distribution, with(PvItems.zirconium,10));
                     localizedName = "Mass Router";
                     health = 85;
                     speed = 0;
@@ -224,7 +227,7 @@ public class PvBlocks {
                 }};
                 megaMassRouter = new DuctRouter("megamass-router")
                 {{
-                    requirements(Category.distribution, with(PvItems.zirconium,10));
+                    requirements(Category.distribution, with(Items.silicon,7,PvItems.zirconium, 5, PvItems.carbonFiber, 3));
                     localizedName = "MegaMass Router";
                     health = 200;
                     itemCapacity = 50;
@@ -710,10 +713,13 @@ public class PvBlocks {
                     consumePower(130f/60f);
                     itemCapacity = 3000;
                     liquidCapacity = 200;
+                    selectionColumns = 3;
                     plans = new Seq<>().with(
                         new UnitPlan(PvUnits.particle,15*60f,with(PvItems.lithium,20,Items.silicon,10)),
                         new UnitPlan(PvUnits.snippet,30*60f,with(PvItems.lithium,50,Items.silicon,25,PvItems.nobelium,10)),
-                        new UnitPlan(PvUnits.fragment,45*60f,with(PvItems.lithium,80,Items.silicon,50,PvItems.nobelium,20,PvItems.carbonFiber,10))
+                        new UnitPlan(PvUnits.fragment,45*60f,with(PvItems.lithium,80,Items.silicon,50,PvItems.nobelium,20,PvItems.carbonFiber,10)),
+                        new UnitPlan(PvUnits.pocket,15*60f,with(PvItems.zirconium,40,PvItems.lithium,20)),
+                        new UnitPlan(PvUnits.container,30*60f,with(PvItems.zirconium,100,PvItems.lithium,50,Items.silicon,20))
                     );
                 }};
                 eliteSpawnPad = new BulkUnitFactory("elite-spawn-pad")
@@ -725,13 +731,16 @@ public class PvBlocks {
                     consumePower(480f/60f);
                     itemCapacity = 8000;
                     liquidCapacity = 500;
+                    selectionColumns = 5;
                     maxAmount = 20;
                     plans = new Seq<>().with(
                             new UnitPlan(PvUnits.particle,15*60f,with(PvItems.lithium,20,Items.silicon,10)),
                             new UnitPlan(PvUnits.snippet,30*60f,with(PvItems.lithium,50,Items.silicon,25,PvItems.nobelium,10)),
                             new UnitPlan(PvUnits.fragment,45*60f,with(PvItems.lithium,80,Items.silicon,50,PvItems.nobelium,20,PvItems.carbonFiber,10)),
                             new UnitPlan(PvUnits.excerpt,45*60f,with(PvItems.lithium,200,Items.silicon,120,PvItems.nobelium,60,PvItems.carbonFiber,30,PvItems.platinum,50)),
-                            new UnitPlan(PvUnits.pericope,45*60f,with(PvItems.lithium,300,Items.silicon,200,PvItems.nobelium,100,PvItems.carbonFiber,50,PvItems.platinum,100,PvItems.zirconium,500))
+                            new UnitPlan(PvUnits.pericope,45*60f,with(PvItems.lithium,300,Items.silicon,200,PvItems.nobelium,100,PvItems.carbonFiber,50,PvItems.platinum,100,PvItems.zirconium,500)),
+                            new UnitPlan(PvUnits.pocket,15*60f,with(PvItems.zirconium,40,PvItems.lithium,20)),
+                            new UnitPlan(PvUnits.container,30*60f,with(PvItems.zirconium,100,PvItems.lithium,50,Items.silicon,20))
                     );
                 }};
                 densePayloadConveyor = new PayloadConveyor("dense-payload-conveyor")
@@ -816,20 +825,31 @@ public class PvBlocks {
                 }};
                 nullisCore = new NullisCore("core-null")
                 {{
-                    requirements(Category.effect,with());
+                    requirements(Category.effect,with(PvItems.zirconium,500,PvItems.lithium,200,PvItems.platinum,100));
                     localizedName = "Core Null";
-                    unitType = UnitTypes.gamma;
+                    unitType = PvUnits.vessel;
+                    visibleTeam = PvTeams.Nullis;
                     size = 3;
                     health = 2100;
                     unitCapModifier = 60;
                     itemCapacity = 10;
                     voidRadius = 16;
-                    voidDamage = 10f/60f;
+                }};
+                voidNode = new VoidBlock("void-node")
+                {{
+                    requirements(Category.effect,with(PvItems.zirconium,30));
+                    localizedName = "Void Node";
+                    visibleTeam = PvTeams.Nullis;
+                    size = 1;
+                    health = 100;
+                    voidRadius = 6;
+
                 }};
                 harvestor = new PowerGrinder("harvestor")
                 {{
-                    requirements(Category.power,with());
+                    requirements(Category.power,with(PvItems.zirconium,20,PvItems.lithium,10));
                     localizedName = "Harvestor";
+                    visibleTeam = PvTeams.Nullis;
                     size = 1;
                     range = 6;
                     tier = 10;
@@ -837,8 +857,9 @@ public class PvBlocks {
                 }};
                 packer = new UnitPackerBlock("packer")
                 {{
-                    requirements(Category.units,with());
+                    requirements(Category.units,with(PvItems.zirconium,50));
                     localizedName = "Packer";
+                    visibleTeam = PvTeams.Nullis;
                     range = 16;
                     size = 1;
                     itemCapacity = 20;
