@@ -24,12 +24,14 @@ import mindustry.type.ammo.ItemAmmoType;
 import viscott.abilitys.EnemyStatusFieldAbility;
 import viscott.types.NullisUnitType;
 import viscott.types.PvUnitType;
+import viscott.types.abilities.DamageAbility;
 import viscott.world.bullets.VoidBulletType;
 import viscott.utilitys.PvUtil;
 
 public class PvUnits {
     public static UnitType
-        /*Core Units*/micro,infrared, spectrum,vessel,
+        /*Core Units*/micro,infrared, spectrum,
+            shadow,proton,vessel,
 
         /*Flying Ion Path*/ particle, snippet, fragment, excerpt, pericope,
 
@@ -185,6 +187,46 @@ public class PvUnits {
 
         //Nullis
 
+
+        shadow = new NullisUnitType("shadow")
+        {{
+            health = 0.5f;
+            abilities.add(new DamageAbility(0.05f/60f));
+            localizedName = "Shadow";
+            constructor = EntityMapping.map("beta");
+            armor = 0;
+            flying = true;
+            buildSpeed = 1.2f;
+            mineTier = 2;
+            engineColor = Color.black;
+            mineSpeed = 3f;
+            itemCapacity = 40;
+            speed = 30.8f / 7.5f;
+            healColor = Color.black;
+            drag = 0.3f;
+            range = 10*8;
+            weapons.add(
+                    new Weapon()
+                    {{
+                        x = 0;
+                        reload = 60f;
+                        shoot.shots = 2;
+                        shoot.shotDelay = 20;
+                        rotate = true;
+                        rotationLimit = 30;
+                        bullet = new VoidBulletType(1,20)
+                        {{
+                            recoil = 2f;
+                            homingPower = 0.01f;
+                            trailLength = 20;
+                            trailWidth = 2;
+                            lifetime = 3;
+                            homingDelay = 1;
+                            homingRange = 8*17f;
+                        }};
+                    }}
+            );
+        }};
         vessel = new NullisUnitType("vessel")
         {{
             localizedName = "Vessel";
