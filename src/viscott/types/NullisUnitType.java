@@ -27,6 +27,6 @@ public class NullisUnitType extends PvUnitType{
     @Override
     public boolean unlockedNow()
     {
-        return Vars.player.team() == PvTeams.Nullis && super.unlockedNow();
+        return Vars.net.server() || Vars.player.team() == PvTeams.Nullis && super.unlockedNow();
     }
 }

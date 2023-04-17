@@ -5,10 +5,12 @@ import arc.graphics.g2d.Draw;
 import arc.graphics.g2d.Fill;
 import arc.graphics.g2d.Lines;
 import arc.math.Mathf;
+import arc.util.Structs;
 import mindustry.Vars;
 import mindustry.game.Team;
 import mindustry.gen.*;
 import mindustry.graphics.Layer;
+import mindustry.type.Item;
 import mindustry.world.blocks.storage.CoreBlock;
 import viscott.content.PvEffects;
 import viscott.content.PvStatusEffects;
@@ -26,9 +28,10 @@ public class NullisCore extends CoreBlock {
         super(name);
     }
 
+
     @Override
-    public boolean isVisible(){
-        return (visibleTeam == null ? true : Vars.player.team() == visibleTeam) && !isHidden() && (state.rules.editor || (!state.rules.hideBannedBlocks || !state.rules.isBanned(this)));
+    public boolean environmentBuildable(){
+        return (visibleTeam == null ? true : Vars.player.team() == visibleTeam) && (state.rules.hiddenBuildItems.isEmpty() || !Structs.contains(requirements, i -> state.rules.hiddenBuildItems.contains(i.item)));
     }
 
     @Override
@@ -53,6 +56,11 @@ public class NullisCore extends CoreBlock {
                     }
             );
             updateVoid(this,8*voidRadius);
+        }
+
+        @Override
+        public int getMaximumAccepted(Item item){
+            return storageCapacity;
         }
 
         public void transferItems(Unit unit)
