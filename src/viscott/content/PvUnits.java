@@ -5,6 +5,7 @@ import arc.struct.Seq;
 import mindustry.content.Fx;
 import mindustry.content.Items;
 import mindustry.content.StatusEffects;
+import mindustry.entities.abilities.RepairFieldAbility;
 import mindustry.entities.bullet.*;
 import mindustry.entities.effect.ExplosionEffect;
 import mindustry.entities.effect.MultiEffect;
@@ -35,6 +36,8 @@ public class PvUnits {
 
         /*Flying Ion Path*/ particle, snippet, fragment, excerpt, pericope,
 
+        /*Xeal Naval Path*/rivulet,
+
         /*Nullis*/
             /*Storage Con Path*/pocket,container,
 
@@ -47,6 +50,7 @@ public class PvUnits {
     public static void load()
     {
         loadFlyingIonPath();
+        loadXeonNavalPath();
         loadCorePath();
         loadStoragePath();
         loadExtra();
@@ -1093,6 +1097,51 @@ public class PvUnits {
                         status = StatusEffects.sapped;
                         statusDuration = 60f * 10;
                     }};
+                }};
+            }});
+        }};
+    }
+    public static void loadXeonNavalPath()
+    {
+        rivulet = new PvUnitType("rivulet")
+        {{
+            localizedName = "Rivulet";
+            constructor = EntityMapping.map("risso");
+            canBoost = true;
+            speed = 8.5f/7.5f;
+            engineOffset = 8;
+            drag = 0.13f;
+            buildSpeed = 220;
+            buildBeamOffset = 0;
+            abilities.add(new RepairFieldAbility(10,120,8*12));
+            hitSize = 10f;
+            health = 380;
+            armor = 2;
+            accel = 0.4f;
+            rotateSpeed = 3.3f;
+            faceTarget = false;
+
+            armor = 2f;
+
+            weapons.add(new Weapon(name+"-gun"){{
+                reload = 60f/1.8f;
+                shoot.shots = 2;
+                shoot.shotDelay = 10;
+                x = 5f;
+                shootY = 4f;
+                y = 0f;
+                rotate = true;
+                ejectEffect = Fx.casing1;
+                bullet = new BasicBulletType(3f, 6){{
+                    width = 7f;
+                    height = 9f;
+                    lifetime = PvUtil.GetRange(3,19);
+                    trailColor = backColor = lightColor = Pal.heal;
+                    trailLength = 30;
+                    trailWidth = 1.4f;
+                    healPercent = 3;
+                    collidesTeam = true;
+                    ammoMultiplier = 2;
                 }};
             }});
         }};
