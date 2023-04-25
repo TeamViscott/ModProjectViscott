@@ -6,6 +6,7 @@ import mindustry.content.Fx;
 import mindustry.content.Items;
 import mindustry.content.StatusEffects;
 import mindustry.entities.abilities.RepairFieldAbility;
+import mindustry.entities.abilities.ShieldArcAbility;
 import mindustry.entities.bullet.*;
 import mindustry.entities.effect.ExplosionEffect;
 import mindustry.entities.effect.MultiEffect;
@@ -42,7 +43,7 @@ public class PvUnits {
             /*Storage Con Path*/pocket,container,
 
         /*Extra Paths : */
-        routerTank, routerBastion,
+        routerTank, routerBastion, box,
 
                 /*BOSSES*/
                     vdoble
@@ -919,6 +920,93 @@ public class PvUnits {
                         }};
                     }}
             );
+        }};
+        box = new PvUnitType("the-box")
+        {{
+            localizedName = "THE BOX";
+            constructor = EntityMapping.map("stell");
+            health = 150;
+            armor = 12;
+            rotateSpeed = 0;
+            drag = 0.5f;
+            speed = 0;
+            canBoost = true;
+            hitSize = 8*2f;
+            range = 20*8;
+            weapons.add(
+                    new Weapon(){{
+                        reload = 60;
+                        inaccuracy = 0;
+                        mirror = false;
+                        top = false;
+                        rotate = true;
+                        shootY = 0;
+                        shootX = 0;
+                        x = 0;
+                        y = 0;
+                        bullet = new BasicBulletType(6,50)
+                        {{
+                            lifetime = PvUtil.GetRange(6,20);
+                            sprite = PvUtil.GetName("router-bullet");
+                            trailWidth = 5;
+                            trailLength = 40;
+                            trailColor = lightColor = Pal.lancerLaser;
+                            splashDamageRadius = 8*4f;
+                            splashDamage = 700;
+                            despawnEffect = hitEffect = Fx.massiveExplosion;
+                            hitShake = despawnShake = 1;
+                            shake = 1;
+                            spin = 4f;
+
+                        }};
+
+                    }}
+
+            );
+            abilities.add(new ShieldArcAbility(){{
+                region = "tecta-shield";
+                radius = 34f;
+                angle = 82f;
+                angleOffset = 0;
+                regen = 1f;
+                cooldown = 60f * 12f;
+                max = 10000f;
+                y = -20f;
+                width = 6f;
+            }});
+            abilities.add(new ShieldArcAbility(){{
+                region = "tecta-shield";
+                radius = 34f;
+                angle = 82f;
+                angleOffset = 90;
+                regen = 1f;
+                cooldown = 60f * 12f;
+                max = 5000f;
+                x = -20f;
+                width = 6f;
+            }});
+            abilities.add(new ShieldArcAbility(){{
+                region = "tecta-shield";
+                radius = 34f;
+                angle = 82f;
+                angleOffset = 180;
+                regen = 1f;
+                cooldown = 60f * 12f;
+                max = 5000f;
+                y = 20f;
+                width = 6f;
+            }});
+            abilities.add(new ShieldArcAbility(){{
+                region = "tecta-shield";
+                radius = 34f;
+                angle = 82f;
+                angleOffset = -90;
+                regen = 1f;
+                cooldown = 60f * 12f;
+                max = 5000f;
+                x = 20f;
+                width = 6f;
+            }});
         }};
     }
     public static void loadStoragePath()
