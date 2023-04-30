@@ -2,6 +2,7 @@ package viscott.content;
 
 import arc.graphics.Color;
 import arc.graphics.g2d.TextureAtlas;
+import arc.struct.EnumSet;
 import arc.struct.Seq;
 import mindustry.content.Fx;
 import mindustry.content.Items;
@@ -21,6 +22,7 @@ import mindustry.gen.Sounds;
 import mindustry.graphics.Layer;
 import mindustry.graphics.Pal;
 import mindustry.type.Category;
+import mindustry.type.StatusEffect;
 import mindustry.type.Weapon;
 import mindustry.type.unit.MissileUnitType;
 import mindustry.world.Block;
@@ -29,6 +31,7 @@ import mindustry.world.blocks.defense.turrets.ItemTurret;
 import mindustry.world.blocks.defense.turrets.LiquidTurret;
 import mindustry.world.blocks.defense.turrets.PowerTurret;
 import mindustry.world.draw.DrawTurret;
+import mindustry.world.meta.BlockFlag;
 import mindustry.world.meta.BuildVisibility;
 import viscott.content.shootpatterns.AlternateShootPatternTurret;
 import viscott.content.shootpatterns.CyclicShootPattern;
@@ -41,7 +44,7 @@ public class PvTurrets{
     public static Block
             splinter,shatter,euro,snap,hourglass,
             phantom,razor,rainmaker,striker,
-            marksman, xacto,reaper,shuttle, nuero,
+            marksman, xacto,reaper,shuttle, nuero, glaive,
             xterminium,hel,falarica,spring,shredder,
 
             fracture,javelin
@@ -792,6 +795,31 @@ public class PvTurrets{
                         )
                 );
             }};
+        }};
+        glaive = new LiquidTurret("glaive"){{
+            requirements(Category.turret, with(Items.metaglass, 100, Items.lead, 400, Items.titanium, 250, Items.thorium, 100));
+            size = 3;
+            reload = 20f;
+            shoot.shots = 1;
+            localizedName = "Glaive";
+            velocityRnd = 0f;
+            buildVisibility = BuildVisibility.sandboxOnly;
+            inaccuracy = 0f;
+            recoil = -24f;
+            shootCone = 45f;
+            liquidCapacity = 40f;
+            shootEffect = Fx.shootLiquid;
+            range = 24f;
+            scaledHealth = 250;
+            ammo(
+                    Liquids.water, new BasicBulletType(100, 10){{
+                        lifetime = PvUtil.GetRange(speed,3);
+                        hitSize = 8;
+                        statusDuration = 1200;
+                        status = PvStatusEffects.timeWarped;
+                    }}
+            );
+
         }};
     }
     public static void loadSize4()

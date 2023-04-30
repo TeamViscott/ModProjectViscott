@@ -10,6 +10,7 @@ sourceSets.main.java.srcDirs = ["src"]
 repositories{
     mavenCentral()
     maven{ url 'https://www.jitpack.io' }
+    maven { url 'https://repo.mc-skyplex.net/releases' }
 }
 
 ext{
@@ -29,6 +30,7 @@ allprojects{
 dependencies{
     compileOnly "com.github.Anuken.Arc:arc-core:$mindustryVersion"
     compileOnly "com.github.Anuken.MindustryJitpack:core:$mindustryVersion"
+    compileOnly "com.github.Redstonneur1256.Mindustry-ModLib:Mod:1.4.5"
 
     annotationProcessor "com.github.Anuken:jabel:$jabelVersion"
 }
