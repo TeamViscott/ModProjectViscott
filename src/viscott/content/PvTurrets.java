@@ -797,13 +797,11 @@ public class PvTurrets{
             }};
         }};
         glaive = new LiquidTurret("glaive"){{
-            requirements(Category.turret, with(Items.metaglass, 100, Items.lead, 400, Items.titanium, 250, Items.thorium, 100));
+            requirements(Category.turret,BuildVisibility.sandboxOnly , with(Items.metaglass, 100, Items.lead, 400, Items.titanium, 250, Items.thorium, 100));
             size = 3;
             reload = 20f;
-            shoot.shots = 1;
             localizedName = "Glaive";
             velocityRnd = 0f;
-            buildVisibility = BuildVisibility.sandboxOnly;
             inaccuracy = 0f;
             recoil = -24f;
             shootCone = 45f;
@@ -819,7 +817,9 @@ public class PvTurrets{
                         status = PvStatusEffects.timeWarped;
                     }}
             );
+            drawer = new DrawTurret(PvUtil.GetName("Pov")){{
 
+            }};
         }};
     }
     public static void loadSize4()
