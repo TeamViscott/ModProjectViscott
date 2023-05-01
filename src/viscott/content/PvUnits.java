@@ -1093,7 +1093,7 @@ public class PvUnits {
             groundLayer = Layer.legUnit;
 
             weapons.add(
-                    new Weapon("large-purple-mount-vdoble"){{
+                    new Weapon(PvUtil.GetName("large-purple-mount-vdoble")){{
                         y = -5f;
                         x = 11f;
                         shootY = 7f;
@@ -1123,7 +1123,7 @@ public class PvUnits {
                         }};
                     }});
 
-            weapons.add(new Weapon("vdoble-cannon"){{
+            weapons.add(new Weapon(PvUtil.GetName("vdoble-cannon")){{
                 y = -14f;
                 x = 0f;
                 shootY = 22f;
@@ -1208,12 +1208,12 @@ public class PvUnits {
                     }};
                 }};
             }});
-            weapons.add(new Weapon("vdoble-cannon"){{
+            weapons.add(new Weapon(PvUtil.GetName("vdoble-cannon")){{
                 y = -18f;
                 x = 6f;
                 shootY = 22f;
                 mirror = true;
-                reload = 300;
+                reload = 220;
                 shake = 10f;
                 recoil = 10f;
                 rotateSpeed = 1f;
