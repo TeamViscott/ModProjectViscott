@@ -803,15 +803,15 @@ public class PvTurrets{
             localizedName = "Glaive";
             velocityRnd = 0f;
             inaccuracy = 0f;
-            recoil = -24f;
+            recoil = -40f;
             shootCone = 45f;
             liquidCapacity = 40f;
             shootEffect = Fx.shootLiquid;
-            range = 24f;
+            range = 40f;
             scaledHealth = 250;
             ammo(
                     Liquids.water, new BasicBulletType(100, 10){{
-                        lifetime = PvUtil.GetRange(speed,3);
+                        lifetime = PvUtil.GetRange(speed,5);
                         hitSize = 8;
                         statusDuration = 1200;
                         status = PvStatusEffects.timeWarped;

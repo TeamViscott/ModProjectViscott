@@ -1093,7 +1093,7 @@ public class PvUnits {
             groundLayer = Layer.legUnit;
 
             weapons.add(
-                    new Weapon("large-purple-mount"){{
+                    new Weapon("large-purple-mount-vdoble"){{
                         y = -5f;
                         x = 11f;
                         shootY = 7f;
@@ -1123,12 +1123,12 @@ public class PvUnits {
                         }};
                     }});
 
-            weapons.add(new Weapon("toxopid-cannon"){{
+            weapons.add(new Weapon("vdoble-cannon"){{
                 y = -14f;
                 x = 0f;
                 shootY = 22f;
                 mirror = false;
-                reload = 210;
+                reload = 300;
                 shake = 10f;
                 recoil = 10f;
                 rotateSpeed = 1f;
@@ -1139,10 +1139,10 @@ public class PvUnits {
 
                 rotationLimit = 80f;
 
-                bullet = new ArtilleryBulletType(3f, 50){{
+                bullet = new ArtilleryBulletType(5f, 80){{
                     hitEffect = Fx.sapExplosion;
                     knockback = 0.8f;
-                    lifetime = 80f;
+                    lifetime = 48f;
                     width = height = 25f;
                     collidesTiles = collides = true;
                     ammoMultiplier = 4f;
@@ -1150,8 +1150,8 @@ public class PvUnits {
                     splashDamage = 75f;
                     backColor = Pal.sapBulletBack;
                     frontColor = lightningColor = Pal.sapBullet;
-                    lightning = 5;
-                    lightningLength = 20;
+                    lightning = 8;
+                    lightningLength = 25;
                     smokeEffect = Fx.shootBigSmoke2;
                     hitShake = 10f;
                     lightRadius = 40f;
@@ -1164,7 +1164,92 @@ public class PvUnits {
                     fragLifeMin = 0.3f;
                     fragBullets = 9;
 
-                    fragBullet = new ArtilleryBulletType(2.3f, 30){{
+                    fragBullet = new ArtilleryBulletType(4.3f, 50){{
+                        hitEffect = Fx.sapExplosion;
+                        knockback = 0.8f;
+                        lifetime = 90f;
+                        width = height = 20f;
+                        collidesTiles = false;
+                        splashDamageRadius = 70f;
+                        splashDamage = 40f;
+                        backColor = Pal.sapBulletBack;
+                        frontColor = lightningColor = Pal.sapBullet;
+                        lightning = 2;
+                        lightningLength = 5;
+                        smokeEffect = Fx.shootBigSmoke2;
+                        hitShake = 5f;
+                        lightRadius = 30f;
+                        lightColor = Pal.sap;
+                        lightOpacity = 0.5f;
+
+                        status = StatusEffects.sapped;
+                        statusDuration = 60f * 10;
+                        fragBullet = new ArtilleryBulletType(3.3f, 30){{
+                            hitEffect = Fx.sapExplosion;
+                            knockback = 0.8f;
+                            lifetime = 90f;
+                            width = height = 20f;
+                            collidesTiles = false;
+                            splashDamageRadius = 70f;
+                            splashDamage = 40f;
+                            backColor = Pal.sapBulletBack;
+                            frontColor = lightningColor = Pal.sapBullet;
+                            lightning = 2;
+                            lightningLength = 5;
+                            smokeEffect = Fx.shootBigSmoke2;
+                            hitShake = 5f;
+                            lightRadius = 30f;
+                            lightColor = Pal.sap;
+                            lightOpacity = 0.5f;
+
+                            status = StatusEffects.sapped;
+                            statusDuration = 60f * 10;
+                        }};
+                    }};
+                }};
+            }});
+            weapons.add(new Weapon("vdoble-cannon"){{
+                y = -18f;
+                x = 6f;
+                shootY = 22f;
+                mirror = true;
+                reload = 300;
+                shake = 10f;
+                recoil = 10f;
+                rotateSpeed = 1f;
+                ejectEffect = Fx.casing3;
+                shootSound = Sounds.artillery;
+                rotate = true;
+                shadow = 30f;
+
+                rotationLimit = 80f;
+
+                bullet = new ArtilleryBulletType(3f, 80){{
+                    hitEffect = Fx.sapExplosion;
+                    knockback = 0.8f;
+                    lifetime = 80f;
+                    width = height = 25f;
+                    collidesTiles = collides = true;
+                    ammoMultiplier = 4f;
+                    splashDamageRadius = 80f;
+                    splashDamage = 75f;
+                    backColor = Pal.sapBulletBack;
+                    frontColor = lightningColor = Pal.sapBullet;
+                    lightning = 8;
+                    lightningLength = 25;
+                    smokeEffect = Fx.shootBigSmoke2;
+                    hitShake = 10f;
+                    lightRadius = 40f;
+                    lightColor = Pal.sap;
+                    lightOpacity = 0.6f;
+
+                    status = StatusEffects.sapped;
+                    statusDuration = 60f * 10;
+
+                    fragLifeMin = 0.3f;
+                    fragBullets = 9;
+
+                    fragBullet = new ArtilleryBulletType(3.3f, 50){{
                         hitEffect = Fx.sapExplosion;
                         knockback = 0.8f;
                         lifetime = 90f;
