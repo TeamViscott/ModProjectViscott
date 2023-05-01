@@ -1095,9 +1095,9 @@ public class PvUnits {
             weapons.add(
                     new Weapon(PvUtil.GetName("large-purple-mount-vdoble")){{
                         y = -5f;
-                        x = 11f;
+                        x = 13f;
                         shootY = 7f;
-                        reload = 30;
+                        reload = 60;
                         shake = 4f;
                         rotateSpeed = 2f;
                         ejectEffect = Fx.casing1;
@@ -1106,11 +1106,11 @@ public class PvUnits {
                         shadow = 12f;
                         recoil = 3f;
 
-                        shoot = new ShootSpread(2, 17f);
+                        shoot = new ShootSpread(5, 11f);
 
                         bullet = new ShrapnelBulletType(){{
                             length = 90f;
-                            damage = 110f;
+                            damage = 220f;
                             width = 25f;
                             serrationLenScl = 7f;
                             serrationSpaceOffset = 60f;
@@ -1167,7 +1167,7 @@ public class PvUnits {
                     fragBullet = new ArtilleryBulletType(4.3f, 50){{
                         hitEffect = Fx.sapExplosion;
                         knockback = 0.8f;
-                        lifetime = 90f;
+                        lifetime = 60f;
                         width = height = 20f;
                         collidesTiles = false;
                         splashDamageRadius = 70f;
@@ -1187,7 +1187,7 @@ public class PvUnits {
                         fragBullet = new ArtilleryBulletType(3.3f, 30){{
                             hitEffect = Fx.sapExplosion;
                             knockback = 0.8f;
-                            lifetime = 90f;
+                            lifetime = 15f;
                             width = height = 20f;
                             collidesTiles = false;
                             splashDamageRadius = 70f;
