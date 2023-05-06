@@ -46,7 +46,7 @@ public class PvUnits {
         routerTank, routerBastion, box,
 
                 /*BOSSES*/
-                    vdoble
+                    vdoble,charlie
                 ;
     public static void load()
     {
@@ -1272,6 +1272,93 @@ public class PvUnits {
                     }};
                 }};
             }});
+        }};
+        charlie = new PvUnitType("charlie")
+        {
+            {
+                localizedName = "Choo Choo Charlie";
+                constructor = EntityMapping.map("toxopid");
+                drag = 0.1f;
+                speed = 35f / 7.5f;
+                hitSize = 8*8f;
+                health = 200000;
+                armor = 50f;
+                lightRadius = 140f;
+                omniMovement = false;
+                rotateSpeed = 1.9f;
+                drownTimeMultiplier = 3f;
+
+                legCount = 8;
+                legMoveSpace = 0.8f;
+                legPairOffset = 3;
+                legLength = 90f;
+                legExtension = -20;
+                legBaseOffset = 8f;
+                stepShake = 1f;
+                legLengthScl = 0.93f;
+                rippleScale = 3f;
+                legSpeed = 0.19f;
+                ammoType = new ItemAmmoType(Items.graphite, 8);
+
+                deathExplosionEffect = PvEffects.nullisDeath.get(7);
+                legSplashDamage = 200;
+                legSplashRange = 60;
+
+                hovering = true;
+                shadowElevation = 0.95f;
+                groundLayer = Layer.legUnit;
+
+                weapons.add(
+                        new Weapon() {{
+                            y = 55f;
+                            x = 0f;
+                            reload = 120;
+                            top = false;
+                            mirror = false;
+                            shake = 4f;
+                            rotateSpeed = 2f;
+                            ejectEffect = Fx.casing1;
+                            shootSound = Sounds.shootBig;
+                            rotate = true;
+                            recoil = 3f;
+
+                            shoot = new ShootSpread(4, 8.5f);
+
+                            bullet = new ShrapnelBulletType() {{
+                                length = 90f;
+                                damage = 110f;
+                                width = 25f;
+                                serrationLenScl = 7f;
+                                serrationSpaceOffset = 60f;
+                                serrationFadeOffset = 0f;
+                                serrations = 10;
+                                serrationWidth = 6f;
+                                fromColor = Pal.redLight;
+                                toColor = Pal.redderDust;
+                                shootEffect = smokeEffect = Fx.sparkShoot;
+                                fragBullets = 8;
+                                hitShake = despawnShake = 0.5f;
+                                fragLifeMax = 1;
+                                fragLifeMin = 0.8f;
+                                fragBullet = new BulletType(8,60)
+                                {{
+                                    lifetime = 60;
+                                    fromColor = Pal.redLight;
+                                    toColor = Pal.redderDust;
+                                    hitShake = despawnShake = 0.5f;
+                                    fragBullets = 8;
+                                    fragLifeMax = 1;
+                                    fragLifeMin = 0.8f;
+                                    fragBullet = new BulletType(8,60)
+                                    {{
+                                        lifetime = 60;
+                                        fromColor = Pal.redLight;
+                                        toColor = Pal.redderDust;
+                                        hitShake = despawnShake = 0.5f;
+                                    }};
+                                }};
+                            }};
+                        }});
         }};
     }
     public static void loadXeonNavalPath()

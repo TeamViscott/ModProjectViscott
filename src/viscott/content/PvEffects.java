@@ -102,7 +102,7 @@ public class PvEffects {
             line(x2, y2, xn2, yn2);
             // Lifetime = max lifetime || time = time alive
         });
-        for(int i = 1;i<=5;i++)
+        for(int i = 1;i<=9;i++)
             nullisDeath.add(newNullisDeath(i));
     }
 
