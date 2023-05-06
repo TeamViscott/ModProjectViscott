@@ -244,6 +244,7 @@ public class PvUnits {
             mineSpeed = 7f;
             itemCapacity = 50;
             speed = 22.8f / 7.5f;
+            engineColor = Color.black;
             healColor = Color.black;
             drag = 0.1f;
             range = 20*8;
@@ -1019,6 +1020,7 @@ public class PvUnits {
             armor = 2;
             flying = false;
             canBoost = true;
+            engineColor = Color.black;
             buildSpeed = 0.01f;
             itemCapacity = 80;
             speed = 2f / 7.5f / 60;
@@ -1042,6 +1044,7 @@ public class PvUnits {
             flying = false;
             hitSize = 8*2;
             canBoost = true;
+            engineColor = Color.black;
             itemCapacity = 300;
             speed = 2f / 7.5f / 60;
             boostMultiplier = 40;
@@ -1088,6 +1091,17 @@ public class PvUnits {
             legSplashDamage = 80;
             legSplashRange = 60;
 
+
+            abilities.add(new ShieldArcAbility(){{
+                region = "tecta-shield";
+                radius = 40f;
+                angle = 120f;
+                regen = 30f/60f;
+                cooldown = 60f * 6f;
+                max = 3000f;
+                y = -20f;
+                width = 6f;
+            }});
             hovering = true;
             shadowElevation = 0.95f;
             groundLayer = Layer.legUnit;
