@@ -1,17 +1,21 @@
 package viscott.content;
 
 import arc.graphics.Color;
+import mindustry.entities.bullet.BasicBulletType;
+import mindustry.entities.bullet.BulletType;
 import mindustry.game.Team;
 import mindustry.graphics.Pal;
 import mindustry.type.StatusEffect;
+import viscott.utilitys.PvUtil;
 import viscott.world.statusEffects.AlterStatusEffect;
+import viscott.world.statusEffects.FragStatusEffect;
 import viscott.world.statusEffects.PvStatusEffect;
 import viscott.world.statusEffects.StatusEffectStack;
 
 public class PvStatusEffects {
     public static StatusEffect
     timeWarped,doused, disabled, expent, resiliant, ungratefull, crescendo ,tick ,tock,mend,shield, malfunction,
-    voidShield,voidDecay
+    voidShield,voidDecay,frag
             ;
     public static void load() {
         timeWarped = new StatusEffectStack("time-warped") {{
@@ -135,6 +139,18 @@ public class PvStatusEffects {
             description = "Any healing / damage recieved will be applied at the end of this status effect\nlose 1 hp per second that its active.";
             damage = 1f/60f;
             numbness = true;
+        }};
+        frag = new FragStatusEffect("frag"){{
+            localizedName = "Frag";
+            description = "testing if Frag works.";
+            fragBullets = 5;
+            fragBullet = new BasicBulletType(4,5)
+            {{
+                lifetime = PvUtil.GetRange(4,8);
+                trailColor = lightColor = backColor = Pal.heal.cpy().a(0.5f);
+                trailWidth = 1;
+                trailLength = 10;
+            }};
         }};
     }
 }

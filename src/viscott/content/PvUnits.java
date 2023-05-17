@@ -7,6 +7,7 @@ import mindustry.content.Items;
 import mindustry.content.StatusEffects;
 import mindustry.entities.abilities.RepairFieldAbility;
 import mindustry.entities.abilities.ShieldArcAbility;
+import mindustry.entities.abilities.StatusFieldAbility;
 import mindustry.entities.bullet.*;
 import mindustry.entities.effect.ExplosionEffect;
 import mindustry.entities.effect.MultiEffect;
@@ -29,6 +30,7 @@ import viscott.types.PvUnitType;
 import viscott.types.abilities.DamageAbility;
 import viscott.world.bullets.VoidBulletType;
 import viscott.utilitys.PvUtil;
+import viscott.world.statusEffects.PvStatusEffect;
 
 public class PvUnits {
     public static UnitType
@@ -37,7 +39,7 @@ public class PvUnits {
 
         /*Flying Ion Path*/ particle, snippet, fragment, excerpt, pericope,
 
-        /*Xeal Naval Path*/rivulet,
+        /*Xeal Naval Path*/rivulet,bourn,
 
         /*Nullis*/
             /*Storage Con Path*/pocket,container,vault,
@@ -1408,7 +1410,7 @@ public class PvUnits {
             speed = 8.5f/7.5f;
             engineOffset = 8;
             drag = 0.13f;
-            buildSpeed = 220;
+            buildSpeed = 2.2f;
             buildBeamOffset = 0;
             abilities.add(new RepairFieldAbility(10,120,8*12));
             hitSize = 10f;
@@ -1417,8 +1419,6 @@ public class PvUnits {
             accel = 0.4f;
             rotateSpeed = 3.3f;
             faceTarget = false;
-
-            armor = 2f;
 
             weapons.add(new Weapon(name+"-gun"){{
                 reload = 60f/1.8f;
@@ -1439,6 +1439,68 @@ public class PvUnits {
                     healPercent = 3;
                     collidesTeam = true;
                     ammoMultiplier = 2;
+                }};
+            }});
+        }};
+        bourn = new PvUnitType("bourn")
+        {{
+            localizedName = "Bourn";
+            constructor = EntityMapping.map("risso");
+            canBoost = true;
+            speed = 8.5f/7.5f;
+            engineOffset = 8;
+            drag = 0.13f;
+            buildSpeed = 2.2f;
+            buildBeamOffset = 0;
+            abilities.add(new RepairFieldAbility(6,300,8*8),
+                    new StatusFieldAbility(PvStatusEffects.frag,240,180,8*15)
+                    );
+            hitSize = 10f;
+            health = 880;
+            armor = 4;
+            accel = 0.4f;
+            rotateSpeed = 3.3f;
+            faceTarget = false;
+
+            weapons.add(new Weapon(name+"-turret"){{
+                reload = 60f/1.6f;
+                shoot = new ShootSpread(4,0);
+                x = 0f;
+                shootY = 2f;
+                inaccuracy = 20;
+                y = -4f;
+                recoil = 2;
+                rotate = true;
+                mirror = false;
+                top = true;
+                ejectEffect = Fx.casing1;
+                bullet = new BasicBulletType(3f, 23){{
+                    width = 7f;
+                    height = 9f;
+                    lifetime = PvUtil.GetRange(3,22);
+                    trailColor = backColor = lightColor = Pal.heal;
+                    trailLength = 30;
+                    weaveScale = 2;
+                    weaveMag = 2;
+                    homingPower = 0.008f;
+                    trailWidth = 1.4f;
+                    weaveRandom = true;
+                    healPercent = 7;
+                    collidesTeam = true;
+                    ammoMultiplier = 2;
+                    /*
+                    fragBullets = 3;
+                    fragBullet = new BasicBulletType(3,5)
+                    {{
+                         width = 7f;
+                         height = 9f;
+                         lifetime = PvUtil.GetRange(3,6);
+                        trailWidth = 1.4f;
+                        trailLength = 10;
+                         trailColor = backColor = lightColor = Pal.heal;
+                         healPercent = 1;
+                    }};
+                     */
                 }};
             }});
         }};
