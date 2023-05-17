@@ -28,6 +28,7 @@ import mindustry.ui.Styles;
 
 public class PvCanvas extends LCanvas {
 
+    public PvDragLayout statements;
     StatementElem dragging;
     public Seq<Prov<LStatement>> allStatements;
     float targetWidth;

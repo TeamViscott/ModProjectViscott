@@ -40,7 +40,7 @@ public class PvUnits {
         /*Xeal Naval Path*/rivulet,
 
         /*Nullis*/
-            /*Storage Con Path*/pocket,container,
+            /*Storage Con Path*/pocket,container,vault,
 
         /*Extra Paths : */
         routerTank, routerBastion, box,
@@ -1056,6 +1056,29 @@ public class PvUnits {
                     new UnitEngine(-10,10,6,90+45),
                     new UnitEngine(-10,-10,6,180+45),
                     new UnitEngine(10,-10,6,270+45)
+            );
+        }};
+        vault = new NullisUnitType("vault")
+        {{
+            localizedName = "Vault";
+            constructor = EntityMapping.map("dagger");
+            health = 5200;
+            armor = 8;
+            flying = false;
+            hitSize = 8*4;
+            canBoost = true;
+            engineColor = Color.black;
+            itemCapacity = 1200;
+            speed = 2f / 7.5f / 60;
+            boostMultiplier = 40;
+            drag = 0.05f;
+            range = 12*8;
+            engineSize = 0;
+            engines = Seq.with(
+                    new UnitEngine(14,14,8,45),
+                    new UnitEngine(-14,14,8,90+45),
+                    new UnitEngine(-14,-14,8,180+45),
+                    new UnitEngine(14,-14,8,270+45)
             );
         }};
     }
