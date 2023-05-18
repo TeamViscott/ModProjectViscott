@@ -1,11 +1,13 @@
 package viscott.content.shootpatterns;
 
 import arc.util.Log;
+import mindustry.entities.pattern.ShootPattern;
 import mindustry.entities.pattern.ShootSpread;
 
 /** copied from mindustry shoot pattern but modified a bit */
 
-public class CyclicShootPattern extends ShootSpread {
+public class CyclicShootPattern extends ShootPattern {
+    public float spread = 0;
     public CyclicShootPattern(int cycles)
     {
         this(cycles,0);
@@ -16,7 +18,7 @@ public class CyclicShootPattern extends ShootSpread {
     }
     public CyclicShootPattern(int shotsPerCycle,int cycles,int spread)
     {
-        super(shotsPerCycle,spread);
+        this.shots = shotsPerCycle;
         this.maxCycleIteration = cycles;
         this.spread = spread;
     }

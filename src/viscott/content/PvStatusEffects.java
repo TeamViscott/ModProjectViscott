@@ -142,8 +142,9 @@ public class PvStatusEffects {
         }};
         frag = new FragStatusEffect("frag"){{
             localizedName = "Frag";
-            description = "testing if Frag works.";
+            description = "applies Frag to the unit's bullets";
             fragBullets = 5;
+            fragRandomSpread = 90;
             fragBullet = new BasicBulletType(4,5)
             {{
                 lifetime = PvUtil.GetRange(4,8);

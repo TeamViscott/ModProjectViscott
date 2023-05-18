@@ -1,5 +1,6 @@
 package viscott.types.logic;
 
+import arc.Core;
 import arc.func.Prov;
 import arc.graphics.g2d.Draw;
 import arc.graphics.g2d.Fill;
@@ -27,11 +28,14 @@ import mindustry.logic.LStatements;
 import mindustry.ui.Styles;
 
 public class PvCanvas extends LCanvas {
-
-    public PvDragLayout statements;
     StatementElem dragging;
     public Seq<Prov<LStatement>> allStatements;
     float targetWidth;
+
+    PvCanvas()
+    {
+        statements = new PvDragLayout();
+    }
     @Override
     public void load(String asm){
         jumps.clear();
@@ -147,9 +151,10 @@ public class PvCanvas extends LCanvas {
 
         public PvStatementElem(LStatement st){
             super(st);
+            clear();
             this.st = st;
             st.elem = this;
-            clear();
+            this.clearChildren();
             background(Tex.whitePane);
             setColor(st.category().color);
             margin(0f);
@@ -208,7 +213,7 @@ public class PvCanvas extends LCanvas {
 
                     @Override
                     public void touchUp(InputEvent event, float x, float y, int pointer, KeyCode button){
-                        statements.finishLayout();
+                        ((PvDragLayout)statements).finishLayout();
                     }
                 });
             }).growX().height(38);

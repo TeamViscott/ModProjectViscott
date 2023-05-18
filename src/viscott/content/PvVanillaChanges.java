@@ -18,8 +18,5 @@ public class PvVanillaChanges {
         UnitTypes.latum.hidden = false;
         UnitTypes.renale.hidden = false;
         ((HeatProducer)Blocks.heatSource).heatOutput = 100000;
-        Blocks.microProcessor.buildVisibility = BuildVisibility.hidden;
-        Blocks.logicProcessor.buildVisibility = BuildVisibility.hidden;
-        Blocks.hyperProcessor.buildVisibility = BuildVisibility.hidden;
     }
 }
