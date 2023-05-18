@@ -1,6 +1,8 @@
 package viscott.content.shootpatterns;
 
 import arc.util.Log;
+import arc.util.Nullable;
+import mindustry.entities.pattern.ShootAlternate;
 import mindustry.entities.pattern.ShootPattern;
 import mindustry.entities.pattern.ShootSpread;
 
@@ -27,18 +29,10 @@ public class CyclicShootPattern extends ShootPattern {
      * sets how many shots should be called per cycle done
      */
 
-
     @Override
-    public void shoot(int totalShots, BulletHandler handler) {
-        int Cycle = 0;
-        int maxSum = (int)((maxCycleIteration + 1) / 2f * (maxCycleIteration*shots));
-        int cutShots = totalShots % maxSum;
-        while(Cycle < maxCycleIteration)
-        {
-            int sum = (int)(Cycle / 2f * (++Cycle*shots));
-            if (cutShots == sum)
-                break;
-        }
+    public void shoot(int totalShots, BulletHandler handler,@Nullable Runnable totalShotsIncrement) {
+        int Cycle = totalShots % maxCycleIteration + 1;
+        totalShotsIncrement.run();
         float dynamicspread = spread / (shots * Cycle);
         int allShots = Cycle * shots;
         for (int i = 0; i < allShots; i++) {

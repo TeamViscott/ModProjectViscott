@@ -1,8 +1,6 @@
 package viscott.content;
 
 import arc.graphics.Color;
-import arc.graphics.g2d.TextureAtlas;
-import arc.struct.EnumSet;
 import arc.struct.Seq;
 import mindustry.content.Fx;
 import mindustry.content.Items;
@@ -22,7 +20,6 @@ import mindustry.gen.Sounds;
 import mindustry.graphics.Layer;
 import mindustry.graphics.Pal;
 import mindustry.type.Category;
-import mindustry.type.StatusEffect;
 import mindustry.type.Weapon;
 import mindustry.type.unit.MissileUnitType;
 import mindustry.world.Block;
@@ -31,9 +28,7 @@ import mindustry.world.blocks.defense.turrets.ItemTurret;
 import mindustry.world.blocks.defense.turrets.LiquidTurret;
 import mindustry.world.blocks.defense.turrets.PowerTurret;
 import mindustry.world.draw.DrawTurret;
-import mindustry.world.meta.BlockFlag;
 import mindustry.world.meta.BuildVisibility;
-import viscott.content.shootpatterns.AlternateShootPatternTurret;
 import viscott.content.shootpatterns.CyclicShootPattern;
 import viscott.utilitys.PvUtil;
 
@@ -1144,7 +1139,6 @@ public class PvTurrets{
         {{
             requirements(Category.turret,with(PvItems.zirconium, 120,PvItems.lithium,100,PvItems.platinum,50,silicon,200)); //Todo 2
             localizedName = "Nuero";
-            shoot = new AlternateShootPatternTurret(20,2);
             reload = 4*60;
             inaccuracy = 2;
             recoilTime = 10;
@@ -1156,6 +1150,7 @@ public class PvTurrets{
             recoil = 8;
             heatRequirement = 8;
             maxHeatEfficiency = 4;
+            shootCone = 30;
             ammo(
                     PvItems.carbonFiber,new BasicBulletType(0,0)
                     {{
@@ -1168,7 +1163,7 @@ public class PvTurrets{
                         spawnUnit = new MissileUnitType("nuero-missile"){{
                             speed = 6.2f;
                             maxRange = 6f;
-                            lifetime = PvUtil.GetRange(this.speed,129)+30;
+                            lifetime = PvUtil.GetRange(this.speed,129)+20;
                             outlineColor = Pal.darkOutline;
                             engineColor = trailColor = Pal.redLight;
                             engineLayer = Layer.effect;
@@ -1236,33 +1231,34 @@ public class PvTurrets{
                         }};
                     }}
             );
+
+            shoot = new ShootAlternate(20);
+            shoot.shotDelay = 10;
+            shoot.shots = 4;
+            recoils = 2;
             drawer = new DrawTurret(PvUtil.GetName("Pov")){{
+
+                for(int i = 0; i < 2; i++){
+                    int f = i;
+                    parts.add(new RegionPart("-barrel-" + (i == 0 ? "l" : "r")){{
+                        progress = PartProgress.recoil;
+                        heatProgress = PartProgress.recoil;
+                        heatColor = Color.valueOf("ff6214");
+                        mirror = false;
+                        recoilIndex = f;
+                        under = false;
+                        moveY = -4f;
+                    }});
+                }
                 parts.addAll(
                         Seq.with(
-                                //Arms and Barrels
-                                new RegionPart("-l"){{
-                                    progress = PartProgress.recoil.mul(((AlternateShootPatternTurret)shoot).barrelPos.Run(0));
-                                    heatProgress = PartProgress.recoil;
-                                    heatColor = Color.valueOf("ff6214");
-                                    mirror = false;
-                                    under = false;
-                                    moveY = -4f;
-                                }},
-                                new RegionPart("-r"){{
-                                    progress = PartProgress.recoil.mul(((AlternateShootPatternTurret)shoot).barrelPos.Run(1));
-                                    heatProgress = PartProgress.recoil;
-                                    heatColor = Color.valueOf("ff6214");
-                                    mirror = false;
-                                    under = false;
-                                    moveY = -4f;
-                                }},
                                 new RegionPart("-top"){{
                                     progress = PartProgress.recoil;
                                     heatProgress = PartProgress.recoil;
                                     heatColor = Color.valueOf("ff6214");
                                     mirror = false;
                                     under = false;
-                                    moveY = -4f;
+                                    moveY = 0f;
                                     moveX = 0f;
                                     moveRot = 0;
                                 }}
@@ -1270,6 +1266,7 @@ public class PvTurrets{
                 );
             }
             };
+            limitRange();
         }};
         hel = new LiquidTurret("hel")
         {
@@ -1724,7 +1721,7 @@ public class PvTurrets{
         {{
             requirements(Category.turret,with(PvItems.platinum, 200,PvItems.erbium,600,PvItems.carbonFiber,50,PvItems.nobelium,500,silicon,500)); //Todo 2
             localizedName = "Shuttle";
-            shoot = new AlternateShootPatternTurret(8,2);
+            shoot = new ShootAlternate(8);
             reload = 60f/4.6f;
             inaccuracy = 2;
             size = 6;
@@ -1734,6 +1731,7 @@ public class PvTurrets{
             range = 87*8;
             shootY = 16;
             recoil = 4;
+            recoils = 2;
             ammo(
                     PvItems.carbonFiber,new BasicBulletType(8,200)
                     {{
@@ -1779,18 +1777,20 @@ public class PvTurrets{
                         Seq.with(
                                 //Arms and Barrels
                                 new RegionPart("-l1"){{
-                                    progress = PartProgress.recoil.mul(((AlternateShootPatternTurret)shoot).barrelPos.Run(0));
+                                    progress = PartProgress.recoil;
                                     heatProgress = PartProgress.recoil;
                                     heatColor = Color.valueOf("ff6214");
                                     mirror = false;
+                                    recoilIndex = 0;
                                     under = false;
                                     moveY = -6f;
                                 }},
                                 new RegionPart("-r1"){{
-                                    progress = PartProgress.recoil.mul(((AlternateShootPatternTurret)shoot).barrelPos.Run(1));
+                                    progress = PartProgress.recoil;
                                     heatProgress = PartProgress.recoil;
                                     heatColor = Color.valueOf("ff6214");
                                     mirror = false;
+                                    recoilIndex = 1;
                                     under = false;
                                     moveY = -6f;
                                 }},
@@ -1893,7 +1893,7 @@ public class PvTurrets{
         {{
             requirements(Category.turret,BuildVisibility.sandboxOnly,with(PvItems.platinum, 1000,PvItems.erbium,1000,PvItems.carbonFiber,1000,PvItems.nobelium,1000,silicon,1000)); //Todo 2
             localizedName = "X-terminium";
-            shoot = new AlternateShootPatternTurret(20,2);
+            shoot = new ShootAlternate(20);
             reload = 200;
             inaccuracy = 2;
             recoilTime = 30;
@@ -1914,47 +1914,70 @@ public class PvTurrets{
                         fragRandomSpread = 0;
                         fragSpread = 36;
                         fragVelocityMin = 1;
-                        fragOnHit = false;
                         trailLength = 16;
                         lifetime = PvUtil.GetRange(2, 100);
                         frontColor = backColor = trailColor = Pal.slagOrange;
                         fragBullet = new BasicBulletType(3,200){{
-                            fragBullets = 3;
+                            drag = 1/100f;
+                            lifetime = 60;
+                            trailLength = 6;
+                            frontColor = backColor = trailColor = Pal.redDust;
+                            fragBullets = 10;
                             fragRandomSpread = 0;
                             fragSpread = 36;
                             fragVelocityMin = 1;
-                            fragOnHit = false;
-                            drag = 1/100f;
-                            lifetime = 120;
-                            trailLength = 8;
-                            frontColor = backColor = trailColor = Pal.redDust;
                             fragBullet = new BasicBulletType(5, 300){{
                                 frontColor = backColor = trailColor = Pal.redderDust;
                                 trailLength = 32;
+                                lifetime = 120;
                                 homingPower = 1;
                                 homingRange = 100*8;
-                                lifetime = PvUtil.GetRange(5, 100);
+                                fragBullets = 5;
+                                fragRandomSpread = 0;
+                                fragSpread = 36;
+                                fragVelocityMin = 1;
+                                fragBullet = new BasicBulletType(5, 300){{
+                                    frontColor = backColor = trailColor = Pal.redderDust;
+                                    trailLength = 32;
+                                    lifetime = 60;
+                                    homingPower = 1;
+                                    homingRange = 100*8;
+                                    fragBullets = 4;
+                                    fragRandomSpread = 0;
+                                    fragSpread = 36;
+                                    fragVelocityMin = 1;
+                                    fragBullet = new BasicBulletType(5, 300){{
+                                        frontColor = backColor = trailColor = Pal.redderDust;
+                                        trailLength = 32;
+                                        lifetime = 30;
+                                        homingPower = 1;
+                                        homingRange = 100*8;
+                                    }};
+                                }};
                             }};
                         }};
                     }}
             );
+            recoils = 2;
             drawer = new DrawTurret(PvUtil.GetName("Pov")){{
                 parts.addAll(
                         Seq.with(
                                 //Arms and Barrels
                                 new RegionPart("-l"){{
-                                    progress = PartProgress.recoil.mul(((AlternateShootPatternTurret)shoot).barrelPos.Run(0));
+                                    progress = PartProgress.recoil;
                                     heatProgress = PartProgress.recoil;
                                     heatColor = Color.valueOf("ff6214");
                                     mirror = false;
+                                    recoilIndex = 0;
                                     under = false;
                                     moveY = -4f;
                                 }},
                                 new RegionPart("-r"){{
-                                    progress = PartProgress.recoil.mul(((AlternateShootPatternTurret)shoot).barrelPos.Run(1));
+                                    progress = PartProgress.recoil;
                                     heatProgress = PartProgress.recoil;
                                     heatColor = Color.valueOf("ff6214");
                                     mirror = false;
+                                    recoilIndex = 0;
                                     under = false;
                                     moveY = -4f;
                                 }},
