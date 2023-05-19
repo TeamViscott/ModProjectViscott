@@ -714,11 +714,17 @@ public class PvBlocks {
                     liquidCapacity = 200;
                     selectionColumns = 3;
                     plans = new Seq<>().with(
+                        //Particle Path
                         new UnitPlan(PvUnits.particle,15*60f,with(PvItems.lithium,20,Items.silicon,10)),
                         new UnitPlan(PvUnits.snippet,30*60f,with(PvItems.lithium,50,Items.silicon,25,PvItems.nobelium,10)),
                         new UnitPlan(PvUnits.fragment,45*60f,with(PvItems.lithium,80,Items.silicon,50,PvItems.nobelium,20,PvItems.carbonFiber,10)),
+                        //Container Path
                         new UnitPlan(PvUnits.pocket,15*60f,with(PvItems.zirconium,40,PvItems.lithium,20)),
-                        new UnitPlan(PvUnits.container,30*60f,with(PvItems.zirconium,100,PvItems.lithium,50,Items.silicon,20))
+                        new UnitPlan(PvUnits.container,30*60f,with(PvItems.zirconium,100,PvItems.lithium,50,Items.silicon,20)),
+                        new UnitPlan(PvUnits.vault,45*60f,with(PvItems.zirconium,120,PvItems.lithium,100,Items.silicon,100)),
+                        //Naval Path
+                        new UnitPlan(PvUnits.rivulet,15*60f,with(PvItems.zirconium,50,Items.silicon,30)),
+                        new UnitPlan(PvUnits.bourn,30*60f,with(PvItems.zirconium,100,Items.silicon,80,PvItems.nobelium,40,PvItems.lithium,100))
                     );
                 }};
                 eliteSpawnPad = new BulkUnitFactory("elite-spawn-pad")
@@ -733,13 +739,19 @@ public class PvBlocks {
                     selectionColumns = 5;
                     maxAmount = 20;
                     plans = new Seq<>().with(
+                            //Particle Path
                             new UnitPlan(PvUnits.particle,15*60f,with(PvItems.lithium,20,Items.silicon,10)),
                             new UnitPlan(PvUnits.snippet,30*60f,with(PvItems.lithium,50,Items.silicon,25,PvItems.nobelium,10)),
                             new UnitPlan(PvUnits.fragment,45*60f,with(PvItems.lithium,80,Items.silicon,50,PvItems.nobelium,20,PvItems.carbonFiber,10)),
                             new UnitPlan(PvUnits.excerpt,45*60f,with(PvItems.lithium,200,Items.silicon,120,PvItems.nobelium,60,PvItems.carbonFiber,30,PvItems.platinum,50)),
                             new UnitPlan(PvUnits.pericope,45*60f,with(PvItems.lithium,300,Items.silicon,200,PvItems.nobelium,100,PvItems.carbonFiber,50,PvItems.platinum,100,PvItems.zirconium,500)),
+                            //Container Path
                             new UnitPlan(PvUnits.pocket,15*60f,with(PvItems.zirconium,40,PvItems.lithium,20)),
-                            new UnitPlan(PvUnits.container,30*60f,with(PvItems.zirconium,100,PvItems.lithium,50,Items.silicon,20))
+                            new UnitPlan(PvUnits.container,30*60f,with(PvItems.zirconium,100,PvItems.lithium,50,Items.silicon,20)),
+                            new UnitPlan(PvUnits.vault,45*60f,with(PvItems.zirconium,120,PvItems.lithium,100,Items.silicon,100)),
+                            //Naval Path
+                            new UnitPlan(PvUnits.rivulet,15*60f,with(PvItems.zirconium,50,Items.silicon,30)),
+                            new UnitPlan(PvUnits.bourn,30*60f,with(PvItems.zirconium,100,Items.silicon,80,PvItems.nobelium,40,PvItems.lithium,100))
                     );
                 }};
                 densePayloadConveyor = new PayloadConveyor("dense-payload-conveyor")

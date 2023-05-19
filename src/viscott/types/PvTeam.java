@@ -10,6 +10,8 @@ import mindustry.game.Team;
 import viscott.content.PvPlanets;
 import viscott.world.teamResearch;
 
+import java.io.Serializable;
+
 public class PvTeam extends Team {
 
     public TechTree.TechNode techTree = null;

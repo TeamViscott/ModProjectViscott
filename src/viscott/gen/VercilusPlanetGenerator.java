@@ -37,9 +37,7 @@ import viscott.content.PvBlocks;
 
 import static mindustry.Vars.*;
 /* SerpuloPlanetGenerator */
-public class VercilusPlanetGenerator extends PlanetGenerator {
-    public static boolean alt = false;
-    BaseGenerator basegen = new BaseGenerator();
+public class VercilusPlanetGenerator extends SerpuloPlanetGenerator {
     float scl = 5f;
     float waterOffset = 0.07f;
     boolean genLakes = false;
@@ -66,29 +64,6 @@ public class VercilusPlanetGenerator extends PlanetGenerator {
         if (Simplex.noise3d(seed,7,0.5f,1f/3f,position.x,position.y,position.z)*1f < 0.5f)
             return Pal.darkFlame;
         return Pal.redLight;
-    }
-
-    @Override
-    public void generate(Tiles tiles, Sector sec, int seed){
-        this.tiles = tiles;
-        this.seed = seed + baseSeed;
-        this.sector = sec;
-        this.width = tiles.width;
-        this.height = tiles.height;
-        this.rand.setSeed(sec.id + seed + baseSeed);
-
-        TileGen gen = new TileGen();
-        for(int y = 0; y < height; y++){
-            for(int x = 0; x < width; x++){
-                gen.reset();
-                Vec3 position = sector.rect.project(x / (float)tiles.width, y / (float)tiles.height);
-
-                genTile(position, gen);
-                tiles.set(x, y, new Tile(x, y, gen.floor, gen.overlay, gen.block));
-            }
-        }
-
-        generate(tiles);
     }
 
 }

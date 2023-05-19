@@ -7,6 +7,7 @@ import arc.graphics.g2d.TextureRegion;
 import arc.math.geom.Vec2;
 import arc.util.Log;
 import arc.util.Scaling;
+import mindustry.Vars;
 import mindustry.game.Team;
 import mindustry.game.Teams;
 import viscott.types.PvTeam;

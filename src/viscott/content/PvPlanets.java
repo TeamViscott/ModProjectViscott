@@ -44,15 +44,7 @@ public class PvPlanets{
             iconColor = atmosphereColor = Pal.heal;
             alwaysUnlocked = true;
             ruleSetter = r -> {
-                r.waveTeam = PvTeams.Mortikai;
-                r.defaultTeam = PvTeams.Xeal;
-                r.placeRangeCheck = false;
-                r.showSpawns = true;
-                r.lighting = true;
-                r.weather.add(new Weather.WeatherEntry(Weathers.rain,10,60,10,60));
-                r.coreDestroyClear = true;
             };
-            clearSectorOnLose = true;
         }};
     }
 }

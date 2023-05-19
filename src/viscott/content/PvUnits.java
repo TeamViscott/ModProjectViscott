@@ -383,7 +383,6 @@ public class PvUnits {
                         mirror = false;
                         recoil = 3;
                         inaccuracy = 5;
-                        shootSound = Sounds.laserbeam;
                         bullet = new SapBulletType()
                         {{
                             incendChance = 0;
@@ -455,7 +454,6 @@ public class PvUnits {
                         mirror = true;
                         recoil = 3;
                         inaccuracy = 5;
-                        shootSound = Sounds.laserbeam;
                         bullet = new LaserBoltBulletType(5.2f, 67){{
                             lifetime = 60f;
                             trailWidth = 1.8f;
