@@ -45,12 +45,14 @@ public class PvSoundControl extends SoundControl {
     }
     @Override
     public void playRandom(){
-        //playOnce(PvMusics.orbit);
+        playOnce(PvMusics.orbit);
+        /*
         if (Vars.state.getPlanet() == PvPlanets.vercilus)
             playOnce(PvMusics.orbit);
         else {
             super.playRandom();
         }
+         */
     }
 
     protected void playOnce(Music music){

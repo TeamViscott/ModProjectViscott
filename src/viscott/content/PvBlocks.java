@@ -233,7 +233,7 @@ public class PvBlocks {
                     speed = 0;
                 }};
                 microTransportGate = new MassDriver("micro-transport-gate"){{
-                    requirements(Category.distribution, with(PvItems.zirconium, 20, PvItems.erbium, 30));
+                    requirements(Category.distribution, with(PvItems.zirconium, 20));
                     size = 1;
                     localizedName = "Micro transport gate";
                     health = 180;
@@ -289,7 +289,7 @@ public class PvBlocks {
                 }};
                 microLiquidTransportGate = new LiquidBridge("micro-liquid-transport-gate"){{
                     //todo adjust items
-                requirements(Category.liquid, with(PvItems.zirconium, 50, PvItems.erbium, 25, PvItems.lithium, 10));
+                requirements(Category.liquid, with(PvItems.zirconium, 50, PvItems.lithium, 10));
                 size = 1;
                 localizedName = "Micro liquid transport gate";
                 health = 180;
@@ -548,7 +548,7 @@ public class PvBlocks {
                     craftTime = 5.8f*60f;
                     heatRequirement = 6;
                     maxEfficiency = 5;
-                    outputItem = new ItemStack(PvItems.nobelium,3);
+                    outputItem = new ItemStack(PvItems.nobelium,5);
                 }};
                 nitrogenDistiller = new MultiCrafter("nitrogen-distiller")
                 {{
@@ -659,7 +659,7 @@ public class PvBlocks {
                     craftTime = 6.5f * 60f;
                 }};
                 heatPathfinder = new HeatConductor("heat-pathfinder"){{
-                    requirements(Category.crafting, with(PvItems.zirconium, 100, PvItems.carbonFiber, 20));
+                    requirements(Category.crafting, with(PvItems.zirconium, 100));
                     localizedName = "Heat Pathfinder";
                     size = 2;
                     drawer = new DrawMulti(new DrawDefault(), new DrawHeatOutput(), new DrawHeatInput("-heat"));
