@@ -21,10 +21,7 @@ import arc.util.Align;
 import arc.util.Tmp;
 import mindustry.gen.Icon;
 import mindustry.gen.Tex;
-import mindustry.logic.LCanvas;
-import mindustry.logic.LExecutor;
-import mindustry.logic.LStatement;
-import mindustry.logic.LStatements;
+import mindustry.logic.*;
 import mindustry.ui.Styles;
 
 public class PvCanvas extends LCanvas {
@@ -35,6 +32,46 @@ public class PvCanvas extends LCanvas {
     PvCanvas()
     {
         statements = new PvDragLayout();
+    }
+
+    @Override
+    public String save(){
+        Seq<LStatement> st = statements.getChildren().<StatementElem>as().map(s -> s.st);
+        st.each(LStatement::saveUI);
+
+        return LAssembler.write(st);
+    }
+    @Override
+    public void rebuild(){
+        targetWidth = useRows() ? 400f : 900f;
+        float s = pane != null ? pane.getVisualScrollY() : 0f;
+        String toLoad = statements != null ? save() : null;
+
+        clear();
+
+        statements = new PvDragLayout();
+        jumps = new WidgetGroup();
+
+        pane = pane(t -> {
+            t.center();
+            t.add(statements).pad(2f).center().width(targetWidth);
+            t.addChild(jumps);
+
+            jumps.cullable = false;
+        }).grow().get();
+        pane.setFlickScroll(false);
+
+        pane.setScrollYForce(s);
+        pane.updateVisualScroll();
+        //load old scroll percent
+        Core.app.post(() -> {
+            pane.setScrollYForce(s);
+            pane.updateVisualScroll();
+        });
+
+        if(toLoad != null){
+            load(toLoad);
+        }
     }
     @Override
     public void load(String asm){
