@@ -814,7 +814,7 @@ public class PvBlocks {
                 }};
                 coreElevate = new CoreBlock("core-elevate")
                 {{
-                    requirements(Category.effect, with(PvItems.zirconium,5000,PvItems.lithium,4000,Items.silicon,900,PvItems.carbonFiber,500));
+                    requirements(Category.effect, with(PvItems.zirconium,5000,PvItems.lithium,4000,Items.silicon,900,PvItems.nobelium,500));
                     localizedName = "Core Elevate";
                     alwaysUnlocked = true;
                     unitType = PvUnits.infrared;
@@ -877,7 +877,7 @@ public class PvBlocks {
                 }};
                 oilGrinder = new LiquidGrinder("oil-grinder")
                 {{
-                    requirements(Category.production, with(PvItems.zirconium,35,PvItems.lithium,5,Items.silicon,25)); //Todo
+                    requirements(Category.production, with(PvItems.zirconium,35,PvItems.lithium,5,PvItems.platinum,25)); //Todo
                     localizedName = "Oil Grinder";
                     extractedLiquid = new LiquidStack(Liquids.oil,4f);
                     range = 3;
