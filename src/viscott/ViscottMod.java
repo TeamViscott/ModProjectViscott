@@ -12,11 +12,13 @@ import mindustry.entities.part.DrawPart;
 import mindustry.game.EventType;
 import mindustry.graphics.Layer;
 import mindustry.mod.Mod;
+import mindustry.mod.Mods;
 import viscott.content.*;
 import viscott.sounds.PvSoundControl;
 import viscott.types.PvTeam;
 
 import static mindustry.Vars.control;
+import static mindustry.Vars.mods;
 
 public class ViscottMod extends Mod {
 
@@ -63,6 +65,9 @@ public class ViscottMod extends Mod {
     }
     @Override
     public void init(){
+        Mods.LoadedMod tu = mods.locateMod("project-viscott");
+        tu.meta.author = "[crimson]Sprites : [][white]\n [green]Ethanol10[] \n [yellow]ThomasThings[] \n[crimson]Sfx/Music : [][white]\n [cyan]Vdoble MSG[] \n[crimson]Programmers : [white]\n [orange]Si[red]ede[][] \n [orange]Manuwar[] \n [orange][Pseudo3D] MeepOfFaith";
+        tu.meta.description = "[red]Project Viscott[] is a [orange]Mindustry mod[] that tries to add a \n[lime]new Planet[] and intends to give the player a [cyan]new[] and \n[purple]unique[] playing experience.\nIt adds [yellow]5 new Teams[], each with their own tech tree\nTo add to that it has a somewhat interresting progression.";
         super.init();
         overRideOldSound();
         PvUIs.init();

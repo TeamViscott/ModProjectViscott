@@ -1,6 +1,7 @@
 package viscott.content;
 
 import arc.graphics.Color;
+import mindustry.content.Fx;
 import mindustry.entities.bullet.BasicBulletType;
 import mindustry.entities.bullet.BulletType;
 import mindustry.game.Team;
@@ -15,7 +16,7 @@ import viscott.world.statusEffects.StatusEffectStack;
 public class PvStatusEffects {
     public static StatusEffect
     timeWarped,doused, disabled, expent, resiliant, ungratefull, crescendo ,tick ,tock,mend,shield, malfunction,
-    voidShield,voidDecay,frag
+    voidShield,voidDecay,frag,aoe
             ;
     public static void load() {
         timeWarped = new StatusEffectStack("time-warped") {{
@@ -151,6 +152,19 @@ public class PvStatusEffects {
                 trailColor = lightColor = backColor = Pal.heal.cpy().a(0.5f);
                 trailWidth = 1;
                 trailLength = 10;
+            }};
+        }};
+        aoe = new FragStatusEffect("aoe"){{
+            localizedName = "AOE";
+            description = "applies Aoe damage to the unit Bullet's";
+            fragBullets = 1;
+            fragRandomSpread = 0;
+            fragBullet = new BasicBulletType(0,0)
+            {{
+                lifetime = 0;
+                splashDamage = 30;
+                despawnEffect = hitEffect = Fx.explosion;
+                splashDamageRadius = 8*2;
             }};
         }};
     }

@@ -39,7 +39,7 @@ public class PvUnits {
 
         /*Flying Ion Path*/ particle, snippet, fragment, excerpt, pericope,
 
-        /*Xeal Naval Path*/rivulet,bourn,
+        /*Xeal Naval Path*/rivulet,bourn,tributary,
 
         /*Nullis*/
             /*Storage Con Path*/pocket,container,vault,
@@ -1484,6 +1484,69 @@ public class PvUnits {
                     trailWidth = 1.4f;
                     weaveRandom = true;
                     healPercent = 7;
+                    collidesTeam = true;
+                    ammoMultiplier = 2;
+                    /*
+                    fragBullets = 3;
+                    fragBullet = new BasicBulletType(3,5)
+                    {{
+                         width = 7f;
+                         height = 9f;
+                         lifetime = PvUtil.GetRange(3,6);
+                        trailWidth = 1.4f;
+                        trailLength = 10;
+                         trailColor = backColor = lightColor = Pal.heal;
+                         healPercent = 1;
+                    }};
+                     */
+                }};
+            }});
+        }};
+        tributary = new PvUnitType("tributary")
+        {{
+            localizedName = "Tributary";
+            constructor = EntityMapping.map("risso");
+            canBoost = true;
+            speed = 6.8f/7.5f;
+            engineOffset = 8;
+            drag = 0.13f;
+            buildSpeed = 3f;
+            buildBeamOffset = 0;
+            abilities.add(new RepairFieldAbility(10,720,8*20),
+                    new StatusFieldAbility(PvStatusEffects.aoe,240,180,8*20)
+            );
+            hitSize = 10f;
+            health = 2400;
+            armor = 6;
+            accel = 0.4f;
+            rotateSpeed = 3.3f;
+            faceTarget = false;
+
+            weapons.add(new Weapon(name+"-weapon"){{
+                reload = 60f/1.2f;
+                shoot = new ShootSpread(3,0);
+                x = 0f;
+                shootY = 2f;
+                hitSize = 2*8;
+                inaccuracy = 15;
+                y = -4f;
+                recoil = 2;
+                rotate = true;
+                mirror = false;
+                top = true;
+                ejectEffect = Fx.casing1;
+                bullet = new BasicBulletType(3f, 30){{
+                    width = 7f;
+                    height = 9f;
+                    lifetime = PvUtil.GetRange(3,22);
+                    trailColor = backColor = lightColor = Pal.heal;
+                    trailLength = 30;
+                    weaveScale = 2;
+                    weaveMag = 2;
+                    homingPower = 0.008f;
+                    trailWidth = 1.4f;
+                    weaveRandom = true;
+                    healPercent = 5;
                     collidesTeam = true;
                     ammoMultiplier = 2;
                     /*

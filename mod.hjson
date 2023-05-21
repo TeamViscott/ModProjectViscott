@@ -5,13 +5,13 @@ displayName: "Project Viscott"
 name: "project-viscott"
 
 #your name
-author: "Siede & Manuwar & Pew"
+author: "Sprites : Ethanol10 ,ThomasThings \nSfx/Music : Vdoble MSG \nProgrammers : Siede ,Manuwar \n[Pseudo3D] MeepOfFaith"
 
 #the fully qualified main class of the mod
 main: "viscott.ViscottMod"
 
 #the mod description as seen in the mod dialog
-description: "Project viscott is a mindustry mod in development."
+description: "Project viscott is a mindustry mod that tries to add a \nnew Planet and intends to give the player a new and \nunique playing experience..."
 
 #the mod version
 version: 0.1
