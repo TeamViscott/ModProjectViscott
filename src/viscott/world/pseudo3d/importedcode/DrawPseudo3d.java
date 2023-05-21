@@ -13,7 +13,7 @@ import mindustry.*;
 import static arc.Core.*;
 import static arc.math.Mathf.*;
 
-public class DrawPseudo3D{
+public class DrawPseudo3d {
     /** Translates horizontal distance in tiles to camera offset height. Somewhat arbitrary. */
     public static final float horiToVerti = 1f/48f;
     private static final Color tmpCol = new Color();

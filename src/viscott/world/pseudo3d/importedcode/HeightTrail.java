@@ -7,7 +7,7 @@ import arc.struct.*;
 import arc.util.*;
 import mindustry.graphics.*;
 
-import static viscott.world.pseudo3d.importedcode.DrawPseudo3D.*;
+import static viscott.world.pseudo3d.importedcode.DrawPseudo3d.*;
 
 public class HeightTrail extends Trail{
     protected float lastH = 0f;

@@ -15,10 +15,8 @@ import mindustry.entities.bullet.*;
 import mindustry.gen.*;
 import mindustry.graphics.*;
 
-import viscott.world.pseudo3d.importedcode.PMDrawf;
-
 import static mindustry.Vars.*;
-import static viscott.world.pseudo3d.importedcode.DrawPseudo3D.*;
+import static viscott.world.pseudo3d.importedcode.DrawPseudo3d.*;
 
 public class BallisticMissileBulletType extends BulletType{
     public boolean drawZone = true;
@@ -196,7 +194,7 @@ public class BallisticMissileBulletType extends BulletType{
         Draw.z(shadowLayer);
         Draw.scl(1f + hScl);
         Drawf.shadow(region, shX, shY, shadowRot(b, shX, shY));
-        Draw.z(layer + DrawPseudo3D.layerOffset(x, y)); //Unsure that the trail is drawn underneath.
+        Draw.z(layer + DrawPseudo3d.layerOffset(x, y)); //Unsure that the trail is drawn underneath.
         drawTrail(b);
         Draw.scl(1f + hMul(hScl));
         Draw.z(layer + hScl / 100f);

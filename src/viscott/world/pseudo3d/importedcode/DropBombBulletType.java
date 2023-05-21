@@ -13,7 +13,7 @@ import mindustry.gen.*;
 import mindustry.graphics.*;
 
 import static mindustry.Vars.headless;
-import static viscott.world.pseudo3d.importedcode.DrawPseudo3D.*;
+import static viscott.world.pseudo3d.importedcode.DrawPseudo3d.*;
 
 public class DropBombBulletType extends BulletType{
     public float height = 1f;
@@ -104,7 +104,7 @@ public class DropBombBulletType extends BulletType{
         Draw.z(shadowLayer);
         Draw.scl(1f + hScl * shadowGrowth);
         Drawf.shadow(region, shX, shY, 45f);
-        Draw.z(layer + DrawPseudo3D.layerOffset(b.x, b.y) + hScl / 100f);
+        Draw.z(layer + DrawPseudo3d.layerOffset(b.x, b.y) + hScl / 100f);
         Draw.scl();
         drawTrail(b);
         Draw.scl(1f + hMul(h));
