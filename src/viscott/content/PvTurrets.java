@@ -1161,6 +1161,7 @@ public class PvTurrets{
                         hitShake = 1f;
                         homingRange = 24;
                         homingPower = 0.03f;
+                        speed = 1;
                         height = 24f;
                         trailLength = 25;
                         trailWidth = 1f;
