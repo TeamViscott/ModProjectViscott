@@ -14,7 +14,7 @@ public class PvMusics {
 
     public static void load()
     {
-        Core.assets.load("sounds/outer.wav", Music.class).loaded = (a) -> {
+        Core.assets.load("sounds/outer.ogg", Music.class).loaded = (a) -> {
             orbit = a;
         };
     }
