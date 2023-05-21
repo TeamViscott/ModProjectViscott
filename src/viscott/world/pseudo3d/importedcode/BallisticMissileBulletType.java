@@ -58,7 +58,7 @@ public class BallisticMissileBulletType extends BulletType{
         scaledSplashDamage = true;
         status = StatusEffects.blasted;
     }
-
+    @Override
 
         super.init();
 
