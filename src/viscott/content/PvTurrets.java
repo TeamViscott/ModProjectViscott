@@ -1164,6 +1164,7 @@ public class PvTurrets{
                         speed = 4;
                         lifetime = 20;
                         height = 24f;
+                        //tfec
                         trailLength = 25;
                         trailWidth = 1f;
                         trailColor = targetColor = Color.yellow;
