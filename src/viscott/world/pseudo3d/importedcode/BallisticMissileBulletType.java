@@ -58,7 +58,11 @@ public class BallisticMissileBulletType extends BulletType{
         scaledSplashDamage = true;
         status = StatusEffects.blasted;
     }
-    @Override
+     @Override
+    public void init(){
+        if(shadowOffset < 0) shadowOffset = height * 2f;
+        if(shadowGrowth < 0) shadowGrowth = height(height) / 2f;
+        if(shrinkRad < 0) shrinkRad = zoneRadius / 6f;
 
         super.init();
 
