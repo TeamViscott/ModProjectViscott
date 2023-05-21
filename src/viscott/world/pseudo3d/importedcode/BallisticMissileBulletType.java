@@ -14,14 +14,8 @@ import mindustry.entities.*;
 import mindustry.entities.bullet.*;
 import mindustry.gen.*;
 import mindustry.graphics.*;
-import mindustry.*;
-import mindustry.content.*;
-import mindustry.content.effects.*;
-import mindustry.graphics.*;
-import mindustry.util.*;
-import mindustry.world.blocks.defence.*;
-import mindustry.world.blocks.defence.ShieldProjector.*;
-import viscott.world.pseudo3d.importedcode;
+
+import viscott.world.pseudo3d.importedcode.PMDrawf;
 
 import static mindustry.Vars.*;
 import static viscott.world.pseudo3d.importedcode.DrawPseudo3D.*;
@@ -31,13 +25,12 @@ public class BallisticMissileBulletType extends BulletType{
     public float height = 1f, heightRnd;
     public float zoneLayer = Layer.bullet - 1f, shadowLayer = Layer.flyingUnit + 1;
     public float targetRadius = 1f, zoneRadius = 3f * 8f, shrinkRad = -1f;
-    public float shadowOffset = -1f;
+    public float shadowOffset = -1f, shadowGrowth = -1f;
     public float splitTime = 0.5f;
     public float splitLifeMaxOffset = 10f;
     public Color targetColor = Color.red;
     public String sprite;
     public Effect blockEffect = MissileFx.missileBlocked;
-    public float fartVolume = 50f;
     public boolean spinShade = true, vertical = false;
     public Interp hInterp = PMInterp.flightArc, posInterp = Interp.pow2In, rotInterp = PMInterp.sineInverse;
 
@@ -268,19 +261,6 @@ public class BallisticMissileBulletType extends BulletType{
     public void despawned(Bullet b){
         if(fragBullet instanceof BallisticMissileBulletType){
             createFrags(b, b.x, b.y);
-            return;
-        }
-
-        ShieldBuild shield = (ShieldBuild)Units.findEnemyTile(b.team, b.x, b.y, ShieldProjector.maxShieldRange, build -> build instanceof ShieldBuild s && !s.broken && PMMathf.isInSquare(s.x, s.y, s.realRadius(), b.x, b.y));
-        if(shield != null){ //Ballistic Shield blocks the missile
-            blockEffect.at(b.x, b.y, b.rotation(), hitColor);
-            despawnSound.at(b);
-
-            Effect.shake(despawnShake, despawnShake, b);
-
-            shield.hit = 1f;
-            shield.buildup += (b.damage() + splashDamage * shield.realStrikeBlastResistance() * b.damageMultiplier()) * shield.warmup;
-
             return;
         }
 

@@ -805,8 +805,8 @@ public class PvTurrets{
             range = 40f;
             scaledHealth = 250;
             ammo(
-                    Liquids.water, new BasicBulletType(100, 10){{
-                        lifetime = PvUtil.GetRange(speed,5);
+                    Liquids.water, new BasicBulletType(7, 10){{
+                        lifetime = PvUtil.GetRange(this.speed,5);
                         hitSize = 8;
                         statusDuration = 1200;
                         status = PvStatusEffects.timeWarped;
