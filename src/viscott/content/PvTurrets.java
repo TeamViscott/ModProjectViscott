@@ -31,9 +31,11 @@ import mindustry.world.draw.DrawTurret;
 import mindustry.world.meta.BuildVisibility;
 import viscott.content.shootpatterns.CyclicShootPattern;
 import viscott.utilitys.PvUtil;
+import viscott.world.pseudo3d.importedcode.BallisticMissileBulletType;
 
 import static mindustry.content.Items.silicon;
 import static mindustry.type.ItemStack.with;
+import static viscott.utilitys.PvUtil.GetName;
 
 public class PvTurrets{
     public static Block
@@ -112,7 +114,7 @@ public class PvTurrets{
             inaccuracy = 1f;
             coolant = consumeCoolant(0.1f);
             researchCostMultiplier = 0.05f;
-            drawer = new DrawTurret(PvUtil.GetName("Pov")){{
+            drawer = new DrawTurret(GetName("Pov")){{
                 parts.addAll(
                         parts.add(
                                 new RegionPart("-l"){{
@@ -224,7 +226,7 @@ public class PvTurrets{
                 fragLifeMin = 0.5f;
             }};
 
-            drawer = new DrawTurret(PvUtil.GetName("Pov")){{
+            drawer = new DrawTurret(GetName("Pov")){{
                 parts.addAll(
                         parts.add(
                                 new RegionPart("-l"){{
@@ -412,7 +414,7 @@ public class PvTurrets{
                     }}
             );
 
-            drawer = new DrawTurret(PvUtil.GetName("Pov")){{
+            drawer = new DrawTurret(GetName("Pov")){{
                 parts.addAll(
                         parts.add(
                                 new RegionPart("-l"){{
@@ -465,7 +467,7 @@ public class PvTurrets{
 
                     }}
             );
-            drawer = new DrawTurret(PvUtil.GetName("Pov"));
+            drawer = new DrawTurret(GetName("Pov"));
         }};
         hourglass = new ItemTurret("hourglass")
         {{
@@ -488,7 +490,7 @@ public class PvTurrets{
                         despawnEffect = hitEffect = PvEffects.slowEnergeticEffect;
                     }}
             );
-            drawer = new DrawTurret(PvUtil.GetName("Pov")){{
+            drawer = new DrawTurret(GetName("Pov")){{
                 parts.addAll(
                         parts.add(
                                 new RegionPart("-l"){{
@@ -553,7 +555,7 @@ public class PvTurrets{
                         trailColor = backColor = Pal.gray;
                     }}
             );
-            drawer = new DrawTurret(PvUtil.GetName("Pov")){{
+            drawer = new DrawTurret(GetName("Pov")){{
                 parts.addAll(
                         parts.add(
                                 new RegionPart("-l"){{
@@ -637,7 +639,7 @@ public class PvTurrets{
                         }};
                     }}
             );
-            drawer = new DrawTurret(PvUtil.GetName("Pov")){{
+            drawer = new DrawTurret(GetName("Pov")){{
                 parts.addAll(
                         parts.add(
                                 new RegionPart("-l"){{
@@ -703,7 +705,7 @@ public class PvTurrets{
 
                 }};
             }};
-            drawer = new DrawTurret(PvUtil.GetName("Pov")){{
+            drawer = new DrawTurret(GetName("Pov")){{
                 parts.addAll(
                         parts.add(
                                 new RegionPart("-l"){{
@@ -759,7 +761,7 @@ public class PvTurrets{
                         lifetime = PvUtil.GetRange(this.speed,25);
                     }}
             );
-            drawer = new DrawTurret(PvUtil.GetName("Pov")){{
+            drawer = new DrawTurret(GetName("Pov")){{
                 parts.addAll(
                         parts.add(
                                 new RegionPart("-barrel"){{
@@ -812,7 +814,7 @@ public class PvTurrets{
                         status = PvStatusEffects.timeWarped;
                     }}
             );
-            drawer = new DrawTurret(PvUtil.GetName("Pov")){{
+            drawer = new DrawTurret(GetName("Pov")){{
 
             }};
         }};
@@ -888,7 +890,7 @@ public class PvTurrets{
             inaccuracy = 1f;
             coolant = consumeCoolant(0.1f);
             researchCostMultiplier = 0.05f;
-            drawer = new DrawTurret(PvUtil.GetName("Pov")){{
+            drawer = new DrawTurret(GetName("Pov")){{
                 parts.addAll(
                         parts.add(
                                 new RegionPart("-l"){{
@@ -1003,7 +1005,7 @@ public class PvTurrets{
                 fragLifeMin = 0.5f;
             }};
 
-            drawer = new DrawTurret(PvUtil.GetName("Pov")){{
+            drawer = new DrawTurret(GetName("Pov")){{
                 parts.addAll(
                         parts.add(
                                 new RegionPart("-barrel"){{
@@ -1050,7 +1052,7 @@ public class PvTurrets{
                         lifetime = PvUtil.GetRange(this.speed,60);
                     }}
             );
-            drawer = new DrawTurret(PvUtil.GetName("Pov")){{
+            drawer = new DrawTurret(GetName("Pov")){{
                 parts.addAll(
                         parts.add(
                                 new RegionPart("-down"){{
@@ -1108,7 +1110,7 @@ public class PvTurrets{
                         maxHeatEfficiency = 7;
                         buildingDamageMultiplier = 0.001f;
                     }};
-            drawer = new DrawTurret(PvUtil.GetName("Pov")){{
+            drawer = new DrawTurret(GetName("Pov")){{
                 parts.addAll(
                         parts.add(
                                 new RegionPart("-l"){{
@@ -1152,91 +1154,25 @@ public class PvTurrets{
             maxHeatEfficiency = 4;
             shootCone = 30;
             ammo(
-                    PvItems.carbonFiber,new BasicBulletType(0,0)
-                    {{
-                        shoot.shotDelay = 10;
-                        shoot.shots = 4;
-                        shootEffect = Fx.shootSmall;
-                        smokeEffect = Fx.shootSmallSmoke;
-                        ammoMultiplier = 1f;
+                    PvItems.carbonFiber, new BallisticMissileBulletType(GetName("nuero-missile")){{
+                        splashDamage = 123f;
+                        splashDamageRadius = 73f;
+                        buildingDamageMultiplier = 0.5f;
+                        hitShake = 1f;
+                        homingRange = 24;
+                        homingPower = 0.03f;
+                        height = 24f;
+                        trailLength = 25;
+                        trailWidth = 1f;
+                        trailColor = targetColor = Color.yellow;
+                    }});
 
-                        spawnUnit = new MissileUnitType("nuero-missile"){{
-                            speed = 6.2f;
-                            maxRange = 6f;
-                            lifetime = PvUtil.GetRange(this.speed,129)+20;
-                            outlineColor = Pal.darkOutline;
-                            engineColor = trailColor = Pal.redLight;
-                            engineLayer = Layer.effect;
-                            engineSize = 5.4f;
-                            engineOffset = 10f;
-                            rotateSpeed = 0.5f;
-                            trailLength = 18;
-                            missileAccelTime = 50f;
-                            lowAltitude = true;
-                            loopSound = Sounds.missileTrail;
-                            loopSoundVolume = 0.6f;
-                            deathSound = Sounds.largeExplosion;
-                            targetAir = false;
-
-                            fogRadius = 6f;
-
-                            health = 210;
-
-                            weapons.add(new Weapon(){{
-                                shootCone = 360f;
-                                mirror = false;
-                                reload = 1f;
-                                deathExplosionEffect = Fx.massiveExplosion;
-                                shootOnDeath = true;
-                                shake = 30f;
-                                bullet = new ExplosionBulletType(124f, 9.2f*8f){{
-                                    hitColor = Pal.missileYellow;
-                                    shootEffect = new MultiEffect(Fx.massiveExplosion, Fx.scatheExplosion, Fx.scatheLight, new WaveEffect(){{
-                                        lifetime = 30f;
-                                        strokeFrom = 4f;
-                                        sizeTo = 130f;
-                                    }});
-
-                                    collidesAir = true;
-                                    buildingDamageMultiplier = 0.3f;
-
-                                    ammoMultiplier = 1f;
-                                    fragLifeMin = 0.1f;
-                                    fragBullets = 7;
-                                    fragBullet = new ArtilleryBulletType(2f, 20){{
-                                        drag = 0.02f;
-                                        hitEffect = Fx.massiveExplosion;
-                                        despawnEffect = Fx.scatheSlash;
-                                        knockback = 0.8f;
-                                        lifetime = PvUtil.GetRange(this.speed,2.7f);
-                                        width = height = 18f;
-                                        collidesTiles = false;
-                                        splashDamageRadius = 21.6f;
-                                        splashDamage = 30f;
-                                        backColor = trailColor = hitColor = Pal.bulletYellow;
-                                        frontColor = Color.white;
-                                        smokeEffect = Fx.shootBigSmoke2;
-                                        despawnShake = 1f;
-                                        lightRadius = 30f;
-                                        lightColor = Pal.redLight;
-                                        lightOpacity = 0.5f;
-
-                                        trailLength = 20;
-                                        trailWidth = 3.5f;
-                                        trailEffect = Fx.none;
-                                    }};
-                                }};
-                            }});
-
-                        }};
-                    }}
-            );
 
             shoot = new ShootAlternate(20);
             shoot.shotDelay = 10;
             shoot.shots = 4;
             recoils = 2;
-            drawer = new DrawTurret(PvUtil.GetName("Pov")){{
+            drawer = new DrawTurret(GetName("Pov")){{
 
                 for(int i = 0; i < 2; i++){
                     int f = i;
@@ -1313,7 +1249,7 @@ public class PvTurrets{
 
                         }}
                 );
-                drawer = new DrawTurret(PvUtil.GetName("Pov")) {{
+                drawer = new DrawTurret(GetName("Pov")) {{
                     parts.addAll(
                             Seq.with(
                                     new RegionPart("-l"){{
@@ -1369,7 +1305,7 @@ public class PvTurrets{
 
                     }}
             );
-            drawer = new DrawTurret(PvUtil.GetName("Pov"));
+            drawer = new DrawTurret(GetName("Pov"));
         }};
     }
     public static void loadSize5()
@@ -1414,7 +1350,7 @@ public class PvTurrets{
 
                 }};
             }};
-            drawer = new DrawTurret(PvUtil.GetName("Pov")){{
+            drawer = new DrawTurret(GetName("Pov")){{
                 parts.addAll(
                         parts.add(
                                 new RegionPart("-l"){{
@@ -1509,7 +1445,7 @@ public class PvTurrets{
                             trailColor = backColor = lightColor = Pal.heal;
                         }}
             );
-            drawer = new DrawTurret(PvUtil.GetName("Pov")){{
+            drawer = new DrawTurret(GetName("Pov")){{
                 parts.addAll(
                         parts.add(
                                 new RegionPart("-l"){{
@@ -1639,7 +1575,7 @@ public class PvTurrets{
                         }};
                     }}
             );
-            drawer = new DrawTurret(PvUtil.GetName("Pov")){{
+            drawer = new DrawTurret(GetName("Pov")){{
                 parts.addAll(
                         new RegionPart("-l"){{
                             progress = PartProgress.warmup;
@@ -1772,7 +1708,7 @@ public class PvTurrets{
                         }};
                     }}
             );
-            drawer = new DrawTurret(PvUtil.GetName("Pov")){{
+            drawer = new DrawTurret(GetName("Pov")){{
                 parts.addAll(
                         Seq.with(
                                 //Arms and Barrels
@@ -1959,7 +1895,7 @@ public class PvTurrets{
                     }}
             );
             recoils = 2;
-            drawer = new DrawTurret(PvUtil.GetName("Pov")){{
+            drawer = new DrawTurret(GetName("Pov")){{
                 parts.addAll(
                         Seq.with(
                                 //Arms and Barrels
