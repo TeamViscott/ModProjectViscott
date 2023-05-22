@@ -41,6 +41,7 @@ import viscott.world.block.distribution.MassConveyor;
 import viscott.world.block.distribution.UnitPackerBlock;
 import viscott.world.block.drill.*;
 import viscott.world.block.effect.NullisCore;
+import viscott.world.block.effect.PvCore;
 import viscott.world.block.effect.UtilityProjector;
 import viscott.world.block.environment.DepositWall;
 import viscott.world.block.logic.PvLogicBlock;
@@ -94,7 +95,9 @@ public class PvBlocks {
                     /*Payload*/densePayloadConveyor,densePayloadRouter,
                             denseConstructor,denseDeconstructor,denseUnloader,denseLoader,
                     /*Core's*/coreHover,coreElevate,coreUpraise,
-                            bulkUnloader,nullisCore,
+                            bulkUnloader,
+                            /*Nullis*/nullisCore,
+                            /*Xeal*/coreSpark,
                     /*Effects*/utilityProjector,
 
                             /*Walls*/
@@ -831,12 +834,23 @@ public class PvBlocks {
                     unitCapModifier = 84;
                     itemCapacity = 16000;
                 }};
+                coreSpark = new PvCore("core-spark")
+                {{
+                    requirements(Category.effect, with(PvItems.zirconium,5000,PvItems.lithium,4000,Items.silicon,900,PvItems.nobelium,500));
+                    localizedName = "Core Elevate";
+                    alwaysUnlocked = true;
+                    unitType = PvUnits.amp;
+                    faction.add(PvFactions.Xeal);
+                    health = 3000;
+                    size = 4;
+                    unitCapModifier = 32;
+                    itemCapacity = 20000;
+                }};
                 nullisCore = new NullisCore("core-null")
                 {{
                     requirements(Category.effect,with(PvItems.zirconium,500,PvItems.lithium,200,PvItems.platinum,100));
                     localizedName = "Core Null";
                     unitType = PvUnits.vessel;
-                    faction.add(PvFactions.Nullis);
                     size = 3;
                     health = 2100;
                     unitCapModifier = 60;

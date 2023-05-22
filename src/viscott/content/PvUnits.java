@@ -36,6 +36,7 @@ public class PvUnits {
     public static UnitType
         /*Core Units*/micro,infrared, spectrum,
             shadow,proton,vessel,
+            amp,
 
         /*Flying Ion Path*/ particle, snippet, fragment, excerpt, pericope,
 
@@ -269,6 +270,46 @@ public class PvUnits {
                             lifetime = 2;
                             homingDelay = 1;
                             homingRange = 8*17f;
+                        }};
+                    }}
+            );
+        }};
+        //Xeal
+        amp = new PvUnitType("amp")
+        {{
+
+            localizedName = "Amp";
+            constructor = EntityMapping.map("alpha");
+            health = 130;
+            armor = 0;
+            flying = true;
+            buildSpeed = 1.5f;
+            rotateMoveFirst = true;
+            mineTier = 1;
+            mineSpeed = 5f;
+            itemCapacity = 60;
+            speed = 25.2f / 7.5f;
+            drag = 0.1f;
+            range = 17*8;
+            weapons.add(
+                    new Weapon()
+                    {{
+                        mirror = true;
+                        top = false;
+                        x = 4;
+                        y = 2;
+                        reload = 60f/1.8f;
+                        alternate = false;
+                        bullet = new LaserBoltBulletType(8,10)
+                        {{
+                            buildingDamageMultiplier = 0.01f;
+                            trailColor = backColor = lightColor = Pal.heal;
+                            trailWidth = 2;
+                            knockback = 2.5f;
+                            trailLength = 25;
+                            lifetime = PvUtil.GetRange(8,21);
+                            status = StatusEffects.shocked;
+                            statusDuration = 60;
                         }};
                     }}
             );
