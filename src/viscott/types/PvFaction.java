@@ -31,6 +31,14 @@ public class PvFaction {
             linkedTeams.clear();
         });
     }
+    public int teamSize()
+    {
+        return linkedTeams.size;
+    }
+    public Seq<Team> allLinked()
+    {
+        return linkedTeams;
+    }
     public String packetLinks()
     {
         StringBuilder sb = new StringBuilder();
