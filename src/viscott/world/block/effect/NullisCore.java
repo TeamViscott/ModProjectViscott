@@ -5,6 +5,7 @@ import arc.graphics.g2d.Draw;
 import arc.graphics.g2d.Fill;
 import arc.graphics.g2d.Lines;
 import arc.math.Mathf;
+import arc.struct.Seq;
 import arc.util.Structs;
 import mindustry.Vars;
 import mindustry.game.Team;
@@ -14,6 +15,7 @@ import mindustry.type.Item;
 import mindustry.world.blocks.storage.CoreBlock;
 import viscott.content.PvEffects;
 import viscott.content.PvStatusEffects;
+import viscott.types.PvFaction;
 import viscott.world.bullets.VoidBulletType;
 import viscott.world.chips.VoidArea;
 
@@ -22,16 +24,23 @@ import static mindustry.Vars.*;
 public class NullisCore extends CoreBlock {
     public float voidRadius = 5;
 
-    public Team visibleTeam = null;
+    public Seq<PvFaction> faction = new Seq<>();
     public NullisCore(String name)
     {
         super(name);
     }
 
-
+    public boolean partOfPlayerFaction()
+    {
+        return faction.size == 0 || faction.count(f -> f.partOf(Vars.player.team())) > 0;
+    }
     @Override
-    public boolean environmentBuildable(){
-        return (visibleTeam == null ? true : Vars.player.team() == visibleTeam) && (state.rules.hiddenBuildItems.isEmpty() || !Structs.contains(requirements, i -> state.rules.hiddenBuildItems.contains(i.item)));
+    public boolean isVisible(){
+        return partOfPlayerFaction() && !isHidden() && (state.rules.editor || (!state.rules.hideBannedBlocks || !state.rules.isBanned(this)));
+    }
+    @Override
+    public boolean isPlaceable(){
+        return Vars.net.server() || (!state.rules.isBanned(this) || state.rules.editor) && supportsEnv(state.rules.env);
     }
 
     @Override

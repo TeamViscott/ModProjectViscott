@@ -19,7 +19,7 @@ public interface VoidArea {
     {
         Groups.bullet.forEach(b -> {
             if (b.type instanceof VoidBulletType && Mathf.len(building.x-b.x,building.y-b.y) <= radius)
-                b.time = 0;
+                b.keepAlive = true;
         });
         Groups.unit.forEach(unit ->
                 {

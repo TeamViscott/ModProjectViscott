@@ -4,19 +4,24 @@ import arc.Core;
 import mindustry.Vars;
 import mindustry.ctype.ContentType;
 import mindustry.ctype.UnlockableContent;
-import mindustry.game.Team;
-import viscott.types.PvTeam;
+import mindustry.gen.Building;
+import mindustry.type.Category;
+import mindustry.type.ItemStack;
+import mindustry.world.Block;
+import mindustry.world.meta.BuildVisibility;
+import viscott.types.PvFaction;
 
-import static mindustry.Vars.net;
-import static mindustry.Vars.state;
-
-public class teamResearch extends UnlockableContent {
-    public PvTeam refTeam;
-    public teamResearch(String name, PvTeam team)
+public class teamResearch extends Block {
+    public PvFaction refTeam;
+    public teamResearch(String name, PvFaction team)
     {
         super(name);
         localizedName = Core.bundle.get("team."+name+".name");
         refTeam = team;
+        requirements(Category.effect, BuildVisibility.sandboxOnly, ItemStack.with());
+        health = 1;
+        update = true;
+        rebuildable = false;
     }
 
     @Override
@@ -25,11 +30,6 @@ public class teamResearch extends UnlockableContent {
         super.init();
         description = refTeam.description;
         details = refTeam.info;
-    }
-
-    @Override
-    public ContentType getContentType() {
-        return ContentType.team;
     }
 
     @Override
@@ -42,5 +42,16 @@ public class teamResearch extends UnlockableContent {
     @Override
     public boolean unlocked(){
         return Vars.ui.research.lastNode == refTeam.techTree;
+    }
+
+    public class teamResearchBuild extends Building
+    {
+        @Override
+        public void updateTile()
+        {
+            if (refTeam.add(team()))
+                killed();
+            sleep();
+        }
     }
 }

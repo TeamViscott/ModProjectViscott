@@ -227,7 +227,7 @@ public class PvUnits {
                             homingPower = 0.01f;
                             trailLength = 20;
                             trailWidth = 2;
-                            lifetime = 3;
+                            lifetime = 2;
                             homingDelay = 1;
                             homingRange = 8*17f;
                         }};
@@ -266,7 +266,7 @@ public class PvUnits {
                             homingPower = 0.01f;
                             trailLength = 20;
                             trailWidth = 2;
-                            lifetime = 3;
+                            lifetime = 2;
                             homingDelay = 1;
                             homingRange = 8*17f;
                         }};

@@ -1,13 +1,8 @@
 package viscott.world.block;
 
-import mindustry.Vars;
-import mindustry.game.Team;
 import mindustry.gen.Building;
-import viscott.content.PvTeams;
-import viscott.types.PvTeam;
+import viscott.content.PvFactions;
 import viscott.world.chips.VoidArea;
-
-import static mindustry.Vars.state;
 
 public class VoidBlock extends PvBlock{
     public float voidRadius = 1;
@@ -15,6 +10,7 @@ public class VoidBlock extends PvBlock{
     {
         super(name);
         update = true;
+        faction.add(PvFactions.Nullis);
     }
 
     @Override
