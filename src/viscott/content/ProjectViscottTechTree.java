@@ -1,12 +1,8 @@
 package viscott.content;
 
-import arc.Core;
 import arc.Events;
-import arc.input.KeyCode;
 import mindustry.Vars;
-import mindustry.content.TechTree;
 import mindustry.game.EventType;
-import viscott.types.PvTeam;
 import viscott.world.teamResearch;
 
 import static mindustry.content.TechTree.*;
@@ -16,18 +12,18 @@ public class ProjectViscottTechTree {
     public static void load()
     {
         PvPlanets.vercilus.techTree = nodeRoot("Vercilus",coreHover,() -> {
-            node(PvTeams.Xeal.icon);
-            node(PvTeams.Psy.icon);
-            node(PvTeams.Nullis.icon);
-            node(PvTeams.Mortikai.icon);
-            node(PvTeams.Azulex.icon);
+            node(PvFactions.Xeal.icon);
+            node(PvFactions.Psy.icon);
+            node(PvFactions.Nullis.icon);
+            node(PvFactions.Mortikai.icon);
+            node(PvFactions.Azulex.icon);
         });
-        PvTeams.Xeal.techTree = nodeRoot("Xeal",PvTeams.Xeal.icon,() -> {
+        PvFactions.Xeal.techTree = nodeRoot("Xeal", PvFactions.Xeal.icon,() -> {
             node(auditoryNode,() -> {
 
             });
         });
-        PvTeams.Nullis.techTree = nodeRoot("Nullis",PvTeams.Nullis.icon,() -> {
+        PvFactions.Nullis.techTree = nodeRoot("Nullis", PvFactions.Nullis.icon,() -> {
             node(auditoryNode,() -> {
 
             });

@@ -2,9 +2,7 @@ package viscott.content;
 
 import arc.func.Prov;
 import arc.graphics.Color;
-import arc.math.Interp;
 import arc.struct.Seq;
-import mindustry.Vars;
 import mindustry.content.*;
 import mindustry.entities.bullet.MassDriverBolt;
 import mindustry.entities.effect.MultiEffect;
@@ -37,13 +35,13 @@ import mindustry.world.blocks.storage.CoreBlock;
 import mindustry.world.blocks.storage.Unloader;
 import mindustry.world.draw.*;
 import mindustry.world.meta.BuildVisibility;
-import viscott.types.PvTeam;
 import viscott.world.block.VoidBlock;
 import viscott.world.block.defense.PvWall;
 import viscott.world.block.distribution.MassConveyor;
 import viscott.world.block.distribution.UnitPackerBlock;
 import viscott.world.block.drill.*;
 import viscott.world.block.effect.NullisCore;
+import viscott.world.block.effect.PvCore;
 import viscott.world.block.effect.UtilityProjector;
 import viscott.world.block.environment.DepositWall;
 import viscott.world.block.logic.PvLogicBlock;
@@ -97,7 +95,9 @@ public class PvBlocks {
                     /*Payload*/densePayloadConveyor,densePayloadRouter,
                             denseConstructor,denseDeconstructor,denseUnloader,denseLoader,
                     /*Core's*/coreHover,coreElevate,coreUpraise,
-                            bulkUnloader,nullisCore,
+                            bulkUnloader,
+                            /*Nullis*/nullisCore,
+                            /*Xeal*/coreSpark,
                     /*Effects*/utilityProjector,
 
                             /*Walls*/
@@ -834,12 +834,23 @@ public class PvBlocks {
                     unitCapModifier = 84;
                     itemCapacity = 16000;
                 }};
+                coreSpark = new PvCore("core-spark")
+                {{
+                    requirements(Category.effect, with(PvItems.zirconium,5000,PvItems.lithium,4000,Items.silicon,900,PvItems.nobelium,500));
+                    localizedName = "Core Elevate";
+                    alwaysUnlocked = true;
+                    unitType = PvUnits.amp;
+                    faction.add(PvFactions.Xeal);
+                    health = 3000;
+                    size = 4;
+                    unitCapModifier = 32;
+                    itemCapacity = 20000;
+                }};
                 nullisCore = new NullisCore("core-null")
                 {{
                     requirements(Category.effect,with(PvItems.zirconium,500,PvItems.lithium,200,PvItems.platinum,100));
                     localizedName = "Core Null";
                     unitType = PvUnits.vessel;
-                    visibleTeam = PvTeams.Nullis;
                     size = 3;
                     health = 2100;
                     unitCapModifier = 60;
@@ -850,7 +861,7 @@ public class PvBlocks {
                 {{
                     requirements(Category.effect,with(PvItems.zirconium,30));
                     localizedName = "Void Node";
-                    visibleTeam = PvTeams.Nullis;
+                    faction.add(PvFactions.Nullis);
                     size = 1;
                     health = 100;
                     voidRadius = 6;
@@ -860,7 +871,7 @@ public class PvBlocks {
                 {{
                     requirements(Category.power,with(PvItems.zirconium,20,PvItems.lithium,10));
                     localizedName = "Harvestor";
-                    visibleTeam = PvTeams.Nullis;
+                    faction.add(PvFactions.Nullis);
                     size = 1;
                     range = 6;
                     tier = 10;
@@ -870,7 +881,7 @@ public class PvBlocks {
                 {{
                     requirements(Category.units,with(PvItems.zirconium,50));
                     localizedName = "Packer";
-                    visibleTeam = PvTeams.Nullis;
+                    faction.add(PvFactions.Nullis);
                     range = 16;
                     size = 1;
                     itemCapacity = 20;

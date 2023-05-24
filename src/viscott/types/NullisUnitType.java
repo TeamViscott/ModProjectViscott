@@ -2,10 +2,9 @@ package viscott.types;
 
 import mindustry.Vars;
 import mindustry.game.Team;
-import mindustry.gen.TimedKillc;
 import mindustry.gen.Unit;
 import viscott.content.PvEffects;
-import viscott.content.PvTeams;
+import viscott.content.PvFactions;
 
 public class NullisUnitType extends PvUnitType{
     public NullisUnitType(String name)
@@ -27,6 +26,6 @@ public class NullisUnitType extends PvUnitType{
     @Override
     public boolean unlockedNow()
     {
-        return Vars.net.server() || Vars.player.team() == PvTeams.Nullis && super.unlockedNow();
+        return Vars.net.server() || PvFactions.Nullis.partOf(Vars.player.team()) && super.unlockedNow();
     }
 }
