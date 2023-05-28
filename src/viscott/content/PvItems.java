@@ -2,6 +2,7 @@ package viscott.content;
 
 import arc.graphics.Color;
 import arc.struct.Seq;
+import mindustry.game.Team;
 import mindustry.graphics.Pal;
 import mindustry.type.Item;
 
@@ -9,7 +10,8 @@ import static mindustry.content.Items.silicon;
 
 public class PvItems {
     public static Item
-    zirconium,lithium,barium,nobelium,platinum,erbium,carbonFiber,copium
+    zirconium,lithium,barium,nobelium,platinum,erbium,carbonFiber,copium,
+            rushAlloy
     ;
     public static Seq<Item> vercilusItems = new Seq<Item>(),
                             vercilusOnlyItems = new Seq<Item>();
@@ -52,8 +54,15 @@ public class PvItems {
             charge = 100;
             radioactivity = -2;
         }};
+        rushAlloy = new Item("rush-alloy")
+        {{
+            localizedName = "Rush Alloy";
+            color = Team.sharded.color;
 
-        vercilusItems.addAll(zirconium,lithium,barium,silicon,nobelium,platinum,erbium,carbonFiber);
-        vercilusOnlyItems.addAll(zirconium,lithium,barium,nobelium,platinum,erbium,carbonFiber);
+        }};
+
+        vercilusItems.addAll(zirconium,lithium,barium,silicon,nobelium,platinum,erbium,carbonFiber,rushAlloy);
+        vercilusOnlyItems = vercilusItems.copy();
+        vercilusOnlyItems.remove(silicon);
     }
 }

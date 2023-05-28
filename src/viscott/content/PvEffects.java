@@ -3,14 +3,17 @@ package viscott.content;
 import arc.graphics.Color;
 import arc.graphics.g2d.Draw;
 import arc.graphics.g2d.Fill;
+import arc.graphics.g2d.Lines;
 import arc.math.Mathf;
 import arc.struct.Seq;
 import mindustry.content.UnitTypes;
 import mindustry.entities.Effect;
 import mindustry.entities.Units;
+import mindustry.game.Team;
 import mindustry.graphics.Drawf;
 import mindustry.graphics.Layer;
 import mindustry.graphics.Pal;
+import viscott.world.pseudo3d.importedcode.DrawPseudo3d;
 
 import static arc.graphics.g2d.Draw.rect;
 import static arc.graphics.g2d.Draw.*;
@@ -19,7 +22,9 @@ import static arc.graphics.g2d.Lines.*;
 public class PvEffects {
     public static Effect
         slowEnergeticEffect, particleDeath1,particleDeath2,particleDeath3,
-            railFrag,waveBulletFalerica,waveBulletJavelin
+            railFrag,waveBulletFalerica,waveBulletJavelin,
+
+            quadRushCraft
             ;
     public static Seq<Effect> nullisDeath = new Seq<>();
     public static void load()
@@ -101,6 +106,12 @@ public class PvEffects {
             line(x1, y1, xn1, yn1);
             line(x2, y2, xn2, yn2);
             // Lifetime = max lifetime || time = time alive
+        });
+        quadRushCraft = new Effect(60,e->{
+            Color col = Team.sharded.color;
+            DrawPseudo3d.tube(e.x,e.y,5*e.fin(),e.fout()*50,col,Color.clear);
+            Lines.stroke(e.fout()*4,col);
+            Lines.circle(e.x,e.y,15*e.fin());
         });
         for(int i = 1;i<=9;i++)
             nullisDeath.add(newNullisDeath(i));

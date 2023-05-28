@@ -103,7 +103,7 @@ public class bTurrets {
             heatColor = Color.red;
             size = 2;
             scaledHealth = 320;
-            targetAir = true;
+            targetAir = false;
             moveWhileCharging = false;
             accurateDelay = false;
             shootSound = Sounds.laser;

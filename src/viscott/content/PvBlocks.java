@@ -79,7 +79,7 @@ public class PvBlocks {
                                         keroseneGenerator,radiator,blastReactor,subzeroReactor,feverReactor,
                             /*Nullis*/harvestor,
                     /*Production*/siliconMassForge,particalAccelerator, keroseneMixer, carbonWeaver,
-                            fractionIonizer,nitrogenDistiller,
+                            fractionIonizer,nitrogenDistiller,quadRushForge,
 
                     /*Heaters*/keroseneHeater,blastHeater, hybridHeater, xeroPointHeater,
                                 heatPathfinder,
@@ -562,6 +562,21 @@ public class PvBlocks {
                     consumeLiquid(Liquids.water,10f/60f);
                     consumeLiquid(Liquids.nitrogen,10f/60f);
                     outputLiquid(PvLiquids.liquidNitrogen,10f/60f);
+                }};
+                quadRushForge = new HeatCrafter("quadrush-forge")
+                {{
+                    requirements(Category.crafting,with(PvItems.zirconium,1000));
+                    localizedName = "Quadrush Forge";
+                    health = 985;
+                    size = 4;
+                    consumePower(380f/60f);
+                    itemCapacity = 20;
+                    heatRequirement = 15;
+                    maxEfficiency = 2;
+                    craftTime = 60*2.5f;
+                    craftEffect = new MultiEffect(PvEffects.quadRushCraft,Fx.smokeCloud);
+                    consumeItems(with(PvItems.carbonFiber,1,Items.silicon,5));
+                    outputItem = new ItemStack(PvItems.rushAlloy,1);
                 }};
                 keroseneMixer = new GenericCrafter("kerosene-mixer")
                 {
