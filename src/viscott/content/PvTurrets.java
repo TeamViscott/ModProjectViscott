@@ -968,6 +968,47 @@ public class PvTurrets{
                 splashDamage = 35;
                 splashDamageRadius = 8*2.5f;
                 despawnSound = Sounds.dullExplosion;
+                fragBullets = 5;
+
+                //TODO shoot sound
+                shootSound = Sounds.cannon;
+                fragBullet = new BasicBulletType()
+                {{
+                        shootEffect = new MultiEffect(Fx.shootTitan, new WaveEffect(){{
+                    colorTo = Pal.lancerLaser;
+                    sizeTo = 26f;
+                    lifetime = 14f;
+                    strokeFrom = 4f;
+                }});
+                smokeEffect = Fx.shootSmokeTitan;
+                hitColor = Pal.lancerLaser;
+
+                sprite = "large-orb";
+                trailEffect = Fx.missileTrail;
+                trailInterval = 3f;
+                trailParam = 4f;
+                pierceCap = 2;
+                fragOnHit = false;
+                speed = 5f;
+                damage = 150f;
+                lifetime = PvUtil.GetRange(this.speed,59);
+                width = height = 16f;
+                backColor = Pal.lancerLaser;
+                frontColor = Color.white;
+                shrinkX = shrinkY = 0f;
+                trailColor = Pal.lancerLaser;
+                trailLength = 12;
+                trailWidth = 2.2f;
+                despawnEffect = hitEffect = new ExplosionEffect(){{
+                    waveColor = Pal.lancerLaser;
+                    smokeColor = Color.gray;
+                    sparkColor = Pal.sap;
+                    waveStroke = 4f;
+                    waveRad = 40f;
+                }};
+                splashDamage = 35;
+                splashDamageRadius = 8*2.5f;
+                despawnSound = Sounds.dullExplosion;
 
                 //TODO shoot sound
                 shootSound = Sounds.cannon;
@@ -994,6 +1035,38 @@ public class PvTurrets{
                 }};
 
                 bulletInterval = 3f;
+                intervalRandomSpread = 20f;
+                intervalBullets = 2;
+                intervalAngle = 180f;
+                intervalSpread = 300f;
+
+                fragBullets = 10;
+                fragVelocityMin = 0.5f;
+                fragVelocityMax = 1.5f;
+                fragLifeMin = 0.5f;
+            }};
+                intervalBullet = new BasicBulletType(5f, 40){{
+                    width = 9f;
+                    hitSize = 5f;
+                    height = 15f;
+                    pierce = true;
+                    lifetime = PvUtil.GetRange(this.speed,16);
+                    pierceBuilding = true;
+                    hitColor = backColor = trailColor = Pal.lancerLaser;
+                    frontColor = Color.white;
+                    trailWidth = 2.1f;
+                    trailLength = 8;
+                    hitEffect = despawnEffect = new WaveEffect(){{
+                        colorFrom = colorTo = Pal.lancerLaser;
+                        sizeTo = 4f;
+                        strokeFrom = 4f;
+                        lifetime = 10f;
+                    }};
+                    buildingDamageMultiplier = 0.3f;
+                    homingPower = 0.2f;
+                }};
+
+                bulletInterval = 1f;
                 intervalRandomSpread = 20f;
                 intervalBullets = 2;
                 intervalAngle = 180f;
@@ -1161,7 +1234,7 @@ public class PvTurrets{
                         hitShake = 1f;
                         homingRange = 24;
                         homingPower = 0.03f;
-                        speed = 4;
+                        speed = 8;
                         lifetime = 20;
                         height = 24f;
                         //tfec
