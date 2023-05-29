@@ -21,16 +21,19 @@ import mindustry.gen.EntityMapping;
 import mindustry.gen.Sounds;
 import mindustry.graphics.Layer;
 import mindustry.graphics.Pal;
+import mindustry.type.PayloadStack;
 import mindustry.type.UnitType;
 import mindustry.type.Weapon;
 import mindustry.type.ammo.ItemAmmoType;
 import viscott.abilitys.EnemyStatusFieldAbility;
+import viscott.types.BuildUnitType;
 import viscott.types.NullisUnitType;
 import viscott.types.PvUnitType;
 import viscott.types.abilities.DamageAbility;
 import viscott.world.bullets.VoidBulletType;
 import viscott.utilitys.PvUtil;
-import viscott.world.statusEffects.PvStatusEffect;
+
+import static mindustry.Vars.tilePayload;
 
 public class PvUnits {
     public static UnitType
@@ -43,7 +46,7 @@ public class PvUnits {
         /*Xeal Naval Path*/rivulet,bourn,tributary,
 
         /*Nullis*/
-            /*Storage Con Path*/pocket,container,vault,
+            /*Storage Con Path*/pocket,container, capsule,vault,
 
         /*Extra Paths : */
         routerTank, routerBastion, box,
@@ -1099,9 +1102,9 @@ public class PvUnits {
                     new UnitEngine(10,-10,6,270+45)
             );
         }};
-        vault = new NullisUnitType("vault")
+        capsule = new NullisUnitType("capsule")
         {{
-            localizedName = "Vault";
+            localizedName = "Capsule";
             constructor = EntityMapping.map("dagger");
             health = 5200;
             armor = 8;
@@ -1120,6 +1123,29 @@ public class PvUnits {
                     new UnitEngine(-14,14,8,90+45),
                     new UnitEngine(-14,-14,8,180+45),
                     new UnitEngine(14,-14,8,270+45)
+            );
+        }};
+        vault = new BuildUnitType("vault")
+        {{
+            localizedName = "Vault";
+            constructor = EntityMapping.map("quad");
+            health = 25600;
+            armor = 15;
+            flying = true;
+            hitSize = 8*8;
+            engineColor = Color.black;
+            itemCapacity = 3000;
+            speed = 1.4f / 7.5f;
+            drag = 0.03f;
+            pickupUnits = true;
+            payloadCapacity = tilePayload * (2 * 2);
+            range = 12*8;
+            engineSize = 0;
+            engines = Seq.with(
+                    new UnitEngine(26,26,12,45),
+                    new UnitEngine(-26,26,12,90+45),
+                    new UnitEngine(-26,-26,12,180+45),
+                    new UnitEngine(26,-26,12,270+45)
             );
         }};
     }
