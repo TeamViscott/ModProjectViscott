@@ -3,14 +3,12 @@ package viscott.world.statusEffects;
 import arc.Events;
 import arc.math.Mathf;
 import arc.struct.Seq;
-import arc.util.Time;
 import mindustry.Vars;
 import mindustry.entities.bullet.BulletType;
 import mindustry.game.EventType;
 import mindustry.gen.Bullet;
 import mindustry.gen.Groups;
 import mindustry.gen.Unit;
-import viscott.content.PvStatusEffects;
 
 public class FragStatusEffect extends PvStatusEffect {
 
