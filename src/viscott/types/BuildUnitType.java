@@ -42,7 +42,7 @@ public class BuildUnitType extends PvUnitType{
                 drawBuild(build,unit,layer);
             }
             else {
-                Draw.rect(pay.content().fullIcon, unit.x, unit.y, unit.rotation);
+                Draw.rect(pay.content().fullIcon, unit.x, unit.y, unit.rotation - 90);
             }
             Draw.z(layer);
         }

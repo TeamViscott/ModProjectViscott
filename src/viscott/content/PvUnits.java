@@ -50,7 +50,7 @@ public class PvUnits {
             /*Storage Con Path*/pocket,container, capsule,vault,
 
         /*Extra Paths : */
-        routerTank, routerBastion, box,
+        routerTank, routerBastion, box,blockHost,
 
                 /*BOSSES*/
                     vdoble,charlie
@@ -1053,6 +1053,23 @@ public class PvUnits {
                 x = 20f;
                 width = 6f;
             }});
+        }};
+        blockHost = new BuildUnitType("block-host")
+        {{
+            localizedName = "Block Host";
+            constructor = EntityMapping.map("quad");
+            health = 1000;
+            armor = 10;
+            flying = true;
+            hitSize = 1;
+            engineColor = Color.black;
+            itemCapacity = 3000;
+            speed = 3f / 7.5f;
+            drag = 0.05f;
+            lowAltitude = true;
+            pickupUnits = true;
+            payloadCapacity = tilePayload * (9 * 9);
+            range = 12*8;
         }};
     }
     public static void loadStoragePath()
