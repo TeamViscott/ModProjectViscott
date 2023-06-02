@@ -1152,6 +1152,7 @@ public class PvUnits {
             health = 25600;
             deathExplosionEffect = PvEffects.nullisDeath.get(7);
             armor = 15;
+            factions.add(PvFactions.Nullis);
             flying = true;
             hitSize = 8*8;
             engineColor = Color.black;

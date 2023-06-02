@@ -10,6 +10,7 @@ public class NullisUnitType extends PvUnitType{
     public NullisUnitType(String name)
     {
         super(name);
+        factions.add(PvFactions.Nullis);
     }
     @Override
     public Unit create(Team team){

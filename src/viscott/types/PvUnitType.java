@@ -19,6 +19,6 @@ public class PvUnitType extends UnitType {
     @Override
     public boolean unlockedNow()
     {
-        return Vars.net.server() || factions.count(f->f.partOf(Vars.player.team())) > 0 && super.unlockedNow();
+        return Vars.net.server() || (factions.size == 0 || factions.count(f->f.partOf(Vars.player.team())) > 0) && super.unlockedNow();
     }
 }
