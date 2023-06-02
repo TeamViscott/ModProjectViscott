@@ -25,6 +25,8 @@ import mindustry.world.blocks.liquid.Conduit;
 import mindustry.world.blocks.liquid.LiquidBridge;
 import mindustry.world.blocks.liquid.LiquidJunction;
 import mindustry.world.blocks.liquid.LiquidRouter;
+import mindustry.world.blocks.logic.MemoryBlock;
+import mindustry.world.blocks.logic.SwitchBlock;
 import mindustry.world.blocks.payloads.*;
 import mindustry.world.blocks.power.*;
 import mindustry.world.blocks.production.Drill;
@@ -45,6 +47,7 @@ import viscott.world.block.effect.PvCore;
 import viscott.world.block.effect.UtilityProjector;
 import viscott.world.block.environment.DepositWall;
 import viscott.world.block.logic.PvLogicBlock;
+import viscott.world.block.logic.PvSelector;
 import viscott.world.block.power.ConstGenerator;
 import viscott.world.block.production.ItemVariableReactor;
 import viscott.world.block.production.MultiCrafter;
@@ -107,7 +110,7 @@ public class PvBlocks {
                             erbiumWall,erbiumWallLarge,
                             carbonWall,carbonWallLarge,
                     /*Logic*/
-                            piscoProcessor,
+                            piscoProcessor,memoryByte,statusSelector,
                             /*Testing*/
                                     sus,voidNode
                             ;
@@ -1034,6 +1037,19 @@ public class PvBlocks {
                                     //Undefined
                                     PvLogic.CommentStatement::new
                             });
+                }};
+                memoryByte = new MemoryBlock("memory-byte")
+                {{
+                    requirements(Category.logic, with(PvItems.zirconium,50,PvItems.lithium,100));
+                    localizedName = "Memory Byte";
+                    health = 145;
+                    memoryCapacity = 8;
+                }};
+                statusSelector = new PvSelector("status-selector")
+                {{
+                    requirements(Category.logic, with(PvItems.zirconium,10,PvItems.lithium,10));
+                    localizedName = "Status Selector";
+                    health = 145;
                 }};
                 sus = new PvWall("sus")
                 {{

@@ -29,7 +29,7 @@ public class PvCanvas extends LCanvas {
     public Seq<Prov<LStatement>> allStatements;
     float targetWidth;
 
-    PvCanvas()
+    public PvCanvas()
     {
         statements = new PvDragLayout();
     }

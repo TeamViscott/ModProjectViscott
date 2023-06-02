@@ -1,4 +1,4 @@
-package viscott.types.logic;
+package viscott.world.ui;
 
 import arc.Core;
 import arc.func.Cons;
@@ -22,6 +22,7 @@ import mindustry.logic.*;
 import mindustry.ui.Fonts;
 import mindustry.ui.Styles;
 import mindustry.ui.dialogs.BaseDialog;
+import viscott.types.logic.PvCanvas;
 import viscott.world.block.logic.PvLogicBlock;
 
 import java.util.HashMap;

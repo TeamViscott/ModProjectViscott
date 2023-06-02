@@ -18,6 +18,7 @@ import mindustry.entities.part.RegionPart;
 import mindustry.entities.part.ShapePart;
 import mindustry.entities.pattern.ShootHelix;
 import mindustry.entities.pattern.ShootSpread;
+import mindustry.game.Team;
 import mindustry.gen.EntityMapping;
 import mindustry.gen.Sounds;
 import mindustry.graphics.Layer;
@@ -1149,6 +1150,7 @@ public class PvUnits {
             description = "First in its kind to link a picked up Turret to the Main Item Feed. With this any Turret that requires items will be able to function while on the Unit.";
             constructor = EntityMapping.map("quad");
             health = 25600;
+            deathExplosionEffect = PvEffects.nullisDeath.get(7);
             armor = 15;
             flying = true;
             hitSize = 8*8;
@@ -1178,20 +1180,8 @@ public class PvUnits {
                     phase = 50f;
                     stroke = 4f;
                     layerOffset = -0.001f;
-                    color = Color.black;
-                }},
-                        new HoverPart(){{
-                            x = 22f;
-                            y = f%2==0 ? 22f : -22f;
-
-                            mirror = true;
-                            radius = 22f;
-                            phase = 50f;
-                            stroke = 2f;
-                            layerOffset = -0.001f;
-                            color = Color.white;
-                        }}
-                );
+                    color = Team.green.color;
+                }});
             }
         }};
     }

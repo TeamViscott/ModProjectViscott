@@ -22,10 +22,4 @@ public class NullisUnitType extends PvUnitType{
         int ind = (int)((hitSize-1)/8);
         deathExplosionEffect = PvEffects.nullisDeath.get(Math.min(ind,PvEffects.nullisDeath.size-1));
     }
-
-    @Override
-    public boolean unlockedNow()
-    {
-        return Vars.net.server() || PvFactions.Nullis.partOf(Vars.player.team()) && super.unlockedNow();
-    }
 }
