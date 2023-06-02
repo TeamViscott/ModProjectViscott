@@ -57,6 +57,7 @@ public class SelectDialog extends BaseDialog {
         int index = 0;
         for(String iconName : Icon.icons.keys()) {
             if (caller.hasIcon(Icon.icons.get(iconName))) continue;
+            if (iconName.contains("Small")) continue;
             ImageButton btn = selection.button(Tex.whiteui, Styles.clearNoneTogglei, 40, () -> {
                 control.input.config.hideConfig();
                 hide();
@@ -66,7 +67,6 @@ public class SelectDialog extends BaseDialog {
                 if (btn.isChecked())
                 {
                     selectedIcon = Icon.icons.get(iconName);
-                    Log.info(iconName,0);
                 }
             });
             if (++index%width==0)
