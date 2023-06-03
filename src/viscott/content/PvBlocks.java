@@ -317,7 +317,7 @@ public class PvBlocks {
                 behemothGrinder = new Grinder("behemoth-grinder")
                 {{
                     requirements(Category.production, with(PvItems.zirconium,100,PvItems.platinum,100)); //Todo
-                    localizedName = "Harvest Grinder";
+                    localizedName = "Behemoth Grinder";
                     health = 570;
                     liquidCapacity = 20;
                     consumePower(50f/60f);
@@ -343,7 +343,7 @@ public class PvBlocks {
                 tetraDrill = new Drill("tetra-drill")
                 {{
                     requirements(Category.production, with(PvItems.zirconium,60,PvItems.platinum,25)); //Todo
-                    localizedName = "Harvest Drill";
+                    localizedName = "Tetra Drill";
                     size = 3;
                     drillTime = 200;
                     tier = 2;
@@ -356,7 +356,7 @@ public class PvBlocks {
                 spectrumDrill = new Drill("spectrum-drill")
                 {{
                     requirements(Category.production, with(PvItems.zirconium,160,PvItems.platinum,65,PvItems.nobelium,40)); //Todo
-                    localizedName = "Harvest Drill";
+                    localizedName = "Spectrum Drill";
                     size = 4;
                     drillTime = 160;
                     tier = 3;

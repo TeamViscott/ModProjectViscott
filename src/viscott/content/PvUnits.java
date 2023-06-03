@@ -1507,6 +1507,7 @@ public class PvUnits {
         rivulet = new PvUnitType("rivulet")
         {{
             localizedName = "Rivulet";
+            factions.add(PvFactions.Xeal);
             constructor = EntityMapping.map("risso");
             canBoost = true;
             speed = 8.5f/7.5f;
@@ -1547,6 +1548,7 @@ public class PvUnits {
         bourn = new PvUnitType("bourn")
         {{
             localizedName = "Bourn";
+            factions.add(PvFactions.Xeal);
             constructor = EntityMapping.map("risso");
             canBoost = true;
             speed = 8.5f/7.5f;
@@ -1609,6 +1611,7 @@ public class PvUnits {
         tributary = new PvUnitType("tributary")
         {{
             localizedName = "Tributary";
+            factions.add(PvFactions.Xeal);
             constructor = EntityMapping.map("risso");
             canBoost = true;
             speed = 6.8f/7.5f;
