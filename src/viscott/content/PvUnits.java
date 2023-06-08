@@ -75,7 +75,7 @@ public class PvUnits {
             armor = 0;
             flying = true;
             buildSpeed = 0.75f;
-            mineTier = 2;
+            mineTier = 1;
             mineSpeed = 4.5f;
             itemCapacity = 40;
             speed = 20.7f / 7.5f;
@@ -133,9 +133,46 @@ public class PvUnits {
                             trailWidth = 2;
                             homingDelay = 1;
                             homingRange = 8*17f;
+                            buildingDamageMultiplier = 0.1f;
                             lifetime = PvUtil.GetRange(this.speed,17);
                             trailColor = lightColor = backColor = Pal.engine;
                             despawnShake = hitShake = 0.5f;
+                            fragBullets = 2;
+                            fragRandomSpread = 0;
+                            splashDamage = 10;
+                            splashDamageRadius = 16;
+                            hitEffect = Fx.explosion;
+                            fragSpread = 180;
+                            fragAngle = 90;
+                            fragVelocityMin = fragVelocityMax = 1;
+                            fragBullet = new LaserBoltBulletType(2,6)
+                            {{
+                                homingPower = 0.01f;
+                                trailLength = 20;
+                                trailWidth = 2;
+                                homingDelay = 1;
+                                homingRange = 8*17f;
+                                buildingDamageMultiplier = 0.1f;
+                                lifetime = PvUtil.GetRange(this.speed,8);
+                                trailColor = lightColor = backColor = Pal.engine;
+                                despawnShake = hitShake = 0.5f;
+                                fragBullets = 1;
+                                fragRandomSpread = 0;
+                                fragAngle = 180;
+                                fragVelocityMin = fragVelocityMax = 1;
+                                fragBullet = new LaserBoltBulletType(2,6)
+                                {{
+                                    homingPower = 0.015f;
+                                    trailLength = 20;
+                                    trailWidth = 2;
+                                    homingDelay = 1;
+                                    homingRange = 8*17f;
+                                    buildingDamageMultiplier = 0.1f;
+                                    lifetime = PvUtil.GetRange(this.speed,10);
+                                    trailColor = lightColor = backColor = Pal.engine;
+                                    despawnShake = hitShake = 0.5f;
+                                }};
+                            }};
                         }};
                     }}
             );
@@ -148,7 +185,7 @@ public class PvUnits {
             armor = 0;
             flying = true;
             buildSpeed = 1.15f;
-            mineTier = 2;
+            mineTier = 3;
             mineSpeed = 7.25f;
             itemCapacity = 90;
             speed = 30.7f / 7.5f;

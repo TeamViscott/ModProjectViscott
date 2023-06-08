@@ -21,7 +21,7 @@ public class PvCore extends CoreBlock {
     }
     @Override
     public boolean isVisible(){
-        return partOfPlayerFaction() && !isHidden() && (state.rules.editor || (!state.rules.hideBannedBlocks || !state.rules.isBanned(this)));
+        return state.rules.editor || (partOfPlayerFaction() && !isHidden() && (!state.rules.hideBannedBlocks || !state.rules.isBanned(this)));
     }
     @Override
     public boolean isPlaceable(){

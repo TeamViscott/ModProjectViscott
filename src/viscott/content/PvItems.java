@@ -17,6 +17,27 @@ public class PvItems {
                             vercilusOnlyItems = new Seq<Item>();
     public static void load()
     {
+        zirconium = new Item("zirconium"){{
+            localizedName = "Zirconium";
+            color = Color.valueOf("6f6d83");
+            hardness = 1;
+        }};
+        lithium = new Item("lithium"){{
+            localizedName = "Lithium";
+            color = Color.valueOf("47463d");
+            hardness = 1;
+        }};
+        erbium = new Item("erbium"){{
+            localizedName = "Erbium";
+            color = Color.valueOf("aaadaf");
+            hardness = 2;
+        }};
+        platinum = new Item("platinum"){{
+            localizedName = "Platinum";
+            color = Color.valueOf("d0d6db");
+            hardness = 2;
+        }};
+        // ------------------------------------
         nobelium = new Item("nobelium"){{
             localizedName = "Nobelium";
             color = Color.valueOf("ef525b");
@@ -25,25 +46,9 @@ public class PvItems {
             localizedName = "Barium";
             color = Color.valueOf("666558");
         }};
-        platinum = new Item("platinum"){{
-            localizedName = "Platinum";
-            color = Color.valueOf("d0d6db");
-        }};
-        lithium = new Item("lithium"){{
-            localizedName = "Lithium";
-            color = Color.valueOf("47463d");
-        }};
         carbonFiber = new Item("carbon-fiber"){{
             localizedName = "Carbon Fiber";
             color = Color.valueOf("3d3e47");
-        }};
-        erbium = new Item("erbium"){{
-            localizedName = "Erbium";
-            color = Color.valueOf("aaadaf");
-        }};
-        zirconium = new Item("zirconium"){{
-            localizedName = "Zirconium";
-            color = Color.valueOf("6f6d83");
         }};
         copium = new Item("copium")
         {{

@@ -279,29 +279,6 @@ public class PvBlocks {
                         speed = 100;
                     }};
                 }};
-                megaLiquidTransportGate = new LiquidBridge("mega-liquid-transport-gate"){{
-                    //todo adjust items
-                    requirements(Category.liquid, with(PvItems.zirconium, 50, PvItems.nobelium, 25, PvItems.lithium, 10));
-                    size = 3;
-                    localizedName = "Mega liquid transport gate";
-                    health = 180;
-                    liquidCapacity = 200;
-                    //todo power consume
-                    range = 120;
-                    consumePower(330/60f);
-                }};
-                microLiquidTransportGate = new LiquidBridge("micro-liquid-transport-gate"){{
-                    //todo adjust items
-                requirements(Category.liquid, with(PvItems.zirconium, 50, PvItems.lithium, 10));
-                size = 1;
-                localizedName = "Micro liquid transport gate";
-                health = 180;
-                liquidCapacity = 200;
-                range = 10;
-                //todo power consume
-                consumePower(330/60f);
-            }};
-
                 harvestGrinder = new Grinder("harvest-grinder")
                 {{
                     requirements(Category.production, with(PvItems.zirconium,35));
@@ -316,7 +293,7 @@ public class PvBlocks {
                 }};
                 behemothGrinder = new Grinder("behemoth-grinder")
                 {{
-                    requirements(Category.production, with(PvItems.zirconium,100,PvItems.platinum,100)); //Todo
+                    requirements(Category.production, with(PvItems.zirconium,100,PvItems.nobelium,20));
                     localizedName = "Behemoth Grinder";
                     health = 570;
                     liquidCapacity = 20;
@@ -683,44 +660,6 @@ public class PvBlocks {
                     drawer = new DrawMulti(new DrawDefault(), new DrawHeatOutput(), new DrawHeatInput("-heat"));
                     regionRotated1 = 1;
                 }};
-                concentratedRouter = new LiquidRouter("concentrated-router")
-                {{
-                    requirements(Category.liquid, with(PvItems.lithium,4,PvItems.zirconium,4));
-                    localizedName = "Concentrated Router";
-                    health = 60;
-                    liquidCapacity = 40;
-                }};
-                concentratedJunction = new LiquidJunction("concentrated-junction")
-                {{
-                    requirements(Category.liquid, with(PvItems.lithium,4,PvItems.zirconium,4));
-                    localizedName = "Concentrated Junction";
-                    health = 60;
-                    liquidCapacity = 40;
-                }};
-                concentratedConduit = new Conduit("concentrated-conduit")
-                {{
-                    requirements(Category.liquid, with(PvItems.lithium,4,PvItems.zirconium,2));
-                    localizedName = "Concentrated conduit";
-                    health = 60;
-                    liquidCapacity = 30;
-                    junctionReplacement = concentratedJunction;
-                }};
-                smallConcentratedTank = new LiquidRouter("small-concentrated-tank"){{
-                    requirements(Category.liquid, with(PvItems.barium, 30,PvItems.lithium,10));
-                    size = 2;
-                    solid = true;
-                    liquidCapacity = 1500f;
-                    liquidPadding = 1.5f;
-                    health = 500;
-                }};
-                largeConcentratedTank = new LiquidRouter("large-concentrated-tank"){{
-                    requirements(Category.liquid, with(PvItems.barium, 100,PvItems.lithium,50,PvItems.nobelium,20));
-                    size = 4;
-                    solid = true;
-                    liquidCapacity = 6000f;
-                    liquidPadding = 3.5f;
-                    health = 1230;
-                }};
                 nueroSpawnPad = new BulkUnitFactory("nuero-spawn-pad")
                 {{
                     requirements(Category.units,with(PvItems.zirconium,250,Items.silicon,75,PvItems.platinum,40)); //Todo
@@ -742,7 +681,8 @@ public class PvBlocks {
                         new UnitPlan(PvUnits.capsule,45*60f,with(PvItems.zirconium,120,PvItems.lithium,100,Items.silicon,100)),
                         //Naval Path
                         new UnitPlan(PvUnits.rivulet,15*60f,with(PvItems.zirconium,50,Items.silicon,30)),
-                        new UnitPlan(PvUnits.bourn,30*60f,with(PvItems.zirconium,100,Items.silicon,80,PvItems.nobelium,40,PvItems.lithium,100))
+                        new UnitPlan(PvUnits.bourn,30*60f,with(PvItems.zirconium,100,Items.silicon,80,PvItems.nobelium,40,PvItems.lithium,100)),
+                        new UnitPlan(PvUnits.tributary,45*60f,with(PvItems.zirconium,200,Items.silicon,140,PvItems.nobelium,100,PvItems.lithium,200,PvItems.barium,260))
                     );
                 }};
                 eliteSpawnPad = new BulkUnitFactory("elite-spawn-pad")
@@ -769,7 +709,8 @@ public class PvBlocks {
                             new UnitPlan(PvUnits.capsule,45*60f,with(PvItems.zirconium,120,PvItems.lithium,100,Items.silicon,100)),
                             //Naval Path
                             new UnitPlan(PvUnits.rivulet,15*60f,with(PvItems.zirconium,50,Items.silicon,30)),
-                            new UnitPlan(PvUnits.bourn,30*60f,with(PvItems.zirconium,100,Items.silicon,80,PvItems.nobelium,40,PvItems.lithium,100))
+                            new UnitPlan(PvUnits.bourn,30*60f,with(PvItems.zirconium,100,Items.silicon,80,PvItems.nobelium,40,PvItems.lithium,100)),
+                            new UnitPlan(PvUnits.tributary,45*60f,with(PvItems.zirconium,200,Items.silicon,140,PvItems.nobelium,100,PvItems.lithium,200,PvItems.barium,260))
                     );
                 }};
                 densePayloadConveyor = new PayloadConveyor("dense-payload-conveyor")
@@ -906,7 +847,7 @@ public class PvBlocks {
                 }};
                 oilGrinder = new LiquidGrinder("oil-grinder")
                 {{
-                    requirements(Category.production, with(PvItems.zirconium,35,PvItems.lithium,5,PvItems.platinum,25)); //Todo
+                    requirements(Category.production, with(PvItems.zirconium,35,PvItems.lithium,50,PvItems.barium,10));
                     localizedName = "Oil Grinder";
                     extractedLiquid = new LiquidStack(Liquids.oil,4f);
                     range = 3;
@@ -1003,6 +944,67 @@ public class PvBlocks {
                     size = 3;
                     pumpAmount = 14.5f/60f;
                     liquidCapacity = 40;
+                }};
+                megaLiquidTransportGate = new LiquidBridge("mega-liquid-transport-gate"){{
+                    //todo adjust items
+                    requirements(Category.liquid, with(PvItems.zirconium, 50, PvItems.nobelium, 25, PvItems.lithium, 10));
+                    size = 3;
+                    localizedName = "Mega liquid transport gate";
+                    health = 180;
+                    liquidCapacity = 200;
+                    //todo power consume
+                    range = 120;
+                    consumePower(330/60f);
+                }};
+                microLiquidTransportGate = new LiquidBridge("micro-liquid-transport-gate"){{
+                    //todo adjust items
+                    requirements(Category.liquid, with(PvItems.zirconium, 50, PvItems.lithium, 10));
+                    size = 1;
+                    localizedName = "Micro liquid transport gate";
+                    health = 180;
+                    liquidCapacity = 200;
+                    range = 10;
+                    //todo power consume
+                    consumePower(330/60f);
+                }};
+
+                concentratedRouter = new LiquidRouter("concentrated-router")
+                {{
+                    requirements(Category.liquid, with(PvItems.lithium,4,PvItems.zirconium,4));
+                    localizedName = "Concentrated Router";
+                    health = 60;
+                    liquidCapacity = 40;
+                }};
+                concentratedJunction = new LiquidJunction("concentrated-junction")
+                {{
+                    requirements(Category.liquid, with(PvItems.lithium,4,PvItems.zirconium,4));
+                    localizedName = "Concentrated Junction";
+                    health = 60;
+                    liquidCapacity = 40;
+                }};
+                concentratedConduit = new Conduit("concentrated-conduit")
+                {{
+                    requirements(Category.liquid, with(PvItems.lithium,4,PvItems.zirconium,2));
+                    localizedName = "Concentrated conduit";
+                    health = 60;
+                    liquidCapacity = 30;
+                    junctionReplacement = concentratedJunction;
+                }};
+                smallConcentratedTank = new LiquidRouter("small-concentrated-tank"){{
+                    requirements(Category.liquid, with(PvItems.barium, 30,PvItems.lithium,10));
+                    size = 2;
+                    solid = true;
+                    liquidCapacity = 1500f;
+                    liquidPadding = 1.5f;
+                    health = 500;
+                }};
+                largeConcentratedTank = new LiquidRouter("large-concentrated-tank"){{
+                    requirements(Category.liquid, with(PvItems.barium, 100,PvItems.lithium,50,PvItems.nobelium,20));
+                    size = 4;
+                    solid = true;
+                    liquidCapacity = 6000f;
+                    liquidPadding = 3.5f;
+                    health = 1230;
                 }};
                 piscoProcessor = new PvLogicBlock("pisco-processor")
                 {{
