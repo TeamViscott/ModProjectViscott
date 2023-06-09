@@ -7,10 +7,8 @@ import arc.math.geom.Point2;
 import arc.struct.Seq;
 import mindustry.entities.units.BuildPlan;
 import mindustry.world.Block;
-import mindustry.world.blocks.distribution.Conveyor;
-import mindustry.world.blocks.distribution.Junction;
-import mindustry.world.blocks.distribution.StackConveyor;
-import mindustry.world.blocks.environment.AirBlock;
+import mindustry.world.blocks.distribution.*;
+import mindustry.world.blocks.environment.*;
 import viscott.content.PvBlocks;
 
 public class MassConveyor extends StackConveyor {
@@ -29,7 +27,7 @@ public class MassConveyor extends StackConveyor {
 
     @Override
     public boolean canReplace(Block other){
-        return other instanceof AirBlock ||other instanceof MassConveyor || other instanceof Junction;
+        return other instanceof AirBlock || other instanceof Prop ||other instanceof MassConveyor || other instanceof Junction;
     }
 
     @Override
