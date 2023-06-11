@@ -34,7 +34,7 @@ public class teamResearch extends Block {
 
     @Override
     public void loadIcon(){
-        fullIcon =Core.atlas.find(name+"-team");
+        fullIcon =Core.atlas.find(name);
 
         uiIcon = fullIcon;
     }
