@@ -41,7 +41,7 @@ public class PvUnits {
     public static UnitType
         /*Core Units*/micro,infrared, spectrum,
             shadow,proton,vessel,
-            amp,
+            amp,volt,watt,
 
         /*Flying Ion Path*/ particle, snippet, fragment, excerpt, pericope,
 
@@ -319,9 +319,9 @@ public class PvUnits {
         //Xeal
         amp = new PvUnitType("amp")
         {{
-
             localizedName = "Amp";
             constructor = EntityMapping.map("alpha");
+            description = "A small core unit created by the Xeal faction. Specializes in base building and support.";
             health = 130;
             armor = 0;
             flying = true;
@@ -349,9 +349,99 @@ public class PvUnits {
                             trailWidth = 2;
                             knockback = 2.5f;
                             trailLength = 25;
+                            hitEffect = Fx.hitLancer;
                             lifetime = PvUtil.GetRange(8,21);
                             status = StatusEffects.shocked;
                             statusDuration = 60;
+                        }};
+                    }}
+            );
+        }};
+        volt = new PvUnitType("volt")
+        {{
+            localizedName = "Volt";
+            constructor = EntityMapping.map("alpha");
+            description = "A mid sized core unit created by the Xeal faction. Specializes in base building and support.";
+            health = 140;
+            armor = 0;
+            flying = true;
+            buildSpeed = 1.75f;
+            rotateMoveFirst = true;
+            mineTier = 1;
+            mineSpeed = 6f;
+            itemCapacity = 80;
+            speed = 26.8f / 7.5f;
+            drag = 0.1f;
+            range = 17*8;
+            weapons.add(
+                    new Weapon()
+                    {{
+                        mirror = true;
+                        top = false;
+                        x = 4;
+                        y = 2;
+                        reload = 60f/1.8f;
+                        alternate = false;
+                        bullet = new LaserBoltBulletType(10,14)
+                        {{
+                            buildingDamageMultiplier = 0.01f;
+                            trailColor = backColor = lightColor = Pal.heal;
+                            trailWidth = 2;
+                            knockback = 3f;
+                            trailLength = 25;
+                            hitEffect = Fx.hitLancer;
+                            lifetime = PvUtil.GetRange(10,25);
+                            status = StatusEffects.shocked;
+                            statusDuration = 60;
+                        }};
+                    }}
+            );
+        }};
+        watt = new PvUnitType("watt")
+        {{
+            localizedName = "Watt";
+            constructor = EntityMapping.map("alpha");
+            health = 160;
+            armor = 0;
+            flying = true;
+            buildSpeed = 2.25f;
+            rotateMoveFirst = true;
+            mineTier = 2;
+            mineSpeed = 7.5f;
+            itemCapacity = 100;
+            speed = 26.8f / 7.5f;
+            drag = 0.1f;
+            range = 17*8;
+            weapons.add(
+                    new Weapon()
+                    {{
+                        mirror = true;
+                        top = false;
+                        x = 4;
+                        y = 2;
+                        reload = 60f/1.8f;
+                        alternate = false;
+                        bullet = new LaserBoltBulletType(14,22)
+                        {{
+                            buildingDamageMultiplier = 0.01f;
+                            trailColor = backColor = lightColor = Pal.heal;
+                            trailWidth = 2;
+                            knockback = 5f;
+                            trailLength = 35;
+                            lifetime = PvUtil.GetRange(14,25);
+                            status = StatusEffects.shocked;
+                            statusDuration = 60;
+                            homingPower = 0.02f;
+                            weaveMag = 1;
+                            weaveScale = 1;
+                            weaveRandom = true;
+                            fragBullets = 3;
+                            hitEffect = Fx.hitLancer;
+                            fragBullet = new LightningBulletType() {{
+                                damage = 10;
+                                lightningLength = 8;
+                                collidesAir = true;
+                            }};
                         }};
                     }}
             );

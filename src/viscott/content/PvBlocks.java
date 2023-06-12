@@ -100,7 +100,7 @@ public class PvBlocks {
                     /*Core's*/coreHover,coreElevate,coreUpraise,
                             bulkUnloader,
                             /*Nullis*/nullisCore,
-                            /*Xeal*/coreSpark,
+                            /*Xeal*/coreSpark,coreCharge,coreSurge,
                     /*Effects*/utilityProjector,
 
                             /*Walls*/
@@ -795,7 +795,7 @@ public class PvBlocks {
                 }};
                 coreSpark = new PvCore("core-spark")
                 {{
-                    requirements(Category.effect, with(PvItems.zirconium,5000,PvItems.lithium,4000,Items.silicon,900,PvItems.nobelium,500));
+                    requirements(Category.effect, with(PvItems.zirconium,5000,PvItems.lithium,4000,Items.silicon,900));
                     localizedName = "Core Elevate";
                     alwaysUnlocked = true;
                     unitType = PvUnits.amp;
@@ -804,6 +804,32 @@ public class PvBlocks {
                     size = 4;
                     unitCapModifier = 32;
                     itemCapacity = 20000;
+                }};
+                coreCharge = new PvCore("core-charge")
+                {{
+                    requirements(Category.effect, with(PvItems.zirconium,10000,PvItems.lithium,8000,Items.silicon,3000,PvItems.nobelium,1500,PvItems.platinum,500));
+                    localizedName = "Core Charge";
+                    alwaysUnlocked = true;
+                    unitType = PvUnits.volt;
+                    faction.add(PvFactions.Xeal);
+                    health = 5500;
+                    size = 5;
+                    unitCapModifier = 48;
+                    itemCapacity = 30000;
+                }};
+                coreSurge = new PvCore("core-surge")
+                {{
+                    requirements(Category.effect, with(PvItems.zirconium,20000,PvItems.lithium,15000,Items.silicon,8000,PvItems.nobelium,5000,PvItems.platinum,3000,PvItems.carbonFiber,100));
+                    localizedName = "Core Surge";
+                    alwaysUnlocked = true;
+                    unitType = PvUnits.watt;
+                    faction.add(PvFactions.Xeal);
+                    health = 7000;
+                    size = 6;
+                    unitCapModifier = 65;
+                    itemCapacity = 45000;
+                    healTime = 25;
+                    healTimeout = 2;
                 }};
                 nullisCore = new NullisCore("core-null")
                 {{

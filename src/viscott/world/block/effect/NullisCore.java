@@ -36,7 +36,7 @@ public class NullisCore extends PvCore {
         updateClipRadius(voidRadius*8);
         super.init();
     }
-    public class NullisCoreBlock extends CoreBuild implements VoidArea {
+    public class NullisCoreBlock extends PvCoreBuild implements VoidArea {
         public float pulsing = 0;
         @Override
         public void updateTile()
