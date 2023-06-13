@@ -293,7 +293,7 @@ public class PvBlocks {
                 }};
                 behemothGrinder = new Grinder("behemoth-grinder")
                 {{
-                    requirements(Category.production, with(PvItems.zirconium,100,PvItems.nobelium,20));
+                    requirements(Category.production, with(PvItems.zirconium,100,Items.silicon,20));
                     localizedName = "Behemoth Grinder";
                     health = 570;
                     liquidCapacity = 20;
