@@ -26,6 +26,7 @@ import mindustry.world.blocks.liquid.LiquidBridge;
 import mindustry.world.blocks.liquid.LiquidJunction;
 import mindustry.world.blocks.liquid.LiquidRouter;
 import mindustry.world.blocks.logic.MemoryBlock;
+import mindustry.world.blocks.logic.MessageBlock;
 import mindustry.world.blocks.logic.SwitchBlock;
 import mindustry.world.blocks.payloads.*;
 import mindustry.world.blocks.power.*;
@@ -37,6 +38,7 @@ import mindustry.world.blocks.storage.CoreBlock;
 import mindustry.world.blocks.storage.Unloader;
 import mindustry.world.draw.*;
 import mindustry.world.meta.BuildVisibility;
+import viscott.types.drawer.PvDrawPulse;
 import viscott.world.block.VoidBlock;
 import viscott.world.block.defense.PvWall;
 import viscott.world.block.distribution.MassConveyor;
@@ -83,6 +85,7 @@ public class PvBlocks {
                             /*Nullis*/harvestor,
                     /*Production*/siliconMassForge,particalAccelerator, keroseneMixer, carbonWeaver,
                             fractionIonizer,nitrogenDistiller,quadRushForge,
+                            /*Mortikai*/uberbulkForge,
 
                     /*Heaters*/keroseneHeater,blastHeater, hybridHeater, xeroPointHeater,
                                 heatPathfinder,
@@ -102,6 +105,7 @@ public class PvBlocks {
                             /*Nullis*/nullisCore,
                             /*Xeal*/coreSpark,coreCharge,coreSurge,
                     /*Effects*/utilityProjector,
+                            /*Nullis*/voidNode,voidBeacon,
 
                             /*Walls*/
                             zirconWall,zirconWallLarge,
@@ -110,9 +114,9 @@ public class PvBlocks {
                             erbiumWall,erbiumWallLarge,
                             carbonWall,carbonWallLarge,
                     /*Logic*/
-                            piscoProcessor,memoryByte,statusSelector,
+                            piscoProcessor,memoryByte,statusSelector,labelHandler,
                             /*Testing*/
-                                    sus,voidNode
+                                    sus
                             ;
             public static void load()
             {
@@ -319,7 +323,7 @@ public class PvBlocks {
                 }};
                 tetraDrill = new Drill("tetra-drill")
                 {{
-                    requirements(Category.production, with(PvItems.zirconium,60,PvItems.platinum,25)); //Todo
+                    requirements(Category.production, with(PvItems.zirconium,60,Items.silicon,25));
                     localizedName = "Tetra Drill";
                     size = 3;
                     drillTime = 200;
@@ -707,10 +711,12 @@ public class PvBlocks {
                             new UnitPlan(PvUnits.pocket,15*60f,with(PvItems.zirconium,40,PvItems.lithium,20)),
                             new UnitPlan(PvUnits.container,30*60f,with(PvItems.zirconium,100,PvItems.lithium,50,Items.silicon,20)),
                             new UnitPlan(PvUnits.capsule,45*60f,with(PvItems.zirconium,120,PvItems.lithium,100,Items.silicon,100)),
+                            new UnitPlan(PvUnits.vault,60*60f,with(PvItems.zirconium,300,PvItems.lithium,500,Items.silicon,400,PvItems.nobelium,60)),
                             //Naval Path
                             new UnitPlan(PvUnits.rivulet,15*60f,with(PvItems.zirconium,50,Items.silicon,30)),
                             new UnitPlan(PvUnits.bourn,30*60f,with(PvItems.zirconium,100,Items.silicon,80,PvItems.nobelium,40,PvItems.lithium,100)),
-                            new UnitPlan(PvUnits.tributary,45*60f,with(PvItems.zirconium,200,Items.silicon,140,PvItems.nobelium,100,PvItems.lithium,200,PvItems.barium,260))
+                            new UnitPlan(PvUnits.tributary,45*60f,with(PvItems.zirconium,200,Items.silicon,140,PvItems.nobelium,100,PvItems.lithium,200,PvItems.barium,260)),
+                            new UnitPlan(PvUnits.loch,60*60f,with(PvItems.zirconium,500,Items.silicon,320,PvItems.nobelium,200,PvItems.lithium,400,PvItems.barium,520,Items.silicon,120))
                     );
                 }};
                 densePayloadConveyor = new PayloadConveyor("dense-payload-conveyor")
@@ -796,7 +802,7 @@ public class PvBlocks {
                 coreSpark = new PvCore("core-spark")
                 {{
                     requirements(Category.effect, with(PvItems.zirconium,5000,PvItems.lithium,4000,Items.silicon,900));
-                    localizedName = "Core Elevate";
+                    localizedName = "Core Spark";
                     alwaysUnlocked = true;
                     unitType = PvUnits.amp;
                     faction.add(PvFactions.Xeal);
@@ -829,13 +835,13 @@ public class PvBlocks {
                     unitCapModifier = 65;
                     itemCapacity = 45000;
                     healTime = 25;
-                    healTimeout = 2;
                 }};
                 nullisCore = new NullisCore("core-null")
                 {{
                     requirements(Category.effect,with(PvItems.zirconium,500,PvItems.lithium,200,PvItems.platinum,100));
                     localizedName = "Core Null";
                     unitType = PvUnits.vessel;
+                    defaultMiner = PvUnits.shadow;
                     size = 3;
                     health = 2100;
                     unitCapModifier = 60;
@@ -851,6 +857,19 @@ public class PvBlocks {
                     health = 100;
                     voidRadius = 6;
 
+                }};
+                voidBeacon = new VoidBlock("void-bacon")
+                {{
+                    requirements(Category.effect,with(PvItems.zirconium,1500,PvItems.lithium,1000,PvItems.nobelium,300,PvItems.carbonFiber,100));
+                    localizedName = "Void Beacon";
+                    faction.add(PvFactions.Nullis);
+                    size = 4;
+                    health = 1400;
+                    voidRadius = 26;
+                    drawer = new DrawMulti(
+                            new DrawDefault(),
+                            new PvDrawPulse("-black")
+                    );
                 }};
                 harvestor = new PowerGrinder("harvestor")
                 {{
@@ -1031,6 +1050,13 @@ public class PvBlocks {
                     liquidCapacity = 6000f;
                     liquidPadding = 3.5f;
                     health = 1230;
+                }};
+                labelHandler = new MessageBlock("label-handler") {{
+                    requirements(Category.logic, with(PvItems.zirconium,25,PvItems.lithium,20));
+                    localizedName = "Label Handler";
+                    maxTextLength = 300;
+                    maxNewlines = 30;
+                    health = 100;
                 }};
                 piscoProcessor = new PvLogicBlock("pisco-processor")
                 {{

@@ -27,7 +27,7 @@ public class MassConveyor extends StackConveyor {
 
     @Override
     public boolean canReplace(Block other){
-        return other instanceof AirBlock || other instanceof Prop ||other instanceof MassConveyor || other instanceof Junction;
+        return other instanceof AirBlock || (!(other instanceof StaticWall) && other instanceof Prop) ||other instanceof MassConveyor || other instanceof Junction;
     }
 
     @Override

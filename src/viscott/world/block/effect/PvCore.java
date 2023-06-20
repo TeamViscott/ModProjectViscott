@@ -14,7 +14,6 @@ import static mindustry.Vars.state;
 public class PvCore extends CoreBlock {
     public Seq<PvFaction> faction = new Seq<>();
     public float healTime = -1;
-    public float healTimeout = 0;
 
     public PvCore(String name)
     {
@@ -42,6 +41,7 @@ public class PvCore extends CoreBlock {
         public void updateTile()
         {
             super.updateTile();
+            if (healTime < 1) return;
             if (wasRecentlyDamaged()) return;
             if (health != maxHealth) {
                 charge += Time.delta;

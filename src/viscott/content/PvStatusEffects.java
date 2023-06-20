@@ -8,15 +8,12 @@ import mindustry.game.Team;
 import mindustry.graphics.Pal;
 import mindustry.type.StatusEffect;
 import viscott.utilitys.PvUtil;
-import viscott.world.statusEffects.AlterStatusEffect;
-import viscott.world.statusEffects.FragStatusEffect;
-import viscott.world.statusEffects.PvStatusEffect;
-import viscott.world.statusEffects.StatusEffectStack;
+import viscott.world.statusEffects.*;
 
 public class PvStatusEffects {
     public static StatusEffect
     timeWarped,doused, disabled, expent, resiliant, ungratefull, crescendo ,tick ,tock,mend,shield, malfunction,
-    voidShield,voidDecay,frag,aoe
+    voidShield,voidDecay,frag,aoe,homing
             ;
     public static void load() {
         timeWarped = new StatusEffectStack("time-warped") {{
@@ -166,6 +163,13 @@ public class PvStatusEffects {
                 despawnEffect = hitEffect = Fx.explosion;
                 splashDamageRadius = 8*2;
             }};
+        }};
+        homing = new HomingStatusEffect("homing"){{
+            localizedName = "Homing";
+            description = "Silicon + Unit Go Brrrrr...";
+            homingRange = 8*15;
+            homingPower = 0.05f;
+            homingDelay = 0;
         }};
     }
 }

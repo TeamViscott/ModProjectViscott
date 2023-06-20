@@ -1,5 +1,6 @@
 package viscott.types;
 
+import arc.graphics.Color;
 import mindustry.Vars;
 import mindustry.game.Team;
 import mindustry.gen.Unit;
@@ -10,6 +11,7 @@ public class NullisUnitType extends PvUnitType{
     public NullisUnitType(String name)
     {
         super(name);
+        healColor = Color.black;
         factions.add(PvFactions.Nullis);
     }
     @Override

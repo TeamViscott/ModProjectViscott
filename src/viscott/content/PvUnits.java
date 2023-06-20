@@ -2,6 +2,7 @@ package viscott.content;
 
 import arc.graphics.Color;
 import arc.struct.Seq;
+import mindustry.ai.types.MinerAI;
 import mindustry.content.Fx;
 import mindustry.content.Items;
 import mindustry.content.StatusEffects;
@@ -45,7 +46,7 @@ public class PvUnits {
 
         /*Flying Ion Path*/ particle, snippet, fragment, excerpt, pericope,
 
-        /*Xeal Naval Path*/rivulet,bourn,tributary,
+        /*Xeal Naval Path*/rivulet,bourn,tributary,loch,
 
         /*Nullis*/
             /*Storage Con Path*/pocket,container, capsule,vault,
@@ -243,7 +244,8 @@ public class PvUnits {
             health = 0.5f;
             abilities.add(new DamageAbility(0.05f/60f));
             localizedName = "Shadow";
-            constructor = EntityMapping.map("beta");
+            constructor = EntityMapping.map("mono");
+            controller = a -> new MinerAI();
             armor = 0;
             flying = true;
             buildSpeed = 1.2f;
@@ -1282,6 +1284,7 @@ public class PvUnits {
             factions.add(PvFactions.Nullis);
             flying = true;
             hitSize = 8*8;
+            healColor = Color.black;
             engineColor = Color.black;
             itemCapacity = 3000;
             speed = 1.4f / 7.5f;
@@ -1796,6 +1799,69 @@ public class PvUnits {
                          healPercent = 1;
                     }};
                      */
+                }};
+            }});
+        }};
+        loch = new PvUnitType("loch") {{
+            localizedName = "Loch";
+            factions.add(PvFactions.Xeal);
+            constructor = EntityMapping.map("risso");
+            canBoost = true;
+            speed = 6.2f / 7.5f;
+            engineOffset = 14;
+            engineSize = 12;
+            drag = 0.13f;
+            buildSpeed = 4f;
+            buildBeamOffset = 0;
+            abilities.add(new RepairFieldAbility(4,1080,8*30),
+                    new StatusFieldAbility(PvStatusEffects.homing,300,240,8*24)
+            );
+            hitSize = 18f;
+            health = 18000;
+            armor = 8;
+            accel = 0.4f;
+            rotateSpeed = 3.3f;
+            faceTarget = false;
+
+            weapons.add(new Weapon(name+"-turret"){{
+                reload = 60f/0.8f;
+                shoot = new ShootSpread(3,0);
+                shoot.shotDelay = 5;
+                x = 0f;
+                shootY = 2f;
+                hitSize = 2*8;
+                inaccuracy = 3;
+                y = -4f;
+                recoil = 2;
+                rotate = true;
+                mirror = false;
+                top = true;
+                ejectEffect = Fx.casing1;
+                bullet = new BasicBulletType(3f, 72){{
+                    width = 7f;
+                    height = 9f;
+                    lifetime = PvUtil.GetRange(3,34);
+                    trailColor = backColor = lightColor = Pal.heal;
+                    trailLength = 30;
+                    weaveScale = 2;
+                    weaveMag = 2;
+                    homingPower = 0.008f;
+                    trailWidth = 1.4f;
+                    weaveRandom = true;
+                    healPercent = 5;
+                    collidesTeam = true;
+                    ammoMultiplier = 2;
+                    fragBullets = 3;
+                    fragBullet = new BasicBulletType(3,45)
+                    {{
+                         width = 7f;
+                         height = 9f;
+                         lifetime = PvUtil.GetRange(3,12);
+                         trailWidth = 1.4f;
+                         trailLength = 10;
+                         trailColor = backColor = lightColor = Pal.heal;
+                         healPercent = 1;
+                    }};
                 }};
             }});
         }};

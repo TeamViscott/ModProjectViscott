@@ -283,7 +283,7 @@ public class PvTurrets{
                             loopSound = Sounds.missileTrail;
                             loopSoundVolume = 0.6f;
                             deathSound = Sounds.largeExplosion;
-                            targetAir = false;
+                            targetAir = true;
 
                             fogRadius = 6f;
 
@@ -304,7 +304,7 @@ public class PvTurrets{
                                         sizeTo = 130f;
                                     }});
 
-                                    collidesAir = false;
+                                    collidesAir = true;
                                     buildingDamageMultiplier = 0.3f;
 
                                     ammoMultiplier = 1f;
@@ -319,7 +319,7 @@ public class PvTurrets{
                                         width = height = 18f;
                                         collidesTiles = false;
                                         splashDamageRadius = 40f;
-                                        splashDamage = 80f;
+                                        splashDamage = 20f;
                                         backColor = trailColor = hitColor = Pal.bulletYellow;
                                         frontColor = Color.white;
                                         smokeEffect = Fx.shootBigSmoke2;

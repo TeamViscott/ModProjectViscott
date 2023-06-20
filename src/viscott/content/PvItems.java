@@ -11,7 +11,7 @@ import static mindustry.content.Items.silicon;
 public class PvItems {
     public static Item
     zirconium,lithium,barium,nobelium,platinum,erbium,carbonFiber,copium,
-            rushAlloy
+            rushAlloy,tideAlloy
     ;
     public static Seq<Item> vercilusItems = new Seq<Item>(),
                             vercilusOnlyItems = new Seq<Item>();
@@ -63,10 +63,14 @@ public class PvItems {
         {{
             localizedName = "Rush Alloy";
             color = Team.sharded.color;
-
+        }};
+        tideAlloy = new Item("tide-alloy")
+        {{
+            localizedName = "Tide Alloy";
+            color = Team.green.color;
         }};
 
-        vercilusItems.addAll(zirconium,lithium,barium,silicon,nobelium,platinum,erbium,carbonFiber,rushAlloy);
+        vercilusItems.addAll(zirconium,lithium,barium,silicon,nobelium,platinum,erbium,carbonFiber,rushAlloy,tideAlloy);
         vercilusOnlyItems = vercilusItems.copy();
         vercilusOnlyItems.remove(silicon);
     }
