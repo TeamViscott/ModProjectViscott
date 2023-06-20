@@ -118,7 +118,10 @@ public class NullisCore extends PvCore {
         @Override
         public void write(Writes write) {
             super.write(write);
-            write.i(shadowMiner.id());
+            if (shadowMiner == null || !shadowMiner.isValid())
+                write.i(-1);
+            else
+                write.i(shadowMiner.id());
         }
 
         @Override

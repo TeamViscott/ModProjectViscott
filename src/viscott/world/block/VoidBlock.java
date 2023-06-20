@@ -1,13 +1,23 @@
 package viscott.world.block;
 
 import arc.graphics.g2d.Draw;
+import arc.math.geom.Intersector;
+import arc.math.geom.Point2;
+import arc.struct.Seq;
+import arc.util.Nullable;
 import arc.util.Time;
+import arc.util.Tmp;
 import mindustry.gen.Building;
 import mindustry.graphics.Layer;
+import mindustry.input.Placement;
+import mindustry.world.Tile;
 import mindustry.world.draw.DrawBlock;
 import mindustry.world.draw.DrawDefault;
 import viscott.content.PvFactions;
 import viscott.world.chips.VoidArea;
+
+import static mindustry.Vars.tilesize;
+import static mindustry.Vars.world;
 
 public class VoidBlock extends PvBlock{
     public float voidRadius = 1;
@@ -27,6 +37,15 @@ public class VoidBlock extends PvBlock{
         drawer.load(this);
     }
 
+    @Override
+    public void changePlacementPath(Seq<Point2> points, int rotation){
+        Placement.calculateNodes(points, this, rotation, (point, other) -> overlaps(world.tile(point.x, point.y), world.tile(other.x, other.y)));
+    }
+
+    boolean overlaps(@Nullable Tile src, @Nullable Tile other){
+        if(src == null || other == null) return true;
+        return Intersector.overlaps(Tmp.cr1.set(src.worldx() + offset, src.worldy() + offset, voidRadius * tilesize), Tmp.r1.setSize(size * tilesize).setCenter(other.worldx() + offset, other.worldy() + offset));
+    }
     public class VoidBuilding extends Building implements VoidArea
     {
         float time = 0;
