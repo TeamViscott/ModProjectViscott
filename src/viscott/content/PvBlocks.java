@@ -54,6 +54,7 @@ import viscott.world.block.power.ConstGenerator;
 import viscott.world.block.production.ItemVariableReactor;
 import viscott.world.block.production.MultiCrafter;
 import viscott.world.block.unit.BulkUnitFactory;
+import viscott.world.block.unit.PvSelectiveConstructor;
 
 import static mindustry.type.ItemStack.with;
 
@@ -93,10 +94,12 @@ public class PvBlocks {
                     smallConcentratedTank,largeConcentratedTank,
                             micropulsePump,effluxPump,
                     /*Pressure related*/ pressureSource,
-                    /*Unit Creation*/nueroSpawnPad,eliteSpawnPad,
+                    /*Unit Creation*/templateMolder,nueroSpawnPad,eliteSpawnPad,
 
                     /*Nullis*/
                         packer,
+
+                    /*Templates*/airTempT1,airTempT2,airTempT3,
 
                     /*Payload*/densePayloadConveyor,densePayloadRouter,
                             denseConstructor,denseDeconstructor,denseUnloader,denseLoader,
@@ -663,6 +666,37 @@ public class PvBlocks {
                     size = 2;
                     drawer = new DrawMulti(new DrawDefault(), new DrawHeatOutput(), new DrawHeatInput("-heat"));
                     regionRotated1 = 1;
+                }};
+                airTempT1 = new Block("flying-t1") {{
+                    requirements = with(PvItems.zirconium,100); //Todo
+                    localizedName = "Tier 1 Flying Template";
+                    health = 70;
+                    size = 1;
+                }};
+                airTempT1 = new Block("flying-t2") {{
+                    requirements = with(PvItems.zirconium,250); //Todo
+                    localizedName = "Tier 2 Flying Template";
+                    health = 180;
+                    size = 2;
+                }};
+                airTempT1 = new Block("flying-t3") {{
+                    requirements = with(PvItems.zirconium,800); //Todo
+                    localizedName = "Tier 3 Flying Template";
+                    health = 780;
+                    size = 3;
+                }};
+                templateMolder = new PvSelectiveConstructor("template-molder") {{
+                    requirements(Category.units,with(PvItems.zirconium,250,Items.silicon,75,PvItems.platinum,40)); //Todo
+                    localizedName = "Template Molder";
+                    health = 500;
+                    size = 3;
+                    minBlockSize = 1;
+                    maxBlockSize = 3;
+                    constructables = Seq.with(
+                            airTempT1,
+                            airTempT2,
+                            airTempT3
+                    );
                 }};
                 nueroSpawnPad = new BulkUnitFactory("nuero-spawn-pad")
                 {{

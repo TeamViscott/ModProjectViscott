@@ -19,7 +19,6 @@ import java.util.HashMap;
 public class NullisCore extends PvCore {
     public float voidRadius = 5;
     public UnitType defaultMiner = null;
-    static CoreBuild visualCore = null;
     public NullisCore(String name)
     {
         super(name);
@@ -41,10 +40,7 @@ public class NullisCore extends PvCore {
         @Override
         public void updateTile()
         {
-            if (visualCore == null || !visualCore.isValid())
-                visualCore = this;
-
-            if (visualCore == this) {
+            if (team.core() == this && !Vars.net.client()) {
                 Vars.content.items().each(i -> {
                     int amount = visualItems.get(i);
                     if (amount > 0)
@@ -65,7 +61,7 @@ public class NullisCore extends PvCore {
                         }
                     }
             );
-            if (visualCore == this) {
+            if (team.core() == this && !Vars.net.client()) {
                 for (Unit u : visualizer)
                     if (!u.isValid())
                         visualizer.remove(u);
