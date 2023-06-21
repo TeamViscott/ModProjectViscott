@@ -94,7 +94,7 @@ public class PowerGrinder extends Grinder{
 
         @Override
         public float getPowerProduction(){
-            return powerProduction * productionEfficiency;
+            return powerProduction * productionEfficiency * timeScale();
         }
     }
 }
