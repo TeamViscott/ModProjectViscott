@@ -27,7 +27,6 @@ import mindustry.world.blocks.liquid.LiquidJunction;
 import mindustry.world.blocks.liquid.LiquidRouter;
 import mindustry.world.blocks.logic.MemoryBlock;
 import mindustry.world.blocks.logic.MessageBlock;
-import mindustry.world.blocks.logic.SwitchBlock;
 import mindustry.world.blocks.payloads.*;
 import mindustry.world.blocks.power.*;
 import mindustry.world.blocks.production.Drill;
@@ -38,6 +37,7 @@ import mindustry.world.blocks.storage.CoreBlock;
 import mindustry.world.blocks.storage.Unloader;
 import mindustry.world.draw.*;
 import mindustry.world.meta.BuildVisibility;
+import viscott.types.PvUnitPlan;
 import viscott.types.drawer.PvDrawPulse;
 import viscott.world.block.VoidBlock;
 import viscott.world.block.defense.PvWall;
@@ -55,6 +55,7 @@ import viscott.world.block.production.ItemVariableReactor;
 import viscott.world.block.production.MultiCrafter;
 import viscott.world.block.unit.BulkUnitFactory;
 import viscott.world.block.unit.PvSelectiveConstructor;
+import viscott.world.block.unit.PvTemplate;
 
 import static mindustry.type.ItemStack.with;
 
@@ -667,19 +668,19 @@ public class PvBlocks {
                     drawer = new DrawMulti(new DrawDefault(), new DrawHeatOutput(), new DrawHeatInput("-heat"));
                     regionRotated1 = 1;
                 }};
-                airTempT1 = new Block("flying-t1") {{
+                airTempT1 = new PvTemplate("flying-t1") {{
                     requirements = with(PvItems.zirconium,100); //Todo
                     localizedName = "Tier 1 Flying Template";
                     health = 70;
                     size = 1;
                 }};
-                airTempT1 = new Block("flying-t2") {{
+                airTempT2 = new PvTemplate("flying-t2") {{
                     requirements = with(PvItems.zirconium,250); //Todo
                     localizedName = "Tier 2 Flying Template";
                     health = 180;
                     size = 2;
                 }};
-                airTempT1 = new Block("flying-t3") {{
+                airTempT3 = new PvTemplate("flying-t3") {{
                     requirements = with(PvItems.zirconium,800); //Todo
                     localizedName = "Tier 3 Flying Template";
                     health = 780;
@@ -692,10 +693,9 @@ public class PvBlocks {
                     size = 3;
                     minBlockSize = 1;
                     maxBlockSize = 3;
-                    constructables = Seq.with(
-                            airTempT1,
-                            airTempT2,
-                            airTempT3
+                    consumePower(120/60);
+                    constructions.addAll(
+                            airTempT1
                     );
                 }};
                 nueroSpawnPad = new BulkUnitFactory("nuero-spawn-pad")
@@ -710,17 +710,17 @@ public class PvBlocks {
                     selectionColumns = 3;
                     plans = new Seq<>().with(
                         //Particle Path
-                        new UnitPlan(PvUnits.particle,15*60f,with(PvItems.lithium,20,Items.silicon,10)),
-                        new UnitPlan(PvUnits.snippet,30*60f,with(PvItems.lithium,50,Items.silicon,25,PvItems.nobelium,10)),
-                        new UnitPlan(PvUnits.fragment,45*60f,with(PvItems.lithium,80,Items.silicon,50,PvItems.nobelium,20,PvItems.carbonFiber,10)),
+                        new PvUnitPlan(PvUnits.particle,15*60f,with(PvItems.lithium,20,Items.silicon,10),airTempT1),
+                        new PvUnitPlan(PvUnits.snippet,30*60f,with(PvItems.lithium,50,Items.silicon,25,PvItems.nobelium,10),airTempT2),
+                        new PvUnitPlan(PvUnits.fragment,45*60f,with(PvItems.lithium,80,Items.silicon,50,PvItems.nobelium,20,PvItems.carbonFiber,10),airTempT3),
                         //Container Path
-                        new UnitPlan(PvUnits.pocket,15*60f,with(PvItems.zirconium,40,PvItems.lithium,20)),
-                        new UnitPlan(PvUnits.container,30*60f,with(PvItems.zirconium,100,PvItems.lithium,50,Items.silicon,20)),
-                        new UnitPlan(PvUnits.capsule,45*60f,with(PvItems.zirconium,120,PvItems.lithium,100,Items.silicon,100)),
+                        new PvUnitPlan(PvUnits.pocket,15*60f,with(PvItems.zirconium,40,PvItems.lithium,20)),
+                        new PvUnitPlan(PvUnits.container,30*60f,with(PvItems.zirconium,100,PvItems.lithium,50,Items.silicon,20)),
+                        new PvUnitPlan(PvUnits.capsule,45*60f,with(PvItems.zirconium,120,PvItems.lithium,100,Items.silicon,100)),
                         //Naval Path
-                        new UnitPlan(PvUnits.rivulet,15*60f,with(PvItems.zirconium,50,Items.silicon,30)),
-                        new UnitPlan(PvUnits.bourn,30*60f,with(PvItems.zirconium,100,Items.silicon,80,PvItems.nobelium,40,PvItems.lithium,100)),
-                        new UnitPlan(PvUnits.tributary,45*60f,with(PvItems.zirconium,200,Items.silicon,140,PvItems.nobelium,100,PvItems.lithium,200,PvItems.barium,260))
+                        new PvUnitPlan(PvUnits.rivulet,15*60f,with(PvItems.zirconium,50,Items.silicon,30)),
+                        new PvUnitPlan(PvUnits.bourn,30*60f,with(PvItems.zirconium,100,Items.silicon,80,PvItems.nobelium,40,PvItems.lithium,100)),
+                        new PvUnitPlan(PvUnits.tributary,45*60f,with(PvItems.zirconium,200,Items.silicon,140,PvItems.nobelium,100,PvItems.lithium,200,PvItems.barium,260))
                     );
                 }};
                 eliteSpawnPad = new BulkUnitFactory("elite-spawn-pad")
@@ -736,21 +736,21 @@ public class PvBlocks {
                     maxAmount = 20;
                     plans = new Seq<>().with(
                             //Particle Path
-                            new UnitPlan(PvUnits.particle,15*60f,with(PvItems.lithium,20,Items.silicon,10)),
-                            new UnitPlan(PvUnits.snippet,30*60f,with(PvItems.lithium,50,Items.silicon,25,PvItems.nobelium,10)),
-                            new UnitPlan(PvUnits.fragment,45*60f,with(PvItems.lithium,80,Items.silicon,50,PvItems.nobelium,20,PvItems.carbonFiber,10)),
-                            new UnitPlan(PvUnits.excerpt,45*60f,with(PvItems.lithium,200,Items.silicon,120,PvItems.nobelium,60,PvItems.carbonFiber,30,PvItems.platinum,50)),
-                            new UnitPlan(PvUnits.pericope,45*60f,with(PvItems.lithium,300,Items.silicon,200,PvItems.nobelium,100,PvItems.carbonFiber,50,PvItems.platinum,100,PvItems.zirconium,500)),
+                            new PvUnitPlan(PvUnits.particle,15*60f,with(PvItems.lithium,20,Items.silicon,10)),
+                            new PvUnitPlan(PvUnits.snippet,30*60f,with(PvItems.lithium,50,Items.silicon,25,PvItems.nobelium,10)),
+                            new PvUnitPlan(PvUnits.fragment,45*60f,with(PvItems.lithium,80,Items.silicon,50,PvItems.nobelium,20,PvItems.carbonFiber,10)),
+                            new PvUnitPlan(PvUnits.excerpt,45*60f,with(PvItems.lithium,200,Items.silicon,120,PvItems.nobelium,60,PvItems.carbonFiber,30,PvItems.platinum,50)),
+                            new PvUnitPlan(PvUnits.pericope,45*60f,with(PvItems.lithium,300,Items.silicon,200,PvItems.nobelium,100,PvItems.carbonFiber,50,PvItems.platinum,100,PvItems.zirconium,500)),
                             //Container Path
-                            new UnitPlan(PvUnits.pocket,15*60f,with(PvItems.zirconium,40,PvItems.lithium,20)),
-                            new UnitPlan(PvUnits.container,30*60f,with(PvItems.zirconium,100,PvItems.lithium,50,Items.silicon,20)),
-                            new UnitPlan(PvUnits.capsule,45*60f,with(PvItems.zirconium,120,PvItems.lithium,100,Items.silicon,100)),
-                            new UnitPlan(PvUnits.vault,60*60f,with(PvItems.zirconium,300,PvItems.lithium,500,Items.silicon,400,PvItems.nobelium,60)),
+                            new PvUnitPlan(PvUnits.pocket,15*60f,with(PvItems.zirconium,40,PvItems.lithium,20)),
+                            new PvUnitPlan(PvUnits.container,30*60f,with(PvItems.zirconium,100,PvItems.lithium,50,Items.silicon,20)),
+                            new PvUnitPlan(PvUnits.capsule,45*60f,with(PvItems.zirconium,120,PvItems.lithium,100,Items.silicon,100)),
+                            new PvUnitPlan(PvUnits.vault,60*60f,with(PvItems.zirconium,300,PvItems.lithium,500,Items.silicon,400,PvItems.nobelium,60)),
                             //Naval Path
-                            new UnitPlan(PvUnits.rivulet,15*60f,with(PvItems.zirconium,50,Items.silicon,30)),
-                            new UnitPlan(PvUnits.bourn,30*60f,with(PvItems.zirconium,100,Items.silicon,80,PvItems.nobelium,40,PvItems.lithium,100)),
-                            new UnitPlan(PvUnits.tributary,45*60f,with(PvItems.zirconium,200,Items.silicon,140,PvItems.nobelium,100,PvItems.lithium,200,PvItems.barium,260)),
-                            new UnitPlan(PvUnits.loch,60*60f,with(PvItems.zirconium,500,Items.silicon,320,PvItems.nobelium,200,PvItems.lithium,400,PvItems.barium,520,Items.silicon,120))
+                            new PvUnitPlan(PvUnits.rivulet,15*60f,with(PvItems.zirconium,50,Items.silicon,30)),
+                            new PvUnitPlan(PvUnits.bourn,30*60f,with(PvItems.zirconium,100,Items.silicon,80,PvItems.nobelium,40,PvItems.lithium,100)),
+                            new PvUnitPlan(PvUnits.tributary,45*60f,with(PvItems.zirconium,200,Items.silicon,140,PvItems.nobelium,100,PvItems.lithium,200,PvItems.barium,260)),
+                            new PvUnitPlan(PvUnits.loch,60*60f,with(PvItems.zirconium,500,Items.silicon,320,PvItems.nobelium,200,PvItems.lithium,400,PvItems.barium,520,Items.silicon,120))
                     );
                 }};
                 densePayloadConveyor = new PayloadConveyor("dense-payload-conveyor")
