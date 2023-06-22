@@ -100,7 +100,7 @@ public class PvBlocks {
                     /*Nullis*/
                         packer,
 
-                    /*Templates*/airTempT1,airTempT2,airTempT3,
+                    /*Templates*/airTempT1,airTempT2,airTempT3,airTempT4, airTempT5,
 
                     /*Payload*/densePayloadConveyor,densePayloadRouter,
                             denseConstructor,denseDeconstructor,denseUnloader,denseLoader,
@@ -668,23 +668,35 @@ public class PvBlocks {
                     drawer = new DrawMulti(new DrawDefault(), new DrawHeatOutput(), new DrawHeatInput("-heat"));
                     regionRotated1 = 1;
                 }};
-                airTempT1 = new PvTemplate("flying-t1") {{
+                airTempT1 = new PvTemplate("aerial-t1") {{
                     requirements = with(PvItems.zirconium,100); //Todo
-                    localizedName = "Tier 1 Flying Template";
+                    localizedName = "Tier 1 Aerial Template";
                     health = 70;
                     size = 1;
                 }};
-                airTempT2 = new PvTemplate("flying-t2") {{
+                airTempT2 = new PvTemplate("aerial-t2") {{
                     requirements = with(PvItems.zirconium,250); //Todo
-                    localizedName = "Tier 2 Flying Template";
+                    localizedName = "Tier 2 Aerial Template";
                     health = 180;
                     size = 2;
                 }};
-                airTempT3 = new PvTemplate("flying-t3") {{
+                airTempT3 = new PvTemplate("aerial-t3") {{
                     requirements = with(PvItems.zirconium,800); //Todo
-                    localizedName = "Tier 3 Flying Template";
+                    localizedName = "Tier 3 Aerial Template";
                     health = 780;
                     size = 3;
+                }};
+                airTempT4 = new PvTemplate("aerial-t4") {{
+                    requirements = with(PvItems.zirconium,1200); //Todo
+                    localizedName = "Tier 4 Aerial Template";
+                    health = 1280;
+                    size = 5;
+                }};
+                airTempT5 = new PvTemplate("aerial-t5") {{
+                    requirements = with(PvItems.zirconium,1800); //Todo
+                    localizedName = "Tier 5 Aerial Template";
+                    health = 1780;
+                    size = 7;
                 }};
                 templateMolder = new PvSelectiveConstructor("template-molder") {{
                     requirements(Category.units,with(PvItems.zirconium,250,Items.silicon,75,PvItems.platinum,40)); //Todo
@@ -695,7 +707,7 @@ public class PvBlocks {
                     maxBlockSize = 3;
                     consumePower(120/60);
                     constructions.addAll(
-                            airTempT1
+                            airTempT1, airTempT2, airTempT3, airTempT4, airTempT5
                     );
                 }};
                 nueroSpawnPad = new BulkUnitFactory("nuero-spawn-pad")
