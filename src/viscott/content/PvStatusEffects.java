@@ -129,7 +129,11 @@ public class PvStatusEffects {
             localizedName = "Void Decay";
             color = Color.valueOf("000000");
             description = "the result of a non void unit entering the void.";
+            effect = Fx.breakProp;
+            effectChance = 0.8f;
             damage = 20f/60f;
+            buildSpeedMultiplier = 0.1f;
+            speedMultiplier = 0.94f;
         }};
         malfunction = new PvStatusEffect("malfunction")
         {{
