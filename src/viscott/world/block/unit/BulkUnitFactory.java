@@ -131,6 +131,7 @@ public class BulkUnitFactory extends Reconstructor {
         @Override
         public void updateTile()
         {
+            efficiency = power.status;
             rotation = Mathf.approachDelta(rotation,1,edelta()*0.01f/amount);
             rotation %= 1;
             if(!configurable){
@@ -143,6 +144,7 @@ public class BulkUnitFactory extends Reconstructor {
 
             if(efficiency > 0 && currentPlan != -1 && hasAllItems() && templateCorrect()){
                 time += edelta() * speedScl * Vars.state.rules.unitBuildSpeed(team);
+                constructTime = plans.get(currentPlan).time;
                 progress += edelta() * Vars.state.rules.unitBuildSpeed(team);
                 speedScl = Mathf.lerpDelta(speedScl, 1f, 0.05f);
             }else{
@@ -170,13 +172,14 @@ public class BulkUnitFactory extends Reconstructor {
                     return;
                 }
 
-                if(progress >= plan.time){
+                if(progress >= constructTime){
                     progress %= 1f;
 
                     Unit unit = plan.unit.create(team);
                     if(commandPos != null && unit.isCommandable()){
                         unit.command().commandPosition(commandPos);
                     }
+                    curTemplate = null;
                     payload = new UnitPayload(unit);
                     payVector.setZero();
                     consume();
@@ -193,7 +196,7 @@ public class BulkUnitFactory extends Reconstructor {
         public boolean templateCorrect() {
             if (currentPlan < 0) return false;
             if (plans.get(currentPlan) instanceof PvUnitPlan pvPlan)
-                return pvPlan.template == curTemplate;
+                return pvPlan.template == null || pvPlan.template == curTemplate;
             return true;
         }
 
@@ -215,7 +218,7 @@ public class BulkUnitFactory extends Reconstructor {
         @Override
         public void draw(){
             super.draw();
-            Draw.z(Layer.blockOver-3);
+            Draw.z(Layer.blockOver-2);
             if (currentPlan != -1) {
                 UnitFactory.UnitPlan plan = plans.get(currentPlan);
 
@@ -228,7 +231,9 @@ public class BulkUnitFactory extends Reconstructor {
                     }
             }
             if (curTemplate == null || currentPlan < 0 || plans.get(currentPlan) instanceof PvUnitPlan pvPlan && curTemplate != pvPlan.template) return;
-            Draw.z(Layer.blockOver-2);
+            Draw.z(Layer.blockOver-3);
+            float m = 1 + -progress/constructTime;
+            Draw.color(Pal.lighterOrange.cpy().add(m,m,m));
             Draw.rect(curTemplate.fullIcon,x,y);
         }
 
