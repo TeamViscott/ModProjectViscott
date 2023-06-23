@@ -82,7 +82,9 @@ public class ViscottMod extends Mod {
 
         if (mobile)
         {
-            for(var team : PvFaction.all.items) {
+
+            for(int i = 0;i < PvFaction.all.size ;i++) {
+                PvFaction team = PvFaction.all.get(i);
                 if (team.techTree != null && TechTree.roots.contains(team.techTree))
                     TechTree.roots.remove(team.techTree);
             }
