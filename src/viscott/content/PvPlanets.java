@@ -21,7 +21,8 @@ public class PvPlanets{
             ;
     public static void load()
     {
-        content.planets().forEach(p -> p.hiddenItems.addAll(PvItems.vercilusOnlyItems));
+        for(Planet p : content.planets().items)
+            p.hiddenItems.addAll(PvItems.vercilusOnlyItems);
         vercilus = new Planet("vercilus", Planets.sun,1f,2)
         {{
             localizedName = "Vercilus";
