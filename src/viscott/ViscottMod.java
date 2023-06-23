@@ -80,20 +80,10 @@ public class ViscottMod extends Mod {
         overRideOldSound();
         PvUIs.init();
 
-        if (mobile)
-        {
-
-            for(int i = 0;i < PvFaction.all.size ;i++) {
-                PvFaction team = PvFaction.all.get(i);
-                if (team.techTree != null && TechTree.roots.contains(team.techTree))
-                    TechTree.roots.remove(team.techTree);
-            }
-        }
-        else
-            PvFaction.all.forEach(team -> {
-                if (team.techTree != null && TechTree.roots.contains(team.techTree))
-                    TechTree.roots.remove(team.techTree);
-            });
+        PvFaction.all.each(team -> {
+            if (team.techTree != null && TechTree.roots.contains(team.techTree))
+                TechTree.roots.remove(team.techTree);
+        });
     }
 
     public void overRideOldSound()
