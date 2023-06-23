@@ -79,7 +79,7 @@ public class MultiCrafter extends GenericCrafter {
                     if (b.selected == -1) return ItemStack.empty;
                     ItemStack[] is = new ItemStack[consumerItems.get(b.selected).size];
                     AtomicInteger i = new AtomicInteger();
-                    consumerItems.get(b.selected).forEach(item -> {is[i.getAndIncrement()] = item;});
+                    consumerItems.get(b.selected).each(item -> {is[i.getAndIncrement()] = item;});
                     return is;
                 })
         );
@@ -242,7 +242,7 @@ public class MultiCrafter extends GenericCrafter {
         {
 
             AtomicBoolean enough = new AtomicBoolean(true);
-            consumerLiquids.get(selected).forEach(liquid -> {if (liquids.get(liquid.liquid) < liquid.amount) enough.set(false);});
+            consumerLiquids.get(selected).each(liquid -> {if (liquids.get(liquid.liquid) < liquid.amount) enough.set(false);});
             return enough.get();
         }
 
@@ -259,13 +259,13 @@ public class MultiCrafter extends GenericCrafter {
                 this.progress += this.getProgressIncrease(MultiCrafter.this.craftTime);
                 this.warmup = Mathf.approachDelta(this.warmup, this.warmupTarget(), MultiCrafter.this.warmupSpeed);
                 if (MultiCrafter.this.outputerLiquids.get(selected).size != 0) {
-                    MultiCrafter.this.outputerLiquids.get(selected).forEach(liquid -> {
+                    MultiCrafter.this.outputerLiquids.get(selected).each(liquid -> {
                         liquids.add(liquid.liquid, Math.min(liquid.amount, MultiCrafter.this.liquidCapacity - this.liquids.get(liquid.liquid)));
                         dumpLiquid(liquid.liquid);
                     });
                 }
                 if (MultiCrafter.this.consumerLiquids.get(selected).size != 0) {
-                    MultiCrafter.this.consumerLiquids.get(selected).forEach(liquid -> {
+                    MultiCrafter.this.consumerLiquids.get(selected).each(liquid -> {
                         liquids.remove(liquid.liquid, liquid.amount);
                     });
                 }
@@ -286,7 +286,7 @@ public class MultiCrafter extends GenericCrafter {
         public void craft() {
             this.consume();
             if (MultiCrafter.this.outputerItems.get(selected).size != 0) {
-                MultiCrafter.this.outputerItems.get(selected).forEach(item ->
+                MultiCrafter.this.outputerItems.get(selected).each(item ->
                 {
                     items.add(item.item,Math.min(item.amount,itemCapacity-items.get(item.item)));
                 });

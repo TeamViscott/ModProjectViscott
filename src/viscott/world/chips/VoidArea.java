@@ -18,11 +18,11 @@ import static mindustry.Vars.renderer;
 public interface VoidArea {
     default void updateVoid(Building building,float radius)
     {
-        Groups.bullet.forEach(b -> {
+        Groups.bullet.each(b -> {
             if (b.type instanceof VoidBulletType && Mathf.len(building.x-b.x,building.y-b.y) <= radius)
                 b.keepAlive = true;
         });
-        Groups.unit.forEach(unit ->
+        Groups.unit.each(unit ->
                 {
                     if (unit.team == building.team) {
                         if (Mathf.len(building.x-unit.x,building.y-unit.y) <= radius) {
@@ -40,11 +40,11 @@ public interface VoidArea {
     }
     default void updateVoid(Unit u, float radius)
     {
-        Groups.bullet.forEach(b -> {
+        Groups.bullet.each(b -> {
             if (b.type instanceof VoidBulletType && Mathf.len(u.x-b.x,u.y-b.y) <= radius)
                 b.keepAlive = true;
         });
-        Groups.unit.forEach(unit ->
+        Groups.unit.each(unit ->
                 {
                     if (unit.team == u.team) {
                         if (Mathf.len(u.x-unit.x,u.y-unit.y) <= radius) {

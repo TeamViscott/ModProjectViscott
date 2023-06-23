@@ -101,7 +101,7 @@ public class UtilityProjector extends Block {
                 charge+=edelta();
                 smoothEff = Mathf.lerpDelta(smoothEff,efficiency,0.02f);
                 shieldEff = Mathf.lerpDelta(shieldEff,shieldUp?1:0,0.02f);
-                Groups.unit.forEach(u -> {
+                Groups.unit.each(u -> {
                     if (u.team == team && Mathf.len(u.x-x,u.y-y) <= realRange)
                         u.apply(statusEffects.get(selectedEffect),60f);
                 });

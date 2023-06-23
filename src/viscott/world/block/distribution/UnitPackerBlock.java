@@ -43,7 +43,7 @@ public class UnitPackerBlock extends PvBlock {
         @Override
         public void updateTile()
         {
-            Groups.unit.forEach(u -> {
+            Groups.unit.each(u -> {
                 if (u.team == team() && Mathf.len(x-u.x,y-u.y) <= range)
                     if(items.total() > 0 && (!u.hasItem() || u.item() == items.first()) && u.itemCapacity() > u.stack.amount)
                     {
@@ -57,7 +57,7 @@ public class UnitPackerBlock extends PvBlock {
         public void drawSelect() {
             super.drawSelect();
             Drawf.dashCircle(x,y,range,Pal.lighterOrange);
-            Groups.unit.forEach(u -> {
+            Groups.unit.each(u -> {
                 if (u.team == team() && Mathf.len(x-u.x,y-u.y) <= range) {
                     Drawf.select(u.x,u.y,u.hitSize,Pal.lighterOrange);
                 }

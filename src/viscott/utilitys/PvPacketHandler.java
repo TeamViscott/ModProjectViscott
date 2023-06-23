@@ -19,7 +19,7 @@ public class PvPacketHandler {
         /*FACTION PACKET*/
         Events.on(EventType.PlayerJoin.class,(pJ)->{
             StringBuilder sb = new StringBuilder();
-            PvFaction.all.forEach(faction -> {
+            PvFaction.all.each(faction -> {
                 sb.append("!");
                 sb.append(faction.packetLinks());
             });

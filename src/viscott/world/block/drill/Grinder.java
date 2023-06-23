@@ -104,7 +104,7 @@ public class Grinder extends PvBlock {
     {
         RectCons getMinableBlocks = (positions,x,y,tier) -> {
             Seq<Block> newBlockList = new Seq<>();
-            positions.forEach(pos -> {
+            positions.each(pos -> {
                 int aX = x - pos.x,
                         aY = y - pos.y;
                 if (aX >= 0 && aX < world.width() && aY >= 0 && aY < world.height() )
@@ -184,7 +184,7 @@ public class Grinder extends PvBlock {
                 progress = Mathf.approachDelta(progress, 1, ((maxMineSpeed - hardness) / 60)*efficiency);
                 if (progress == 1) {
                     Seq<Block> blockList = getBlocks((int)x/8,(int)y/8);
-                    blockList.forEach(b -> craft(b));
+                    blockList.each(b -> craft(b));
                     if (updateEffect != null)
                         updateEffect.at(x, y, 0);
                     progress %= 1;

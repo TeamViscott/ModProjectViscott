@@ -43,7 +43,7 @@ public class PvFaction {
     {
         StringBuilder sb = new StringBuilder();
         sb.append(id);
-        linkedTeams.forEach(lTeam -> {
+        linkedTeams.each(lTeam -> {
             sb.append(";");
             sb.append(lTeam.id);
         });

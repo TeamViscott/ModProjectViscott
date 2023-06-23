@@ -18,11 +18,11 @@ public class PvWorldState {
             @Override
             public void write(DataOutput stream) throws IOException {
                 stream.writeInt(PvFaction.all.size);
-                PvFaction.all.forEach(faction -> {
+                PvFaction.all.each(faction -> {
                     try {
                         stream.writeInt(faction.id);
                         stream.writeInt(faction.teamSize());
-                        faction.allLinked().forEach(team -> {
+                        faction.allLinked().each(team -> {
                             try {
                                 stream.writeInt(team.id);
                             } catch (IOException e) {

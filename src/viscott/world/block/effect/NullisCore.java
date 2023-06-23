@@ -52,7 +52,7 @@ public class NullisCore extends PvCore {
             pulsing%=1;
             super.updateTile();
             visualizer.clear();
-            Groups.unit.forEach(unit ->
+            Groups.unit.each(unit ->
                     {
                         if (unit.team == team) {
                             visualizer.add(unit);
