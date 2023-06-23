@@ -144,7 +144,7 @@ public class BulkUnitFactory extends Reconstructor {
 
             if(efficiency > 0 && currentPlan != -1 && hasAllItems() && templateCorrect()){
                 time += edelta() * speedScl * Vars.state.rules.unitBuildSpeed(team);
-                constructTime = plans.get(currentPlan).time;
+                constructTime = plans.get(currentPlan).time * amount;
                 progress += edelta() * Vars.state.rules.unitBuildSpeed(team);
                 speedScl = Mathf.lerpDelta(speedScl, 1f, 0.05f);
             }else{

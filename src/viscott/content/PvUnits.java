@@ -33,6 +33,7 @@ import viscott.types.BuildUnitType;
 import viscott.types.NullisUnitType;
 import viscott.types.PvUnitType;
 import viscott.types.abilities.DamageAbility;
+import viscott.types.abilities.VoidAbility;
 import viscott.world.bullets.VoidBulletType;
 import viscott.utilitys.PvUtil;
 
@@ -49,7 +50,7 @@ public class PvUnits {
         /*Xeal Naval Path*/rivulet,bourn,tributary,loch,
 
         /*Nullis*/
-            /*Storage Con Path*/pocket,container, capsule,vault,
+            /*Storage Con Path*/pocket,container, capsule,vault,chamber,
 
         /*Extra Paths : */
         routerTank, routerBastion, box,blockHost,
@@ -1215,7 +1216,7 @@ public class PvUnits {
             engineColor = Color.black;
             buildSpeed = 0.01f;
             itemCapacity = 80;
-            speed = 2f / 7.5f / 60;
+            speed = 4f / 7.5f / 60;
             boostMultiplier = 60;
             drag = 0.2f;
             range = 10*8;
@@ -1238,7 +1239,7 @@ public class PvUnits {
             canBoost = true;
             engineColor = Color.black;
             itemCapacity = 300;
-            speed = 2f / 7.5f / 60;
+            speed = 3f / 7.5f / 60;
             boostMultiplier = 40;
             drag = 0.05f;
             range = 12*8;
@@ -1287,7 +1288,7 @@ public class PvUnits {
             healColor = Color.black;
             engineColor = Color.black;
             itemCapacity = 3000;
-            speed = 1.4f / 7.5f;
+            speed = 2f / 7.5f;
             drag = 0.03f;
             lowAltitude = true;
             pickupUnits = true;
@@ -1308,6 +1309,44 @@ public class PvUnits {
                     y = f%2==0 ? 22f : -22f;
                     mirror = true;
                     radius = 22f;
+                    phase = 50f;
+                    stroke = 4f;
+                    layerOffset = -0.001f;
+                    color = Team.green.color;
+                }});
+            }
+        }};
+        chamber = new NullisUnitType("chamber")
+        {{
+            localizedName = "Chamber";
+            description = "[#444444]Where the [crimson]End[] Begins...";
+            constructor = EntityMapping.map("quad");
+            health = 54200;
+            deathExplosionEffect = PvEffects.nullisDeath.get(7);
+            armor = 22;
+            rotateSpeed = 90/60;
+            canBoost = true;
+            hitSize = 16*8;
+            healColor = Color.black;
+            engineColor = Color.black;
+            itemCapacity = 10000;
+            speed = 0.004f / 7.5f;
+            boostMultiplier = 400;
+            drag = 0.03f;
+            lowAltitude = true;
+            range = 12*8;
+            engineSize = 0;
+            abilities.add(new VoidAbility(18*8));
+            engines = Seq.with(
+                    new UnitEngine(34,12,10,45),
+                    new UnitEngine(-34,12,10,90+45)
+            );
+            for(float f : new int[]{0,1}){
+                parts.add(new HoverPart(){{
+                    x = 50f;
+                    y = f%2==0 ? 50f : -50f;
+                    mirror = true;
+                    radius = 30f;
                     phase = 50f;
                     stroke = 4f;
                     layerOffset = -0.001f;
