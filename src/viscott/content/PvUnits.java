@@ -30,6 +30,7 @@ import mindustry.type.Weapon;
 import mindustry.type.ammo.ItemAmmoType;
 import viscott.abilitys.EnemyStatusFieldAbility;
 import viscott.types.BuildUnitType;
+import viscott.types.GridUnitType;
 import viscott.types.NullisUnitType;
 import viscott.types.PvUnitType;
 import viscott.types.abilities.DamageAbility;
@@ -328,6 +329,7 @@ public class PvUnits {
             health = 130;
             armor = 0;
             flying = true;
+            strafePenalty = 0.2f;
             buildSpeed = 1.5f;
             rotateMoveFirst = true;
             mineTier = 1;
@@ -368,6 +370,7 @@ public class PvUnits {
             health = 140;
             armor = 0;
             flying = true;
+            strafePenalty = 0.2f;
             buildSpeed = 1.75f;
             rotateMoveFirst = true;
             mineTier = 1;
@@ -407,6 +410,7 @@ public class PvUnits {
             health = 160;
             armor = 0;
             flying = true;
+            strafePenalty = 0.2f;
             buildSpeed = 2.25f;
             rotateMoveFirst = true;
             mineTier = 2;
@@ -1316,7 +1320,7 @@ public class PvUnits {
                 }});
             }
         }};
-        chamber = new NullisUnitType("chamber")
+        chamber = new GridUnitType("chamber")
         {{
             localizedName = "Chamber";
             description = "[#444444]Where the [crimson]End[] Begins...";
@@ -1327,6 +1331,19 @@ public class PvUnits {
             rotateSpeed = 90/60;
             canBoost = true;
             hitSize = 16*8;
+            buildSize = 10;
+            buildArea = new byte[][]{
+                    {0,0,0,1,1,1,1,0,0,0},
+                    {0,0,0,1,1,1,1,0,0,0},
+                    {0,0,0,1,1,1,1,0,0,0},
+                    {0,0,0,1,1,1,1,0,0,0},
+                    {0,0,1,1,0,0,1,1,0,0},
+                    {0,0,1,1,0,0,1,1,0,0},
+                    {0,1,1,1,1,1,1,1,1,0},
+                    {0,1,1,1,1,1,1,1,1,0},
+                    {0,0,1,1,1,1,1,1,0,0},
+                    {0,0,0,1,1,1,1,0,0,0}
+            };
             healColor = Color.black;
             engineColor = Color.black;
             itemCapacity = 10000;
