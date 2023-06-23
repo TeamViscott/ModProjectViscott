@@ -27,7 +27,7 @@ void main() {
     } else {
         if (color.a > 0.0) {
             color = Inner;
-            color.a = sin((coords.x + coords.y + u_time)/15) * 0.1 + 0.2;
+            color.a = sin((coords.x + coords.y + u_time)/15.0) * 0.1 + 0.2;
             /*
             if (mod(coords.x+ coords.y + (u_time / 4.0), 5.0) < 1.0) {
                 color = Inner.a = coords.x;
