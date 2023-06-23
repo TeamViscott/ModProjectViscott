@@ -13,7 +13,7 @@ import mindustry.type.Planet;
 import mindustry.type.Weather;
 import viscott.gen.VercilusPlanetGenerator;
 
-import static mindustry.Vars.content;
+import static mindustry.Vars.*;
 
 public class PvPlanets{
     public static Planet
@@ -21,8 +21,9 @@ public class PvPlanets{
             ;
     public static void load()
     {
-        for(var p : content.planets().items)
-            p.hiddenItems.addAll(PvItems.vercilusOnlyItems);
+        Planet[] planets = content.planets().items;
+        for(int i = 0;i < planets.length;i++)
+            planets[i].hiddenItems.addAll(PvItems.vercilusOnlyItems);
         vercilus = new Planet("vercilus", Planets.sun,1f,2)
         {{
             localizedName = "Vercilus";
