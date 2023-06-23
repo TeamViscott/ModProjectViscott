@@ -21,7 +21,7 @@ public class PvPlanets{
             ;
     public static void load()
     {
-        for(Planet p : content.planets().items)
+        for(var p : content.planets().items)
             p.hiddenItems.addAll(PvItems.vercilusOnlyItems);
         vercilus = new Planet("vercilus", Planets.sun,1f,2)
         {{
