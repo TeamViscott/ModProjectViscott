@@ -22,13 +22,7 @@ public class PvPlanets{
             ;
     public static void load()
     {
-        if(mobile) {
-            Planet[] planets = {Planets.serpulo,Planets.erekir};
-            for(var p : planets)
-                p.hiddenItems.addAll(PvItems.vercilusOnlyItems);
-        }
-        else
-            content.planets().forEach(p->p.hiddenItems.addAll(PvItems.vercilusOnlyItems));
+        content.planets().each(p->p.hiddenItems.addAll(PvItems.vercilusOnlyItems));
         vercilus = new Planet("vercilus", Planets.sun,1f,2)
         {{
             localizedName = "Vercilus";

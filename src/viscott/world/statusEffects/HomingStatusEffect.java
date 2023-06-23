@@ -24,7 +24,7 @@ public class HomingStatusEffect extends PvStatusEffect {
         Events.run(EventType.Trigger.update,()->{
             if (!Vars.state.isPaused()) {
                 Seq<Bullet> removeBullets = new Seq<>();
-                homingBullets.forEach(b -> {
+                homingBullets.each(b -> {
                     if (b.isAdded()) {
                         if(homingPower > 0.0001f && b.time >= homingDelay) {
                             float realAimX = b.aimX < 0 ? b.x : b.aimX;
@@ -53,7 +53,7 @@ public class HomingStatusEffect extends PvStatusEffect {
                         removeBullets.add(b);
                     }
                 });
-                removeBullets.forEach(b -> {
+                removeBullets.each(b -> {
                     homingBullets.remove(b);
                 });
             }
@@ -61,7 +61,7 @@ public class HomingStatusEffect extends PvStatusEffect {
     }
     @Override
     public void update(Unit unit, float time){
-        Groups.bullet.forEach(b->{
+        Groups.bullet.each(b->{
             if (b.owner() == unit && !homingBullets.contains(b)){
                 homingBullets.add(b);
             }

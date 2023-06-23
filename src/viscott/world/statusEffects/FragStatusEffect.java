@@ -22,14 +22,14 @@ public class FragStatusEffect extends PvStatusEffect {
         Events.run(EventType.Trigger.update,()->{
             if (!Vars.state.isPaused()) {
                 Seq<Bullet> removeBullets = new Seq<>();
-                fragTaggedBullets.forEach(b -> {
+                fragTaggedBullets.each(b -> {
                     if (!b.isAdded()) {
                         for (int i = 0; i < fragBullets; i++)
                             fragBullet.createNet(b.team(), b.x, b.y, Mathf.random(fragRandomSpread) - fragRandomSpread / 2 + b.rotation(), 1, 1, 1);
                         removeBullets.add(b);
                     }
                 });
-                removeBullets.forEach(b -> {
+                removeBullets.each(b -> {
                     fragTaggedBullets.remove(b);
                 });
             }
@@ -38,7 +38,7 @@ public class FragStatusEffect extends PvStatusEffect {
     @Override
     public void update(Unit unit, float time){
         if (fragBullet != null && !Vars.net.client())
-            Groups.bullet.forEach(b->{
+            Groups.bullet.each(b->{
                 if (b.owner() == unit && !fragTaggedBullets.contains(b)){
                     fragTaggedBullets.add(b);
                 }
