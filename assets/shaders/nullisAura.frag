@@ -18,7 +18,7 @@ void main() {
 
     vec4 color = texture2D(u_texture, v_texCoords.xy);
     vec2 v = u_invsize;
-    float wave = sin((coords.y + u_time)/6);
+    float wave = sin((coords.y + u_time)/6.0);
 
     vec4 maxed = max(max(max(texture2D(u_texture, v_texCoords.xy + vec2(wave, step) * v), texture2D(u_texture, v_texCoords.xy + vec2(wave, -step) * v)), texture2D(u_texture, v_texCoords.xy + vec2(step + wave, 0.0) * v)), texture2D(u_texture, v_texCoords.xy + vec2(-step + wave, 0.0) * v));
 
