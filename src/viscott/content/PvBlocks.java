@@ -882,6 +882,8 @@ public class PvBlocks {
                     unitCapModifier = 65;
                     itemCapacity = 45000;
                     healTime = 25;
+                    warmupEffect = PvEffects.surgeSpawn;
+                    spawnEffect = Fx.greenBomb;
                 }};
                 nullisCore = new NullisCore("core-null")
                 {{

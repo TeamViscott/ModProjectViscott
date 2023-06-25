@@ -3,6 +3,7 @@ package viscott.types;
 import arc.graphics.Color;
 import arc.struct.Seq;
 import mindustry.Vars;
+import mindustry.game.Gamemode;
 import mindustry.type.UnitType;
 import viscott.content.PvFactions;
 
@@ -19,6 +20,6 @@ public class PvUnitType extends UnitType {
     @Override
     public boolean unlockedNow()
     {
-        return Vars.net.server() || (factions.size == 0 || factions.count(f->f.partOf(Vars.player.team())) > 0) && super.unlockedNow();
+        return Vars.state.rules.mode() == Gamemode.sandbox || Vars.state.isEditor() || Vars.net.server() || (factions.size == 0 || factions.count(f->f.partOf(Vars.player.team())) > 0) && super.unlockedNow();
     }
 }

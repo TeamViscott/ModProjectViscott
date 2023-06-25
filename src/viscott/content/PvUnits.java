@@ -1327,7 +1327,9 @@ public class PvUnits {
             constructor = EntityMapping.map("quad");
             health = 54200;
             deathExplosionEffect = PvEffects.nullisDeath.get(7);
+            factions.add(PvFactions.Nullis);
             armor = 22;
+            drownTimeMultiplier = 30;
             rotateSpeed = 90/60;
             canBoost = true;
             hitSize = 16*8;

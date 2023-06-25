@@ -4,6 +4,7 @@ import arc.graphics.Color;
 import arc.graphics.g2d.Draw;
 import arc.graphics.g2d.Fill;
 import arc.graphics.g2d.Lines;
+import arc.math.Interp;
 import arc.math.Mathf;
 import arc.struct.Seq;
 import mindustry.content.UnitTypes;
@@ -24,7 +25,7 @@ public class PvEffects {
         slowEnergeticEffect, particleDeath1,particleDeath2,particleDeath3,
             railFrag,waveBulletFalerica,waveBulletJavelin,
 
-            quadRushCraft
+            quadRushCraft,surgeSpawn
             ;
     public static Seq<Effect> nullisDeath = new Seq<>();
     public static void load()
@@ -115,6 +116,16 @@ public class PvEffects {
         });
         for(int i = 1;i<=9;i++)
             nullisDeath.add(newNullisDeath(i));
+        surgeSpawn = new Effect(120,e-> {
+            Color col = Team.green.color;
+            float finout = (Math.abs(e.fout() - 0.5f) - 0.5f) * -2;
+            Lines.stroke(finout*4,col);
+            Lines.square(e.x,e.y,e.fout()*12+4,e.fout()*720);
+            Lines.stroke(finout*2,col);
+            Lines.square(e.x,e.y,e.fout()*18+6,e.fout()*360);
+            Draw.color(col);
+            Fill.circle(e.x,e.y,e.fin()*8);
+        });
     }
 
     public static Effect newNullisDeath(int blockSize)
