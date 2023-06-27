@@ -2106,7 +2106,7 @@ public class PvTurrets{
                                     haloRadius = 13f;
                                     haloRotateSpeed = 1;
                                     layer = Layer.effect;
-                                    y = 10;
+                                    y = 14;
                                     x = 40;
                                 }}
                         )
