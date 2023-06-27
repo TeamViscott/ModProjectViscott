@@ -187,8 +187,6 @@ public class BulkUnitFactory extends Reconstructor {
                     //if (Vars.net.client()) return;
                     Events.fire(new EventType.UnitCreateEvent(payload.unit, this));
                 }
-
-                progress = Mathf.clamp(progress, 0, plan.time);
             }else{
                 progress = 0f;
             }
@@ -222,7 +220,7 @@ public class BulkUnitFactory extends Reconstructor {
             if (currentPlan != -1) {
                 UnitFactory.UnitPlan plan = plans.get(currentPlan);
 
-                float revProg = (progress / plan.time - 1) * -1;
+                float revProg = (progress / (plan.time * amount) - 1) * -1;
                 if (progress > 0)
                     for (int i = (int) amount - 1; i >= 0; i--) {
                         Draw.color(Pal.lighterOrange);
