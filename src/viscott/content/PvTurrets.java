@@ -1986,7 +1986,7 @@ public class PvTurrets{
                                     mirror = false;
                                     recoilIndex = 0;
                                     under = false;
-                                    y = 10;
+                                    y = 14;
                                     moveY = -4f;
                                 }},
                                 new RegionPart("-r"){{
@@ -1996,7 +1996,7 @@ public class PvTurrets{
                                     mirror = false;
                                     recoilIndex = 0;
                                     under = false;
-                                    y = 10;
+                                    y = 14;
                                     moveY = -4f;
                                 }},
 
@@ -2011,7 +2011,7 @@ public class PvTurrets{
                                     strokeTo = 1.6f;
                                     radius = 10f;
                                     layer = Layer.effect;
-                                    y = 10;
+                                    y = 14;
                                     x = -40;
                                 }},
                                 new ShapePart(){{
@@ -2024,7 +2024,7 @@ public class PvTurrets{
                                     strokeTo = 1.6f;
                                     radius = 6f;
                                     layer = Layer.effect;
-                                    y = 10;
+                                    y = 14;
                                     x = -40;
                                 }},
                                 new ShapePart(){{
@@ -2037,7 +2037,7 @@ public class PvTurrets{
                                     strokeTo = 1.6f;
                                     radius = 11f;
                                     layer = Layer.effect;
-                                    y = 10;
+                                    y = 14;
                                     x = -40;
                                 }},
                                 new HaloPart(){{
@@ -2052,7 +2052,7 @@ public class PvTurrets{
                                     haloRadius = 13f;
                                     haloRotateSpeed = 1;
                                     layer = Layer.effect;
-                                    y = 10;
+                                    y = 14;
                                     x = -40;
                                 }},
                                 new ShapePart(){{
@@ -2065,7 +2065,7 @@ public class PvTurrets{
                                     strokeTo = 1.6f;
                                     radius = 10f;
                                     layer = Layer.effect;
-                                    y = 10;
+                                    y = 14;
                                     x = 40;
                                 }},
                                 new ShapePart(){{
@@ -2078,7 +2078,7 @@ public class PvTurrets{
                                     strokeTo = 1.6f;
                                     radius = 6f;
                                     layer = Layer.effect;
-                                    y = 10;
+                                    y = 14;
                                     x = 40;
                                 }},
                                 new ShapePart(){{
@@ -2091,7 +2091,7 @@ public class PvTurrets{
                                     strokeTo = 1.6f;
                                     radius = 11f;
                                     layer = Layer.effect;
-                                    y = 10;
+                                    y = 14;
                                     x = 40;
                                 }},
                                 new HaloPart(){{
