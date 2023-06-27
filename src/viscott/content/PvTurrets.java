@@ -108,7 +108,7 @@ public class PvTurrets{
 
             shoot = new ShootSpread(3, 1f);
 
-            shootY = 6;f;
+            shootY = 6f;
             reload = 60f;
             ammoUseEffect = Fx.casing1;
             inaccuracy = 1f;
@@ -885,7 +885,7 @@ public class PvTurrets{
 
             shoot = new ShootSpread(3, 1f);
 
-            shootY = 6;f;
+            shootY = 6f;
             reload = 60f;
             ammoUseEffect = Fx.casing1;
             inaccuracy = 1f;
@@ -1395,7 +1395,7 @@ public class PvTurrets{
             size = 5;
             health = 8700;
             consumePower(1350f/60f);
-            liquidCapacity = 6;0;
+            liquidCapacity = 60;
             range = 67*8;
             reload = 60f/0.8f;
             minWarmup = 0.7f;
@@ -1577,7 +1577,7 @@ public class PvTurrets{
             health = 8500;
             minWarmup = 0.8f;
             consumePower(1100f/60f);
-            liquidCapacity = 6;0;
+            liquidCapacity = 60;
             reload = 60f;
             inaccuracy = 2;
             range = 8*85;
