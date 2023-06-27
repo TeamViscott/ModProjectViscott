@@ -1,6 +1,7 @@
 package viscott.content;
 
 import arc.graphics.Color;
+import arc.math.Mathf;
 import arc.struct.Seq;
 import mindustry.content.Fx;
 import mindustry.content.Items;
@@ -32,6 +33,7 @@ import mindustry.world.meta.BuildVisibility;
 import viscott.content.shootpatterns.CyclicShootPattern;
 import viscott.utilitys.PvUtil;
 import viscott.world.pseudo3d.importedcode.BallisticMissileBulletType;
+import viscott.world.statusEffects.PvStatusEffect;
 
 import static mindustry.content.Items.silicon;
 import static mindustry.type.ItemStack.with;
@@ -66,7 +68,7 @@ public class PvTurrets{
             rotateSpeed = 6f;
             requirements(Category.turret, with(PvItems.zirconium, 75));
             ammo(
-                    PvItems.zirconium,  new BasicBulletType(6f, 14){{
+                    PvItems.zirconium,  new BasicBulletType(6f, 21){{
                         lifetime = PvUtil.GetRange(speed,range-1);
                         knockback = 0.3f;
                         width = 10f;
@@ -77,8 +79,10 @@ public class PvTurrets{
                         hitEffect = despawnEffect = Fx.hitBulletColor;
                         trailWidth = 2.5f;
                         trailLength = 30;
+                        status = StatusEffects.shocked;
+                        statusDuration = 30;
                     }},
-                    PvItems.platinum,  new BasicBulletType(6f, 37){{
+                    PvItems.erbium,  new BasicBulletType(6f, 42){{
                         lifetime = PvUtil.GetRange(speed,range-1);
                         knockback = 0.3f;
                         width = 10f;
@@ -89,8 +93,10 @@ public class PvTurrets{
                         hitEffect = despawnEffect = Fx.hitBulletColor;
                         trailWidth = 2.5f;
                         trailLength = 30;
+                        status = StatusEffects.shocked;
+                        statusDuration = 30;
                     }},
-                    PvItems.nobelium,  new BasicBulletType(6f, 32){{
+                    PvItems.nobelium,  new BasicBulletType(6f, 36){{
                         lifetime = PvUtil.GetRange(speed,range-1);
                         knockback = 0.2f;
                         width = 10f;
@@ -103,6 +109,8 @@ public class PvTurrets{
                         statusDuration = 120f;
                         trailWidth = 2.5f;
                         trailLength = 30;
+                        status = StatusEffects.shocked;
+                        statusDuration = 30;
                     }}
             );
 
@@ -145,13 +153,14 @@ public class PvTurrets{
         shatter = new PowerTurret("shatter")
         {{
             requirements(Category.turret, with(PvItems.zirconium, 100,PvItems.lithium,100)); //Todo 2
-            range = 31*8;
+            range = 29*8;
             health = 800;
             size = 2;
             localizedName = "Shatter";
             targetAir = true;
             targetGround = true;
             consumePower(120f/60f);
+            coolant = consumeCoolant(0.1f);
             reload = 60f/1.2f;
             rotateSpeed = 4f;
 
@@ -167,12 +176,12 @@ public class PvTurrets{
 
                 sprite = "large-orb";
                 trailEffect = Fx.missileTrail;
-                trailInterval = 3f;
+                trailInterval = 6f;
                 trailParam = 4f;
                 pierceCap = 2;
                 fragOnHit = false;
                 speed = 5f;
-                damage = 26f;
+                damage = 30f;
                 lifetime = PvUtil.GetRange(this.speed,31);
                 width = height = 16f;
                 backColor = Pal.lancerLaser;
@@ -256,13 +265,14 @@ public class PvTurrets{
         }};
         euro = new ItemTurret("euro")
         {{
-            requirements(Category.turret, with(silicon, 300,PvItems.lithium,150)); //Todo 2
-            range = 87*8;
+            requirements(Category.turret, with(silicon, 300,PvItems.erbium,150)); //Todo 2
+            range = 52*8;
             localizedName = "Euro";
             inaccuracy = 10;
-            reload = 120;
+            reload = 180;
             size = 2;
             coolant = consumeCoolant(0.1f);
+            targetAir = false;
             ammo(
                     silicon, new BasicBulletType(0f, 1){{
                         ammoMultiplier = 1f;
@@ -270,7 +280,7 @@ public class PvTurrets{
                         spawnUnit = new MissileUnitType("euro-missile1"){{
                             speed = 4.6f;
                             maxRange = 6f;
-                            lifetime = PvUtil.GetRange(this.speed,87)+30;
+                            lifetime = PvUtil.GetRange(this.speed,52)+30;
                             outlineColor = Pal.darkOutline;
                             engineColor = trailColor = Pal.redLight;
                             engineLayer = Layer.effect;
@@ -283,7 +293,8 @@ public class PvTurrets{
                             loopSound = Sounds.missileTrail;
                             loopSoundVolume = 0.6f;
                             deathSound = Sounds.largeExplosion;
-                            targetAir = true;
+                            targetAir = false;
+                            collidesAir = false;
 
                             fogRadius = 6f;
 
@@ -304,7 +315,7 @@ public class PvTurrets{
                                         sizeTo = 130f;
                                     }});
 
-                                    collidesAir = true;
+                                    collidesAir = false;
                                     buildingDamageMultiplier = 0.3f;
 
                                     ammoMultiplier = 1f;
@@ -345,7 +356,7 @@ public class PvTurrets{
                         spawnUnit = new MissileUnitType("euro-missile2"){{
                             speed = 4.6f;
                             maxRange = 6f;
-                            lifetime = PvUtil.GetRange(this.speed,87)+30;
+                            lifetime = PvUtil.GetRange(this.speed,52)+30;
                             outlineColor = Pal.darkOutline;
                             engineColor = trailColor = Pal.redLight;
                             engineLayer = Layer.effect;
@@ -359,6 +370,7 @@ public class PvTurrets{
                             loopSoundVolume = 0.6f;
                             deathSound = Sounds.largeExplosion;
                             targetAir = false;
+                            collidesAir = false;
 
                             fogRadius = 6f;
 
@@ -448,20 +460,20 @@ public class PvTurrets{
             localizedName = "Snap";
             size = 2;
             reload = 60f/1f;
-            range = 20*8;
+            range = 28*8;
             ammo(
-                    Liquids.water,new LaserBulletType(15) {{
+                    Liquids.water,new LaserBulletType(13) {{
                         colors = new Color[3];
                         colors[0] = colors[1] = colors[2] = Liquids.water.color;
-                        length = 20*8;
+                        length = 28*8;
                         status = StatusEffects.wet;
                         statusDuration = 90;
 
                     }},
-                    PvLiquids.kerosene, new LaserBulletType(24){{
+                    PvLiquids.kerosene, new LaserBulletType(20){{
                         colors = new Color[3];
                         colors[0] = colors[1] = colors[2] = PvLiquids.kerosene.color;
-                        length = 20*8;
+                        length = 28*8;
                         status = PvStatusEffects.doused;
                         statusDuration = 90;
 
@@ -535,11 +547,12 @@ public class PvTurrets{
             reload = 60f/0.9f;
             coolant = consumeCoolant(0.1f);
             ammo(
-                    PvItems.platinum,new BasicBulletType(8,360)
+                    PvItems.platinum,new BasicBulletType(4,120)
                     {{
-                        lifetime = PvUtil.GetRange(this.speed,56);
-                        trailLength = 20;
-                        trailWidth = 2;
+                        rangeChange = -8*4;
+                        lifetime = PvUtil.GetRange(this.speed,52);
+                        trailLength = 10;
+                        trailWidth = 1;
                         width = 20;
                         height = 20;
                         trailColor = backColor = Pal.gray;
@@ -794,24 +807,51 @@ public class PvTurrets{
             }};
         }};
         glaive = new LiquidTurret("glaive"){{
-            requirements(Category.turret,BuildVisibility.sandboxOnly , with(Items.metaglass, 100, Items.lead, 400, Items.titanium, 250, Items.thorium, 100));
+            requirements(Category.turret,BuildVisibility.shown , with(PvItems.zirconium,120,PvItems.nobelium,50,PvItems.erbium,100));
             size = 3;
-            reload = 20f;
+            reload = 40f;
             localizedName = "Glaive";
             velocityRnd = 0f;
             inaccuracy = 0f;
-            recoil = -40f;
+            shootX = 0;
+            shootY = 0;
+            recoil = -8*9f;
             shootCone = 45f;
             liquidCapacity = 40f;
             shootEffect = Fx.shootLiquid;
-            range = 40f;
+            range = 8*9f;
             scaledHealth = 250;
             ammo(
-                    Liquids.water, new BasicBulletType(7, 10){{
-                        lifetime = PvUtil.GetRange(this.speed,5);
-                        hitSize = 8;
-                        statusDuration = 1200;
+                    Liquids.water, new BasicBulletType(8, 140){{
+                        trailLength = 20;
+                        trailWidth = 2;
+                        trailColor = lightColor = backColor = Pal.engine;
+                        lifetime = Mathf.ceil(PvUtil.GetRange(this.speed,9));
+                        hitSize = 8*1.5f;
                         status = PvStatusEffects.timeWarped;
+                        hitEffect = Fx.hitLancer;
+                        despawnEffect = Fx.none;
+                        statusDuration = 20*60;
+                        fragOnHit = true;
+                        fragBullets = 1;
+                        fragRandomSpread = 0;
+                        fragSpread = 0;
+                        fragVelocityMin = 1;
+                        fragLifeMin = 1;
+                        fragBullet = new BasicBulletType(8, 20){
+                            {
+                                trailLength = 10;
+                                trailWidth = 1;
+                                trailColor = lightColor = backColor = Pal.engine;
+                                lifetime = Mathf.ceil(PvUtil.GetRange(this.speed, 5));
+                                hitSize = 8 * 1.5f;
+                                status = StatusEffects.shocked;
+                                pierce = true;
+                                pierceCap = 4;
+                                hitEffect = Fx.hitLancer;
+                                despawnEffect = Fx.none;
+                                statusDuration = 20 * 60;
+                            }};
                     }}
             );
             drawer = new DrawTurret(GetName("Pov")){{
@@ -1903,7 +1943,7 @@ public class PvTurrets{
         }};
         xterminium = new ItemTurret("xterminium")
         {{
-            requirements(Category.turret,BuildVisibility.sandboxOnly,with(PvItems.platinum, 1000,PvItems.erbium,1000,PvItems.carbonFiber,1000,PvItems.nobelium,1000,silicon,1000)); //Todo 2
+            requirements(Category.turret,BuildVisibility.sandboxOnly,with(PvItems.platinum, 10000,PvItems.erbium,5000,PvItems.carbonFiber,2000,PvItems.nobelium,3000,silicon,1000,PvItems.copium,1)); //Todo 2
             localizedName = "X-terminium";
             shoot = new ShootAlternate(20);
             reload = 200;

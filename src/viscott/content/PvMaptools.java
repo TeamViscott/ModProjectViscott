@@ -42,6 +42,7 @@ public class PvMaptools {
             itemsPerSecond = 10;
             health = 600;
             buildVisibility = BuildVisibility.sandboxOnly;
+            sandboxEditOnly = true;
 
         }};
         normalsource = new PvItemSource("normalsource")
@@ -52,6 +53,7 @@ public class PvMaptools {
             itemsPerSecond = 20;
             health = 1000;
             buildVisibility = BuildVisibility.sandboxOnly;
+            sandboxEditOnly = true;
 
         }};
         advancedsource = new PvItemSource("advancedsource")
@@ -61,6 +63,7 @@ public class PvMaptools {
             itemsPerSecond = 25;
             health = 4000;
             buildVisibility = BuildVisibility.sandboxOnly;
+            sandboxEditOnly = true;
 
         }};
         ultrasource = new PvItemSource("ultrasource")

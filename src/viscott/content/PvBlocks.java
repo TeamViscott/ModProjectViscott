@@ -1039,28 +1039,6 @@ public class PvBlocks {
                     pumpAmount = 14.5f/60f;
                     liquidCapacity = 40;
                 }};
-                megaLiquidTransportGate = new LiquidBridge("mega-liquid-transport-gate"){{
-                    //todo adjust items
-                    requirements(Category.liquid, with(PvItems.zirconium, 50, PvItems.nobelium, 25, PvItems.lithium, 10));
-                    size = 3;
-                    localizedName = "Mega liquid transport gate";
-                    health = 180;
-                    liquidCapacity = 200;
-                    //todo power consume
-                    range = 120;
-                    consumePower(330/60f);
-                }};
-                microLiquidTransportGate = new LiquidBridge("micro-liquid-transport-gate"){{
-                    //todo adjust items
-                    requirements(Category.liquid, with(PvItems.zirconium, 50, PvItems.lithium, 10));
-                    size = 1;
-                    localizedName = "Micro liquid transport gate";
-                    health = 180;
-                    liquidCapacity = 200;
-                    range = 10;
-                    //todo power consume
-                    consumePower(330/60f);
-                }};
 
                 concentratedRouter = new LiquidRouter("concentrated-router")
                 {{
@@ -1099,6 +1077,28 @@ public class PvBlocks {
                     liquidCapacity = 6000f;
                     liquidPadding = 3.5f;
                     health = 1230;
+                }};
+                microLiquidTransportGate = new LiquidBridge("micro-liquid-transport-gate"){{
+                    //todo adjust items
+                    requirements(Category.liquid, with(PvItems.zirconium, 50, PvItems.lithium, 10));
+                    size = 1;
+                    localizedName = "Micro liquid transport gate";
+                    health = 180;
+                    liquidCapacity = 200;
+                    range = 10;
+                    //todo power consume
+                    consumePower(5/60f);
+                }};
+                megaLiquidTransportGate = new LiquidBridge("mega-liquid-transport-gate"){{
+                    //todo adjust items
+                    requirements(Category.liquid, with(PvItems.zirconium, 50, PvItems.nobelium, 25, PvItems.lithium, 10));
+                    size = 3;
+                    localizedName = "Mega liquid transport gate";
+                    health = 180;
+                    liquidCapacity = 200;
+                    //todo power consume
+                    range = 120;
+                    consumePower(330/60f);
                 }};
                 labelHandler = new MessageBlock("label-handler") {{
                     requirements(Category.logic, with(PvItems.zirconium,25,PvItems.lithium,20));

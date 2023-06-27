@@ -49,6 +49,11 @@ public class PvCore extends CoreBlock {
         public void requestSpawn(Player player){
             //do not try to respawn in unsupported environments at all
             if(!unitType.supportsEnv(state.rules.env)) return;
+            if(warmupEffect.lifetime == 0) {
+                Call.playerSpawn(tile,player);
+                spawnEffect.at(tile);
+                return;
+            }
             if(playerQue.contains(player)) return;
             warmupEffect.at(tile);
             playerQue.add(player);

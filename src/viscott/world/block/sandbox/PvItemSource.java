@@ -18,10 +18,6 @@ public class PvItemSource extends ItemSource {
     public PvItemSource(String name)
     {
         super(name);
-        configClear((PvLiquidSource.PvLiquidSourceBuild b) -> {
-            if (b.canConfig())
-                b.source = null;
-        });
     }
 
     @Override
@@ -49,6 +45,6 @@ public class PvItemSource extends ItemSource {
             if (canConfig())
                 super.buildConfiguration(table);
         }
-        public boolean canConfig() {return !sandboxEditOnly || (state.rules.mode() == Gamemode.sandbox || state.rules.editor);}
+        public boolean canConfig() {return !sandboxEditOnly || (state.isEditor() || state.rules.infiniteResources);}
     }
 }

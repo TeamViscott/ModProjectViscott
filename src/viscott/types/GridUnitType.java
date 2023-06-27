@@ -110,7 +110,7 @@ public class GridUnitType extends PvUnitType{
             if (doneBuild.get(unit).get()) { //unbuild time
                 for(int i1 = 0;i1 < buildSize;i1++) {
                     for(int i2 = 0;i2 < buildSize;i2++) {
-                        placeFrom(i2,i1,unit);
+                        placeFrom(i1,i2,unit);
                     }
                 }
                 doneBuild.get(unit).set(false);
