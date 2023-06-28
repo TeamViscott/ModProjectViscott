@@ -43,7 +43,7 @@ public class PvTurrets{
     public static Block
             splinter,shatter,euro,snap,hourglass,
             phantom,razor,rainmaker,striker,
-            marksman, xacto,reaper,shuttle, nuero, glaive,
+            marksman, xacto,reaper,shuttle, nuero, jaeger, glaive,
             xterminium,hel,falarica,spring,shredder,
 
             fracture,javelin
@@ -1321,10 +1321,10 @@ public class PvTurrets{
             };
             limitRange();
         }};
-        Jaeger = new ItemTurret("Jaeger")
+        jaeger = new ItemTurret("jaeger")
         {{
             requirements(Category.turret,with(PvItems.zirconium, 420,PvItems.lithium,500,PvItems.platinum,500,silicon,400,PvItems.carbonFiber,100)); //Todo 2
-            localizedName = "Jaeger";
+            localizedName = "jaeger";
             reload = 4*60;
             inaccuracy = 5;
             recoilTime = 10;
@@ -1338,7 +1338,7 @@ public class PvTurrets{
             maxHeatEfficiency = 4;
             shootCone = 40;
             ammo(
-                    PvItems.carbonFiber, new BallisticMissileBulletType(GetName("Jaeger-missile")){{
+                    PvItems.carbonFiber, new BallisticMissileBulletType(GetName("jaeger-missile")){{
                         splashDamage = 123f;
                         splashDamageRadius = 43f;
                         buildingDamageMultiplier = 0.5f;
