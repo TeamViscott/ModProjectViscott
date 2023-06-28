@@ -1325,14 +1325,14 @@ public class PvTurrets{
         {{
             requirements(Category.turret,with(PvItems.zirconium, 420,PvItems.lithium,500,PvItems.platinum,500,silicon,400,PvItems.carbonFiber,100)); //Todo 2
             localizedName = "Jaeger";
-            reload = 10*60;
+            reload = 10*80;
             inaccuracy = 20;
             recoilTime = 10;
             size = 6;
             health = 7000;
             minWarmup = 0.9f;
             range = 147*8;
-            shootY = 16;
+            shootY = 14;
             recoil = 8;
             heatRequirement = 40;
             maxHeatEfficiency = 2;
@@ -1356,21 +1356,21 @@ public class PvTurrets{
 
 
             shoot = new ShootAlternate(20);
-            shoot.shotDelay = 2;
+            shoot.shotDelay = 10;
             shoot.shots = 100;
-            recoils = 2;
+            recoils = 4;
             drawer = new DrawTurret(GetName("Pov")){{
 
                 for(int i = 0; i < 2; i++){
                     int f = i;
                     parts.add(new RegionPart("-barrelt-" + (i == 0 ? "l" : "r")){{
                         progress = PartProgress.recoil;
-                        heatProgress = PartProgress.recoil;
+                        heatProgress = PartProgress.recoil.delay(0.5f);
                         heatColor = Color.valueOf("ff6214");
                         mirror = false;
                         recoilIndex = f;
                         under = false;
-                        moveY = -6f;
+                        moveY = -5f;
                         layerOffset = 0.5f;
                     }});
                 }
@@ -1383,7 +1383,7 @@ public class PvTurrets{
                         mirror = false;
                         recoilIndex = f;
                         under = false;
-                        moveY = -3f;
+                        moveY = -3.5f;
                         layerOffset = -0.5f;
                     }});
                 }
