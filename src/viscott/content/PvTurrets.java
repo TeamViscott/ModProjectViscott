@@ -1325,7 +1325,9 @@ public class PvTurrets{
         {{
             requirements(Category.turret,with(PvItems.zirconium, 420,PvItems.lithium,500,PvItems.platinum,500,silicon,400,PvItems.carbonFiber,100)); //Todo 2
             localizedName = "Jaeger";
-            reload = 10*80;
+            maxAmmo = 60;
+            ammoPerShot = 25;
+            reload = 1440;
             inaccuracy = 20;
             recoilTime = 10;
             size = 6;
@@ -1339,8 +1341,8 @@ public class PvTurrets{
             shootCone = 40;
             ammo(
                     PvItems.carbonFiber, new BallisticMissileBulletType(GetName("nuero-missile")){{
-                        splashDamage = 123f;
-                        splashDamageRadius = 43f;
+                        splashDamage = 200f;
+                        splashDamageRadius = 40f;
                         buildingDamageMultiplier = 0.5f;
                         hitShake = 1f;
                         homingRange = 24;
