@@ -1356,7 +1356,7 @@ public class PvTurrets{
 
 
             shoot = new ShootAlternate(20);
-            shoot.shotDelay = 10;
+            shoot.shotDelay = 6;
             shoot.shots = 100;
             recoils = 4;
             drawer = new DrawTurret(GetName("Pov")){{
