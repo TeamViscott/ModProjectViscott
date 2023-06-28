@@ -1324,9 +1324,9 @@ public class PvTurrets{
         jaeger = new ItemTurret("jaeger")
         {{
             requirements(Category.turret,with(PvItems.zirconium, 420,PvItems.lithium,500,PvItems.platinum,500,silicon,400,PvItems.carbonFiber,100)); //Todo 2
-            localizedName = "jaeger";
-            reload = 4*60;
-            inaccuracy = 5;
+            localizedName = "Jaeger";
+            reload = 10*60;
+            inaccuracy = 20;
             recoilTime = 10;
             size = 6;
             health = 7000;
@@ -1335,35 +1335,35 @@ public class PvTurrets{
             shootY = 16;
             recoil = 8;
             heatRequirement = 40;
-            maxHeatEfficiency = 4;
+            maxHeatEfficiency = 2;
             shootCone = 40;
             ammo(
-                    PvItems.carbonFiber, new BallisticMissileBulletType(GetName("jaeger-missile")){{
+                    PvItems.carbonFiber, new BallisticMissileBulletType(GetName("nuero-missile")){{
                         splashDamage = 123f;
                         splashDamageRadius = 43f;
                         buildingDamageMultiplier = 0.5f;
                         hitShake = 1f;
                         homingRange = 24;
                         homingPower = 0.03f;
-                        speed = 14;
+                        speed = 10;
                         lifetime = 40;
                         height = 24f;
                         //tfec
                         trailLength = 25;
                         trailWidth = 1f;
-                        trailColor = targetColor = Pal.techBlue;
+                        trailColor = targetColor = Color.yellow;
                     }});
 
 
             shoot = new ShootAlternate(20);
-            shoot.shotDelay = 1;
-            shoot.shots = 200;
+            shoot.shotDelay = 2;
+            shoot.shots = 100;
             recoils = 2;
             drawer = new DrawTurret(GetName("Pov")){{
 
                 for(int i = 0; i < 1; i++){
                     int f = i;
-                    parts.add(new RegionPart("-barrel-" + (i == 0 ? "l" : "r")){{
+                    parts.add(new RegionPart("-barrelt-" + (i == 0 ? "l" : "r")){{
                         progress = PartProgress.recoil;
                         heatProgress = PartProgress.recoil;
                         heatColor = Color.valueOf("ff6214");
@@ -1371,11 +1371,12 @@ public class PvTurrets{
                         recoilIndex = f;
                         under = false;
                         moveY = -4f;
+                        layerOffset = 0.5f;
                     }});
                 }
                 for(int i = 0; i < 2; i++){
                     int f = i;
-                    parts.add(new RegionPart("-barrel-" + (i == 0 ? "l" : "r")){{
+                    parts.add(new RegionPart("-barrelb-" + (i == 0 ? "l" : "r")){{
                         progress = PartProgress.recoil;
                         heatProgress = PartProgress.recoil;
                         heatColor = Color.valueOf("ff6214");
@@ -1383,22 +1384,9 @@ public class PvTurrets{
                         recoilIndex = f;
                         under = false;
                         moveY = -4f;
+                        layerOffset = -0.5f;
                     }});
                 }
-                parts.addAll(
-                        Seq.with(
-                                new RegionPart("-top"){{
-                                    progress = PartProgress.recoil;
-                                    heatProgress = PartProgress.recoil;
-                                    heatColor = Color.valueOf("ff6214");
-                                    mirror = false;
-                                    under = false;
-                                    moveY = 0f;
-                                    moveX = 0f;
-                                    moveRot = 0;
-                                }}
-                        )
-                );
             }
             };
             limitRange();
