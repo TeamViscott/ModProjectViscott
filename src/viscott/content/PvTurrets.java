@@ -43,7 +43,7 @@ public class PvTurrets{
     public static Block
             splinter,shatter,euro,snap,hourglass,
             phantom,razor,rainmaker,striker,
-            marksman, xacto,reaper,shuttle, nuero, glaive,
+            marksman, xacto,reaper,shuttle, nuero, jaeger, glaive,
             xterminium,hel,falarica,spring,shredder,
 
             fracture,javelin
@@ -1317,6 +1317,78 @@ public class PvTurrets{
                                 }}
                         )
                 );
+            }
+            };
+            limitRange();
+        }};
+        jaeger = new ItemTurret("jaeger")
+        {{
+            requirements(Category.turret,with(PvItems.zirconium, 420,PvItems.lithium,500,PvItems.platinum,500,silicon,400,PvItems.carbonFiber,100)); //Todo 2
+            localizedName = "Jaeger";
+            maxAmmo = 60;
+            ammoPerShot = 25;
+            reload = 1440;
+            inaccuracy = 20;
+            recoilTime = 10;
+            size = 6;
+            health = 7000;
+            minWarmup = 0.9f;
+            range = 147*8;
+            shootY = 14;
+            recoil = 8;
+            heatRequirement = 40;
+            maxHeatEfficiency = 2;
+            shootCone = 40;
+            ammo(
+                    PvItems.carbonFiber, new BallisticMissileBulletType(GetName("nuero-missile")){{
+                        splashDamage = 200f;
+                        splashDamageRadius = 40f;
+                        buildingDamageMultiplier = 0.5f;
+                        hitShake = 1f;
+                        homingRange = 24;
+                        homingPower = 0.03f;
+                        speed = 10;
+                        lifetime = 40;
+                        height = 24f;
+                        //tfec
+                        trailLength = 25;
+                        trailWidth = 1f;
+                        trailColor = targetColor = Color.yellow;
+                    }});
+
+
+            shoot = new ShootAlternate(20);
+            shoot.shotDelay = 6;
+            shoot.shots = 100;
+            recoils = 4;
+            drawer = new DrawTurret(GetName("Pov")){{
+
+                for(int i = 0; i < 2; i++){
+                    int f = i;
+                    parts.add(new RegionPart("-barrelt-" + (i == 0 ? "l" : "r")){{
+                        progress = PartProgress.recoil;
+                        heatProgress = PartProgress.recoil.delay(0.5f);
+                        heatColor = Color.valueOf("ff6214");
+                        mirror = false;
+                        recoilIndex = f;
+                        under = false;
+                        moveY = -5f;
+                        layerOffset = 0.5f;
+                    }});
+                }
+                for(int i = 0; i < 2; i++){
+                    int f = i;
+                    parts.add(new RegionPart("-barrelb-" + (i == 0 ? "l" : "r")){{
+                        progress = PartProgress.recoil;
+                        heatProgress = PartProgress.recoil;
+                        heatColor = Color.valueOf("ff6214");
+                        mirror = false;
+                        recoilIndex = f;
+                        under = false;
+                        moveY = -3.5f;
+                        layerOffset = -0.5f;
+                    }});
+                }
             }
             };
             limitRange();
