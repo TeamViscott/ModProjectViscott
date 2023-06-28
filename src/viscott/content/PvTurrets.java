@@ -1361,7 +1361,7 @@ public class PvTurrets{
             recoils = 2;
             drawer = new DrawTurret(GetName("Pov")){{
 
-                for(int i = 0; i < 1; i++){
+                for(int i = 0; i < 2; i++){
                     int f = i;
                     parts.add(new RegionPart("-barrelt-" + (i == 0 ? "l" : "r")){{
                         progress = PartProgress.recoil;
@@ -1370,7 +1370,7 @@ public class PvTurrets{
                         mirror = false;
                         recoilIndex = f;
                         under = false;
-                        moveY = -4f;
+                        moveY = -6f;
                         layerOffset = 0.5f;
                     }});
                 }
@@ -1383,7 +1383,7 @@ public class PvTurrets{
                         mirror = false;
                         recoilIndex = f;
                         under = false;
-                        moveY = -4f;
+                        moveY = -3f;
                         layerOffset = -0.5f;
                     }});
                 }
