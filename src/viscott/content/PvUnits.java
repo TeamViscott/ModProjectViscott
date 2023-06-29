@@ -1923,5 +1923,89 @@ public class PvUnits {
                 }};
             }});
         }};
+         atlantic = new PvUnitType("atlantic") {{
+            // i dont know what stats to put so basic shit /otamamori
+            localizedName = "Atlantic";
+            factions.add(PvFactions.Xeal);
+            constructor = EntityMapping.map("risso");
+            canBoost = true;
+            speed = 6.2f / 7.5f;
+            engineOffset = 14;
+            engineSize = 12;
+            drag = 0.13f;
+            buildSpeed = 4f;
+            buildBeamOffset = 0;
+            /*abilities.add(new RepairFieldAbility(4,1080,8*30),
+                    new StatusFieldAbility(PvStatusEffects.homing,300,240,8*24)
+            );
+            for shield abillty /otamamori
+            */
+            hitSize = 18f;
+            health = 24000;
+            armor = 12;
+            accel = 0.4f;
+            rotateSpeed = 3.3f;
+            faceTarget = false;
+
+            weapons.add(new Weapon(name+"-obliterate"){{
+                reload = 60f/0.8f;
+                shoot = new ShootSpread(3,0);
+                shoot.shotDelay = 5;
+                x = 5f;
+                shootY = 2f;
+                hitSize = 2*8;
+                inaccuracy = 3;
+                y = 0f;
+                recoil = 2;
+                rotate = true;
+                mirror = true;
+                top = true;
+                ejectEffect = Fx.casing1;
+                parts.add(
+                new RegionPart("-blade"){{
+                    moveRot = -10f;
+                    moveX = -1f;
+                    moves.add(new PartMove(PartProgress.reload, 2f, 1f, -5f));
+                    progress = PartProgress.warmup;
+                    mirror = true;
+                    children.add(new RegionPart("-side"){{
+                        moveX = 2f;
+                        moveY = -2f;
+                        progress = PartProgress.warmup;
+                        under = true;
+                        mirror = true;
+                        moves.add(new PartMove(PartProgress.reload, -2f, 2f, 0f));
+                    }});
+                }});
+                bullet = new BasicBulletType(3f, 72){{
+                    width = 12f;
+                    height = 15f;
+                    lifetime = PvUtil.GetRange(3,34);
+                    trailColor = backColor = lightColor = Pal.heal;
+                    trailLength = 40;
+                    weaveScale = 4;
+                    weaveMag = 2;
+                    homingPower = 0.008f;
+                    trailWidth = 3f;
+                    weaveRandom = true;
+                    healPercent = 5;
+                    collidesTeam = true;
+                    ammoMultiplier = 2;
+                    /*fragBullets = 3;
+                    fragBullet = new BasicBulletType(3,45)
+                    {{
+                         width = 7f;
+                         height = 9f;
+                         lifetime = PvUtil.GetRange(3,12);
+                         trailWidth = 1.4f;
+                         trailLength = 10;
+                         trailColor = backColor = lightColor = Pal.heal;
+                         healPercent = 1;
+                    }};
+                    is this important? /otamamori
+                    */
+                }};
+            }});
+        }};
     }
 }
