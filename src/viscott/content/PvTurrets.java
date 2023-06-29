@@ -1321,100 +1321,6 @@ public class PvTurrets{
             };
             limitRange();
         }};
-        jaeger = new ItemTurret("jaeger")
-        {{
-            requirements(Category.turret,with(PvItems.zirconium, 420,PvItems.lithium,500,PvItems.platinum,500,silicon,400,PvItems.carbonFiber,100)); //Todo 2
-            localizedName = "Jaeger";
-            maxAmmo = 75;
-            ammoPerShot = 25;
-            reload = 288;
-            inaccuracy = 20;
-            recoilTime = 10;
-            size = 6;
-            health = 7000;
-            range = 147*8;
-            shootY = 14;
-            soundPitchMin = 0.8f;
-            soundPitchMax = 0.85f;
-            recoil = 8;
-            heatRequirement = 40;
-            maxHeatEfficiency = 2;
-            shake = 8;
-            shootCone = 40;
-            ammo(
-                    PvItems.carbonFiber, new BallisticMissileBulletType(GetName("nuero-missile")){{
-                        splashDamage = 0f;
-                        splashDamageRadius = 40f;
-                        buildingDamageMultiplier = 0.5f;
-                        hitShake = 1f;
-                        homingRange = 24;
-                        homingPower = 0.03f;
-                        hitSoundVolume = 2;
-                        targetRadius = 36;
-                        speed = 7;
-                        lifetime = 40;
-                        height = 36f;
-                        trailLength = 25;
-                        trailWidth = 1f;
-                        trailColor = targetColor = Pal.techBlue;
-                        fragBullets = 10;
-                        soundPitchMin = 0.8f;
-                        soundPitchMax = 0.85f;
-                        fragSpread = 8;
-                        fragRandomSpread = 36;
-                        fragBullet = new BallisticMissileBulletType(GetName("nuero-missile")){{
-                            splashDamage = 40f;
-                            splashDamageRadius = 40f;
-                            buildingDamageMultiplier = 0.5f;
-                            hitShake = 1f;
-                            homingRange = 24;
-                            homingPower = 0.03f;
-                            speed = 10;
-                            lifetime = 40;
-                            height = 24f;
-                            trailLength = 25;
-                            trailWidth = 1f;
-                            trailColor = targetColor = Pal.techBlue;
-                        }};
-                    }});
-
-
-            shoot = new ShootAlternate(20);
-            shoot.shotDelay = 8;
-            shoot.shots = 2;
-            recoils = 8;
-            drawer = new DrawTurret(GetName("Pov")){{
-
-                for(int i = 0; i < 2; i++){
-                    int f = i;
-                    parts.add(new RegionPart("-barrelt-" + (i == 0 ? "l" : "r")){{
-                        progress = PartProgress.recoil;
-                        heatProgress = PartProgress.recoil.delay(0.5f);
-                        heatColor = Color.valueOf("ff6214");
-                        mirror = false;
-                        recoilIndex = f;
-                        under = false;
-                        moveY = -5f;
-                        layerOffset = 0.5f;
-                    }});
-                }
-                for(int i = 0; i < 2; i++){
-                    int f = i;
-                    parts.add(new RegionPart("-barrelb-" + (i == 0 ? "l" : "r")){{
-                        progress = PartProgress.recoil;
-                        heatProgress = PartProgress.recoil;
-                        heatColor = Color.valueOf("ff6214");
-                        mirror = false;
-                        recoilIndex = f;
-                        under = false;
-                        moveY = -3.5f;
-                        layerOffset = -0.5f;
-                    }});
-                }
-            }
-            };
-            limitRange();
-        }};
         hel = new LiquidTurret("hel")
         {
             {
@@ -1867,6 +1773,100 @@ public class PvTurrets{
     }
     public static void loadSize6()
     {
+        jaeger = new ItemTurret("jaeger")
+        {{
+            requirements(Category.turret,with(PvItems.zirconium, 420,PvItems.lithium,500,PvItems.platinum,500,silicon,400,PvItems.carbonFiber,100)); //Todo 2
+            localizedName = "Jaeger";
+            maxAmmo = 40;
+            ammoPerShot = 10;
+            reload = 288;
+            inaccuracy = 20;
+            recoilTime = 10;
+            size = 6;
+            health = 7000;
+            range = 147*8;
+            shootY = 14;
+            soundPitchMin = 0.8f;
+            soundPitchMax = 0.85f;
+            recoil = 8;
+            heatRequirement = 40;
+            maxHeatEfficiency = 2;
+            shake = 8;
+            shootCone = 40;
+            ammo(
+                    PvItems.carbonFiber, new BallisticMissileBulletType(GetName("jaeger-missile")){{
+                        splashDamage = 0f;
+                        splashDamageRadius = 40f;
+                        buildingDamageMultiplier = 0.5f;
+                        hitShake = 1f;
+                        homingRange = 24;
+                        homingPower = 0.03f;
+                        hitSoundVolume = 2;
+                        targetRadius = 36;
+                        speed = 7;
+                        lifetime = 40;
+                        height = 36f;
+                        trailLength = 25;
+                        trailWidth = 1f;
+                        trailColor = targetColor = Pal.techBlue;
+                        fragBullets = 10;
+                        soundPitchMin = 0.8f;
+                        soundPitchMax = 0.85f;
+                        fragSpread = 8;
+                        fragRandomSpread = 36;
+                        fragBullet = new BallisticMissileBulletType(GetName("nuero-missile")){{
+                            splashDamage = 30f;
+                            splashDamageRadius = 40f;
+                            buildingDamageMultiplier = 0.5f;
+                            hitShake = 1f;
+                            homingRange = 24;
+                            homingPower = 0.03f;
+                            speed = 10;
+                            lifetime = 40;
+                            height = 24f;
+                            trailLength = 25;
+                            trailWidth = 1f;
+                            trailColor = targetColor = Pal.techBlue;
+                        }};
+                    }});
+
+
+            shoot = new ShootAlternate(20);
+            shoot.shotDelay = 8;
+            shoot.shots = 4;
+            recoils = 8;
+            drawer = new DrawTurret(GetName("Pov")){{
+
+                for(int i = 0; i < 2; i++){
+                    int f = i;
+                    parts.add(new RegionPart("-barrelt-" + (i == 0 ? "l" : "r")){{
+                        progress = PartProgress.recoil;
+                        heatProgress = PartProgress.recoil.delay(0.5f);
+                        heatColor = Color.valueOf("ff6214");
+                        mirror = false;
+                        recoilIndex = f;
+                        under = false;
+                        moveY = -5f;
+                        layerOffset = 0.5f;
+                    }});
+                }
+                for(int i = 0; i < 2; i++){
+                    int f = i;
+                    parts.add(new RegionPart("-barrelb-" + (i == 0 ? "l" : "r")){{
+                        progress = PartProgress.recoil;
+                        heatProgress = PartProgress.recoil;
+                        heatColor = Color.valueOf("ff6214");
+                        mirror = false;
+                        recoilIndex = f;
+                        under = false;
+                        moveY = -3.5f;
+                        layerOffset = -0.5f;
+                    }});
+                }
+            }
+            };
+            limitRange();
+        }};
         shuttle = new ItemTurret("shuttle")
         {{
             requirements(Category.turret,with(PvItems.platinum, 200,PvItems.erbium,600,PvItems.carbonFiber,50,PvItems.nobelium,500,silicon,500)); //Todo 2
