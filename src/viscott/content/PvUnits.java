@@ -1947,7 +1947,7 @@ public class PvUnits {
             rotateSpeed = 3.3f;
             faceTarget = false;
 
-            weapons.add(new Weapon(name+"-obliterate"){{
+            weapons.add(new Weapon(name+"-weapon"){{
                 reload = 60f/0.8f;
                 shoot = new ShootSpread(3,0);
                 shoot.shotDelay = 5;
@@ -1963,19 +1963,11 @@ public class PvUnits {
                 ejectEffect = Fx.casing1;
                 parts.add(
                 new RegionPart("-blade"){{
-                    moveRot = -10f;
-                    moveX = -1f;
-                    moves.add(new PartMove(PartProgress.reload, 2f, 1f, -5f));
+                    moveRot = 5f;
+                    moveX = 0f;
+                    moves.add(new PartMove(PartProgress.reload, 2f, 0f, -10f));
                     progress = PartProgress.warmup;
                     mirror = true;
-                    children.add(new RegionPart("-side"){{
-                        moveX = 2f;
-                        moveY = -2f;
-                        progress = PartProgress.warmup;
-                        under = true;
-                        mirror = true;
-                        moves.add(new PartMove(PartProgress.reload, -2f, 2f, 0f));
-                    }});
                 }});
                 bullet = new BasicBulletType(3f, 72){{
                     width = 12f;
