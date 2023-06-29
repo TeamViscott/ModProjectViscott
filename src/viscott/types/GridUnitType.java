@@ -76,30 +76,31 @@ public class GridUnitType extends PvUnitType{
     public boolean buildAt(int x, int y, Unit unit, Building building,byte rotation) {
         if (building == null || building.block() == null) return false;
         if (building.block instanceof CoreBlock) return false;
-        if (building.tile.build == building)
-            building.tile.setNet(Blocks.air);
         World curWorld = Vars.world;
-        World gridWorld = grids.get(unit);
-        Vars.world = grids.get(unit);
         int s = buildSize-1;
-        Tile t;
+        World gridWorld = grids.get(unit);
+        Tile t = gridWorld.tile(0,0);
         switch(rotation%4) {
             case 0:
                 t = gridWorld.tile(x,y);
+                if (buildArea[y][x] == 0) return false;
                 break;
             case 1:
                 t = gridWorld.tile(y,s-x);
+                if (buildArea[x][y] == 0) return false;
                 break;
             case 2:
                 t = gridWorld.tile(s-x,s-y);
+                if (buildArea[y][x] == 0) return false;
                 break;
             case 3:
                 t = gridWorld.tile(s-y,x);
-                break;
-            default:
-                t = gridWorld.tile(0,0);
+                if (buildArea[x][y] == 0) return false;
                 break;
         }
+        if (building.tile.build == building)
+            building.tile.setNet(Blocks.air);
+        Vars.world = grids.get(unit);
         t.setBlock(building.block(),unit.team);
         t.build = building;
         building.tile = t;
@@ -172,7 +173,7 @@ public class GridUnitType extends PvUnitType{
                 for(int i1 = 0;i1 < buildSize;i1++) {
                     for(int i2 = 0;i2 < buildSize;i2++) {
                         Tile t = Vars.world.tile(bx+i1,by+i2);
-                        if (t.block() != null)
+                        if (t != null && t.block() != null)
                             buildAt(i1,i2,unit,t.build, (byte) Math.round(unit.rotation / 90));
                     }
                 }
