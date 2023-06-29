@@ -43,7 +43,7 @@ public class PvLogicDialog extends BaseDialog {
 
         clearChildren();
 
-        canvas = new PvCanvas();
+        canvas = new PvCanvas(statements);
         shouldPause = true;
 
         addCloseListener();

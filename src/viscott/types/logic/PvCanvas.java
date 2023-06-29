@@ -25,15 +25,16 @@ import mindustry.logic.*;
 import mindustry.ui.Styles;
 
 public class PvCanvas extends LCanvas {
-    StatementElem dragging;
     public Seq<Prov<LStatement>> allStatements;
-    float targetWidth;
 
+    public PvCanvas(Seq<Prov<LStatement>> statements) {
+        allStatements = statements;
+    }
     @Override
     public String save(){
         Seq<LStatement> st = statements.getChildren().<StatementElem>as().map(s -> s.st);
         st.each(LStatement::saveUI);
 
-        return LAssembler.write(st);
+        return PvAssembler.write(st);
     }
 }

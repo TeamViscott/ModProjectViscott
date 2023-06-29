@@ -45,7 +45,6 @@ public class GridUnitType extends PvUnitType{
     public HashMap<Unit,AtomicBoolean> doneBuild = new HashMap<>();
     public int buildSize = 4;
     public byte[][] buildArea = new byte[buildSize][buildSize];
-    final Block fillin = Blocks.air;
     public GridUnitType(String name)
     {
         super(name);
@@ -91,11 +90,11 @@ public class GridUnitType extends PvUnitType{
                 break;
             case 2:
                 t = gridWorld.tile(s-x,s-y);
-                if (buildArea[y][x] == 0) return false;
+                if (buildArea[s-y][s-x] == 0) return false;
                 break;
             case 3:
                 t = gridWorld.tile(s-y,x);
-                if (buildArea[x][y] == 0) return false;
+                if (buildArea[s-x][s-y] == 0) return false;
                 break;
         }
         if (building.tile.build == building)
@@ -104,8 +103,9 @@ public class GridUnitType extends PvUnitType{
         t.setBlock(building.block(),unit.team);
         t.build = building;
         building.tile = t;
-        for(int i1 = Mathf.floor(building.block().size - 1 / 2);i1 < Mathf.floor(building.block().size / 2);i1++)
-            for(int i2 = Mathf.floor(building.block().size - 1 / 2);i2 < Mathf.floor(building.block().size / 2);i2++)
+        int size = building.block().size;
+        for(int i1 = 0;i1 <= size - 1;i1++)
+            for(int i2 = 0;i2 <= size - 1;i2++)
                 Vars.world.tile(t.x + i1,t.y + i2).build = building;
         building.updateProximity();
         Vars.world = curWorld;
@@ -137,8 +137,9 @@ public class GridUnitType extends PvUnitType{
         t.setBlock(b.block(),unit.team);
         t.build = b;
         b.tile = t;
-        for(int i1 = Mathf.floor(b.block().size - 1 / 2);i1 < Mathf.floor(b.block().size / 2);i1++)
-            for(int i2 = Mathf.floor(b.block().size - 1 / 2);i2 < Mathf.floor(b.block().size / 2);i2++)
+        int size = b.block().size;
+        for(int i1 = -Mathf.floor((size - 1) / 2);i1 <= Mathf.floor(size / 2);i1++)
+            for(int i2 = -Mathf.floor((size - 1) / 2);i2 <= Mathf.floor(size / 2);i2++)
                 Vars.world.tile(t.x + i1,t.y + i2).build = b;
         b.set(t.x * 8 + (b.block().size-1) % 2 * 4,t.y * 8 + (b.block().size-1) % 2 * 4);
         b.updateProximity();
@@ -264,9 +265,9 @@ public class GridUnitType extends PvUnitType{
             Building build = t.get(x,y).build;
             if (build != null && !drawed.contains(build)) {
                 if (build.block() == null) return;
-                Draw.z(Layer.flyingUnitLow+0.1f);
+                Draw.z(Layer.flyingUnitLow + 0.1f);
                 int size = build.block().size;
-                float off =  Mathf.floor((size-1) * 4);
+                float off = Mathf.floor((size - 1) * 4);
                 float Dx = unit.x + Angles.trnsx(unit.rotation, xOffset + off, yOffset + off);
                 float Dy = unit.y + Angles.trnsy(unit.rotation, xOffset + off, yOffset + off);
                 build.x = Dx;
@@ -274,16 +275,17 @@ public class GridUnitType extends PvUnitType{
                 build.payloadRotation = unit.rotation;
                 if (build instanceof Turret.TurretBuild tb) {
                     Turret turret = (Turret) tb.block;
-                    DrawTurret drawer = (DrawTurret)turret.drawer;
-                    Draw.rect(drawer.base, Dx, Dy,unit.rotation);
+                    DrawTurret drawer = (DrawTurret) turret.drawer;
+                    Draw.rect(drawer.base, Dx, Dy, unit.rotation);
                     Draw.color();
                     Drawf.shadow(drawer.preview, Dx + tb.recoilOffset.x - turret.elevation, Dy + tb.recoilOffset.y - turret.elevation, tb.drawrot());
-                    Draw.z(Layer.flyingUnitLow+0.2f);
+                    Draw.z(Layer.flyingUnitLow + 0.2f);
                     drawer.drawTurret(turret, tb);
                     drawer.drawHeat(turret, tb);
-                    drawTurretParts(tb,Dx,Dy);
-                } else {
-                    Draw.rect(build.block().region,Dx,Dy,build.payloadRotation);
+                    drawTurretParts(tb, Dx, Dy);
+                }
+                else {
+                    Draw.rect(build.block().getGeneratedIcons()[0], Dx, Dy, unit.rotation);
                 }
                 drawed.add(build);
                 Draw.reset();

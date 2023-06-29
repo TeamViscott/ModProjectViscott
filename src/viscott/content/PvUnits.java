@@ -48,6 +48,8 @@ public class PvUnits {
 
         /*Flying Ion Path*/ particle, snippet, fragment, excerpt, pericope,
 
+        /*Rocket Hover Path*/milli,
+
         /*Xeal Naval Path*/rivulet,bourn,tributary,loch,atlantic,
 
         /*Nullis*/
@@ -61,10 +63,14 @@ public class PvUnits {
                 ;
     public static void load()
     {
+        //Base UnitLoads
         loadFlyingIonPath();
+        loadRocketHoverPath();
+        //Faction Based UnitLoads
         loadXeonNavalPath();
-        loadCorePath();
         loadStoragePath();
+        //Extra UnitLoads
+        loadCorePath();
         loadExtra();
         loadBosses();
     }
@@ -1690,6 +1696,60 @@ public class PvUnits {
                         }});
         }};
     }
+    public static void loadRocketHoverPath() {
+        milli = new PvUnitType("milli") {{
+            localizedName = "Milli";
+            constructor = EntityMapping.map("ElevationMoveUnit");
+            speed = 12.3f/7.5f;
+            engineOffset = 8;
+            drag = 0.13f;
+            buildSpeed = 2.2f;
+            buildBeamOffset = 0;
+            hitSize = 10f;
+            health = 275;
+            armor = 3;
+            range = 8 * 26;
+            accel = 0.4f;
+            rotateSpeed = 3.3f;
+            faceTarget = true;
+            hovering = true;
+            parts.add(new HoverPart(){{
+                x = 0f;
+                y = 0f;
+                mirror = false;
+                radius = 18f;
+                phase = 60f;
+                stroke = 5f;
+                layerOffset = -0.001f;
+                color = Pal.neoplasmMid;
+            }});
+
+            weapons.add(new Weapon(name+"-gun"){{
+                reload = 60f/0.8f;
+                x = -5f;
+                shootY = 0f;
+                y = 0f;
+                rotate = true;
+                ejectEffect = Fx.casing1;
+                bullet = new BasicBulletType(3f, 14){{
+                    width = 12f;
+                    height = 15f;
+                    homingPower = 0.01f;
+                    lifetime = PvUtil.GetRange(3,26);
+                    trailColor = backColor = lightColor = Pal.neoplasm1;
+                    frontColor = Pal.neoplasm2;
+                    trailLength = 24;
+                    trailChance = 0.1f;
+                    trailWidth = 1.4f;
+                    splashDamage = 15;
+                    splashDamageRadius = 8*1.5f;
+                    ammoMultiplier = 2;
+                    despawnEffect = hitEffect = new MultiEffect(Fx.explosion,Fx.smokeCloud);
+                }};
+            }});
+        }};
+    }
+
     public static void loadXeonNavalPath()
     {
         rivulet = new PvUnitType("rivulet")
@@ -2008,4 +2068,5 @@ public class PvUnits {
             }});
         }};
     }
+
 }
