@@ -37,4 +37,22 @@ public class PvCanvas extends LCanvas {
 
         return PvAssembler.write(st);
     }
+
+    @Override
+    public void load(String asm){
+        jumps.clear();
+
+        Seq<LStatement> statements = PvAssembler.pvRead(asm, false);
+        statements.truncate(LExecutor.maxInstructions);
+        this.statements.clearChildren();
+        for(LStatement st : statements){
+            add(st);
+        }
+
+        for(LStatement st : statements){
+            st.setupUI();
+        }
+
+        this.statements.layout();
+    }
 }

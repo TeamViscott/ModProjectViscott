@@ -23,4 +23,10 @@ public class PvAssembler extends LAssembler {
         asm.instructions = st.map(l -> l.build(asm)).filter(l -> l != null).toArray(LExecutor.LInstruction.class);
         return asm;
     }
+
+    public static Seq<LStatement> pvRead(String text, boolean privileged){
+        //don't waste time parsing null/empty text
+        if(text == null || text.isEmpty()) return new Seq<>();
+        return new PvParser(text, allStatement).parse();
+    }
 }
