@@ -2023,8 +2023,9 @@ public class PvUnits {
                 ejectEffect = Fx.casing1;
                 parts.add(
                 new RegionPart("-blade"){{
-                    moveRot = 10f;
+                    moveRot = -10f;
                     moveY = -1f;
+                    under = false;
                     moves.add(new PartMove(PartProgress.reload, 0f, -0.5f, -10f));
                     progress = PartProgress.warmup;
                     mirror = true;
@@ -2074,8 +2075,9 @@ public class PvUnits {
                 ejectEffect = Fx.casing1;
                 parts.add(
                 new RegionPart("-blade"){{
-                    moveRot = 10f;
+                    moveRot = -10f;
                     moveY = -1f;
+                    under = false;
                     moves.add(new PartMove(PartProgress.reload, 0f, -0.5f, -10f));
                     progress = PartProgress.warmup;
                     mirror = true;
