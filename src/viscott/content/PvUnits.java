@@ -2011,11 +2011,11 @@ public class PvUnits {
                 reload = 60f/0.8f;
                 shoot = new ShootSpread(3,0);
                 shoot.shotDelay = 5;
-                x = 10f;
+                x = 16f;
                 shootY = 2f;
                 hitSize = 2*8;
                 inaccuracy = 3;
-                y = -4f;
+                y = -6f;
                 recoil = 2;
                 rotate = true;
                 mirror = true;
@@ -2023,9 +2023,60 @@ public class PvUnits {
                 ejectEffect = Fx.casing1;
                 parts.add(
                 new RegionPart("-blade"){{
-                    moveRot = 5f;
-                    moveX = 0f;
-                    moves.add(new PartMove(PartProgress.reload, 2f, 0f, -10f));
+                    moveRot = 10f;
+                    moveY = -1f;
+                    moves.add(new PartMove(PartProgress.reload, 0f, -0.5f, -10f));
+                    progress = PartProgress.warmup;
+                    mirror = true;
+                }});
+                bullet = new BasicBulletType(3f, 72){{
+                    width = 12f;
+                    height = 15f;
+                    lifetime = PvUtil.GetRange(3,34);
+                    trailColor = backColor = lightColor = Pal.heal;
+                    trailLength = 40;
+                    weaveScale = 4;
+                    weaveMag = 2;
+                    homingPower = 0.008f;
+                    trailWidth = 3f;
+                    weaveRandom = true;
+                    healPercent = 5;
+                    collidesTeam = true;
+                    ammoMultiplier = 2;
+                    /*fragBullets = 3;
+                    fragBullet = new BasicBulletType(3,45)
+                    {{
+                         width = 7f;
+                         height = 9f;
+                         lifetime = PvUtil.GetRange(3,12);
+                         trailWidth = 1.4f;
+                         trailLength = 10;
+                         trailColor = backColor = lightColor = Pal.heal;
+                         healPercent = 1;
+                    }};
+                    is this important? /otamamori
+                    */
+                }};
+            }});
+            weapons.add(new Weapon(name+"-weapon"){{
+                reload = 60f/0.8f;
+                shoot = new ShootSpread(3,0);
+                shoot.shotDelay = 5;
+                x = 16f;
+                shootY = 2f;
+                hitSize = 2*8;
+                inaccuracy = 3;
+                y = 0f;
+                recoil = 2;
+                rotate = true;
+                mirror = true;
+                top = true;
+                ejectEffect = Fx.casing1;
+                parts.add(
+                new RegionPart("-blade"){{
+                    moveRot = 10f;
+                    moveY = -1f;
+                    moves.add(new PartMove(PartProgress.reload, 0f, -0.5f, -10f));
                     progress = PartProgress.warmup;
                     mirror = true;
                 }});
