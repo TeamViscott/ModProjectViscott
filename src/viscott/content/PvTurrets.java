@@ -1325,42 +1325,64 @@ public class PvTurrets{
         {{
             requirements(Category.turret,with(PvItems.zirconium, 420,PvItems.lithium,500,PvItems.platinum,500,silicon,400,PvItems.carbonFiber,100)); //Todo 2
             localizedName = "Jaeger";
-            maxAmmo = 60;
+            maxAmmo = 75;
             ammoPerShot = 25;
-            reload = 1440;
+            reload = 288;
             inaccuracy = 20;
             recoilTime = 10;
             size = 6;
             health = 7000;
-            minWarmup = 0.9f;
             range = 147*8;
             shootY = 14;
+            soundPitchMin = 0.8f;
+            soundPitchMax = 0.85f;
             recoil = 8;
             heatRequirement = 40;
             maxHeatEfficiency = 2;
+            shake = 8;
             shootCone = 40;
             ammo(
                     PvItems.carbonFiber, new BallisticMissileBulletType(GetName("nuero-missile")){{
-                        splashDamage = 200f;
+                        splashDamage = 0f;
                         splashDamageRadius = 40f;
                         buildingDamageMultiplier = 0.5f;
                         hitShake = 1f;
                         homingRange = 24;
                         homingPower = 0.03f;
-                        speed = 10;
+                        hitSoundVolume = 2;
+                        targetRadius = 36;
+                        speed = 7;
                         lifetime = 40;
-                        height = 24f;
-                        //tfec
+                        height = 36f;
                         trailLength = 25;
                         trailWidth = 1f;
-                        trailColor = targetColor = Color.yellow;
+                        trailColor = targetColor = Pal.techBlue;
+                        fragBullets = 10;
+                        soundPitchMin = 0.8f;
+                        soundPitchMax = 0.85f;
+                        fragSpread = 8;
+                        fragRandomSpread = 36;
+                        fragBullet = new BallisticMissileBulletType(GetName("nuero-missile")){{
+                            splashDamage = 40f;
+                            splashDamageRadius = 40f;
+                            buildingDamageMultiplier = 0.5f;
+                            hitShake = 1f;
+                            homingRange = 24;
+                            homingPower = 0.03f;
+                            speed = 10;
+                            lifetime = 40;
+                            height = 24f;
+                            trailLength = 25;
+                            trailWidth = 1f;
+                            trailColor = targetColor = Pal.techBlue;
+                        }};
                     }});
 
 
             shoot = new ShootAlternate(20);
-            shoot.shotDelay = 6;
-            shoot.shots = 100;
-            recoils = 4;
+            shoot.shotDelay = 8;
+            shoot.shots = 2;
+            recoils = 8;
             drawer = new DrawTurret(GetName("Pov")){{
 
                 for(int i = 0; i < 2; i++){
