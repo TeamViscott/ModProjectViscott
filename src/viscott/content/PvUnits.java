@@ -2008,14 +2008,14 @@ public class PvUnits {
             faceTarget = false;
 
             weapons.add(new Weapon(name+"-weapon"){{
-                reload = 60f/0.8f;
+                reload = 70f/0.8f;
                 shoot = new ShootSpread(3,0);
                 shoot.shotDelay = 5;
-                x = 16f;
+                x = 18f;
                 shootY = 2f;
                 hitSize = 2*8;
                 inaccuracy = 3;
-                y = -6f;
+                y = -10f;
                 recoil = 2;
                 rotate = true;
                 mirror = true;
@@ -2062,11 +2062,11 @@ public class PvUnits {
                 reload = 60f/0.8f;
                 shoot = new ShootSpread(3,0);
                 shoot.shotDelay = 5;
-                x = 16f;
+                x = 18f;
                 shootY = 2f;
                 hitSize = 2*8;
                 inaccuracy = 3;
-                y = 0f;
+                y = 2f;
                 recoil = 2;
                 rotate = true;
                 mirror = true;
