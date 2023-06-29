@@ -10,6 +10,7 @@ import arc.scene.ui.Label;
 import arc.scene.ui.TextButton;
 import arc.scene.ui.layout.Table;
 import arc.struct.Seq;
+import arc.util.Align;
 import arc.util.Log;
 import arc.util.Nullable;
 import arc.util.Time;
@@ -237,6 +238,12 @@ public class PvLogicDialog extends BaseDialog {
             dialog.addCloseButton();
             dialog.show();
         }).disabled(t -> canvas.statements.getChildren().size >= LExecutor.maxInstructions);
+    }
+
+    @Override
+    public void hide(){
+        super.hide();
+        canvas.resetDialog();
     }
 
     public void show(Seq<Prov<LStatement>> statements, String code, LExecutor executor, boolean privileged, Cons<String> modified){
