@@ -48,7 +48,7 @@ public class PvUnits {
 
         /*Flying Ion Path*/ particle, snippet, fragment, excerpt, pericope,
 
-        /*Xeal Naval Path*/rivulet,bourn,tributary,loch,
+        /*Xeal Naval Path*/rivulet,bourn,tributary,loch,atlantic,
 
         /*Nullis*/
             /*Storage Con Path*/pocket,container, capsule,vault,chamber,
