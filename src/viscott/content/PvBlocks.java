@@ -445,7 +445,7 @@ public class PvBlocks {
                 }};
                 blastReactor = new ConsumeGenerator("blast-reactor")
                 {{
-                    requirements(Category.power, with(PvItems.zirconium,35,PvItems.lithium,20)); //todo
+                    requirements(Category.power, with(PvItems.zirconium,130,PvItems.nobelium,70)); //todo
                     localizedName = "Blast Reactor";
                     health = 780;
                     size = 3;
@@ -460,7 +460,7 @@ public class PvBlocks {
                 }};
                 subzeroReactor = new ConsumeGenerator("subzero-reactor")
                 {{
-                    requirements(Category.power, with(PvItems.zirconium,35,PvItems.lithium,20)); //todo
+                    requirements(Category.power, with(PvItems.lithium,300,PvItems.nobelium,100,PvItems.erbium,70)); //todo
                     localizedName = "SubZero Reactor";
                     health = 980;
                     size = 4;
@@ -490,7 +490,7 @@ public class PvBlocks {
                 }};
                 feverReactor = new ItemVariableReactor("fever-reactor")
                 {{
-                    requirements(Category.power, with(PvItems.zirconium,35,PvItems.lithium,20)); //todo
+                    requirements(Category.power, with(PvItems.zirconium,375,Items.silicon,125,PvItems.lithium,50,PvItems.erbium,30)); //todo
                     localizedName = "Fever Reactor";
                     maxHeat = 40;
                     health = 3050;

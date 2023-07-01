@@ -794,7 +794,6 @@ public class PvUnits {
                 shootStatus = StatusEffects.slow;
                 shootStatusDuration = 60f;
                 bullet = new BasicBulletType(){{
-
                     shootEffect = new MultiEffect(Fx.shootTitan, new WaveEffect(){{
                         colorTo = Pal.sapBulletBack;
                         sizeTo = 26f;
@@ -869,6 +868,7 @@ public class PvUnits {
                     progress = PartProgress.warmup;
                     moveRot = 15;
                     mirror = true;
+
                     x = -20;
                     y = 15;
                     moveX = -5;
