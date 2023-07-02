@@ -106,7 +106,7 @@ public class PvBlocks {
                             denseConstructor,denseDeconstructor,denseUnloader,denseLoader,
                     /*Core's*/coreHover,coreElevate,coreUpraise,
                             bulkUnloader,
-                            /*Nullis*/nullisCore,
+                            /*Nullis*/nullisCore, voidLink,
                             /*Xeal*/coreSpark,coreCharge,coreSurge,
                     /*Effects*/utilityProjector,
                             /*Nullis*/voidNode,voidBeacon,
@@ -884,6 +884,18 @@ public class PvBlocks {
                     healTime = 25;
                     warmupEffect = PvEffects.surgeSpawn;
                     spawnEffect = Fx.greenBomb;
+                }};
+                voidLink = new NullisCore("void-link")
+                {{
+                    requirements(Category.effect,with(PvItems.zirconium,80,PvItems.lithium,50,PvItems.platinum,40));
+                    localizedName = "Void Link";
+                    unitType = null;
+                    size = 2;
+                    health = 1300;
+                    unitCapModifier = 0;
+                    itemCapacity = 1;
+                    voidRadius = 0;
+                    placeableOn = true;
                 }};
                 nullisCore = new NullisCore("core-null")
                 {{
