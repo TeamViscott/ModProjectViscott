@@ -3,6 +3,7 @@ package viscott.types;
 import arc.Events;
 import arc.graphics.Color;
 import arc.struct.Seq;
+import mindustry.Vars;
 import mindustry.content.TechTree;
 import mindustry.game.EventType;
 import mindustry.game.Team;

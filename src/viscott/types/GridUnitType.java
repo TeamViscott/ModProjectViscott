@@ -8,6 +8,7 @@ import arc.math.Scaled;
 import arc.struct.Seq;
 import arc.util.Log;
 import arc.util.Reflect;
+import arc.util.Timer;
 import arc.util.io.Writes;
 import mindustry.Vars;
 import mindustry.content.Blocks;
@@ -73,27 +74,30 @@ public class GridUnitType extends PvUnitType{
         return gridWorld;
     }
     public boolean buildAt(int x, int y, Unit unit, Building building,byte rotation) {
+        int cx = Mathf.ceil(unit.x / 8) - buildSize / 2,
+                cy = Mathf.ceil(unit.y / 8) - buildSize / 2;
         if (building == null || building.block() == null) return false;
         if (building.block instanceof CoreBlock) return false;
         World curWorld = Vars.world;
         int s = buildSize-1;
         World gridWorld = grids.get(unit);
+        Tile cT = building.tile;
         Tile t = gridWorld.tile(0,0);
         switch(rotation%4) {
             case 0:
-                t = gridWorld.tile(x,y);
+                t = gridWorld.tile(cT.x - cx,cT.y - cy);
                 if (buildArea[y][x] == 0) return false;
                 break;
             case 1:
-                t = gridWorld.tile(y,s-x);
+                t = gridWorld.tile(cT.y - cy,s- cT.x - cx);
                 if (buildArea[x][y] == 0) return false;
                 break;
             case 2:
-                t = gridWorld.tile(s-x,s-y);
+                t = gridWorld.tile(s- cT.x - cx,s- cT.y - cy);
                 if (buildArea[s-y][s-x] == 0) return false;
                 break;
             case 3:
-                t = gridWorld.tile(s-y,x);
+                t = gridWorld.tile(s- cT.y - cy,cT.x - cx);
                 if (buildArea[s-x][s-y] == 0) return false;
                 break;
         }
@@ -104,8 +108,10 @@ public class GridUnitType extends PvUnitType{
         t.build = building;
         building.tile = t;
         int size = building.block().size;
-        for(int i1 = 0;i1 <= size - 1;i1++)
-            for(int i2 = 0;i2 <= size - 1;i2++)
+        int min = -Mathf.floor((size - 1) / 2),
+                max = Mathf.floor(size / 2);
+        for(int i1 = min;i1 <= max;i1++)
+            for(int i2 = min;i2 <= max;i2++)
                 Vars.world.tile(t.x + i1,t.y + i2).build = building;
         building.updateProximity();
         Vars.world = curWorld;
@@ -114,35 +120,47 @@ public class GridUnitType extends PvUnitType{
     public boolean placeFrom(int x,int y,Unit unit,byte rotation) {
         int bx = Mathf.ceil(unit.x / 8) - buildSize / 2,
                 by = Mathf.ceil(unit.y / 8) - buildSize / 2;
-        Tile p = grids.get(unit).tile(x,y);
-        Building b = p.build;
+        World g = grids.get(unit);
+        Building b = g.tile(x,y).build;
         if (b == null || b.block() == null) return false;
-        p.setBlock(Blocks.air);
+
+        int size = b.block().size;
+        int min = -Mathf.floor((size - 1) / 2),
+                max = Mathf.floor(size / 2);
+
+        Tile cT = b.tile();
+        for(int i1 = min;i1 <= max;i1++)
+            for(int i2 = min;i2 <= max;i2++)
+                g.tile(cT.x+i1,cT.y+i2).setBlock(Blocks.air);
         int s = buildSize-1;
         Tile t = Vars.world.tile(0,0);
         switch(rotation%4) {
             case 0:
-                t = Vars.world.tile(bx + x,by + y);
+                t = Vars.world.tile(bx + cT.x,by + cT.y);
                 break;
             case 1:
-                t = Vars.world.tile(bx + s - y,by + x);
+                t = Vars.world.tile(bx + s - cT.y,by + cT.x);
                 break;
             case 2:
-                t = Vars.world.tile(bx + s - x,by + s - y);
+                t = Vars.world.tile(bx + s - cT.x,by + s - cT.y);
                 break;
             case 3:
-                t = Vars.world.tile(bx + y,by + s - x);
+                t = Vars.world.tile(bx + cT.y,by + s - cT.x);
                 break;
+        }
+        if (t == null) {
+            Log.warn("No Tile found at : " + (bx + cT.x) + ", " + (by + cT.y) + " | bx : " + bx + ", by : " + by, 0);
+            return false;
         }
         t.setBlock(b.block(),unit.team);
         t.build = b;
         b.tile = t;
-        int size = b.block().size;
-        for(int i1 = -Mathf.floor((size - 1) / 2);i1 <= Mathf.floor(size / 2);i1++)
-            for(int i2 = -Mathf.floor((size - 1) / 2);i2 <= Mathf.floor(size / 2);i2++)
+        for(int i1 = min;i1 <= max;i1++)
+            for(int i2 = min;i2 <= max;i2++)
                 Vars.world.tile(t.x + i1,t.y + i2).build = b;
         b.set(t.x * 8 + (b.block().size-1) % 2 * 4,t.y * 8 + (b.block().size-1) % 2 * 4);
-        b.updateProximity();
+        b.created();
+        b.add();
         return true;
     }
 
@@ -159,11 +177,16 @@ public class GridUnitType extends PvUnitType{
             unit.rotation = Math.round(unit.rotation / 90) * 90;
             if (doneBuild.get(unit).get()) {
                 if (doneBuild.get(unit).get()) { //unbuild time
+                    Seq<Building> proxupdate = new Seq<>();
                     for (int i1 = 0; i1 < buildSize; i1++) {
                         for (int i2 = 0; i2 < buildSize; i2++) {
+                            Tile t = grids.get(unit).tile(i1,i2);
+                            if (t.build != null && t.block() != null)
+                                proxupdate.add(t.build);
                             placeFrom(i1, i2, unit, (byte) Math.round(unit.rotation / 90));
                         }
                     }
+                    proxupdate.each(b -> b.updateProximity());
                     doneBuild.get(unit).set(false);
                 }
             }
@@ -176,6 +199,15 @@ public class GridUnitType extends PvUnitType{
                         Tile t = Vars.world.tile(bx+i1,by+i2);
                         if (t != null && t.block() != null)
                             buildAt(i1,i2,unit,t.build, (byte) Math.round(unit.rotation / 90));
+                    }
+                }
+                for(int i1 = 0;i1 < buildSize;i1++) {
+                    for(int i2 = 0;i2 < buildSize;i2++) {
+                        Tile t = Vars.world.tile(bx+i1,by+i2);
+                        if (t.build != null && t.block() != null) {
+                            t.build.onProximityUpdate();
+                            t.build.updateProximity();
+                        }
                     }
                 }
                 doneBuild.get(unit).set(true);

@@ -49,7 +49,7 @@ public class PvUnits {
 
         /*Flying Ion Path*/ particle, snippet, fragment, excerpt, pericope,
 
-        /*Rocket Hover Path*/milli,
+        /*Rocket Hover Path*/milli,centi,
 
         /*Xeal Naval Path*/rivulet,bourn,tributary,loch,atlantic,
 
