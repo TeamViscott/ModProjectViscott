@@ -825,10 +825,11 @@ public class PvTurrets{
             range = 8*12f;
             scaledHealth = 250;
             ammo(
-                    Liquids.water, new BasicBulletType(8, 140){{
+                    Liquids.water, new BasicBulletType(range/20, 140){{
                         trailLength = 20;
                         trailWidth = 2;
-                        trailColor = lightColor = backColor = Pal.redDust;
+                        pierce = true; pierceCap = 1000;
+                        trailColor = lightColor = backColor = Color.valueOf("000000");
                         lifetime = Mathf.ceil(PvUtil.GetRange(this.speed,12));
                         hitSize = 8*1.5f;
                         status = PvStatusEffects.timeWarped;
