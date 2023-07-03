@@ -26,6 +26,7 @@ import mindustry.world.Build;
 import mindustry.world.Tile;
 import mindustry.world.Tiles;
 import mindustry.world.blocks.defense.turrets.Turret;
+import mindustry.world.blocks.distribution.Conveyor;
 import mindustry.world.blocks.environment.AirBlock;
 import mindustry.world.blocks.environment.Floor;
 import mindustry.world.blocks.payloads.BuildPayload;
@@ -89,23 +90,26 @@ public class GridUnitType extends PvUnitType{
                 if (buildArea[y][x] == 0) return false;
                 break;
             case 1:
-                t = gridWorld.tile(cT.y - cy,s- cT.x - cx);
+                t = gridWorld.tile(cT.y - cy,s- (cT.x - cx));
                 if (buildArea[x][y] == 0) return false;
                 break;
             case 2:
-                t = gridWorld.tile(s- cT.x - cx,s- cT.y - cy);
+                t = gridWorld.tile(s- (cT.x - cx),s- (cT.y - cy));
                 if (buildArea[s-y][s-x] == 0) return false;
                 break;
             case 3:
-                t = gridWorld.tile(s- cT.y - cy,cT.x - cx);
+                t = gridWorld.tile(s- (cT.y - cy),cT.x - cx);
                 if (buildArea[s-x][s-y] == 0) return false;
                 break;
         }
+        if (t == null) return false;
         if (building.tile.build == building)
             building.tile.setNet(Blocks.air);
         Vars.world = grids.get(unit);
         t.setBlock(building.block(),unit.team);
         t.build = building;
+        building.rotation -= rotation;
+        building.rotation %= 4;
         building.tile = t;
         int size = building.block().size;
         int min = -Mathf.floor((size - 1) / 2),
@@ -155,6 +159,8 @@ public class GridUnitType extends PvUnitType{
         t.setBlock(b.block(),unit.team);
         t.build = b;
         b.tile = t;
+        b.rotation += rotation;
+        b.rotation %= 4;
         for(int i1 = min;i1 <= max;i1++)
             for(int i2 = min;i2 <= max;i2++)
                 Vars.world.tile(t.x + i1,t.y + i2).build = b;
@@ -316,9 +322,13 @@ public class GridUnitType extends PvUnitType{
                     drawer.drawHeat(turret, tb);
                     drawTurretParts(tb, Dx, Dy);
                 }
-                else {
-                    Draw.rect(build.block().getGeneratedIcons()[0], Dx, Dy, unit.rotation);
+                else if (build instanceof Conveyor.ConveyorBuild cb) {
+                    Draw.rect(build.block().getGeneratedIcons()[0], Dx, Dy, unit.rotation+build.rotation*90);
                 }
+                else {
+                    Draw.rect(build.block().getGeneratedIcons()[0], Dx, Dy, unit.rotation+build.rotation*90);
+                }
+
                 drawed.add(build);
                 Draw.reset();
             }
