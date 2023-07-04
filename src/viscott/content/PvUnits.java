@@ -1798,7 +1798,7 @@ public class PvUnits {
                 mirror = false;
                 ejectEffect = Fx.casing1;
                 recoil = 0f;
-                minWarmup = 0.3f;
+                minWarmup = 0.6f;
                 shootWarmupSpeed = 0.1f;
                 layerOffset = 1f;
                 bullet = new MissileBulletType(3f, 18){{
