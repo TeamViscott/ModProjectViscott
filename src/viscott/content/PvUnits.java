@@ -1767,20 +1767,20 @@ public class PvUnits {
             hovering = true;
             parts.add(
             new HoverPart(){{
-               x = 2f;
-               y = 2f;
+               x = 4f;
+               y = 4f;
                mirror = true;
-               radius = 4f;
+               radius = 8f;
                phase = 60f;
                stroke = 5f;
                layerOffset = -0.001f;
                color = Pal.neoplasmMid;
             }},
             new HoverPart(){{
-                x = -2f;
-                y = -2f;
+                x = -4f;
+                y = -4f;
                 mirror = true;
-                radius = 4;
+                radius = 8;
                 phase = 60f;
                 stroke = 5f;
                 layerOffset = -0.001f;
