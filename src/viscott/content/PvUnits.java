@@ -1767,8 +1767,8 @@ public class PvUnits {
             hovering = true;
             parts.add(
             new HoverPart(){{
-               x = 4f;
-               y = 4f;
+               x = 8f;
+               y = 8f;
                mirror = true;
                radius = 8f;
                phase = 60f;
@@ -1777,8 +1777,8 @@ public class PvUnits {
                color = Pal.neoplasmMid;
             }},
             new HoverPart(){{
-                x = -4f;
-                y = -4f;
+                x = -8f;
+                y = -8f;
                 mirror = true;
                 radius = 8;
                 phase = 60f;
@@ -1789,7 +1789,7 @@ public class PvUnits {
             
 
             weapons.add(new Weapon(name+"-gun"){{
-                reload = 54;
+                reload = 27;
                 x = 0f;
                 shootY = 0f;
                 y = -1f;
@@ -1797,17 +1797,18 @@ public class PvUnits {
                 mirror = false;
                 ejectEffect = Fx.casing1;
                 recoil = 0f;
-                bullet = new MissileBulletType(3f, 18){{
-                    width = 12f;
-                    height = 15f;
+                shoot = new ShootAlternate(0.5f);
+                bullet = new MissileBulletType(3f, 12){{
+                    width = 1f;
+                    height = 4.3f;
                     homingPower = 0.01f;
                     lifetime = PvUtil.GetRange(3,26);
                     trailColor = backColor = lightColor = Pal.neoplasm1;
                     frontColor = Pal.neoplasm2;
-                    trailLength = 24;
+                    trailLength = 12;
                     trailChance = 0.1f;
-                    trailWidth = 1.4f;
-                    splashDamage = 11;
+                    trailWidth = 0.6f;
+                    splashDamage = 6;
                     splashDamageRadius = 10f;
                     ammoMultiplier = 2;
                     despawnEffect = hitEffect = new MultiEffect(Fx.explosion,Fx.smokeCloud);
@@ -1823,8 +1824,8 @@ public class PvUnits {
                     moveY = -0.5f;
                 }},
                 new RegionPart("-barrel-r"){{
-                    progress = PartProgress.recoil.delay(0.2f);
-                    heatProgress = PartProgress.recoil.delay(0.2f);
+                    progress = PartProgress.recoil.delay(27f);
+                    heatProgress = PartProgress.recoil.delay(27f);
                     heatColor = Pal.neoplasm1;
                     mirror = false;
                     under = true;
