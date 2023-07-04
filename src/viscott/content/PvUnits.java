@@ -20,6 +20,7 @@ import mindustry.entities.part.RegionPart;
 import mindustry.entities.part.ShapePart;
 import mindustry.entities.pattern.ShootHelix;
 import mindustry.entities.pattern.ShootSpread;
+import mindustry.entities.pattern.ShootAlternate;
 import mindustry.game.Team;
 import mindustry.gen.EntityMapping;
 import mindustry.gen.Sounds;
