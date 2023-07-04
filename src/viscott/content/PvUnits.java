@@ -1766,27 +1766,27 @@ public class PvUnits {
             faceTarget = true;
             hovering = true;
             parts.add(
-                new HoverPart(){{
-                   x = 2f;
-                   y = 2f;
-                   mirror = true;
-                   radius = 4f;
-                   phase = 60f;
-                   stroke = 5f;
-                   layerOffset = -0.001f;
-                   color = Pal.neoplasmMid;
-                }}; 
-                new HoverPart(){{
-                   x = -2f;
-                   y = -2f;
-                   mirror = true;
-                   radius = 4;
-                   phase = 60f;
-                   stroke = 5f;
-                   layerOffset = -0.001f;
-                   color = Pal.neoplasmMid;
-                }};  
-            );
+            new HoverPart(){{
+               x = 2f;
+               y = 2f;
+               mirror = true;
+               radius = 4f;
+               phase = 60f;
+               stroke = 5f;
+               layerOffset = -0.001f;
+               color = Pal.neoplasmMid;
+            }},
+            new HoverPart(){{
+                x = -2f;
+                y = -2f;
+                mirror = true;
+                radius = 4;
+                phase = 60f;
+                stroke = 5f;
+                layerOffset = -0.001f;
+                color = Pal.neoplasmMid;
+            }});  
+            
 
             weapons.add(new Weapon(name+"-gun"){{
                 reload = 54;
@@ -1819,7 +1819,7 @@ public class PvUnits {
                     under = true;
                     moveX = 0;
                     moveY = -0.5f;
-                }};
+                }},
                 new RegionPart("-barrel-r"){{
                     progress = PartProgress.recoil.delay(0.2);
                     heatProgress = PartProgress.recoil.delay(0.2);
