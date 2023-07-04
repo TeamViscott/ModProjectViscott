@@ -1794,7 +1794,7 @@ public class PvUnits {
                 shootY = 0f;
                 y = -1f;
                 rotate = true;
-                mirror = false:
+                mirror = false;
                 ejectEffect = Fx.casing1;
                 recoil = 0f;
                 bullet = new MissileBulletType(3f, 18){{
