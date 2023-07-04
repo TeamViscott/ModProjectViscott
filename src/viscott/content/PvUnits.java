@@ -1790,11 +1790,13 @@ public class PvUnits {
 
             weapons.add(new Weapon(name+"-gun"){{
                 reload = 54;
-                x = -1f;
+                x = 0f;
                 shootY = 0f;
-                y = 0f;
+                y = -1f;
                 rotate = true;
+                mirror = false:
                 ejectEffect = Fx.casing1;
+                recoil = 0f;
                 bullet = new MissileBulletType(3f, 18){{
                     width = 12f;
                     height = 15f;
