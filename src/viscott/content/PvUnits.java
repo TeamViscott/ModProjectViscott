@@ -1799,6 +1799,7 @@ public class PvUnits {
                 ejectEffect = Fx.casing1;
                 recoil = 0f;
                 minWarmup = 0.3f;
+                shootWarmupSpeed = 0.1f;
                 layerOffset = 1f;
                 bullet = new MissileBulletType(3f, 18){{
                     width = 3f;
@@ -1822,8 +1823,8 @@ public class PvUnits {
                     heatColor = Pal.neoplasm1;
                     mirror = true;
                     under = false;
-                    moveX = -1;
-                    moveY = -0.5f;
+                    moveX = -0.6f;
+                    moveY = -0.6f;
                     moves.add(new PartMove(PartProgress.recoil, 0f, -0.5f, 0f));
                 }});
             }});
