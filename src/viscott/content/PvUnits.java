@@ -1798,7 +1798,7 @@ public class PvUnits {
                 mirror = false;
                 ejectEffect = Fx.casing1;
                 recoil = 0f;
-                shoot = new ShootAlternate(0.5f);
+                shoot = new ShootAlternate(2f);
                 bullet = new MissileBulletType(3f, 12){{
                     width = 1f;
                     height = 4.3f;
@@ -1825,8 +1825,8 @@ public class PvUnits {
                     moveY = -0.5f;
                 }},
                 new RegionPart("-barrel-r"){{
-                    progress = PartProgress.recoil.delay(27f);
-                    heatProgress = PartProgress.recoil.delay(27f);
+                    progress = PartProgress.recoil.delay(26.9f);
+                    heatProgress = PartProgress.recoil.delay(26.9f);
                     heatColor = Pal.neoplasm1;
                     mirror = false;
                     under = true;
