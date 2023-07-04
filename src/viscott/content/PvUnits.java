@@ -1752,7 +1752,7 @@ public class PvUnits {
         centi = new PvUnitType("centi") {{
             localizedName = "Centi";
             constructor = EntityMapping.map("ElevationMoveUnit");
-            speed = 9.8;
+            speed = 9.8f;
             engineOffset = 8;
             drag = 0.13f;
             buildSpeed = 2.2f;
@@ -1821,8 +1821,8 @@ public class PvUnits {
                     moveY = -0.5f;
                 }},
                 new RegionPart("-barrel-r"){{
-                    progress = PartProgress.recoil.delay(0.2);
-                    heatProgress = PartProgress.recoil.delay(0.2);
+                    progress = PartProgress.recoil.delay(0.2f);
+                    heatProgress = PartProgress.recoil.delay(0.2f);
                     heatColor = Pal.neoplasm1;
                     mirror = false;
                     under = true;
