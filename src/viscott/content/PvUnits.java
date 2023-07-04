@@ -49,7 +49,7 @@ public class PvUnits {
 
         /*Flying Ion Path*/ particle, snippet, fragment, excerpt, pericope,
 
-        /*Rocket Hover Path*/milli,centi,
+        /*Rocket Hover Path*/milli,centi,deci,
 
         /*Xeal Naval Path*/rivulet,bourn,tributary,loch,atlantic,
 
@@ -1747,6 +1747,88 @@ public class PvUnits {
                     ammoMultiplier = 2;
                     despawnEffect = hitEffect = new MultiEffect(Fx.explosion,Fx.smokeCloud);
                 }};
+            }});
+        }};
+        centi = new PvUnitType("centi") {{
+            localizedName = "Centi";
+            constructor = EntityMapping.map("ElevationMoveUnit");
+            speed = 9.8;
+            engineOffset = 8;
+            drag = 0.13f;
+            buildSpeed = 2.2f;
+            buildBeamOffset = 0;
+            hitSize = 10f;
+            health = 925;
+            armor = 5;
+            range = 29;
+            accel = 0.4f;
+            rotateSpeed = 3.3f;
+            faceTarget = true;
+            hovering = true;
+            parts.add(
+                new HoverPart(){{
+                   x = 2f;
+                   y = 2f;
+                   mirror = true;
+                   radius = 4f;
+                   phase = 60f;
+                   stroke = 5f;
+                   layerOffset = -0.001f;
+                   color = Pal.neoplasmMid;
+                }}; 
+                new HoverPart(){{
+                   x = -2f;
+                   y = -2f;
+                   mirror = true;
+                   radius = 4;
+                   phase = 60f;
+                   stroke = 5f;
+                   layerOffset = -0.001f;
+                   color = Pal.neoplasmMid;
+                }};  
+            );
+
+            weapons.add(new Weapon(name+"-gun"){{
+                reload = 54;
+                x = -1f;
+                shootY = 0f;
+                y = 0f;
+                rotate = true;
+                ejectEffect = Fx.casing1;
+                bullet = new MissileBulletType(3f, 18){{
+                    width = 12f;
+                    height = 15f;
+                    homingPower = 0.01f;
+                    lifetime = PvUtil.GetRange(3,26);
+                    trailColor = backColor = lightColor = Pal.neoplasm1;
+                    frontColor = Pal.neoplasm2;
+                    trailLength = 24;
+                    trailChance = 0.1f;
+                    trailWidth = 1.4f;
+                    splashDamage = 11;
+                    splashDamageRadius = 10f;
+                    ammoMultiplier = 2;
+                    despawnEffect = hitEffect = new MultiEffect(Fx.explosion,Fx.smokeCloud);
+                }};
+                parts.add(
+                new RegionPart("-barrel-l"){{
+                    progress = PartProgress.recoil;
+                    heatProgress = PartProgress.recoil;
+                    heatColor = Pal.neoplasm1;
+                    mirror = false;
+                    under = true;
+                    moveX = 0;
+                    moveY = -0.5f;
+                }};
+                new RegionPart("-barrel-r"){{
+                    progress = PartProgress.recoil.delay(0.2);
+                    heatProgress = PartProgress.recoil.delay(0.2);
+                    heatColor = Pal.neoplasm1;
+                    mirror = false;
+                    under = true;
+                    moveX = 0;
+                    moveY = -0.5f;
+                }});
             }});
         }};
     }
