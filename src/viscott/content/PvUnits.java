@@ -1790,7 +1790,7 @@ public class PvUnits {
             
 
             weapons.add(new Weapon(name+"-gun"){{
-                reload = 27;
+                reload = 54;
                 x = 0f;
                 shootY = 0f;
                 y = -1f;
@@ -1798,10 +1798,11 @@ public class PvUnits {
                 mirror = false;
                 ejectEffect = Fx.casing1;
                 recoil = 0f;
-                shoot = new ShootAlternate(2f);
-                bullet = new MissileBulletType(3f, 12){{
-                    width = 1f;
-                    height = 4.3f;
+                minWarmup = 0.3f;
+                layerOffset = 1f;
+                bullet = new MissileBulletType(3f, 18){{
+                    width = 3f;
+                    height = 7f;
                     homingPower = 0.01f;
                     lifetime = PvUtil.GetRange(3,26);
                     trailColor = backColor = lightColor = Pal.neoplasm1;
@@ -1809,29 +1810,21 @@ public class PvUnits {
                     trailLength = 12;
                     trailChance = 0.1f;
                     trailWidth = 0.6f;
-                    splashDamage = 6;
+                    splashDamage = 11;
                     splashDamageRadius = 10f;
                     ammoMultiplier = 2;
                     despawnEffect = hitEffect = new MultiEffect(Fx.explosion,Fx.smokeCloud);
                 }};
                 parts.add(
-                new RegionPart("-barrel-l"){{
-                    progress = PartProgress.recoil;
+                new RegionPart("-barrel"){{
+                    progress = PartProgress.warmup;
                     heatProgress = PartProgress.recoil;
                     heatColor = Pal.neoplasm1;
-                    mirror = false;
-                    under = true;
-                    moveX = 0;
+                    mirror = true;
+                    under = false;
+                    moveX = -1;
                     moveY = -0.5f;
-                }},
-                new RegionPart("-barrel-r"){{
-                    progress = PartProgress.recoil.delay(26.9f);
-                    heatProgress = PartProgress.recoil.delay(26.9f);
-                    heatColor = Pal.neoplasm1;
-                    mirror = false;
-                    under = true;
-                    moveX = 0;
-                    moveY = -0.5f;
+                    moves.add(new PartMove(PartProgress.recoil, 0f, -0.5f, 0f));
                 }});
             }});
         }};
