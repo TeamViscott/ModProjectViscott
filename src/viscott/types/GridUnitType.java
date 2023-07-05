@@ -46,7 +46,7 @@ public class GridUnitType extends PvUnitType{
     public HashMap<Unit, World> grids = new HashMap<>();
     public HashMap<Unit,AtomicBoolean> doneBuild = new HashMap<>();
     public int buildSize = 4;
-    public byte[][] buildArea = new byte[buildSize][buildSize];
+    boolean[][] buildArea = new boolean[buildSize][buildSize];
     public GridUnitType(String name)
     {
         super(name);
@@ -74,6 +74,15 @@ public class GridUnitType extends PvUnitType{
         });
         return gridWorld;
     }
+    public void setGridLayout(byte[][] layout) {
+        buildArea = new boolean[layout.length][layout[0].length];
+        for(int i1 = 0;i1 < layout.length;i1++) {
+            for (int i2 = 0;i2 < layout[i1].length;i2++) {
+                buildArea[i1][i2] = layout[i1][i2] > 0;
+            }
+        }
+        buildSize = Math.max(layout.length,layout[0].length);
+    }
     public boolean buildAt(int x, int y, Unit unit, Building building,byte rotation) {
         int cx = Mathf.ceil(unit.x / 8) - buildSize / 2,
                 cy = Mathf.ceil(unit.y / 8) - buildSize / 2;
@@ -84,25 +93,32 @@ public class GridUnitType extends PvUnitType{
         World gridWorld = grids.get(unit);
         Tile cT = building.tile;
         Tile t = gridWorld.tile(0,0);
+        int size = building.block().size;
+        int min = -Mathf.floor((size - 1) / 2),
+                max = Mathf.floor(size / 2);
+        int xMin = min,xMax = max,
+                yMin = min,yMax = max;
         switch(rotation%4) {
             case 0:
                 t = gridWorld.tile(cT.x - cx,cT.y - cy);
-                if (buildArea[y][x] == 0) return false;
+                if (!buildArea[y][x]) return false;
                 break;
             case 1:
                 t = gridWorld.tile(cT.y - cy,s- (cT.x - cx));
-                if (buildArea[x][y] == 0) return false;
+                if (!buildArea[x][y]) return false;
                 break;
             case 2:
                 t = gridWorld.tile(s- (cT.x - cx),s- (cT.y - cy));
-                if (buildArea[s-y][s-x] == 0) return false;
+                if (!buildArea[s-y][s-x]) return false;
                 break;
             case 3:
                 t = gridWorld.tile(s- (cT.y - cy),cT.x - cx);
-                if (buildArea[s-x][s-y] == 0) return false;
+                if (!buildArea[s-x][s-y]) return false;
                 break;
         }
         if (t == null) return false;
+        if (t.x + min < 0 || t.y + min < 0) return false;
+        if (t.x + max >= buildSize || t.y + max >= buildSize) return false;
         if (building.tile.build == building)
             building.tile.setNet(Blocks.air);
         Vars.world = grids.get(unit);
@@ -111,11 +127,8 @@ public class GridUnitType extends PvUnitType{
         building.rotation -= rotation;
         building.rotation %= 4;
         building.tile = t;
-        int size = building.block().size;
-        int min = -Mathf.floor((size - 1) / 2),
-                max = Mathf.floor(size / 2);
-        for(int i1 = min;i1 <= max;i1++)
-            for(int i2 = min;i2 <= max;i2++)
+        for(int i1 = xMin;i1 <= xMax;i1++)
+            for(int i2 = yMin;i2 <= yMax;i2++)
                 Vars.world.tile(t.x + i1,t.y + i2).build = building;
         building.updateProximity();
         Vars.world = curWorld;

@@ -1342,7 +1342,7 @@ public class PvUnits {
             canBoost = true;
             hitSize = 16*8;
             buildSize = 10;
-            buildArea = new byte[][]{
+            setGridLayout(new byte[][]{
                     {0,0,0,0,0,0,0,0,0,0},
                     {0,0,1,1,0,0,0,0,0,0},
                     {0,1,1,1,1,1,0,0,0,0},
@@ -1353,7 +1353,7 @@ public class PvUnits {
                     {0,1,1,1,1,1,0,0,0,0},
                     {0,0,1,1,0,0,0,0,0,0},
                     {0,0,0,0,0,0,0,0,0,0}
-            };
+            });
             healColor = Color.black;
             engineColor = Color.black;
             itemCapacity = 10000;
@@ -1753,7 +1753,7 @@ public class PvUnits {
         centi = new PvUnitType("centi") {{
             localizedName = "Centi";
             constructor = EntityMapping.map("ElevationMoveUnit");
-            speed = 9.8f;
+            speed = 9.8f/7.5f;
             engineOffset = 8;
             drag = 0.13f;
             buildSpeed = 2.2f;
@@ -1761,11 +1761,14 @@ public class PvUnits {
             hitSize = 10f;
             health = 925;
             armor = 5;
-            range = 29;
+            range = 29*8;
             accel = 0.4f;
             rotateSpeed = 3.3f;
-            faceTarget = true;
+            faceTarget = false;
             hovering = true;
+            trailLength = 15;
+            trailScl = 1;
+            trailColor = Pal.neoplasm1;
             parts.add(
             new HoverPart(){{
                x = 8f;
@@ -1799,13 +1802,16 @@ public class PvUnits {
                 ejectEffect = Fx.casing1;
                 recoil = 0f;
                 minWarmup = 0.6f;
+                shoot.shots = 5;
+                shoot.shotDelay = 5;
                 shootWarmupSpeed = 0.1f;
                 layerOffset = 1f;
+                inaccuracy = 1;
                 bullet = new MissileBulletType(3f, 18){{
                     width = 3f;
                     height = 7f;
                     homingPower = 0.01f;
-                    lifetime = 80;
+                    lifetime = PvUtil.GetRange(this.speed,29);
                     trailColor = backColor = lightColor = Pal.neoplasm1;
                     frontColor = Pal.neoplasm2;
                     trailLength = 12;
@@ -1832,7 +1838,7 @@ public class PvUnits {
         deci = new PvUnitType("deci") {{
             localizedName = "Deci";
             constructor = EntityMapping.map("ElevationMoveUnit");
-            speed = 8.5f;
+            speed = 8.5f/7.5f;
             engineOffset = 8;
             drag = 0.13f;
             buildSpeed = 2.2f;
@@ -1840,7 +1846,7 @@ public class PvUnits {
             hitSize = 10f;
             health = 2500;
             armor = 7;
-            range = 34;
+            range = 34*8;
             accel = 0.4f;
             rotateSpeed = 3.3f;
             faceTarget = true;
@@ -1887,8 +1893,9 @@ public class PvUnits {
                     }});
 
 
-            weapons.add(new Weapon(){{
-                reload = 42;
+            weapons.add(
+                    new Weapon(){{
+                reload = 60f/0.7f;
                 x = 0f;
                 shootY = 0f;
                 y = -2f;
@@ -1905,8 +1912,7 @@ public class PvUnits {
                     width = 6f;
                     height = 8f;
                     homingPower = 0.01f;
-                    recoil = 1f;
-                    lifetime = 80;
+                    lifetime = PvUtil.GetRange(this.speed,34);
                     trailColor = backColor = lightColor = Pal.neoplasm1;
                     frontColor = Pal.neoplasm2;
                     trailLength = 12;
@@ -1916,13 +1922,34 @@ public class PvUnits {
                     splashDamageRadius = 10f;
                     ammoMultiplier = 2;
                     despawnEffect = hitEffect = new MultiEffect(Fx.explosion,Fx.smokeCloud);
+                }};
+            }}, new Weapon(){{
+                reload = 60f / 0.7f;
+                minWarmup = 0.9f;
+                x = 0;
+                y = 0;
+                mirror = false;
+                shootWarmupSpeed = 0.1f;
+                bullet = new MissileBulletType(3f,42f) {{
+                    width = 12f;
+                    height = 16f;
+                    homingPower = 0.01f;
+                    lifetime = PvUtil.GetRange(this.speed,34);
+                    trailColor = backColor = lightColor = Pal.neoplasm1;
+                    frontColor = Pal.neoplasm2;
+                    trailLength = 30;
+                    trailChance = 0.1f;
+                    trailWidth = 1.2f;
+                    splashDamage = 20;
+                    splashDamageRadius = 8*1.5f;
+                    despawnEffect = hitEffect = new MultiEffect(Fx.explosion,Fx.smokeCloud);
                     fragBullets = 10;
                     fragBullet = new MissileBulletType(2,12)
                     {{
                         width = 3f;
                         height = 4f;
                         homingPower = 0.01f;
-                        lifetime = 20;
+                        lifetime = PvUtil.GetRange(this.speed,5);
                         trailColor = backColor = lightColor = Pal.neoplasm1;
                         frontColor = Pal.neoplasm2;
                         trailLength = 12;
@@ -1933,7 +1960,8 @@ public class PvUnits {
                         ammoMultiplier = 2;
                     }};
                 }};
-            }});
+                    }}
+            );
         }};
     }
 
