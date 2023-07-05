@@ -1,5 +1,6 @@
 package viscott.types;
 
+import arc.func.Cons;
 import arc.graphics.Color;
 import arc.graphics.g2d.Draw;
 import arc.math.Angles;
@@ -35,6 +36,7 @@ import mindustry.world.blocks.storage.CoreBlock;
 import mindustry.world.draw.DrawBlock;
 import mindustry.world.draw.DrawTurret;
 import viscott.content.PvBlocks;
+import viscott.gen.GridUnit;
 
 import java.io.Writer;
 import java.util.HashMap;
@@ -50,6 +52,7 @@ public class GridUnitType extends PvUnitType{
     public GridUnitType(String name)
     {
         super(name);
+        constructor = GridUnit::new;
     }
 
     @Override
@@ -66,12 +69,13 @@ public class GridUnitType extends PvUnitType{
 
         World gridWorld = new World();
         gridWorld.resize(buildSize,buildSize);
-        gridWorld.loadGenerator(buildSize,buildSize,(tiles) -> {
+        Cons<Tiles> gen = (tiles) -> {
             for(int iy = 0;iy < buildSize;iy++)
                 for(int ix = 0;ix < buildSize;ix++) {
                     tiles.set(ix,iy,new Tile(ix,iy,PvBlocks.densePlate,Blocks.air,Blocks.air));
                 }
-        });
+        };
+        gen.get(gridWorld.tiles);
         return gridWorld;
     }
     public void setGridLayout(byte[][] layout) {

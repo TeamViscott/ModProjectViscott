@@ -1332,7 +1332,6 @@ public class PvUnits {
         {{
             localizedName = "Chamber";
             description = "[#444444]Where the [crimson]End[] Begins...";
-            constructor = EntityMapping.map("quad");
             health = 54200;
             deathExplosionEffect = PvEffects.nullisDeath.get(7);
             factions.add(PvFactions.Nullis);
