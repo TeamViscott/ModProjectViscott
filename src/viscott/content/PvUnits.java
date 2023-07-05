@@ -1805,7 +1805,7 @@ public class PvUnits {
                     width = 3f;
                     height = 7f;
                     homingPower = 0.01f;
-                    lifetime = PvUtil.GetRange(3,26);
+                    lifetime = 80;
                     trailColor = backColor = lightColor = Pal.neoplasm1;
                     frontColor = Pal.neoplasm2;
                     trailLength = 12;
@@ -1827,6 +1827,112 @@ public class PvUnits {
                     moveY = -0.6f;
                     moves.add(new PartMove(PartProgress.recoil, 0f, -0.5f, 0f));
                 }});
+            }});
+        }};
+        deci = new PvUnitType("deci") {{
+            localizedName = "Deci";
+            constructor = EntityMapping.map("ElevationMoveUnit");
+            speed = 8.5f;
+            engineOffset = 8;
+            drag = 0.13f;
+            buildSpeed = 2.2f;
+            buildBeamOffset = 0;
+            hitSize = 10f;
+            health = 2500;
+            armor = 7;
+            range = 34;
+            accel = 0.4f;
+            rotateSpeed = 3.3f;
+            faceTarget = true;
+            hovering = true;
+            parts.add(
+                    new HoverPart(){{
+                        x = -12.7f;
+                        y = -11.5f;
+                        mirror = true;
+                        radius = 10;
+                        phase = 60f;
+                        stroke = 5f;
+                        layerOffset = -0.1f;
+                        color = Pal.neoplasmMid;
+                        //back hovers
+                    }},
+                    new RegionPart("-blade"){{
+                        y = -2.3f;
+                        x = -6.95f;
+                        moveRot = 15f;
+                        under = true;
+                        moves.add(new PartMove(PartProgress.reload, 0f, -1f, 5f));
+                        progress = PartProgress.warmup;
+                        mirror = true;
+
+                        children.add(new RegionPart("-hover"){{
+                            moveX = 2f;
+                            moveY = 2f;
+                            progress = PartProgress.warmup;
+                            under = true;
+
+                            children.add(new HoverPart(){{
+                                x = -6f;
+                                y = 13.5f;
+                                mirror = true;
+                                radius = 10;
+                                phase = 60f;
+                                stroke = 5f;
+                                layerOffset = -0.1f;
+                                color = Pal.neoplasmMid;
+                                //front hovers
+                            }});
+                        }});
+                    }});
+
+
+            weapons.add(new Weapon(){{
+                reload = 42;
+                x = 0f;
+                shootY = 0f;
+                y = -2f;
+                mirror = false;
+                ejectEffect = Fx.casing1;
+                recoil = 0f;
+                minWarmup = 0.9f;
+                shootWarmupSpeed = 0.1f;
+                shoot = new ShootHelix(){{
+                    mag = 2f;
+                    scl = 5f;
+                }};
+                bullet = new MissileBulletType(3f, 42){{
+                    width = 6f;
+                    height = 8f;
+                    homingPower = 0.01f;
+                    recoil = 1f;
+                    lifetime = 80;
+                    trailColor = backColor = lightColor = Pal.neoplasm1;
+                    frontColor = Pal.neoplasm2;
+                    trailLength = 12;
+                    trailChance = 0.1f;
+                    trailWidth = 0.6f;
+                    splashDamage = 11;
+                    splashDamageRadius = 10f;
+                    ammoMultiplier = 2;
+                    despawnEffect = hitEffect = new MultiEffect(Fx.explosion,Fx.smokeCloud);
+                    fragBullets = 10;
+                    fragBullet = new MissileBulletType(2,12)
+                    {{
+                        width = 3f;
+                        height = 4f;
+                        homingPower = 0.01f;
+                        lifetime = 20;
+                        trailColor = backColor = lightColor = Pal.neoplasm1;
+                        frontColor = Pal.neoplasm2;
+                        trailLength = 12;
+                        trailChance = 0.1f;
+                        trailWidth = 0.6f;
+                        splashDamage = 11;
+                        splashDamageRadius = 10f;
+                        ammoMultiplier = 2;
+                    }};
+                }};
             }});
         }};
     }
