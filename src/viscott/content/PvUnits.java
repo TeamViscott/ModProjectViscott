@@ -1,8 +1,11 @@
 package viscott.content;
 
 import arc.graphics.Color;
+import arc.math.Angles;
+import arc.math.Mathf;
 import arc.struct.Seq;
 import arc.util.Reflect;
+import arc.util.Time;
 import mindustry.ai.types.MinerAI;
 import mindustry.content.Fx;
 import mindustry.content.Items;
@@ -24,6 +27,7 @@ import mindustry.entities.pattern.ShootAlternate;
 import mindustry.game.Team;
 import mindustry.gen.EntityMapping;
 import mindustry.gen.Sounds;
+import mindustry.gen.UnitEntity;
 import mindustry.graphics.Layer;
 import mindustry.graphics.Pal;
 import mindustry.type.PayloadStack;
@@ -31,6 +35,8 @@ import mindustry.type.UnitType;
 import mindustry.type.Weapon;
 import mindustry.type.ammo.ItemAmmoType;
 import viscott.abilitys.EnemyStatusFieldAbility;
+import viscott.content.shootpatterns.ShootSpreadBounce;
+import viscott.gen.FrogUnit;
 import viscott.types.BuildUnitType;
 import viscott.types.GridUnitType;
 import viscott.types.NullisUnitType;
@@ -61,7 +67,7 @@ public class PvUnits {
         routerTank, routerBastion, box,blockHost,
 
                 /*BOSSES*/
-                    vdoble,charlie
+                    vdoble,charlie,siede
                 ;
     public static void load()
     {
@@ -1695,6 +1701,71 @@ public class PvUnits {
                                 }};
                             }};
                         }});
+        }};
+        siede = new PvUnitType("siede") {{
+            localizedName = "Siede";
+            description = "A Powerfull Programmer Capable of a Lot of things. his many Attributes are [orange]\n1. Controll Units\n2. Summon Units\n3. Transform into a Tier 5 unit\n4. Use a Shield";
+            Seq<String> detailList = new Seq<>();
+            detailList.addAll(
+                "[gold]Siede[]. the so called [#b]\"Necromaniac\"[] is widely known for his strategic Power.",
+                    "No matter how or when, even a million Flares would falter to this menace of a unit.",
+                    "[orange]The Fallen[] [crimson]close[] to him would just get sucked up and get [purple]Reused[] to help him Fight.",
+                    "Mindless Spamming will not get you anywhere with this Foe. try to have a mix of Weak and Strong units.",
+                    "His [purple]Corruption[] [blue]slowly creeps[] into any [#b]Unit's software[], so be sure that they [orange]Target the Weak[] as to not risk losing the Strong units.",
+                    "[orange]Usual Behaviour Between Factions : ",
+                    "[green]Allianced Factions : []Nullis , Psy",
+                    "[red]Enemy Factions : []Xeal, Mortakei, Azulex"
+            );
+            StringBuilder sb = new StringBuilder();
+            detailList.each(cs -> sb.append(cs+"\n"));
+            sb.replace(sb.length()-1,sb.length(),"");
+            details = sb.toString();
+            constructor = FrogUnit::new;
+            flying = true;
+            engineColor = Color.black;
+            health = 40000;
+            armor = 6;
+            range = 38*8;
+            weapons.add(
+                    new Weapon() {{
+                        reload = 60/0.8f;
+                        mirror = false;
+                        shoot = new ShootSpreadBounce(10,2,2);
+                        shoot.shotDelay = 1;
+                        x = 0;
+                        y = 0;
+                        bullet = new MissileBulletType(8,24) {{
+                            backColor = lightColor = trailColor = Pal.reactorPurple;
+                            frontColor = Pal.reactorPurple2;
+                            lifetime = PvUtil.GetRange(this.speed,38);
+                            trailLength = 60;
+                            trailWidth = 1;
+                            homingPower = 0;
+                            despawnEffect = hitEffect = Fx.absorb;
+
+                        }};
+                    }}
+            );
+            float swingTime = 60;
+            parts.addAll(
+                    new RegionPart("-l1") {{
+                        progress = p -> Mathf.cos(Time.time/swingTime)/2+0.5f;
+                        mirror = true;
+                        moveY = -4;
+                    }},
+                    new RegionPart("-l2") {{
+                        progress = p -> Mathf.sin(Time.time/swingTime)/2+0.5f;
+                        mirror = true;
+                        moveY = -4;
+                    }},
+                    new RegionPart("-arm") {{
+                        progress = PartProgress.smoothReload;
+                        moveY = -2;
+                        moveX = -6;
+                        moveRot = 8;
+                        mirror = true;
+                    }}
+            );
         }};
     }
     public static void loadRocketHoverPath() {

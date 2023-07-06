@@ -13,7 +13,7 @@ import viscott.world.statusEffects.*;
 public class PvStatusEffects {
     public static StatusEffect
     timeWarped,doused, disabled, expent, resiliant, ungratefull, crescendo ,tick ,tock,mend,shield, malfunction,
-    voidShield,voidDecay,frag,aoe,homing
+    voidShield,voidDecay,frag,aoe,homing,memoryExchange
             ;
     public static void load() {
         timeWarped = new StatusEffectStack("time-warped") {{
@@ -174,6 +174,10 @@ public class PvStatusEffects {
             homingRange = 8*15;
             homingPower = 0.05f;
             homingDelay = 0;
+        }};
+        memoryExchange = new CurseStatusEffect("memory-exchange"){{
+            localizedName = "[#b]Memory Exchange";
+            description = "Please do not destroy Unit durring this Exchange";
         }};
     }
 }

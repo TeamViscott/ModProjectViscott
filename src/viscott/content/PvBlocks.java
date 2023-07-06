@@ -885,6 +885,7 @@ public class PvBlocks {
                     warmupEffect = PvEffects.surgeSpawn;
                     spawnEffect = Fx.greenBomb;
                 }};
+                if (false) // NO. This is not the way to go.
                 voidLink = new NullisCore("void-link")
                 {{
                     requirements(Category.effect,with(PvItems.zirconium,80,PvItems.lithium,50,PvItems.platinum,40));
