@@ -25,7 +25,7 @@ public class PvEffects {
         slowEnergeticEffect, particleDeath1,particleDeath2,particleDeath3,
             railFrag,waveBulletFalerica,waveBulletJavelin,
 
-            quadRushCraft,surgeSpawn
+            quadRushCraft,surgeSpawn,siedeSummon
             ;
     public static Seq<Effect> nullisDeath = new Seq<>();
     public static void load()
@@ -125,6 +125,17 @@ public class PvEffects {
             Lines.square(e.x,e.y,e.fout()*18+6,e.fout()*360);
             Draw.color(col);
             Fill.circle(e.x,e.y,e.fin()*8);
+        });
+        siedeSummon = new Effect(120,e-> {
+            float waves = 1;
+            float size = 8;
+            float wave = Math.abs(Mathf.sin(e.fin()*waves*Mathf.pi));
+            Draw.z(Layer.effect);
+            Draw.color(Color.gray);
+            Fill.circle(e.x,e.y,wave*size+1);
+            Draw.color(Team.green.color);
+            Fill.circle(e.x,e.y,wave*size);
+            Draw.reset();
         });
     }
 

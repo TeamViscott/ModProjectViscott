@@ -1727,11 +1727,13 @@ public class PvUnits {
             engineColor = Color.black;
             health = 40000;
             armor = 6;
-            range = 38*8;
             hitSize = 8*2;
             buildSpeed = 1;
             buildBeamOffset = 12;
-            abilities.add(new EnemyStatusFieldAbility(PvStatusEffects.memoryExchange,180,120,16*8));
+            abilities.add(
+                    new EnemyStatusFieldAbility(PvStatusEffects.memoryExchange,180,120,16*8),
+                    new VoidAbility(8*4)
+            );
             weapons.add(
                     new Weapon() {{
                         reload = 60/0.8f;
@@ -1778,7 +1780,12 @@ public class PvUnits {
                         mirror = true;
                     }}
             );
-        }};
+        }
+            @Override public void init() {
+                super.init();
+                range = 8*14;
+            }
+        };
     }
     public static void loadRocketHoverPath() {
         milli = new PvUnitType("milli") {{
