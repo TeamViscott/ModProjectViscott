@@ -113,7 +113,7 @@ public class FrogUnit extends UnitEntity {
                 Tile t = Vars.world.tile(Mathf.floor(curX/8),Mathf.floor(curY/8));
                 UnitType selected = fleetUnits.random();
                 if (t==null || t.solid())
-                    while (!selected.flying) selected = transformList.random();
+                    while (!selected.flying) selected = fleetUnits.random();
                 Unit u = selected.spawn(team,curX,curY);
                 summonEffect.at(curX,curY);
                 u.shield = u.maxHealth;
