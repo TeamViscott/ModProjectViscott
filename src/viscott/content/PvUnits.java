@@ -1731,7 +1731,7 @@ public class PvUnits {
             hitSize = 8*2;
             buildSpeed = 1;
             buildBeamOffset = 12;
-            abilities.add(new EnemyStatusFieldAbility(PvStatusEffects.memoryExchange,180,60,16*8));
+            abilities.add(new EnemyStatusFieldAbility(PvStatusEffects.memoryExchange,180,120,16*8));
             weapons.add(
                     new Weapon() {{
                         reload = 60/0.8f;
@@ -2312,6 +2312,7 @@ public class PvUnits {
                 shootY = 2f;
                 hitSize = 2*8;
                 inaccuracy = 3;
+                layerOffset = 0.001f;
                 y = -12f;
                 recoil = 2;
                 rotate = true;
@@ -2322,7 +2323,7 @@ public class PvUnits {
                 new RegionPart("-blade"){{
                     moveRot = -10f;
                     moveY = -1f;
-                    under = false;
+                    outline = true;
                     moves.add(new PartMove(PartProgress.reload, 0f, -0.5f, -10f));
                     progress = PartProgress.warmup;
                     mirror = true;
@@ -2367,6 +2368,7 @@ public class PvUnits {
                 y = 4f;
                 recoil = 2;
                 rotate = true;
+                layerOffset = 0.001f;
                 mirror = true;
                 top = true;
                 ejectEffect = Fx.casing1;
@@ -2374,7 +2376,7 @@ public class PvUnits {
                 new RegionPart("-blade"){{
                     moveRot = -10f;
                     moveY = -1f;
-                    under = false;
+                    outline = true;
                     moves.add(new PartMove(PartProgress.reload, 0f, -0.5f, -10f));
                     progress = PartProgress.warmup;
                     mirror = true;
