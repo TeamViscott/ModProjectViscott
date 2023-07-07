@@ -68,7 +68,7 @@ public class FrogUnit extends UnitEntity {
         }
 
         if(summonCharges > 0) {
-            if (isShooting() && wantsToSummon) {
+            if (isShooting() && !hideUnit && wantsToSummon) {
                 summonFleet();
                 summonCharges--;
                 wantsToSummon = false;
