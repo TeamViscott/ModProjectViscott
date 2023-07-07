@@ -1706,7 +1706,7 @@ public class PvUnits {
         }};
         siede = new PvUnitType("siede") {{
             localizedName = "Siede";
-            description = "A Powerfull Programmer Capable of a Lot of things. his many Attributes are [orange]\n1. Controll Units\n2. Summon Units\n3. Transform into a Tier 5 unit\n4. Use a Shield";
+            description = "A Powerful Programmer Capable of doing a lot of things. His many Attributes are [orange]\n1. Control Units\n2. Summon Units\n3. Transform into a Tier 5 unit\n4. Use a Shield";
             Seq<String> detailList = new Seq<>();
             detailList.addAll(
                 "[gold]Siede[]. the so called [#b]\"Necromaniac\"[] is widely known for his strategic Power.",
@@ -1716,7 +1716,7 @@ public class PvUnits {
                     "His [purple]Corruption[] [blue]slowly creeps[] into any [#b]Unit's software[], so be sure that they [orange]Target the Weak[] as to not risk losing the Strong units.",
                     "[orange]Usual Behaviour Between Factions : ",
                     "[green]Allianced Factions : []Nullis , Psy",
-                    "[red]Enemy Factions : []Xeal, Mortakei, Azulex"
+                    "[red]Enemy Factions : []Xeal, Mortikai, Azulex"
             );
             StringBuilder sb = new StringBuilder();
             detailList.each(cs -> sb.append(cs+"\n"));
