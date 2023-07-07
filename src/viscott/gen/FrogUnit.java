@@ -12,6 +12,8 @@ import arc.math.Mathf;
 import arc.struct.Seq;
 import arc.util.Time;
 import arc.util.Timer;
+import arc.util.io.Reads;
+import arc.util.io.Writes;
 import mindustry.Vars;
 import mindustry.ai.types.FlyingAI;
 import mindustry.content.Fx;
@@ -136,5 +138,21 @@ public class FrogUnit extends UnitEntity {
         super.draw();
         if (!canTransform)
             forcePhaseTwo.draw(this);
+    }
+
+    @Override
+    public void write(Writes write) {
+        super.write(write);
+        write.bool(canTransform);
+        write.bool(wantsToSummon);
+        write.b((byte)summonCharges);
+    }
+
+    @Override
+    public void read(Reads reads) {
+        super.read(reads);
+        canTransform = reads.bool();
+        wantsToSummon = reads.bool();
+        summonCharges = reads.b();
     }
 }

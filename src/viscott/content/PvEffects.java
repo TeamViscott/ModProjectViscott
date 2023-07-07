@@ -128,7 +128,7 @@ public class PvEffects {
         });
         siedeSummon = new Effect(120,e-> {
             float waves = 1;
-            float size = 8;
+            float size = 24;
             float wave = Math.abs(Mathf.sin(e.fin()*waves*Mathf.pi));
             Draw.z(Layer.effect);
             Draw.color(Color.gray);
