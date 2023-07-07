@@ -26,10 +26,7 @@ import mindustry.entities.pattern.ShootHelix;
 import mindustry.entities.pattern.ShootSpread;
 import mindustry.entities.pattern.ShootAlternate;
 import mindustry.game.Team;
-import mindustry.gen.EntityMapping;
-import mindustry.gen.Sounds;
-import mindustry.gen.Unit;
-import mindustry.gen.UnitEntity;
+import mindustry.gen.*;
 import mindustry.graphics.Layer;
 import mindustry.graphics.Pal;
 import mindustry.type.PayloadStack;
@@ -69,7 +66,10 @@ public class PvUnits {
         routerTank, routerBastion, box,blockHost,
 
                 /*BOSSES*/
-                    vdoble,charlie,siede
+                    charlie,
+                    vdoble,
+                        siede,
+                        frire, /*swarm mini extra*/lilshts
                 ;
     public static void load()
     {
@@ -1705,7 +1705,7 @@ public class PvUnits {
                         }});
         }};
         siede = new PvUnitType("siede") {{
-            localizedName = "Siede";
+            localizedName = "[orange]Sie[red]de[][]";
             description = "A Powerful Programmer Capable of doing a lot of things. His many Attributes are [orange]\n1. Control Units\n2. Summon Units\n3. Transform into a Tier 5 unit\n4. Use a Shield";
             Seq<String> detailList = new Seq<>();
             detailList.addAll(
@@ -1786,6 +1786,27 @@ public class PvUnits {
                 range = 8*14;
             }
         };
+        frire = new PvUnitType("frire") {{
+            localizedName = "FrireDragon";
+            health = 230000;
+            armor = 20;
+            constructor = EntityMapping.map("CrawlUnit");
+            segments = 3;
+            hitSize = 8*4;
+            omniMovement = false;
+            drawCell = false;
+            drawBody = false;
+        }};
+        lilshts = new PvUnitType("lilshts") {{
+            health = 650;
+            armor = 40;
+            localizedName = "Frire's personal Lil Sh[#b]*[]ts";
+            constructor = EntityMapping.map("CrawlUnit");
+            segments = 3;
+            omniMovement = false;
+            drawCell = false;
+            drawBody = false;
+        }};
     }
     public static void loadRocketHoverPath() {
         milli = new PvUnitType("milli") {{
