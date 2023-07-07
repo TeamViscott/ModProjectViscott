@@ -1815,7 +1815,7 @@ public class PvUnits {
                 y = 0f;
                 rotate = true;
                 ejectEffect = Fx.casing1;
-                bullet = new BasicBulletType(3f, 14){{
+                bullet = new BasicBulletType(3f, 28){{
                     width = 12f;
                     height = 15f;
                     homingPower = 0.01f;
@@ -1825,7 +1825,7 @@ public class PvUnits {
                     trailLength = 24;
                     trailChance = 0.1f;
                     trailWidth = 1.4f;
-                    splashDamage = 15;
+                    splashDamage = 30;
                     splashDamageRadius = 8*1.5f;
                     ammoMultiplier = 2;
                     despawnEffect = hitEffect = new MultiEffect(Fx.explosion,Fx.smokeCloud);
@@ -1990,7 +1990,7 @@ public class PvUnits {
                     mag = 2f;
                     scl = 5f;
                 }};
-                bullet = new MissileBulletType(3f, 42){{
+                bullet = new MissileBulletType(3f, 84){{
                     width = 6f;
                     height = 8f;
                     homingPower = 0.01f;
@@ -2000,7 +2000,7 @@ public class PvUnits {
                     trailLength = 12;
                     trailChance = 0.1f;
                     trailWidth = 0.6f;
-                    splashDamage = 11;
+                    splashDamage = 22;
                     splashDamageRadius = 10f;
                     ammoMultiplier = 2;
                     despawnEffect = hitEffect = new MultiEffect(Fx.explosion,Fx.smokeCloud);
@@ -2012,7 +2012,7 @@ public class PvUnits {
                 y = 0;
                 mirror = false;
                 shootWarmupSpeed = 0.1f;
-                bullet = new MissileBulletType(3f,42f) {{
+                bullet = new MissileBulletType(3f,84f) {{
                     width = 12f;
                     height = 16f;
                     homingPower = 0.01f;
@@ -2022,11 +2022,11 @@ public class PvUnits {
                     trailLength = 30;
                     trailChance = 0.1f;
                     trailWidth = 1.2f;
-                    splashDamage = 20;
+                    splashDamage = 40;
                     splashDamageRadius = 8*1.5f;
                     despawnEffect = hitEffect = new MultiEffect(Fx.explosion,Fx.smokeCloud);
                     fragBullets = 10;
-                    fragBullet = new MissileBulletType(2,12)
+                    fragBullet = new MissileBulletType(2,24)
                     {{
                         width = 3f;
                         height = 4f;
@@ -2037,7 +2037,7 @@ public class PvUnits {
                         trailLength = 12;
                         trailChance = 0.1f;
                         trailWidth = 0.6f;
-                        splashDamage = 11;
+                        splashDamage = 22;
                         splashDamageRadius = 10f;
                         ammoMultiplier = 2;
                     }};
@@ -2077,7 +2077,7 @@ public class PvUnits {
                 y = 0f;
                 rotate = true;
                 ejectEffect = Fx.casing1;
-                bullet = new BasicBulletType(3f, 6){{
+                bullet = new BasicBulletType(3f, 12){{
                     width = 7f;
                     height = 9f;
                     lifetime = PvUtil.GetRange(3,19);
@@ -2123,7 +2123,7 @@ public class PvUnits {
                 mirror = false;
                 top = true;
                 ejectEffect = Fx.casing1;
-                bullet = new BasicBulletType(3f, 23){{
+                bullet = new BasicBulletType(3f, 46){{
                     width = 7f;
                     height = 9f;
                     lifetime = PvUtil.GetRange(3,22);
@@ -2327,7 +2327,7 @@ public class PvUnits {
                     progress = PartProgress.warmup;
                     mirror = true;
                 }});
-                bullet = new BasicBulletType(3f, 72){{
+                bullet = new BasicBulletType(3f, 144){{
                     width = 12f;
                     height = 15f;
                     lifetime = PvUtil.GetRange(3,34);
@@ -2379,7 +2379,7 @@ public class PvUnits {
                     progress = PartProgress.warmup;
                     mirror = true;
                 }});
-                bullet = new BasicBulletType(3f, 72){{
+                bullet = new BasicBulletType(3f, 144){{
                     width = 12f;
                     height = 15f;
                     lifetime = PvUtil.GetRange(3,34);
