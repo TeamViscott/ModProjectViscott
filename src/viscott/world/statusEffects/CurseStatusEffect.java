@@ -26,8 +26,10 @@ public class CurseStatusEffect extends PvStatusEffect{
                 });
                 removeUnits.each(u -> {
                     cursedUnits.remove(u);
-                    if (!u.isValid() && !deadCursed.contains(u))
+                    if (!u.isValid() && !deadCursed.contains(u)) {
                         deadCursed.add(u);
+                        u.remove();
+                    }
                 });
             }
         });

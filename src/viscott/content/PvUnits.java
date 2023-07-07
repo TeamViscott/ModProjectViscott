@@ -1,5 +1,6 @@
 package viscott.content;
 
+import arc.func.Prov;
 import arc.graphics.Color;
 import arc.math.Angles;
 import arc.math.Mathf;
@@ -27,6 +28,7 @@ import mindustry.entities.pattern.ShootAlternate;
 import mindustry.game.Team;
 import mindustry.gen.EntityMapping;
 import mindustry.gen.Sounds;
+import mindustry.gen.Unit;
 import mindustry.gen.UnitEntity;
 import mindustry.graphics.Layer;
 import mindustry.graphics.Pal;
@@ -1726,6 +1728,10 @@ public class PvUnits {
             health = 40000;
             armor = 6;
             range = 38*8;
+            hitSize = 8*2;
+            buildSpeed = 1;
+            buildBeamOffset = 12;
+            abilities.add(new EnemyStatusFieldAbility(PvStatusEffects.memoryExchange,180,60,16*8));
             weapons.add(
                     new Weapon() {{
                         reload = 60/0.8f;
@@ -1740,8 +1746,14 @@ public class PvUnits {
                             lifetime = PvUtil.GetRange(this.speed,38);
                             trailLength = 60;
                             trailWidth = 1;
+                            pierceCap = 3;
+                            weaveMag = 1;
+                            weaveScale = 1;
+                            weaveRandom = true;
                             homingPower = 0;
                             despawnEffect = hitEffect = Fx.absorb;
+                            status = StatusEffects.corroded;
+                            statusDuration = 90;
 
                         }};
                     }}

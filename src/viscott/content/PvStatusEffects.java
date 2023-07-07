@@ -4,6 +4,7 @@ import arc.graphics.Color;
 import mindustry.content.Fx;
 import mindustry.entities.bullet.BasicBulletType;
 import mindustry.entities.bullet.BulletType;
+import mindustry.entities.effect.MultiEffect;
 import mindustry.game.Team;
 import mindustry.graphics.Pal;
 import mindustry.type.StatusEffect;
@@ -13,7 +14,7 @@ import viscott.world.statusEffects.*;
 public class PvStatusEffects {
     public static StatusEffect
     timeWarped,doused, disabled, expent, resiliant, ungratefull, crescendo ,tick ,tock,mend,shield, malfunction,
-    voidShield,voidDecay,frag,aoe,homing,memoryExchange
+    voidShield,voidDecay,frag,aoe,homing,memoryExchange,dataLeak
             ;
     public static void load() {
         timeWarped = new StatusEffectStack("time-warped") {{
@@ -177,7 +178,20 @@ public class PvStatusEffects {
         }};
         memoryExchange = new CurseStatusEffect("memory-exchange"){{
             localizedName = "[#b]Memory Exchange";
-            description = "Please do not destroy Unit durring this Exchange";
+            description = "When cast uppon a Unit, when the Unit is killed while this effect is active their Data gets picked up by [purple]Siede";
+            details = "[red]Please do not destroy Unit durring this Exchange";
+            effect = new MultiEffect(Fx.despawn,Fx.freezing,Fx.lava);
+            effectChance = 0.1f;
+        }};
+        dataLeak = new StatusEffect("data-leak") {{
+            localizedName = "[purple]Data Leak";
+            description = "The Rebuilding of the Unit with [#b]Broken Data[] has led to the unit's Data to constantly Leak.";
+            details = "[purple]Balancing Goes Brrr....";
+            permanent = true;
+            damage = 25f/60f;
+            damageMultiplier = 0.8f;
+            effect = Fx.sapped;
+            effectChance = 0.2f;
         }};
     }
 }

@@ -4,6 +4,7 @@ import arc.scene.ui.layout.Table;
 import arc.util.Timer;
 import mindustry.Vars;
 import mindustry.content.Blocks;
+import mindustry.content.StatusEffects;
 import mindustry.content.UnitTypes;
 import mindustry.gen.LogicIO;
 import mindustry.gen.Musics;
@@ -20,6 +21,8 @@ public class PvVanillaChanges {
         UnitTypes.latum.hidden = false;
         UnitTypes.renale.hidden = false;
         ((HeatProducer)Blocks.heatSource).heatOutput = 100000;
+        StatusEffects.corroded.localizedName = "Corroded";
+        StatusEffects.corroded.show = true;
 
         
     }

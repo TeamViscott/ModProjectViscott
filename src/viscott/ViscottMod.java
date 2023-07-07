@@ -49,6 +49,7 @@ public class ViscottMod extends Mod {
     @Override
     public void loadContent(){
         Log.info("Loading PV content");
+        PvUnitMapper.load();
         PvMusics.load();
         PvLogic.load();
         PvFactions.load();

@@ -1,6 +1,7 @@
 package viscott.types;
 
 import arc.struct.Seq;
+import mindustry.io.SaveIO;
 import mindustry.type.Item;
 import mindustry.type.ItemStack;
 import mindustry.type.UnitType;

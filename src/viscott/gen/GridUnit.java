@@ -15,6 +15,11 @@ public class GridUnit extends MechUnit {
     }
 
     @Override
+    public int classId() {
+        return 151;
+    }
+
+    @Override
     public void read(Reads read) {
         super.read(read);
     }
