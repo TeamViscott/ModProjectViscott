@@ -725,6 +725,10 @@ public class PvBlocks {
                         new PvUnitPlan(PvUnits.particle,10*60f,with(PvItems.lithium,20,Items.silicon,10),airTempT1),
                         new PvUnitPlan(PvUnits.snippet,25*60f,with(PvItems.lithium,50,Items.silicon,25,PvItems.nobelium,10),airTempT2),
                         new PvUnitPlan(PvUnits.fragment,35*60f,with(PvItems.lithium,80,Items.silicon,50,PvItems.nobelium,20,PvItems.carbonFiber,10),airTempT3),
+                        //Hover Path
+                            new PvUnitPlan(PvUnits.milli,10*60f,with(PvItems.zirconium,160,Items.silicon,60)),
+                            new PvUnitPlan(PvUnits.centi,25*60f,with(PvItems.zirconium,400,Items.silicon,150,PvItems.erbium,80)),
+                            new PvUnitPlan(PvUnits.deci,35*60f,with(PvItems.zirconium,1000,Items.silicon,500,PvItems.erbium,320,PvItems.platinum,180)),
                         //Container Path
                         new PvUnitPlan(PvUnits.pocket,10*60f,with(PvItems.zirconium,40,PvItems.lithium,20)),
                         new PvUnitPlan(PvUnits.container,25*60f,with(PvItems.zirconium,100,PvItems.lithium,50,Items.silicon,20)),
