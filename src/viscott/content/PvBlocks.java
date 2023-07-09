@@ -87,6 +87,7 @@ public class PvBlocks {
                             /*Nullis*/harvestor,
                     /*Production*/siliconMassForge,particalAccelerator, keroseneMixer, carbonWeaver,
                             fractionIonizer,nitrogenDistiller,quadRushForge,
+                            /*Xeal*/cascadeForge,
                             /*Mortikai*/uberbulkForge,
 
                     /*Heaters*/keroseneHeater,blastHeater, hybridHeater, xeroPointHeater,
