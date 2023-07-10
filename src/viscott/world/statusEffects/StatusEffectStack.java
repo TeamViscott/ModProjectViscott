@@ -56,27 +56,27 @@ public class StatusEffectStack extends PvStatusEffect {
             stats.add(PvStats.newTeam,newTeam.emoji+" "+newTeam.name);
         if(statsStatic.get(0) != 1) {
             stats.addPercent(Stat.damageMultiplier, statsStatic.get(0));
-            if (charges != 1)stats.addPercent(PvStats.maxDamageMultiplier, 1+(statsStatic.get(0)-1)*charges);
+            if (charges != 1)stats.addPercent(PvStats.maxDamageMultiplier, Mathf.round(1+(statsStatic.get(0)-1)*charges,0.01f));
         }
         if(statsStatic.get(1) != 1) {
             stats.addPercent(Stat.healthMultiplier, statsStatic.get(1));
-            if (charges != 1)stats.addPercent(PvStats.maxHealthMultiplier, 1+(statsStatic.get(1)-1)*charges);
+            if (charges != 1)stats.addPercent(PvStats.maxHealthMultiplier, Mathf.round(1+(statsStatic.get(1)-1)*charges,0.01f));
         }
         if(statsStatic.get(2) != 1) {
             stats.addPercent(Stat.speedMultiplier, statsStatic.get(2));
-            if (charges != 1)stats.addPercent(PvStats.maxSpeedMultiplier, 1+(statsStatic.get(2)-1)*charges);
+            if (charges != 1)stats.addPercent(PvStats.maxSpeedMultiplier, Mathf.round(1+(statsStatic.get(2)-1)*charges,0.01f));
         }
         if(statsStatic.get(3) != 1) {
             stats.addPercent(Stat.reloadMultiplier, statsStatic.get(3));
-            if (charges != 1)stats.addPercent(PvStats.maxReloadSpeedMultiplier, 1+(statsStatic.get(3)-1)*charges);
+            if (charges != 1)stats.addPercent(PvStats.maxReloadSpeedMultiplier, Mathf.round(1+(statsStatic.get(3)-1)*charges,0.01f));
         }
         if(statsStatic.get(4) != 1) {
             stats.addPercent(Stat.buildSpeedMultiplier, statsStatic.get(4));
-            if (charges != 1)stats.addPercent(PvStats.maxBuildSpeedMultiplier, 1+(statsStatic.get(4)-1)*charges);
+            if (charges != 1)stats.addPercent(PvStats.maxBuildSpeedMultiplier, Mathf.round(1+(statsStatic.get(4)-1)*charges,0.01f));
         }
         if(statsStatic.get(4) != 1) {
             stats.addPercent(PvStats.dragMultiplier, statsStatic.get(5));
-            if (charges != 1)stats.addPercent(PvStats.maxDragMultiplier, 1+(statsStatic.get(5)-1)*charges);
+            if (charges != 1)stats.addPercent(PvStats.maxDragMultiplier, Mathf.round(1+(statsStatic.get(5)-1)*charges,0.01f));
         }
 
         if(damage > 0) {

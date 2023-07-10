@@ -64,11 +64,11 @@ public class PvStatusEffects {
         resiliant = new StatusEffectStack("resiliant") {{
             localizedName = "Resiliant";
             description = "The Lava on you is cooling off jamming your Weapons but allowing bigger resistance to Damage.";
-            reloadMultiplier = 0.99f;
-            dragMultiplier = 0.99f;
+            reloadMultiplier = 0.999f;
+            dragMultiplier = 0.999f;
             healthMultiplier = 1.01f;
-            speedMultiplier = 0.99f;
-            charges = 10;
+            speedMultiplier = 0.999f;
+            charges = 100;
             staticStat();
         }};
         ungratefull = new StatusEffectStack("ungratefull") {{

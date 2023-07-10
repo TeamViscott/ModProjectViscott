@@ -78,17 +78,21 @@ public class BulkUnitFactory extends Reconstructor {
     }
 
     public void buildStats(Table t, UnitFactory.UnitPlan plan) {
-        t.background(Tex.whiteui);
-        t.setColor(Pal.darkestGray);
+        Table cT = new Table();
+        cT.background(Tex.whiteui);
+        cT.setColor(Pal.darkestGray);
+        cT.image(plan.unit.region).size(32).tooltip("output").left();
+        cT.add("[lightgrey] "+(plan.time/60) + " seconds ");
+        cT.image(Icon.left).size(32).padRight(8f).left();
         if (plan instanceof PvUnitPlan pvPlan) {
             if (pvPlan.template != null)
-                t.image(pvPlan.template.region).size(32).tooltip("template").padRight(8f);
+                cT.image(pvPlan.template.region).size(32).tooltip("template").right().padRight(8f);
         }
         for(ItemStack is : plan.requirements) {
-            t.add(new ItemDisplay(is.item, is.amount, plan.time, true)).padRight(5);
+            cT.add(new ItemDisplay(is.item, is.amount, plan.time, false)).right();
         }
-        t.image(Icon.right).size(32).padRight(8f);
-        t.image(plan.unit.region).size(32).tooltip("output");
+        t.row();
+        t.add(cT).left();
         t.row();
     }
 
