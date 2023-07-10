@@ -11,13 +11,13 @@ public class PvFactions {
     public static void load()
     {
         Xeal = new PvFaction("xeal", Color.valueOf("#57d87e")) {{
-            description = "A powerfull Faction with a lot of defensive and offensive potential.";
+            description = "A faction with an incredible Technological Advantage";
         }};
         Mortikai = new PvFaction("mortikai",Color.valueOf("#811f1f")){{
-            description = "The Technological Advantage has given this Faction an edge above all other Factions.";
+            description = "This faction has solely centered in offense and defense since ancient times. They are specified in defense in a different way than psy";
         }};
         Azulex = new PvFaction("azulex",Color.valueOf("#5a56f1")){{
-            description = "No Description Provided - Azulex";
+            description = "Azulex is a faction that has learnt to bend liquids and transport them with ease.";
         }};
         Nullis = new PvFaction("nullis",Color.valueOf("#ffffff")){{
             description = "Having found a way to extract value from Black Holes made them an unstable Faction.";
@@ -27,7 +27,7 @@ public class PvFactions {
                     "with every Unit in Nullis using a microscopical black hole as their core.";
         }};
         Psy = new PvFaction("psy",Color.valueOf("#e892d1")){{
-            description = "No Description Provided - Psy";
+            description = "The Psy faction has been able to create extremely powerful shields and walls. They are specified in defense in a different way than mortikai";
         }};
     }
 }

@@ -44,13 +44,13 @@ public class FrogUnit extends UnitEntity {
     public float necroRange = 16;
 
     boolean canTransform = true;
-    Seq<UnitType> transformList = Seq.with(UnitTypes.reign,UnitTypes.corvus,UnitTypes.toxopid,UnitTypes.eclipse);
+    Seq<UnitType> transformList = Seq.with(UnitTypes.reign,UnitTypes.corvus,UnitTypes.toxopid,UnitTypes.eclipse, PvUnits.pericope);
     Unit transformedUnit;
     boolean hideUnit = false;
     int fleetSize = 18;
     Seq<UnitType> fleetUnits = Seq.with(
-            PvUnits.particle,PvUnits.snippet,PvUnits.fragment,
-            PvUnits.milli,PvUnits.centi,PvUnits.deci
+            PvUnits.snippet,PvUnits.fragment, PvUnits.excerpt,
+            PvUnits.centi,PvUnits.deci, PvUnits.deci // duplicate is intended to increase chance
     );
     float summonCharges = 2;
     boolean wantsToSummon = true;
@@ -78,8 +78,9 @@ public class FrogUnit extends UnitEntity {
         if (canTransform) {
             if (health < maxHealth / 2) {
                 UnitType selected = transformList.random();
-                if (tileOn().solid())
+                if (tileOn().solid()) {
                     while (!selected.flying) selected = transformList.random();
+                }
                 transformedUnit = selected.spawn(team, x, y);
                 transformedUnit.health /= 2;
                 hideUnit = true;

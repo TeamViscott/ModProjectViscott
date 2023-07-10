@@ -17,6 +17,7 @@ import mindustry.entities.abilities.StatusFieldAbility;
 import mindustry.entities.bullet.*;
 import mindustry.entities.effect.ExplosionEffect;
 import mindustry.entities.effect.MultiEffect;
+import mindustry.entities.effect.SeqEffect;
 import mindustry.entities.effect.WaveEffect;
 import mindustry.entities.part.HaloPart;
 import mindustry.entities.part.HoverPart;
@@ -1712,7 +1713,7 @@ public class PvUnits {
                     "Mindless Spamming will not get you anywhere with this Foe. try to have a mix of Weak and Strong units.",
                     "His [purple]Corruption[] [blue]slowly creeps[] into any [#b]Unit's software[], so be sure that they [orange]Target the Weak[] as to not risk losing the Strong units.",
                     "[orange]Usual Behaviour Between Factions : ",
-                    "[green]Allianced Factions : []Nullis , Psy",
+                    "[green]Ally Factions : []Nullis , Psy",
                     "[red]Enemy Factions : []Xeal, Mortikai, Azulex"
             );
             StringBuilder sb = new StringBuilder();
@@ -1722,13 +1723,14 @@ public class PvUnits {
             constructor = FrogUnit::new;
             flying = true;
             engineColor = Color.black;
-            health = 40000;
-            armor = 6;
+            health = 50000;
+            armor = 10;
             hitSize = 8*2;
             buildSpeed = 1;
             buildBeamOffset = 12;
             abilities.add(
                     new EnemyStatusFieldAbility(PvStatusEffects.memoryExchange,180,120,16*8),
+                    new StatusFieldAbility(PvStatusEffects.tock,30,120,16*8),
                     new VoidAbility(8*4)
             );
             weapons.add(
@@ -1739,20 +1741,20 @@ public class PvUnits {
                         shoot.shotDelay = 1;
                         x = 0;
                         y = 0;
-                        bullet = new MissileBulletType(8,24) {{
+                        bullet = new MissileBulletType(12,48) {{
                             backColor = lightColor = trailColor = Pal.reactorPurple;
                             frontColor = Pal.reactorPurple2;
                             lifetime = PvUtil.GetRange(this.speed,38);
                             trailLength = 60;
-                            trailWidth = 1;
+                            trailWidth = 2;
                             pierceCap = 3;
                             weaveMag = 1;
                             weaveScale = 1;
                             weaveRandom = true;
                             homingPower = 0;
                             despawnEffect = hitEffect = Fx.absorb;
-                            status = StatusEffects.corroded;
-                            statusDuration = 90;
+                            status = PvStatusEffects.doused;
+                            statusDuration = 180;
 
                         }};
                     }}
