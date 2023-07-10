@@ -25,7 +25,7 @@ public class PvEffects {
         slowEnergeticEffect, particleDeath1,particleDeath2,particleDeath3,
             railFrag,waveBulletFalerica,waveBulletJavelin,
 
-            quadRushCraft,surgeSpawn,siedeSummon
+            quadRushCraft,cascadeCraft,surgeSpawn,siedeSummon
             ;
     public static Seq<Effect> nullisDeath = new Seq<>();
     public static void load()
@@ -111,6 +111,15 @@ public class PvEffects {
         quadRushCraft = new Effect(60,e->{
             Color col = Team.sharded.color;
             DrawPseudo3d.tube(e.x,e.y,5*e.fin(),e.fout()*50,col,Color.clear);
+            Lines.stroke(e.fout()*4,col);
+            Lines.circle(e.x,e.y,15*e.fin());
+        });
+        cascadeCraft = new Effect(120,e->{
+            float waves = 3;
+            float sin = Math.abs(Mathf.sin(e.fin()*waves *Mathf.pi));
+            Color col = Team.green.color.cpy().lerp(Color.clear,e.fin());
+            DrawPseudo3d.ring(e.x,e.y,5 * sin,7 * sin,9 * sin,e.fin()*8,col,col);
+            DrawPseudo3d.tube(e.x,e.y,2*e.fout(),e.fin()*50,col,Color.clear);
             Lines.stroke(e.fout()*4,col);
             Lines.circle(e.x,e.y,15*e.fin());
         });

@@ -53,6 +53,7 @@ import viscott.world.block.logic.PvSelector;
 import viscott.world.block.power.ConstGenerator;
 import viscott.world.block.production.ItemVariableReactor;
 import viscott.world.block.production.MultiCrafter;
+import viscott.world.block.production.PvGenericCrafter;
 import viscott.world.block.unit.BulkUnitFactory;
 import viscott.world.block.unit.PvSelectiveConstructor;
 import viscott.world.block.unit.PvTemplate;
@@ -552,21 +553,6 @@ public class PvBlocks {
                     consumeLiquid(Liquids.nitrogen,10f/60f);
                     outputLiquid(PvLiquids.liquidNitrogen,10f/60f);
                 }};
-                quadRushForge = new HeatCrafter("quadrush-forge")
-                {{
-                    requirements(Category.crafting,with(PvItems.zirconium,1000));
-                    localizedName = "Quadrush Forge";
-                    health = 985;
-                    size = 4;
-                    consumePower(380f/60f);
-                    itemCapacity = 20;
-                    heatRequirement = 15;
-                    maxEfficiency = 2;
-                    craftTime = 60*2.5f;
-                    craftEffect = new MultiEffect(PvEffects.quadRushCraft,Fx.smokeCloud);
-                    consumeItems(with(PvItems.carbonFiber,1,Items.silicon,5));
-                    outputItem = new ItemStack(PvItems.rushAlloy,1);
-                }};
                 keroseneMixer = new GenericCrafter("kerosene-mixer")
                 {
                     {
@@ -611,6 +597,37 @@ public class PvBlocks {
                         craftTime = 1.3f*60f;
 
                     }};
+                quadRushForge = new HeatCrafter("quadrush-forge")
+                {{
+                    requirements(Category.crafting,with(PvItems.zirconium,1000));
+                    localizedName = "Quadrush Forge";
+                    health = 985;
+                    size = 4;
+                    consumePower(380f/60f);
+                    itemCapacity = 20;
+                    heatRequirement = 15;
+                    maxEfficiency = 2;
+                    craftTime = 60*2.5f;
+                    craftEffect = new MultiEffect(PvEffects.quadRushCraft,Fx.smokeCloud);
+                    consumeItems(with(PvItems.carbonFiber,1,Items.silicon,5));
+                    outputItem = new ItemStack(PvItems.rushAlloy,1);
+                }};
+                cascadeForge = new PvGenericCrafter("cascade-forge") {{
+                    requirements(Category.crafting,with(PvItems.zirconium,10000));
+                    localizedName = "Cascade Forge";
+                    faction.add(PvFactions.Xeal);
+                    health = 920;
+                    size = 4;
+                    consumePower(250f/60f);
+                    itemCapacity = 20;
+                    liquidCapacity = 50;
+                    craftTime = 60*7.1f;
+                    craftEffect = new MultiEffect(PvEffects.cascadeCraft,Fx.freezing,Fx.wet);
+                    updateEffect = Fx.smoke;
+                    consumeLiquid(PvLiquids.xenon,15f/60f);
+                    consumeItems(with(PvItems.lithium,10,PvItems.erbium,5));
+                    outputItem = new ItemStack(PvItems.tideAlloy,2);
+                }};
                 keroseneHeater = new HeatProducer("kerosene-heater"){{
                     requirements(Category.crafting, with(PvItems.zirconium, 20, PvItems.platinum, 30)); //Todo
 
