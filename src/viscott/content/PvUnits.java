@@ -61,6 +61,7 @@ import viscott.types.abilities.DamageAbility;
 import viscott.types.abilities.VoidAbility;
 import viscott.world.bullets.VoidBulletType;
 import viscott.utilitys.PvUtil;
+import viscott.world.statusEffects.PvStatusEffect;
 
 import static arc.graphics.g2d.Draw.color;
 import static arc.graphics.g2d.Lines.stroke;
@@ -646,7 +647,7 @@ public class PvUnits {
             constructor = EntityMapping.map("mega");
             health = 15000;
             armor = 4;
-            hitSize = 8;
+            hitSize = 8*3;
             drag = 0.02f;
             lowAltitude = true;
             flying = true;
@@ -669,7 +670,7 @@ public class PvUnits {
                         mirror = true;
                         recoil = 3;
                         inaccuracy = 5;
-                        bullet = new LaserBoltBulletType(5.2f, 67){{
+                        bullet = new LaserBoltBulletType(5.2f, 24){{
                             lifetime = 60f;
                             trailWidth = 1.8f;
                             trailLength = 20;
@@ -692,8 +693,7 @@ public class PvUnits {
                 top = true;
                 inaccuracy = 0;
                 bullet = new RailBulletType(){{
-                    recoil = 2;
-                    damage = 1350;
+                    damage = 240;
                     buildingDamageMultiplier = 0.2f;
                     hitShake = 6f;
                     shootEffect = Fx.lancerLaserShoot;
@@ -704,7 +704,7 @@ public class PvUnits {
                     hitEffect = Fx.massiveExplosion;
                     smokeEffect = Fx.shootBig2;
                     lightningColor = trailColor = lightColor = Pal.sap;
-                    pierceCap = 10;
+                    pierceCap = 2;
                     pierceDamageFactor = 0.5f;
                 }};
             }}
@@ -1744,8 +1744,7 @@ public class PvUnits {
                 buildSpeed = 1;
                 buildBeamOffset = 12;
                 abilities.add(
-                        new EnemyStatusFieldAbility(PvStatusEffects.memoryExchange, 180, 120, 16 * 8),
-                        new StatusFieldAbility(PvStatusEffects.voidShield, 180, 120, 16 * 8),
+                        new EnemyStatusFieldAbility(PvStatusEffects.memoryExchange, 180, 120, 20 * 8),
                         new VoidAbility(8 * 4)
                 );
                 weapons.add(
@@ -1936,8 +1935,13 @@ public class PvUnits {
                         "durring his creation [gold]Yggdrasil[] gave him the power to protect his allies called [red]Prevention[], [green]He can give a ally a second life[].",
                         "[orange]Usual Behaviour Between Factions : ",
                         "[green]Allianced Factions : []Xeal , Psy",
-                        "[red]Enemy Factions : [] Mortikai"
+                        "[grey]Neutral Factions :[] Nullis, Azulex",
+                        "[red]Enemy Factions : []Mortikai"
                 );
+                StringBuilder sb = new StringBuilder();
+                detailList.each(cs -> sb.append(cs + "\n"));
+                sb.replace(sb.length() - 1, sb.length(), "");
+                details = sb.toString();
                 constructor = EntityMapping.map("stell");
                 drag = 0.1f;
                 speed = 0.5f;
