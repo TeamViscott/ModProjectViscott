@@ -1154,11 +1154,8 @@ public class PvUnits {
                             hitShake = despawnShake = 1;
                             shake = 1;
                             spin = 4f;
-
                         }};
-
                     }}
-
             );
             abilities.add(new ShieldArcAbility(){{
                 region = "tecta-shield";
