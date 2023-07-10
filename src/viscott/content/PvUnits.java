@@ -1737,7 +1737,7 @@ public class PvUnits {
             buildBeamOffset = 12;
             abilities.add(
                     new EnemyStatusFieldAbility(PvStatusEffects.memoryExchange,180,120,16*8),
-                    new StatusFieldAbility(PvStatusEffects.tock,30,120,16*8),
+                    new StatusFieldAbility(PvStatusEffects.voidShield,180,120,16*8),
                     new VoidAbility(8*4)
             );
             weapons.add(
@@ -1828,8 +1828,8 @@ public class PvUnits {
             constructor = EntityMapping.map("stell");
             drag = 0.1f;
             speed = 0.5f;
-            hitSize = 8f;
-            health = 20000;
+            hitSize = 80f;
+            health = 80000;
             armor = 50f;
             omniMovement = false;
             faceTarget = false;
@@ -1843,6 +1843,8 @@ public class PvUnits {
                 top = false;
                 mirror = false;
                 reload = 100f;
+                targetAir = true;
+                targetGround = true;
                 inaccuracy = 10f;
                 chargeSound = Sounds.plasmadrop;
                 shootStatusDuration = 200f;
@@ -1856,13 +1858,13 @@ public class PvUnits {
                 shoot.shotDelay = 1f;
                 rotate = true;
                 rotateSpeed = 0.8f;
-                bullet = new BasicBulletType(2.5f, 200f) {{
+                bullet = new BasicBulletType(2.5f, 175f) {{
                     buildingDamageMultiplier = 0.1f;
                     sprite = PvUtil.GetName("error-bullet-top");
                     backSprite = PvUtil.GetName("error-bullet-bottom");
                     shootEffect = smokeEffect = Fx.none;
                     reflectable = false;
-                    absorbable = false;
+                    absorbable = true;
                     height = width = 18f;
                     shrinkY = shrinkX = -0.4f;
                     spin = 4f;
@@ -1897,7 +1899,7 @@ public class PvUnits {
                 rotateSpeed = 2f;
                 bullet = new RailBulletType(){{
                     length = 260f;
-                    damage = 48f;
+                    damage = 750f;
                     hitColor = Color.valueOf("feb380");
                     hitEffect = endEffect = Fx.hitBulletColor;
                     pierceDamageFactor = 0.8f;
@@ -1950,15 +1952,16 @@ public class PvUnits {
                     top = false;
                     mirror = false;
                     reload = 800f;
-                    inaccuracy = 360f;
                     shootSound = Sounds.plasmadrop;
                     cooldownTime = 300f;
                     heatColor = Color.valueOf("addada");
                     recoil = 0f;
+                    shoot = new ShootSpread();
                     shootCone = 360f;
                     shoot.shots = 360;
                     shoot.shotDelay = 0f;
-                    bullet = new BulletType(2.5f, 10f) {{
+
+                    bullet = new BulletType(2.5f, 100f) {{
                         buildingDamageMultiplier = 2f;
                         shootEffect = smokeEffect = Fx.none;
                         reflectable = false;
