@@ -39,6 +39,17 @@ import mindustry.type.UnitType;
 import mindustry.type.Weapon;
 import mindustry.type.ammo.ItemAmmoType;
 import mindustry.type.unit.TankUnitType;
+import mindustry.entities.abilities.*;
+
+import arc.graphics.*;
+import arc.math.geom.*;
+import mindustry.content.*;
+import mindustry.gen.*;
+import mindustry.graphics.*;
+import mindustry.type.*;
+import mindustry.type.ammo.*;
+//No clue which one gives tread rect/otamamori
+
 import viscott.abilitys.EnemyStatusFieldAbility;
 import viscott.content.shootpatterns.ShootSpreadBounce;
 import viscott.gen.FrogUnit;
@@ -1834,8 +1845,10 @@ public class PvUnits {
             omniMovement = false;
             faceTarget = false;
             rotateSpeed = 0.8f;
-            drownTimeMultiplier = 3f;
+            drownTimeMultiplier = 0.5f;
             ammoType = new ItemAmmoType(Items.graphite, 8);
+
+            abilities.add(new UnitSpawnAbility(omai, 600f, 19.25f, 0f), new UnitSpawnAbility(omai, 600f, -19.25f, 0f));
             weapons.add(new Weapon(name+"-weapon-main") {{
                 shootY = 3f;
                 x = 0f;
@@ -1858,6 +1871,7 @@ public class PvUnits {
                 shoot.shotDelay = 1f;
                 rotate = true;
                 rotateSpeed = 0.8f;
+                /*immunities.add(PvStatusEffects.prevention);TODO make prevention effect*/
                 bullet = new BasicBulletType(2.5f, 175f) {{
                     buildingDamageMultiplier = 0.1f;
                     sprite = PvUtil.GetName("error-bullet-top");
@@ -1945,12 +1959,12 @@ public class PvUnits {
                     });
                 }};
             }});
-            weapons.add(new Weapon(name+"-weapon-wave") {
-                {
+            weapons.add(new Weapon(name+"-weapon-wave") {{
                     x = 0f;
                     y = 0f;
                     top = false;
                     mirror = false;
+                    shootY = 0f;
                     reload = 800f;
                     shootSound = Sounds.plasmadrop;
                     cooldownTime = 300f;
@@ -1962,20 +1976,133 @@ public class PvUnits {
                     shoot.shotDelay = 0f;
 
                     bullet = new BulletType(2.5f, 100f) {{
+                    shootCone = 360;
+                    hitSize = 6;
+                    shoot.shots = 180;
+                    shoot.shotDelay = 0f;
+                    useAmmo = false;
+                    controllable = false;
+                    autoTarget = true;
+                    bullet = new BulletType(2.5f, 20f) {{
                         buildingDamageMultiplier = 2f;
                         shootEffect = smokeEffect = Fx.none;
                         reflectable = false;
                         absorbable = false;
                         hittable = false;
-                        lifetime = 50f;
-                        hitEffect = despawnEffect = Fx.none;
+                        lifetime = 80f;
+                        trailEffect = hitEffect = despawnEffect = Fx.none;
                         laserAbsorb = false;
-                        trailInterval = 1f;
-                        trailParam = 1f;
-                        trailLength = 0;
-                        trailWidth = 0f;
-                        trailEffect = Fx.crawlDust;
+                        trailColor = Color.valueOf("011414");
+                        trailInterval = 0.2f;
+                        trailParam = 0.2f;
+                        trailLength = 2;
+                        trailWidth = 4f;
                         knockback = 5;
+                        impact = true;
+                        collidesAir = false;
+                        keepVelocity = false;
+                    }};
+                }});
+        }};
+        omai = new PvUnitType("omai") {{
+            localizedName = "[green]Omai[]";
+            description = "[gold]Children Of Omamori[], Helps Omamori deal with eneimes.";
+            constructor = EntityMapping.map("stell");
+            drag = 0.1f;
+            speed = 0.6f;
+            hitSize = 8f;
+            health = 4000;
+            armor = 20f;
+            omniMovement = false;
+            faceTarget = false;
+            rotateSpeed = 1.4f;
+            drownTimeMultiplier = 0.5f;
+            treadPullOffset = 5;
+            treadRects = new Rect[]{new Rect(17 - 96f/2f, 10 - 96f/2f, 19, 76)};
+            ammoType = new ItemAmmoType(Items.graphite, 8);
+            weapons.add(new Weapon(name+"-weapon") {{
+                shootY = 3f;
+                x = 0f;
+                y = 0f;
+                top = false;
+                mirror = false;
+                reload = 100f;
+                inaccuracy = 10f;
+                chargeSound = Sounds.plasmadrop;
+                shootStatusDuration = 200f;
+                shootStatus = StatusEffects.slow;
+                shootSound = Sounds.plasmaboom;
+                cooldownTime = 300f;
+                heatColor = Color.valueOf("addada");
+                recoil = 0f;
+                shoot.firstShotDelay = 80f;
+                shoot.shots = 100;
+                shoot.shotDelay = 1f;
+                rotate = true;
+                rotateSpeed = 0.8f;
+                layerOffset = 1f;
+                bullet = new BasicBulletType(2.5f, 20f) {{
+                    buildingDamageMultiplier = 0.1f;
+                    sprite = PvUtil.GetName("error-bullet-top");
+                    backSprite = PvUtil.GetName("error-bullet-bottom");
+                    shootEffect = smokeEffect = Fx.none;
+                    reflectable = false;
+                    absorbable = false;
+                    height = width = 6f;
+                    shrinkY = shrinkX = -0.4f;
+                    spin = 4f;
+                    lifetime = 50f;
+                    trailColor = backColor = Color.valueOf("011414");
+                    frontColor = Color.valueOf("021d1d");
+                    trailEffect = hitEffect = despawnEffect = Fx.none;
+                    trailInterval = 0f;
+                    trailParam = 0f;
+                    trailLength = 7;
+                    trailWidth = 4f;
+                    laserAbsorb = false;
+                    homingRange = 600f;
+                    homingPower = 0.04f;
+                    homingDelay = 30f;
+                }};
+            }});
+            weapons.add(new Weapon(name+"-weapon-wave") {
+                {
+                    x = 0f;
+                    y = 0f;
+                    shootY = 0f;
+                    top = false;
+                    mirror = false;
+                    reload = 800f;
+                    inaccuracy = 360f;
+                    shootSound = Sounds.plasmadrop;
+                    cooldownTime = 300f;
+                    heatColor = Color.valueOf("addada");
+                    recoil = 0f;
+                    shootCone = 360;
+                    hitSize = 6;
+                    shoot.shots = 180;
+                    shoot.shotDelay = 0f;
+                    useAmmo = false;
+                    controllable = false;
+                    autoTarget = true;
+                    bullet = new BulletType(2.5f, 2f) {{
+                        buildingDamageMultiplier = 2f;
+                        shootEffect = smokeEffect = Fx.none;
+                        reflectable = false;
+                        absorbable = false;
+                        hittable = false;
+                        lifetime = 40f;
+                        trailEffect = hitEffect = despawnEffect = Fx.none;
+                        laserAbsorb = false;
+                        trailColor = Color.valueOf("011414");
+                        trailInterval = 0.2f;
+                        trailParam = 0.2f;
+                        trailLength = 2;
+                        trailWidth = 4f;
+                        knockback = 5;
+                        impact = true;
+                        collidesAir = false;
+                        keepVelocity = false;
                     }};
                 }});
         }};
