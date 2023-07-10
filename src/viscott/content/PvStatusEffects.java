@@ -14,7 +14,7 @@ import viscott.world.statusEffects.*;
 public class PvStatusEffects {
     public static StatusEffect
     timeWarped,doused, disabled, expent, resiliant, ungratefull, crescendo ,tick ,tock,mend,shield, malfunction,
-    voidShield,voidDecay,frag,aoe,homing,memoryExchange,dataLeak
+    voidShield,voidDecay,frag,aoe,homing,memoryExchange,dataLeak,endless
             ;
     public static void load() {
         timeWarped = new StatusEffectStack("time-warped") {{
@@ -192,6 +192,15 @@ public class PvStatusEffects {
             damageMultiplier = 0.8f;
             effect = Fx.sapped;
             effectChance = 0.2f;
+        }};
+        endless = new StatusEffectStack("endless") {{
+            localizedName = "Endless";
+            reloadMultiplier = 1.01f;
+            dragMultiplier = 1.01f;
+            healthMultiplier = 1.01f;
+            speedMultiplier = 1.01f;
+            charges = 10001;
+            staticStat();
         }};
     }
 }

@@ -71,6 +71,7 @@ public class PvWorldState {
                             stream.writeInt(st.unitCharges.size());
                             st.unitCharges.forEach((unit,c) -> {
                                 try {
+                                    if (unit == null) return;
                                     stream.writeInt(unit.id);
                                     stream.writeInt(c);
                                     if (st.unitTeam.containsKey(unit))
