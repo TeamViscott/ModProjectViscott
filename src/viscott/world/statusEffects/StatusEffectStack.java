@@ -24,6 +24,7 @@ public class StatusEffectStack extends PvStatusEffect {
     public HashMap<Unit, Team> unitTeam = new HashMap<>();
     List<Float> statsStatic = new Stack<>();
     public Team newTeam = null;
+    String localName = "";
 
     public StatusEffectStack(String name)
     {
@@ -116,13 +117,14 @@ public class StatusEffectStack extends PvStatusEffect {
     public void init()
     {
         super.init();
+        localName = localizedName;
     }
 
     public void start(Unit unit,float time)
     {
         if (!unitCharges.containsKey(unit))
         {{
-                unitCharges.put(unit, 1);
+                unitCharges.put(unit, 0);
                 unitTime.put(unit,time);
                 unitTeam.put(unit,unit.team);
             }}
@@ -137,6 +139,8 @@ public class StatusEffectStack extends PvStatusEffect {
         if (newTeam != null)
             unit.team(unitTeam.get(unit));
         unitTeam.remove(unit);
+        if (unit == Vars.player.unit())
+            localizedName = localName;
     }
 
     @Override
@@ -151,6 +155,8 @@ public class StatusEffectStack extends PvStatusEffect {
         unit.speedMultiplier *= 1+(statsStatic.get(2)-1)*unitCharges.get(unit);
         unit.reloadMultiplier *= 1+(statsStatic.get(3)-1)*unitCharges.get(unit);
         unit.buildSpeedMultiplier *= 1+(statsStatic.get(4)-1)*unitCharges.get(unit);
+        if (unit == Vars.player.unit())
+            localizedName = localName + " [orange]x" + unitCharges.get(unit);
 
         float shieldDiff = maxShield - shield;
         if (shieldDiff > 0)

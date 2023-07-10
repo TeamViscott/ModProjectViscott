@@ -13,16 +13,14 @@ import arc.util.io.Reads;
 import arc.util.io.Writes;
 import mindustry.Vars;
 import mindustry.game.EventType;
-import mindustry.gen.Building;
-import mindustry.gen.Payloadc;
-import mindustry.gen.Player;
-import mindustry.gen.Unit;
+import mindustry.gen.*;
 import mindustry.graphics.Drawf;
 import mindustry.graphics.Layer;
 import mindustry.graphics.Pal;
 import mindustry.type.Item;
 import mindustry.type.ItemStack;
 import mindustry.type.UnitType;
+import mindustry.ui.ItemDisplay;
 import mindustry.ui.Styles;
 import mindustry.world.Block;
 import mindustry.world.blocks.ItemSelection;
@@ -32,6 +30,7 @@ import mindustry.world.blocks.payloads.UnitPayload;
 import mindustry.world.blocks.units.Reconstructor;
 import mindustry.world.blocks.units.UnitFactory;
 import mindustry.world.consumers.ConsumeItemDynamic;
+import mindustry.world.meta.Stat;
 import viscott.types.BuildUnitType;
 import viscott.types.PvUnitPlan;
 import viscott.utilitys.PvUtil;
@@ -66,6 +65,31 @@ public class BulkUnitFactory extends Reconstructor {
                 new ConsumeItemDynamic((BulkUnitFactory.BulkUnitFactoryBuild e) ->
                         e.currentPlan != -1 ? plans.get(Math.min(e.currentPlan, plans.size - 1)).requirements : ItemStack.empty)
         );
+    }
+
+    @Override
+    public void setStats() {
+        super.setBars();
+        plans.each(plan -> {
+            stats.add(Stat.output, t -> {
+                buildStats(t,plan);
+            });
+        });
+    }
+
+    public void buildStats(Table t, UnitFactory.UnitPlan plan) {
+        t.background(Tex.whiteui);
+        t.setColor(Pal.darkestGray);
+        if (plan instanceof PvUnitPlan pvPlan) {
+            if (pvPlan.template != null)
+                t.image(pvPlan.template.region).size(32).tooltip("template").padRight(8f);
+        }
+        for(ItemStack is : plan.requirements) {
+            t.add(new ItemDisplay(is.item, is.amount, plan.time, true)).padRight(5);
+        }
+        t.image(Icon.right).size(32).padRight(8f);
+        t.image(plan.unit.region).size(32).tooltip("output");
+        t.row();
     }
 
     @Override

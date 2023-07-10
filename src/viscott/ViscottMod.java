@@ -42,13 +42,13 @@ public class ViscottMod extends Mod {
                         Vars.renderer.effectBuffer.endBind();
                 });
         });
-        PvPacketHandler.load();
-        PvWorldState.load();
     }
 
     @Override
     public void loadContent(){
         Log.info("Loading PV content");
+        PvPacketHandler.load();
+        PvWorldState.load();
         PvUnitMapper.load();
         PvMusics.load();
         PvLogic.load();

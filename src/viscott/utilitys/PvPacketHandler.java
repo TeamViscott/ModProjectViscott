@@ -27,9 +27,7 @@ public class PvPacketHandler {
             Call.clientPacketUnreliable(pJ.player.con,"recFactions",sb.toString());
         });
 
-        ObjectMap<String, Seq<Cons<String>>> customPacketHandlers = Reflect.get(netClient,"customPacketHandlers");
-        Seq<Cons<String>> cons = new Seq<>();
-        cons.add(s -> {
+        Cons<String> cons = (s -> {
             Seq<String> factionList = new Seq<>();
             String[] split1 = s.split("!");
             for(int i = 1;i<split1.length;i++)
@@ -45,6 +43,6 @@ public class PvPacketHandler {
                 }
             });
         });
-        customPacketHandlers.put("recFactions",cons);
+        netClient.addPacketHandler("recFactions", cons);
     }
 }

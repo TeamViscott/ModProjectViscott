@@ -20,7 +20,7 @@ public class PvVanillaChanges {
     {
         UnitTypes.latum.hidden = false;
         UnitTypes.renale.hidden = false;
-        ((HeatProducer)Blocks.heatSource).heatOutput = 100000;
+        ((HeatProducer)Blocks.heatSource).heatOutput = 10000;
         StatusEffects.corroded.localizedName = "Corroded";
         StatusEffects.corroded.show = true;
 
