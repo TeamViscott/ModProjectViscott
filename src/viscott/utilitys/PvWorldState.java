@@ -1,11 +1,13 @@
 package viscott.utilitys;
 
 import arc.Events;
+import mindustry.Vars;
 import mindustry.game.EventType;
 import mindustry.game.Team;
 import mindustry.io.SaveFileReader;
 import mindustry.io.SaveVersion;
 import viscott.types.PvFaction;
+import viscott.world.statusEffects.StatusEffectStack;
 
 import java.io.DataInput;
 import java.io.DataOutput;
@@ -53,5 +55,24 @@ public class PvWorldState {
                 }
             }
         });
+        /*
+        SaveVersion.addCustomChunk("stackEffects", new SaveFileReader.CustomChunk() {
+            @Override
+            public void write(DataOutput stream) throws IOException {
+                int count = Vars.content.statusEffects().count(se -> se instanceof StatusEffectStack);
+                stream.writeInt(count);
+                Vars.content.statusEffects().each(se -> {
+                    if (se instanceof StatusEffectStack st){
+
+                    }
+                });
+            }
+
+            @Override
+            public void read(DataInput stream) throws IOException {
+
+            }
+        });
+         */
     }
 }

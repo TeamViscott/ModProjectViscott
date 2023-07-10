@@ -1,10 +1,12 @@
 package viscott.world.statusEffects;
 
+import arc.Events;
 import arc.math.Mathf;
 import arc.util.Time;
 import arc.util.Tmp;
 import mindustry.Vars;
 import mindustry.content.Fx;
+import mindustry.game.EventType;
 import mindustry.game.Team;
 import mindustry.gen.Iconc;
 import mindustry.gen.Unit;
@@ -118,6 +120,12 @@ public class StatusEffectStack extends PvStatusEffect {
     {
         super.init();
         localName = localizedName;
+        Events.run(EventType.Trigger.update,()-> {
+            if (unitCharges.containsKey(Vars.player.unit()) && Vars.player.unit().hasEffect(this))
+                localizedName = localName + " [accent]x" + unitCharges.get(Vars.player.unit()) + " | " + charges;
+            else
+                localizedName = localName;
+        });
     }
 
     public void start(Unit unit,float time)
@@ -127,9 +135,8 @@ public class StatusEffectStack extends PvStatusEffect {
                 unitCharges.put(unit, 0);
                 unitTime.put(unit,time);
                 unitTeam.put(unit,unit.team);
-            }}
-        else
-            unitCharges.replace(unit,Mathf.clamp(unitCharges.get(unit)+1,0,charges));
+        }}
+        unitCharges.replace(unit,Mathf.clamp(unitCharges.get(unit)+1,0,charges));
     }
 
     public void end(Unit unit)
@@ -139,8 +146,6 @@ public class StatusEffectStack extends PvStatusEffect {
         if (newTeam != null)
             unit.team(unitTeam.get(unit));
         unitTeam.remove(unit);
-        if (unit == Vars.player.unit())
-            localizedName = localName;
     }
 
     @Override
@@ -155,8 +160,6 @@ public class StatusEffectStack extends PvStatusEffect {
         unit.speedMultiplier *= 1+(statsStatic.get(2)-1)*unitCharges.get(unit);
         unit.reloadMultiplier *= 1+(statsStatic.get(3)-1)*unitCharges.get(unit);
         unit.buildSpeedMultiplier *= 1+(statsStatic.get(4)-1)*unitCharges.get(unit);
-        if (unit == Vars.player.unit())
-            localizedName = localName + " [orange]x" + unitCharges.get(unit);
 
         float shieldDiff = maxShield - shield;
         if (shieldDiff > 0)
@@ -176,7 +179,7 @@ public class StatusEffectStack extends PvStatusEffect {
             effect.at(unit.x + Tmp.v1.x, unit.y + Tmp.v1.y, 0, color, parentizeEffect ? unit : null);
         }
 
-        if (unitCharges.containsKey(unit) && time <= Time.delta * 2f)
+        if (unitCharges.containsKey(unit) && (time <= Time.delta * 2f || !unit.isValid()))
         {{
             end(unit);
         }}
