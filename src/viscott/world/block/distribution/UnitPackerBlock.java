@@ -1,17 +1,20 @@
 package viscott.world.block.distribution;
 
 import arc.math.Mathf;
+import arc.struct.Seq;
 import mindustry.gen.Building;
 import mindustry.gen.Groups;
 import mindustry.graphics.Drawf;
 import mindustry.graphics.Pal;
 import mindustry.type.Item;
+import mindustry.type.UnitType;
 import mindustry.world.Block;
 import viscott.content.PvBlocks;
 import viscott.world.block.PvBlock;
 
 public class UnitPackerBlock extends PvBlock {
     public float range = 8;
+    public Seq<UnitType> quickCalledUnits = new Seq<>();
     public UnitPackerBlock(String name)
     {
         super(name);

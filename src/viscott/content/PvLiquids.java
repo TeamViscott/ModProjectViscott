@@ -6,7 +6,8 @@ import mindustry.type.Liquid;
 
 public class PvLiquids {
     public static Liquid
-    kerosene,xenon,liquidNitrogen
+    kerosene,xenon,liquidNitrogen,
+    /*Nullis*/concentratedVoid
     ;
     public static void load()
     {
@@ -16,12 +17,6 @@ public class PvLiquids {
             color = Color.valueOf("ECDCF5");
             heatCapacity = 2;
         }};
-        xenon = new Liquid("liquid-xenon"){{
-            localizedName = "Xenon";
-            color = Color.valueOf("C080E2");
-            gas = true;
-            coolant = false;
-        }};
         kerosene = new Liquid("liquid-kerosene")
         {{
             localizedName = "Kerosene";
@@ -29,6 +24,19 @@ public class PvLiquids {
             effect = PvStatusEffects.doused;
             flammability = 1f;
             heatCapacity = 1.25f;
+        }};
+        xenon = new Liquid("liquid-xenon"){{
+            localizedName = "Xenon";
+            color = Color.valueOf("C080E2");
+            gas = true;
+            coolant = false;
+        }};
+        concentratedVoid = new Liquid("liquid-concentrated-void"){{
+            localizedName = "Concentrated Void";
+            description = "[#1a1a1a]So Concentrated that it manifested into a Liquid.";
+            color = Color.valueOf("111111");
+            heatCapacity = 4;
+            coolant = true;
         }};
     }
 }

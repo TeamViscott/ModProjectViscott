@@ -9,20 +9,24 @@ import mindustry.core.UI;
 import mindustry.core.World;
 import mindustry.gen.Building;
 import mindustry.gen.Icon;
-import mindustry.logic.LAssembler;
-import mindustry.logic.LExecutor;
-import mindustry.logic.LStatement;
-import mindustry.logic.LStatements;
+import mindustry.logic.*;
 import mindustry.ui.Styles;
 import mindustry.world.blocks.logic.LogicBlock;
+import mindustry.world.draw.DrawBlock;
+import mindustry.world.draw.DrawDefault;
+import viscott.types.PvFaction;
 import viscott.types.logic.PvAssembler;
 import viscott.world.ui.PvUI;
 
+import static mindustry.Vars.state;
 import static mindustry.Vars.world;
 import static viscott.content.PvUIs.*;
 
 public class PvLogicBlock extends LogicBlock {
+
+    public Seq<PvFaction> faction = new Seq<>();
     public Seq<Prov<LStatement>> allStatements;
+    public DrawBlock drawer = new DrawDefault();
     public PvLogicBlock(String name)
     {
         super(name);
@@ -65,6 +69,27 @@ public class PvLogicBlock extends LogicBlock {
                         LStatements.GetFlagStatement::new,
                         LStatements.SetFlagStatement::new});
     }
+
+    @Override
+    public void init() {
+        super.init();
+        drawer.load(this);
+    }
+
+    public boolean partOfPlayerFaction()
+    {
+        return faction.size == 0 || faction.count(f -> f.partOf(Vars.player.team())) > 0;
+    }
+
+    @Override
+    public boolean isVisible(){
+        return state.rules.editor || (partOfPlayerFaction() && !isHidden() && (!state.rules.hideBannedBlocks || !state.rules.isBanned(this)));
+    }
+
+    @Override
+    public boolean isPlaceable(){
+        return Vars.net.server() || (!state.rules.isBanned(this) || state.rules.editor) && supportsEnv(state.rules.env);
+    }
     public class PvLogicBuild extends LogicBuild
     {
         @Override
@@ -78,6 +103,15 @@ public class PvLogicBlock extends LogicBlock {
             table.button(Icon.pencil, Styles.cleari, () -> {
                 extraUI.customLogic.show(allStatements,code, executor, privileged, code -> configure(compress(code, relativeConnections())));
             }).size(40);
+        }
+
+        @Override
+        public float warmup() {
+            return 1f;
+        }
+        @Override
+        public void draw() {
+            drawer.draw(this);
         }
 
         @Override
