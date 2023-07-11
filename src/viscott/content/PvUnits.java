@@ -1859,10 +1859,10 @@ public class PvUnits {
                 faceTarget = false;
                 rotateSpeed = 0.8f;
                 drownTimeMultiplier = 0.5f;
-                ammoType = new ItemAmmoType(Items.graphite, 8);
+                ammoType = new ItemAmmoType(PvItems.darkMatter, 8);
                 treadPullOffset = 5;
                 /*treadRects = new Rect[]{new Rect(56f, 275f, 64f, -137)};TODO figure out why this crashes mindustry*/
-                /*abilities.add(new StatusFieldAbility(PvStatusEffects.prevention, 10f, 1000f, 200f)*/
+                /*abilities.add(new StatusFieldAbility(PvStatusEffects.prevention, 10f, 1000f, 200f)TODO make prevention effect*/
                 weapons.add(
                 new Weapon(name + "-weapon-main") {{
                     shootY = 3f;
@@ -2083,7 +2083,7 @@ public class PvUnits {
                     mirror = true;
                     alternate = false;
                     shootX = 40f;
-                    reload = 2000f;
+                    reload = 1200f;
                     shootSound = Sounds.respawn;
                     recoil = 0f;
                     shootCone = 360f;
@@ -2130,7 +2130,7 @@ public class PvUnits {
                             drownTimeMultiplier = 0.5f;
                             treadPullOffset = 5;
                             treadRects = new Rect[]{new Rect(17 - 96f / 2f, 10 - 96f / 2f, 19, 76)};
-                            ammoType = new ItemAmmoType(Items.graphite, 8);
+                            ammoType = new ItemAmmoType(PvItems.darkMatter, 8);
                             weapons.add(
                             new Weapon(name + "-weapon") {{
                                 shootY = 3f;
