@@ -7,6 +7,7 @@ import mindustry.content.Fx;
 import mindustry.content.Items;
 import mindustry.content.Liquids;
 import mindustry.content.StatusEffects;
+import mindustry.entities.Effect;
 import mindustry.entities.UnitSorts;
 import mindustry.entities.bullet.*;
 import mindustry.entities.effect.ExplosionEffect;
@@ -44,7 +45,7 @@ public class PvTurrets{
             splinter,shatter,euro,snap,hourglass,
             phantom,razor,rainmaker,striker,
             marksman, xacto,reaper,shuttle, nuero, jaeger, glaive,
-            xterminium,hel,falarica,spring,shredder,
+            xterminium,hel,falarica,spring,shredder, sumaya,
 
             fracture,javelin
             ;
@@ -825,13 +826,15 @@ public class PvTurrets{
             range = 8*12f;
             scaledHealth = 250;
             ammo(
-                    Liquids.water, new BasicBulletType(range/20, 140){{
-                        trailLength = 20;
-                        trailWidth = 2;
+                    Liquids.water, new PointBulletType(){{
+                        damage = 140;
                         pierce = true; pierceCap = 1000;
-                        trailColor = lightColor = backColor = Color.valueOf("000000");
-                        lifetime = Mathf.ceil(PvUtil.GetRange(this.speed,12));
+                        trailColor = lightColor = Color.valueOf("000000");
+                        lifetime = 40;
                         hitSize = 8*1.5f;
+                        trailChance = 0;
+                        hitSize = 16;
+                        trailEffect = Fx.none;
                         status = PvStatusEffects.timeWarped;
                         knockback = -4f;
                         hitEffect = Fx.hitLancer;
@@ -2004,6 +2007,39 @@ public class PvTurrets{
                                 }}
                         )
                 );
+            }};
+        }};
+        sumaya = new PowerTurret("glaive"){{ //todo requirements. currently copied from glaive
+            requirements(Category.turret,BuildVisibility.shown , with(PvItems.zirconium,120,PvItems.nobelium,50,PvItems.erbium,100));
+            size = 6;
+            reload = 300f;
+            localizedName = "Sumaya";
+            velocityRnd = 0f;
+            inaccuracy = 0f;
+            shootX = 0;
+            shootY = 0;
+            health = 12000;
+            shootCone = 360f;
+            shootEffect = Fx.shootLiquid;
+            range = 8*70f;
+            shootType = new PointBulletType(){{
+                        damage = 350;
+                        splashDamage = 250;
+                        splashDamageRadius = 80;
+                        pierce = true; pierceCap = 1000;
+                        trailColor = lightColor = Color.valueOf("000000");
+                        lifetime = 40;
+                        shootEffect = PvEffects.sumayaShoot;
+                        despawnEffect = PvEffects.sumayaImpact;
+                        trailChance = 0;
+                        hitSize = 16;
+                        trailEffect = Fx.none;
+                        knockback = 10f;
+                        hitEffect = Fx.hitLancer;
+
+                    }};
+            drawer = new DrawTurret(GetName("Pov")){{
+
             }};
         }};
         xterminium = new ItemTurret("xterminium")

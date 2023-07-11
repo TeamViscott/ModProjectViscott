@@ -1,6 +1,7 @@
 package viscott.content;
 
 import arc.graphics.Color;
+import arc.struct.ObjectSet;
 import mindustry.content.Fx;
 import mindustry.entities.bullet.BasicBulletType;
 import mindustry.entities.bullet.BulletType;
@@ -14,7 +15,7 @@ import viscott.world.statusEffects.*;
 public class PvStatusEffects {
     public static StatusEffect
     timeWarped,doused, disabled, expent, resiliant, ungratefull, crescendo ,tick ,tock,mend,shield, malfunction,
-    voidShield,voidDecay,frag,aoe,homing,memoryExchange,dataLeak,endless
+    voidShield,voidDecay,frag,aoe,homing,memoryExchange,dataLeak,endless, revived, prevention
             ;
     public static void load() {
         timeWarped = new StatusEffectStack("time-warped") {{
@@ -182,6 +183,19 @@ public class PvStatusEffects {
             details = "[red]Please do not destroy Unit durring this Exchange";
             effect = new MultiEffect(Fx.despawn,Fx.freezing,Fx.lava);
             effectChance = 0.1f;
+        }};
+        prevention = new RevivalStatusEffect("prevention"){{
+            localizedName = "Prevention";
+            description = "This effect given by Omamori prevents death in any ally";
+            details = "";
+            opposites = ObjectSet.with(PvStatusEffects.revived);
+        }};
+        revived = new StatusEffect("revived"){{
+            localizedName = "Revived";
+            description = "This means you've been revived by Omamori, and can't be revived another time";
+            details = "";
+            opposites = ObjectSet.with(PvStatusEffects.prevention);
+            applyEffect = PvEffects.quadRushCraft;
         }};
         dataLeak = new StatusEffect("data-leak") {{
             localizedName = "[purple]Data Leak";

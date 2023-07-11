@@ -11,6 +11,7 @@ import mindustry.content.UnitTypes;
 import mindustry.entities.Effect;
 import mindustry.entities.Units;
 import mindustry.game.Team;
+import mindustry.game.Teams;
 import mindustry.graphics.Drawf;
 import mindustry.graphics.Layer;
 import mindustry.graphics.Pal;
@@ -23,7 +24,7 @@ import static arc.graphics.g2d.Lines.*;
 public class PvEffects {
     public static Effect
         slowEnergeticEffect, particleDeath1,particleDeath2,particleDeath3,
-            railFrag,waveBulletFalerica,waveBulletJavelin,
+            railFrag,waveBulletFalerica,waveBulletJavelin,sumayaShoot, sumayaImpact,
 
             quadRushCraft,cascadeCraft,surgeSpawn,siedeSummon
             ;
@@ -113,6 +114,19 @@ public class PvEffects {
             DrawPseudo3d.tube(e.x,e.y,5*e.fin(),e.fout()*50,col,Color.clear);
             Lines.stroke(e.fout()*4,col);
             Lines.circle(e.x,e.y,15*e.fin());
+        });
+        sumayaShoot = new Effect(30,e->{
+            Color col = Color.valueOf("51c0fc");
+            DrawPseudo3d.tube(e.x,e.y,8,e.fin()*50,col,Color.clear);
+            Lines.stroke(e.fout()*4,col);
+            Lines.circle(e.x,e.y,80*e.fout());
+
+        });
+        sumayaImpact = new Effect(30,e->{
+            Color col = Color.valueOf("51c0fc");
+            DrawPseudo3d.tube(e.x,e.y,8,e.fout()*50,col,Color.clear);
+            Lines.stroke(e.fout()*4,col);
+            Lines.circle(e.x,e.y,80*e.fin());
         });
         Interp cascadeColAlphaInterp = new arc.math.Interp.ExpIn(2.5f, 10f);
         cascadeCraft = new Effect(120,e->{
