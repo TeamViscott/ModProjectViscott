@@ -1,5 +1,6 @@
 package viscott.content;
 
+import arc.Core;
 import arc.func.Prov;
 import arc.graphics.Color;
 import arc.struct.Seq;
@@ -29,10 +30,7 @@ import mindustry.world.blocks.logic.MemoryBlock;
 import mindustry.world.blocks.logic.MessageBlock;
 import mindustry.world.blocks.payloads.*;
 import mindustry.world.blocks.power.*;
-import mindustry.world.blocks.production.Drill;
-import mindustry.world.blocks.production.GenericCrafter;
-import mindustry.world.blocks.production.HeatCrafter;
-import mindustry.world.blocks.production.Pump;
+import mindustry.world.blocks.production.*;
 import mindustry.world.blocks.storage.CoreBlock;
 import mindustry.world.blocks.storage.Unloader;
 import mindustry.world.draw.*;
@@ -41,22 +39,15 @@ import viscott.types.PvUnitPlan;
 import viscott.types.drawer.PvDrawPulse;
 import viscott.world.block.VoidBlock;
 import viscott.world.block.defense.PvWall;
-import viscott.world.block.distribution.MassConveyor;
-import viscott.world.block.distribution.UnitPackerBlock;
+import viscott.world.block.distribution.*;
 import viscott.world.block.drill.*;
-import viscott.world.block.effect.NullisCore;
-import viscott.world.block.effect.PvCore;
-import viscott.world.block.effect.UtilityProjector;
+import viscott.world.block.effect.*;
 import viscott.world.block.environment.DepositWall;
-import viscott.world.block.logic.PvLogicBlock;
-import viscott.world.block.logic.PvSelector;
+import viscott.world.block.logic.*;
 import viscott.world.block.power.ConstGenerator;
-import viscott.world.block.production.ItemVariableReactor;
-import viscott.world.block.production.MultiCrafter;
-import viscott.world.block.production.PvGenericCrafter;
-import viscott.world.block.unit.BulkUnitFactory;
-import viscott.world.block.unit.PvSelectiveConstructor;
-import viscott.world.block.unit.PvTemplate;
+import viscott.world.block.production.*;
+import viscott.world.block.unit.*;
+import viscott.world.draw.DrawLiquidStaticRegion;
 
 import static mindustry.type.ItemStack.with;
 
@@ -121,6 +112,7 @@ public class PvBlocks {
                             carbonWall,carbonWallLarge,
                     /*Logic*/
                             piscoProcessor,memoryByte,statusSelector,labelHandler,
+                            /*Nullis*/voidReprocessingUnit,
                             /*Testing*/
                                     sus
                             ;
@@ -1158,6 +1150,40 @@ public class PvBlocks {
                                     //Unit Controll
                                     LStatements.UnitBindStatement::new,
                                     PvLogic.HealStatement::new,
+                                    LStatements.UnitControlStatement::new,
+                                    LStatements.UnitLocateStatement::new,
+                                    LStatements.UnitRadarStatement::new,
+                                    //Block Controll
+                                    LStatements.SensorStatement::new,
+                                    //Operator
+                                    LStatements.SetStatement::new,
+                                    LStatements.OperationStatement::new,
+                                    LStatements.LookupStatement::new,
+                                    //Flow Controll
+                                    LStatements.EndStatement::new,
+                                    LStatements.JumpStatement::new,
+                                    PvLogic.DynamicJumpStatement::new,
+                                    //Undefined
+                                    PvLogic.CommentStatement::new
+                            });
+                }};
+                voidReprocessingUnit = new PvLogicBlock("void-reprocessing-unit") {{
+                    requirements(Category.logic, with(PvItems.zirconium,75,PvItems.lithium,50,PvItems.nobelium,20));
+                    localizedName = "Void Reprocessing Unit";
+                    range = 8*32;
+                    health = 90;
+                    size = 2;
+                    faction.add(PvFactions.Nullis);
+                    instructionsPerTick = 5;
+                    maxInstructionsPerTick = 20;
+                    allStatements= Seq.with(
+                            new Prov[]{
+                                    //Input && Output
+                                    LStatements.WriteStatement::new,
+                                    LStatements.ReadStatement::new,
+                                    //Unit Controll
+                                    LStatements.UnitBindStatement::new,
+                                    PvLogic.HealStatement::new,
                                     PvLogic.ShieldStatement::new,
                                     LStatements.UnitControlStatement::new,
                                     LStatements.UnitLocateStatement::new,
@@ -1175,6 +1201,19 @@ public class PvBlocks {
                                     //Undefined
                                     PvLogic.CommentStatement::new
                             });
+                    drawer = new DrawMulti(
+                            new DrawLiquidStaticRegion(PvLiquids.concentratedVoid) {{
+                                suffix = "-bottom";
+                            }},
+                            new DrawBubbles(Color.darkGray) {{
+                                amount = 10;
+                                radius = 3;
+                                spread = 2;
+                                timeScl = 120f;
+                                recurrence = 4f;
+                            }},
+                            new DrawDefault()
+                    );
                 }};
                 memoryByte = new MemoryBlock("memory-byte")
                 {{

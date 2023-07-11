@@ -69,7 +69,7 @@ public class BulkUnitFactory extends Reconstructor {
 
     @Override
     public void setStats() {
-        super.setBars();
+        super.setStats();
         plans.each(plan -> {
             stats.add(Stat.output, t -> {
                 buildStats(t,plan);
@@ -89,7 +89,7 @@ public class BulkUnitFactory extends Reconstructor {
                 cT.image(pvPlan.template.region).size(32).tooltip("template").right().padRight(8f);
         }
         for(ItemStack is : plan.requirements) {
-            cT.add(new ItemDisplay(is.item, is.amount, plan.time, false)).right();
+            cT.add(new ItemDisplay(is.item, is.amount, false)).right().padRight(5f).tooltip(  is.item.localizedName+" [lightgrey]"+ ((is.amount*60)/plan.time) + " items/second" );
         }
         t.row();
         t.add(cT).left();
