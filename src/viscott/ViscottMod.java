@@ -74,10 +74,10 @@ public class ViscottMod extends Mod {
     }
     @Override
     public void init(){
-        //don't use meta.author and meta.description when mod.hjson can be used, and there's no need to keep these things here
-        //Mods.LoadedMod tu = mods.locateMod("project-viscott");
-        //tu.meta.author = "[crimson]Sprites : [][white]\n [green]Ethanol10[] \n [yellow]ThomasThings[] \n[crimson]Sfx/Music : [][white]\n [cyan]Vdoble MSG[] \n[crimson]Programmers : [white]\n [orange]Si[red]ede[][] \n [orange]Manuwar[] \n [white][Pseudo3D] [orange]MeepOfFaith \n[crimson]Mappers : \n [purple]Nicodium";
-        //tu.meta.description = "[red]Project Viscott[] is a [orange]Mindustry mod[] that tries to add a \n[lime]new Planet[] and intends to give the player a [cyan]new[] and \n[purple]unique[] playing experience.\nIt adds [yellow]5 new Teams[], each with their own tech tree\nTo add to that it has a somewhat interresting progression.";
+        Mods.LoadedMod tu = mods.locateMod("project-viscott");
+        tu.meta.author = "[crimson]Sprites : [][white]\n [green]Ethanol10[] \n [blue]ThomasThings[] \n[crimson]Sfx/Music : [][white]\n [cyan]Vdoble MSG[] \n[crimson]Programmers : [white]\n [orange]Si[red]ede[][] \n [orange]Manuwar[] \n [white][Pseudo3D] [orange]MeepOfFaith \n[crimson]Mappers : \n [purple]Nicodium";
+        tu.meta.author = "[yellow]CREDITS[]: \n\n[crimson]Spriters : [green]Ethanol10[], [yellow]ThomasThings \n----------------------------\n[crimson]Sfx/Music : [cyan]Vdoble MSG [yellow]\n----------------------------\n[crimson]Programmers : [orange]Si[red]ede ,[purple]Manuwar [yellow]\n----------------------------\n[crimson]Mappers : [purple]Nicodium[yellow] \n----------------------------\n \n [purple]Special thanks to MEEPofFaith for creating the pseudo3d system.";
+        tu.meta.description = "[green]Project viscott[] is a mindustry mod that adds a \nnew Planet to the campaign, [purple]Vercilus[], and gives the player a [orange]new[] and [red]unique[] gameplay experience \nIt adds [blue]5 new Factions[], each with their own [orange]tech tree[]\nTo add to that, this mod makes a completely new progression and a new way to make units, [yellow]bulk factories[].\n\nThis mod is [yellow]still in development[]. \n Expect it to have some[scarlet] slight balancing issues[]";
         super.init();
         overRideOldSound();
         PvUIs.init();
