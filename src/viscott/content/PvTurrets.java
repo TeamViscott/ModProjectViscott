@@ -1266,7 +1266,24 @@ public class PvTurrets{
                         trailLength = 25;
                         trailWidth = 1f;
                         trailColor = targetColor = Color.yellow;
+                    }},
+                    PvItems.darkMatter, new BallisticMissileBulletType(GetName("nuero-missile")){{
+                        //sandbox only for now
+                        splashDamage = 423f;
+                        splashDamageRadius = 123f;
+                        buildingDamageMultiplier = 0.5f;
+                        hitShake = 4f;
+                        homingRange = 84;
+                        homingPower = 0.01f;
+                        speed = 10;
+                        lifetime = 16;
+                        height = 24f;
+                        //tfec
+                        trailLength = 25;
+                        trailWidth = 1f;
+                        trailColor = targetColor = Color.valueOf("011414");
                     }});
+
 
 
             shoot = new ShootAlternate(20);
@@ -1757,6 +1774,41 @@ public class PvTurrets{
                             trailLength = 25;
                             trailWidth = 1f;
                             trailColor = targetColor = Pal.techBlue;
+                        }};
+                    }},
+                    PvItems.darkMatter, new BallisticMissileBulletType(GetName("jaeger-missile")){{
+                        splashDamage = 0f;
+                        splashDamageRadius = 60f;
+                        buildingDamageMultiplier = 0.5f;
+                        hitShake = 1f;
+                        homingRange = 24;
+                        homingPower = 0.03f;
+                        hitSoundVolume = 2;
+                        targetRadius = 8;
+                        speed = 9;
+                        lifetime = 36;
+                        height = 36f;
+                        trailLength = 25;
+                        trailWidth = 1f;
+                        trailColor = targetColor = Color.valueOf("011414");
+                        fragBullets = 6;
+                        soundPitchMin = 0.8f;
+                        soundPitchMax = 0.85f;
+                        fragSpread = 8;
+                        fragRandomSpread = 36;
+                        fragBullet = new BallisticMissileBulletType(GetName("nuero-missile")){{
+                            splashDamage = 230f;
+                            splashDamageRadius = 140f;
+                            buildingDamageMultiplier = 0.5f;
+                            hitShake = 1f;
+                            homingRange = 24;
+                            homingPower = 0.03f;
+                            speed = 12;
+                            lifetime = 36;
+                            height = 24f;
+                            trailLength = 25;
+                            trailWidth = 1f;
+                            trailColor = targetColor = Color.valueOf("011414");
                         }};
                     }});
 

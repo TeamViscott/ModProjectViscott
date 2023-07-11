@@ -11,7 +11,7 @@ import static mindustry.content.Items.silicon;
 public class PvItems {
     public static Item
     zirconium,lithium,barium,nobelium,platinum,erbium,carbonFiber,copium,
-            rushAlloy,tideAlloy,bulkAlloy
+            rushAlloy,tideAlloy,bulkAlloy,darkMatter
     ;
     public static Seq<Item> vercilusItems = new Seq<Item>(),
                             vercilusOnlyItems = new Seq<Item>();
@@ -73,6 +73,15 @@ public class PvItems {
         {{
             localizedName = "Bulk Alloy";
             color = Pal.neoplasm1;
+        }};
+        //fun item mainly for omamori/omai and neuro/jaeger
+        darkMatter = new Item("dark-matter")
+        {{
+            localizedName = "Dark Matter";
+            description = "A dark mystical material, durring the creation of [green]Omamori[], [gold]Yggdrasil[] Made Dark matter for [green]Omamori[]";
+            color = Color.valueOf("011414");
+            explosiveness = 100;
+            radioactivity = 40;
         }};
 
         vercilusItems.addAll(zirconium,lithium,barium,silicon,nobelium,platinum,erbium,carbonFiber,rushAlloy,tideAlloy);
