@@ -114,10 +114,12 @@ public class PvEffects {
             Lines.stroke(e.fout()*4,col);
             Lines.circle(e.x,e.y,15*e.fin());
         });
+        Interp cascadeColAlphaInterp = new arc.math.Interp.ExpIn(2.5f, 10f);
         cascadeCraft = new Effect(120,e->{
             float waves = 3;
             float sin = Math.abs(Mathf.sin(e.fin()*waves *Mathf.pi));
-            Color col = Team.green.color.cpy().lerp(Color.clear,e.fin());
+            Color col = Team.green.color.cpy();
+            col.a = cascadeColAlphaInterp.apply(1);
             DrawPseudo3d.ring(e.x,e.y,5 * sin,7 * sin,9 * sin,e.fin()*8,col,col);
             DrawPseudo3d.tube(e.x,e.y,2*e.fout(),e.fin()*50,col,Color.clear);
             Lines.stroke(e.fout()*4,col);
