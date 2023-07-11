@@ -5,10 +5,15 @@ import arc.graphics.Color;
 import arc.math.Mathf;
 import arc.scene.ui.Label;
 import arc.scene.ui.layout.Table;
+import arc.util.Log;
+import arc.util.Strings;
 import arc.util.Time;
+import mindustry.gen.Building;
 import mindustry.gen.Unit;
 import mindustry.logic.*;
 import mindustry.ui.Styles;
+import mindustry.world.blocks.logic.LogicBlock;
+import mindustry.world.blocks.logic.LogicDisplay;
 import viscott.types.logic.PvParser;
 import viscott.world.block.logic.PvLogicBlock;
 
@@ -23,6 +28,7 @@ public class PvLogic {
         PvParser.addLoad("heal",2,new HealStatement());
         PvParser.addLoad("shield",3,new ShieldStatement());
         PvParser.addLoad("dj",1,new DynamicJumpStatement());
+        PvParser.addLoad("iptmv",3,new TransmitIptStatement());
     }
     public static String tokens(String... token)
     {
@@ -310,6 +316,112 @@ public class PvLogic {
             @Override
             public void run(LExecutor exec) {
                 exec.var(varCounter).numval += exec.numi(jump);
+            }
+        }
+    }
+    public static class TransmitIptStatement extends LStatement {
+        public int type = 0;
+        public String amount = "1";
+        public String building = "processor1";
+        public enum swapNames {
+                takeTPS,
+                giveTPS;
+                static public int size = swapNames.values().length;
+                static public swapNames[] all = swapNames.values();
+        }
+
+        @Override
+        public void write(StringBuilder builder){
+            builder.append("iptmv " + tokens(String.valueOf(type),amount,building));
+        }
+
+        @Override
+        public void afterRead()
+        {
+            type = Integer.parseInt(PvParser.allToken[1]);
+            amount = PvParser.allToken[2];
+            building = PvParser.allToken[3];
+        }
+
+        @Override
+        public LStatement copy()
+        {
+            return new TransmitIptStatement(type,amount,building);
+        }
+
+        @Override
+        public void build(Table table) {
+            table.button(b -> {
+                Label l = b.label(() -> swapNames.all[type].name()).get();
+                b.clicked(() -> {
+                    type = ++type % swapNames.size;
+                    l.name = swapNames.all[type].name();
+                });
+            }, Styles.logict, () -> {}).size(90, 40).color(table.color).left().padLeft(2);
+            table.table(t -> {
+                fields(t,"amount", amount, v -> amount = v).color(table.color);
+                fields(t,"building",building,v -> building = v).color(table.color).width(160);
+            });
+        }
+
+        public LCategory category(){
+            return LCategory.block;
+
+        }
+
+        public TransmitIptStatement(int type,String amount,String building){
+            this.type = type;
+            this.amount = amount;
+            this.building = building;
+        }
+        public TransmitIptStatement(){
+            super();
+        }
+
+        @Override
+        public LExecutor.LInstruction build(LAssembler builder) {
+            return new ITPTrans(type,builder.var(amount),builder.var(building));
+        }
+
+        public static class ITPTrans implements LExecutor.LInstruction {
+            public int type = 0;
+            public int amount = 0;
+            public int build = 0;
+            public ITPTrans(int type,int amount,int build) {
+                this.type = type;
+                this.amount = amount;
+                this.build = build;
+            }
+            @Override
+            public void run(LExecutor exec) {
+                int tpsAmount = exec.numi(amount);
+                if (tpsAmount == 0) return;
+                Building building = exec.building(build);
+                if (building instanceof LogicBlock.LogicBuild logicBuild) {
+                    LogicBlock execBlock = (LogicBlock) exec.build.block();
+                    LogicBlock lblock = (LogicBlock) logicBuild.block();
+                    int lipt,diff;
+                    switch (swapNames.all[type]) {
+                        case giveTPS:
+                            tpsAmount = Math.min(tpsAmount,exec.build.ipt);
+                            lipt = Math.min(logicBuild.ipt + tpsAmount,lblock.maxInstructionsPerTick);
+                            diff = lipt - logicBuild.ipt;
+                            logicBuild.ipt = lipt;
+                            exec.build.ipt -= diff;
+                            Log.info(logicBuild.ipt + " | Build ipt",0);
+                            Log.info(exec.build.ipt + " | Logic ipt",0);
+                            break;
+                        case takeTPS:
+                            tpsAmount = Math.min(tpsAmount,logicBuild.ipt);
+                            lipt = Math.min(exec.build.ipt + tpsAmount,execBlock.maxInstructionsPerTick);
+                            diff = lipt - exec.build.ipt;
+                            exec.build.ipt = lipt;
+                            logicBuild.ipt -= diff;
+                            Log.info(logicBuild.ipt + " | Build ipt",0);
+                            Log.info(exec.build.ipt + " | Logic ipt",0);
+                            break;
+                    }
+                }
             }
         }
     }

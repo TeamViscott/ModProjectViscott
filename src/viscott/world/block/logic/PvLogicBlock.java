@@ -3,7 +3,10 @@ package viscott.world.block.logic;
 import arc.func.Cons;
 import arc.func.Prov;
 import arc.scene.ui.layout.Table;
+import arc.struct.IntSet;
 import arc.struct.Seq;
+import arc.util.io.Reads;
+import arc.util.io.Writes;
 import mindustry.Vars;
 import mindustry.core.UI;
 import mindustry.core.World;
@@ -115,6 +118,86 @@ public class PvLogicBlock extends LogicBlock {
         }
 
         @Override
+        public void updateTile(){
+            //load up code from read()
+            if(loadBlock != null){
+                loadBlock.run();
+                loadBlock = null;
+            }
+
+            executor.team = team;
+
+            if(!checkedDuplicates){
+                checkedDuplicates = true;
+                var removal = new IntSet();
+                var removeLinks = new Seq<LogicLink>();
+                for(var link : links){
+                    var build = world.build(link.x, link.y);
+                    if(build != null){
+                        if(!removal.add(build.id)){
+                            removeLinks.add(link);
+                        }
+                    }
+                }
+                links.removeAll(removeLinks);
+            }
+
+            //check for previously invalid links to add after configuration
+            boolean changed = false, updates = true;
+
+            while(updates){
+                updates = false;
+
+                for(int i = 0; i < links.size; i++){
+                    LogicLink l = links.get(i);
+
+                    if(!l.active) continue;
+
+                    var cur = world.build(l.x, l.y);
+
+                    boolean valid = validLink(cur);
+                    if(l.lastBuild == null) l.lastBuild = cur;
+                    if(valid != l.valid || l.lastBuild != cur){
+                        l.lastBuild = cur;
+                        changed = true;
+                        l.valid = valid;
+                        if(valid){
+
+                            //this prevents conflicts
+                            l.name = "";
+                            //finds a new matching name after toggling
+                            l.name = findLinkName(cur.block);
+
+                            //remove redundant links
+                            links.removeAll(o -> world.build(o.x, o.y) == cur && o != l);
+
+                            //break to prevent concurrent modification
+                            updates = true;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            if(changed){
+                updateCode(code, true, null);
+            }
+
+            if(state.rules.disableWorldProcessors && privileged) return;
+
+            if(enabled && executor.initialized()){
+                accumulator += edelta() * ipt;
+
+                if(accumulator > maxInstructionScale * ipt) accumulator = maxInstructionScale * ipt;
+
+                for(int i = 0; i < (int)accumulator; i++){
+                    executor.runOnce();
+                    accumulator --;
+                }
+            }
+        }
+
+        @Override
         public void updateCode(String str, boolean keep, Cons<LAssembler> assemble) {
             if (str != null) {
                 code = str;
@@ -176,6 +259,18 @@ public class PvLogicBlock extends LogicBlock {
                     executor.load(LAssembler.assemble(code = "", privileged));
                 }
             }
+        }
+        @Override
+        public void write(Writes write){
+            super.write(write);
+            write.i(ipt);
+        }
+
+        @Override
+        public void read(Reads read, byte revision)
+        {
+            super.read(read,revision);
+            ipt = read.i();
         }
     }
 }

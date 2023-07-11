@@ -1,5 +1,6 @@
 package viscott.content;
 
+import arc.util.Strings;
 import mindustry.content.Blocks;
 import mindustry.content.Items;
 import mindustry.content.UnitTypes;
@@ -108,17 +109,18 @@ public class PvMaptools {
             health = Integer.MAX_VALUE;
             sandboxEditOnly = true;
         }};
-        coreIntrusion = new CoreBlock("core-intrusion")
-        {{
-            requirements(Category.effect,BuildVisibility.sandboxOnly,with());
-            localizedName = "Core: Intrusion";
-            alwaysUnlocked = true;
-            unitType = UnitTypes.emanate; //todo emanate like unit for invasion mode
-            health = 5350;
-            size = 6;
-            unitCapModifier = 100;
-            itemCapacity = 10000;
-        }};
+        if (false)
+            coreIntrusion = new CoreBlock("core-intrusion")
+            {{
+                requirements(Category.effect,BuildVisibility.sandboxOnly,with());
+                localizedName = "Core: Intrusion";
+                alwaysUnlocked = true;
+                unitType = UnitTypes.emanate; //todo emanate like unit for invasion mode
+                health = 5350;
+                size = 6;
+                unitCapModifier = 196;
+                itemCapacity = 240000;
+            }};
         ultrapowersource = new PowerSource("ultrapowersource")
         {{
             requirements(Category.power,BuildVisibility.sandboxOnly,with());

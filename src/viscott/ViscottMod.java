@@ -14,6 +14,7 @@ import mindustry.core.NetClient;
 import mindustry.game.EventType;
 import mindustry.gen.Call;
 import mindustry.gen.ClientPacketUnreliableCallPacket;
+import mindustry.gen.UnitEntity;
 import mindustry.graphics.Layer;
 import mindustry.mod.Mod;
 import mindustry.mod.Mods;
@@ -57,7 +58,6 @@ public class ViscottMod extends Mod {
         PvShaders.init();
         PvAttributes.load();
         PvStats.load();
-        PvMaptools.load();
         PvEffects.load();
         PvItems.load();
         PvStatusEffects.load();
@@ -65,6 +65,7 @@ public class ViscottMod extends Mod {
         PvWeathers.load();
         PvUnits.load();
         PvBlocks.load();
+        PvMaptools.load();
         PvTurrets.load();
         PvPlanets.load();
         PvVanillaChanges.load();

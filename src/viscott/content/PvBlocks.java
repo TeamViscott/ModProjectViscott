@@ -1141,7 +1141,8 @@ public class PvBlocks {
                     range = 8*20;
                     health = 90;
                     instructionsPerTick = 1;
-                    maxInstructionsPerTick = 1;
+                    maxInstructionsPerTick = 2;
+                    maxInstructionScale = 5;
                     allStatements= Seq.with(
                             new Prov[]{
                                     //Input && Output
@@ -1176,11 +1177,13 @@ public class PvBlocks {
                     faction.add(PvFactions.Nullis);
                     instructionsPerTick = 5;
                     maxInstructionsPerTick = 20;
+                    maxInstructionScale = 40;
                     allStatements= Seq.with(
                             new Prov[]{
                                     //Input && Output
                                     LStatements.WriteStatement::new,
                                     LStatements.ReadStatement::new,
+                                    LStatements.PrintStatement::new,
                                     //Unit Controll
                                     LStatements.UnitBindStatement::new,
                                     PvLogic.HealStatement::new,
@@ -1189,7 +1192,11 @@ public class PvBlocks {
                                     LStatements.UnitLocateStatement::new,
                                     LStatements.UnitRadarStatement::new,
                                     //Block Controll
+                                    LStatements.PrintFlushStatement::new,
                                     LStatements.SensorStatement::new,
+                                    LStatements.RadarStatement::new,
+                                    PvLogic.TransmitIptStatement::new,
+                                    LStatements.GetLinkStatement::new,
                                     //Operator
                                     LStatements.SetStatement::new,
                                     LStatements.OperationStatement::new,
