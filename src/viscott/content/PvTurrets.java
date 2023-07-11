@@ -2061,7 +2061,7 @@ public class PvTurrets{
                 );
             }};
         }};
-        sumaya = new PowerTurret("glaive"){{ //todo requirements. currently copied from glaive
+        sumaya = new PowerTurret("sumaya"){{ //todo requirements. currently copied from glaive
             requirements(Category.turret,BuildVisibility.shown , with(PvItems.zirconium,120,PvItems.nobelium,50,PvItems.erbium,100));
             size = 6;
             reload = 300f;
