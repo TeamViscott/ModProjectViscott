@@ -17,6 +17,7 @@ import mindustry.entities.Effect;
 import mindustry.entities.abilities.RepairFieldAbility;
 import mindustry.entities.abilities.ShieldArcAbility;
 import mindustry.entities.abilities.StatusFieldAbility;
+import mindustry.entities.abilities.UnitSpawnAbility;
 import mindustry.entities.bullet.*;
 import mindustry.entities.effect.ExplosionEffect;
 import mindustry.entities.effect.MultiEffect;
@@ -39,7 +40,6 @@ import mindustry.type.UnitType;
 import mindustry.type.Weapon;
 import mindustry.type.ammo.ItemAmmoType;
 import mindustry.type.unit.TankUnitType;
-import mindustry.entities.abilities.*;
 
 import arc.graphics.*;
 import arc.math.geom.*;
@@ -48,7 +48,17 @@ import mindustry.gen.*;
 import mindustry.graphics.*;
 import mindustry.type.*;
 import mindustry.type.ammo.*;
-//No clue which one gives tread rect/otamamori
+import mindustry.content.*;
+import mindustry.gen.*;
+import arc.graphics.*;
+import arc.math.*;
+import mindustry.entities.bullet.*;
+import mindustry.entities.part.*;
+import mindustry.graphics.*;
+import mindustry.type.*;
+import mindustry.world.*;
+import mindustry.world.blocks.defense.turrets.*;
+import mindustry.world.draw.*;
 
 import viscott.abilitys.EnemyStatusFieldAbility;
 import viscott.content.shootpatterns.ShootSpreadBounce;
@@ -1822,117 +1832,14 @@ public class PvUnits {
             drawCell = false;
             drawBody = false;
         }};
-        omai = new PvUnitType("omai") {{
-            localizedName = "[green]Omai[]";
-            description = "[gold]Children Of Omamori[], Helps Omamori deal with eneimes.";
-            constructor = EntityMapping.map("stell");
-            drag = 0.1f;
-            speed = 0.6f;
-            hitSize = 8f*2f;
-            health = 4000;
-            armor = 20f;
-            omniMovement = false;
-            faceTarget = false;
-            rotateSpeed = 1.4f;
-            drownTimeMultiplier = 0.5f;
-            treadPullOffset = 5;
-            treadRects = new Rect[]{new Rect(17 - 96f / 2f, 10 - 96f / 2f, 19, 76)};
-            ammoType = new ItemAmmoType(Items.graphite, 8);
-            weapons.add(new Weapon(name + "-weapon") {{
-                shootY = 3f;
-                x = 0f;
-                y = 0f;
-                top = false;
-                mirror = false;
-                reload = 100f;
-                inaccuracy = 10f;
-                chargeSound = Sounds.plasmadrop;
-                shootStatusDuration = 200f;
-                shootStatus = StatusEffects.slow;
-                shootSound = Sounds.plasmaboom;
-                cooldownTime = 300f;
-                heatColor = Color.valueOf("addada");
-                recoil = 0f;
-                shoot.firstShotDelay = 80f;
-                shoot.shots = 100;
-                shoot.shotDelay = 1f;
-                rotate = true;
-                rotateSpeed = 0.8f;
-                layerOffset = 1f;
-                bullet = new BasicBulletType(2.5f, 20f) {{
-                    buildingDamageMultiplier = 0.1f;
-                    sprite = PvUtil.GetName("error-bullet-top");
-                    backSprite = PvUtil.GetName("error-bullet-bottom");
-                    shootEffect = smokeEffect = Fx.none;
-                    reflectable = false;
-                    absorbable = false;
-                    height = width = 6f;
-                    shrinkY = shrinkX = -0.4f;
-                    spin = 4f;
-                    lifetime = 50f;
-                    trailColor = backColor = Color.valueOf("011414");
-                    frontColor = Color.valueOf("021d1d");
-                    trailEffect = hitEffect = despawnEffect = Fx.none;
-                    trailInterval = 0f;
-                    trailParam = 0f;
-                    trailLength = 7;
-                    trailWidth = 4f;
-                    laserAbsorb = false;
-                    homingRange = 600f;
-                    homingPower = 0.04f;
-                    homingDelay = 30f;
-                }};
-            }},
-            new Weapon(name + "-weapon-wave") {
-                {
-                    x = 0f;
-                    y = 0f;
-                    shootY = 0f;
-                    top = false;
-                    mirror = false;
-                    reload = 800f;
-                    inaccuracy = 360f;
-                    shootSound = Sounds.plasmadrop;
-                    cooldownTime = 300f;
-                    heatColor = Color.valueOf("addada");
-                    recoil = 0f;
-                    shootCone = 360;
-                    shoot.shots = 180;
-                    shoot.shotDelay = 0f;
-                    useAmmo = false;
-                    controllable = false;
-                    autoTarget = true;
-                    bullet = new BulletType(2.5f, 2f) {{
-                        buildingDamageMultiplier = 2f;
-                        shootEffect = smokeEffect = Fx.none;
-                        reflectable = false;
-                        absorbable = false;
-                        hittable = false;
-                        lifetime = 40f;
-                        trailEffect = hitEffect = despawnEffect = Fx.none;
-                        laserAbsorb = false;
-                        trailColor = Color.valueOf("011414");
-                        trailInterval = 0.2f;
-                        trailParam = 0.2f;
-                        trailLength = 2;
-                        trailWidth = 4f;
-                        knockback = 5;
-                        impact = true;
-                        collidesAir = false;
-                        keepVelocity = false;
-                    }};
-                }
-            });
-        }};
-        omamori = new PvUnitType("omamori") {
-            {
+        omamori = new PvUnitType("omamori") {{
                 localizedName = "[green]Omamori[]";
                 description = "[gold]Creation of Yggdrasil[], Omamori protects his allies to the very end. His many Attributes are [orange]\n1. Revive Allys\n2. Spawn Omais.";
                 Seq<String> detailList = new Seq<>();
                 detailList.addAll(
                         "[green]Omamori[].The Large Tank Run by a peaceful [green]Medusa AI[] Know to only attack when its place of rest has been disrepected",
-                        "the gentle giant that Omamori is makes him greatly feared but he inst one prone to attack as a creation of [gold]Yggdrasil[]",
-                        "durring his creation [gold]Yggdrasil[] gave him the power to protect his allies called [red]Prevention[], [green]He can give a ally a second life[].",
+                        "the gentle giant that Omamori is makes him greatly feared but he ins't one prone to attack as a creation of [gold]Yggdrasil[]",
+                        "durring his creation [gold]Yggdrasil[] gave him the power to protect his allies with [red]Prevention[], [green]He can give a ally a second life[].",
                         "[orange]Usual Behaviour Between Factions : ",
                         "[green]Allianced Factions : []Xeal , Psy",
                         "[grey]Neutral Factions :[] Nullis, Azulex",
@@ -1953,14 +1860,18 @@ public class PvUnits {
                 rotateSpeed = 0.8f;
                 drownTimeMultiplier = 0.5f;
                 ammoType = new ItemAmmoType(Items.graphite, 8);
-
-                abilities.add(new UnitSpawnAbility(omai, 600f, 19.25f, 0f), new UnitSpawnAbility(omai, 600f, -19.25f, 0f));
-                weapons.add(new Weapon(name + "-weapon-main") {{
+                treadPullOffset = 5;
+                /*treadRects = new Rect[]{new Rect(56f, 275f, 64f, -137)};TODO figure out why this crashes mindustry*/
+                /*abilities.add(new StatusFieldAbility(PvStatusEffects.prevention, 10f, 1000f, 200f)*/
+                weapons.add(
+                new Weapon(name + "-weapon-main") {{
                     shootY = 3f;
                     x = 0f;
                     y = 0f;
                     top = false;
                     mirror = false;
+                    shootWarmupSpeed = 0.06f;
+                    minWarmup = 0.9f;
                     reload = 100f;
                     targetAir = true;
                     targetGround = true;
@@ -1977,8 +1888,13 @@ public class PvUnits {
                     shoot.shotDelay = 1f;
                     rotate = true;
                     rotateSpeed = 0.8f;
+                    layerOffset = 2f;
                     /*immunities.add(PvStatusEffects.prevention);TODO make prevention effect*/
                     bullet = new BasicBulletType(2.5f, 175f) {{
+                        pierce = true;
+                        pierceBuilding = true;
+                        pierceCap = 8;
+                        laserAbsorb = false;
                         buildingDamageMultiplier = 0.1f;
                         sprite = PvUtil.GetName("error-bullet-top");
                         backSprite = PvUtil.GetName("error-bullet-bottom");
@@ -2002,60 +1918,53 @@ public class PvUnits {
                         homingDelay = 30f;
                     }};
                 }},
-                        new Weapon(name + "-weapon-rail") {{
-                    shootY = 3f;
-                    x = 12f;
-                    y = 12f;
+                new Weapon(name + "-weapon-rail") {{
+                    x = 26f;
+                    y = 16f;
                     top = false;
                     mirror = true;
-                    reload = 40f;
+                    reload = 10f;
                     inaccuracy = 0f;
-                    shootSound = Sounds.plasmaboom;
+                    shootSound = Sounds.malignShoot;
                     cooldownTime = 300f;
                     heatColor = Color.valueOf("addada");
-                    recoil = 0f;
+                    recoil = 2f;
                     rotate = true;
                     rotateSpeed = 2f;
+                    layerOffset = 1f;
                     bullet = new RailBulletType() {{
-                        length = 260f;
-                        damage = 750f;
-                        hitColor = Color.valueOf("feb380");
+                        length = 300f;
+                        damage = 50f;
+                        hitColor = Color.valueOf("021d1d");
                         hitEffect = endEffect = Fx.hitBulletColor;
-                        pierceDamageFactor = 0.8f;
-
+                        pierce = true;
+                        pierceBuilding = true;
+                        pierceCap = 4;
+                        laserAbsorb = false;
                         smokeEffect = Fx.colorSpark;
-
                         endEffect = new Effect(14f, e -> {
                             color(e.color);
                             Drawf.tri(e.x, e.y, e.fout() * 1.5f, 5f, e.rotation);
                         });
-
                         shootEffect = new Effect(10, e -> {
                             color(e.color);
                             float w = 1.2f + 7 * e.fout();
-
                             Drawf.tri(e.x, e.y, w, 30f * e.fout(), e.rotation);
                             color(e.color);
-
-                            for (int i : Mathf.signs) {
+                            for(int i : Mathf.signs){
                                 Drawf.tri(e.x, e.y, w * 0.9f, 18f * e.fout(), e.rotation + i * 90f);
                             }
-
                             Drawf.tri(e.x, e.y, w, 4f * e.fout(), e.rotation + 180f);
                         });
-
                         lineEffect = new Effect(20f, e -> {
-                            if (!(e.data instanceof Vec2 v)) return;
-
+                            if(!(e.data instanceof Vec2 v)) return;
                             color(e.color);
                             stroke(e.fout() * 0.9f + 0.6f);
-
                             Fx.rand.setSeed(e.id);
-                            for (int i = 0; i < 7; i++) {
+                            for(int i = 0; i < 7; i++){
                                 Fx.v.trns(e.rotation, Fx.rand.random(8f, v.dst(e.x, e.y) - 8f));
                                 Lines.lineAngleCenter(e.x + Fx.v.x, e.y + Fx.v.y, e.rotation + e.finpow(), e.foutpowdown() * 20f * Fx.rand.random(0.5f, 1f) + 0.3f);
                             }
-
                             e.scaled(14f, b -> {
                                 stroke(b.fout() * 1.5f);
                                 color(e.color);
@@ -2064,54 +1973,264 @@ public class PvUnits {
                         });
                     }};
                 }},
-                        new Weapon(name + "-weapon-wave") {{
+                new Weapon(name + "-weapon-rail") {{
+                    x = 18f;
+                    y = -24f;
+                    top = false;
+                    mirror = true;
+                    reload = 10f;
+                    inaccuracy = 0f;
+                    shootSound = Sounds.malignShoot;
+                    cooldownTime = 300f;
+                    heatColor = Color.valueOf("addada");
+                    recoil = 2f;
+                    rotate = true;
+                    rotateSpeed = 2f;
+                    shoot.firstShotDelay = 5f;
+                    layerOffset = 1f;
+                    bullet = new RailBulletType() {{
+                        length = 300f;
+                        damage = 50f;
+                        hitColor = Color.valueOf("021d1d");
+                        hitEffect = endEffect = Fx.hitBulletColor;
+                        pierce = true;
+                        pierceBuilding = true;
+                        pierceCap = 4;
+                        laserAbsorb = false;
+                        smokeEffect = Fx.colorSpark;
+                        endEffect = new Effect(14f, e -> {
+                            color(e.color);
+                            Drawf.tri(e.x, e.y, e.fout() * 1.5f, 5f, e.rotation);
+                        });
+                        shootEffect = new Effect(10, e -> {
+                            color(e.color);
+                            float w = 1.2f + 7 * e.fout();
+                            Drawf.tri(e.x, e.y, w, 30f * e.fout(), e.rotation);
+                            color(e.color);
+                            for(int i : Mathf.signs){
+                                Drawf.tri(e.x, e.y, w * 0.9f, 18f * e.fout(), e.rotation + i * 90f);
+                            }
+                            Drawf.tri(e.x, e.y, w, 4f * e.fout(), e.rotation + 180f);
+                        });
+                        lineEffect = new Effect(20f, e -> {
+                            if(!(e.data instanceof Vec2 v)) return;
+                            color(e.color);
+                            stroke(e.fout() * 0.9f + 0.6f);
+                            Fx.rand.setSeed(e.id);
+                            for(int i = 0; i < 7; i++){
+                                Fx.v.trns(e.rotation, Fx.rand.random(8f, v.dst(e.x, e.y) - 8f));
+                                Lines.lineAngleCenter(e.x + Fx.v.x, e.y + Fx.v.y, e.rotation + e.finpow(), e.foutpowdown() * 20f * Fx.rand.random(0.5f, 1f) + 0.3f);
+                            }
+                            e.scaled(14f, b -> {
+                                stroke(b.fout() * 1.5f);
+                                color(e.color);
+                                Lines.line(e.x, e.y, v.x, v.y);
+                            });
+                        });
+                    }};
+                }},
+
+                new Weapon(name + "-weapon-wave"){{
                     x = 0f;
                     y = 0f;
+                    shootY = 0f;
                     top = false;
                     mirror = false;
-                    shootY = 0f;
                     reload = 800f;
+                    inaccuracy = 360f;
                     shootSound = Sounds.plasmadrop;
                     cooldownTime = 300f;
                     heatColor = Color.valueOf("addada");
                     recoil = 0f;
-                    shoot = new ShootSpread();
-                    shootCone = 360f;
-                    shoot.shots = 360;
+                    shootCone = 360;
+                    hitSize = 6;
+                    shoot.shots = 180;
                     shoot.shotDelay = 0f;
+                    useAmmo = false;
+                    controllable = false;
+                    autoTarget = true;
+                    bullet = new BulletType(2.5f, 20f) {{
+                        buildingDamageMultiplier = 2f;
+                        pierce = true;
+                        pierceBuilding = true;
+                        pierceCap = 400;
+                        laserAbsorb = false;
+                        shootEffect = smokeEffect = Fx.none;
+                        reflectable = false;
+                        absorbable = false;
+                        hittable = false;
+                        lifetime = 80f;
+                        trailEffect = hitEffect = despawnEffect = Fx.none;
+                        laserAbsorb = false;
+                        trailColor = Color.valueOf("011414");
+                        trailInterval = 0.2f;
+                        trailParam = 0.2f;
+                        trailLength = 2;
+                        trailWidth = 4f;
+                        knockback = 8;
+                        impact = true;
+                        collidesAir = false;
+                        keepVelocity = false;
+                    }};
+                }});
+                weapons.add(
+                new Weapon(name + "-factory") {{
+                    x = 0f;
+                    y = 0f;
+                    shootWarmupSpeed = 0.06f;
+                    minWarmup = 0.3f;
+                    top = true;
+                    mirror = true;
+                    alternate = false;
+                    shootX = 40f;
+                    reload = 2000f;
+                    shootSound = Sounds.respawn;
+                    recoil = 0f;
+                    shootCone = 360f;
+                    layerOffset = 0.06f;
+                    parts.add(
+                    new RegionPart("-out"){{
+                        progress = PartProgress.recoil;
+                        mirror = false;
+                        under = true;
+                        layerOffset = -0.02f;
+                        outline = false;
+                    }},
+                    new RegionPart("-unit"){{
+                        progress = PartProgress.reload.curve(Interp.pow2In);
 
-                    bullet = new BulletType(2.5f, 100f) {{
-                        shootCone = 360;
-                        hitSize = 6;
-                        shoot.shots = 180;
-                        shoot.shotDelay = 0f;
-                        useAmmo = false;
-                        controllable = false;
-                        autoTarget = true;
-                        bullet = new BulletType(2.5f, 20f) {{
-                            buildingDamageMultiplier = 2f;
-                            shootEffect = smokeEffect = Fx.none;
-                            reflectable = false;
-                            absorbable = false;
-                            hittable = false;
-                            lifetime = 80f;
-                            trailEffect = hitEffect = despawnEffect = Fx.none;
-                            laserAbsorb = false;
-                            trailColor = Color.valueOf("011414");
-                            trailInterval = 0.2f;
-                            trailParam = 0.2f;
-                            trailLength = 2;
-                            trailWidth = 4f;
-                            knockback = 5;
-                            impact = true;
-                            collidesAir = false;
-                            keepVelocity = false;
+                        colorTo = new Color(1f, 1f, 1f, 0f);
+                        color = Color.white;
+                        mixColorTo = Color.white;
+                        mixColor = new Color(1f, 1f, 1f, 0f);
+                        outline = false;
+                        under = true;
+                        x = 1;
+
+                        layerOffset = -0.01f;
+
+                        moves.add(new PartMove(PartProgress.recoil.inv(), -2f, 0f, 0f));
+                    }});
+                    bullet = new BasicBulletType() {{
+                        speed = 0f;
+                        keepVelocity = false;
+                        collidesAir = false;
+                        spawnUnit = new PvUnitType("omai") {{
+                            localizedName = "[green]Omai[]";
+                            description = "[gold]Children Of Omamori[], Helps Omamori deal with eneimes.";
+                            constructor = EntityMapping.map("stell");
+                            drag = 0.1f;
+                            speed = 0.6f;
+                            hitSize = 8f;
+                            health = 4000;
+                            armor = 20f;
+                            omniMovement = false;
+                            faceTarget = false;
+                            rotateSpeed = 1.4f;
+                            drownTimeMultiplier = 0.5f;
+                            treadPullOffset = 5;
+                            treadRects = new Rect[]{new Rect(17 - 96f / 2f, 10 - 96f / 2f, 19, 76)};
+                            ammoType = new ItemAmmoType(Items.graphite, 8);
+                            weapons.add(
+                            new Weapon(name + "-weapon") {{
+                                shootY = 3f;
+                                x = 0f;
+                                y = 0f;
+                                top = false;
+                                mirror = false;
+                                reload = 100f;
+                                inaccuracy = 10f;
+                                chargeSound = Sounds.plasmadrop;
+                                shootStatusDuration = 200f;
+                                shootStatus = StatusEffects.slow;
+                                shootSound = Sounds.plasmaboom;
+                                cooldownTime = 300f;
+                                heatColor = Color.valueOf("addada");
+                                recoil = 0f;
+                                shoot.firstShotDelay = 80f;
+                                shoot.shots = 100;
+                                shoot.shotDelay = 1f;
+                                rotate = true;
+                                rotateSpeed = 0.8f;
+                                layerOffset = 1f;
+                                bullet = new BasicBulletType(2.5f, 20f) {{
+                                    pierce = true;
+                                    pierceBuilding = true;
+                                    pierceCap = 8;
+                                    laserAbsorb = false;
+                                    buildingDamageMultiplier = 0.1f;
+                                    sprite = PvUtil.GetName("error-bullet-top");
+                                    backSprite = PvUtil.GetName("error-bullet-bottom");
+                                    shootEffect = smokeEffect = Fx.none;
+                                    reflectable = false;
+                                    absorbable = false;
+                                    height = width = 6f;
+                                    shrinkY = shrinkX = -0.4f;
+                                    spin = 4f;
+                                    lifetime = 50f;
+                                    trailColor = backColor = Color.valueOf("011414");
+                                    frontColor = Color.valueOf("021d1d");
+                                    trailEffect = hitEffect = despawnEffect = Fx.none;
+                                    trailInterval = 0f;
+                                    trailParam = 0f;
+                                    trailLength = 7;
+                                    trailWidth = 4f;
+                                    laserAbsorb = false;
+                                    homingRange = 600f;
+                                    homingPower = 0.04f;
+                                    homingDelay = 30f;
+                                }};
+                            }},
+                            new Weapon(name + "-weapon-wave"){{
+                                x = 0f;
+                                y = 0f;
+                                shootY = 0f;
+                                top = false;
+                                mirror = false;
+                                reload = 800f;
+                                inaccuracy = 360f;
+                                shootSound = Sounds.plasmadrop;
+                                cooldownTime = 300f;
+                                heatColor = Color.valueOf("addada");
+                                recoil = 0f;
+                                shootCone = 360;
+                                hitSize = 6;
+                                shoot.shots = 180;
+                                shoot.shotDelay = 0f;
+                                useAmmo = false;
+                                controllable = false;
+                                autoTarget = true;
+                                bullet = new BulletType(2.5f, 2f) {{
+                                    pierce = true;
+                                    pierceBuilding = true;
+                                    pierceCap = 400;
+                                    laserAbsorb = false;
+                                    buildingDamageMultiplier = 2f;
+                                    removeAfterPierce = false;
+                                    shootEffect = smokeEffect = Fx.none;
+                                    reflectable = false;
+                                    absorbable = false;
+                                    hittable = false;
+                                    lifetime = 40f;
+                                    trailEffect = hitEffect = despawnEffect = Fx.none;
+                                    laserAbsorb = false;
+                                    trailColor = Color.valueOf("011414");
+                                    trailInterval = 0.2f;
+                                    trailParam = 0.2f;
+                                    trailLength = 2;
+                                    trailWidth = 4f;
+                                    knockback = 8;
+                                    impact = true;
+                                    collidesAir = false;
+                                    keepVelocity = false;
+                                }};
+                            }});
                         }};
                     }};
                 }});
-            }
-        };
-        };    public static void loadRocketHoverPath() {
+        }};
+    };
+    public static void loadRocketHoverPath() {
         milli = new PvUnitType("milli") {{
             localizedName = "Milli";
             constructor = EntityMapping.map("ElevationMoveUnit");
