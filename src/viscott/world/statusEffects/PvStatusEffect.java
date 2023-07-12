@@ -1,6 +1,7 @@
 package viscott.world.statusEffects;
 
 import arc.Core;
+import arc.math.Mat;
 import arc.struct.Seq;
 import arc.util.Log;
 import arc.util.Time;
@@ -21,6 +22,7 @@ public class PvStatusEffect extends StatusEffect {
     public float maxShield = 100;
 
     public boolean numbness = false;
+    public boolean ground = false;
 
     public class healthDmg
     {
@@ -55,6 +57,16 @@ public class PvStatusEffect extends StatusEffect {
         {
             start(unit);
             effectOn.add(unit);
+        }
+        if (ground) {
+            if (unit.type.canBoost)
+                unit.updateBoosting(false);
+            if (unit.tileOn().solid()) {
+                unit.vel.x *= -2f;
+                unit.vel.y *= -2f;
+                unit.speedMultiplier = 0;
+                unit.dragMultiplier = 0;
+            }
         }
         if (numbness) {
             if(damageNumbness.containsKey(unit)) {

@@ -40,6 +40,7 @@ public class PvLiquids {
             heatCapacity = 4;
             temperature = 0;
             effect = PvStatusEffects.voidDecay;
+            voidFlyingEffect = PvStatusEffects.voidConsume;
             explosiveness = 0.1f;
             viscosity = 2;
             coolant = true;

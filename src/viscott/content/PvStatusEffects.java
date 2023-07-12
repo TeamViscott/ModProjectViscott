@@ -15,7 +15,7 @@ import viscott.world.statusEffects.*;
 public class PvStatusEffects {
     public static StatusEffect
     timeWarped,doused, disabled, expent, resiliant, ungratefull, crescendo ,tick ,tock,mend,shield, malfunction,
-    voidShield,voidDecay,frag,aoe,homing,memoryExchange,dataLeak,endless, revived, prevention
+    voidShield,voidDecay,frag,aoe,homing,memoryExchange,dataLeak,endless, revived, prevention, voidConsume
             ;
     public static void load() {
         timeWarped = new StatusEffectStack("time-warped") {{
@@ -136,6 +136,14 @@ public class PvStatusEffects {
             damage = 20f/60f;
             buildSpeedMultiplier = 0.1f;
             speedMultiplier = 0.94f;
+        }};
+        voidConsume = new PvStatusEffect("void-consume") {{
+            localizedName = "Void Consume";
+            color = Color.black;
+            description = "Hovering so close to the Void was not a good idea. it dragged you down to the ground";
+            damage = 5f/60f;
+            buildSpeedMultiplier = 0.90f;
+            ground = true;
         }};
         malfunction = new PvStatusEffect("malfunction")
         {{
