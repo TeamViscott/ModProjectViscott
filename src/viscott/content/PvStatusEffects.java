@@ -185,12 +185,14 @@ public class PvStatusEffects {
             effectChance = 0.1f;
         }};
         prevention = new RevivalStatusEffect("prevention"){{
+            permanent = true;
             localizedName = "Prevention";
             description = "This effect given by Omamori prevents death in any ally";
             details = "";
             opposites = ObjectSet.with(PvStatusEffects.revived);
         }};
         revived = new StatusEffect("revived"){{
+            permanent = true;
             localizedName = "Revived";
             description = "This means you've been revived by Omamori, and can't be revived another time";
             details = "";
