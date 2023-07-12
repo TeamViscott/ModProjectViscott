@@ -189,7 +189,6 @@ public class PvLogicBlock extends LogicBlock {
                 accumulator += edelta() * ipt;
 
                 if(accumulator > maxInstructionScale * ipt) accumulator = maxInstructionScale * ipt;
-
                 for(int i = 0; i < (int)accumulator; i++){
                     executor.runOnce();
                     accumulator --;
@@ -229,7 +228,7 @@ public class PvLogicBlock extends LogicBlock {
                     asm.putConst("@mapw", world.width());
                     asm.putConst("@maph", world.height());
                     asm.putConst("@links", executor.links.length);
-                    asm.putConst("@ipt", instructionsPerTick);
+                    asm.putVar("@ipt").value = ipt;;
 
                     if (keep) {
                         //store any older variables

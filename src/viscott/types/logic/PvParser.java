@@ -23,7 +23,6 @@ public class PvParser {
 
     Seq<LStatement> statements = new Seq<>();
     static HashMap<String,LStatement> connector = new HashMap<>();
-    static HashMap<String,Integer> stats = new HashMap<>();
     public static String[] allToken;
     char[] chars;
     int pos, line, tok;
@@ -31,10 +30,9 @@ public class PvParser {
 
     Seq<Prov<LStatement>> allStatements;
 
-    public static void addLoad(String ent,int tokenCount,LStatement statement)
+    public static void addLoad(String ent,LStatement statement)
     {
         connector.put(ent,statement);
-        stats.put(ent,tokenCount);
     }
 
     public PvParser(String text, Seq<Prov<LStatement>> allStatements){

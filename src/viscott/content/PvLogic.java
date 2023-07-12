@@ -24,11 +24,11 @@ import static mindustry.logic.LExecutor.varCounter;
 public class PvLogic {
     public static void load()
     {
-        PvParser.addLoad("com",1,new CommentStatement());
-        PvParser.addLoad("heal",2,new HealStatement());
-        PvParser.addLoad("shield",3,new ShieldStatement());
-        PvParser.addLoad("dj",1,new DynamicJumpStatement());
-        PvParser.addLoad("iptmv",3,new TransmitIptStatement());
+        PvParser.addLoad("com",new CommentStatement());
+        PvParser.addLoad("heal",new HealStatement());
+        PvParser.addLoad("shield",new ShieldStatement());
+        PvParser.addLoad("dj",new DynamicJumpStatement());
+        PvParser.addLoad("iptmv",new TransmitIptStatement());
     }
     public static String tokens(String... token)
     {
@@ -324,8 +324,8 @@ public class PvLogic {
         public String amount = "1";
         public String building = "processor1";
         public enum swapNames {
-                takeTPS,
-                giveTPS;
+                take,
+                give;
                 static public int size = swapNames.values().length;
                 static public swapNames[] all = swapNames.values();
         }
@@ -402,25 +402,23 @@ public class PvLogic {
                     LogicBlock lblock = (LogicBlock) logicBuild.block();
                     int lipt,diff;
                     switch (swapNames.all[type]) {
-                        case giveTPS:
+                        case give:
                             tpsAmount = Math.min(tpsAmount,exec.build.ipt);
                             lipt = Math.min(logicBuild.ipt + tpsAmount,lblock.maxInstructionsPerTick);
                             diff = lipt - logicBuild.ipt;
                             logicBuild.ipt = lipt;
                             exec.build.ipt -= diff;
-                            Log.info(logicBuild.ipt + " | Build ipt",0);
-                            Log.info(exec.build.ipt + " | Logic ipt",0);
                             break;
-                        case takeTPS:
+                        case take:
                             tpsAmount = Math.min(tpsAmount,logicBuild.ipt);
                             lipt = Math.min(exec.build.ipt + tpsAmount,execBlock.maxInstructionsPerTick);
                             diff = lipt - exec.build.ipt;
                             exec.build.ipt = lipt;
                             logicBuild.ipt -= diff;
-                            Log.info(logicBuild.ipt + " | Build ipt",0);
-                            Log.info(exec.build.ipt + " | Logic ipt",0);
                             break;
                     }
+                    exec.setnum(exec.iptIndex,exec.build.ipt);
+                    logicBuild.executor.setnum(logicBuild.executor.iptIndex,logicBuild.ipt);
                 }
             }
         }

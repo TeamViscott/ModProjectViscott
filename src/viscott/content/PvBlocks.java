@@ -1091,6 +1091,7 @@ public class PvBlocks {
                 }};
                 smallConcentratedTank = new LiquidRouter("small-concentrated-tank"){{
                     requirements(Category.liquid, with(PvItems.barium, 30,PvItems.lithium,10));
+                    localizedName = "Concentrated Container";
                     size = 2;
                     solid = true;
                     liquidCapacity = 1500f;
@@ -1099,6 +1100,7 @@ public class PvBlocks {
                 }};
                 largeConcentratedTank = new LiquidRouter("large-concentrated-tank"){{
                     requirements(Category.liquid, with(PvItems.barium, 100,PvItems.lithium,50,PvItems.nobelium,20));
+                    localizedName = "Concentrated Tank";
                     size = 4;
                     solid = true;
                     liquidCapacity = 6000f;

@@ -2,7 +2,9 @@ package viscott.content;
 
 import arc.graphics.Color;
 import mindustry.content.StatusEffects;
+import mindustry.type.CellLiquid;
 import mindustry.type.Liquid;
+import viscott.types.VoidLiquid;
 
 public class PvLiquids {
     public static Liquid
@@ -31,11 +33,15 @@ public class PvLiquids {
             gas = true;
             coolant = false;
         }};
-        concentratedVoid = new Liquid("liquid-concentrated-void"){{
+        concentratedVoid = new VoidLiquid("liquid-concentrated-void"){{
             localizedName = "Concentrated Void";
             description = "[#1a1a1a]So Concentrated that it manifested into a Liquid.";
             color = Color.valueOf("111111");
             heatCapacity = 4;
+            temperature = 0;
+            effect = PvStatusEffects.voidDecay;
+            explosiveness = 0.1f;
+            viscosity = 2;
             coolant = true;
         }};
     }
