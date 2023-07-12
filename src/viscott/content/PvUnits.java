@@ -1862,7 +1862,7 @@ public class PvUnits {
                 ammoType = new ItemAmmoType(PvItems.darkMatter, 8);
                 treadPullOffset = 5;
                 /*treadRects = new Rect[]{new Rect(56f, 275f, 64f, -137)};TODO figure out why this crashes mindustry*/
-                /*abilities.add(new StatusFieldAbility(PvStatusEffects.prevention, 10f, 1000f, 200f)TODO make prevention effect*/
+                abilities.add(new StatusFieldAbility(PvStatusEffects.prevention, 10f, 1000f, 200f));
                 weapons.add(
                 new Weapon(name + "-weapon-main") {{
                     shootY = 3f;
@@ -1889,7 +1889,7 @@ public class PvUnits {
                     rotate = true;
                     rotateSpeed = 0.8f;
                     layerOffset = 2f;
-                    /*immunities.add(PvStatusEffects.prevention);TODO make prevention effect*/
+                    immunities.add(PvStatusEffects.prevention);
                     bullet = new BasicBulletType(2.5f, 175f) {{
                         pierce = true;
                         pierceBuilding = true;
@@ -2153,6 +2153,7 @@ public class PvUnits {
                                 rotate = true;
                                 rotateSpeed = 0.8f;
                                 layerOffset = 1f;
+                                immunities.add(PvStatusEffects.prevention);
                                 bullet = new BasicBulletType(2.5f, 20f) {{
                                     pierce = true;
                                     pierceBuilding = true;
