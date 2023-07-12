@@ -819,32 +819,31 @@ public class PvTurrets{
             shootX = 0;
             shootY = 0;
             health = 3200;
-            recoil = -8*9f;
+            recoil = -8*2f;
             shootCone = 45f;
             liquidCapacity = 40f;
             shootEffect = Fx.shootLiquid;
             range = 8*12f;
             scaledHealth = 250;
             ammo(
-                    Liquids.water, new PointBulletType(){{
-                        damage = 140;
+                    Liquids.water, new LaserBoltBulletType(12,140){{
                         pierce = true; pierceCap = 1000;
-                        trailColor = lightColor = Color.valueOf("000000");
-                        lifetime = 40;
+                        trailColor = lightColor = Pal.sap;
+                        lifetime = Mathf.ceil(PvUtil.GetRange(this.speed,14));
+                        trailWidth = 2;
+                        trailLength = 12;
                         collides = true;
                         trailChance = 0;
                         hitSize = 16;
                         trailEffect = Fx.none;
                         status = PvStatusEffects.timeWarped;
-                        knockback = -4f;
+                        knockback = -6f;
                         hitEffect = Fx.hitLancer;
                         despawnEffect = Fx.none;
                         statusDuration = 8*60;
                     }}
             );
-            drawer = new DrawTurret(GetName("Pov")){{
-
-            }};
+            drawer = new DrawTurret(GetName("Pov"));
         }};
     }
     public static void loadSize4()

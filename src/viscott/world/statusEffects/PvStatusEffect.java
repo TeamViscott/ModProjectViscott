@@ -61,12 +61,13 @@ public class PvStatusEffect extends StatusEffect {
         if (ground) {
             if (unit.type.canBoost)
                 unit.updateBoosting(false);
-            if (unit.tileOn().solid()) {
-                unit.vel.x *= -2f;
-                unit.vel.y *= -2f;
-                unit.speedMultiplier = 0;
-                unit.dragMultiplier = 0;
-            }
+            if (unit.tileOn() != null)
+                if (unit.tileOn().solid()) {
+                    unit.vel.x *= -2f;
+                    unit.vel.y *= -2f;
+                    unit.speedMultiplier = 0;
+                    unit.dragMultiplier = 0;
+                }
         }
         if (numbness) {
             if(damageNumbness.containsKey(unit)) {

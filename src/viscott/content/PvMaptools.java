@@ -22,6 +22,7 @@ import mindustry.world.draw.DrawDefault;
 import mindustry.world.draw.DrawHeatOutput;
 import mindustry.world.draw.DrawMulti;
 import mindustry.world.meta.BuildVisibility;
+import viscott.world.block.liquids.VoidSource;
 import viscott.world.block.sandbox.PvItemSource;
 import viscott.world.block.sandbox.PvLiquidSource;
 
@@ -33,6 +34,7 @@ public class PvMaptools {
     public static Block
     basicsource, normalsource, advancedsource, ultrasource, ultrarouter, ultraliquidrouter, omegarouter, omegaliquidrouter, ultraconveyor,
     ultraconduit, basicliquidsource, advancedliquidsource, ultraliquidsource, normalliquidsource, coreIntrusion, ultraheatsource, ultrapowersource,
+    voidsource,
     tier1overdrive, tier2overdrive, tier3overdrive, tier4overdrive;
     public static void load()
     {
@@ -173,5 +175,14 @@ public class PvMaptools {
             useTime = 300f;
             hasBoost = false;
         }};
-        }
+        voidsource = new VoidSource("void-source") {
+            {
+                requirements(Category.liquid,BuildVisibility.sandboxOnly,with());
+                health = 1400;
+                localizedName = "Void Source";
+                description = "Emitts Void and does not get damaged by Void.";
+                voidAmount = 4;
+            }
+        };
+    }
 }

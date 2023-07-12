@@ -81,6 +81,7 @@ public class PvBlocks {
                             fractionIonizer,nitrogenDistiller,quadRushForge,
                             /*Xeal*/cascadeForge,
                             /*Mortikai*/uberbulkForge,
+                            /*Nullis*/voidPressurizer,
 
                     /*Heaters*/keroseneHeater,blastHeater, hybridHeater, xeroPointHeater,
                                 heatPathfinder,
@@ -619,6 +620,27 @@ public class PvBlocks {
                     consumeLiquid(PvLiquids.xenon,15f/60f);
                     consumeItems(with(PvItems.lithium,10,PvItems.erbium,5));
                     outputItem = new ItemStack(PvItems.tideAlloy,2);
+                }};
+                voidPressurizer = new PvGenericCrafter("void-pressurizer") {{
+                    requirements(Category.crafting,with(PvItems.rushAlloy,75,PvItems.carbonFiber,190,PvItems.zirconium,2500));
+                    localizedName = "Void Pressurizer";
+                    faction.add(PvFactions.Nullis);
+                    health = 1400;
+                    size = 4;
+                    consumePower(1260f/60f);
+                    itemCapacity = 50;
+                    liquidCapacity = 50;
+                    craftTime = 60*2f;
+                    craftEffect = new MultiEffect(PvEffects.nullisDeath.get(0),Fx.explosion);
+                    updateEffect = Fx.wet;
+                    consumeItems(with(PvItems.rushAlloy,1,PvItems.erbium,20));
+                    outputLiquid = new LiquidStack(PvLiquids.concentratedVoid,8/60f);
+                    hasLiquids = true;
+                    drawer = new DrawMulti(
+                            new DrawRegion("-liquid"),
+                            new DrawLiquidRegion(PvLiquids.concentratedVoid),
+                            new DrawDefault()
+                    );
                 }};
                 keroseneHeater = new HeatProducer("kerosene-heater"){{
                     requirements(Category.crafting, with(PvItems.zirconium, 20, PvItems.platinum, 30)); //Todo
