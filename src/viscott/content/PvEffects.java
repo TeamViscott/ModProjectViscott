@@ -115,15 +115,17 @@ public class PvEffects {
             Lines.stroke(e.fout()*4,col);
             Lines.circle(e.x,e.y,15*e.fin());
         });
-        sumayaShoot = new Effect(30,e->{
-            Color col = Color.valueOf("51c0fc");
-            DrawPseudo3d.tube(e.x,e.y,8,e.fin()*50,col,Color.clear);
+        Interp sumayaShootInterp = new arc.math.Interp.ExpIn(2.5f, 10f);
+        sumayaShoot = new Effect(180,e->{
+            Color col = Color.valueOf("baf9ff");
+            Color colVar = col.a(sumayaShootInterp.apply(1));
+            DrawPseudo3d.tube(e.x,e.y,8,e.fout()*50,colVar,Color.clear);
             Lines.stroke(e.fout()*4,col);
             Lines.circle(e.x,e.y,80*e.fout());
 
         });
-        sumayaImpact = new Effect(30,e->{
-            Color col = Color.valueOf("51c0fc");
+        sumayaImpact = new Effect(90,e->{
+            Color col = Color.valueOf("baf9ff");
             DrawPseudo3d.tube(e.x,e.y,8,e.fout()*50,col,Color.clear);
             Lines.stroke(e.fout()*4,col);
             Lines.circle(e.x,e.y,80*e.fin());

@@ -831,7 +831,7 @@ public class PvTurrets{
                         pierce = true; pierceCap = 1000;
                         trailColor = lightColor = Color.valueOf("000000");
                         lifetime = 40;
-                        hitSize = 8*1.5f;
+                        collides = true;
                         trailChance = 0;
                         hitSize = 16;
                         trailEffect = Fx.none;
@@ -2064,19 +2064,23 @@ public class PvTurrets{
         sumaya = new PowerTurret("sumaya"){{ //todo requirements. currently copied from glaive
             requirements(Category.turret,BuildVisibility.shown , with(PvItems.zirconium,120,PvItems.nobelium,50,PvItems.erbium,100));
             size = 6;
-            reload = 300f;
+            reload = 240f;
             localizedName = "Sumaya";
             velocityRnd = 0f;
             inaccuracy = 0f;
             shootX = 0;
             shootY = 0;
+            predictTarget = false;
             health = 12000;
             shootCone = 360f;
-            shootEffect = Fx.shootLiquid;
+            shootSound = Sounds.lasershoot;
+            shake = 10;
+            shootEffect = PvEffects.sumayaShoot;
             range = 8*70f;
             shootType = new PointBulletType(){{
                         damage = 350;
                         splashDamage = 250;
+                        collides = true;
                         splashDamageRadius = 80;
                         pierce = true; pierceCap = 1000;
                         trailColor = lightColor = Color.valueOf("000000");
@@ -2084,6 +2088,7 @@ public class PvTurrets{
                         shootEffect = PvEffects.sumayaShoot;
                         despawnEffect = PvEffects.sumayaImpact;
                         trailChance = 0;
+                        despawnSound = Sounds.laserbig;
                         hitSize = 16;
                         trailEffect = Fx.none;
                         knockback = 10f;
