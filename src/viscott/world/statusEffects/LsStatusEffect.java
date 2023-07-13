@@ -13,7 +13,7 @@ public class LsStatusEffect extends PvStatusEffect {
 
     @Override
     public void update(Unit unit, float time) {
-        if (unit.health < unit.maxHealth() / 4f) {
+        if (unit.health < unit.maxHealth() / 3.333333333333f) {
             unit.apply(PvStatusEffects.lse);
             unit.add();
             unit.dead = false;
