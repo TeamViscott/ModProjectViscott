@@ -1,10 +1,8 @@
 package viscott.content;
 
 import arc.graphics.Color;
-import arc.struct.ObjectSet;
 import mindustry.content.Fx;
 import mindustry.entities.bullet.BasicBulletType;
-import mindustry.entities.bullet.BulletType;
 import mindustry.entities.effect.MultiEffect;
 import mindustry.game.Team;
 import mindustry.graphics.Pal;
@@ -12,10 +10,14 @@ import mindustry.type.StatusEffect;
 import viscott.utilitys.PvUtil;
 import viscott.world.statusEffects.*;
 
+import static java.lang.Float.POSITIVE_INFINITY;
+
 public class PvStatusEffects {
     public static StatusEffect
     timeWarped,doused, disabled, expent, resiliant, ungratefull, crescendo ,tick ,tock,mend,shield, malfunction,
-    voidShield,voidDecay,frag,aoe,homing,memoryExchange,dataLeak,endless, revived, prevention, voidConsume
+    voidShield,voidDecay,frag,aoe,homing,memoryExchange,dataLeak,endless, prevention, lastStand, voidConsume,
+    //visual statuses
+    pe,lse
             ;
     public static void load() {
         timeWarped = new StatusEffectStack("time-warped") {{
@@ -148,7 +150,7 @@ public class PvStatusEffects {
         malfunction = new PvStatusEffect("malfunction")
         {{
             localizedName = "Malfunction";
-            description = "Any healing / damage recieved will be applied at the end of this status effect\nlose 1 hp per second that its active.";
+            description = "Any healing / damage received will be applied at the end of this status effect\nlose 1 hp per second that its active.";
             damage = 1f/60f;
             numbness = true;
         }};
@@ -180,37 +182,34 @@ public class PvStatusEffects {
         }};
         homing = new HomingStatusEffect("homing"){{
             localizedName = "Homing";
-            description = "Silicon + Unit Go Brrrrr...";
+            description = "Silicon + Unit Go Brr...";
             homingRange = 8*15;
             homingPower = 0.05f;
             homingDelay = 0;
         }};
         memoryExchange = new CurseStatusEffect("memory-exchange"){{
             localizedName = "[#b]Memory Exchange";
-            description = "When cast uppon a Unit, when the Unit is killed while this effect is active their Data gets picked up by [purple]Siede";
-            details = "[red]Please do not destroy Unit durring this Exchange";
+            description = "When cast upon a Unit, when the Unit is killed while this effect is active their Data gets picked up by [purple]Siede";
+            details = "[red]Please do not destroy Unit during this Exchange";
             effect = new MultiEffect(Fx.despawn,Fx.freezing,Fx.lava);
             effectChance = 0.1f;
         }};
         prevention = new RevivalStatusEffect("prevention"){{
+            localizedName = "[green]Prevention[]";
+            description = "This [gold]Enchantment[] given by [green]Omamori[] prevents death in any ally\n[orange]Activation Threshold |[lightgray]10%[]| Hp.\n[orange]Activation Repair |[lightgray]50%[]| Hp\n[orange]Activation Invincibility Duration |[lightgray]0.25[]| seconds";
+            details = "A special [gold]Enchantment[] created from [gold]Yggdrasil's[] [green]Life Force] ";
             permanent = true;
-            localizedName = "Prevention";
-            description = "This effect given by Omamori prevents death in any ally";
-            details = "";
-            opposites = ObjectSet.with(PvStatusEffects.revived);
         }};
-        revived = new StatusEffect("revived"){{
+        lastStand = new LsStatusEffect("last-stand"){{
+            localizedName = "[blue]Last Stand";
+            description = "This [gold]Enchantment[] given by [green]Omamori[] Protects you at low HP\n[orange]Activation Threshold |[lightgray]25%[]| Hp.\n[orange]Activation Invincibility Duration |[lightgray]3[]| seconds";
+            details = "A special [gold]Enchantment[] created from [gold]Yggdrasil's[] [green]Bark]";
             permanent = true;
-            localizedName = "Revived";
-            description = "This means you've been revived by Omamori, and can't be revived another time";
-            details = "";
-            opposites = ObjectSet.with(PvStatusEffects.prevention);
-            applyEffect = PvEffects.quadRushCraft;
         }};
         dataLeak = new StatusEffect("data-leak") {{
             localizedName = "[purple]Data Leak";
             description = "The Rebuilding of the Unit with [#b]Broken Data[] has led to the unit's Data to constantly Leak.";
-            details = "[purple]Balancing Goes Brrr....";
+            details = "[purple]Balancing Goes Brr....";
             permanent = true;
             damage = 25f/60f;
             damageMultiplier = 0.8f;
@@ -218,13 +217,22 @@ public class PvStatusEffects {
             effectChance = 0.2f;
         }};
         endless = new StatusEffectStack("endless") {{
-            localizedName = "Endless";
+            localizedName = "[purple]Endless";
+            description = "[purple]Endless[] [gold]Amplification[]";
+            details = "[purple]Endless";
             reloadMultiplier = 1.01f;
             dragMultiplier = 1.01f;
             healthMultiplier = 1.01f;
             speedMultiplier = 1.01f;
-            charges = 10001;
+            charges = (int) POSITIVE_INFINITY;
             staticStat();
+        }};
+        //visual statuses
+        pe = new StatusEffect("1") {{
+            applyEffect = PvEffects.quadRushCraft;/*lotusActivate*/
+        }};
+        lse = new StatusEffect("2") {{
+            applyEffect = PvEffects.quadRushCraft;/*lastStandActivate*/
         }};
     }
 }

@@ -100,7 +100,7 @@ public class PvUnits {
                     vdoble,
                     siede,
                     frire, /*swarm mini extra*/lilshts,
-                    omamori,/*bb omamoris*/omai;
+                    omamori;
     public static void load()
     {
         //Base UnitLoads
@@ -1473,6 +1473,8 @@ public class PvUnits {
                         rotate = true;
                         shadow = 12f;
                         recoil = 3f;
+                        immunities.add(PvStatusEffects.prevention);
+                        immunities.add(PvStatusEffects.lastStand);
 
                         shoot = new ShootSpread(5, 11f);
 
@@ -1688,6 +1690,8 @@ public class PvUnits {
                             shootSound = Sounds.shootBig;
                             rotate = true;
                             recoil = 3f;
+                            immunities.add(PvStatusEffects.prevention);
+                            immunities.add(PvStatusEffects.lastStand);
 
                             shoot = new ShootSpread(4, 8.5f);
 
@@ -1765,6 +1769,8 @@ public class PvUnits {
                             shoot.shotDelay = 1;
                             x = 0;
                             y = 0;
+                            immunities.add(PvStatusEffects.prevention);
+                            immunities.add(PvStatusEffects.lastStand);
                             bullet = new MissileBulletType(12, 48) {{
                                 backColor = lightColor = trailColor = Pal.reactorPurple;
                                 frontColor = Pal.reactorPurple2;
@@ -1821,6 +1827,8 @@ public class PvUnits {
             omniMovement = false;
             drawCell = false;
             drawBody = false;
+            immunities.add(PvStatusEffects.prevention);
+            immunities.add(PvStatusEffects.lastStand);
         }};
         lilshts = new PvUnitType("lilshts") {{
             health = 650;
@@ -1831,15 +1839,17 @@ public class PvUnits {
             omniMovement = false;
             drawCell = false;
             drawBody = false;
+            immunities.add(PvStatusEffects.prevention);
+            immunities.add(PvStatusEffects.lastStand);
         }};
         omamori = new PvUnitType("omamori") {{
                 localizedName = "[green]Omamori[]";
-                description = "[gold]Creation of Yggdrasil[], Omamori protects his allies to the very end. His many Attributes are [orange]\n1. Revive Allys\n2. Spawn Omais.";
+                description = "[gold]Creation of Yggdrasil[], Omamori protects his allies to the very end. His many Attributes are [orange]\n1. Revive Allys\n2. Last stand for allies.\n3. Spawn Omais.";
                 Seq<String> detailList = new Seq<>();
                 detailList.addAll(
-                        "[green]Omamori[].The Large Tank Run by a peaceful [green]Medusa AI[] Know to only attack when its place of rest has been disrepected",
+                        "[green]Omamori[].The Large Tank Run by a peaceful [green]Medusa AI[] Know to only attack when its place of rest has been disrespected",
                         "the gentle giant that Omamori is makes him greatly feared but he ins't one prone to attack as a creation of [gold]Yggdrasil[]",
-                        "durring his creation [gold]Yggdrasil[] gave him the power to protect his allies with [red]Prevention[], [green]He can give a ally a second life[].",
+                        "during his creation [gold]Yggdrasil[] gave him the power to protect his allies with [green]Prevention[] & [blue]Last Stand[], [green]He can give a ally a second life[] and [blue]Great resistance at low health.",
                         "[orange]Usual Behaviour Between Factions : ",
                         "[green]Allianced Factions : []Xeal , Psy",
                         "[grey]Neutral Factions :[] Nullis, Azulex",
@@ -1862,7 +1872,8 @@ public class PvUnits {
                 ammoType = new ItemAmmoType(PvItems.darkMatter, 8);
                 treadPullOffset = 5;
                 /*treadRects = new Rect[]{new Rect(56f, 275f, 64f, -137)};TODO figure out why this crashes mindustry*/
-                abilities.add(new StatusFieldAbility(PvStatusEffects.prevention, 10f, 1000f, 200f));
+                abilities.add(new StatusFieldAbility(PvStatusEffects.prevention, 10f, 6000f, 400f));
+                abilities.add(new StatusFieldAbility(PvStatusEffects.lastStand, 10f, 2000f, 400f));
                 weapons.add(
                 new Weapon(name + "-weapon-main") {{
                     shootY = 3f;
@@ -1890,6 +1901,7 @@ public class PvUnits {
                     rotateSpeed = 0.8f;
                     layerOffset = 2f;
                     immunities.add(PvStatusEffects.prevention);
+                    immunities.add(PvStatusEffects.lastStand);
                     bullet = new BasicBulletType(2.5f, 175f) {{
                         pierce = true;
                         pierceBuilding = true;
@@ -2154,6 +2166,7 @@ public class PvUnits {
                                 rotateSpeed = 0.8f;
                                 layerOffset = 1f;
                                 immunities.add(PvStatusEffects.prevention);
+                                immunities.add(PvStatusEffects.lastStand);
                                 bullet = new BasicBulletType(2.5f, 20f) {{
                                     pierce = true;
                                     pierceBuilding = true;

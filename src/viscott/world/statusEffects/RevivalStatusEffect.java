@@ -1,9 +1,6 @@
 package viscott.world.statusEffects;
 
-import arc.Events;
-import arc.struct.Seq;
-import mindustry.Vars;
-import mindustry.game.EventType;
+import mindustry.content.StatusEffects;
 import mindustry.gen.Unit;
 import viscott.content.PvStatusEffects;
 
@@ -12,19 +9,17 @@ public class RevivalStatusEffect extends PvStatusEffect {
 
     public RevivalStatusEffect(String name) {
         super(name);
-        Seq<Unit> PreservableUnits = new Seq<>();
-
-
     }
 
     @Override
     public void update(Unit unit, float time) {
         if (unit.health < unit.maxHealth() / 10f) {
+            unit.apply(PvStatusEffects.pe);
             unit.add();
-            unit.health = unit.maxHealth() / 1.26f;
+            unit.health = unit.maxHealth() / 2f;
             unit.dead = false;
-            unit.clearStatuses();
-            unit.apply(PvStatusEffects.revived);
+            unit.unapply(this);
+            unit.apply(StatusEffects.invincible,15);
         }
     }
 }
