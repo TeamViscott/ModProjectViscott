@@ -228,11 +228,13 @@ public class PvStatusEffects {
             staticStat();
         }};
         //visual statuses
-        pe = new StatusEffect("1") {{
+        pe = new StatusEffect("prevention-trigger-vfx") {{
             applyEffect = PvEffects.quadRushCraft;/*lotusActivate*/
+            show = false;
         }};
-        lse = new StatusEffect("2") {{
+        lse = new StatusEffect("last-stand-trigger-vfx") {{
             applyEffect = PvEffects.quadRushCraft;/*lastStandActivate*/
+            show = false;
         }};
     }
 }
