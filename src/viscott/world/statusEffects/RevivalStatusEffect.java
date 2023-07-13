@@ -13,7 +13,7 @@ public class RevivalStatusEffect extends PvStatusEffect {
 
     @Override
     public void update(Unit unit, float time) {
-        if (unit.health < unit.maxHealth() / 10f) {
+        if (unit.health < unit.maxHealth() / 6.66666666666f) {
             unit.apply(PvStatusEffects.pe);
             unit.add();
             unit.health = unit.maxHealth() / 2f;
