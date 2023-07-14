@@ -601,6 +601,7 @@ public class PvBlocks {
                     heatRequirement = 15;
                     maxEfficiency = 2;
                     craftTime = 60*2.5f;
+                    loopSound = Sounds.spellLoop;
                     craftEffect = new MultiEffect(PvEffects.quadRushCraft,Fx.smokeCloud);
                     consumeItems(with(PvItems.carbonFiber,1,Items.silicon,5));
                     outputItem = new ItemStack(PvItems.rushAlloy,1);
@@ -611,6 +612,7 @@ public class PvBlocks {
                     faction.add(PvFactions.Xeal);
                     health = 920;
                     size = 4;
+                    loopSound = Sounds.lasercharge2;
                     consumePower(250f/60f);
                     itemCapacity = 20;
                     liquidCapacity = 50;
@@ -627,6 +629,7 @@ public class PvBlocks {
                     faction.add(PvFactions.Nullis);
                     health = 1400;
                     size = 4;
+                    loopSound = Sounds.pulse;
                     consumePower(1260f/60f);
                     itemCapacity = 50;
                     liquidCapacity = 50;
