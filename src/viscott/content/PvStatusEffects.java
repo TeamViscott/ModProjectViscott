@@ -10,16 +10,30 @@ import mindustry.type.StatusEffect;
 import viscott.utilitys.PvUtil;
 import viscott.world.statusEffects.*;
 
+
 import static java.lang.Float.POSITIVE_INFINITY;
 
 public class PvStatusEffects {
     public static StatusEffect
     timeWarped,doused, disabled, expent, resiliant, ungratefull, crescendo ,tick ,tock,mend,shield, malfunction,
-    voidShield,voidDecay,frag,aoe,homing,memoryExchange,dataLeak,endless, prevention, lastStand, voidConsume,
+    voidShield,voidDecay,frag,aoe,homing,memoryExchange,dataLeak,endlessAmp, endlessDot, prevention, lastStand, voidConsume,
     //visual statuses
-    pe,lse
+    preventionFx,lastStandFx,basicFx
             ;
     public static void load() {
+        //visual statuses
+        basicFx = new StatusEffect("basic-trigger-vfx") {{
+            applyEffect = PvEffects.quadRushCraft;
+            show = false;
+        }};
+        preventionFx = new StatusEffect("prevention-trigger-vfx") {{
+            applyEffect = PvEffects.quadRushCraft;/*lotusActivate*/
+            show = false;
+        }};
+        lastStandFx = new StatusEffect("last-stand-trigger-vfx") {{
+            applyEffect = PvEffects.quadRushCraft;/*lastStandActivate*/
+            show = false;
+        }};
         timeWarped = new StatusEffectStack("time-warped") {{
             localizedName = "Time Warped";
             speedMultiplier = 0.98f;
@@ -194,16 +208,24 @@ public class PvStatusEffects {
             effect = new MultiEffect(Fx.despawn,Fx.freezing,Fx.lava);
             effectChance = 0.1f;
         }};
-        prevention = new RevivalStatusEffect("prevention"){{
+        prevention = new TriggerStatusEffect("prevention"){{
             localizedName = "[green]Prevention[]";
-            description = "This [gold]Enchantment[] given by [green]Omamori[] prevents death in any ally\n[orange]Activation Threshold |[lightgray]10%[]| Hp.\n[orange]Activation Repair |[lightgray]50%[]| Hp\n[orange]Activation Invincibility Duration |[lightgray]0.25[]| seconds";
+            description = "This [gold]Enchantment[] given by [green]Omamori[] prevents death in any ally\n[orange]Activation Threshold[] \n>|[lightgray]15%[]| HP.\n[orange]Activation Repair[] \n>|[lightgray]50%[]| HP.\n[orange]Activation Invincibility Duration []\n>|[lightgray]0.25[]| Seconds.";
             details = "A special [gold]Enchantment[] created from [gold]Yggdrasil's[] [green]Life Force] ";
+            activationRepair = true;
+            activationStatusFx = preventionFx;
+            activationThreshold = 6.66666666666f;
+            ActivationRepairAmount = 2f;
+            activationResistanceTime = 15f;
             permanent = true;
         }};
-        lastStand = new LsStatusEffect("last-stand"){{
+        lastStand = new TriggerStatusEffect("last-stand"){{
             localizedName = "[blue]Last Stand";
-            description = "This [gold]Enchantment[] given by [green]Omamori[] Protects you at low HP\n[orange]Activation Threshold |[lightgray]25%[]| Hp.\n[orange]Activation Invincibility Duration |[lightgray]3[]| seconds";
+            description = "This [gold]Enchantment[] given by [green]Omamori[] Protects you at low HP\n[orange]Activation Threshold[] \n>|[lightgray]30%[]| HP.\n[orange]Activation Invincibility Duration[] \n>|[lightgray]3[]| Seconds.";
             details = "A special [gold]Enchantment[] created from [gold]Yggdrasil's[] [green]Bark]";
+            activationStatusFx = lastStandFx;
+            activationThreshold = 4f;
+            activationResistanceTime = 180f;
             permanent = true;
         }};
         dataLeak = new StatusEffect("data-leak") {{
@@ -216,25 +238,28 @@ public class PvStatusEffects {
             effect = Fx.sapped;
             effectChance = 0.2f;
         }};
-        endless = new StatusEffectStack("endless") {{
-            localizedName = "[purple]Endless";
-            description = "[purple]Endless[] [gold]Amplification[]";
-            details = "[purple]Endless";
+        endlessAmp = new StatusEffectStack("endless-amp") {{
+            localizedName = "[purple]Endless[] [gold]Amplification[]";
+            description = "[red]never ending charges";
+            details = "[purple]you can have infinite charges";
             reloadMultiplier = 1.01f;
-            dragMultiplier = 1.01f;
+            damageMultiplier = 1.01f;
             healthMultiplier = 1.01f;
             speedMultiplier = 1.01f;
+            buildSpeedMultiplier = 1.01f;
+            dragMultiplier = 1.01f;
+            setStatsInfinity = true;
             charges = (int) POSITIVE_INFINITY;
             staticStat();
         }};
-        //visual statuses
-        pe = new StatusEffect("prevention-trigger-vfx") {{
-            applyEffect = PvEffects.quadRushCraft;/*lotusActivate*/
-            show = false;
-        }};
-        lse = new StatusEffect("last-stand-trigger-vfx") {{
-            applyEffect = PvEffects.quadRushCraft;/*lastStandActivate*/
-            show = false;
+        endlessDot = new StatusEffectStack("endless-dot") {{
+            localizedName = "[purple]Endless[] [red]Damage[]";
+            description = "[red]never ending charges";
+            details = "[purple]you can have infinite charges";
+            damage = 0.05f;
+            setStatsInfinity = true;
+            charges = (int) POSITIVE_INFINITY;
+            staticStat();
         }};
     }
 }

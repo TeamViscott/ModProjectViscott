@@ -21,6 +21,7 @@ import java.util.Stack;
 
 public class StatusEffectStack extends PvStatusEffect {
     public int charges = 1;
+    public boolean setStatsInfinity = false;
     public HashMap<Unit, Integer> unitCharges = new HashMap<>();
     public HashMap<Unit, Float> unitTime = new HashMap<>();
     public HashMap<Unit, Team> unitTeam = new HashMap<>();
@@ -51,70 +52,106 @@ public class StatusEffectStack extends PvStatusEffect {
     }
 
     @Override
-    public void setStats(){
-        if(newTeam != null)
-            stats.add(PvStats.newTeam,newTeam.emoji+" "+newTeam.name);
-        if(statsStatic.get(0) != 1) {
-            stats.addPercent(Stat.damageMultiplier, statsStatic.get(0));
-            if (charges != 1)stats.addPercent(PvStats.maxDamageMultiplier, Mathf.round(1+(statsStatic.get(0)-1)*charges,0.01f));
-        }
-        if(statsStatic.get(1) != 1) {
-            stats.addPercent(Stat.healthMultiplier, statsStatic.get(1));
-            if (charges != 1)stats.addPercent(PvStats.maxHealthMultiplier, Mathf.round(1+(statsStatic.get(1)-1)*charges,0.01f));
-        }
-        if(statsStatic.get(2) != 1) {
-            stats.addPercent(Stat.speedMultiplier, statsStatic.get(2));
-            if (charges != 1)stats.addPercent(PvStats.maxSpeedMultiplier, Mathf.round(1+(statsStatic.get(2)-1)*charges,0.01f));
-        }
-        if(statsStatic.get(3) != 1) {
-            stats.addPercent(Stat.reloadMultiplier, statsStatic.get(3));
-            if (charges != 1)stats.addPercent(PvStats.maxReloadSpeedMultiplier, Mathf.round(1+(statsStatic.get(3)-1)*charges,0.01f));
-        }
-        if(statsStatic.get(4) != 1) {
-            stats.addPercent(Stat.buildSpeedMultiplier, statsStatic.get(4));
-            if (charges != 1)stats.addPercent(PvStats.maxBuildSpeedMultiplier, Mathf.round(1+(statsStatic.get(4)-1)*charges,0.01f));
-        }
-        if(statsStatic.get(4) != 1) {
-            stats.addPercent(PvStats.dragMultiplier, statsStatic.get(5));
-            if (charges != 1)stats.addPercent(PvStats.maxDragMultiplier, Mathf.round(1+(statsStatic.get(5)-1)*charges,0.01f));
-        }
-
-        if(damage > 0) {
-            stats.add(Stat.damage, damage * 60f, StatUnit.perSecond);
-            if (charges != 1)stats.add(PvStats.maxDamage, damage * 60f * charges, StatUnit.perSecond);
-        }
-        else if(damage < 0) {
-            stats.add(Stat.healing, -damage * 60f, StatUnit.perSecond);
-            if (charges != 1)stats.add(PvStats.maxHealing, -damage * 60f * charges, StatUnit.perSecond);
-        }
-        if (charges != 1)stats.add(PvStats.maxCharges, charges,StatUnit.none);
-
-        boolean reacts = false;
-
-        for(var e : opposites.toSeq().sort()){
-            stats.add(Stat.opposites, e.emoji() + "" + e);
-        }
-
-        if(reactive){
-            var other = Vars.content.statusEffects().find(f -> f.affinities.contains(this));
-            if(other != null && other.transitionDamage > 0){
-                stats.add(Stat.reactive, other.emoji() + other + " / [accent]" + (int)other.transitionDamage + "[lightgray] " + Stat.damage.localized());
-                reacts = true;
+    public void setStats() {
+        if (newTeam != null)
+            stats.add(PvStats.newTeam, newTeam.emoji + " " + newTeam.name);
+        if (setStatsInfinity) {
+            if (statsStatic.get(0) != 1) {
+                stats.addPercent(Stat.damageMultiplier, statsStatic.get(0));
+                if (charges != 1)stats.add(PvStats.maxDamageMultiplier, "Infinity%");
             }
-        }
-
-        //don't list affinities *and* reactions, as that would be redundant
-        if(!reacts){
-            for(var e : affinities.toSeq().sort()){
-                stats.add(Stat.affinities, e.emoji() + "" + e);
+            if(statsStatic.get(1) != 1) {
+                stats.addPercent(Stat.healthMultiplier, statsStatic.get(1));
+                if (charges != 1)stats.add(PvStats.maxHealthMultiplier, "Infinity%");
+            }
+            if(statsStatic.get(2) != 1) {
+                stats.addPercent(Stat.speedMultiplier, statsStatic.get(2));
+                if (charges != 1)stats.add(PvStats.maxSpeedMultiplier, "Infinity%");
+            }
+            if(statsStatic.get(3) != 1) {
+                stats.addPercent(Stat.reloadMultiplier, statsStatic.get(3));
+                if (charges != 1)stats.add(PvStats.maxReloadSpeedMultiplier, "Infinity%");
+            }
+            if(statsStatic.get(4) != 1) {
+                stats.addPercent(Stat.buildSpeedMultiplier, statsStatic.get(4));
+                if (charges != 1)stats.add(PvStats.maxBuildSpeedMultiplier, "Infinity%");
+            }
+            if(statsStatic.get(4) != 1) {
+                stats.addPercent(PvStats.dragMultiplier, statsStatic.get(5));
+                if (charges != 1)stats.add(PvStats.maxDragMultiplier, "Infinity%");
             }
 
-            if(affinities.size > 0 && transitionDamage != 0){
-                stats.add(Stat.affinities, "/ [accent]" + (int)transitionDamage + " " + Stat.damage.localized());
+            if(damage > 0) {
+                stats.add(Stat.damage, damage * 60f, StatUnit.perSecond);
+                if (charges != 1)stats.add(PvStats.maxDamage, "Infinity", StatUnit.perSecond);
             }
-        }
+            else if(damage < 0) {
+                stats.add(Stat.healing, -damage * 60f, StatUnit.perSecond);
+                if (charges != 1)stats.add(PvStats.maxHealing, "Infinity", StatUnit.perSecond);
+            }
+            if (charges != 1)stats.add(PvStats.maxCharges,"Infinity");
+        }else{
+               if (statsStatic.get(0) != 1) {
+                   stats.addPercent(Stat.damageMultiplier, statsStatic.get(0));
+                   if (charges != 1)stats.addPercent(PvStats.maxDamageMultiplier, Mathf.round(1 + (statsStatic.get(0) - 1) * charges, 0.01f));
+               }
+               if(statsStatic.get(1) != 1) {
+                   stats.addPercent(Stat.healthMultiplier, statsStatic.get(1));
+                   if (charges != 1)stats.addPercent(PvStats.maxHealthMultiplier, Mathf.round(1+(statsStatic.get(1)-1)*charges,0.01f));
+               }
+               if(statsStatic.get(2) != 1) {
+                   stats.addPercent(Stat.speedMultiplier, statsStatic.get(2));
+                   if (charges != 1)stats.addPercent(PvStats.maxSpeedMultiplier, Mathf.round(1+(statsStatic.get(2)-1)*charges,0.01f));
+               }
+               if(statsStatic.get(3) != 1) {
+                   stats.addPercent(Stat.reloadMultiplier, statsStatic.get(3));
+                   if (charges != 1)stats.addPercent(PvStats.maxReloadSpeedMultiplier, Mathf.round(1+(statsStatic.get(3)-1)*charges,0.01f));
+               }
+               if(statsStatic.get(4) != 1) {
+                   stats.addPercent(Stat.buildSpeedMultiplier, statsStatic.get(4));
+                   if (charges != 1)stats.addPercent(PvStats.maxBuildSpeedMultiplier, Mathf.round(1+(statsStatic.get(4)-1)*charges,0.01f));
+               }
+               if(statsStatic.get(4) != 1) {
+                   stats.addPercent(PvStats.dragMultiplier, statsStatic.get(5));
+                   if (charges != 1)stats.addPercent(PvStats.maxDragMultiplier, Mathf.round(1+(statsStatic.get(5)-1)*charges,0.01f));
+               }
 
-    }
+               if(damage > 0) {
+                   stats.add(Stat.damage, damage * 60f, StatUnit.perSecond);
+                   if (charges != 1)stats.add(PvStats.maxDamage, damage * 60f * charges, StatUnit.perSecond);
+               }
+               else if(damage < 0) {
+                   stats.add(Stat.healing, -damage * 60f, StatUnit.perSecond);
+                   if (charges != 1)stats.add(PvStats.maxHealing, -damage * 60f * charges, StatUnit.perSecond);
+               }
+               if (charges != 1)stats.add(PvStats.maxCharges, charges,StatUnit.none);
+
+               boolean reacts = false;
+
+               for(var e : opposites.toSeq().sort()){
+                   stats.add(Stat.opposites, e.emoji() + "" + e);
+               }
+
+               if(reactive){
+                   var other = Vars.content.statusEffects().find(f -> f.affinities.contains(this));
+                   if(other != null && other.transitionDamage > 0){
+                       stats.add(Stat.reactive, other.emoji() + other + " / [accent]" + (int)other.transitionDamage + "[lightgray] " + Stat.damage.localized());
+                       reacts = true;
+                   }
+               }
+
+               //don't list affinities *and* reactions, as that would be redundant
+               if(!reacts){
+                   for(var e : affinities.toSeq().sort()){
+                       stats.add(Stat.affinities, e.emoji() + "" + e);
+                   }
+
+                   if(affinities.size > 0 && transitionDamage != 0){
+                       stats.add(Stat.affinities, "/ [accent]" + (int)transitionDamage + " " + Stat.damage.localized());
+                   }
+               }
+           }
+        }
     @Override
     public void init()
     {
@@ -122,7 +159,11 @@ public class StatusEffectStack extends PvStatusEffect {
         localName = localizedName;
         Events.run(EventType.Trigger.update,()-> {
             if (unitCharges.containsKey(Vars.player.unit()) && Vars.player.unit().hasEffect(this))
-                localizedName = localName + " [accent]x" + unitCharges.get(Vars.player.unit()) + " | " + charges;
+                if (setStatsInfinity) {
+                    localizedName = localName + " [accent]x" + unitCharges.get(Vars.player.unit()) + " | Infinity";
+                }else{
+                    localizedName = localName + " [accent]x" + unitCharges.get(Vars.player.unit()) + " | " + charges;
+                }
             else
                 localizedName = localName;
         });
