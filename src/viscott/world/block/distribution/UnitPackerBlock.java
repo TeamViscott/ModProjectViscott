@@ -1,14 +1,22 @@
 package viscott.world.block.distribution;
 
+import arc.func.Cons;
 import arc.math.Mathf;
+import arc.math.geom.Vec2;
+import arc.scene.style.TextureRegionDrawable;
+import arc.scene.ui.Button;
+import arc.scene.ui.ImageButton;
+import arc.scene.ui.layout.Table;
 import arc.struct.Seq;
-import mindustry.gen.Building;
-import mindustry.gen.Groups;
+import mindustry.ai.UnitCommand;
+import mindustry.gen.*;
 import mindustry.graphics.Drawf;
 import mindustry.graphics.Pal;
 import mindustry.type.Item;
 import mindustry.type.UnitType;
+import mindustry.ui.Styles;
 import mindustry.world.Block;
+import mindustry.world.blocks.ItemSelection;
 import viscott.content.PvBlocks;
 import viscott.world.block.PvBlock;
 
@@ -22,6 +30,7 @@ public class UnitPackerBlock extends PvBlock {
         acceptsItems = true;
         itemCapacity = 10;
         update = true;
+        configurable = true;
     }
     @Override
     public void drawPlace(int x, int y, int rotation, boolean valid) {
@@ -55,6 +64,22 @@ public class UnitPackerBlock extends PvBlock {
 
                     }
             });
+        }
+        @Override
+        public void buildConfiguration(Table table){
+            table.background(Styles.black6);
+
+            for(UnitType u : quickCalledUnits) {
+                ImageButton b = table.button(Tex.whiteui, Styles.clearNoneTogglei,40, () -> {
+                    Unit c = Groups.unit.find(g -> g.type == u && g.isCommandable() && !g.isFlying());
+                    if (c == null) return;
+                    c.flag(1);
+                    c.command().command(UnitCommand.boostCommand);
+                    c.command().commandPosition(new Vec2(this.x, this.y));
+                }).tooltip(u.localizedName).get();
+                b.changed(()->b.setChecked(false));
+                b.getStyle().imageUp = new TextureRegionDrawable(u.fullIcon);
+            }
         }
         @Override
         public void drawSelect() {

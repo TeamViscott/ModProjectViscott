@@ -16,7 +16,7 @@ public class teamResearch extends Block {
     public teamResearch(String name, PvFaction team)
     {
         super(name);
-        localizedName = Core.bundle.get("team."+name+".name");
+        localizedName = Core.bundle.get("team."+name);
         refTeam = team;
         requirements(Category.effect, BuildVisibility.sandboxOnly, ItemStack.with());
         health = 1;

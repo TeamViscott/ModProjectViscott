@@ -9,6 +9,7 @@ import arc.math.geom.Vec2;
 import arc.struct.Seq;
 import arc.util.Reflect;
 import arc.util.Time;
+import mindustry.Vars;
 import mindustry.ai.types.MinerAI;
 import mindustry.content.Fx;
 import mindustry.content.Items;
@@ -112,7 +113,17 @@ public class PvUnits {
         //Extra UnitLoads
         loadCorePath();
         loadExtra();
+
+        //For Every UnitType loaded in loadBosses it shall do that.
+        Seq<UnitType> l = Vars.content.units().copy();
         loadBosses();
+        Vars.content.units().copy().removeAll(u->l.contains(u)).each(u->
+                u.immunities.addAll(
+                        PvStatusEffects.memoryExchange,
+                        PvStatusEffects.prevention,
+                        PvStatusEffects.lastStand
+                )
+        );
     }
     public static void loadCorePath()
     {
@@ -289,7 +300,7 @@ public class PvUnits {
 
         shadow = new NullisUnitType("shadow")
         {{
-            health = 0.5f;
+            health = 1f;
             abilities.add(new DamageAbility(0.05f/60f));
             localizedName = "Shadow";
             constructor = EntityMapping.map("mono");
@@ -1827,20 +1838,16 @@ public class PvUnits {
             omniMovement = false;
             drawCell = false;
             drawBody = false;
-            immunities.add(PvStatusEffects.prevention);
-            immunities.add(PvStatusEffects.lastStand);
         }};
         lilshts = new PvUnitType("lilshts") {{
             health = 650;
             armor = 40;
-            localizedName = "Frire's personal Lil Sh[#b]*[]ts";
+            localizedName = "Lil shizz";
             constructor = EntityMapping.map("CrawlUnit");
             segments = 3;
             omniMovement = false;
             drawCell = false;
             drawBody = false;
-            immunities.add(PvStatusEffects.prevention);
-            immunities.add(PvStatusEffects.lastStand);
         }};
         omamori = new PvUnitType("omamori") {{
                 localizedName = "[green]Omamori[]";

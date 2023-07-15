@@ -181,7 +181,7 @@ public class PvMaptools {
                 health = 1400;
                 localizedName = "Void Source";
                 description = "Emitts Void and does not get damaged by Void.";
-                voidAmount = 4;
+                voidAmount = 10;
             }
         };
     }

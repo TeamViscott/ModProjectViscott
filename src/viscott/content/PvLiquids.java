@@ -45,8 +45,9 @@ public class PvLiquids {
             effect = PvStatusEffects.voidDecay;
             voidFlyingEffect = PvStatusEffects.voidConsume;
             explosiveness = 0.1f;
-            viscosity = 2f;
+            viscosity = 0.999f;
             coolant = true;
+            capPuddles = false;
         }};
     }
 }

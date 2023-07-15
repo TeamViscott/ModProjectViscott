@@ -81,7 +81,7 @@ public class BulkUnitFactory extends Reconstructor {
         Table cT = new Table();
         cT.background(Tex.whiteui);
         cT.setColor(Pal.darkestGray);
-        cT.image(plan.unit.region).size(32).tooltip("output").left();
+        cT.image(plan.unit.fullIcon).size(32).tooltip("output").left();
         cT.add("[lightgrey] "+(plan.time/60) + " seconds ");
         cT.image(Icon.left).size(32).padRight(8f).left();
         if (plan instanceof PvUnitPlan pvPlan) {

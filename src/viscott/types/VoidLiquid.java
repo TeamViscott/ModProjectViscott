@@ -11,21 +11,23 @@ import mindustry.type.StatusEffect;
 import mindustry.world.Tile;
 import mindustry.world.blocks.environment.Prop;
 import mindustry.world.blocks.environment.StaticWall;
+import mindustry.world.blocks.liquid.Conduit;
+import viscott.content.PvLiquids;
 import viscott.world.statusEffects.PvStatusEffect;
 
 public class VoidLiquid extends CellLiquid {
     public float voidDamage = 5;
     public StatusEffect voidFlyingEffect = null;
     public int[][] checks = {
-            {0,1},
-            {1,0},
+            {-1,0},
             {0,-1},
-            {-1,0}
+            {1,0},
+            {0,1}
     };
     public VoidLiquid(String name) {
         super(name);
         canStayOn.addAll(Liquids.water);
-        spreadTarget = null;
+        spreadTarget = Liquids.water;
     }
     @Override
     public void update(Puddle puddle){
@@ -41,14 +43,31 @@ public class VoidLiquid extends CellLiquid {
             build.handleLiquid(null,puddle.liquid,puddle.amount);
             puddle.remove();
         }
-        for(int[] i : checks) {
+        for(int rot = 0;rot < checks.length;rot++) {
+            int[] i = checks[rot];
             Tile t = puddle.tile.nearby(i[0], i[1]);
+            Puddle np = Groups.puddle.find(p->p.tile == t);
+            if (np != null) {
+                puddle.amount = (np.amount + puddle.amount) / 2;
+                np.amount = puddle.amount;
+            }
             if ( t == null || t.block() == null ) continue;
-            if (t.block() instanceof Prop prop && !(prop instanceof StaticWall))
+            if (t.block() instanceof Prop prop && !(prop instanceof StaticWall)) {
                 t.removeNet();
+                prop.breakEffect.at(t.x,t.y,0,prop.lightColor);
+                puddle.amount += 100;
+            }
+            if (t.build instanceof Conduit.ConduitBuild cb) {
+                if(cb.rotation != rot && (cb.liquids.current() == this || cb.liquids.currentAmount() == 0)) {
+                    cb.liquids.add(this,puddle.amount);
+                    cb.noSleep();
+                    puddle.remove();
+                }
+            }
             if (t.build == null|| !t.build.isValid() ) continue;
             t.build.damage(voidDamage/60);
             puddle.amount += voidDamage/60;
+            rot++;
         }
         super.update(puddle);
     }

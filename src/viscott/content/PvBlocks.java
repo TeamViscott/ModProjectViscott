@@ -946,7 +946,7 @@ public class PvBlocks {
                     size = 3;
                     health = 2100;
                     unitCapModifier = 60;
-                    itemCapacity = 10;
+                    itemCapacity = 100;
                     voidRadius = 16;
                 }};
                 voidNode = new VoidBlock("void-node")
@@ -987,9 +987,14 @@ public class PvBlocks {
                     requirements(Category.units,with(PvItems.zirconium,50));
                     localizedName = "Packer";
                     faction.add(PvFactions.Nullis);
-                    range = 16;
+                    range = 8*4.5f;
                     size = 1;
                     itemCapacity = 20;
+                    quickCalledUnits = Seq.with(
+                            PvUnits.pocket,
+                            PvUnits.container,
+                            PvUnits.capsule
+                    );
                 }};
                 oilGrinder = new LiquidGrinder("oil-grinder")
                 {{

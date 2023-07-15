@@ -97,9 +97,7 @@ public class PvWorldState {
                 for(;count > 0;count--) {
                     int statusEffId = stream.readInt();
                     int unitsize = stream.readInt();
-                    Log.info(unitsize + " Found",0);
                     StatusEffect status = Vars.content.statusEffects().find(se -> se.id == statusEffId);
-                    Log.info(status.localizedName + " Starting",0);
                     if (status instanceof StatusEffectStack st) {
                         st.unitTeam.clear();
                         st.unitTime.clear();
@@ -114,7 +112,6 @@ public class PvWorldState {
                             st.unitCharges.put(unit,unitSt);
                             st.unitTeam.put(unit,Team.get(unitT));
                             st.unitTime.put(unit,unitTime);
-                            Log.info(unitId + "Unit Added",0);
                         }
                     }
                 }
