@@ -10,6 +10,7 @@ import arc.struct.Seq;
 import arc.util.Log;
 import arc.util.Reflect;
 import arc.util.Timer;
+import arc.util.Tmp;
 import arc.util.io.Writes;
 import mindustry.Vars;
 import mindustry.content.Blocks;
@@ -22,6 +23,7 @@ import mindustry.game.Team;
 import mindustry.gen.*;
 import mindustry.graphics.Drawf;
 import mindustry.graphics.Layer;
+import mindustry.type.Item;
 import mindustry.world.Block;
 import mindustry.world.Build;
 import mindustry.world.Tile;
@@ -42,7 +44,8 @@ import java.io.Writer;
 import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import static mindustry.Vars.player;
+import static mindustry.Vars.*;
+import static mindustry.Vars.itemSize;
 
 public class GridUnitType extends PvUnitType{
     public HashMap<Unit, World> grids = new HashMap<>();
@@ -127,6 +130,7 @@ public class GridUnitType extends PvUnitType{
             building.tile.setNet(Blocks.air);
         Vars.world = grids.get(unit);
         t.setBlock(building.block(),unit.team);
+        t.build.remove();
         t.build = building;
         building.rotation -= rotation;
         building.rotation %= 4;
@@ -134,7 +138,6 @@ public class GridUnitType extends PvUnitType{
         for(int i1 = xMin;i1 <= xMax;i1++)
             for(int i2 = yMin;i2 <= yMax;i2++)
                 Vars.world.tile(t.x + i1,t.y + i2).build = building;
-        building.updateProximity();
         Vars.world = curWorld;
         return true;
     }
@@ -182,8 +185,6 @@ public class GridUnitType extends PvUnitType{
             for(int i2 = min;i2 <= max;i2++)
                 Vars.world.tile(t.x + i1,t.y + i2).build = b;
         b.set(t.x * 8 + (b.block().size-1) % 2 * 4,t.y * 8 + (b.block().size-1) % 2 * 4);
-        b.created();
-        b.add();
         return true;
     }
 
@@ -209,7 +210,11 @@ public class GridUnitType extends PvUnitType{
                             placeFrom(i1, i2, unit, (byte) Math.round(unit.rotation / 90));
                         }
                     }
-                    proxupdate.each(b -> b.updateProximity());
+                    proxupdate.each(b -> {
+                        if(!b.isAdded())
+                            b.add();
+                        b.updateProximity();
+                    });
                     doneBuild.get(unit).set(false);
                 }
             }
@@ -217,23 +222,26 @@ public class GridUnitType extends PvUnitType{
             if (!doneBuild.get(unit).get()) { //building time
                 int bx = Mathf.ceil(unit.x / 8) - buildSize / 2,
                         by = Mathf.ceil(unit.y / 8) - buildSize / 2;
+                Seq<Building> proxupdate = new Seq<>();
                 for(int i1 = 0;i1 < buildSize;i1++) {
                     for(int i2 = 0;i2 < buildSize;i2++) {
                         Tile t = Vars.world.tile(bx+i1,by+i2);
-                        if (t != null && t.block() != null)
-                            buildAt(i1,i2,unit,t.build, (byte) Math.round(unit.rotation / 90));
-                    }
-                }
-                for(int i1 = 0;i1 < buildSize;i1++) {
-                    for(int i2 = 0;i2 < buildSize;i2++) {
-                        Tile t = Vars.world.tile(bx+i1,by+i2);
-                        if (t.build != null && t.block() != null) {
-                            t.build.onProximityUpdate();
-                            t.build.updateProximity();
+                        if (t != null && t.block() != null) {
+                            if (t.build != null)
+                                proxupdate.add(t.build);
+                            buildAt(i1, i2, unit, t.build, (byte) Math.round(unit.rotation / 90));
                         }
                     }
                 }
+                World w = Vars.world;
+                Vars.world = grids.get(unit);
+                proxupdate.each(b -> {
+                    if(!b.isAdded())
+                        b.add();
+                    b.onProximityUpdate();
+                });
                 doneBuild.get(unit).set(true);
+                Vars.world = w;
             }
         }
 
@@ -245,7 +253,7 @@ public class GridUnitType extends PvUnitType{
             Tile tile = tiles.get(x,y);
             if (tile.block() != null && !updated.contains(tile.build)) {
                 if (tile.build != null && tile.build.block() != null)
-                tile.build.update();
+                //tile.build.updateTile();
                 updated.add(tile.build);
             }
         });
@@ -340,7 +348,21 @@ public class GridUnitType extends PvUnitType{
                     drawTurretParts(tb, Dx, Dy);
                 }
                 else if (build instanceof Conveyor.ConveyorBuild cb) {
-                    Draw.rect(build.block().getGeneratedIcons()[0], Dx, Dy, unit.rotation+build.rotation*90);
+                    float rotation = unit.rotation+build.rotation*90;
+                    Draw.rect(build.block().getGeneratedIcons()[0], Dx, Dy, rotation);
+                    for(int i = 0; i < cb.len; i++){
+                        Item item = cb.ids[i];
+                        Tmp.v1.trns(rotation, tilesize, 0);
+                        Tmp.v2.trns(rotation, -tilesize / 2f, cb.xs[i] * tilesize / 2f);
+
+                        float
+                                ix = (cb.x + Tmp.v1.x * cb.ys[i] + Tmp.v2.x),
+                                iy = (cb.y + Tmp.v1.y * cb.ys[i] + Tmp.v2.y);
+
+                        //keep draw position deterministic.
+                        Draw.z(Draw.z()+0.1f);
+                        Draw.rect(item.fullIcon, ix, iy, itemSize, itemSize);
+                    }
                 }
                 else {
                     Draw.rect(build.block().getGeneratedIcons()[0], Dx, Dy, unit.rotation+build.rotation*90);

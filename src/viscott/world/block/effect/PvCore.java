@@ -20,6 +20,7 @@ public class PvCore extends CoreBlock {
     public float healTime = -1;
     public Effect warmupEffect = Fx.none;
     public Effect spawnEffect = Fx.none;
+    public boolean blackListFactions = false;
 
     public PvCore(String name)
     {
@@ -30,6 +31,8 @@ public class PvCore extends CoreBlock {
 
     public boolean partOfPlayerFaction()
     {
+        if (blackListFactions)
+            return faction.count(f -> f.partOf(Vars.player.team())) == 0;
         return faction.size == 0 || faction.count(f -> f.partOf(Vars.player.team())) > 0;
     }
     @Override

@@ -35,6 +35,7 @@ import mindustry.world.blocks.storage.CoreBlock;
 import mindustry.world.blocks.storage.Unloader;
 import mindustry.world.draw.*;
 import mindustry.world.meta.BuildVisibility;
+import viscott.types.PvFaction;
 import viscott.types.PvUnitPlan;
 import viscott.types.drawer.PvDrawPulse;
 import viscott.world.block.VoidBlock;
@@ -852,7 +853,7 @@ public class PvBlocks {
                     size = 1;
                     itemCapacity = 5;
                 }};
-                coreHover = new CoreBlock("core-hover")
+                coreHover = new PvCore("core-hover")
                 {{
                     requirements(Category.effect, with(PvItems.zirconium,1000,PvItems.lithium,1500,Items.silicon,300));
                     localizedName = "Core Hover";
@@ -862,8 +863,10 @@ public class PvBlocks {
                     size = 3;
                     unitCapModifier = 30;
                     itemCapacity = 6000;
+                    blackListFactions = true;
+                    faction.addAll(PvFactions.Xeal,PvFactions.Nullis);
                 }};
-                coreElevate = new CoreBlock("core-elevate")
+                coreElevate = new PvCore("core-elevate")
                 {{
                     requirements(Category.effect, with(PvItems.zirconium,5000,PvItems.lithium,4000,Items.silicon,900,PvItems.nobelium,500));
                     localizedName = "Core Elevate";
@@ -873,8 +876,10 @@ public class PvBlocks {
                     size = 4;
                     unitCapModifier = 50;
                     itemCapacity = 11000;
+                    blackListFactions = true;
+                    faction.addAll(PvFactions.Xeal,PvFactions.Nullis);
                 }};
-                coreUpraise = new CoreBlock("core-upraise")
+                coreUpraise = new PvCore("core-upraise")
                 {{
                     requirements(Category.effect, with(PvItems.zirconium,10000,PvItems.lithium,7000,Items.silicon,1500,PvItems.carbonFiber,1200,PvItems.nobelium,400));
                     localizedName = "Core Upraise";
@@ -884,6 +889,8 @@ public class PvBlocks {
                     size = 5;
                     unitCapModifier = 84;
                     itemCapacity = 16000;
+                    blackListFactions = true;
+                    faction.addAll(PvFactions.Xeal,PvFactions.Nullis);
                 }};
                 coreSpark = new PvCore("core-spark")
                 {{

@@ -20,11 +20,17 @@ public class PvFactions {
             description = "Azulex is a faction that has learnt to bend liquids and transport them with ease.";
         }};
         Nullis = new PvFaction("nullis",Color.valueOf("#ffffff")){{
-            description = "Having found a way to extract value from Black Holes made them an unstable Faction.";
-            info = "Nullis is a Faction of Robots wich have found a way to harness the Power of a Black Hole.\n" +
-                    "With that they have constructed and improved themselfs to not rely as much on the usual\n" +
-                    "resouces but rather the black hole energy\n" +
-                    "with every Unit in Nullis using a microscopical black hole as their core.";
+            description = "Having found a way to extract value from Black Holes made them an unstable Faction.\n" +
+                    "[green]Positive Attributes : \n" +
+                    "   Unit Storage and Core Storage is Linked\n" +
+                    "   Void Area's\n" +
+                    "   Near Endless Growth\n" +
+                    "[red]Negative Attributes : \n" +
+                    "   Base Core Capacity is Low\n" +
+                    "   Slower Statup\n";
+            info = "Nullis is a Faction of Units that have found a way to use Black Hole's in an Efficient way.\n" +
+                    "Once a Small Faction with nothing more than a few Units and some computery to mess around with,\n" +
+                    "is now a Force to be reckoned with.\nTheir expansion is close to non once they set up base.";
         }};
         Psy = new PvFaction("psy",Color.valueOf("#e892d1")){{
             description = "The Psy faction has been able to create extremely powerful shields and walls. They are specified in defense in a different way than mortikai";

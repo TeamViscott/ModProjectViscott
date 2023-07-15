@@ -8,6 +8,7 @@ import arc.struct.ObjectMap;
 import arc.struct.Seq;
 import arc.util.Log;
 import arc.util.Reflect;
+import arc.util.Strings;
 import mindustry.Vars;
 import mindustry.content.TechTree;
 import mindustry.core.NetClient;
@@ -24,6 +25,7 @@ import viscott.sounds.PvSoundControl;
 import viscott.types.PvFaction;
 import viscott.utilitys.PvPacketHandler;
 import viscott.utilitys.PvWorldState;
+import viscott.world.statusEffects.StatusEffectStack;
 
 import static mindustry.Vars.*;
 

@@ -1838,16 +1838,18 @@ public class PvUnits {
             omniMovement = false;
             drawCell = false;
             drawBody = false;
+            crushDamage = 4;
         }};
         lilshts = new PvUnitType("lilshts") {{
             health = 650;
-            armor = 40;
+            armor = 20;
             localizedName = "Lil shizz";
             constructor = EntityMapping.map("CrawlUnit");
             segments = 3;
             omniMovement = false;
             drawCell = false;
             drawBody = false;
+            crushDamage = 0.5f;
         }};
         omamori = new PvUnitType("omamori") {{
                 localizedName = "[green]Omamori[]";

@@ -137,9 +137,10 @@ public class PvStatusEffects {
         {{
              localizedName = "Void Shield";
              color = Color.valueOf("000000");
-             description = "a shield made of Void that reduces taken damage by 5.";
+             description = "a shield made of Void that reduces taken damage by 5.\n[grey]Void enhanced the building speed by a lot.";
              shield = 5;
              maxShield = 5;
+             buildSpeedMultiplier = 30;
              damage = -0.1f/60f;
         }};
         voidDecay = new PvStatusEffect("void-decay")

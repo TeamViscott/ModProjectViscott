@@ -48,7 +48,6 @@ public interface VoidArea {
                 {
                     if (unit.team == u.team) {
                         if (Mathf.len(u.x-unit.x,u.y-unit.y) <= radius) {
-                            unit.buildSpeedMultiplier*= 100;
                             unit.apply(PvStatusEffects.voidShield,30);
                         }
                     } else {
