@@ -7,6 +7,7 @@ import arc.struct.Seq;
 import mindustry.content.*;
 import mindustry.entities.bullet.MassDriverBolt;
 import mindustry.entities.effect.MultiEffect;
+import mindustry.gen.Call;
 import mindustry.gen.Sounds;
 import mindustry.logic.LStatements;
 import mindustry.type.Category;
@@ -955,6 +956,12 @@ public class PvBlocks {
                     unitCapModifier = 60;
                     itemCapacity = 100;
                     voidRadius = 16;
+                    drawer = new DrawMulti(
+                        new DrawLiquidStaticRegion(PvLiquids.concentratedVoid) {{
+                            padding = 2;
+                        }},
+                        new DrawDefault()
+                    );
                 }};
                 voidNode = new VoidBlock("void-node")
                 {{
@@ -1166,11 +1173,13 @@ public class PvBlocks {
                     range = 120;
                     consumePower(330/60f);
                 }};
-                labelHandler = new MessageBlock("label-handler") {{
+                labelHandler = new PvLabelBlock("label-handler") {{
                     requirements(Category.logic, with(PvItems.zirconium,25,PvItems.lithium,20));
                     localizedName = "Label Handler";
+                    description = "Everyone can read it with a little bit of power. need i say more?";
                     maxTextLength = 300;
                     maxNewlines = 30;
+                    consumePower(10f/60f);
                     health = 100;
                 }};
                 piscoProcessor = new PvLogicBlock("pisco-processor")
@@ -1249,6 +1258,7 @@ public class PvBlocks {
                             });
                     drawer = new DrawMulti(
                             new DrawLiquidStaticRegion(PvLiquids.concentratedVoid) {{
+                                padding = 2f;
                                 suffix = "-bottom";
                             }},
                             new DrawBubbles(Color.darkGray) {{

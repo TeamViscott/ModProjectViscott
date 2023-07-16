@@ -9,6 +9,8 @@ import mindustry.gen.*;
 import mindustry.type.Item;
 import mindustry.type.ItemStack;
 import mindustry.type.UnitType;
+import mindustry.world.draw.DrawBlock;
+import mindustry.world.draw.DrawDefault;
 import mindustry.world.modules.ItemModule;
 import viscott.content.PvEffects;
 import viscott.content.PvFactions;

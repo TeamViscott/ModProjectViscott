@@ -11,6 +11,8 @@ import mindustry.gen.Call;
 import mindustry.gen.Player;
 import mindustry.graphics.Pal;
 import mindustry.world.blocks.storage.CoreBlock;
+import mindustry.world.draw.DrawBlock;
+import mindustry.world.draw.DrawDefault;
 import viscott.types.PvFaction;
 
 import static mindustry.Vars.state;
@@ -22,11 +24,19 @@ public class PvCore extends CoreBlock {
     public Effect spawnEffect = Fx.none;
     public boolean blackListFactions = false;
 
+    public DrawBlock drawer = new DrawDefault();
+
     public PvCore(String name)
     {
         super(name);
         update = true;
         noUpdateDisabled = false;
+    }
+
+    @Override
+    public void init() {
+        super.init();
+        drawer.load(this);
     }
 
     public boolean partOfPlayerFaction()
@@ -66,6 +76,11 @@ public class PvCore extends CoreBlock {
                 playerQue.remove(player);
                 },
                     warmupEffect.lifetime/60);
+        }
+
+        @Override
+        public void draw() {
+            drawer.draw(this);
         }
 
         @Override
