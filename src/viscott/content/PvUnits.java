@@ -1856,6 +1856,7 @@ public class PvUnits {
             hitSize = 8 * 4;
             omniMovement = false;
             drawCell = false;
+            rotateSpeed = 90/60f;
             drawBody = false;
             drownTimeMultiplier = 5;
             crushDamage = 2;

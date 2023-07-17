@@ -43,6 +43,7 @@ public class ConsumeStatusEffect extends PvStatusEffect{
                     consumes.get(unit)[0]--;
                     if (consumes.get(unit)[0] <= 0) {
                         unit.unapply(this);
+                        effectOn.remove(unit);
                         return;
                     }
                 }
