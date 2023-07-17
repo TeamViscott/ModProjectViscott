@@ -16,7 +16,7 @@ import static java.lang.Float.POSITIVE_INFINITY;
 public class PvStatusEffects {
     public static StatusEffect
     timeWarped,doused, disabled, expent, resiliant, ungratefull, crescendo ,tick ,tock,mend,shield, malfunction,
-    voidShield,voidDecay,frag,aoe,homing,memoryExchange,dataLeak,endlessAmp, endlessDot, prevention, lastStand, voidConsume,
+    voidShield,voidDecay,frag,aoe,homing,memoryExchange,dataLeak,endlessAmp, endlessDot, prevention, lastStand, voidConsume, consume,
     //visual statuses
     preventionFx,lastStandFx,basicFx
             ;
@@ -202,6 +202,7 @@ public class PvStatusEffects {
             homingPower = 0.05f;
             homingDelay = 0;
         }};
+        //BossEffects
         memoryExchange = new CurseStatusEffect("memory-exchange"){{
             localizedName = "[#b]Memory Exchange";
             description = "When cast upon a Unit, when the Unit is killed while this effect is active their Data gets picked up by [purple]Siede";
@@ -239,6 +240,13 @@ public class PvStatusEffects {
             effect = Fx.sapped;
             effectChance = 0.2f;
         }};
+        consume = new ConsumeStatusEffect("consume") {{
+            localizedName = "[#f]Consume";
+            description = "The Frire hungers for blocks.";
+            hpThreshhold = 1800;
+            radius = 1;
+        }};
+        //Fun StatusEffects
         endlessAmp = new StatusEffectStack("endless-amp") {{
             localizedName = "[purple]Endless[] [gold]Amplification[]";
             description = "[red]never ending charges";
