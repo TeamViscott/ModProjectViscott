@@ -6,7 +6,9 @@ import viscott.types.PvFaction;
 
 public class PvFactions {
     public static PvFaction
-        Xeal,Mortikai,Azulex,Nullis,Psy
+        Xeal,Mortikai,Azulex,Nullis,Psy,
+            /*Extra's*/
+            Yggdrasil
             ;
     public static void load()
     {
@@ -34,6 +36,12 @@ public class PvFactions {
         }};
         Psy = new PvFaction("psy",Color.valueOf("#e892d1")){{
             description = "The Psy faction has been able to create extremely powerful shields and walls. They are specified in defense in a different way than mortikai";
+        }};
+        Yggdrasil = new PvFaction("yggdrasil",Color.valueOf("#59bc59")) {{
+            description = "[pink][Extra Faction][]\nA faction of the allmighty Otamori. they use nature to defend and harvest resources";
+            info = "one uppon a time there was the Otamori. the Peacefull giant who loved to walk around and See the view.\n" +
+                    "Over time. he accumulated followers who called themself the Yggdrasil's who wanted to follow the Giants footsteps.\n" +
+                    "And so the Giant helped them build in a way as to not hurt mother nature.";
         }};
     }
 }

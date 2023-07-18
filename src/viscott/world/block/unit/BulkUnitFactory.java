@@ -32,14 +32,20 @@ import mindustry.world.blocks.units.UnitFactory;
 import mindustry.world.consumers.ConsumeItemDynamic;
 import mindustry.world.meta.Stat;
 import viscott.types.BuildUnitType;
+import viscott.types.PvFaction;
 import viscott.types.PvUnitPlan;
 import viscott.utilitys.PvUtil;
 
 import java.util.List;
 
+import static mindustry.Vars.state;
+
 public class BulkUnitFactory extends Reconstructor {
     public int maxAmount = 10;
     public Seq<UnitFactory.UnitPlan> plans = new Seq<>();
+
+    public Seq<PvFaction> faction = new Seq<>();
+    public boolean blackListFactions = false;
 
     public BulkUnitFactory(String name)
     {
@@ -65,6 +71,23 @@ public class BulkUnitFactory extends Reconstructor {
                 new ConsumeItemDynamic((BulkUnitFactory.BulkUnitFactoryBuild e) ->
                         e.currentPlan != -1 ? plans.get(Math.min(e.currentPlan, plans.size - 1)).requirements : ItemStack.empty)
         );
+    }
+
+    public boolean partOfPlayerFaction()
+    {
+        if (blackListFactions)
+            return faction.count(f -> f.partOf(Vars.player.team())) == 0;
+        return faction.size == 0 || faction.count(f -> f.partOf(Vars.player.team())) > 0;
+    }
+
+    @Override
+    public boolean isVisible(){
+        return state.rules.editor || (partOfPlayerFaction() && !isHidden() && (!state.rules.hideBannedBlocks || !state.rules.isBanned(this)));
+    }
+
+    @Override
+    public boolean isPlaceable(){
+        return Vars.net.server() || (!state.rules.isBanned(this) || state.rules.editor) && supportsEnv(state.rules.env);
     }
 
     @Override

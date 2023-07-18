@@ -1477,9 +1477,10 @@ public class PvTurrets {
             );
             drawer = new DrawTurret(GetName("Pov"));
         }};
-        life = new ItemTurret("life")
+        life = new PvItemTurret("life")
         {{
             localizedName = "[gold]Life";
+            faction.add(PvFactions.Yggdrasil);
             range = 60*8;
             size = 4;
             health = 6000;

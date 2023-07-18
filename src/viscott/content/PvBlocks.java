@@ -351,10 +351,11 @@ public class PvBlocks {
                     liquidCapacity = 5;
                     consumePower(195f/60f);
                 }};
-                rootHarvester = new Drill("root-harvester")
+                rootHarvester = new PvDrill("root-harvester")
                 {{
                     requirements(Category.production, with(Items.copper,15,Items.sand,15));
                     localizedName = "[gold]Root Harvester";
+                    faction.add(PvFactions.Yggdrasil);
                     size = 2;
                     drillTime = 800;
                     tier = 4;
@@ -827,6 +828,7 @@ public class PvBlocks {
                 {{
                     requirements(Category.units,with(Items.copper,250,Items.silicon,75,PvItems.hardenedOak,40));
                     localizedName = "[gold]Branch Molder";
+                    faction.add(PvFactions.Yggdrasil);
                     health = 1600;
                     size = 5;
                     consumePower(120f/60f);
@@ -971,6 +973,7 @@ public class PvBlocks {
                 {{
                     requirements(Category.effect, with(PvItems.hardenedOak,15000));
                     localizedName = "[gold]Yggdrasil's Heartwood";
+                    faction.add(PvFactions.Yggdrasil);
                     alwaysUnlocked = true;
                     unitType = PvUnits.wood;
                     health = 18000;
