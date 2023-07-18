@@ -34,6 +34,8 @@ import mindustry.world.meta.BuildVisibility;
 import viscott.content.shootpatterns.CyclicShootPattern;
 import viscott.utilitys.PvUtil;
 import viscott.world.bullets.LargeBranchBulletType;
+import viscott.world.block.defense.PvItemTurret;
+import viscott.world.bullets.VoidBulletType;
 import viscott.world.pseudo3d.importedcode.BallisticMissileBulletType;
 import viscott.world.statusEffects.PvStatusEffect;
 
@@ -48,16 +50,66 @@ public class PvTurrets {
             marksman, xacto,reaper,shuttle, nuero, jaeger, glaive,
             xterminium,hel,falarica,spring,shredder, sumaya,life,
 
-            fracture,javelin
+            fracture,javelin,
+                    /*Nullis*/ quark
             ;
 
     public static void load(){
+        loadSize1();
         loadSize2();
         loadSize3();
         loadSize4();
         loadSize5();
         loadSize6();
     };
+
+    public static void loadSize1() {
+        quark = new PvItemTurret("quark") {{
+            localizedName = "Quark";
+            faction.add(PvFactions.Nullis);
+            size = 1;
+            health = 420;
+            range = 32*8;
+            recoil = 2;
+            rotateSpeed = 4f;
+            reload = 60/1.2f;
+            shoot = new ShootSpread(3,1);
+            shoot.shotDelay = 3;
+            maxAmmo = 100;
+            requirements(Category.turret,with(PvItems.zirconium,40));
+            ammo(
+                PvItems.zirconium, new VoidBulletType(4,6) {{
+                    lifetime = 3;
+                    trailLength = 30;
+                    trailWidth = 2;
+                    splashDamage = 4;
+                    splashDamageRadius = 8*2f;
+                    despawnEffect = hitEffect = Fx.wet;
+                    ammoMultiplier = 10;
+                    }}
+            );
+            drawer = new DrawTurret(GetName("Pov")) {{
+                parts.add(
+                        new RegionPart("-l") {{
+                            progress = PartProgress.reload;
+                            x = y = 0;
+                            moveX = 2;
+                            moveY = 2;
+                            under = true;
+                            mirror = false;
+                        }},
+                        new RegionPart("-r") {{
+                            progress = PartProgress.reload;
+                            x = y = 0;
+                            moveX = -2;
+                            moveY = 2;
+                            under = true;
+                            mirror = false;
+                        }}
+                );
+            }};
+        }};
+    }
 
     public static void loadSize2() //cuz u guys cant sort stuff by size i did it 4 u.
     {
@@ -107,8 +159,6 @@ public class PvTurrets {
                         hitColor = backColor = trailColor = Color.valueOf("ef525b");
                         frontColor = Color.valueOf("ffa1a7");
                         hitEffect = despawnEffect = Fx.hitBulletColor;
-                        status = StatusEffects.blasted;
-                        statusDuration = 120f;
                         trailWidth = 2.5f;
                         trailLength = 30;
                         status = StatusEffects.shocked;

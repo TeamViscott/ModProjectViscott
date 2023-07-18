@@ -99,9 +99,12 @@ public class PvBlocks {
 
                     /*Payload*/densePayloadConveyor,densePayloadRouter,
                             denseConstructor,denseDeconstructor,denseUnloader,denseLoader,
+
+                            voidLink,
                     /*Core's*/coreHover,coreElevate,coreUpraise,yggdrasilsHeartwood,
+
                             bulkUnloader,
-                            /*Nullis*/nullisCore, voidLink,
+                            /*Nullis*/nullisCore, nullisVoid,
                             /*Xeal*/coreSpark,coreCharge,coreSurge,
                     /*Effects*/utilityProjector,
                             /*Nullis*/voidNode,voidBeacon,
@@ -1004,6 +1007,25 @@ public class PvBlocks {
                             padding = 2;
                         }},
                         new DrawDefault()
+                    );
+                }};
+                nullisVoid = new NullisCore("core-void")
+                {{
+                    requirements(Category.effect,with(PvItems.zirconium,1400,PvItems.lithium,800,PvItems.platinum,400,PvItems.erbium,100,Items.silicon,100,PvItems.nobelium,100));
+                    localizedName = "Core Void";
+                    unitType = PvUnits.vessel;
+                    defaultMiner = PvUnits.shadow;
+                    size = 4;
+                    health = 4600;
+                    armor = 4;
+                    unitCapModifier = 100;
+                    itemCapacity = 200;
+                    voidRadius = 22;
+                    drawer = new DrawMulti(
+                            new DrawLiquidStaticRegion(PvLiquids.concentratedVoid) {{
+                                padding = 2;
+                            }},
+                            new DrawDefault()
                     );
                 }};
                 voidNode = new VoidBlock("void-node")

@@ -10,6 +10,7 @@ import arc.struct.Seq;
 import arc.util.Reflect;
 import arc.util.Time;
 import mindustry.Vars;
+import mindustry.ai.types.HugAI;
 import mindustry.ai.types.MinerAI;
 import mindustry.content.Fx;
 import mindustry.content.Items;
@@ -31,6 +32,7 @@ import mindustry.entities.part.ShapePart;
 import mindustry.entities.pattern.ShootHelix;
 import mindustry.entities.pattern.ShootSpread;
 import mindustry.entities.pattern.ShootAlternate;
+import mindustry.game.EventType;
 import mindustry.game.Team;
 import mindustry.gen.*;
 import mindustry.graphics.Drawf;
@@ -64,6 +66,7 @@ import mindustry.world.draw.*;
 import viscott.abilitys.EnemyStatusFieldAbility;
 import viscott.content.shootpatterns.ShootSpreadBounce;
 import viscott.gen.FrogUnit;
+import viscott.gen.ai.FrireAI;
 import viscott.types.BuildUnitType;
 import viscott.types.GridUnitType;
 import viscott.types.NullisUnitType;
@@ -78,6 +81,7 @@ import viscott.world.statusEffects.PvStatusEffect;
 
 import static arc.graphics.g2d.Draw.color;
 import static arc.graphics.g2d.Lines.stroke;
+import static mindustry.Vars.netServer;
 import static mindustry.Vars.tilePayload;
 
 public class PvUnits {
@@ -398,6 +402,7 @@ public class PvUnits {
                     new Weapon()
                     {{
                         x = 0;
+
                         reload = 60f;
                         shoot.shots = 2;
                         shoot.shotDelay = 20;
@@ -1906,28 +1911,84 @@ public class PvUnits {
                 range = 8 * 14;
             }
         };
-        frire = new PvUnitType("frire") {{
-            localizedName = "FrireDragon";
-            health = 230000;
-            armor = 20;
-            constructor = EntityMapping.map("CrawlUnit");
-            segments = 3;
-            hitSize = 8 * 4;
-            omniMovement = false;
-            drawCell = false;
-            drawBody = false;
-            crushDamage = 4;
-        }};
         lilshts = new PvUnitType("lilshts") {{
             health = 650;
             armor = 20;
             localizedName = "Lil shizz";
             constructor = EntityMapping.map("CrawlUnit");
+            aiController = HugAI::new;
+            controller = p -> new HugAI();
             segments = 3;
             omniMovement = false;
             drawCell = false;
             drawBody = false;
             crushDamage = 0.5f;
+        }};
+        frire = new PvUnitType("frire") {{
+            localizedName = "FrireDragon";
+            health = 230000;
+            armor = 20;
+            constructor = EntityMapping.map("CrawlUnit");
+            aiController = FrireAI::new;
+            segments = 3;
+            hitSize = 8 * 4;
+            omniMovement = false;
+            drawCell = false;
+            rotateSpeed = 90/60f;
+            drawBody = false;
+            drownTimeMultiplier = 5;
+            crushDamage = 2;
+            weapons.add(new Weapon("rush") {{
+                reload = 60 * 6;
+                shootCone = 360;
+                x = y = 0;
+                shoot.firstShotDelay = 20;
+                bullet = new BulletType() {{
+                    this.range = 8*6;
+                    shootStatus = PvStatusEffects.consume;
+                    shootStatusDuration = 240;
+                    recoil = -8 * 3;
+                    lifetime = 0;
+                    shootSound = hitSound = despawnSound = Sounds.none;
+                    fallEffect = smokeEffect = shootEffect = despawnEffect = hitEffect = Fx.none;
+                    ejectEffect = Fx.smokeCloud;
+                }};
+            }},
+                    new Weapon("frireSpawn") {{
+                        mirror = true;
+                        x = 8*1.4f;
+                        y = 0;
+                        shootCone = 360;
+                        alternate = true;
+                        reload = 60*2;
+                        rotate = false;
+                        controllable = false;
+                        autoTarget = true;
+                        bullet = new BulletType() {{
+                            this.range = 8*16;
+                            lifetime = 0;
+                            spawnUnit = PvUnits.lilshts;
+                            shootSound = hitSound = despawnSound = Sounds.none;
+                            ejectEffect = fallEffect = smokeEffect = shootEffect = despawnEffect = hitEffect = Fx.none;
+                        }};
+                    }},
+                    new Weapon("bite") {{
+                        mirror = false;
+                        x = y = 0;
+                        reload = 60;
+                        rotate = false;
+                        shootCone = 45;
+                        shoot = new ShootSpread(10,4);
+                        bullet = new BasicBulletType(4,82) {{
+                            trailLength = 20;
+                            trailWidth = 2;
+                            drag = 0.06f;
+                            lifetime = 100;
+                            trailColor = backColor = lightColor = Pal.redderDust;
+                            frontColor = Pal.redLight;
+                        }};
+                    }}
+            );
         }};
         omamori = new PvUnitType("omamori") {{
                 localizedName = "[green]Omamori[]";

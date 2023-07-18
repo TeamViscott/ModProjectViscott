@@ -25,7 +25,7 @@ public class DrawLiquidStaticRegion extends DrawLiquidRegion {
     @Override
     public void draw(Building build){
         TextureRegion region = renderer.fluidFrames[drawLiquid.gas ? 1 : 0][drawLiquid.getAnimationFrame()];
-        TextureRegion toDraw = liquid;
+        TextureRegion toDraw = Tmp.tr1;
         int size = build.block().size;
         float leftBounds = size/2f * tilesize - padding;
         float bottomBounds = size/2f * tilesize - padding;
@@ -63,7 +63,5 @@ public class DrawLiquidStaticRegion extends DrawLiquidRegion {
 
     @Override
     public void load(Block block){
-        liquid = Core.atlas.find(block.name + suffix);
-        Log.info(liquid.toString(),0);
     }
 }
