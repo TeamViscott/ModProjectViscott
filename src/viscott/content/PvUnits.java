@@ -87,7 +87,7 @@ import static mindustry.Vars.tilePayload;
 public class PvUnits {
     public static UnitType
         /*Core Units*/micro,infrared, spectrum,
-            shadow,proton,vessel,
+            shadow,vessel,proton,
             amp,volt,watt,
 
             wood,

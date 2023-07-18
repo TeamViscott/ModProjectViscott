@@ -21,6 +21,7 @@ import java.util.HashMap;
 public class NullisCore extends PvCore {
     public float voidRadius = 5;
     public UnitType defaultMiner = null;
+    public int miners = 1;
     public NullisCore(String name)
     {
         super(name);
@@ -37,8 +38,8 @@ public class NullisCore extends PvCore {
         public float pulsing = 0;
         Seq<Unit> visualizer = new Seq<>();
         ItemModule visualItems = new ItemModule();
-        public Unit shadowMiner = null;
-        int savedId = -1;
+        public Seq<Unit> shadowMiner = new Seq<>();
+        Seq<Integer> savedIds = new Seq<>();
         @Override
         public void updateTile()
         {
@@ -74,17 +75,28 @@ public class NullisCore extends PvCore {
             }
             updateVoid(this, 8 * voidRadius);
             if (defaultMiner == null) return;
-            if (shadowMiner == null || !shadowMiner.isValid())
-                if (savedId < 0) {
-                    if (!Vars.net.client()) {
-                        shadowMiner = defaultMiner.spawn(team(), x(), y());
-                        PvEffects.nullisDeath.get(size - 1).at(x(), y());
-                    }
+            for(Unit u : shadowMiner.list())
+                if (!u.isValid())
+                    shadowMiner.remove(u);
+            if (savedIds.size > 0) {
+                savedIds.each(uid -> {
+                    Unit u = Groups.unit.find(r -> r.id == uid);
+                    if (u == null) return;
+                    shadowMiner.add(u);
+                });
+                savedIds.clear();
+            }
+            if (shadowMiner.size < miners)
+                if (!Vars.net.client()) {
+                    shadowMiner.add(defaultMiner.spawn(team(), x(), y()));
+                    PvEffects.nullisDeath.get(size - 1).at(x(), y());
                 }
-                else {
-                    shadowMiner = Groups.unit.getByID(savedId);
-                    savedId = -1;
-                }
+        }
+
+        @Override
+        public void remove() {
+            shadowMiner.each(u -> u.spawnedByCore = true);
+            super.remove();
         }
 
         @Override
@@ -116,16 +128,16 @@ public class NullisCore extends PvCore {
         @Override
         public void write(Writes write) {
             super.write(write);
-            if (shadowMiner == null || !shadowMiner.isValid())
-                write.i(-1);
-            else
-                write.i(shadowMiner.id());
+            write.s(shadowMiner.size);
+            shadowMiner.each(s -> write.i(s.id));
         }
 
         @Override
         public void read(Reads read, byte revision) {
             super.read(read, revision);
-            savedId = read.i();
+            int size = read.s();
+            for(;size > 0;size--)
+                savedIds.add(read.i());
         }
     }
 }

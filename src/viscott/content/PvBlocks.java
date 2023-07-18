@@ -32,6 +32,7 @@ import mindustry.world.blocks.payloads.*;
 import mindustry.world.blocks.power.*;
 import mindustry.world.blocks.production.*;
 import mindustry.world.blocks.storage.CoreBlock;
+import mindustry.world.blocks.storage.StorageBlock;
 import mindustry.world.blocks.storage.Unloader;
 import mindustry.world.draw.*;
 import mindustry.world.meta.BuildVisibility;
@@ -106,7 +107,7 @@ public class PvBlocks {
                             bulkUnloader,
                             /*Nullis*/nullisCore, nullisVoid,
                             /*Xeal*/coreSpark,coreCharge,coreSurge,
-                    /*Effects*/utilityProjector,
+                    /*Effects*/utilityProjector,pocketContainer,
                             /*Nullis*/voidNode,voidBeacon,
 
                             /*Walls*/
@@ -1021,6 +1022,7 @@ public class PvBlocks {
                     size = 4;
                     health = 4600;
                     armor = 4;
+                    miners = 3;
                     unitCapModifier = 100;
                     itemCapacity = 200;
                     voidRadius = 22;
@@ -1285,7 +1287,7 @@ public class PvBlocks {
                             });
                 }};
                 voidReprocessingUnit = new PvLogicBlock("void-reprocessing-unit") {{
-                    requirements(Category.logic, with(PvItems.zirconium,75,PvItems.lithium,50,PvItems.nobelium,20));
+                    requirements(Category.logic, with(PvItems.zirconium,180,PvItems.lithium,120,Items.silicon,100,PvItems.nobelium,80));
                     localizedName = "Void Reprocessing Unit";
                     range = 8*32;
                     health = 90;
@@ -1361,6 +1363,14 @@ public class PvBlocks {
                     armor = 10;
                     pierceReduction = 99;
                     absorbLasers = true;
+                }};
+                pocketContainer = new StorageBlock("pocket-container") {{
+                    requirements(Category.effect,with(PvItems.zirconium,100,PvItems.lithium,80,PvItems.erbium,60,Items.silicon,50));
+                    localizedName = "Pocket Container";
+                    description = "A Container for everyday use. its only downside is that it cannot be merged with the core.";
+                    coreMerge = false;
+                    size = 2;
+                    itemCapacity = 400;
                 }};
                 utilityProjector = new UtilityProjector("utility-projector")
                 {{
