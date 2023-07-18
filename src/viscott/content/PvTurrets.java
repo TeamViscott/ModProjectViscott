@@ -65,6 +65,7 @@ public class PvTurrets{
     public static void loadSize1() {
         quark = new PvItemTurret("quark") {{
             localizedName = "Quark";
+            faction.add(PvFactions.Nullis);
             size = 1;
             health = 420;
             range = 32*8;
@@ -74,9 +75,9 @@ public class PvTurrets{
             shoot = new ShootSpread(3,1);
             shoot.shotDelay = 3;
             maxAmmo = 100;
-            requirements(Category.turret,with(PvItems.zirconium,75));
+            requirements(Category.turret,with(PvItems.zirconium,40));
             ammo(
-                PvItems.zirconium, new VoidBulletType(4,10) {{
+                PvItems.zirconium, new VoidBulletType(4,6) {{
                     lifetime = 3;
                     trailLength = 30;
                     trailWidth = 2;
