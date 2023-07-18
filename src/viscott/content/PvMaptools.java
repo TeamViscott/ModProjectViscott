@@ -1,26 +1,11 @@
 package viscott.content;
 
-import arc.util.Strings;
-import mindustry.content.Blocks;
-import mindustry.content.Items;
 import mindustry.content.UnitTypes;
 import mindustry.type.Category;
-import mindustry.type.UnitType;
 import mindustry.world.Block;
-import mindustry.world.Build;
 import mindustry.world.blocks.defense.OverdriveProjector;
-import mindustry.world.blocks.distribution.Conveyor;
-import mindustry.world.blocks.distribution.Router;
-import mindustry.world.blocks.heat.HeatProducer;
-import mindustry.world.blocks.liquid.Conduit;
-import mindustry.world.blocks.liquid.LiquidRouter;
-import mindustry.world.blocks.sandbox.ItemSource;
-import mindustry.world.blocks.sandbox.LiquidSource;
 import mindustry.world.blocks.sandbox.PowerSource;
 import mindustry.world.blocks.storage.CoreBlock;
-import mindustry.world.draw.DrawDefault;
-import mindustry.world.draw.DrawHeatOutput;
-import mindustry.world.draw.DrawMulti;
 import mindustry.world.meta.BuildVisibility;
 import viscott.world.block.liquids.VoidSource;
 import viscott.world.block.sandbox.PvItemSource;

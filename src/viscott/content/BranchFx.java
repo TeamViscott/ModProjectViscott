@@ -1,15 +1,11 @@
 package viscott.content;
 
 import arc.graphics.Color;
-import arc.graphics.g2d.Draw;
-import arc.graphics.g2d.Fill;
 import arc.math.Mathf;
 import arc.math.geom.Vec2;
 import arc.struct.Seq;
-import arc.util.Tmp;
 import mindustry.entities.Effect;
 import mindustry.graphics.Drawf;
-import mindustry.graphics.Layer;
 
 import static arc.graphics.g2d.Draw.alpha;
 import static arc.graphics.g2d.Draw.color;

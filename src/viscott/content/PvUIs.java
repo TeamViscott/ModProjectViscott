@@ -1,6 +1,5 @@
 package viscott.content;
 
-import mindustry.core.UI;
 import viscott.world.ui.PvUI;
 
 public class PvUIs {

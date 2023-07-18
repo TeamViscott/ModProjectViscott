@@ -1,10 +1,6 @@
 package viscott.content;
-import arc.*;
-import arc.util.*;
 import mindustry.gen.*;
 import mindustry.world.meta.StatUnit;
-
-import java.util.*;
 
 /**
  * Defines a unit of measurement for block stats.

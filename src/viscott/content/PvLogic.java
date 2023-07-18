@@ -1,24 +1,18 @@
 package viscott.content;
 
-import arc.Core;
-import arc.graphics.Color;
 import arc.math.Mathf;
 import arc.scene.ui.Label;
 import arc.scene.ui.layout.Table;
-import arc.util.Log;
-import arc.util.Strings;
 import arc.util.Time;
 import mindustry.gen.Building;
 import mindustry.gen.Unit;
 import mindustry.logic.*;
 import mindustry.ui.Styles;
 import mindustry.world.blocks.logic.LogicBlock;
-import mindustry.world.blocks.logic.LogicDisplay;
 import viscott.types.logic.PvParser;
 import viscott.world.block.logic.PvLogicBlock;
 
 import static mindustry.Vars.*;
-import static mindustry.Vars.state;
 import static mindustry.logic.LExecutor.varCounter;
 
 public class PvLogic {

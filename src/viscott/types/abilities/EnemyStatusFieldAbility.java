@@ -1,4 +1,4 @@
-package viscott.abilitys;
+package viscott.types.abilities;
 
 import arc.math.Angles;
 import arc.util.Time;

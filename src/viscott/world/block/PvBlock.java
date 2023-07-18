@@ -1,5 +1,6 @@
 package viscott.world.block;
 
+import arc.Core;
 import arc.struct.Seq;
 import arc.util.Structs;
 import mindustry.Vars;
@@ -18,6 +19,13 @@ public class PvBlock extends Block {
         super(name);
         solid = true;
         destructible = true;
+    }
+
+    @Override
+    public void loadIcon(){
+        super.loadIcon();
+        fullIcon = Core.atlas.find(name + "-full",fullIcon);
+        uiIcon = Core.atlas.find(name + "-ui",fullIcon);
     }
 
     public boolean partOfPlayerFaction()

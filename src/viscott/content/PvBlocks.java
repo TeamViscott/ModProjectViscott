@@ -2,42 +2,29 @@ package viscott.content;
 
 import arc.func.Prov;
 import arc.graphics.Color;
+import arc.math.Mathf;
 import arc.struct.Seq;
+import arc.util.Time;
 import mindustry.content.*;
 import mindustry.entities.bullet.MassDriverBolt;
 import mindustry.entities.effect.MultiEffect;
-import mindustry.gen.Call;
 import mindustry.gen.Sounds;
 import mindustry.logic.LStatements;
-import mindustry.type.Category;
-import mindustry.type.ItemStack;
-import mindustry.type.LiquidStack;
+import mindustry.type.*;
 import mindustry.world.Block;
 import mindustry.world.blocks.defense.Wall;
-import mindustry.world.blocks.distribution.DuctRouter;
-import mindustry.world.blocks.distribution.Junction;
-import mindustry.world.blocks.distribution.MassDriver;
-import mindustry.world.blocks.environment.Floor;
-import mindustry.world.blocks.environment.OreBlock;
-import mindustry.world.blocks.environment.StaticWall;
-import mindustry.world.blocks.heat.HeatConductor;
-import mindustry.world.blocks.heat.HeatProducer;
-import mindustry.world.blocks.liquid.Conduit;
-import mindustry.world.blocks.liquid.LiquidBridge;
-import mindustry.world.blocks.liquid.LiquidJunction;
-import mindustry.world.blocks.liquid.LiquidRouter;
-import mindustry.world.blocks.logic.MemoryBlock;
-import mindustry.world.blocks.logic.MessageBlock;
+import mindustry.world.blocks.distribution.*;
+import mindustry.world.blocks.environment.*;
+import mindustry.world.blocks.heat.*;
+import mindustry.world.blocks.liquid.*;
+import mindustry.world.blocks.logic.*;
 import mindustry.world.blocks.payloads.*;
 import mindustry.world.blocks.power.*;
 import mindustry.world.blocks.production.*;
-import mindustry.world.blocks.storage.CoreBlock;
-import mindustry.world.blocks.storage.StorageBlock;
-import mindustry.world.blocks.storage.Unloader;
+import mindustry.world.blocks.storage.*;
 import mindustry.world.draw.*;
 import mindustry.world.meta.BuildVisibility;
-import viscott.types.PvFaction;
-import viscott.types.PvUnitPlan;
+import viscott.types.*;
 import viscott.types.drawer.PvDrawPulse;
 import viscott.world.block.VoidBlock;
 import viscott.world.block.defense.PvWall;
@@ -49,7 +36,7 @@ import viscott.world.block.logic.*;
 import viscott.world.block.power.ConstGenerator;
 import viscott.world.block.production.*;
 import viscott.world.block.unit.*;
-import viscott.world.draw.DrawLiquidStaticRegion;
+import viscott.world.draw.*;
 
 import static mindustry.type.ItemStack.with;
 
@@ -108,7 +95,7 @@ public class PvBlocks {
                             /*Nullis*/nullisCore, nullisVoid,
                             /*Xeal*/coreSpark,coreCharge,coreSurge,
                     /*Effects*/utilityProjector,pocketContainer,
-                            /*Nullis*/voidNode,voidBeacon,
+                            /*Nullis*/voidNode,voidBeacon,voidExpander,
 
                             /*Walls*/
                             zirconWall,zirconWallLarge,
@@ -1037,7 +1024,6 @@ public class PvBlocks {
                 {{
                     requirements(Category.effect,with(PvItems.zirconium,30));
                     localizedName = "Void Node";
-                    faction.add(PvFactions.Nullis);
                     size = 1;
                     health = 100;
                     voidRadius = 6;
@@ -1047,13 +1033,42 @@ public class PvBlocks {
                 {{
                     requirements(Category.effect,with(PvItems.zirconium,1500,PvItems.lithium,1000,PvItems.nobelium,300,PvItems.carbonFiber,100));
                     localizedName = "Void Beacon";
-                    faction.add(PvFactions.Nullis);
                     size = 4;
                     health = 1400;
                     voidRadius = 26;
                     drawer = new DrawMulti(
                             new DrawDefault(),
                             new PvDrawPulse("-black")
+                    );
+                }};
+                voidExpander = new VoidBlock("void-expander") {{
+                    requirements(Category.effect,with(PvItems.zirconium,3000,PvItems.lithium,1800,PvItems.nobelium,1000,PvItems.carbonFiber,500,PvItems.rushAlloy,250));
+                    localizedName = "Void Expander";
+                    size = 5;
+                    health = 4500;
+                    voidRadius = 30;
+                    squareSprite = false;
+                    drawer = new DrawMulti(
+                        new DrawLiquidStaticRegion(PvLiquids.concentratedVoid){{
+                                padding = 10;
+                        }},
+                        new DrawDefault(),
+                        new DrawMoveRegion("-l"){{
+                            moveY = 4;
+                            progress = () -> Mathf.sin(Time.time/60);
+                        }},
+                        new DrawMoveRegion("-r"){{
+                            moveY = -4;
+                            progress = () -> Mathf.sin(Time.time/60);
+                        }},
+                        new DrawMoveRegion("-u"){{
+                            moveX = -4;
+                            progress = () -> Mathf.cos(Time.time/60);
+                        }},
+                        new DrawMoveRegion("-d") {{
+                            moveX = 4;
+                            progress = () -> Mathf.cos(Time.time/60);
+                        }}
                     );
                 }};
                 harvestor = new PowerGrinder("harvestor")
@@ -1369,6 +1384,7 @@ public class PvBlocks {
                     localizedName = "Pocket Container";
                     description = "A Container for everyday use. its only downside is that it cannot be merged with the core.";
                     coreMerge = false;
+                    health = 380;
                     size = 2;
                     itemCapacity = 400;
                 }};

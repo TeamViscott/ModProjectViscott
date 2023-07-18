@@ -1,9 +1,6 @@
 package viscott.content;
 
 import arc.graphics.Color;
-import mindustry.content.StatusEffects;
-import mindustry.game.EventType;
-import mindustry.type.CellLiquid;
 import mindustry.type.Liquid;
 import viscott.types.VoidLiquid;
 

@@ -1,17 +1,10 @@
 package viscott.content;
 
 import arc.graphics.Color;
-import mindustry.Vars;
-import mindustry.content.Items;
 import mindustry.content.Planets;
-import mindustry.content.Weathers;
-import mindustry.game.Team;
 import mindustry.graphics.Pal;
 import mindustry.graphics.g3d.HexMesh;
-import mindustry.maps.planet.AsteroidGenerator;
-import mindustry.maps.planet.SerpuloPlanetGenerator;
 import mindustry.type.Planet;
-import mindustry.type.Weather;
 import viscott.gen.VercilusPlanetGenerator;
 
 import static mindustry.Vars.*;

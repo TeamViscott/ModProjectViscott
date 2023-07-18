@@ -6,7 +6,6 @@ import arc.graphics.g2d.Fill;
 import arc.graphics.g2d.Lines;
 import arc.math.Interp;
 import arc.math.Mathf;
-import arc.math.geom.Vec2;
 import arc.struct.Seq;
 import mindustry.entities.Effect;
 import mindustry.game.Team;
@@ -16,7 +15,6 @@ import mindustry.graphics.Pal;
 import viscott.world.pseudo3d.importedcode.DrawPseudo3d;
 import static arc.graphics.g2d.Draw.*;
 import static arc.graphics.g2d.Lines.*;
-import static arc.input.KeyCode.e;
 
 public class PvEffects {
     public static Effect
