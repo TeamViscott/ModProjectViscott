@@ -1,7 +1,9 @@
 package viscott.content;
 
 import arc.graphics.Color;
+import arc.math.Mathf;
 import mindustry.content.Fx;
+import mindustry.content.StatusEffects;
 import mindustry.entities.bullet.BasicBulletType;
 import mindustry.entities.effect.MultiEffect;
 import mindustry.game.Team;
@@ -16,7 +18,7 @@ import static java.lang.Float.POSITIVE_INFINITY;
 public class PvStatusEffects {
     public static StatusEffect
     timeWarped,doused, disabled, expent, resiliant, ungratefull, crescendo ,tick ,tock,mend,shield, malfunction,
-    voidShield,voidDecay,frag,aoe,homing,memoryExchange,dataLeak,endlessAmp, endlessDot, prevention, lastStand, voidConsume,
+    voidShield,voidDecay,frag,aoe,homing,memoryExchange,dataLeak,endlessAmp, endlessDot, prevention, lastStand, voidConsume,splintered,
     //visual statuses
     preventionFx,lastStandFx,basicFx
             ;
@@ -261,6 +263,21 @@ public class PvStatusEffects {
             setStatsInfinity = true;
             charges = (int) POSITIVE_INFINITY;
             staticStat();
+        }};
+        splintered = new StatusEffect("splintered")
+        {{
+            localizedName = "[gold]Splintered";
+            color = Color.valueOf("392f32");
+            description = "Shards of wood are stuck inside you";
+            damage = 2f/60f;
+            transitionDamage = 80;
+            init(() -> {
+                opposite(StatusEffects.wet, StatusEffects.freezing);
+                affinity(StatusEffects.burning, (unit, result, time) -> {
+                    unit.damagePierce(transitionDamage);
+                    Fx.burning.at(unit.x + Mathf.range(unit.bounds() / 2f), unit.y + Mathf.range(unit.bounds() / 2f));
+                });
+            });
         }};
     }
 }

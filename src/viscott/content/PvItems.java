@@ -11,7 +11,7 @@ import static mindustry.content.Items.silicon;
 public class PvItems {
     public static Item
     zirconium,lithium,barium,nobelium,platinum,erbium,carbonFiber,copium,
-            rushAlloy,tideAlloy,bulkAlloy,darkMatter
+            rushAlloy,tideAlloy,bulkAlloy,darkMatter,hardenedOak
     ;
     public static Seq<Item> vercilusItems = new Seq<Item>(),
                             vercilusOnlyItems = new Seq<Item>();
@@ -82,6 +82,14 @@ public class PvItems {
             color = Color.valueOf("011414");
             explosiveness = 100;
             radioactivity = 40;
+        }};
+        hardenedOak = new Item("hardened-oak")
+        {{
+            localizedName = "[gold]Hardened Oak";
+            color = Color.valueOf("392f32");
+            explosiveness = -10;
+            flammability = 2;
+            radioactivity = -4;
         }};
 
         vercilusItems.addAll(zirconium,lithium,barium,silicon,nobelium,platinum,erbium,carbonFiber,rushAlloy,tideAlloy);

@@ -33,6 +33,7 @@ import mindustry.world.draw.DrawTurret;
 import mindustry.world.meta.BuildVisibility;
 import viscott.content.shootpatterns.CyclicShootPattern;
 import viscott.utilitys.PvUtil;
+import viscott.world.bullets.LargeBranchBulletType;
 import viscott.world.pseudo3d.importedcode.BallisticMissileBulletType;
 import viscott.world.statusEffects.PvStatusEffect;
 
@@ -40,12 +41,12 @@ import static mindustry.content.Items.silicon;
 import static mindustry.type.ItemStack.with;
 import static viscott.utilitys.PvUtil.GetName;
 
-public class PvTurrets{
+public class PvTurrets {
     public static Block
             splinter,shatter,euro,snap,hourglass,
             phantom,razor,rainmaker,striker,
             marksman, xacto,reaper,shuttle, nuero, jaeger, glaive,
-            xterminium,hel,falarica,spring,shredder, sumaya,
+            xterminium,hel,falarica,spring,shredder, sumaya,life,
 
             fracture,javelin
             ;
@@ -56,7 +57,7 @@ public class PvTurrets{
         loadSize4();
         loadSize5();
         loadSize6();
-};
+    };
 
     public static void loadSize2() //cuz u guys cant sort stuff by size i did it 4 u.
     {
@@ -1426,6 +1427,94 @@ public class PvTurrets{
             );
             drawer = new DrawTurret(GetName("Pov"));
         }};
+        life = new ItemTurret("life")
+        {{
+            localizedName = "[gold]Life";
+            range = 60*8;
+            size = 4;
+            health = 6000;
+            reload = 5*60f;
+            chargeSound = Sounds.plasmadrop;//TODO custom sounds
+            shootSound = Sounds.plasmaboom;
+            cooldownTime = 300f;
+            recoil = 0f;
+            shoot.firstShotDelay = 80f;
+            shoot.shots = 40;
+            shoot.shotDelay = 1f;
+            heatColor = Pal.heal;
+            requirements(Category.turret,with(Items.thorium, 250,Items.titanium,50,PvItems.hardenedOak,200,silicon,100));
+            ammo(
+                PvItems.hardenedOak,new LargeBranchBulletType(100),
+                PvItems.darkMatter,new LargeBranchBulletType(800)
+            );
+            drawer = new DrawTurret(GetName("YPov")){{
+                parts.addAll(
+                        new RegionPart("-barrel"){{
+                            progress = PartProgress.warmup;
+                            heatProgress = PartProgress.recoil;
+                            heatColor = Pal.heal;
+                            mirror = false;
+                            under = false;
+                            moveY = 8;
+                            layerOffset = -1;
+                        }},
+                        new ShapePart(){{
+                            progress = PartProgress.warmup;
+                            rotateSpeed = -5;
+                            color = Color.valueOf("7fab7e");
+                            sides = 7;
+                            hollow = true;
+                            stroke = 0f;
+                            strokeTo = 1.6f;
+                            radius = 12f;
+                            layer = Layer.effect;
+                            x = -14;
+                            mirror = true;
+                        }},
+                        new ShapePart(){{
+                            progress = PartProgress.warmup;
+                            rotateSpeed = 4;
+                            color = Color.valueOf("7fab7e");
+                            sides = 8;
+                            hollow = true;
+                            stroke = 0f;
+                            strokeTo = 1.6f;
+                            radius = 8;
+                            layer = Layer.effect;
+                            x = -14;
+                            mirror = true;
+                        }},
+                        new ShapePart(){{
+                            progress = PartProgress.warmup;
+                            rotateSpeed = -5;
+                            color = Color.valueOf("7fab7e");
+                            sides = 10;
+                            hollow = true;
+                            stroke = 0f;
+                            strokeTo = 1.6f;
+                            radius = 7f;
+                            layer = Layer.effect;
+                            x = -14;
+                            mirror = true;
+                        }},
+                        new HaloPart(){{
+                            progress = PartProgress.warmup;
+                            color = Color.valueOf("7fab7e");
+                            sides = 3;
+                            hollow = true;
+                            shapes = 3;
+                            stroke = 0f;
+                            strokeTo = 4f;
+                            radius = 3f;
+                            haloRadius = 8f;
+                            haloRotateSpeed = 1;
+                            layer = Layer.effect;
+                            x = -14;
+                            mirror = true;
+                        }}
+                );
+            }};
+        }};
     }
     public static void loadSize5()
     {
@@ -2171,144 +2260,7 @@ public class PvTurrets{
                 PvItems.copium,1
             );
             recoils = 2;
-            drawer = new DrawTurret(GetName("Pov")){{
-                parts.addAll(
-                        Seq.with(
-                                //Arms and Barrels
-                                new RegionPart("-l"){{
-                                    progress = PartProgress.recoil;
-                                    heatProgress = PartProgress.recoil;
-                                    heatColor = Color.valueOf("ff6214");
-                                    mirror = false;
-                                    recoilIndex = 0;
-                                    under = false;
-                                    y = 14;
-                                    moveY = -4f;
-                                }},
-                                new RegionPart("-r"){{
-                                    progress = PartProgress.recoil;
-                                    heatProgress = PartProgress.recoil;
-                                    heatColor = Color.valueOf("ff6214");
-                                    mirror = false;
-                                    recoilIndex = 0;
-                                    under = false;
-                                    y = 14;
-                                    moveY = -4f;
-                                }},
-
-                                //Summoning Circles
-                                new ShapePart(){{
-                                    progress = PartProgress.warmup;
-                                    rotateSpeed = -5;
-                                    color = Color.valueOf("875aab");
-                                    sides = 4;
-                                    hollow = true;
-                                    stroke = 0f;
-                                    strokeTo = 1.6f;
-                                    radius = 10f;
-                                    layer = Layer.effect;
-                                    y = 14;
-                                    x = -40;
-                                }},
-                                new ShapePart(){{
-                                    progress = PartProgress.warmup;
-                                    rotateSpeed = 5;
-                                    color = Color.valueOf("875aab");
-                                    sides = 4;
-                                    hollow = true;
-                                    stroke = 0f;
-                                    strokeTo = 1.6f;
-                                    radius = 6f;
-                                    layer = Layer.effect;
-                                    y = 14;
-                                    x = -40;
-                                }},
-                                new ShapePart(){{
-                                    progress = PartProgress.warmup;
-                                    rotateSpeed = -5;
-                                    color = Color.valueOf("875aab");
-                                    sides = 20;
-                                    hollow = true;
-                                    stroke = 0f;
-                                    strokeTo = 1.6f;
-                                    radius = 11f;
-                                    layer = Layer.effect;
-                                    y = 14;
-                                    x = -40;
-                                }},
-                                new HaloPart(){{
-                                    progress = PartProgress.warmup;
-                                    color = Color.valueOf("875aab");
-                                    sides = 3;
-                                    hollow = true;
-                                    shapes = 3;
-                                    stroke = 0f;
-                                    strokeTo = 4f;
-                                    radius = 1f;
-                                    haloRadius = 13f;
-                                    haloRotateSpeed = 1;
-                                    layer = Layer.effect;
-                                    y = 14;
-                                    x = -40;
-                                }},
-                                new ShapePart(){{
-                                    progress = PartProgress.warmup;
-                                    rotateSpeed = -5;
-                                    color = Color.valueOf("57d87e");
-                                    sides = 4;
-                                    hollow = true;
-                                    stroke = 0f;
-                                    strokeTo = 1.6f;
-                                    radius = 10f;
-                                    layer = Layer.effect;
-                                    y = 14;
-                                    x = 40;
-                                }},
-                                new ShapePart(){{
-                                    progress = PartProgress.warmup;
-                                    rotateSpeed = 5;
-                                    color = Color.valueOf("57d87e");
-                                    sides = 4;
-                                    hollow = true;
-                                    stroke = 0f;
-                                    strokeTo = 1.6f;
-                                    radius = 6f;
-                                    layer = Layer.effect;
-                                    y = 14;
-                                    x = 40;
-                                }},
-                                new ShapePart(){{
-                                    progress = PartProgress.warmup;
-                                    rotateSpeed = -5;
-                                    color = Color.valueOf("57d87e");
-                                    sides = 20;
-                                    hollow = true;
-                                    stroke = 0f;
-                                    strokeTo = 1.6f;
-                                    radius = 11f;
-                                    layer = Layer.effect;
-                                    y = 14;
-                                    x = 40;
-                                }},
-                                new HaloPart(){{
-                                    progress = PartProgress.warmup;
-                                    color = Color.valueOf("57d87e");
-                                    sides = 3;
-                                    hollow = true;
-                                    shapes = 3;
-                                    stroke = 0f;
-                                    strokeTo = 4f;
-                                    radius = 1f;
-                                    haloRadius = 13f;
-                                    haloRotateSpeed = 1;
-                                    layer = Layer.effect;
-                                    y = 14;
-                                    x = 40;
-                                }}
-                        )
-                );
-            }
-            };
+            drawer = new DrawTurret(GetName("Pov"));
         }};
     }
 }

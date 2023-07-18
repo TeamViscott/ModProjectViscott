@@ -1,6 +1,5 @@
 package viscott.content;
 
-import arc.Core;
 import arc.func.Prov;
 import arc.graphics.Color;
 import arc.struct.Seq;
@@ -60,26 +59,26 @@ public class PvBlocks {
             damagedDensePlate, patternedDensePlate, denseMetalWall, bariumWall, bariumPowder, tenebrousStone, tenebrousWall,
 
             /*Ore's*/
-            erbiumOre,lithiumOre,zirconiumOre,platinumOre,
+            erbiumOre,lithiumOre,zirconiumOre,platinumOre,exposedRoot,
 
             /*Deposit's*/
                     erbiumDeposit,lithiumDeposit,platinumDeposit,zirconiumDeposit,
 
                     /*Buildings*/
 
-                    /*Conveyors*/micromassConveyor,massJunction,massRouter, microTransportGate,
+                    /*Conveyors*/micromassConveyor,massJunction,massRouter, microTransportGate,yggdrasilsRoot,
                             megaTransportGate, megaLiquidTransportGate, microLiquidTransportGate,
                             megaMassConveyor,megaMassJunction,megaMassRouter,
                             nueromassConveyor,
 
-                    /*Drills*/harvestDrill,tetraDrill,spectrumDrill,
+                    /*Drills*/harvestDrill,tetraDrill,spectrumDrill,rootHarvester,
                     /*Grinders*/harvestGrinder,behemothGrinder,oilGrinder,
 
-                    /*Power*/opticalNode,auditoryNode,compressedBattery,
+                    /*Power*/opticalNode,auditoryNode,compressedBattery,lifeForceConverter,oakDengerizer,
                     /*Power Production*/smallCarbonPanel,largeCarbonPanel,lithiumDegenerator,
                                         keroseneGenerator,radiator,blastReactor,subzeroReactor,feverReactor,
                             /*Nullis*/harvestor,
-                    /*Production*/siliconMassForge,particalAccelerator, keroseneMixer, carbonWeaver,
+                    /*Production*/siliconMassForge,particalAccelerator, keroseneMixer, carbonWeaver,oakCrystalizer,darkMatterAccelerator,
                             fractionIonizer,nitrogenDistiller,quadRushForge,
                             /*Xeal*/cascadeForge,
                             /*Mortikai*/uberbulkForge,
@@ -90,8 +89,8 @@ public class PvBlocks {
                     /*Liquids*/concentratedJunction,concentratedRouter,concentratedConduit,
                     smallConcentratedTank,largeConcentratedTank,
                             micropulsePump,effluxPump,
-                    /*Pressure related*/ pressureSource,
-                    /*Unit Creation*/templateMolder,nueroSpawnPad,eliteSpawnPad,
+                    /*Pressure related*/pressureSource,
+                    /*Unit Creation*/templateMolder,nueroSpawnPad,eliteSpawnPad,branchMolder,
 
                     /*Nullis*/
                         packer,
@@ -100,7 +99,7 @@ public class PvBlocks {
 
                     /*Payload*/densePayloadConveyor,densePayloadRouter,
                             denseConstructor,denseDeconstructor,denseUnloader,denseLoader,
-                    /*Core's*/coreHover,coreElevate,coreUpraise,
+                    /*Core's*/coreHover,coreElevate,coreUpraise,yggdrasilsHeartwood,
                             bulkUnloader,
                             /*Nullis*/nullisCore, voidLink,
                             /*Xeal*/coreSpark,coreCharge,coreSurge,
@@ -113,6 +112,7 @@ public class PvBlocks {
                             platinumWall,platinumWallLarge,
                             erbiumWall,erbiumWallLarge,
                             carbonWall,carbonWallLarge,
+                            yggdrasilsBark,
                     /*Logic*/
                             piscoProcessor,memoryByte,statusSelector,labelHandler,
                             /*Nullis*/voidReprocessingUnit,
@@ -143,6 +143,7 @@ public class PvBlocks {
                 lithiumOre = new OreBlock("lithium-ore",PvItems.lithium){{variants = 3; localizedName = "Lithium Ore";}};
                 platinumOre = new OreBlock("platinum-ore",PvItems.platinum){{variants = 3; localizedName = "Platinum Ore";}};
                 zirconiumOre = new OreBlock("zirconium-ore",PvItems.zirconium){{variants = 3; localizedName = "Zirconium Ore";}};
+                exposedRoot = new OreBlock("exposed-root",PvItems.hardenedOak){{variants = 2; localizedName = "[gold]Exposed Root";}};
                 /*Ore's End*/
                 /*Deposit's Start*/
                 erbiumDeposit = new DepositWall("erbium-deposit") //Todo
@@ -346,6 +347,18 @@ public class PvBlocks {
                     health = 790;
                     liquidCapacity = 5;
                     consumePower(195f/60f);
+                }};
+                rootHarvester = new Drill("root-harvester")
+                {{
+                    requirements(Category.production, with(Items.copper,15,Items.sand,15));
+                    localizedName = "[gold]Root Harvester";
+                    size = 2;
+                    drillTime = 800;
+                    tier = 4;
+                    liquidBoostIntensity = 6f;
+                    health = 625;
+                    liquidCapacity = 10;
+                    consumeLiquid(Liquids.cryofluid,2.5f/60f).boost();
                 }};
                 opticalNode = new PowerNode("optical-node")
                 {{
@@ -807,6 +820,25 @@ public class PvBlocks {
                             new PvUnitPlan(PvUnits.loch,60*60f,with(PvItems.zirconium,500,Items.silicon,320,PvItems.nobelium,200,PvItems.lithium,400,PvItems.barium,520,Items.silicon,120))
                     );
                 }};
+                branchMolder = new BulkUnitFactory("branch-molder")
+                {{
+                    requirements(Category.units,with(Items.copper,250,Items.silicon,75,PvItems.hardenedOak,40));
+                    localizedName = "[gold]Branch Molder";
+                    health = 1600;
+                    size = 5;
+                    consumePower(120f/60f);
+                    itemCapacity = 3000;
+                    liquidCapacity = 200;
+                    selectionColumns = 1;
+                    plans = new Seq<>().with(
+
+                            new PvUnitPlan(PvUnits.root,20*60f,with(PvItems.hardenedOak,20,Items.silicon,10))
+                            /*new PvUnitPlan(PvUnits.stick,25*60f,with()),
+                            new PvUnitPlan(PvUnits.branch,35*60f,with()),
+                            new PvUnitPlan(PvUnits.log,35*60f,with()),
+                            new PvUnitPlan(PvUnits.tree,35*60f,with())*/
+                    );
+                }};
                 densePayloadConveyor = new PayloadConveyor("dense-payload-conveyor")
                 {{
                     requirements(Category.units,with(PvItems.carbonFiber,20)); //Todo
@@ -931,6 +963,17 @@ public class PvBlocks {
                     healTime = 25;
                     warmupEffect = PvEffects.surgeSpawn;
                     spawnEffect = Fx.greenBomb;
+                }};
+                yggdrasilsHeartwood = new PvCore("yggdrasils-heartwood")
+                {{
+                    requirements(Category.effect, with(PvItems.hardenedOak,15000));
+                    localizedName = "[gold]Yggdrasil's Heartwood";
+                    alwaysUnlocked = true;
+                    unitType = PvUnits.wood;
+                    health = 18000;
+                    size = 2;
+                    unitCapModifier = 4;
+                    itemCapacity = 2000;
                 }};
                 if (false) // NO. This is not the way to go.
                 voidLink = new NullisCore("void-link")

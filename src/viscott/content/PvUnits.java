@@ -70,6 +70,8 @@ import viscott.types.NullisUnitType;
 import viscott.types.PvUnitType;
 import viscott.types.abilities.DamageAbility;
 import viscott.types.abilities.VoidAbility;
+import viscott.world.bullets.BranchBulletType;
+import viscott.world.bullets.LargeBranchBulletType;
 import viscott.world.bullets.VoidBulletType;
 import viscott.utilitys.PvUtil;
 import viscott.world.statusEffects.PvStatusEffect;
@@ -84,14 +86,17 @@ public class PvUnits {
             shadow,proton,vessel,
             amp,volt,watt,
 
+            wood,
         /*Flying Ion Path*/ particle, snippet, fragment, excerpt, pericope,
 
         /*Rocket Hover Path*/milli,centi,deci,
 
         /*Xeal Naval Path*/rivulet,bourn,tributary,loch,atlantic,
 
+        /*yggdrasil path*/root,stick,branch,log,tree,
+
         /*Nullis*/
-            /*Storage Con Path*/pocket,container, capsule,vault,chamber,
+            /*Storage Con Path*/pocket,container,capsule,vault,chamber,
 
         /*Extra Paths : */
         routerTank, routerBastion, box,blockHost,
@@ -111,6 +116,7 @@ public class PvUnits {
         loadXeonNavalPath();
         loadStoragePath();
         //Extra UnitLoads
+        loadYggdrasilPath();
         loadCorePath();
         loadExtra();
 
@@ -294,6 +300,78 @@ public class PvUnits {
                         }}
             );
         }};
+        wood = new PvUnitType("wood")
+        {{
+            localizedName = "[gold]Wood";
+            constructor = EntityMapping.map("alpha");
+            health = 650;
+            armor = 20;
+            flying = true;
+            buildSpeed = 3.15f;
+            mineTier = 3;
+            mineSpeed = 7.25f;
+            itemCapacity = 300;
+            speed = 20.7f / 7.5f;
+            drag = 0.15f;
+            range = 17*8;
+            weapons.add(
+                    new Weapon(name + "-weapon") {{
+                        x = 5f;
+                        y = 0f;
+                        top = false;
+                        mirror = true;
+                        reload = 10f;
+                        inaccuracy = 0f;
+                        shootSound = Sounds.malignShoot;
+                        recoil = 2f;
+                        rotate = true;
+                        rotateSpeed = 2f;
+                        shootStatus = PvStatusEffects.crescendo;
+                        shootStatusDuration = 30;
+                        bullet = new RailBulletType() {{
+                            length = 150f;
+                            damage = 10f;
+                            buildingDamageMultiplier = 0.1f;
+                            hitColor = Color.valueOf("392f32");
+                            hitEffect = endEffect = Fx.hitBulletColor;
+                            pierce = true;
+                            pierceBuilding = true;
+                            pierceCap = 4;
+                            laserAbsorb = false;
+                            smokeEffect = Fx.colorSpark;
+                            endEffect = new Effect(14f, e -> {
+                                color(e.color);
+                                Drawf.tri(e.x, e.y, e.fout() * 1.5f, 5f, e.rotation);
+                            });
+                            shootEffect = new Effect(10, e -> {
+                                color(e.color);
+                                float w = 1.2f + 7 * e.fout();
+                                Drawf.tri(e.x, e.y, w, 30f * e.fout(), e.rotation);
+                                color(e.color);
+                                for(int i : Mathf.signs){
+                                    Drawf.tri(e.x, e.y, w * 0.9f, 18f * e.fout(), e.rotation + i * 90f);
+                                }
+                                Drawf.tri(e.x, e.y, w, 4f * e.fout(), e.rotation + 180f);
+                            });
+                            lineEffect = new Effect(20f, e -> {
+                                if(!(e.data instanceof Vec2 v)) return;
+                                color(e.color);
+                                stroke(e.fout() * 0.9f + 0.6f);
+                                Fx.rand.setSeed(e.id);
+                                for(int i = 0; i < 7; i++){
+                                    Fx.v.trns(e.rotation, Fx.rand.random(8f, v.dst(e.x, e.y) - 8f));
+                                    Lines.lineAngleCenter(e.x + Fx.v.x, e.y + Fx.v.y, e.rotation + e.finpow(), e.foutpowdown() * 20f * Fx.rand.random(0.5f, 1f) + 0.3f);
+                                }
+                                e.scaled(14f, b -> {
+                                    stroke(b.fout() * 1.5f);
+                                    color(e.color);
+                                    Lines.line(e.x, e.y, v.x, v.y);
+                                });
+                            });
+                        }};
+                    }});
+        }};
+
 
         //Nullis
 
@@ -1878,11 +1956,13 @@ public class PvUnits {
                 faceTarget = false;
                 rotateSpeed = 0.8f;
                 drownTimeMultiplier = 0.5f;
+                buildSpeed = 0.2f;
                 ammoType = new ItemAmmoType(PvItems.darkMatter, 8);
                 treadPullOffset = 5;
                 /*treadRects = new Rect[]{new Rect(56f, 275f, 64f, -137)};TODO figure out why this crashes mindustry*/
                 abilities.add(new StatusFieldAbility(PvStatusEffects.prevention, 10f, 6000f, 400f));
                 abilities.add(new StatusFieldAbility(PvStatusEffects.lastStand, 10f, 2000f, 400f));
+                abilities.add(new RepairFieldAbility(5000f, 4000, 400f));
                 weapons.add(
                 new Weapon(name + "-weapon-main") {{
                     shootY = 3f;
@@ -2075,7 +2155,6 @@ public class PvUnits {
                         pierce = true;
                         pierceBuilding = true;
                         pierceCap = 400;
-                        laserAbsorb = false;
                         shootEffect = smokeEffect = Fx.none;
                         reflectable = false;
                         absorbable = false;
@@ -2227,7 +2306,6 @@ public class PvUnits {
                                     pierce = true;
                                     pierceBuilding = true;
                                     pierceCap = 400;
-                                    laserAbsorb = false;
                                     buildingDamageMultiplier = 2f;
                                     removeAfterPierce = false;
                                     shootEffect = smokeEffect = Fx.none;
@@ -2252,7 +2330,7 @@ public class PvUnits {
                     }};
                 }});
         }};
-    };
+    }
     public static void loadRocketHoverPath() {
         milli = new PvUnitType("milli") {{
             localizedName = "Milli";
@@ -2884,5 +2962,110 @@ public class PvUnits {
                 }};
             }});
         }};
-};
+    }
+    public static void loadYggdrasilPath() {
+        root = new PvUnitType("root") {{
+            health = 250;
+            armor = 80;
+            speed = 0.6f;
+            localizedName = "[gold]Root";
+            constructor = EntityMapping.map("toxopid");
+            legCount = 4;
+            legMoveSpace = 2f;
+            legPairOffset = 2;
+            legLength = 14f;
+            legExtension = -5;
+            legBaseOffset = 5f;
+            stepShake = 0f;
+            legLengthScl = 0.64f;
+            rippleScale = 1f;
+            legSpeed = 0.1f;
+            weapons.add(new Weapon(name + "-weapon") {{
+                x = 4f;
+                y = -1f;
+                mirror = true;
+                reload = 100f;
+                inaccuracy = 10f;
+                shootSound = Sounds.mud;
+                shoot.shots = 2;
+                shoot.shotDelay = 20f;
+                rotate = true;
+                rotateSpeed = 2.8f;
+                bullet = new BasicBulletType(0.8f, 10f) {{
+                    pierce = true;
+                    pierceBuilding = true;
+                    pierceCap = 2;
+                    sprite = PvUtil.GetName("leaf-bullet");
+                    backSprite = PvUtil.GetName("leaf-bullet-back");
+                    shootEffect = smokeEffect = Fx.none;
+                    height = width = 10f;
+                    spin = 0.4f;
+                    lifetime = 180f;
+                    backColor = Color.valueOf("61726a");
+                    frontColor = Color.valueOf("ccdd98");
+                    hitEffect = despawnEffect = Fx.hitLaser;
+                    laserAbsorb = false;
+                    homingRange = 400f;
+                    homingPower = 0.02f;
+                    homingDelay = 10f;
+                }};
+            }});
+        }};
+        stick = new PvUnitType("stick") {{
+            health = 750;
+            armor = 100;
+            localizedName = "[gold]Stick";
+            constructor = EntityMapping.map("toxopid");
+            weapons.add(new Weapon(name + "-weapon-strike") {{
+                x = 0f;
+                y = 0f;
+                top = false;
+                mirror = true;
+                reload = 10f;
+                inaccuracy = 0f;
+                recoil = 0f;
+                bullet = new BranchBulletType(25) {{
+                    pierce = true;
+                    pierceBuilding = true;
+                    pierceCap = 4;
+                    laserAbsorb = false;
+                    smokeEffect = Fx.colorSpark;
+                }};
+            }});
+        }};
+        branch = new PvUnitType("branch") {{
+            health = 2250;
+            armor = 120;
+            localizedName = "[gold]Branch";
+            constructor = EntityMapping.map("toxopid");
+        }};
+        log = new PvUnitType("log") {{
+            health = 6750;
+            armor = 80;
+            localizedName = "[gold]Log";
+            constructor = EntityMapping.map("toxopid");
+            weapons.add(new Weapon(name + "-weapon-strike") {{
+                x = 0f;
+                y = 0f;
+                top = false;
+                mirror = true;
+                reload = 10f;
+                inaccuracy = 0f;
+                recoil = 0f;
+                bullet = new LargeBranchBulletType(250){{
+                    pierce = true;
+                    pierceBuilding = true;
+                    pierceCap = 4;
+                    laserAbsorb = false;
+                    smokeEffect = Fx.colorSpark;
+                }};
+            }});
+        }};
+        tree = new PvUnitType("tree") {{
+            health = 20250;
+            armor = 80;
+            localizedName = "[gold]Tree";
+            constructor = EntityMapping.map("toxopid");
+        }};
+    }
 }
