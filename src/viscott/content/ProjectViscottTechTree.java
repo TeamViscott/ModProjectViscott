@@ -18,6 +18,22 @@ public class ProjectViscottTechTree {
             node(PvFactions.Mortikai.icon);
             node(PvFactions.Azulex.icon);
         });
+        PvFactions.Psy.techTree = nodeRoot ("Psy", PvFactions.Psy.icon,() -> {
+            node(PvFactions.Yggdrasil.icon);
+        });
+        PvFactions.Yggdrasil.techTree = nodeRoot ("[gold]Yggdrasil", PvFactions.Yggdrasil.icon,() -> {
+            node(PvItems.hardenedOak,() -> {
+
+            });
+            node(PvItems.darkMatter,() -> {
+
+            });
+            node(yggdrasilsHeartwood,() -> {
+                node(PvUnits.wood,() -> {
+
+                });
+            });
+        });
         PvFactions.Xeal.techTree = nodeRoot("Xeal", PvFactions.Xeal.icon,() -> {
             node(auditoryNode,() -> {
 

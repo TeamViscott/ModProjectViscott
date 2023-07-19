@@ -17,7 +17,7 @@ import static java.lang.Float.POSITIVE_INFINITY;
 
 public class PvStatusEffects {
     public static StatusEffect
-    timeWarped,doused, disabled, expent, resiliant, ungratefull, crescendo ,tick ,tock,mend,shield, malfunction,
+    timeWarped,doused, disabled, expent, resiliant, ungratefull, crescendo, treeAmp, tick ,tock,mend,shield, malfunction,
     
     voidShield,voidDecay,frag,aoe,homing,memoryExchange,dataLeak,endlessAmp, endlessDot, prevention, lastStand, voidConsume, consume,splintered,
 
@@ -79,6 +79,16 @@ public class PvStatusEffects {
             dragMultiplier = 1.01f;
             speedMultiplier = 0.995f;
             charges = 80;
+            show = false;
+            staticStat();
+        }};
+        treeAmp = new StatusEffectStack("tree-amp") {{
+            localizedName = "[gold]Tree Amp";
+            healthMultiplier = 1.5f;
+            reloadMultiplier = 1.1f;
+            damageMultiplier = 0.95f;
+            speedMultiplier = 0.999f;
+            charges = 30;
             show = false;
             staticStat();
         }};
