@@ -41,7 +41,7 @@ public class PvTurrets {
             xterminium,hel,falarica,spring,shredder, sumaya,life,
 
             fracture,javelin,
-                    /*Nullis*/ quark
+                    /*Nullis*/ quantum
             ;
 
     public static void load(){
@@ -54,8 +54,8 @@ public class PvTurrets {
     };
 
     public static void loadSize1() {
-        quark = new PvItemTurret("quark") {{
-            localizedName = "Quark";
+        quantum = new PvItemTurret("quantum") {{
+            localizedName = "Quantum";
             faction.add(PvFactions.Nullis);
             size = 1;
             health = 420;
