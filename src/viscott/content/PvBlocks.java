@@ -45,7 +45,7 @@ public class PvBlocks {
             /*Floor's*/
             densePlate,densePlate2,densePlate3,densePlate4,
             damagedDensePlate, patternedDensePlate, denseMetalWall, bariumWall, bariumPowder, tenebrousStone, tenebrousWall,
-            testingRed,testingBlue,
+            testingRed,testingBlue,testingGrey,
 
             /*Ore's*/
             erbiumOre,lithiumOre,zirconiumOre,platinumOre,exposedRoot,
@@ -127,6 +127,7 @@ public class PvBlocks {
                 tenebrousWall = new StaticWall("tenebrous-wall"){{variants = 3;mapColor = Color.valueOf("67607A"); localizedName = "Tenebrous Wall";}};
                 testingRed = new Floor("testing-red",0){{mapColor = Color.valueOf("dbc5c5");localizedName = "Testing Floor [red]Red";}};
                 testingBlue = new Floor("testing-blue",0){{mapColor = Color.valueOf("b1bac1");localizedName = "Testing Floor [cyan]Blue";}};
+                testingGrey = new Floor("testing-grey",0){{mapColor = Color.valueOf("646567");localizedName = "Testing Floor [grey]Grey";}};
                 bariumWall = new StaticWall("barium-wall"){{variants = 2;mapColor = Color.valueOf("666558"); localizedName = "Barium Wall";}};
                 bariumPowder = new Floor("barium-powder",3){{mapColor = Color.valueOf("47463D"); localizedName = "Barium Powder"; itemDrop = PvItems.barium; playerUnmineable = true;}};
                 /*Floor's End*/
