@@ -87,8 +87,6 @@ public class PvBlocks {
 
                     /*Payload*/densePayloadConveyor,densePayloadRouter,
                             denseConstructor,denseDeconstructor,denseUnloader,denseLoader,
-
-                            voidLink,
                     /*Core's*/coreHover,coreElevate,coreUpraise,yggdrasilsHeartwood,
 
                             bulkUnloader,
@@ -968,19 +966,6 @@ public class PvBlocks {
                     size = 2;
                     unitCapModifier = 4;
                     itemCapacity = 2000;
-                }};
-                if (false) // NO. This is not the way to go.
-                voidLink = new NullisCore("void-link")
-                {{
-                    requirements(Category.effect,with(PvItems.zirconium,80,PvItems.lithium,50,PvItems.platinum,40));
-                    localizedName = "Void Link";
-                    unitType = null;
-                    size = 2;
-                    health = 1300;
-                    unitCapModifier = 0;
-                    itemCapacity = 1;
-                    voidRadius = 0;
-                    placeableOn = true;
                 }};
                 nullisCore = new NullisCore("core-null")
                 {{

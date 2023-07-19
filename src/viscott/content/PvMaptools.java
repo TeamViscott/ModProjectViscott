@@ -17,13 +17,12 @@ import static mindustry.type.ItemStack.with;
 
 public class PvMaptools {
     public static Block
-    basicsource, normalsource, advancedsource, ultrasource, ultrarouter, ultraliquidrouter, omegarouter, omegaliquidrouter, ultraconveyor,
-    ultraconduit, basicliquidsource, advancedliquidsource, ultraliquidsource, normalliquidsource, coreIntrusion, ultraheatsource, ultrapowersource,
+    basicsource, normalsource, advancedsource, ultrasource,
+    basicliquidsource, advancedliquidsource, ultraliquidsource, normalliquidsource, coreIntrusion, ultrapowersource,
     voidsource,
     tier1overdrive, tier2overdrive, tier3overdrive, tier4overdrive;
     public static void load()
     {
-        /*
         basicsource = new PvItemSource("basicsource")
         {{
             size = 1;
@@ -170,7 +169,5 @@ public class PvMaptools {
                 voidAmount = 10;
             }
         };
-
-         */
     }
 }
