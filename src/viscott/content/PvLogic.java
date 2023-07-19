@@ -391,6 +391,7 @@ public class PvLogic {
                 int tpsAmount = exec.numi(amount);
                 if (tpsAmount == 0) return;
                 Building building = exec.building(build);
+                if (exec.build.team != building.team) return;
                 if (building instanceof LogicBlock.LogicBuild logicBuild) {
                     LogicBlock execBlock = (LogicBlock) exec.build.block();
                     LogicBlock lblock = (LogicBlock) logicBuild.block();

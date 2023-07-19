@@ -2470,6 +2470,7 @@ public class PvUnits {
             constructor = EntityMapping.map("ElevationMoveUnit");
             speed = 8.5f/7.5f;
             engineOffset = 8;
+            
             drag = 0.13f;
             buildSpeed = 2.2f;
             buildBeamOffset = 0;

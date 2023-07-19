@@ -66,6 +66,7 @@ public class PvTurrets {
             shoot = new ShootSpread(3,1);
             shoot.shotDelay = 3;
             maxAmmo = 100;
+            coolant = consumeCoolant(0.1f);
             requirements(Category.turret,with(PvItems.zirconium,40));
             ammo(
                 PvItems.zirconium, new VoidBulletType(4,6) {{
@@ -729,6 +730,7 @@ public class PvTurrets {
             size = 3;
             health = 2045;
             consumePower(560f/60f);
+            coolant = consumeCoolant(0.1f);
             liquidCapacity = 50;
             range = 35*8;
             minWarmup = 0.7f;
@@ -805,6 +807,7 @@ public class PvTurrets {
             heatColor  = Color.valueOf( "d237a6");
             shoot = new CyclicShootPattern(4,5,0);
             requirements(Category.turret,with(PvItems.zirconium,120,PvItems.nobelium,50,PvItems.lithium,200,PvItems.barium,50)); //Todo 2
+            coolant = consumeCoolant(0.1f);
             ammo(
                     PvItems.nobelium, new BasicBulletType(10, 40){{
                         trailColor = frontColor = backColor = Color.valueOf( "d237a6");
@@ -866,6 +869,7 @@ public class PvTurrets {
             shootEffect = Fx.shootLiquid;
             range = 8*12f;
             scaledHealth = 250;
+            coolant = consumeCoolant(0.1f);
             ammo(
                     Liquids.water, new LaserBoltBulletType(12,140){{
                         pierce = true; pierceCap = 1000;
@@ -1000,6 +1004,7 @@ public class PvTurrets {
             targetAir = true;
             targetGround = true;
             consumePower(630f/60f);
+            coolant = consumeCoolant(0.1f);
             reload = 60f/0.5f;
             rotateSpeed = 5f;
             inaccuracy = 1;
@@ -1177,6 +1182,7 @@ public class PvTurrets {
             reload = 60f;
             range = 8 * 50;
             recoil = 12f;
+            coolant = consumeCoolant(0.1f);
             requirements(Category.turret,with(PvItems.zirconium, 100,PvItems.lithium,150,PvItems.nobelium,150,silicon,50)); //Todo 2
             shoot = new CyclicShootPattern(5,9,45);
             ammo(
@@ -1235,7 +1241,6 @@ public class PvTurrets {
             unitSort = UnitSorts.strongest;
             heatRequirement = 30;
             shootCone = 360;
-
             requirements(Category.turret,with(PvItems.zirconium, 100,PvItems.lithium,300,PvItems.nobelium,100,PvItems.platinum,100)); //Todo 2
 
             shootType = new PointLaserBulletType()
@@ -1291,6 +1296,7 @@ public class PvTurrets {
             heatRequirement = 8;
             maxHeatEfficiency = 4;
             shootCone = 30;
+            coolant = consumeCoolant(0.1f);
             ammo(
                     PvItems.carbonFiber, new BallisticMissileBulletType(GetName("nuero-missile")){{
                         splashDamage = 123f;
@@ -1376,6 +1382,7 @@ public class PvTurrets {
                 range = 8 * 60;
                 shootY = 16;
                 recoil = 4;
+                coolant = consumeCoolant(0.1f);
                 ammo(
                         PvLiquids.liquidNitrogen, new BasicBulletType(1,140) {{
                             lifetime = PvUtil.GetRange(1,60);
@@ -1475,6 +1482,7 @@ public class PvTurrets {
             size = 4;
             health = 6000;
             reload = 5*60f;
+            coolant = consumeCoolant(0.1f);
             chargeSound = Sounds.plasmadrop;//TODO custom sounds
             shootSound = Sounds.plasmaboom;
             cooldownTime = 300f;
@@ -1574,6 +1582,7 @@ public class PvTurrets {
             targetGround = true;
             shootY = 10;
             recoil = 10;
+            coolant = consumeCoolant(0.1f);
             consumeLiquid(PvLiquids.xenon,30/60f);
             shootType = new BasicBulletType(20,830)
             {{
@@ -1735,6 +1744,7 @@ public class PvTurrets {
             coolantMultiplier = 1.5f;
             recoil = 5;
             shake = 1;
+            coolant = consumeCoolant(0.1f);
             requirements(Category.turret,with(PvItems.platinum, 500,PvItems.erbium,300,PvItems.carbonFiber,100,PvItems.nobelium,200,silicon,100)); //Todo 2
             ammo(
                     PvItems.erbium,new BasicBulletType(8,1650)
@@ -1869,6 +1879,7 @@ public class PvTurrets {
             maxHeatEfficiency = 2;
             shake = 8;
             shootCone = 40;
+            coolant = consumeCoolant(0.1f);
             ammo(
                     PvItems.carbonFiber, new BallisticMissileBulletType(GetName("jaeger-missile")){{
                         splashDamage = 0f;
@@ -1983,6 +1994,7 @@ public class PvTurrets {
             requirements(Category.turret,with(PvItems.platinum, 200,PvItems.erbium,600,PvItems.carbonFiber,50,PvItems.nobelium,500,silicon,500)); //Todo 2
             localizedName = "Shuttle";
             shoot = new ShootAlternate(8);
+            coolant = consumeCoolant(0.1f);
             reload = 60f/4.6f;
             inaccuracy = 2;
             size = 6;
@@ -2195,6 +2207,7 @@ public class PvTurrets {
             size = 6;
             reload = 240f;
             localizedName = "Sumaya";
+            coolant = consumeCoolant(0.1f);
             velocityRnd = 0f;
             inaccuracy = 0f;
             shootX = 0;
@@ -2230,9 +2243,10 @@ public class PvTurrets {
         }};
         xterminium = new ItemTurret("xterminium")
         {{
-            requirements(Category.turret,BuildVisibility.sandboxOnly,with(PvItems.platinum, 9999,PvItems.erbium,9999,PvItems.carbonFiber,9999,PvItems.nobelium,9999,silicon,9999,PvItems.copium,1)); //Todo 2
+            requirements(Category.turret,BuildVisibility.sandboxOnly,with(PvItems.zirconium,1000000,PvItems.copium,1,PvItems.copium,1,PvItems.copium,1,PvItems.copium,1,PvItems.copium,1)); //Todo 2
             localizedName = "X-terminium";
             shoot = new ShootAlternate(20);
+            coolant = consumeCoolant(0.1f);
             reload = 200;
             inaccuracy = 2;
             recoilTime = 30;

@@ -71,7 +71,7 @@ public class UnitPackerBlock extends PvBlock {
 
             for(UnitType u : quickCalledUnits) {
                 ImageButton b = table.button(Tex.whiteui, Styles.clearNoneTogglei,40, () -> {
-                    Unit c = Groups.unit.find(g -> g.type == u && g.isCommandable() && !g.isFlying());
+                    Unit c = Groups.unit.find(g -> g.team() == team() && g.type == u && g.isCommandable() && !g.isFlying());
                     if (c == null) return;
                     c.flag(1);
                     c.command().command(UnitCommand.boostCommand);

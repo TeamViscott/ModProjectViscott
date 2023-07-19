@@ -53,7 +53,7 @@ public class GridUnitType extends PvUnitType{
     public GridUnitType(String name)
     {
         super(name);
-        constructor = GridUnit::new;
+        constructor = () -> new GridUnit(this);
     }
     public void setGridLayout(byte[][] layout) {
         buildArea = new boolean[layout.length][layout[0].length];

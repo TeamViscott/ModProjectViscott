@@ -22,6 +22,7 @@ import mindustry.gen.Unit;
 import mindustry.graphics.Drawf;
 import mindustry.graphics.Layer;
 import mindustry.type.Item;
+import mindustry.type.UnitType;
 import mindustry.world.Block;
 import mindustry.world.Tile;
 import mindustry.world.Tiles;
@@ -40,19 +41,27 @@ import static mindustry.Vars.itemSize;
 public class GridUnit extends MechUnit {
     public World innerWorld = new World();
     public boolean built = false;
-    int buildSize = 0;
-    boolean[][] buildArea = new boolean[0][0];
+    public int buildSize = 0;
+    public boolean[][] buildArea = new boolean[0][0];
+    GridUnitType gu;
+    public GridUnit(GridUnitType type) {
+        this();
+        gu = type;
+        build();
+    }
 
     public GridUnit() {
         super();
-        if (type instanceof GridUnitType gu) {
-            buildSize = gu.buildSize;
-            buildArea = gu.buildArea;
-        }
+    }
+
+    void build() {
+        buildSize = gu.buildSize;
+        buildArea = gu.buildArea;
         innerWorld = buildGrid();
     }
 
     World buildGrid() {
+        if (ui.editor == null) return null;
         World gridWorld = new World();
         gridWorld.resize(buildSize,buildSize);
         Cons<Tiles> gen = (tiles) -> {
@@ -166,8 +175,8 @@ public class GridUnit extends MechUnit {
     public void update() {
         super.update();
         if (!isFlying()) {
-            x = Math.round(x / 8 + 0.5) * 8 - 4;
-            y = Math.round(y / 8 + 0.5) * 8 - 4;
+            x = Mathf.ceil(x / 8) * 8 - 4;
+            y = Mathf.ceil(y / 8) * 8 - 4;
             rotation = Math.round(rotation / 90) * 90;
             int bx = Mathf.ceil(x / 8) - buildSize / 2,
                     by = Mathf.ceil(y / 8) - buildSize / 2;
@@ -303,11 +312,11 @@ public class GridUnit extends MechUnit {
             Building build = t.get(x,y).build;
             if (build != null && !drawed.contains(build)) {
                 if (build.block() == null) return;
-                Draw.z(Layer.flyingUnitLow + 0.1f);
+                Draw.z(z + 1f);
                 int size = build.block().size;
                 float off = Mathf.floor((size - 1) * 4);
-                float Dx = x + Angles.trnsx(rotation, xOffset + off, yOffset + off);
-                float Dy = y + Angles.trnsy(rotation, xOffset + off, yOffset + off);
+                float Dx = this.x + Angles.trnsx(rotation, xOffset + off, yOffset + off);
+                float Dy = this.y + Angles.trnsy(rotation, xOffset + off, yOffset + off);
                 build.x = Dx;
                 build.y = Dy;
                 build.payloadRotation = rotation;
@@ -317,7 +326,7 @@ public class GridUnit extends MechUnit {
                     Draw.rect(drawer.base, Dx, Dy, rotation);
                     Draw.color();
                     Drawf.shadow(drawer.preview, Dx + tb.recoilOffset.x - turret.elevation, Dy + tb.recoilOffset.y - turret.elevation, tb.drawrot());
-                    Draw.z(Layer.flyingUnitLow + 0.2f);
+                    Draw.z(z + 1.1f);
                     drawer.drawTurret(turret, tb);
                     drawer.drawHeat(turret, tb);
                     drawTurretParts(tb, Dx, Dy);
@@ -381,6 +390,12 @@ public class GridUnit extends MechUnit {
     public void read(Reads read) {
         super.read(read);
         built = read.bool();
+        int typeId = read.i();
+        if (content.units().find(u->u.id == typeId) instanceof GridUnitType g) {
+            gu = g;
+            build();
+        }
+
         if (built)
             innerWorld.tiles.each((x, y) -> {
                 float typeS = read.s();
@@ -395,10 +410,11 @@ public class GridUnit extends MechUnit {
     public void write(Writes write) {
         super.write(write);
         write.bool(built);
+        write.i(gu.id);
         if (built)
             innerWorld.tiles.each((x,y) -> {
                 Building build = innerWorld.tile(x,y).build;
-                if (build.block == null) {
+                if (build == null || build.block == null) {
                     write.s(-1);
                     return;
                 }
