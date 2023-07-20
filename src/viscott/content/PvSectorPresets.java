@@ -10,7 +10,7 @@ public class PvSectorPresets{
             alwaysUnlocked = true;
             addStartingItems = true;
             captureWave = 50;
-            difficulty = 1;
+            difficulty = 10;
             overrideLaunchDefaults = true;
             noLighting = true;
             startWaveTimeMultiplier = 2f;
