@@ -2,6 +2,7 @@ package viscott.gen;
 
 import arc.func.Cons;
 import arc.graphics.g2d.Draw;
+import arc.graphics.g2d.TextureRegion;
 import arc.math.Angles;
 import arc.math.Mathf;
 import arc.math.Scaled;
@@ -86,23 +87,22 @@ public class GridUnit extends MechUnit {
         int size = building.block().size;
         int min = -Mathf.floor((size - 1) / 2),
                 max = Mathf.floor(size / 2);
-        int xMin = min,xMax = max,
-                yMin = min,yMax = max;
+        int offset = (building.block().size-1) % 2;
         switch(rotation%4) {
             case 0:
                 t = innerWorld.tile(cT.x - cx,cT.y - cy);
                 if (!buildArea[y][x]) return false;
                 break;
             case 1:
-                t = innerWorld.tile(cT.y - cy,s- (cT.x - cx));
+                t = innerWorld.tile(cT.y - cy,s- (cT.x - cx)-offset);
                 if (!buildArea[x][y]) return false;
                 break;
             case 2:
-                t = innerWorld.tile(s- (cT.x - cx),s- (cT.y - cy));
+                t = innerWorld.tile(s- (cT.x - cx)-offset,s- (cT.y - cy)-offset);
                 if (!buildArea[s-y][s-x]) return false;
                 break;
             case 3:
-                t = innerWorld.tile(s- (cT.y - cy),cT.x - cx);
+                t = innerWorld.tile(s- (cT.y - cy)-offset,cT.x - cx);
                 if (!buildArea[s-x][s-y]) return false;
                 break;
         }
@@ -112,15 +112,9 @@ public class GridUnit extends MechUnit {
         if (building.tile.build == building)
             building.tile.setNet(Blocks.air);
         Vars.world = innerWorld;
-        t.setBlock(building.block(),team);
-        t.build.remove();
-        t.build = building;
         building.rotation -= rotation;
         building.rotation %= 4;
-        building.tile = t;
-        for(int i1 = xMin;i1 <= xMax;i1++)
-            for(int i2 = yMin;i2 <= yMax;i2++)
-                Vars.world.tile(t.x + i1,t.y + i2).build = building;
+        t.setBlock(building.block(),team,building.rotation,()->building);
         Vars.world = curWorld;
         return true;
     }
@@ -141,32 +135,28 @@ public class GridUnit extends MechUnit {
                 innerWorld.tile(cT.x+i1,cT.y+i2).setBlock(Blocks.air);
         int s = buildSize-1;
         Tile t = Vars.world.tile(0,0);
+        int offset = (b.block().size-1) % 2;
         switch(rotation%4) {
             case 0:
                 t = Vars.world.tile(bx + cT.x,by + cT.y);
                 break;
             case 1:
-                t = Vars.world.tile(bx + s - cT.y,by + cT.x);
+                t = Vars.world.tile(bx + s - cT.y-offset,by + cT.x);
                 break;
             case 2:
-                t = Vars.world.tile(bx + s - cT.x,by + s - cT.y);
+                t = Vars.world.tile(bx + s - cT.x-offset,by + s - cT.y-offset);
                 break;
             case 3:
-                t = Vars.world.tile(bx + cT.y,by + s - cT.x);
+                t = Vars.world.tile(bx + cT.y,by + s - cT.x-offset);
                 break;
         }
         if (t == null) {
             Log.warn("No Tile found at : " + (bx + cT.x) + ", " + (by + cT.y) + " | bx : " + bx + ", by : " + by, 0);
             return false;
         }
-        t.setBlock(b.block(),team);
-        t.build = b;
-        b.tile = t;
         b.rotation += rotation;
         b.rotation %= 4;
-        for(int i1 = min;i1 <= max;i1++)
-            for(int i2 = min;i2 <= max;i2++)
-                Vars.world.tile(t.x + i1,t.y + i2).build = b;
+        t.setBlock(b.block(),team,b.rotation,()->b);
         b.set(t.x * 8 + (b.block().size-1) % 2 * 4,t.y * 8 + (b.block().size-1) % 2 * 4);
         return true;
     }
@@ -234,7 +224,6 @@ public class GridUnit extends MechUnit {
             Tile tile = tiles.get(x,y);
             if (tile.block() != null && !updated.contains(tile.build)) {
                 if (tile.build != null && tile.build.block() != null)
-                    //tile.build.updateTile();
                     updated.add(tile.build);
             }
         });
@@ -349,7 +338,11 @@ public class GridUnit extends MechUnit {
                     }
                 }
                 else {
-                    Draw.rect(build.block().getGeneratedIcons()[0], Dx, Dy, rotation+build.rotation*90);
+                    if (!build.block().rotate)
+                        build.rotation = 0;
+                    Draw.rect(build.block().region, Dx, Dy, rotation+build.rotation*90);
+                    if (build.block().teamRegion.found())
+                        Draw.rect(build.block().teamRegions[team.id],Dx,Dy,rotation+build.rotation*90);
                 }
 
                 drawed.add(build);
@@ -362,11 +355,11 @@ public class GridUnit extends MechUnit {
     void drawTurretParts(Turret.TurretBuild tb, float x, float y) {
         DrawTurret drawer = (DrawTurret) ((Turret) tb.block()).drawer;
         if(drawer.parts.size > 0){
+            Draw.z(Layer.flyingUnitLow+1.18f);
             if(drawer.outline.found()){
                 //draw outline under everything when parts are involved
-                Draw.z(Layer.flyingUnitLow+0.15f);
+                Draw.z(Layer.flyingUnitLow+1.15f);
                 Draw.rect(drawer.outline, x + tb.recoilOffset.x, y + tb.recoilOffset.y, tb.drawrot());
-                Draw.z(Layer.flyingUnitLow+0.21f);
             }
 
             float progress = tb.progress();
@@ -396,14 +389,11 @@ public class GridUnit extends MechUnit {
             build();
         }
 
-        if (built)
-            innerWorld.tiles.each((x, y) -> {
-                float typeS = read.s();
-                if (typeS == -1) return;
-                Block type = Vars.content.blocks().find(b -> b.id == typeS);
-                Building build = type.newBuilding();
-                build.read(read);
-            });
+        World w = world;
+        world = innerWorld;
+        if (built) {
+        }
+        world = w;
     }
 
     @Override
@@ -411,15 +401,7 @@ public class GridUnit extends MechUnit {
         super.write(write);
         write.bool(built);
         write.i(gu.id);
-        if (built)
-            innerWorld.tiles.each((x,y) -> {
-                Building build = innerWorld.tile(x,y).build;
-                if (build == null || build.block == null) {
-                    write.s(-1);
-                    return;
-                }
-                write.s(build.block.id);
-                build.write(write);
-            });
+        if (built) {
+        }
     }
 }

@@ -1,6 +1,10 @@
 package viscott.content;
 
+import arc.func.Prov;
+import arc.struct.Seq;
 import mindustry.content.UnitTypes;
+import mindustry.logic.LStatement;
+import mindustry.logic.LStatements;
 import mindustry.type.Category;
 import mindustry.world.Block;
 import mindustry.world.blocks.defense.OverdriveProjector;
@@ -8,6 +12,7 @@ import mindustry.world.blocks.sandbox.PowerSource;
 import mindustry.world.blocks.storage.CoreBlock;
 import mindustry.world.meta.BuildVisibility;
 import viscott.world.block.liquids.VoidSource;
+import viscott.world.block.logic.PvLogicBlock;
 import viscott.world.block.sandbox.PvItemSource;
 import viscott.world.block.sandbox.PvLiquidSource;
 
@@ -19,7 +24,7 @@ public class PvMaptools {
     public static Block
     basicsource, normalsource, advancedsource, ultrasource,
     basicliquidsource, advancedliquidsource, ultraliquidsource, normalliquidsource, coreIntrusion, ultrapowersource,
-    voidsource,
+    voidsource,universalProcessor,
     tier1overdrive, tier2overdrive, tier3overdrive, tier4overdrive;
     public static void load()
     {
@@ -169,5 +174,19 @@ public class PvMaptools {
                 voidAmount = 10;
             }
         };
+        universalProcessor = new PvLogicBlock("universal-processor") {{
+            requirements(Category.logic,BuildVisibility.sandboxOnly,with());
+            health = Integer.MAX_VALUE;
+            privileged = true;
+            localizedName = "Universal Processor";
+            description = "The Everything Processor basicaly.";
+            allStatements.addAll(
+                    PvLogic.ShieldStatement::new,
+                    PvLogic.CommentStatement::new,
+                    PvLogic.DynamicJumpStatement::new,
+                    PvLogic.HealStatement::new,
+                    PvLogic.TransmitIptStatement::new
+            );
+        }};
     }
 }

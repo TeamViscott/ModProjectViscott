@@ -1,4 +1,4 @@
-package viscott.world.block;
+package viscott.world.block.effect;
 
 import arc.graphics.g2d.Draw;
 import arc.math.geom.Intersector;
@@ -14,12 +14,13 @@ import mindustry.world.Tile;
 import mindustry.world.draw.DrawBlock;
 import mindustry.world.draw.DrawDefault;
 import viscott.content.PvFactions;
+import viscott.world.block.PvBlock;
 import viscott.world.chips.VoidArea;
 
 import static mindustry.Vars.tilesize;
 import static mindustry.Vars.world;
 
-public class VoidBlock extends PvBlock{
+public class VoidBlock extends PvBlock {
     public float voidRadius = 1;
     public DrawBlock drawer = new DrawDefault();
     public VoidBlock(String name)
