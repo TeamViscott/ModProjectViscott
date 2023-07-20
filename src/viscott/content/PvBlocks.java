@@ -9,6 +9,7 @@ import mindustry.content.*;
 import mindustry.entities.bullet.MassDriverBolt;
 import mindustry.entities.effect.MultiEffect;
 import mindustry.gen.Sounds;
+import mindustry.graphics.Pal;
 import mindustry.logic.LStatements;
 import mindustry.type.*;
 import mindustry.world.Block;
@@ -527,7 +528,15 @@ public class PvBlocks {
                     consumePower(45f/60f);
                     itemCapacity = 20;
                     craftTime = 3.3f*60f;
+                    craftEffect = Fx.absorb;
                     outputItem = new ItemStack(Items.silicon,5);
+                    drawer = new DrawMulti(
+                        new DrawDefault(),
+                        new DrawArcSmelt() {{
+                            this.flameColor = Pal.darkMetal;
+                            this.flameRad = 0.8f;
+                        }}
+                    );
                 }};
                 particalAccelerator = new HeatCrafter("partical-accelerator")
                 {{
@@ -539,9 +548,17 @@ public class PvBlocks {
                     consumePower(60f/60f);
                     itemCapacity = 10;
                     craftTime = 5.8f*60f;
+                    craftEffect = Fx.fire;
                     heatRequirement = 6;
                     maxEfficiency = 5;
                     outputItem = new ItemStack(PvItems.nobelium,5);
+                    drawer = new DrawMulti(
+                            new DrawFlame(Pal.darkFlame) {{
+                                this.flameRadius = 4;
+                                this.flameRadiusIn = 2;
+                            }},
+                            new DrawDefault()
+                    );
                 }};
                 nitrogenDistiller = new MultiCrafter("nitrogen-distiller")
                 {{

@@ -4,6 +4,7 @@ import arc.func.Cons;
 import arc.graphics.g2d.Draw;
 import arc.graphics.g2d.TextureRegion;
 import arc.math.Angles;
+import arc.math.Interp;
 import arc.math.Mathf;
 import arc.math.Scaled;
 import arc.struct.Seq;
@@ -18,6 +19,7 @@ import mindustry.entities.abilities.Ability;
 import mindustry.entities.part.DrawPart;
 import mindustry.entities.units.WeaponMount;
 import mindustry.gen.Building;
+import mindustry.gen.Groups;
 import mindustry.gen.MechUnit;
 import mindustry.gen.Unit;
 import mindustry.graphics.Drawf;
@@ -29,6 +31,7 @@ import mindustry.world.Tile;
 import mindustry.world.Tiles;
 import mindustry.world.blocks.defense.turrets.Turret;
 import mindustry.world.blocks.distribution.Conveyor;
+import mindustry.world.blocks.distribution.StackConveyor;
 import mindustry.world.blocks.storage.CoreBlock;
 import mindustry.world.draw.DrawTurret;
 import viscott.content.PvBlocks;
@@ -115,6 +118,11 @@ public class GridUnit extends MechUnit {
         building.rotation -= rotation;
         building.rotation %= 4;
         t.setBlock(building.block(),team,building.rotation,()->building);
+        if (Groups.all.contains(b->b==building)) {
+            building.setIndex__all(-1);
+            Groups.all.remove(building);
+        }
+
         Vars.world = curWorld;
         return true;
     }
@@ -158,6 +166,10 @@ public class GridUnit extends MechUnit {
         b.rotation %= 4;
         t.setBlock(b.block(),team,b.rotation,()->b);
         b.set(t.x * 8 + (b.block().size-1) % 2 * 4,t.y * 8 + (b.block().size-1) % 2 * 4);
+        if(!Groups.all.contains(r->r == b)) {
+            int i = Groups.all.addIndex(b);
+            b.setIndex__all(i);
+        }
         return true;
     }
 
@@ -224,6 +236,7 @@ public class GridUnit extends MechUnit {
             Tile tile = tiles.get(x,y);
             if (tile.block() != null && !updated.contains(tile.build)) {
                 if (tile.build != null && tile.build.block() != null)
+                    tile.build.update();
                     updated.add(tile.build);
             }
         });
@@ -337,7 +350,18 @@ public class GridUnit extends MechUnit {
                         Draw.rect(item.fullIcon, ix, iy, itemSize, itemSize);
                     }
                 }
-                else {
+                else if (build instanceof StackConveyor.StackConveyorBuild sb) {
+                    Draw.rect(build.block().region,Dx,Dy,rotation + build.rotation*90);
+                    StackConveyor bl = (StackConveyor) build.block();
+                    Tile from = world.tile(sb.link);
+                    if (from == null) return;
+                    int fromRot = from.build == null ? sb.rotation : from.build.rotation;
+                    float a = (fromRot%4) * 90;
+                    float b = (rotation%4) * 90;
+                    if((fromRot%4) == 3 && (rotation%4) == 0) a = -1 * 90;
+                    if((fromRot%4) == 0 && (rotation%4) == 3) a =  4 * 90;
+                    Draw.rect(bl.stackRegion, Dx, Dy, Mathf.lerp(a, b, rotation+Interp.smooth.apply(1f - Mathf.clamp(sb.cooldown * 2, 0f, 1f))));
+                } else {
                     if (!build.block().rotate)
                         build.rotation = 0;
                     Draw.rect(build.block().region, Dx, Dy, rotation+build.rotation*90);
@@ -392,6 +416,16 @@ public class GridUnit extends MechUnit {
         World w = world;
         world = innerWorld;
         if (built) {
+            innerWorld.tiles.each((x,y) -> {
+                Tile t = innerWorld.tile(x,y);
+                int bId = read.i();
+                if (bId != -1) {
+                    int rot = read.s();
+                    Block b = content.block(bId);
+                    t.setBlock(b,team,rot);
+                    t.build.read(read);
+                }
+            });
         }
         world = w;
     }
@@ -402,6 +436,17 @@ public class GridUnit extends MechUnit {
         write.bool(built);
         write.i(gu.id);
         if (built) {
+            innerWorld.tiles.each((x,y) -> {
+                Tile t = innerWorld.tile(x,y);
+                if (t.build == null || t == t.build.tile)
+                    write.i(-1);
+                else {
+                    write.i(t.build.block().id);
+                    write.s(t.build.rotation);
+                    t.build.write(write);
+                }
+
+            });
         }
     }
 }

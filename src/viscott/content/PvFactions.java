@@ -8,7 +8,7 @@ public class PvFactions {
     public static PvFaction
         Xeal,Mortikai,Azulex,Nullis,Psy,
             /*Extra's*/
-            Yggdrasil
+            Yggdrasil,Unix
             ;
     public static void load()
     {
@@ -42,6 +42,9 @@ public class PvFactions {
             info = "one uppon a time there was the Omamori. the Peacefull giant who loved to walk around and See the view.\n" +
                     "Over time. he accumulated followers who called themself the Yggdrasil's who wanted to follow the Giants footsteps.\n" +
                     "And so the Giant helped them build in a way as to not hurt mother nature.";
+        }};
+        Unix = new PvFaction("unix",Color.purple) {{
+            description = "[pink][Extra Faction][]\nInterdimensional Travel goes brrrrr";
         }};
     }
 }

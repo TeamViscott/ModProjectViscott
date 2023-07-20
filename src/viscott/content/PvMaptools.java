@@ -175,9 +175,12 @@ public class PvMaptools {
             }
         };
         universalProcessor = new PvLogicBlock("universal-processor") {{
-            requirements(Category.logic,BuildVisibility.sandboxOnly,with());
+            requirements(Category.logic,BuildVisibility.editorOnly,with());
             health = Integer.MAX_VALUE;
             privileged = true;
+            instructionsPerTick = 4;
+            maxInstructionsPerTick = 50;
+            maxInstructionScale = 100;
             localizedName = "Universal Processor";
             description = "The Everything Processor basicaly.";
             allStatements.addAll(

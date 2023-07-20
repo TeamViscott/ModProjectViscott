@@ -1863,7 +1863,7 @@ public class PvUnits {
         frire = new PvUnitType("frire") {{
             localizedName = "FrireDragon";
             health = 230000;
-            armor = 20;
+            armor = 35;
             constructor = EntityMapping.map("CrawlUnit");
             aiController = FrireAI::new;
             segments = 3;
@@ -2141,7 +2141,6 @@ public class PvUnits {
                     heatColor = Color.valueOf("addada");
                     recoil = 0f;
                     shootCone = 360;
-                    hitSize = 6;
                     shoot.shots = 180;
                     shoot.shotDelay = 0f;
                     useAmmo = false;
