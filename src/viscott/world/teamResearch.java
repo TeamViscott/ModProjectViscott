@@ -13,10 +13,12 @@ import viscott.types.PvFaction;
 
 public class teamResearch extends Block {
     public PvFaction refTeam;
+    public String localName;
     public teamResearch(String name, PvFaction team)
     {
         super(name);
-        localizedName = Core.bundle.get("team."+name);
+        localName = Core.bundle.get("team."+name);
+        localizedName= localName;
         refTeam = team;
         requirements(Category.effect, BuildVisibility.sandboxOnly, ItemStack.with());
         health = 1;
@@ -30,13 +32,21 @@ public class teamResearch extends Block {
         super.init();
         description = refTeam.description;
         details = refTeam.info;
+        localizedName = localName + " [green][Add][]";
     }
 
     @Override
     public void loadIcon(){
         fullIcon =Core.atlas.find(name);
-
         uiIcon = fullIcon;
+    }
+
+
+    public void updateName() {
+        if (Vars.state.rules.infiniteResources || Vars.state.isEditor())
+            localizedName = localName + (refTeam.partOf(Vars.player.team()) ? " [red][Remove][]" : " [green][Add][]");
+        else
+            localizedName = localName;
     }
 
     @Override
@@ -47,11 +57,11 @@ public class teamResearch extends Block {
     public class teamResearchBuild extends Building
     {
         @Override
-        public void updateTile()
-        {
-            if (refTeam.add(team()))
-                killed();
-            sleep();
+        public void created() {
+            super.add();
+            if (!refTeam.add(team))
+                refTeam.remove(team);
+            kill();
         }
     }
 }

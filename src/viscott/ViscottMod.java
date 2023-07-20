@@ -70,6 +70,7 @@ public class ViscottMod extends Mod {
         PvMaptools.load();
         PvTurrets.load();
         PvPlanets.load();
+        PvSectorPresets.load();
         PvVanillaChanges.load();
         ProjectViscottTechTree.load();
         bTurrets.load();

@@ -62,7 +62,7 @@ public class PvUnits {
             wood,
         /*Flying Ion Path*/ particle, snippet, fragment, excerpt, pericope,
 
-        /*Rocket Hover Path*/milli,centi,deci,
+        /*Rocket Hover Path*/milli,centi,deci,hecta,
 
         /*Xeal Naval Path*/rivulet,bourn,tributary,loch,atlantic,
 
@@ -2205,6 +2205,7 @@ public class PvUnits {
 
                         layerOffset = -0.01f;
 
+
                         moves.add(new PartMove(PartProgress.recoil.inv(), -2f, 0f, 0f));
                     }});
                     bullet = new BasicBulletType() {{
@@ -2590,6 +2591,67 @@ public class PvUnits {
                     }};
                 }};
                     }}
+            );
+        }};
+        //T4 here.
+        hecta = new PvUnitType("hecta") {{
+            localizedName = "Deci";
+            constructor = EntityMapping.map("horizon");
+            speed = 6f/7.5f;
+            drag = 0.1f;
+            buildSpeed = 1.6f;
+            buildBeamOffset = 0;
+            hitSize = 8*4f;
+            health = 18000;
+            armor = 16;
+            range = 34*8;
+            accel = 0.2f;
+            rotateSpeed = 2f;
+            faceTarget = true;
+            flying = true;
+            engineSize = 2;
+            engineOffset = 18;
+            weapons.add(
+                    new Weapon() {{
+                        reload = 120;
+                        mirror = false;
+                        x = y = 0;
+                    }}
+            );
+            parts.addAll(
+                new RegionPart("-arm1") {{
+                    progress = PartProgress.smoothReload;
+                    under = true;
+                    layerOffset = -0.01f;
+                    mirror = true;
+                    moveX = 4;
+                }},
+                new RegionPart("-arm2") {{
+                    progress = PartProgress.smoothReload.delay(0.3f);
+                    mirror = true;
+                    moveX = 4;
+                }},
+                new RegionPart("-arm3") {{
+                    progress = PartProgress.smoothReload.delay(0.6f);
+                    under = true;
+                    layerOffset = -0.01f;
+                    mirror = true;
+                    moveX = 4;
+                }},
+                new RegionPart("-leg1") {{
+                    progress = (p) -> (Mathf.sin(Time.time/60) +1f)*0.5f;
+                    mirror = true;
+                    moveRot = 2;
+                    moveY = -1;
+                }},
+                new RegionPart("-leg2") {{
+                    progress = (p) -> (Mathf.cos(Time.time/60) +1f)*0.5f;
+                    under = true;
+                    moveY = -2;
+                    moveX = -1;
+                    layerOffset = -0.01f;
+                    mirror = true;
+                }}
             );
         }};
     }

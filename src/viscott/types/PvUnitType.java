@@ -1,5 +1,6 @@
 package viscott.types;
 
+import arc.Core;
 import arc.graphics.Color;
 import arc.struct.Seq;
 import mindustry.Vars;
@@ -15,6 +16,13 @@ public class PvUnitType extends UnitType {
     {
         super(name);
         outlineColor = Color.valueOf("#181a1b");
+    }
+
+    @Override
+    public void loadIcon(){
+        super.loadIcon();
+        fullIcon = Core.atlas.find(name + "-preview",fullIcon);
+        uiIcon = Core.atlas.find(name + "-ui",fullIcon);
     }
 
     @Override

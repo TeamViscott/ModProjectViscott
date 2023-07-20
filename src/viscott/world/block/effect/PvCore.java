@@ -1,5 +1,6 @@
 package viscott.world.block.effect;
 
+import arc.graphics.g2d.Draw;
 import arc.math.Mathf;
 import arc.struct.Seq;
 import arc.util.Time;
@@ -13,6 +14,8 @@ import mindustry.graphics.Pal;
 import mindustry.world.blocks.storage.CoreBlock;
 import mindustry.world.draw.DrawBlock;
 import mindustry.world.draw.DrawDefault;
+import mindustry.world.draw.DrawMulti;
+import mindustry.world.draw.DrawRegion;
 import viscott.types.PvFaction;
 
 import static mindustry.Vars.state;
@@ -24,7 +27,9 @@ public class PvCore extends CoreBlock {
     public Effect spawnEffect = Fx.none;
     public boolean blackListFactions = false;
 
-    public DrawBlock drawer = new DrawDefault();
+    public DrawBlock drawer = new DrawMulti(
+            new DrawDefault()
+    );
 
     public PvCore(String name)
     {
@@ -81,6 +86,7 @@ public class PvCore extends CoreBlock {
         @Override
         public void draw() {
             drawer.draw(this);
+            Draw.rect(teamRegions[team.id],x,y,0);
         }
 
         @Override

@@ -6,6 +6,7 @@ import arc.struct.ObjectMap;
 import arc.struct.Seq;
 import arc.util.Log;
 import arc.util.Reflect;
+import mindustry.Vars;
 import mindustry.game.EventType;
 import mindustry.game.Team;
 import mindustry.gen.Call;
@@ -18,6 +19,7 @@ public class PvPacketHandler {
     {
         /*FACTION PACKET*/
         Events.on(EventType.PlayerJoin.class,(pJ)->{
+            if (!Vars.net.server()) return;
             StringBuilder sb = new StringBuilder();
             PvFaction.all.each(faction -> {
                 sb.append("!");
@@ -39,7 +41,6 @@ public class PvPacketHandler {
                     curFaction.clearTeams();
                     for (int i = 1; i < split2.length; i++)
                         curFaction.add(Team.get(Integer.parseInt(split2[i])));
-
                 }
             });
         });
