@@ -1035,13 +1035,18 @@ public class PvBlocks {
                             new PvDrawPulse("-black")
                     );
                 }};
-                voidExpander = new VoidBlock("void-expander") {{
+                voidExpander = new VoidExpand("void-expander") {{
                     requirements(Category.effect,with(PvItems.zirconium,3000,PvItems.lithium,1800,PvItems.nobelium,1000,PvItems.carbonFiber,500,PvItems.rushAlloy,250));
                     localizedName = "Void Expander";
+                    description = "Grows. the More you feed it.";
                     size = 5;
                     health = 4500;
                     voidRadius = 30;
                     squareSprite = false;
+                    consumeItem(Items.silicon,1);
+                    itemDuration = 180;
+                    voidGrowAmount = 1;
+                    itemCapacity = 100;
                     drawer = new DrawMulti(
                         new DrawLiquidStaticRegion(PvLiquids.concentratedVoid){{
                                 padding = 10;
