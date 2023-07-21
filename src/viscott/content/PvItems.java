@@ -24,7 +24,7 @@ public class PvItems {
         }};
         lithium = new Item("lithium"){{
             localizedName = "Lithium";
-            color = Color.valueOf("47463d");
+            color = Color.valueOf("51664B");
             hardness = 1;
         }};
         erbium = new Item("erbium"){{
