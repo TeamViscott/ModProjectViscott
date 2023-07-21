@@ -5,7 +5,7 @@ displayName: "Project Viscott"
 name: "project-viscott"
 
 #your name
-author: "[yellow]CREDITS[]: \n[yellow]Spriters : Ethanol10, ThomasThings \n----------------------------\nSfx/Music : Vdoble MSG \n----------------------------\nProgrammers : Siede ,Manuwar \n----------------------------\nMappers : Nicodium \n----------------------------\n \n Special thanks to MEEPofFaith for creating the pseudo3d system."
+author: "[yellow]CREDITS[]: \n[yellow]Spriters : Ethanol10, ThomasThings \n----------------------------\nSfx/Music : Vdoble MSG \n----------------------------\nProgrammers : Siede ,Manuwar ,Otamamori ,Kapzduke \n----------------------------\nMappers : Nicodium \n----------------------------\n \n Special thanks to MEEPofFaith for creating the pseudo3d system."
 
 #the fully qualified main class of the mod
 main: "viscott.ViscottMod"

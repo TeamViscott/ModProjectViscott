@@ -1,5 +1,6 @@
 package viscott.world.block.effect;
 
+import arc.Core;
 import arc.graphics.g2d.Draw;
 import arc.math.Mathf;
 import arc.struct.Seq;
@@ -44,6 +45,13 @@ public class PvCore extends CoreBlock {
         drawer.load(this);
     }
 
+    @Override
+    public void loadIcon(){
+        super.loadIcon();
+        fullIcon = Core.atlas.find(name + "-full",fullIcon);
+        uiIcon = Core.atlas.find(name + "-ui",fullIcon);
+    }
+
     public boolean partOfPlayerFaction()
     {
         if (blackListFactions)
@@ -86,7 +94,7 @@ public class PvCore extends CoreBlock {
         @Override
         public void draw() {
             drawer.draw(this);
-            Draw.rect(teamRegions[team.id],x,y,0);
+            drawTeamTop();
         }
 
         @Override

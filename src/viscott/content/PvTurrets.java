@@ -2006,7 +2006,7 @@ public class PvTurrets {
             recoil = 4;
             recoils = 2;
             ammo(
-                    PvItems.carbonFiber,new BasicBulletType(8,200)
+                    PvItems.carbonFiber,new BasicBulletType(8,120)
                     {{
                         sprite = "missile-large";
                         status = PvStatusEffects.resiliant;
@@ -2044,7 +2044,7 @@ public class PvTurrets {
                             statusDuration = 180;
                         }};
                     }},
-                    PvItems.rushAlloy,new BasicBulletType(16,1000)
+                    PvItems.rushAlloy,new BasicBulletType(16,240)
                     {{
                         sprite = "missile-large";
                         rangeChange = 8*10;
@@ -2270,7 +2270,7 @@ public class PvTurrets {
                         trailLength = 16;
                         lifetime = PvUtil.GetRange(2, 100);
                         frontColor = backColor = trailColor = Pal.slagOrange;
-                        fragBullet = new BasicBulletType(3,200){{
+                        fragBullet = new BasicBulletType(3,150){{
                             drag = 1/100f;
                             lifetime = 60;
                             trailLength = 6;
@@ -2279,7 +2279,7 @@ public class PvTurrets {
                             fragRandomSpread = 0;
                             fragSpread = 36;
                             fragVelocityMin = 1;
-                            fragBullet = new BasicBulletType(5, 300){{
+                            fragBullet = new BasicBulletType(5, 200){{
                                 frontColor = backColor = trailColor = Pal.redderDust;
                                 trailLength = 32;
                                 lifetime = 120;
@@ -2289,7 +2289,7 @@ public class PvTurrets {
                                 fragRandomSpread = 0;
                                 fragSpread = 36;
                                 fragVelocityMin = 1;
-                                fragBullet = new BasicBulletType(5, 300){{
+                                fragBullet = new BasicBulletType(5, 250){{
                                     frontColor = backColor = trailColor = Pal.redderDust;
                                     trailLength = 32;
                                     lifetime = 60;

@@ -2618,14 +2618,24 @@ public class PvUnits {
                         x = 0;
                         y = -4;
                         rotate = false;
-                        shoot.firstShotDelay = PvEffects.chargeUpHecta.lifetime;
+                        shootStatus = StatusEffects.slow;
+                        shootStatusDuration = shoot.firstShotDelay = PvEffects.chargeUpHecta.lifetime;
                         parentizeEffects = true;
-                        bullet = new LaserBulletType(1250) {{
+                        bullet = new LaserBulletType(450) {{
                             chargeEffect = PvEffects.chargeUpHecta;
                             length = 8*58;
                             laserAbsorb = true;
                             colors = new Color[]{Pal.redDust,Pal.redLight,Color.white};
                             width = 8*5;
+                            lifetime = 60;
+                            lightningSpacing = 5f;
+                            lightningLength = 10;
+                            lightningDelay = 0.5f;
+                            lightningLengthRand = 10;
+                            lightningDamage = 50;
+                            lightningAngleRand = 40f;
+                            largeHit = true;
+                            lightColor = lightningColor = Pal.redDust;
                         }};
                     }}
             );
