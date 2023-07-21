@@ -2315,7 +2315,18 @@ public class PvTurrets {
                 PvItems.copium,1
             );
             recoils = 2;
-            drawer = new DrawTurret(GetName("Pov"));
+            drawer = new DrawTurret(GetName("Pov")){{
+                parts.addAll(
+                        new RegionPart("-l") {{
+                            this.recoilIndex = 0;
+                            moveX = -4;
+                        }},
+                        new RegionPart("-r") {{
+                            this.recoilIndex = 1;
+                            moveY = -4;
+                        }}
+                );
+            }};
         }};
     }
 }

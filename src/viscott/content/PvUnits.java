@@ -2595,7 +2595,7 @@ public class PvUnits {
         }};
         //T4 here.
         hecta = new PvUnitType("hecta") {{
-            localizedName = "Deci";
+            localizedName = "Hecta";
             constructor = EntityMapping.map("horizon");
             speed = 6f/7.5f;
             drag = 0.1f;
@@ -2613,26 +2613,37 @@ public class PvUnits {
             engineOffset = 18;
             weapons.add(
                     new Weapon() {{
-                        reload = 120;
+                        reload = 240;
                         mirror = false;
-                        x = y = 0;
+                        x = 0;
+                        y = -4;
+                        rotate = false;
+                        shoot.firstShotDelay = PvEffects.chargeUpHecta.lifetime;
+                        parentizeEffects = true;
+                        bullet = new LaserBulletType(1250) {{
+                            chargeEffect = PvEffects.chargeUpHecta;
+                            length = 8*58;
+                            laserAbsorb = true;
+                            colors = new Color[]{Pal.redDust,Pal.redLight,Color.white};
+                            width = 8*5;
+                        }};
                     }}
             );
             parts.addAll(
                 new RegionPart("-arm1") {{
-                    progress = PartProgress.smoothReload;
+                    progress = PartProgress.reload.sustain(0.2f,0.1f,0.8f);
                     under = true;
                     layerOffset = -0.01f;
                     mirror = true;
                     moveX = 4;
                 }},
                 new RegionPart("-arm2") {{
-                    progress = PartProgress.smoothReload.delay(0.3f);
+                    progress = PartProgress.reload.sustain(0.3f,0.1f,0.5f);
                     mirror = true;
                     moveX = 4;
                 }},
                 new RegionPart("-arm3") {{
-                    progress = PartProgress.smoothReload.delay(0.6f);
+                    progress = PartProgress.reload.sustain(0.4f,0.1f,0.2f);
                     under = true;
                     layerOffset = -0.01f;
                     mirror = true;

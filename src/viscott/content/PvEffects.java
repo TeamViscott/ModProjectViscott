@@ -21,7 +21,7 @@ public class PvEffects {
         slowEnergeticEffect, particleDeath1,particleDeath2,particleDeath3,
             railFrag,waveBulletFalerica,waveBulletJavelin,sumayaShoot, sumayaImpact,
 
-            quadRushCraft,cascadeCraft,surgeSpawn,siedeSummon,branch
+            quadRushCraft,cascadeCraft,surgeSpawn,siedeSummon,chargeUpHecta,branch
             ;
     public static Seq<Effect> nullisDeath = new Seq<>();
     public static void load()
@@ -158,6 +158,12 @@ public class PvEffects {
             Draw.color(Team.green.color);
             Fill.circle(e.x,e.y,wave*size);
             Draw.reset();
+        });
+        chargeUpHecta = new Effect(100,e-> {
+            Draw.z(Layer.effect);
+            Draw.color(Pal.redderDust);
+            Lines.stroke(e.fin()*8);
+            Lines.circle(e.x,e.y,e.fout()*8*5);
         });
     }
 
