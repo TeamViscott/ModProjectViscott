@@ -45,6 +45,7 @@ public class PvItems {
         barium = new Item("barium"){{
             localizedName = "Barium";
             color = Color.valueOf("666558");
+            lowPriority = true;
         }};
         carbonFiber = new Item("carbon-fiber"){{
             localizedName = "Carbon Fiber";
