@@ -15,6 +15,7 @@ import mindustry.content.StatusEffects;
 import mindustry.entities.Effect;
 import mindustry.entities.abilities.RepairFieldAbility;
 import mindustry.entities.abilities.ShieldArcAbility;
+import mindustry.entities.abilities.SpawnDeathAbility;
 import mindustry.entities.abilities.StatusFieldAbility;
 import mindustry.entities.bullet.*;
 import mindustry.entities.effect.ExplosionEffect;
@@ -48,6 +49,7 @@ import viscott.world.bullets.BranchBulletType;
 import viscott.world.bullets.LargeBranchBulletType;
 import viscott.world.bullets.VoidBulletType;
 import viscott.utilitys.PvUtil;
+import viscott.world.statusEffects.PvStatusEffect;
 
 import static arc.graphics.g2d.Draw.color;
 import static arc.graphics.g2d.Lines.stroke;
@@ -66,7 +68,9 @@ public class PvUnits {
 
         /*Xeal Naval Path*/rivulet,bourn,tributary,loch,atlantic,
 
-        /*yggdrasil path*/root,stick,branch,log,tree,
+        /*Assault Spooder Path*/chime,carillon,knell,peal,reverberate,
+
+        /*yggdrasil path*/root,stick,branch,tree,cambrium,yggdrasil,
 
         /*Nullis*/
             /*Storage Con Path*/pocket,container,capsule,vault,chamber,
@@ -79,12 +83,14 @@ public class PvUnits {
                     vdoble,
                     siede,
                     frire, /*swarm mini extra*/lilshts,
+                    zepz, baron, //kapzduke's twin bosses
                     omamori;
     public static void load()
     {
         //Base UnitLoads
         loadFlyingIonPath();
         loadRocketHoverPath();
+        loadAssaultSpooderPath();
         //Faction Based UnitLoads
         loadXeonNavalPath();
         loadStoragePath();
@@ -100,8 +106,7 @@ public class PvUnits {
                 u.immunities.addAll(
                         PvStatusEffects.memoryExchange,
                         PvStatusEffects.prevention,
-                        PvStatusEffects.lastStand
-                )
+                        PvStatusEffects.lastStand                )
         );
     }
     public static void loadCorePath()
@@ -158,7 +163,7 @@ public class PvUnits {
             drag = 0.15f;
             range = 18*8;
             weapons.add(
-                    new Weapon("")
+                    new Weapon()
                     {{
                         x = 0;
                         y = 5;
@@ -275,7 +280,7 @@ public class PvUnits {
         }};
         wood = new PvUnitType("wood")
         {{
-            localizedName = "[gold]Wood";
+            localizedName = "[#766e4d]Wood";
             constructor = EntityMapping.map("alpha");
             health = 650;
             armor = 20;
@@ -1926,16 +1931,186 @@ public class PvUnits {
                     }}
             );
         }};
+        zepz = new UnitType("zepz") {{
+            localizedName = "[white]Zepz[]";
+            constructor = EntityMapping.map("mega");
+            flying = true;
+            drag = 0.3f;
+            speed = 2f;
+            hitSize = 10f;
+            health = 6000;
+            armor = 10f;
+            abilities.add(new StatusFieldAbility(PvStatusEffects.endlessAmp, 60f, 10f, 400f));
+            abilities.add(new AntiVoidAbility(18 * 4));
+        }};
+        baron = new UnitType("baron") {{
+            localizedName = "[#202020]Baron[]";
+            constructor = EntityMapping.map("eclipse");
+            flying = true;
+            drag = 0.3f;
+            speed = 5f;
+            hitSize = 10;
+            health = 6000;
+            armor = 14f;
+            zepz.abilities.add(new SpawnDeathAbility(this,1,0));
+            abilities.add(new EnemyStatusFieldAbility(PvStatusEffects.endlessDot, 60, 10, 400f));
+            abilities.add(new VoidAbility(18 * 4));
+            abilities.add(new SpawnDeathAbility(zepz,1,0));
+            weapons.add(
+                    new Weapon(name + "shotty"){{
+                        y = 0f;
+                        x = 0f;
+                        mirror = false;
+                        reload = 30;
+                        rotateSpeed = 2f;
+                        ejectEffect = Fx.casing4;
+                        shootSound = Sounds.shootAltLong;
+                        rotate = true;
+                        recoil = 3f;
+
+                        shoot = new ShootSpread(10, 0.5f);
+
+                        bullet = new BulletType()
+                        {{
+                                despawnSound = Sounds.shootAltLong;
+                                hittable = false;
+                                reflectable = false;
+                                absorbable = false;
+                                collides = false;
+                                collideTerrain = true;
+                                hitEffect = Fx.none;
+                                despawnEffect = Fx.none;
+                                damage = 0;
+                                speed = 14;
+                                lifetime = 5;
+                                fragRandomSpread = 0;
+                                fragBullets = 1;
+                                fragBullet = new ShrapnelBulletType()
+                                {{
+                                    fromColor = Color.valueOf("000000");
+                                    toColor = Color.valueOf("202020");
+                                    width = 30;
+                                    length = 60;
+                                    damage = 60;
+                                    serrationLenScl = 7f;
+                                    serrationSpaceOffset = 60f;
+                                    serrationFadeOffset = 0f;
+                                    serrations = 10;
+                                    serrationWidth = 6f;
+                                    speed = 0;
+                                    lifetime = 5;
+                                    fragRandomSpread = 0;
+                                    fragBullets = 1;
+                                    fragBullet = new BulletType()
+                                    {{
+                                        despawnSound = Sounds.shootAltLong;
+                                        hittable = false;
+                                        reflectable = false;
+                                        absorbable = false;
+                                        collides = false;
+                                        collideTerrain = true;
+                                        hitEffect = Fx.none;
+                                        despawnEffect = Fx.none;
+                                        damage = 0;
+                                        speed = 14;
+                                        lifetime = 5;
+                                        fragRandomSpread = 0;
+                                        fragBullets = 2;
+                                        fragBullet = new ShrapnelBulletType()
+                                        {{
+                                            fromColor = Color.valueOf("000000");
+                                            toColor = Color.valueOf("202020");
+                                            width = 30;
+                                            length = 60;
+                                            damage = 60;
+                                            serrationLenScl = 7f;
+                                            serrationSpaceOffset = 60f;
+                                            serrationFadeOffset = 0f;
+                                            serrations = 10;
+                                            serrationWidth = 6f;
+                                            speed = 0;
+                                            lifetime = 5;
+                                            fragRandomSpread = 0;
+                                            fragBullets = 1;
+                                            fragBullet = new BulletType()
+                                            {{
+                                                despawnSound = Sounds.shootAltLong;
+                                                hittable = false;
+                                                reflectable = false;
+                                                absorbable = false;
+                                                collides = false;
+                                                collideTerrain = true;
+                                                hitEffect = Fx.none;
+                                                despawnEffect = Fx.none;
+                                                damage = 0;
+                                                speed = 14;
+                                                lifetime = 5;
+                                                fragRandomSpread = 0;
+                                                fragBullets = 4;
+                                                fragBullet = new ShrapnelBulletType(){{
+                                                    fromColor = Color.valueOf("000000");
+                                                    toColor = Color.valueOf("202020");
+                                                    width = 30;
+                                                    length = 60;
+                                                    damage = 60;
+                                                    serrationLenScl = 7f;
+                                                    serrationSpaceOffset = 60f;
+                                                    serrationFadeOffset = 0f;
+                                                    serrations = 10;
+                                                    serrationWidth = 6f;
+                                                    speed = 0;
+                                                    lifetime = 5;
+                                                    fragRandomSpread = 0;
+                                                    fragBullets = 1;
+                                                    fragBullet = new BulletType()
+                                                    {{
+                                                            despawnSound = Sounds.shootAltLong;
+                                                            hittable = false;
+                                                            reflectable = false;
+                                                            absorbable = false;
+                                                            collides = false;
+                                                            collideTerrain = true;
+                                                            hitEffect = Fx.none;
+                                                            despawnEffect = Fx.none;
+                                                            damage = 0;
+                                                            speed = 14;
+                                                            lifetime = 5;
+                                                            fragRandomSpread = 0;
+                                                            fragBullets = 6;
+                                                            fragBullet = new ShrapnelBulletType()
+                                                            {{
+                                                                    fromColor = Color.valueOf("000000");
+                                                                    toColor = Color.valueOf("202020");
+                                                                    width = 30;
+                                                                    length = 60;
+                                                                    damage = 60;
+                                                                    serrationLenScl = 7f;
+                                                                    serrationSpaceOffset = 60f;
+                                                                    serrationFadeOffset = 0f;
+                                                                    serrations = 10;
+                                                                    serrationWidth = 6f;
+                                                                    speed = 0;
+                                                                    lifetime = 5;
+                                                            }};
+                                                    }};
+                                                }};
+                                            }};
+                                        }};
+                                    }};
+                                }};
+                        }};
+                    }});
+        }};
         omamori = new PvUnitType("omamori") {{
                 localizedName = "[green]Omamori[]";
-                description = "[gold]Creation of Yggdrasil[], Omamori protects his allies to the very end. His many Attributes are [orange]\n1. Revive Allys\n2. Last stand for allies.\n3. Spawn Omais.";
+                description = "Omamori protects his allies to the very end. His many Attributes are [orange]\n1. Revive Allys\n2. Last stand for allies.\n3. Spawn Omais.";
                 Seq<String> detailList = new Seq<>();
                 detailList.addAll(
                         "[green]Omamori[].The Large Tank Run by a peaceful [green]Medusa AI[] Know to only attack when its place of rest has been disrespected",
-                        "the gentle giant that Omamori is makes him greatly feared but he ins't one prone to attack as a creation of [gold]Yggdrasil[]",
-                        "during his creation [gold]Yggdrasil[] gave him the power to protect his allies with [green]Prevention[] & [blue]Last Stand[], [green]He can give a ally a second life[] and [blue]Great resistance at low health.",
+                        "the gentle giant that Omamori is makes him greatly feared but he ins't one prone to attack",
+                        "he gained the power to protect his allies with [green]Prevention[] & [blue]Last Stand[], [green]He can give a ally a second life[] and [blue]Great resistance at low health.",
                         "[orange]Usual Behaviour Between Factions : ",
-                        "[green]Allianced Factions : []Xeal , Psy",
+                        "[green]Allianced Factions : []Xeal , Psy , Yggdrasil",
                         "[grey]Neutral Factions :[] Nullis, Azulex",
                         "[red]Enemy Factions : []Mortikai"
                 );
@@ -1943,11 +2118,11 @@ public class PvUnits {
                 detailList.each(cs -> sb.append(cs + "\n"));
                 sb.replace(sb.length() - 1, sb.length(), "");
                 details = sb.toString();
-                constructor = EntityMapping.map("stell");
+                constructor = EntityMapping.map("conquer");
                 drag = 0.1f;
                 speed = 0.5f;
-                hitSize = 80f;
                 health = 80000;
+                hitSize = 40;
                 armor = 50f;
                 omniMovement = false;
                 faceTarget = false;
@@ -3042,23 +3217,120 @@ public class PvUnits {
             }});
         }};
     }
-    public static void loadYggdrasilPath() {
-        root = new PvUnitType("root") {{
-            health = 250;
-            armor = 80;
-            speed = 0.6f;
-            localizedName = "[gold]Root";
+    public static void loadAssaultSpooderPath() {
+        chime = new PvUnitType("chime") {{
+            health = 325;
+            armor = 3;
+            speed = 9.5f/7.5f;
+            localizedName = "[orange]Chime";
+            constructor = EntityMapping.map("toxopid");
+            legCount = 3;
+            legMoveSpace = 3f;
+            legPairOffset = 1.5f;
+            legLength = 10f;
+            legExtension = -2f;
+            legBaseOffset = 4f;
+            stepShake = 0f;
+            legLengthScl = 0.64f;
+            rippleScale = 1f;
+            legSpeed = 0.2f;
+            weapons.add(new Weapon(name + "-hs") {{
+                x = 0f;
+                y = 0f;
+                mirror = false;
+                reload = 48f;
+                inaccuracy = 0f;
+                recoil = 0;
+                heatColor = Pal.neoplasm1;
+                shootY = -1;
+                bullet = new BasicBulletType(2f, 4.5f) {{
+                    splashDamage = 42;
+                    splashDamageRadius = 3.8f;
+                    lifetime = PvUtil.GetRange(2f,12);
+                    trailColor = backColor = lightColor = Pal.neoplasm1;
+                    frontColor = Pal.neoplasm2;
+                    trailLength = 24;
+                    trailChance = 0.1f;
+                    trailWidth = 1.4f;
+                }};
+            }});
+        }};
+        carillon = new PvUnitType("carillon") {{
+            health = 950;
+            armor = 5;
+            speed = 8.1f/7.5f;
+            localizedName = "[orange]Carillon";
             constructor = EntityMapping.map("toxopid");
             legCount = 4;
             legMoveSpace = 2f;
-            legPairOffset = 2;
-            legLength = 14f;
+            legPairOffset = 2f;
+            legLength = 12f;
+            legExtension = -4f;
+            legBaseOffset = 4f;
+            stepShake = 0f;
+            legLengthScl = 0.74f;
+            rippleScale = 2f;
+            legSpeed = 0.2f;
+
+            for(int j = 0; j < 3; j++){
+                int i = j;
+                parts.add(new RegionPart("-spine"){{
+                    layerOffset = -0.01f;
+                    heatLayerOffset = 0.005f;
+                    y = -1;
+                    x = 2f;
+                    moveX = 6f + i * 1.9f;
+                    moveY = 8f + -4f * i;
+                    moveRot = 40f - i * 25f;
+                    mirror = true;
+                    progress = PartProgress.warmup.delay(i * 0.2f);
+                    heatProgress = p -> Mathf.absin(Time.time + i * 14f, 7f, 1f);
+
+                    heatColor = Pal.neoplasm1;
+                }});
+            }
+            weapons.add(new Weapon() {{
+                x = 4f;
+                y = -1f;
+                mirror = true;
+                reload = 54f;
+                alternate = false;
+                inaccuracy = 0f;
+                recoil = 0;
+                baseRotation = -60f;
+                shootCone = 140;
+                bullet = new BasicBulletType(2.5f, 18f) {{
+                    splashDamage = 45;
+                    splashDamageRadius = 2.5f;
+                    lifetime = PvUtil.GetRange(2.5f,19);
+                    homingPower = 0.1f;
+                    homingRange = 200;
+                    trailColor = backColor = lightColor = Pal.neoplasm1;
+                    frontColor = Pal.neoplasm2;
+                    trailLength = 24;
+                    trailChance = 0.1f;
+                    trailWidth = 1.4f;
+                }};
+            }});
+        }};
+    }
+    public static void loadYggdrasilPath() {
+        root = new PvUnitType("root") {{
+            health = 250;
+            armor = 20;
+            speed = 0.6f;
+            localizedName = "[#766e4d]Root";
+            constructor = EntityMapping.map("toxopid");
+            legCount = 6;
+            legMoveSpace = 2f;
+            legPairOffset = 1.5f;
+            legLength = 24f;
             legExtension = -5;
             legBaseOffset = 5f;
             stepShake = 0f;
             legLengthScl = 0.64f;
             rippleScale = 1f;
-            legSpeed = 0.1f;
+            legSpeed = 0.15f;
             weapons.add(new Weapon(name + "-weapon") {{
                 x = 4f;
                 y = -1f;
@@ -3094,10 +3366,20 @@ public class PvUnits {
         }};
         stick = new PvUnitType("stick") {{
             health = 750;
-            armor = 100;
-            localizedName = "[gold]Stick";
+            armor = 40;
+            legCount = 6;
+            legMoveSpace = 3f;
+            legPairOffset = 2.25f;
+            legLength = 36f;
+            legExtension = -7.5f;
+            legBaseOffset = 7.5f;
+            stepShake = 0f;
+            legLengthScl = 0.96f;
+            rippleScale = 1.5f;
+            legSpeed = 0.15f;
+            localizedName = "[#766e4d]Stick";
             constructor = EntityMapping.map("toxopid");
-            weapons.add(new Weapon(name + "-weapon-strike") {{
+            weapons.add(new Weapon(name + "-weapon") {{
                 x = 0f;
                 y = 0f;
                 top = false;
@@ -3117,15 +3399,19 @@ public class PvUnits {
             }});
         }};
         branch = new PvUnitType("branch") {{
-            health = 2250;
-            armor = 120;
-            localizedName = "[gold]Branch";
-            constructor = EntityMapping.map("toxopid");
-        }};
-        log = new PvUnitType("log") {{
-            health = 6750;
+            health = 20250;
             armor = 80;
-            localizedName = "[gold]Log";
+            legCount = 8;
+            legContinuousMove = true;
+            legMaxLength = 52.8f; //8.8
+            legExtension = -15f;  //2.5
+            legLength = 156.8f; //22.4
+            legBaseOffset = 42; //6
+            legLengthScl = 1.4f; //0.2
+            legMoveSpace = 1.05f; //0.15
+            rippleScale = 7f; //1
+            allowLegStep = true;
+            localizedName = "[#766e4d]Branch";
             constructor = EntityMapping.map("toxopid");
             weapons.add(new Weapon(name + "-weapon-strike") {{
                 x = 0f;
@@ -3147,9 +3433,57 @@ public class PvUnits {
             }});
         }};
         tree = new PvUnitType("tree") {{
-            health = 20250;
-            armor = 80;
-            localizedName = "[gold]Tree";
+            health = 60750;
+            armor = 100;
+            legContinuousMove = true;
+            legMaxLength = 61.6f; //8.8
+            legExtension = -17.5f;  //2.5
+            legLength = 179.2f; //22.4
+            legBaseOffset = 48; //6
+            legLengthScl = 1.6f; //0.2
+            legMoveSpace = 1.2f; //0.15
+            rippleScale = 8f; //1
+            legSplashDamage = 3200; //400
+            legSplashRange = 32; //4
+            allowLegStep = true;
+            legCount = 8;
+            localizedName = "[#766e4d]Tree";
+            constructor = EntityMapping.map("toxopid");
+        }};
+        cambrium = new PvUnitType("cambrium") {{
+            health = 182250;
+            armor = 120;
+            legCount = 10;
+            legContinuousMove = true;
+            legMaxLength = 79.2f; //8.8
+            legExtension = -22.5f;  //2.5
+            legLength = 201.6f; //22.4
+            legBaseOffset = 54; //6
+            legLengthScl = 1.8f; //0.2
+            legMoveSpace = 1.35f; //0.15
+            rippleScale = 9f; //1
+            legSplashDamage = 3600; //400
+            legSplashRange = 36; //4
+            allowLegStep = true;
+            localizedName = "[#766e4d]Cambrium";
+            constructor = EntityMapping.map("toxopid");
+        }};
+        yggdrasil = new PvUnitType("yggdrasil") {{
+            health = 546750;
+            armor = 140;
+            legCount = 10;
+            legContinuousMove = true;
+            legMaxLength = 88;
+            legExtension = -25;
+            legLength = 224;
+            legBaseOffset = 60;
+            legLengthScl = 2;
+            legMoveSpace = 1.5f;
+            rippleScale = 10f;
+            legSplashDamage = 4000;
+            legSplashRange = 40;
+            allowLegStep = true;
+            localizedName = "[#766e4d]Yggdrasil";
             constructor = EntityMapping.map("toxopid");
         }};
     }

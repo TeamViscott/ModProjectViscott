@@ -19,7 +19,7 @@ public class PvStatusEffects {
     public static StatusEffect
     timeWarped,doused, disabled, expent, resiliant, ungratefull, crescendo, treeAmp, tick ,tock,mend,shield, malfunction,
     
-    voidShield,voidDecay,frag,aoe,homing,memoryExchange,dataLeak,endlessAmp, endlessDot, prevention, lastStand, voidConsume, consume,splintered,
+    voidShield,voidDecay,antiVoidRepair, frag,aoe,homing,memoryExchange,dataLeak,endlessAmp, endlessDot, prevention, lastStand, voidConsume, consume,splintered,
 
     //visual statuses
     preventionFx,lastStandFx,basicFx
@@ -83,7 +83,7 @@ public class PvStatusEffects {
             staticStat();
         }};
         treeAmp = new StatusEffectStack("tree-amp") {{
-            localizedName = "[gold]Tree Amp";
+            localizedName = "[#766e4d]Tree Amp";
             healthMultiplier = 1.5f;
             reloadMultiplier = 1.1f;
             damageMultiplier = 0.95f;
@@ -175,6 +175,16 @@ public class PvStatusEffects {
             damage = 5f/60f;
             buildSpeedMultiplier = 0.90f;
             ground = true;
+        }};
+        antiVoidRepair = new StatusEffect("antivoid-repair")
+        {{
+            localizedName = "[white]AntiVoid Repair";
+            description = "[white]Grants Youth";
+            color = Color.white;
+            damage = -20f/60f;
+            init(() -> {
+                opposite(PvStatusEffects.voidDecay,PvStatusEffects.voidConsume);
+            });
         }};
         malfunction = new PvStatusEffect("malfunction")
         {{
@@ -286,13 +296,12 @@ public class PvStatusEffects {
         }};
         splintered = new StatusEffect("splintered")
         {{
-            localizedName = "[gold]Splintered";
+            localizedName = "[#766e4d]Splintered";
             color = Color.valueOf("392f32");
             description = "Shards of wood are stuck inside you";
             damage = 2f/60f;
             transitionDamage = 80;
             init(() -> {
-                opposite(StatusEffects.wet, StatusEffects.freezing);
                 affinity(StatusEffects.burning, (unit, result, time) -> {
                     unit.damagePierce(transitionDamage);
                     Fx.burning.at(unit.x + Mathf.range(unit.bounds() / 2f), unit.y + Mathf.range(unit.bounds() / 2f));

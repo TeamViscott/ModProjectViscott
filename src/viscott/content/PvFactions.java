@@ -29,18 +29,18 @@ public class PvFactions {
                     "   Near Endless Growth\n" +
                     "[red]Negative Attributes : \n" +
                     "   Base Core Capacity is Low\n" +
-                    "   Slower Statup\n";
+                    "   Slower Startup\n";
             info = "Nullis is a Faction of Units that have found a way to use Black Hole's in an Efficient way.\n" +
-                    "Once a Small Faction with nothing more than a few Units and some computery to mess around with,\n" +
+                    "Once a Small Faction with nothing more than a few Units and some machinery to mess around with,\n" +
                     "is now a Force to be reckoned with.\nTheir expansion is close to non once they set up base.";
         }};
         Psy = new PvFaction("psy",Color.valueOf("#e892d1")){{
             description = "The Psy faction has been able to create extremely powerful shields and walls. They are specified in defense in a different way than mortikai";
         }};
-        Yggdrasil = new PvFaction("yggdrasil",Color.valueOf("#59bc59")) {{
-            description = "[pink][Extra Faction][]\nA faction of the allmighty Omamori. they use nature to defend and harvest resources";
-            info = "one uppon a time there was the Omamori. the Peacefull giant who loved to walk around and See the view.\n" +
-                    "Over time. he accumulated followers who called themself the Yggdrasil's who wanted to follow the Giants footsteps.\n" +
+        Yggdrasil = new PvFaction("team-yggdrasil",Color.valueOf("#766e4d")) {{
+            description = "[pink][[#e892d1]Psy[] Sub Faction][]\nFollowers of The [green]Omamori[]. they use nature to defend and harvest resources.";
+            info = "once upon a time there was the [green]Omamori[]. the Peaceful giant who loved to move around and nurture the wildlife around him.\n" +
+                    "Over time. he accumulated followers who called themselves the Yggdrasil's who wanted to follow in the Giants footsteps.\n" +
                     "And so the Giant helped them build in a way as to not hurt mother nature.";
         }};
         Unix = new PvFaction("unix",Color.purple) {{

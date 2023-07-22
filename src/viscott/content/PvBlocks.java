@@ -138,7 +138,7 @@ public class PvBlocks {
                 lithiumOre = new OreBlock("lithium-ore",PvItems.lithium){{variants = 3; localizedName = "Lithium Ore";}};
                 platinumOre = new OreBlock("platinum-ore",PvItems.platinum){{variants = 3; localizedName = "Platinum Ore";}};
                 zirconiumOre = new OreBlock("zirconium-ore",PvItems.zirconium){{variants = 3; localizedName = "Zirconium Ore";}};
-                exposedRoot = new OreBlock("exposed-root",PvItems.hardenedOak){{variants = 2; localizedName = "[gold]Exposed Root";}};
+                exposedRoot = new OreBlock("exposed-root",PvItems.hardenedOak){{variants = 2; localizedName = "[#766e4d]Exposed Root";}};
                 /*Ore's End*/
                 /*Deposit's Start*/
                 erbiumDeposit = new DepositWall("erbium-deposit") //Todo
@@ -822,7 +822,7 @@ public class PvBlocks {
                 branchMolder = new BulkUnitFactory("branch-molder")
                 {{
                     requirements(Category.units,with(Items.copper,250,Items.silicon,75,PvItems.hardenedOak,40));
-                    localizedName = "[gold]Branch Molder";
+                    localizedName = "[#766e4d]Branch Molder";
                     faction.add(PvFactions.Yggdrasil);
                     health = 1600;
                     size = 5;
@@ -967,14 +967,14 @@ public class PvBlocks {
                 yggdrasilsHeartwood = new PvCore("yggdrasils-heartwood")
                 {{
                     requirements(Category.effect, with(PvItems.hardenedOak,15000));
-                    localizedName = "[gold]Yggdrasil's Heartwood";
+                    localizedName = "[#766e4d]Yggdrasil's Heartwood";
                     faction.add(PvFactions.Yggdrasil);
                     alwaysUnlocked = true;
                     unitType = PvUnits.wood;
-                    health = 18000;
-                    size = 2;
-                    unitCapModifier = 4;
-                    itemCapacity = 2000;
+                    health = 68000;
+                    size = 6;
+                    unitCapModifier = 16;
+                    itemCapacity = 6000;
                 }};
                 nullisCore = new NullisCore("core-null")
                 {{
