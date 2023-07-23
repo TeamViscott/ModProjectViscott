@@ -1941,7 +1941,7 @@ public class PvUnits {
             armor = 10f;
             immunities.add(PvStatusEffects.endlessAmp);
             abilities.add(new StatusFieldAbility(PvStatusEffects.endlessAmp, 60f, 10f, 400f));
-            abilities.add(new AntiVoidAbility(18 * 4));
+            abilities.add(new SourceAbility(18 * 4));
         }};
         baron = new UnitType("baron") {{
             immunities.add(PvStatusEffects.endlessAmp);

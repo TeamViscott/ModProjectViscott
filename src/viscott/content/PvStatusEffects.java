@@ -19,7 +19,7 @@ public class PvStatusEffects {
     public static StatusEffect
     timeWarped,doused, disabled, expent, resiliant, ungratefull, crescendo, treeAmp, tick ,tock,mend,shield, malfunction,
     
-    voidShield,voidDecay,antiVoidRepair, frag,aoe,homing,memoryExchange,dataLeak,endlessAmp, endlessDot, prevention, lastStand, voidConsume, consume,splintered,
+    voidShield,voidDecay,sourceRepair,sourcePurify,sourceRepel, frag,aoe,homing,memoryExchange,dataLeak,endlessAmp, endlessDot, prevention, lastStand, voidConsume, consume,splintered,
 
     //visual statuses
     preventionFx,lastStandFx,basicFx
@@ -176,14 +176,34 @@ public class PvStatusEffects {
             buildSpeedMultiplier = 0.90f;
             ground = true;
         }};
-        antiVoidRepair = new StatusEffect("antivoid-repair")
+        sourcePurify = new StatusEffect("source-purify")
         {{
-            localizedName = "[white]AntiVoid Repair";
+            localizedName = "[white]Source Purify";
+            description = "[white]Great Flame Of Purification";
+            color = Color.white;
+            effect = PvFx.pureFlame;
+            damage = 2400f/60f;
+        }};
+        sourceRepair = new StatusEffect("source-repair")
+        {{
+            localizedName = "[white]Source Repair";
             description = "[white]Grants Youth";
             color = Color.white;
-            damage = -20f/60f;
+            damage = -240f/60f;
             init(() -> {
-                opposite(PvStatusEffects.voidDecay,PvStatusEffects.voidConsume);
+                opposite(voidDecay);
+            });
+        }};
+        sourceRepel = new PvStatusEffect("source-repel") {{
+            localizedName = "[white]Source Repel";
+            color = Color.white;
+            description = "[white]Hovering so close to the Source was not a good idea. It launched you far away";
+            damage = -5f/60f;
+            speedMultiplier = 2f;
+            dragMultiplier = 0.01f;
+            ground = true;
+            init(() -> {
+                opposite(voidConsume);
             });
         }};
         malfunction = new PvStatusEffect("malfunction")

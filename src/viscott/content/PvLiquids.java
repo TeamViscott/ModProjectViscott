@@ -7,7 +7,9 @@ import viscott.types.VoidLiquid;
 public class PvLiquids {
     public static Liquid
     kerosene,xenon,liquidNitrogen,
-    /*Nullis*/concentratedVoid
+    /*Nullis*/concentratedVoid,
+
+    /*FUNI*/concentratedSource
     ;
     public static void load()
     {
@@ -44,6 +46,21 @@ public class PvLiquids {
             explosiveness = 0.1f;
             viscosity = 0.995f;
             coolant = true;
+            capPuddles = false;
+        }};
+        concentratedSource = new VoidLiquid("liquid-concentrated-source"){{
+            localizedName = "Concentrated Source";
+            description = "[white]Heals everything.";
+            color = Color.valueOf("ffebeb");
+            colorFrom = Color.white;
+            colorTo = Color.valueOf("cdcdcd");
+            heatCapacity = -4;
+            temperature = 100;
+            effect = PvStatusEffects.sourceRepair;
+            voidFlyingEffect = PvStatusEffects.sourceRepel;
+            explosiveness = 2f;
+            viscosity = 5f;
+            coolant = false;
             capPuddles = false;
         }};
     }
