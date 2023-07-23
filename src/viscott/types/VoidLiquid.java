@@ -66,7 +66,7 @@ public class VoidLiquid extends CellLiquid {
             }
             if (t.build == null|| !t.build.isValid() ) continue;
             if (voidDamage < 0)
-                t.build.heal(voidDamage/60);
+                t.build.heal(-voidDamage/60);
             else
                 t.build.damage(voidDamage/60);
             puddle.amount += voidDamage/60;
