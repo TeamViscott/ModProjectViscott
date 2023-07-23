@@ -21,7 +21,8 @@ public class PvEffects {
         slowEnergeticEffect, particleDeath1,particleDeath2,particleDeath3,
             railFrag,waveBulletFalerica,waveBulletJavelin,sumayaShoot, sumayaImpact,
 
-            quadRushCraft,cascadeCraft,surgeSpawn,siedeSummon,chargeUpHecta,branch
+            quadRushCraft,cascadeCraft,uberbulkCraft,
+                    surgeSpawn,siedeSummon,chargeUpHecta,branch
             ;
     public static Seq<Effect> nullisDeath = new Seq<>();
     public static void load()
@@ -135,6 +136,9 @@ public class PvEffects {
             DrawPseudo3d.tube(e.x,e.y,2*e.fout(),e.fin()*50,col,Color.clear);
             Lines.stroke(e.fout()*4,col);
             Lines.circle(e.x,e.y,15*e.fin());
+        });
+        uberbulkCraft = new Effect(180,e -> {
+
         });
         for(int i = 1;i<=9;i++)
             nullisDeath.add(newNullisDeath(i));

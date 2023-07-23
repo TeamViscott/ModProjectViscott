@@ -963,7 +963,6 @@ public class PvBlocks {
                 {{
                     requirements(Category.effect, with(PvItems.zirconium,5000,PvItems.lithium,4000,Items.silicon,900,PvItems.nobelium,500));
                     localizedName = "Core Elevate";
-                    alwaysUnlocked = true;
                     unitType = PvUnits.infrared;
                     health = 3700;
                     size = 4;
@@ -976,7 +975,6 @@ public class PvBlocks {
                 {{
                     requirements(Category.effect, with(PvItems.zirconium,10000,PvItems.lithium,7000,Items.silicon,1500,PvItems.carbonFiber,1200,PvItems.nobelium,400));
                     localizedName = "Core Upraise";
-                    alwaysUnlocked = true;
                     unitType = PvUnits.spectrum;
                     health = 7300;
                     size = 5;
@@ -1001,7 +999,6 @@ public class PvBlocks {
                 {{
                     requirements(Category.effect, with(PvItems.zirconium,10000,PvItems.lithium,8000,Items.silicon,3000,PvItems.nobelium,1500,PvItems.platinum,500));
                     localizedName = "Core Charge";
-                    alwaysUnlocked = true;
                     unitType = PvUnits.volt;
                     faction.add(PvFactions.Xeal);
                     health = 5500;
@@ -1013,7 +1010,6 @@ public class PvBlocks {
                 {{
                     requirements(Category.effect, with(PvItems.zirconium,20000,PvItems.lithium,15000,Items.silicon,8000,PvItems.nobelium,5000,PvItems.platinum,3000,PvItems.carbonFiber,100));
                     localizedName = "Core Surge";
-                    alwaysUnlocked = true;
                     unitType = PvUnits.watt;
                     faction.add(PvFactions.Xeal);
                     health = 7000;
@@ -1042,6 +1038,7 @@ public class PvBlocks {
                     localizedName = "Core Null";
                     unitType = PvUnits.vessel;
                     defaultMiner = PvUnits.shadow;
+                    alwaysUnlocked = true;
                     size = 3;
                     health = 2100;
                     unitCapModifier = 60;
