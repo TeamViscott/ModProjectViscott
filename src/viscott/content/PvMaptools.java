@@ -11,7 +11,7 @@ import mindustry.world.blocks.defense.OverdriveProjector;
 import mindustry.world.blocks.sandbox.PowerSource;
 import mindustry.world.blocks.storage.CoreBlock;
 import mindustry.world.meta.BuildVisibility;
-import viscott.world.block.liquids.VoidSource;
+import viscott.world.block.liquids.SpecialSource;
 import viscott.world.block.logic.PvLogicBlock;
 import viscott.world.block.sandbox.PvItemSource;
 import viscott.world.block.sandbox.PvLiquidSource;
@@ -24,7 +24,7 @@ public class PvMaptools {
     public static Block
     basicsource, normalsource, advancedsource, ultrasource,
     basicliquidsource, advancedliquidsource, ultraliquidsource, normalliquidsource, coreIntrusion, ultrapowersource,
-    voidsource,universalProcessor,
+    voidsource,sourcesource,universalProcessor,
     tier1overdrive, tier2overdrive, tier3overdrive, tier4overdrive;
     public static void load()
     {
@@ -165,13 +165,23 @@ public class PvMaptools {
             useTime = 300f;
             hasBoost = false;
         }};
-        voidsource = new VoidSource("void-source") {
+        voidsource = new SpecialSource("void-source") {
             {
                 requirements(Category.liquid,BuildVisibility.sandboxOnly,with());
                 health = 1400;
                 localizedName = "Void Source";
                 description = "Emitts Void and does not get damaged by Void.";
-                voidAmount = 10;
+                liquidAmount = 10;
+            }
+        };
+        sourcesource = new SpecialSource("source-source") {
+            {
+                requirements(Category.liquid,BuildVisibility.sandboxOnly,with());
+                health = 1400;
+                localizedName = "Source Source";
+                description = "Emitts Source";
+                liquid = PvLiquids.concentratedSource;
+                liquidAmount = 10;
             }
         };
         universalProcessor = new PvLogicBlock("universal-processor") {{
