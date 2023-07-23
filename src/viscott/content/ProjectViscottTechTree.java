@@ -13,10 +13,10 @@ public class ProjectViscottTechTree {
     {
         PvPlanets.vercilus.techTree = nodeRoot("Vercilus",PvPlanets.vercilus,() -> {
             node(PvFactions.Xeal.icon);
-            node(PvFactions.Psy.icon);
-            node(PvFactions.Nullis.icon);
             node(PvFactions.Mortikai.icon);
+            node(PvFactions.Nullis.icon);
             node(PvFactions.Azulex.icon);
+            node(PvFactions.Psy.icon);
             node(coreHover,()-> {
                 node(harvestGrinder,()->{
                     node(micromassConveyor,()-> {

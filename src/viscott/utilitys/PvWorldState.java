@@ -45,9 +45,15 @@ public class PvWorldState {
             @Override
             public void read(DataInput stream) throws IOException {
                 int c1 = stream.readInt();
+                int factionSize = PvFaction.all.size;
                 for(;c1 > 0;c1--)
                 {
                     int factionId = stream.readInt();
+                    if (factionId >= factionSize) {
+                        int c2 = stream.readInt();
+                        for(;c2>0;c2--) stream.readInt();
+                        continue;
+                    }
                     PvFaction curFac = PvFaction.all.get(factionId);
                     curFac.clearTeams();
                     int c2 = stream.readInt();

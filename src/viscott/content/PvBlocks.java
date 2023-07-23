@@ -1111,19 +1111,19 @@ public class PvBlocks {
                         new DrawDefault(),
                         new DrawMoveRegion("-l"){{
                             moveY = 4;
-                            progress = () -> Mathf.sin(Time.time/60);
+                            progress = (b) -> Mathf.sin(Time.time/60);
                         }},
                         new DrawMoveRegion("-r"){{
                             moveY = -4;
-                            progress = () -> Mathf.sin(Time.time/60);
+                            progress = (b) -> Mathf.sin(Time.time/60);
                         }},
                         new DrawMoveRegion("-u"){{
                             moveX = -4;
-                            progress = () -> Mathf.cos(Time.time/60);
+                            progress = (b) -> Mathf.cos(Time.time/60);
                         }},
                         new DrawMoveRegion("-d") {{
                             moveX = 4;
-                            progress = () -> Mathf.cos(Time.time/60);
+                            progress = (b) -> Mathf.cos(Time.time/60);
                         }}
                     );
                 }};

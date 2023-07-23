@@ -19,7 +19,9 @@ public class PvStatusEffects {
     public static StatusEffect
     timeWarped,doused, disabled, expent, resiliant, ungratefull, crescendo, treeAmp, tick ,tock,mend,shield, malfunction,
     
-    voidShield,voidDecay,sourceRepair,sourcePurify,sourceRepel, frag,aoe,homing,memoryExchange,dataLeak,endlessAmp, endlessDot, prevention, lastStand, voidConsume, consume,splintered,
+
+    sourceRepair,sourcePurify,sourceRepel, frag,aoe,homing,memoryExchange,dataLeak,endlessAmp, endlessDot, prevention, lastStand, consume,splintered,
+    /*Void*/voidShield,voidDecay,voidConsume,voidDecayExpand,
 
     //visual statuses
     preventionFx,lastStandFx,basicFx
@@ -167,6 +169,18 @@ public class PvStatusEffects {
             damage = 20f/60f;
             buildSpeedMultiplier = 0.1f;
             speedMultiplier = 0.94f;
+        }};
+        voidDecayExpand = new StatusEffectStack("void-decay-expand") {{
+            localizedName = "Expanding Void Decay";
+            color = Color.valueOf("000000");
+            description = "Expanding of the Void causes enemy's to die faster the longer they are in the void.";
+            effect = Fx.breakProp;
+            effectChance = 0.8f;
+            damage = 0.1f/60f;
+            buildSpeedMultiplier = 0.998f;
+            speedMultiplier = 0.999f;
+            charges = 60*5;
+            staticStat();
         }};
         voidConsume = new PvStatusEffect("void-consume") {{
             localizedName = "Void Consume";

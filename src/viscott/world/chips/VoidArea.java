@@ -10,13 +10,17 @@ import mindustry.gen.Building;
 import mindustry.gen.Groups;
 import mindustry.gen.Unit;
 import mindustry.graphics.Layer;
+import mindustry.type.StatusEffect;
 import viscott.content.PvStatusEffects;
 import viscott.world.bullets.VoidBulletType;
 
 import static mindustry.Vars.renderer;
 
 public interface VoidArea {
-    default void updateVoid(Building building,float radius)
+    default void updateVoid(Building building,float radius) {
+        updateVoid(building,radius,PvStatusEffects.voidDecay,PvStatusEffects.voidShield);
+    }
+    default void updateVoid(Building building, float radius, StatusEffect ef,StatusEffect af)
     {
         Groups.bullet.each(b -> {
             if (b.type instanceof VoidBulletType && Mathf.len(building.x-b.x,building.y-b.y) <= radius)
@@ -25,13 +29,14 @@ public interface VoidArea {
         Groups.unit.each(unit ->
                 {
                     if (unit.team == building.team) {
+                        if (af == null) return;
                         if (Mathf.len(building.x-unit.x,building.y-unit.y) <= radius) {
-                            unit.buildSpeedMultiplier*= 100;
-                            unit.apply(PvStatusEffects.voidShield,30);
+                            unit.apply(af,30);
                         }
                     } else {
+                        if (ef == null) return;
                         if (Mathf.len(building.x-unit.x,building.y-unit.y) <= radius) {
-                            unit.apply(PvStatusEffects.voidDecay,30);
+                            unit.apply(ef,30);
 
                         }
                     }
