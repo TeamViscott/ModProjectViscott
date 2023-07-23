@@ -1940,10 +1940,12 @@ public class PvUnits {
             hitSize = 10f;
             health = 6000;
             armor = 10f;
+            immunities.add(PvStatusEffects.endlessAmp);
             abilities.add(new StatusFieldAbility(PvStatusEffects.endlessAmp, 60f, 10f, 400f));
             abilities.add(new AntiVoidAbility(18 * 4));
         }};
         baron = new UnitType("baron") {{
+            immunities.add(PvStatusEffects.endlessAmp);
             localizedName = "[#202020]Baron[]";
             constructor = EntityMapping.map("eclipse");
             flying = true;
@@ -2161,8 +2163,6 @@ public class PvUnits {
                     rotate = true;
                     rotateSpeed = 0.8f;
                     layerOffset = 2f;
-                    immunities.add(PvStatusEffects.prevention);
-                    immunities.add(PvStatusEffects.lastStand);
                     bullet = new BasicBulletType(2.5f, 175f) {{
                         pierce = true;
                         pierceBuilding = true;

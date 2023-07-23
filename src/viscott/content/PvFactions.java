@@ -43,8 +43,8 @@ public class PvFactions {
                     "Over time. he accumulated followers who called themselves the Yggdrasil's who wanted to follow in the Giants footsteps.\n" +
                     "And so the Giant helped them build in a way as to not hurt mother nature.";
         }};
-        Unix = new PvFaction("unix",Color.purple) {{
+        /*Unix = new PvFaction("unix",Color.purple) {{
             description = "[pink][Extra Faction][]\nInterdimensional Travel goes brrrrr";
-        }};
+        }};*/
     }
 }
