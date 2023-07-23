@@ -8,9 +8,11 @@ import mindustry.Vars;
 
 public class PvShaders {
     public static ModShieldShader nullisAura;
+    public static ModShieldShader antiVoidAura;
     public static void init() {
         if (!Vars.headless) {
             nullisAura = new ModShieldShader("nullisAura", "screenspace");
+            antiVoidAura = new ModShieldShader("antiVoid","screenspace");
         }
     }
 

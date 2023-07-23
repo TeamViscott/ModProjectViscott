@@ -60,7 +60,7 @@ public interface AntiVoidArea {
     }
     default void drawVoid(Building building,float radius)
     {
-        Draw.z(Layer.bullet+35);
+        Draw.z(Layer.bullet+38);
         Draw.color(Color.black);
         if(renderer.animateShields)
             Fill.poly(building.x,building.y,60,radius);
@@ -75,7 +75,7 @@ public interface AntiVoidArea {
     }
     default void drawVoid(Unit unit,float radius)
     {
-        Draw.z(Layer.bullet+35);
+        Draw.z(Layer.bullet+38);
         Draw.color(Color.black);
         if(renderer.animateShields)
             Fill.poly(unit.x,unit.y,60,radius);

@@ -44,6 +44,17 @@ public class ViscottMod extends Mod {
                     if (Vars.renderer.effectBuffer.isBound())
                         Vars.renderer.effectBuffer.endBind();
                 });
+            if (Vars.renderer.animateShields && PvShaders.antiVoidAura != null)
+                Draw.drawRange(Layer.bullet+38, 1f, () -> {
+                    if (!Vars.renderer.effectBuffer.isBound())
+                        Vars.renderer.effectBuffer.begin(Color.clear);
+                }, () ->
+                {
+                    Vars.renderer.effectBuffer.end();
+                    Vars.renderer.effectBuffer.blit(PvShaders.antiVoidAura);
+                    if (Vars.renderer.effectBuffer.isBound())
+                        Vars.renderer.effectBuffer.endBind();
+                });
         });
     }
 

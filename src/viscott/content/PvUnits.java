@@ -669,10 +669,9 @@ public class PvUnits {
                         y = 4;
                         reload = 60/0.5f;
                         mirror = false;
-                        shootSound = Sounds.laserbeam;
                         bullet = new RailBulletType(){{
                             shootEffect = Fx.lancerLaserShoot;
-                            length = 48*8;
+                            length = 36*8;
                             pointEffectSpace = 60f;
                             pierceEffect = Fx.railHit;
                             pointEffect = PvEffects.railFrag;
