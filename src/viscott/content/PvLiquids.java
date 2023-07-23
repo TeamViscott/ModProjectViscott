@@ -53,13 +53,14 @@ public class PvLiquids {
             description = "[white]Heals everything.";
             color = Color.valueOf("ffebeb");
             colorFrom = Color.white;
-            colorTo = Color.valueOf("cdcdcd");
+            colorTo = Color.valueOf("bfbfbf");
             heatCapacity = -4;
             temperature = 100;
             effect = PvStatusEffects.sourceRepair;
             voidFlyingEffect = PvStatusEffects.sourceRepel;
             explosiveness = 2f;
-            viscosity = 5f;
+            viscosity = 1.1f;
+            voidDamage = -10;
             coolant = false;
             capPuddles = false;
         }};

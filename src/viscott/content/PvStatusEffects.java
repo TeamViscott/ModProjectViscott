@@ -196,7 +196,7 @@ public class PvStatusEffects {
             description = "[white]Great Flame Of Purification";
             color = Color.white;
             effect = PvFx.pureFlame;
-            damage = 2400f/60f;
+            damage = 240f/60f;
         }};
         sourceRepair = new StatusEffect("source-repair")
         {{
