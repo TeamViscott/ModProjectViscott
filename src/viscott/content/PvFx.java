@@ -10,7 +10,7 @@ import static arc.math.Angles.randLenVectors;
 public class PvFx {
     public static final Effect
 
-    pureFlame = new Effect(25f, e -> {
+    pureFlame = new Effect(40f, e -> {
         color(Color.valueOf("ffffff"), Color.valueOf("5d9bff"), e.fin());
 
         randLenVectors(e.id, 8, 8f + e.fin() * 9f, (x, y) -> {
