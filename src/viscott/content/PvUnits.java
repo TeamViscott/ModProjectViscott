@@ -3217,6 +3217,7 @@ public class PvUnits {
             health = 325;
             armor = 3;
             speed = 9.5f/7.5f;
+            hovering = true;
             localizedName = "[orange]Chime";
             constructor = EntityMapping.map("toxopid");
             legCount = 3;
@@ -3254,6 +3255,7 @@ public class PvUnits {
             health = 950;
             armor = 5;
             speed = 8.1f/7.5f;
+            hovering = true;
             localizedName = "[orange]Carillon";
             constructor = EntityMapping.map("toxopid");
             legCount = 4;
@@ -3312,6 +3314,7 @@ public class PvUnits {
             health = 18500;
             armor = 10;
             speed = 5.6f/7.5f;
+            hovering = true;
             localizedName = "[orange]Peal";
             constructor = EntityMapping.map("toxopid");
             legCount = 8;
@@ -3362,7 +3365,7 @@ public class PvUnits {
                     lifetime = PvUtil.GetRange(2.5f,19);
                     homingPower = 0.1f;
                     homingRange = 200;
-                    homingDelay = 40;
+                    homingDelay = 10;
                     trailColor = backColor = lightColor = Pal.neoplasm1;
                     frontColor = Pal.neoplasm2;
                     trailLength = 24;
@@ -3448,6 +3451,7 @@ public class PvUnits {
             health = 250;
             armor = 20;
             speed = 0.6f;
+            hovering = true;
             localizedName = "[#766e4d]Root";
             constructor = EntityMapping.map("toxopid");
             legCount = 6;
@@ -3496,6 +3500,7 @@ public class PvUnits {
         stick = new PvUnitType("stick") {{
             health = 750;
             armor = 40;
+            hovering = true;
             legCount = 6;
             legMoveSpace = 3f;
             legPairOffset = 2.25f;
@@ -3530,6 +3535,7 @@ public class PvUnits {
         branch = new PvUnitType("branch") {{
             health = 20250;
             armor = 80;
+            hovering = true;
             legCount = 8;
             legContinuousMove = true;
             legMaxLength = 52.8f; //8.8
@@ -3564,6 +3570,7 @@ public class PvUnits {
         tree = new PvUnitType("tree") {{
             health = 60750;
             armor = 100;
+            hovering = true;
             legContinuousMove = true;
             legMaxLength = 61.6f; //8.8
             legExtension = -17.5f;  //2.5
@@ -3582,6 +3589,7 @@ public class PvUnits {
         cambrium = new PvUnitType("cambrium") {{
             health = 182250;
             armor = 120;
+            hovering = true;
             legCount = 10;
             legContinuousMove = true;
             legMaxLength = 79.2f; //8.8
@@ -3600,6 +3608,7 @@ public class PvUnits {
         yggdrasil = new PvUnitType("yggdrasil") {{
             health = 546750;
             armor = 140;
+            hovering = true;
             legCount = 10;
             legContinuousMove = true;
             legMaxLength = 88;
