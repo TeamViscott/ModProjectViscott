@@ -208,14 +208,13 @@ public class PvStatusEffects {
                 opposite(voidDecay);
             });
         }};
-        sourceRepel = new PvStatusEffect("source-repel") {{
+        sourceRepel = new StatusEffect("source-repel") {{
             localizedName = "[white]Source Repel";
             color = Color.white;
             description = "[white]Hovering so close to the Source was not a good idea. It launched you far away";
             damage = -5f/60f;
-            speedMultiplier = 2f;
+            speedMultiplier = 6f;
             dragMultiplier = 0.01f;
-            ground = true;
             init(() -> {
                 opposite(voidConsume);
             });
