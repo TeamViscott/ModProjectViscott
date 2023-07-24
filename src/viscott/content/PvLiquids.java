@@ -51,9 +51,9 @@ public class PvLiquids {
         concentratedSource = new VoidLiquid("liquid-concentrated-source"){{
             localizedName = "Concentrated Source";
             description = "[white]Heals everything.";
-            color = Color.valueOf("bfbfbf");
+            color = Color.white;
             colorFrom = Color.white;
-            colorTo = Color.valueOf("cdcdcd");
+            colorTo = Color.white;
             heatCapacity = -4;
             temperature = 100;
             effect = PvStatusEffects.sourceRepair;
