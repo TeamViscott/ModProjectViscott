@@ -60,7 +60,7 @@ public class PvLiquids {
             effect = PvStatusEffects.sourceRepair;
             voidFlyingEffect = PvStatusEffects.sourceRepel;
             explosiveness = 2f;
-            viscosity = 1.05f;
+            viscosity = 0.995f;
             voidDamage = -10;
             coolant = false;
             capPuddles = false;

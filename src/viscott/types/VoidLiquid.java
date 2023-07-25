@@ -47,7 +47,7 @@ public class VoidLiquid extends CellLiquid {
             int[] i = checks[rot];
             Tile t = puddle.tile.nearby(i[0], i[1]);
             Puddle np = Groups.puddle.find(p->p.tile == t);
-            if (np != null) {
+            if (np != null && np.liquid == this) {
                 puddle.amount = (np.amount + puddle.amount) / 2;
                 np.amount = puddle.amount;
             }
