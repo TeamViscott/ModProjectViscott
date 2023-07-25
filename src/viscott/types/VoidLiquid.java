@@ -37,6 +37,7 @@ public class VoidLiquid extends CellLiquid {
                     u.apply(voidFlyingEffect, 30);
                     u.apply(effect, 30);
                 }
+                puddle.amount += voidDamage/5;
             });
         Building build = puddle.tile.build;
         if (build != null && build.liquids != null && (build.liquids.currentAmount() == 0 || build.liquids.current() == puddle.liquid)) {
