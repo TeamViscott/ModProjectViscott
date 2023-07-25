@@ -27,7 +27,7 @@ public class VoidLiquid extends CellLiquid {
     public VoidLiquid(String name) {
         super(name);
         canStayOn.addAll(Liquids.water);
-        spreadTarget = PvLiquids.concentratedSource;
+        spreadTarget = null;
     }
     @Override
     public void update(Puddle puddle){
