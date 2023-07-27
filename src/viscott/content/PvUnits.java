@@ -21,10 +21,8 @@ import mindustry.entities.bullet.*;
 import mindustry.entities.effect.ExplosionEffect;
 import mindustry.entities.effect.MultiEffect;
 import mindustry.entities.effect.WaveEffect;
-import mindustry.entities.part.HaloPart;
-import mindustry.entities.part.HoverPart;
-import mindustry.entities.part.RegionPart;
-import mindustry.entities.part.ShapePart;
+import mindustry.entities.effect.WrapEffect;
+import mindustry.entities.part.*;
 import mindustry.entities.pattern.ShootHelix;
 import mindustry.entities.pattern.ShootSpread;
 import mindustry.game.Team;
@@ -39,6 +37,7 @@ import mindustry.type.ammo.ItemAmmoType;
 import arc.math.geom.*;
 import arc.math.*;
 
+import mindustry.type.unit.MissileUnitType;
 import viscott.types.abilities.EnemyStatusFieldAbility;
 import viscott.content.shootpatterns.ShootSpreadBounce;
 import viscott.gen.FrogUnit;
@@ -669,10 +668,9 @@ public class PvUnits {
                         y = 4;
                         reload = 60/0.5f;
                         mirror = false;
-                        shootSound = Sounds.laserbeam;
                         bullet = new RailBulletType(){{
                             shootEffect = Fx.lancerLaserShoot;
-                            length = 48*8;
+                            length = 36*8;
                             pointEffectSpace = 60f;
                             pierceEffect = Fx.railHit;
                             pointEffect = PvEffects.railFrag;
@@ -1942,7 +1940,7 @@ public class PvUnits {
             armor = 10f;
             immunities.add(PvStatusEffects.endlessAmp);
             abilities.add(new StatusFieldAbility(PvStatusEffects.endlessAmp, 60f, 10f, 400f));
-            abilities.add(new AntiVoidAbility(18 * 4));
+            abilities.add(new SourceAbility(24 * 4));
         }};
         baron = new UnitType("baron") {{
             immunities.add(PvStatusEffects.endlessAmp);
@@ -1956,24 +1954,21 @@ public class PvUnits {
             armor = 14f;
             zepz.abilities.add(new SpawnDeathAbility(this,1,0));
             abilities.add(new EnemyStatusFieldAbility(PvStatusEffects.endlessDot, 60, 10, 400f));
-            abilities.add(new VoidAbility(18 * 4));
+            abilities.add(new VoidAbility(24 * 4));
             abilities.add(new SpawnDeathAbility(zepz,1,0));
             weapons.add(
                     new Weapon(name + "shotty"){{
                         y = 0f;
                         x = 0f;
                         mirror = false;
-                        reload = 30;
-                        rotateSpeed = 2f;
-                        ejectEffect = Fx.casing4;
+                        reload = 300;
                         shootSound = Sounds.shootAltLong;
-                        rotate = true;
-                        recoil = 3f;
 
-                        shoot = new ShootSpread(10, 0.5f);
+                        shoot = new ShootSpread(10, 1f);
 
                         bullet = new BulletType()
                         {{
+
                                 despawnSound = Sounds.shootAltLong;
                                 hittable = false;
                                 reflectable = false;
@@ -1984,7 +1979,7 @@ public class PvUnits {
                                 despawnEffect = Fx.none;
                                 damage = 0;
                                 speed = 14;
-                                lifetime = 5;
+                                lifetime = 15;
                                 fragRandomSpread = 0;
                                 fragBullets = 1;
                                 fragBullet = new ShrapnelBulletType()
@@ -2015,7 +2010,7 @@ public class PvUnits {
                                         despawnEffect = Fx.none;
                                         damage = 0;
                                         speed = 14;
-                                        lifetime = 5;
+                                        lifetime = 2;
                                         fragRandomSpread = 0;
                                         fragBullets = 2;
                                         fragBullet = new ShrapnelBulletType()
@@ -2046,7 +2041,7 @@ public class PvUnits {
                                                 despawnEffect = Fx.none;
                                                 damage = 0;
                                                 speed = 14;
-                                                lifetime = 5;
+                                                lifetime = 2;
                                                 fragRandomSpread = 0;
                                                 fragBullets = 4;
                                                 fragBullet = new ShrapnelBulletType(){{
@@ -2076,7 +2071,7 @@ public class PvUnits {
                                                             despawnEffect = Fx.none;
                                                             damage = 0;
                                                             speed = 14;
-                                                            lifetime = 5;
+                                                            lifetime = 2;
                                                             fragRandomSpread = 0;
                                                             fragBullets = 6;
                                                             fragBullet = new ShrapnelBulletType()
@@ -3222,6 +3217,7 @@ public class PvUnits {
             health = 325;
             armor = 3;
             speed = 9.5f/7.5f;
+            hovering = true;
             localizedName = "[orange]Chime";
             constructor = EntityMapping.map("toxopid");
             legCount = 3;
@@ -3259,6 +3255,7 @@ public class PvUnits {
             health = 950;
             armor = 5;
             speed = 8.1f/7.5f;
+            hovering = true;
             localizedName = "[orange]Carillon";
             constructor = EntityMapping.map("toxopid");
             legCount = 4;
@@ -3313,34 +3310,34 @@ public class PvUnits {
                 }};
             }});
         }};
-        /* TODO This is WIP.
-        knell = new PvUnitType("knell") {{
-            health = 2750;
-            armor = 7;
-            speed = 8.1f/7.5f;
-            localizedName = "[orange]Knell";
+        peal = new PvUnitType("peal") {{
+            health = 18500;
+            armor = 10;
+            speed = 5.6f/7.5f;
+            hovering = true;
+            localizedName = "[orange]Peal";
             constructor = EntityMapping.map("toxopid");
-            legCount = 6;
-            legMoveSpace = 2f;
-            legPairOffset = 2f;
-            legLength = 12f;
+            legCount = 8;
+            legMoveSpace = 6f;
+            legPairOffset = 4f;
+            legLength = 30f;
             legExtension = -4f;
             legBaseOffset = 4f;
-            stepShake = 0f;
-            legLengthScl = 0.74f;
-            rippleScale = 2f;
-            legSpeed = 0.2f;
+            stepShake = 0.5f;
+            legLengthScl = 0.94f;
+            rippleScale = 4f;
+            legSpeed = 0.1f;
 
-            for(int j = 0; j < 2; j++){
+            for(int j = 0; j < 4; j++){
                 int i = j;
                 parts.add(new RegionPart("-spine"){{
                     layerOffset = -0.01f;
                     heatLayerOffset = 0.005f;
-                    y = -1;
-                    x = 2f;
-                    moveX = 6f + i * 1.9f;
-                    moveY = 8f + -4f * i;
-                    moveRot = 40f - i * 25f;
+                    y = 2;
+                    x = 6f;
+                    moveX = 5.5f + i * 1.9f;
+                    moveY = 9f + -4f * i;
+                    moveRot = 30f - i * 25f;
                     mirror = true;
                     progress = PartProgress.warmup.delay(i * 0.2f);
                     heatProgress = p -> Mathf.absin(Time.time + i * 14f, 7f, 1f);
@@ -3348,35 +3345,113 @@ public class PvUnits {
                     heatColor = Pal.neoplasm1;
                 }});
             }
-            weapons.add(new Weapon() {{
-                y = 2f;
-                mirror = false;
-                reload = 54f;
+            weapons.add(
+            new Weapon(name+"-weapon") {{
+                x = 9f;
+                y = 6f;
+                mirror = true;
+                reload = 82f;
                 alternate = false;
                 inaccuracy = 0f;
                 recoil = 0;
-                baseRotation = -60f;
+                baseRotation = -45f;
                 shootCone = 140;
+                shootSound = Sounds.mineDeploy;
+
+                shoot = new ShootSpread(5, 4f);
                 bullet = new BasicBulletType(2.5f, 18f) {{
                     splashDamage = 45;
                     splashDamageRadius = 2.5f;
                     lifetime = PvUtil.GetRange(2.5f,19);
                     homingPower = 0.1f;
                     homingRange = 200;
+                    homingDelay = 10;
                     trailColor = backColor = lightColor = Pal.neoplasm1;
                     frontColor = Pal.neoplasm2;
                     trailLength = 24;
                     trailChance = 0.1f;
                     trailWidth = 1.4f;
                 }};
+            }},
+            new Weapon() {{
+                x = 0f;
+                y = 0f;
+                minWarmup = 0.9f;
+                mirror = false;
+                reload = 300f;
+                inaccuracy = 0f;
+                recoil = 0;
+                shootSound = Sounds.dullExplosion;
+                bullet = new BulletType(){{
+                    shootEffect = new MultiEffect(Fx.shootBigColor, new Effect(9, e -> {
+                        color(Color.white, Pal.neoplasm1, e.fin());
+                        stroke(0.7f + e.fout());
+                        Lines.square(e.x, e.y, e.fin() * 5f, e.rotation + 45f);
+
+                        Drawf.light(e.x, e.y, 23f, Pal.neoplasm1, e.fout() * 0.7f);
+                    }), new WaveEffect(){{
+                        colorFrom = colorTo = Pal.neoplasm1;
+                        sizeTo = 35f;
+                        lifetime = 22f;
+                        strokeFrom = 5f;
+                    }});
+
+                    smokeEffect = Fx.shootBigSmoke2;
+                    shake = 2f;
+                    speed = 0f;
+                    keepVelocity = false;
+                    inaccuracy = 0f;
+
+                    spawnUnit = new MissileUnitType("peal-missile"){{
+                        trailColor = engineColor = Pal.neoplasm1;
+                        engineSize = 1.75f;
+                        engineLayer = Layer.effect;
+                        speed = 3.7f;
+                        maxRange = 46f;
+                        lifetime = PvUtil.GetRange(3.7f,48);
+                        outlineColor = Pal.darkOutline;
+                        health = 55;
+                        lowAltitude = true;
+
+                        weapons.add(new Weapon(){{
+                            shootCone = 360f;
+                            mirror = false;
+                            reload = 1f;
+                            shootOnDeath = true;
+                            bullet = new ExplosionBulletType(240f, 6.9f){{
+                                fragBullets = 6;
+                                fragSpread = 45;
+                                fragBullet = new FlakBulletType(3,0){{
+                                    splashDamage = 15;
+                                    splashDamageRadius = 1.6f;
+                                    width = height = 5;
+                                    homingPower = 6f;
+                                    homingRange = 200;
+                                    trailColor = backColor = lightColor = Pal.neoplasm1;
+                                    frontColor = Pal.neoplasm2;
+                                    trailLength = 12;
+                                    trailChance = 0.1f;
+                                    trailWidth = 0.7f;
+                                }};
+                                shootEffect = new MultiEffect(Fx.massiveExplosion, new WrapEffect(Fx.dynamicSpikes, Pal.neoplasm1, 24f), new WaveEffect(){{
+                                    colorFrom = colorTo = Pal.neoplasm1;
+                                    sizeTo = 40f;
+                                    lifetime = 12f;
+                                    strokeFrom = 4f;
+                                }});
+                            }};
+                        }});
+                    }};
+                }};
             }});
-        }}; */
+        }};
     }
     public static void loadYggdrasilPath() {
         root = new PvUnitType("root") {{
             health = 250;
             armor = 20;
             speed = 0.6f;
+            hovering = true;
             localizedName = "[#766e4d]Root";
             constructor = EntityMapping.map("toxopid");
             legCount = 6;
@@ -3425,6 +3500,7 @@ public class PvUnits {
         stick = new PvUnitType("stick") {{
             health = 750;
             armor = 40;
+            hovering = true;
             legCount = 6;
             legMoveSpace = 3f;
             legPairOffset = 2.25f;
@@ -3459,6 +3535,7 @@ public class PvUnits {
         branch = new PvUnitType("branch") {{
             health = 20250;
             armor = 80;
+            hovering = true;
             legCount = 8;
             legContinuousMove = true;
             legMaxLength = 52.8f; //8.8
@@ -3493,6 +3570,7 @@ public class PvUnits {
         tree = new PvUnitType("tree") {{
             health = 60750;
             armor = 100;
+            hovering = true;
             legContinuousMove = true;
             legMaxLength = 61.6f; //8.8
             legExtension = -17.5f;  //2.5
@@ -3511,6 +3589,7 @@ public class PvUnits {
         cambrium = new PvUnitType("cambrium") {{
             health = 182250;
             armor = 120;
+            hovering = true;
             legCount = 10;
             legContinuousMove = true;
             legMaxLength = 79.2f; //8.8
@@ -3529,6 +3608,7 @@ public class PvUnits {
         yggdrasil = new PvUnitType("yggdrasil") {{
             health = 546750;
             armor = 140;
+            hovering = true;
             legCount = 10;
             legContinuousMove = true;
             legMaxLength = 88;

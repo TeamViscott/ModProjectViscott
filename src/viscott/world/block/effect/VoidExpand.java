@@ -12,6 +12,7 @@ import mindustry.type.ItemStack;
 import mindustry.world.consumers.Consume;
 import mindustry.world.consumers.ConsumeItems;
 import mindustry.world.modules.ItemModule;
+import viscott.content.PvStatusEffects;
 import viscott.world.chips.VoidArea;
 
 public class VoidExpand extends VoidBlock{
@@ -49,6 +50,8 @@ public class VoidExpand extends VoidBlock{
             }
             buildVoidRad = Mathf.lerp(buildVoidRad,voidRadius+items.total()*voidGrowAmount,0.02f);
             updateVoid(this,8*buildVoidRad);
+            if (items.total() > itemCapacity/2)
+                updateVoid(this,8*buildVoidRad, PvStatusEffects.voidDecayExpand,null);
         }
 
         @Override

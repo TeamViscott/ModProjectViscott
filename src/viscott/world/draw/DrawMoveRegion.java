@@ -8,12 +8,13 @@ import arc.math.Mathf;
 import mindustry.gen.Building;
 import mindustry.graphics.Drawf;
 import mindustry.world.draw.DrawRegion;
+import viscott.world.chips.Grab;
 
 import java.util.function.Consumer;
 
 public class DrawMoveRegion extends DrawRegion {
     public float moveX = 0, moveY = 0, moveRotate = 0;
-    public Prov<Float> progress;
+    public Grab<Float,Building> progress;
 
     public DrawMoveRegion(String suffix) {
         super(suffix);
@@ -23,7 +24,7 @@ public class DrawMoveRegion extends DrawRegion {
     public void draw(Building build){
         float prog = 0;
         if (progress != null)
-            prog = Mathf.clamp(progress.get(),-1,1);
+            prog = Mathf.clamp(progress.get(build),-1,1);
         float z = Draw.z();
         if(layer > 0) Draw.z(layer);
         if(spinSprite){

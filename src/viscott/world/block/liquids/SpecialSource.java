@@ -2,24 +2,25 @@ package viscott.world.block.liquids;
 
 import mindustry.entities.Puddles;
 import mindustry.gen.Building;
-import mindustry.gen.Puddle;
-import mindustry.world.blocks.liquid.Conduit;
+import mindustry.type.Liquid;
 import viscott.content.PvLiquids;
 import viscott.types.VoidLiquid;
 import viscott.world.block.PvBlock;
 
-public class VoidSource extends PvBlock {
-    public float voidAmount = 1;
-    public VoidSource(String name) {
+public class SpecialSource extends PvBlock {
+    public float liquidAmount = 1;
+
+    public Liquid liquid = PvLiquids.concentratedVoid;
+    public SpecialSource(String name) {
         super(name);
         update = true;
     }
 
-    public class VoidSourceBuild extends Building {
+    public class SpecialSourceBuild extends Building {
 
         @Override
         public void update() {
-            Puddles.deposit(tile(),PvLiquids.concentratedVoid,voidAmount);
+            Puddles.deposit(tile(),liquid,liquidAmount);
         }
 
         @Override

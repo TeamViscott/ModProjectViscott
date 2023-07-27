@@ -29,7 +29,7 @@ public class PvItems {
         }};
         erbium = new Item("erbium"){{
             localizedName = "Erbium";
-            color = Color.valueOf("aaadaf");
+            color = Color.valueOf("F8B7D5");
             hardness = 2;
         }};
         platinum = new Item("platinum"){{

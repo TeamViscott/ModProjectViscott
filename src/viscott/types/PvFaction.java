@@ -59,7 +59,6 @@ public class PvFaction {
     {
         if (linkedTeams.contains(team)) {
             linkedTeams.remove(team);
-            icon.updateName();
             return true;
         }
         return false; // Didn't contain the Team, so it couldn't remove it.
@@ -68,7 +67,6 @@ public class PvFaction {
     {
         if (!linkedTeams.contains(team)){
             linkedTeams.add(team);
-            icon.updateName();
             return true;
         }
         return false; //already contains team. no duplicates
@@ -76,6 +74,5 @@ public class PvFaction {
     public void clearTeams()
     {
         linkedTeams.clear();
-        icon.updateName();
     }
 }

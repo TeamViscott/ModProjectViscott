@@ -27,7 +27,7 @@ public class VoidLiquid extends CellLiquid {
     public VoidLiquid(String name) {
         super(name);
         canStayOn.addAll(Liquids.water);
-        spreadTarget = Liquids.water;
+        spreadTarget = null;
     }
     @Override
     public void update(Puddle puddle){
@@ -37,6 +37,7 @@ public class VoidLiquid extends CellLiquid {
                     u.apply(voidFlyingEffect, 30);
                     u.apply(effect, 30);
                 }
+                puddle.amount += voidDamage/5;
             });
         Building build = puddle.tile.build;
         if (build != null && build.liquids != null && (build.liquids.currentAmount() == 0 || build.liquids.current() == puddle.liquid)) {
@@ -47,7 +48,7 @@ public class VoidLiquid extends CellLiquid {
             int[] i = checks[rot];
             Tile t = puddle.tile.nearby(i[0], i[1]);
             Puddle np = Groups.puddle.find(p->p.tile == t);
-            if (np != null) {
+            if (np != null && np.liquid == this) {
                 puddle.amount = (np.amount + puddle.amount) / 2;
                 np.amount = puddle.amount;
             }
@@ -65,7 +66,10 @@ public class VoidLiquid extends CellLiquid {
                 }
             }
             if (t.build == null|| !t.build.isValid() ) continue;
-            t.build.damage(voidDamage/60);
+            if (voidDamage < 0)
+                t.build.heal(-voidDamage/60);
+            else
+                t.build.damage(voidDamage/60);
             puddle.amount += voidDamage/60;
             rot++;
         }

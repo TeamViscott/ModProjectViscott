@@ -11,12 +11,24 @@ import static viscott.content.PvBlocks.*;
 public class ProjectViscottTechTree {
     public static void load()
     {
-        PvPlanets.vercilus.techTree = nodeRoot("Vercilus",coreHover,() -> {
+        PvPlanets.vercilus.techTree = nodeRoot("Vercilus",PvPlanets.vercilus,() -> {
             node(PvFactions.Xeal.icon);
-            node(PvFactions.Psy.icon);
-            node(PvFactions.Nullis.icon);
             node(PvFactions.Mortikai.icon);
+            node(PvFactions.Nullis.icon);
             node(PvFactions.Azulex.icon);
+            node(PvFactions.Psy.icon);
+            node(coreHover,()-> {
+                node(harvestGrinder,()->{
+                    node(micromassConveyor,()-> {
+                        node(massJunction);
+                        node(massRouter);
+                    });
+                    node(harvestDrill);
+                });
+                node(coreElevate,()->{
+                    node(coreUpraise);
+                });
+            });
         });
         PvFactions.Psy.techTree = nodeRoot ("Psy", PvFactions.Psy.icon,() -> {
             node(PvFactions.Yggdrasil.icon);

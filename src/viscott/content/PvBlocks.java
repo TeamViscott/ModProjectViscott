@@ -23,6 +23,7 @@ import mindustry.world.blocks.payloads.*;
 import mindustry.world.blocks.power.*;
 import mindustry.world.blocks.production.*;
 import mindustry.world.blocks.storage.*;
+import mindustry.world.blocks.units.Reconstructor;
 import mindustry.world.draw.*;
 import mindustry.world.meta.BuildVisibility;
 import viscott.types.*;
@@ -80,7 +81,10 @@ public class PvBlocks {
                     smallConcentratedTank,largeConcentratedTank,
                             micropulsePump,effluxPump,
                     /*Pressure related*/pressureSource,
-                    /*Unit Creation*/templateMolder,nueroSpawnPad,eliteSpawnPad,branchMolder,
+                    /*Unit Creation*/templateMolder,
+                            nueroSpawnPad,eliteSpawnPad,
+                            nueroRemolder,
+                            /*Yggdrasil*/branchMolder,
 
                     /*Nullis*/
                         packer,
@@ -572,6 +576,7 @@ public class PvBlocks {
                     consumeLiquid(Liquids.water,10f/60f);
                     consumeLiquid(Liquids.nitrogen,10f/60f);
                     outputLiquid(PvLiquids.liquidNitrogen,10f/60f);
+                    craftEffect = Fx.bubble;
                 }};
                 keroseneMixer = new GenericCrafter("kerosene-mixer")
                 {
@@ -580,6 +585,7 @@ public class PvBlocks {
                         localizedName = "Kerosene mixer";
                         health = 185;
                         size = 2;
+                        hasLiquids = true;
                         consumeItems(with(PvItems.zirconium, 2));
                         consumeLiquid(Liquids.oil, 20 / (60 * 2f));
                         consumePower(20f / 60f);
@@ -587,20 +593,39 @@ public class PvBlocks {
                         liquidCapacity = 10;
                         craftTime = 2f * 60f;
                         outputLiquid = new LiquidStack(PvLiquids.kerosene, 15 / (60 * 2f));
+                        craftEffect = Fx.breakProp;
+                        drawer = new DrawMulti(
+                                new DrawLiquidRegion(PvLiquids.kerosene),
+                                new DrawRegion("-rot") {{
+                                    rotateSpeed = 3;
+                                    spinSprite = true;
+                                }},
+                                new DrawDefault()
+                        );
                     }};
                     carbonWeaver = new GenericCrafter("carbon-weaver")
                     {{
-                        requirements(Category.crafting, with(PvItems.zirconium,50,PvItems.platinum,30,Items.silicon,50));
+                        requirements(Category.crafting, with(PvItems.zirconium,150,PvItems.platinum,80,Items.silicon,50));
                         localizedName = "Carbon Weaver";
                         health = 1300;
                         size = 3;
+                        hasLiquids = true;
                         consumeItems(with(PvItems.zirconium,7, Items.silicon, 5, PvItems.platinum, 5));
                         consumeLiquid(PvLiquids.kerosene, 25/(60*6.7f));
                         consumePower(280f/60f);
-                        itemCapacity = 10;
+                        itemCapacity = 14;
                         liquidCapacity = 10;
                         craftTime = 6.7f*60f;
                         outputItem = new ItemStack(PvItems.carbonFiber, 3);
+                        craftEffect = Fx.fallSmoke;
+                        drawer = new DrawMulti(
+                                new DrawRegion("-bottom"),
+                                new DrawLiquidRegion(PvLiquids.kerosene),
+                                new DrawDefault(),
+                                new DrawArcSmelt(){{
+                                    flameRad = 4;
+                                }}
+                        );
                 }};
                     fractionIonizer = new HeatCrafter("fraction-ionizer")
                     {{
@@ -612,10 +637,16 @@ public class PvBlocks {
                         liquidCapacity = 50;
                         heatRequirement = 8;
                         maxEfficiency = 4;
+                        hasLiquids = true;
                         consumeLiquid(Liquids.nitrogen,25f/60f);
                         outputLiquid = new LiquidStack(PvLiquids.xenon,15f/60f);
-                        craftTime = 1.3f*60f;
-
+                        craftTime = 8f*60f;
+                        craftEffect = Fx.explosion;
+                        drawer = new DrawMulti(
+                                new DrawRegion("-bottom"),
+                                new DrawLiquidRegion(PvLiquids.xenon),
+                                new DrawDefault()
+                        );
                     }};
                 quadRushForge = new HeatCrafter("quadrush-forge")
                 {{
@@ -649,6 +680,26 @@ public class PvBlocks {
                     consumeLiquid(PvLiquids.xenon,15f/60f);
                     consumeItems(with(PvItems.lithium,10,PvItems.erbium,5));
                     outputItem = new ItemStack(PvItems.tideAlloy,2);
+                }};
+                uberbulkForge = new PvGenericCrafter("uberbulk-forge") {{
+                    requirements(Category.crafting,with(PvItems.zirconium,40000));
+                    localizedName = "Uberbulk Forge";
+                    faction.add(PvFactions.Mortikai);
+                    health = 1420;
+                    size = 4;
+                    loopSound = Sounds.lasercharge2;
+                    consumePower(1200f/60f);
+                    itemCapacity = 200;
+                    liquidCapacity = 50;
+                    craftTime = 60*9.8f;
+                    craftEffect = new MultiEffect(Fx.smokeCloud,Fx.explosion);
+                    updateEffect = Fx.smoke;
+                    consumeItems(with(PvItems.zirconium,100,PvItems.lithium,40,PvItems.nobelium,20,PvItems.carbonFiber,10));
+                    outputItem = new ItemStack(PvItems.bulkAlloy,5);
+                    drawer = new DrawMulti(
+                        new DrawDefault(),
+                        new DrawFlame(Pal.redSpark)
+                    );
                 }};
                 voidPressurizer = new PvGenericCrafter("void-pressurizer") {{
                     requirements(Category.crafting,with(PvItems.rushAlloy,75,PvItems.carbonFiber,190,PvItems.zirconium,2500));
@@ -833,11 +884,20 @@ public class PvBlocks {
                     plans = new Seq<>().with(
 
                             new PvUnitPlan(PvUnits.root,20*60f,with(PvItems.hardenedOak,20,Items.silicon,10))
-                            /*new PvUnitPlan(PvUnits.stick,25*60f,with()),
-                            new PvUnitPlan(PvUnits.branch,35*60f,with()),
-                            new PvUnitPlan(PvUnits.log,35*60f,with()),
-                            new PvUnitPlan(PvUnits.tree,35*60f,with())*/
                     );
+                }};
+                nueroRemolder = new Reconstructor("nuero-remolder") {{
+                    requirements(Category.units,with(PvItems.zirconium,500,PvItems.platinum,100,Items.silicon,40)); //Todo
+                    addUpgrade(PvUnits.particle,PvUnits.snippet);
+                    addUpgrade(PvUnits.milli,PvUnits.centi);
+                    addUpgrade(PvUnits.pocket,PvUnits.container);
+                    addUpgrade(PvUnits.rivulet,PvUnits.bourn);
+                    health = 1200;
+                    size = 5;
+                    itemCapacity = 200;
+                    constructTime = 60*20;
+                    consumePower(200f/60f);
+                    consumeItems(with(PvItems.barium,100,Items.silicon,80,PvItems.lithium,40));
                 }};
                 densePayloadConveyor = new PayloadConveyor("dense-payload-conveyor")
                 {{
@@ -903,7 +963,6 @@ public class PvBlocks {
                 {{
                     requirements(Category.effect, with(PvItems.zirconium,5000,PvItems.lithium,4000,Items.silicon,900,PvItems.nobelium,500));
                     localizedName = "Core Elevate";
-                    alwaysUnlocked = true;
                     unitType = PvUnits.infrared;
                     health = 3700;
                     size = 4;
@@ -916,7 +975,6 @@ public class PvBlocks {
                 {{
                     requirements(Category.effect, with(PvItems.zirconium,10000,PvItems.lithium,7000,Items.silicon,1500,PvItems.carbonFiber,1200,PvItems.nobelium,400));
                     localizedName = "Core Upraise";
-                    alwaysUnlocked = true;
                     unitType = PvUnits.spectrum;
                     health = 7300;
                     size = 5;
@@ -941,7 +999,6 @@ public class PvBlocks {
                 {{
                     requirements(Category.effect, with(PvItems.zirconium,10000,PvItems.lithium,8000,Items.silicon,3000,PvItems.nobelium,1500,PvItems.platinum,500));
                     localizedName = "Core Charge";
-                    alwaysUnlocked = true;
                     unitType = PvUnits.volt;
                     faction.add(PvFactions.Xeal);
                     health = 5500;
@@ -953,7 +1010,6 @@ public class PvBlocks {
                 {{
                     requirements(Category.effect, with(PvItems.zirconium,20000,PvItems.lithium,15000,Items.silicon,8000,PvItems.nobelium,5000,PvItems.platinum,3000,PvItems.carbonFiber,100));
                     localizedName = "Core Surge";
-                    alwaysUnlocked = true;
                     unitType = PvUnits.watt;
                     faction.add(PvFactions.Xeal);
                     health = 7000;
@@ -982,6 +1038,7 @@ public class PvBlocks {
                     localizedName = "Core Null";
                     unitType = PvUnits.vessel;
                     defaultMiner = PvUnits.shadow;
+                    alwaysUnlocked = true;
                     size = 3;
                     health = 2100;
                     unitCapModifier = 60;
@@ -1020,7 +1077,7 @@ public class PvBlocks {
                     localizedName = "Void Node";
                     size = 1;
                     health = 100;
-                    voidRadius = 6;
+                    voidRadius = 10;
 
                 }};
                 voidBeacon = new VoidBlock("void-bacon")
@@ -1054,19 +1111,19 @@ public class PvBlocks {
                         new DrawDefault(),
                         new DrawMoveRegion("-l"){{
                             moveY = 4;
-                            progress = () -> Mathf.sin(Time.time/60);
+                            progress = (b) -> Mathf.sin(Time.time/60);
                         }},
                         new DrawMoveRegion("-r"){{
                             moveY = -4;
-                            progress = () -> Mathf.sin(Time.time/60);
+                            progress = (b) -> Mathf.sin(Time.time/60);
                         }},
                         new DrawMoveRegion("-u"){{
                             moveX = -4;
-                            progress = () -> Mathf.cos(Time.time/60);
+                            progress = (b) -> Mathf.cos(Time.time/60);
                         }},
                         new DrawMoveRegion("-d") {{
                             moveX = 4;
-                            progress = () -> Mathf.cos(Time.time/60);
+                            progress = (b) -> Mathf.cos(Time.time/60);
                         }}
                     );
                 }};

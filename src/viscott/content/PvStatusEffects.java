@@ -19,7 +19,9 @@ public class PvStatusEffects {
     public static StatusEffect
     timeWarped,doused, disabled, expent, resiliant, ungratefull, crescendo, treeAmp, tick ,tock,mend,shield, malfunction,
     
-    voidShield,voidDecay,antiVoidRepair, frag,aoe,homing,memoryExchange,dataLeak,endlessAmp, endlessDot, prevention, lastStand, voidConsume, consume,splintered,
+
+    sourceRepair,sourcePurify,sourceRepel, frag,aoe,homing,memoryExchange,dataLeak,endlessAmp, endlessDot, prevention, lastStand, consume,splintered,
+    /*Void*/voidShield,voidDecay,voidConsume,voidDecayExpand,
 
     //visual statuses
     preventionFx,lastStandFx,basicFx
@@ -168,6 +170,18 @@ public class PvStatusEffects {
             buildSpeedMultiplier = 0.1f;
             speedMultiplier = 0.94f;
         }};
+        voidDecayExpand = new StatusEffectStack("void-decay-expand") {{
+            localizedName = "Expanding Void Decay";
+            color = Color.valueOf("000000");
+            description = "Expanding of the Void causes enemy's to die faster the longer they are in the void.";
+            effect = Fx.breakProp;
+            effectChance = 0.8f;
+            damage = 0.1f/60f;
+            buildSpeedMultiplier = 0.998f;
+            speedMultiplier = 0.999f;
+            charges = 60*5;
+            staticStat();
+        }};
         voidConsume = new PvStatusEffect("void-consume") {{
             localizedName = "Void Consume";
             color = Color.black;
@@ -176,14 +190,33 @@ public class PvStatusEffects {
             buildSpeedMultiplier = 0.90f;
             ground = true;
         }};
-        antiVoidRepair = new StatusEffect("antivoid-repair")
+        sourcePurify = new StatusEffect("source-purify")
         {{
-            localizedName = "[white]AntiVoid Repair";
+            localizedName = "[white]Source Purify";
+            description = "[white]Great Flame Of Purification";
+            color = Color.white;
+            effect = PvFx.pureFlame;
+            damage = 240f/60f;
+        }};
+        sourceRepair = new StatusEffect("source-repair")
+        {{
+            localizedName = "[white]Source Repair";
             description = "[white]Grants Youth";
             color = Color.white;
-            damage = -20f/60f;
+            damage = -240f/60f;
             init(() -> {
-                opposite(PvStatusEffects.voidDecay,PvStatusEffects.voidConsume);
+                opposite(voidDecay);
+            });
+        }};
+        sourceRepel = new StatusEffect("source-repel") {{
+            localizedName = "[white]Source Repel";
+            color = Color.white;
+            description = "[white]Hovering so close to the Source was not a good idea. It launched you far away";
+            damage = -5f/60f;
+            speedMultiplier = 6f;
+            dragMultiplier = 0.01f;
+            init(() -> {
+                opposite(voidConsume);
             });
         }};
         malfunction = new PvStatusEffect("malfunction")

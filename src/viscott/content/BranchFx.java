@@ -15,12 +15,12 @@ import static mindustry.Vars.renderer;
 public class BranchFx {
     public static final Effect
 
-            smallBranch = new Effect(6f, 500f, e -> {
+    smallBranch = new Effect(6f, 500f, e -> {
         if (!(e.data instanceof Seq)) return;
         Seq<Vec2> lines = e.data();
         int n = Mathf.clamp(1 + (int) (e.fin() * lines.size), 1, lines.size);
         for (int i = 2; i >= 0; i--) {
-            stroke(2f * (i / 2f + 1f));
+            stroke(1f * (i / 2f + 1f));
             color(i == 0 ? Color.valueOf("392f32") : Color.valueOf("766e4d"));
             alpha(i == 2 ? 0.5f : 1f);
 
@@ -42,7 +42,7 @@ public class BranchFx {
         if (!(e.data instanceof Seq)) return;
         Seq<Vec2> lines = e.data();
         for (int i = 2; i >= 0; i--) {
-            stroke(2f * (i / 2f + 1f) * e.fout());
+            stroke(1f * (i / 2f + 1f) * e.fout());
             color(i == 0 ? Color.valueOf("392f32") : Color.valueOf("766e4d"));
             alpha((i == 2 ? 0.5f : 1f) * e.fout());
 
@@ -65,7 +65,7 @@ public class BranchFx {
         Seq<Vec2> lines = e.data();
         int n = Mathf.clamp(1 + (int) (e.fin() * lines.size), 1, lines.size);
         for (int i = 2; i >= 0; i--) {
-            stroke(4.5f * (i / 2f + 1f));
+            stroke(2.25f * (i / 2f + 1f));
             color(i == 0 ? Color.valueOf("392f32") : Color.valueOf("766e4d"));
             alpha(i == 2 ? 0.5f : 1f);
 
@@ -87,7 +87,7 @@ public class BranchFx {
         if (!(e.data instanceof Seq)) return;
         Seq<Vec2> lines = e.data();
         for (int i = 2; i >= 0; i--) {
-            stroke(4.5f * (i / 2f + 1f) * e.fout());
+            stroke(2.25f * (i / 2f + 1f) * e.fout());
             color(i == 0 ? Color.valueOf("392f32") : Color.valueOf("766e4d"));
             alpha((i == 2 ? 0.5f : 1f) * e.fout());
 

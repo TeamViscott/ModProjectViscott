@@ -1,9 +1,11 @@
 package viscott.world;
 
 import arc.Core;
+import arc.Events;
 import mindustry.Vars;
 import mindustry.ctype.ContentType;
 import mindustry.ctype.UnlockableContent;
+import mindustry.game.EventType;
 import mindustry.gen.Building;
 import mindustry.type.Category;
 import mindustry.type.ItemStack;
@@ -32,21 +34,18 @@ public class teamResearch extends Block {
         super.init();
         description = refTeam.description;
         details = refTeam.info;
-        localizedName = localName + " [green][Add][]";
+        Events.run(EventType.Trigger.update,()->{
+             if (Vars.state.rules.infiniteResources || Vars.state.isEditor())
+                 localizedName = localName + (refTeam.partOf(Vars.player.team()) ? " [red][Remove][]" : " [green][Add][]");
+             else
+                 localizedName = localName;
+        });
     }
 
     @Override
     public void loadIcon(){
         fullIcon =Core.atlas.find(name);
         uiIcon = fullIcon;
-    }
-
-
-    public void updateName() {
-        if (Vars.state.rules.infiniteResources || Vars.state.isEditor())
-            localizedName = localName + (refTeam.partOf(Vars.player.team()) ? " [red][Remove][]" : " [green][Add][]");
-        else
-            localizedName = localName;
     }
 
     @Override

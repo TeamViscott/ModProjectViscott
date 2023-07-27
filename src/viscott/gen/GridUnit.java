@@ -1,12 +1,15 @@
 package viscott.gen;
 
+import arc.Events;
 import arc.func.Cons;
+import arc.func.Cons2;
 import arc.graphics.g2d.Draw;
 import arc.graphics.g2d.TextureRegion;
 import arc.math.Angles;
 import arc.math.Interp;
 import arc.math.Mathf;
 import arc.math.Scaled;
+import arc.struct.ObjectMap;
 import arc.struct.Seq;
 import arc.util.Log;
 import arc.util.Tmp;
@@ -27,6 +30,7 @@ import mindustry.graphics.Layer;
 import mindustry.type.Item;
 import mindustry.type.UnitType;
 import mindustry.world.Block;
+import mindustry.world.Build;
 import mindustry.world.Tile;
 import mindustry.world.Tiles;
 import mindustry.world.blocks.defense.turrets.Turret;
@@ -37,6 +41,7 @@ import mindustry.world.draw.DrawTurret;
 import viscott.content.PvBlocks;
 import viscott.types.GridUnitType;
 
+import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static mindustry.Vars.*;
@@ -47,6 +52,7 @@ public class GridUnit extends MechUnit {
     public boolean built = false;
     public int buildSize = 0;
     public boolean[][] buildArea = new boolean[0][0];
+    ObjectMap<Object,Seq<Cons2<? extends Block,? extends Building>>> drawers = new ObjectMap<>();
     GridUnitType gu;
     public GridUnit(GridUnitType type) {
         this();
@@ -54,6 +60,11 @@ public class GridUnit extends MechUnit {
         build();
     }
 
+    public <T extends Block,E extends Building> void addDrawer(Class<T> type,Cons2<T,E> cons) {
+        if (!drawers.containsKey(type))
+            drawers.put(type,new Seq<>());
+        drawers.get(type).add(cons);
+    }
     public GridUnit() {
         super();
     }
@@ -419,11 +430,15 @@ public class GridUnit extends MechUnit {
             innerWorld.tiles.each((x,y) -> {
                 Tile t = innerWorld.tile(x,y);
                 int bId = read.i();
+                Log.info(bId);
                 if (bId != -1) {
                     int rot = read.s();
                     Block b = content.block(bId);
-                    t.setBlock(b,team,rot);
-                    t.build.read(read);
+                    Building build = b.newBuilding();
+                    build.read(read,(byte)0);
+                    t.setBlock(b,team,rot,()->build);
+                    Groups.all.remove(build);
+                    build.setIndex__all(-1);
                 }
             });
         }
@@ -438,7 +453,7 @@ public class GridUnit extends MechUnit {
         if (built) {
             innerWorld.tiles.each((x,y) -> {
                 Tile t = innerWorld.tile(x,y);
-                if (t.build == null || t == t.build.tile)
+                if (t.build == null || t != t.build.tile)
                     write.i(-1);
                 else {
                     write.i(t.build.block().id);
