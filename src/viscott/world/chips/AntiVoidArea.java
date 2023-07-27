@@ -5,6 +5,8 @@ import arc.graphics.g2d.Draw;
 import arc.graphics.g2d.Fill;
 import arc.graphics.g2d.Lines;
 import arc.math.Mathf;
+import mindustry.content.Fx;
+import mindustry.game.Team;
 import mindustry.gen.Building;
 import mindustry.gen.Groups;
 import mindustry.gen.Unit;
@@ -12,6 +14,7 @@ import mindustry.graphics.Layer;
 import viscott.content.PvStatusEffects;
 import viscott.world.bullets.VoidBulletType;
 
+import static mindustry.Vars.mods;
 import static mindustry.Vars.renderer;
 
 public interface AntiVoidArea {
@@ -19,7 +22,7 @@ public interface AntiVoidArea {
     {
         Groups.bullet.each(b -> {
             if (b.type instanceof VoidBulletType && Mathf.len(building.x-b.x,building.y-b.y) <= radius)
-                b.keepAlive = true;
+                b.absorb(); //now it destroys void bullets
         });
         Groups.unit.each(unit ->
                 {
@@ -41,7 +44,7 @@ public interface AntiVoidArea {
     {
         Groups.bullet.each(b -> {
             if (b.type instanceof VoidBulletType && Mathf.len(u.x-b.x,u.y-b.y) <= radius)
-                b.keepAlive = true;
+                b.absorb(); //same as last one
         });
         Groups.unit.each(unit ->
                 {
@@ -60,7 +63,7 @@ public interface AntiVoidArea {
     }
     default void drawVoid(Building building,float radius)
     {
-        Draw.z(Layer.bullet+35);
+        Draw.z(Layer.bullet+38);
         Draw.color(Color.black);
         if(renderer.animateShields)
             Fill.poly(building.x,building.y,60,radius);
@@ -69,22 +72,22 @@ public interface AntiVoidArea {
             Lines.stroke(2);
             Lines.poly(building.x,building.y,60,radius);
             Draw.color(Color.white.cpy().a(0.2f));
-            Draw.z(Layer.bullet+34);
+            Draw.z(Layer.bullet+37);
             Fill.poly(building.x,building.y,60,radius);
         }
     }
     default void drawVoid(Unit unit,float radius)
     {
-        Draw.z(Layer.bullet+35);
-        Draw.color(Color.black);
+        Draw.z(Layer.bullet+38);
+        Draw.color(Color.white);
         if(renderer.animateShields)
             Fill.poly(unit.x,unit.y,60,radius);
         else
         {
             Lines.stroke(2);
             Lines.poly(unit.x,unit.y,60,radius);
-            Draw.color(Color.white.cpy().a(0.2f));
-            Draw.z(Layer.bullet+34);
+            Draw.color(Team.sharded.color.cpy().a(0.2f));
+            Draw.z(Layer.bullet+37);
             Fill.poly(unit.x,unit.y,60,radius);
         }
     }

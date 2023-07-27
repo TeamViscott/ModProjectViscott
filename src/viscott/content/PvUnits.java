@@ -3313,6 +3313,64 @@ public class PvUnits {
                 }};
             }});
         }};
+        /* TODO This is WIP.
+        knell = new PvUnitType("knell") {{
+            health = 2750;
+            armor = 7;
+            speed = 8.1f/7.5f;
+            localizedName = "[orange]Knell";
+            constructor = EntityMapping.map("toxopid");
+            legCount = 6;
+            legMoveSpace = 2f;
+            legPairOffset = 2f;
+            legLength = 12f;
+            legExtension = -4f;
+            legBaseOffset = 4f;
+            stepShake = 0f;
+            legLengthScl = 0.74f;
+            rippleScale = 2f;
+            legSpeed = 0.2f;
+
+            for(int j = 0; j < 2; j++){
+                int i = j;
+                parts.add(new RegionPart("-spine"){{
+                    layerOffset = -0.01f;
+                    heatLayerOffset = 0.005f;
+                    y = -1;
+                    x = 2f;
+                    moveX = 6f + i * 1.9f;
+                    moveY = 8f + -4f * i;
+                    moveRot = 40f - i * 25f;
+                    mirror = true;
+                    progress = PartProgress.warmup.delay(i * 0.2f);
+                    heatProgress = p -> Mathf.absin(Time.time + i * 14f, 7f, 1f);
+
+                    heatColor = Pal.neoplasm1;
+                }});
+            }
+            weapons.add(new Weapon() {{
+                y = 2f;
+                mirror = false;
+                reload = 54f;
+                alternate = false;
+                inaccuracy = 0f;
+                recoil = 0;
+                baseRotation = -60f;
+                shootCone = 140;
+                bullet = new BasicBulletType(2.5f, 18f) {{
+                    splashDamage = 45;
+                    splashDamageRadius = 2.5f;
+                    lifetime = PvUtil.GetRange(2.5f,19);
+                    homingPower = 0.1f;
+                    homingRange = 200;
+                    trailColor = backColor = lightColor = Pal.neoplasm1;
+                    frontColor = Pal.neoplasm2;
+                    trailLength = 24;
+                    trailChance = 0.1f;
+                    trailWidth = 1.4f;
+                }};
+            }});
+        }}; */
     }
     public static void loadYggdrasilPath() {
         root = new PvUnitType("root") {{

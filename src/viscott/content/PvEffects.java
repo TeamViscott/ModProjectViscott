@@ -21,7 +21,7 @@ public class PvEffects {
         slowEnergeticEffect, particleDeath1,particleDeath2,particleDeath3,
             railFrag,waveBulletFalerica,waveBulletJavelin,sumayaShoot, sumayaImpact,
 
-            quadRushCraft,cascadeCraft,surgeSpawn,siedeSummon,chargeUpHecta,branch
+            quadRushCraft,cascadeCraft,bulkCraft,surgeSpawn,siedeSummon,chargeUpHecta,branch
             ;
     public static Seq<Effect> nullisDeath = new Seq<>();
     public static void load()
@@ -131,6 +131,17 @@ public class PvEffects {
             float sin = Math.abs(Mathf.sin(e.fin()*waves *Mathf.pi));
             Color col = Team.green.color.cpy();
             col.a = cascadeColAlphaInterp.apply(1);
+            DrawPseudo3d.ring(e.x,e.y,5 * sin,7 * sin,9 * sin,e.fin()*8,col,col);
+            DrawPseudo3d.tube(e.x,e.y,2*e.fout(),e.fin()*50,col,Color.clear);
+            Lines.stroke(e.fout()*4,col);
+            Lines.circle(e.x,e.y,15*e.fin());
+        });
+        Interp bulkInterp = new arc.math.Interp.ExpIn(2.5f, 10f);
+        bulkCraft = new Effect(120,e->{
+            float waves = 10;
+            float sin = Math.abs(Mathf.sin(e.fin()*waves *Mathf.pi));
+            Color col = Team.crux.color.cpy();
+            col.a = bulkInterp.apply(1);
             DrawPseudo3d.ring(e.x,e.y,5 * sin,7 * sin,9 * sin,e.fin()*8,col,col);
             DrawPseudo3d.tube(e.x,e.y,2*e.fout(),e.fin()*50,col,Color.clear);
             Lines.stroke(e.fout()*4,col);

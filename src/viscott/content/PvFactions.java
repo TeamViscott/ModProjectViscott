@@ -40,7 +40,7 @@ public class PvFactions {
         Yggdrasil = new PvFaction("team-yggdrasil",Color.valueOf("#766e4d")) {{
             description = "[pink][[#e892d1]Psy[] Sub Faction][]\nFollowers of The [green]Omamori[]. they use nature to defend and harvest resources.";
             info = "once upon a time there was the [green]Omamori[]. the Peaceful giant who loved to move around and nurture the wildlife around him.\n" +
-                    "Over time. he accumulated followers who called themselves the Yggdrasil's who wanted to follow in the Giants footsteps.\n" +
+                    "Over time. he accumulated followers who called themselves the Yggdrasil's, who wanted to follow in the Giants footsteps.\n" +
                     "And so the Giant helped them build in a way as to not hurt mother nature.";
         }};
         /*Unix = new PvFaction("unix",Color.purple) {{
