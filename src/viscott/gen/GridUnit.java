@@ -1,21 +1,15 @@
 package viscott.gen;
 
-import arc.Core;
 import arc.func.Cons;
-import arc.func.Cons2;
-import arc.graphics.g2d.Batch;
 import arc.graphics.g2d.Draw;
-import arc.graphics.g2d.SpriteBatch;
 import arc.graphics.g2d.TextureRegion;
 import arc.math.*;
-import arc.struct.ObjectMap;
 import arc.struct.Seq;
 import arc.util.Log;
 import arc.util.Time;
 import arc.util.Tmp;
 import arc.util.io.Reads;
 import arc.util.io.Writes;
-import mindustry.ClientLauncher;
 import mindustry.Vars;
 import mindustry.content.Blocks;
 import mindustry.core.World;

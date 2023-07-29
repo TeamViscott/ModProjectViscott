@@ -6,9 +6,7 @@ import arc.graphics.Color;
 import arc.graphics.Texture;
 import arc.graphics.g2d.Batch;
 import arc.graphics.g2d.Draw;
-import arc.graphics.g2d.SpriteBatch;
 import arc.graphics.g2d.TextureRegion;
-import mindustry.world.Block;
 
 public class DrawBatchRotate extends Batch {
     public float rotation = 0;
@@ -25,6 +23,7 @@ public class DrawBatchRotate extends Batch {
         Draw.vert(texture,spriteVertices,offset,count);
         Core.batch = this;
     }
+
     public void inject() {
         source = Core.batch;
         Core.batch = this;
