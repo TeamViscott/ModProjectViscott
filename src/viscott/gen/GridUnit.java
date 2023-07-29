@@ -359,9 +359,9 @@ public class GridUnit extends MechUnit {
                     StackConveyor stackConv = (StackConveyor) block;
                     Draw.rect(stackConv.regions[sb.state],sb.x,sb.y,rotation + sb.rotation * 90);
                     for(int i = 0; i < 4; i++){
-                        if((sb.blendprox & 1 << i) == 0){
+                        //if((sb.blendprox & 1 << i) == 0){
                             Draw.rect(stackConv.edgeRegion, sb.x, sb.y, (sb.rotation - i) * 90 + rotation);
-                        }
+                        //}
                     }
                     Tile from = world.tile(sb.link);
                     if (from != null) {
