@@ -22,7 +22,8 @@ public class PvEffects {
             railFrag,waveBulletFalerica,waveBulletJavelin,sumayaShoot, sumayaImpact,
 
             quadRushCraft,cascadeCraft,uberbulkCraft,
-                    surgeSpawn,siedeSummon,chargeUpHecta,branch
+                    surgeSpawn,siedeSummon,chargeUpHecta,
+                    branch
             ;
     public static Seq<Effect> nullisDeath = new Seq<>();
     public static void load()

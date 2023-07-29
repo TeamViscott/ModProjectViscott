@@ -22,6 +22,7 @@ import mindustry.mod.Mods;
 import mindustry.net.Packets;
 import viscott.content.*;
 import viscott.sounds.PvSoundControl;
+import viscott.types.GridUnitType;
 import viscott.types.PvFaction;
 import viscott.utilitys.PvPacketHandler;
 import viscott.utilitys.PvWorldState;

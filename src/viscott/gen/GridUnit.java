@@ -1,20 +1,21 @@
 package viscott.gen;
 
-import arc.Events;
+import arc.Core;
 import arc.func.Cons;
 import arc.func.Cons2;
+import arc.graphics.g2d.Batch;
 import arc.graphics.g2d.Draw;
+import arc.graphics.g2d.SpriteBatch;
 import arc.graphics.g2d.TextureRegion;
-import arc.math.Angles;
-import arc.math.Interp;
-import arc.math.Mathf;
-import arc.math.Scaled;
+import arc.math.*;
 import arc.struct.ObjectMap;
 import arc.struct.Seq;
 import arc.util.Log;
+import arc.util.Time;
 import arc.util.Tmp;
 import arc.util.io.Reads;
 import arc.util.io.Writes;
+import mindustry.ClientLauncher;
 import mindustry.Vars;
 import mindustry.content.Blocks;
 import mindustry.core.World;
@@ -24,13 +25,10 @@ import mindustry.entities.units.WeaponMount;
 import mindustry.gen.Building;
 import mindustry.gen.Groups;
 import mindustry.gen.MechUnit;
-import mindustry.gen.Unit;
 import mindustry.graphics.Drawf;
 import mindustry.graphics.Layer;
 import mindustry.type.Item;
-import mindustry.type.UnitType;
 import mindustry.world.Block;
-import mindustry.world.Build;
 import mindustry.world.Tile;
 import mindustry.world.Tiles;
 import mindustry.world.blocks.defense.turrets.Turret;
@@ -40,9 +38,7 @@ import mindustry.world.blocks.storage.CoreBlock;
 import mindustry.world.draw.DrawTurret;
 import viscott.content.PvBlocks;
 import viscott.types.GridUnitType;
-
-import java.util.HashMap;
-import java.util.concurrent.atomic.AtomicBoolean;
+import viscott.world.draw.DrawBatchRotate;
 
 import static mindustry.Vars.*;
 import static mindustry.Vars.itemSize;
@@ -52,18 +48,12 @@ public class GridUnit extends MechUnit {
     public boolean built = false;
     public int buildSize = 0;
     public boolean[][] buildArea = new boolean[0][0];
-    ObjectMap<Object,Seq<Cons2<? extends Block,? extends Building>>> drawers = new ObjectMap<>();
+    private DrawBatchRotate drawBatch = new DrawBatchRotate();
     GridUnitType gu;
     public GridUnit(GridUnitType type) {
         this();
         gu = type;
         build();
-    }
-
-    public <T extends Block,E extends Building> void addDrawer(Class<T> type,Cons2<T,E> cons) {
-        if (!drawers.containsKey(type))
-            drawers.put(type,new Seq<>());
-        drawers.get(type).add(cons);
     }
     public GridUnit() {
         super();
@@ -133,7 +123,6 @@ public class GridUnit extends MechUnit {
             building.setIndex__all(-1);
             Groups.all.remove(building);
         }
-
         Vars.world = curWorld;
         return true;
     }
@@ -187,6 +176,7 @@ public class GridUnit extends MechUnit {
     @Override
     public void update() {
         super.update();
+        if (innerWorld == null) return;
         if (!isFlying()) {
             x = Mathf.ceil(x / 8) * 8 - 4;
             y = Mathf.ceil(y / 8) * 8 - 4;
@@ -313,19 +303,20 @@ public class GridUnit extends MechUnit {
         }
 
         Draw.reset();
-
+        if (innerWorld == null || !built || drawBatch == null) return;
         Seq<Building> drawed = new Seq<>();
         World w = Vars.world;
         Tiles t = innerWorld.tiles;
         Vars.world = innerWorld;
+        drawBatch.rotation = rotation;
+        drawBatch.minZ = z+1;
         innerWorld.tiles.each((x,y) -> {
             float xOffset = (x - buildSize / 2) * 8 + 4;
             float yOffset = (y -  buildSize / 2) * 8 + 4;
-
             Building build = t.get(x,y).build;
             if (build != null && !drawed.contains(build)) {
+                var block = build.block();
                 if (build.block() == null) return;
-                Draw.z(z + 1f);
                 int size = build.block().size;
                 float off = Mathf.floor((size - 1) * 4);
                 float Dx = this.x + Angles.trnsx(rotation, xOffset + off, yOffset + off);
@@ -333,7 +324,8 @@ public class GridUnit extends MechUnit {
                 build.x = Dx;
                 build.y = Dy;
                 build.payloadRotation = rotation;
-                if (build instanceof Turret.TurretBuild tb) {
+                Draw.z(z+1);
+                if (build instanceof Turret.TurretBuild tb) { //Turrets require a custom Drawer
                     Turret turret = (Turret) tb.block;
                     DrawTurret drawer = (DrawTurret) turret.drawer;
                     Draw.rect(drawer.base, Dx, Dy, rotation);
@@ -344,9 +336,11 @@ public class GridUnit extends MechUnit {
                     drawer.drawHeat(turret, tb);
                     drawTurretParts(tb, Dx, Dy);
                 }
-                else if (build instanceof Conveyor.ConveyorBuild cb) {
+                else if (build instanceof Conveyor.ConveyorBuild cb) { // so do conveyors
                     float rot = rotation+build.rotation*90;
-                    Draw.rect(build.block().getGeneratedIcons()[0], Dx, Dy, rot);
+                    Conveyor conv = (Conveyor) block;
+                    int frame = cb.enabled && cb.clogHeat <= 0.5f ? (int)(((Time.time * conv.speed * 8f * cb.timeScale() * cb.efficiency)) % 4) : 0;
+                    Draw.rect(conv.regions[cb.blendbits][frame], Dx, Dy,tilesize * cb.blendsclx, tilesize * cb.blendscly, rot);
                     for(int i = 0; i < cb.len; i++){
                         Item item = cb.ids[i];
                         Tmp.v1.trns(rot, tilesize, 0);
@@ -361,27 +355,43 @@ public class GridUnit extends MechUnit {
                         Draw.rect(item.fullIcon, ix, iy, itemSize, itemSize);
                     }
                 }
-                else if (build instanceof StackConveyor.StackConveyorBuild sb) {
-                    Draw.rect(build.block().region,Dx,Dy,rotation + build.rotation*90);
-                    StackConveyor bl = (StackConveyor) build.block();
+                else if (build instanceof StackConveyor.StackConveyorBuild sb) { //StackConveyor broken without custom drawer.
+                    StackConveyor stackConv = (StackConveyor) block;
+                    Draw.rect(stackConv.regions[sb.state],sb.x,sb.y,rotation + sb.rotation * 90);
+                    for(int i = 0; i < 4; i++){
+                        if((sb.blendprox & 1 << i) == 0){
+                            Draw.rect(stackConv.edgeRegion, sb.x, sb.y, (sb.rotation - i) * 90 + rotation);
+                        }
+                    }
                     Tile from = world.tile(sb.link);
-                    if (from == null) return;
-                    int fromRot = from.build == null ? sb.rotation : from.build.rotation;
-                    float a = (fromRot%4) * 90;
-                    float b = (rotation%4) * 90;
-                    if((fromRot%4) == 3 && (rotation%4) == 0) a = -1 * 90;
-                    if((fromRot%4) == 0 && (rotation%4) == 3) a =  4 * 90;
-                    Draw.rect(bl.stackRegion, Dx, Dy, Mathf.lerp(a, b, rotation+Interp.smooth.apply(1f - Mathf.clamp(sb.cooldown * 2, 0f, 1f))));
+                    if (from != null) {
+                        int fromRot = from.build == null ? sb.rotation : from.build.rotation;
+                        float a = (fromRot % 4) * 90;
+                        float b = (sb.rotation % 4) * 90;
+                        if ((fromRot % 4) == 3 && (sb.rotation % 4) == 0) a = -1 * 90;
+                        if ((fromRot % 4) == 0 && (sb.rotation % 4) == 3) a = 4 * 90;
+                        if (sb.items != null && sb.items.total() != 0) {
+                            if (from.build != null)
+                                Tmp.v1.set(from.build.x, from.build.y);
+                            else
+                                Tmp.v1.set(sb.x,sb.y);
+                            Tmp.v2.set(sb.x, sb.y);
+                            Tmp.v1.interpolate(Tmp.v2, 1f - sb.cooldown, Interp.linear);
+                            Draw.z(Draw.z()+0.1f);
+                            Draw.rect(stackConv.stackRegion, Tmp.v1.x, Tmp.v1.y, rotation + Mathf.lerp(a, b, Interp.smooth.apply(1f - Mathf.clamp(sb.cooldown * 2, 0f, 1f))));
+                            TextureRegion itemRegion = sb.items.first().fullIcon;
+                            float scl = Mathf.clamp(sb.items.total() / stackConv.itemCapacity);
+                            Draw.rect(itemRegion, Tmp.v1.x, Tmp.v1.y, scl*5f, scl*5f, 0);
+                        }
+                    }
                 } else {
-                    if (!build.block().rotate)
-                        build.rotation = 0;
-                    Draw.rect(build.block().region, Dx, Dy, rotation+build.rotation*90);
-                    if (build.block().teamRegion.found())
-                        Draw.rect(build.block().teamRegions[team.id],Dx,Dy,rotation+build.rotation*90);
+                    drawBatch.inject();
+                    build.draw();
+                    drawBatch.eject();
                 }
-
                 drawed.add(build);
                 Draw.reset();
+                Draw.blend();
             }
         });
         Vars.world = w;
@@ -440,6 +450,11 @@ public class GridUnit extends MechUnit {
                     Groups.all.remove(build);
                     build.setIndex__all(-1);
                 }
+            });
+            innerWorld.tiles.each((x,y) -> {
+                Building build = innerWorld.tile(x,y).build;
+                if (build == null) return;
+                build.updateProximity();
             });
         }
         world = w;

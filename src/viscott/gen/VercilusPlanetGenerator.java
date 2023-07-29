@@ -63,9 +63,7 @@ public class VercilusPlanetGenerator extends SerpuloPlanetGenerator {
 
     @Override
     public Color getColor(Vec3 position){
-        if (Simplex.noise3d(seed,7,0.5f,1f/3f,position.x,position.y,position.z)*1f < 0.5f)
-            return Pal.darkFlame;
-        return Pal.redLight;
+        return Pal.heal.cpy().lerp(Pal.techBlue, Simplex.noise3d(seed,7,0.5f,1f/3f,position.x,position.y,position.z)*1f);
     }
 
     @Override

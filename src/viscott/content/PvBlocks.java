@@ -13,6 +13,7 @@ import mindustry.graphics.Pal;
 import mindustry.logic.LStatements;
 import mindustry.type.*;
 import mindustry.world.Block;
+import mindustry.world.blocks.defense.ForceProjector;
 import mindustry.world.blocks.defense.Wall;
 import mindustry.world.blocks.distribution.*;
 import mindustry.world.blocks.environment.*;

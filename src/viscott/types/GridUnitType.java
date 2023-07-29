@@ -1,5 +1,6 @@
 package viscott.types;
 
+import arc.Events;
 import arc.func.Cons;
 import arc.graphics.Color;
 import arc.graphics.g2d.Draw;
