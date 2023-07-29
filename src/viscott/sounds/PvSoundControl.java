@@ -30,19 +30,16 @@ public class PvSoundControl extends SoundControl {
         super();
         ObjectMap<Object, Seq<Cons<?>>> events = Reflect.get(Events.class,"events");
         if (events.get(EventType.WaveEvent.class).size == 5) {
-            popAtName(3,"SoundControl",events.get(EventType.WaveEvent.class));
+            popAtName(3,events.get(EventType.WaveEvent.class));
         }
     }
 
-    void popAtName(int index,String name,Seq<Cons<?>> seq)
+    void popAtName(int index,Seq<Cons<?>> seq)
     {
         Seq<Cons<?>> seq2 = new Seq<>();
         for(int i = 0;i < index;i++)
             seq2.add(seq.pop());
-        if (seq.peek().toString().contains(name))
-            seq.pop();
-        else
-            seq2.add(seq.pop());
+        seq.pop();
         for(int i = 0;i < index;i++)
             seq.add(seq2.pop());
     }
