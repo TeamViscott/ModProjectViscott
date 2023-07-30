@@ -203,9 +203,8 @@ public class GridUnit extends MechUnit {
             for (int i1 = 0; i1 < buildSize; i1++) {
                 for (int i2 = 0; i2 < buildSize; i2++) {
                     Tile t = rt.nearby(i1,i2);
-                    if (t != null && t.block() != null) {
-                        if (t.build != null)
-                            proxupdate.add(t.build);
+                    if (t != null && t.block() != null && t.build != null && t.build.team == team) {
+                        proxupdate.add(t.build);
                         buildAt(rt,i1, i2,  t.build, (byte) Math.round(rotation / 90));
                     }
                 }

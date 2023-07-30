@@ -7,6 +7,7 @@ import arc.graphics.Texture;
 import arc.graphics.g2d.Batch;
 import arc.graphics.g2d.Draw;
 import arc.graphics.g2d.TextureRegion;
+import arc.graphics.gl.Shader;
 
 public class DrawBatchRotate extends Batch {
     public float rotation = 0;
@@ -18,9 +19,23 @@ public class DrawBatchRotate extends Batch {
     }
 
     @Override
+    protected void draw(Runnable request){
+        Core.batch = source;
+        Draw.draw(Draw.z(),request);
+        Core.batch = this;
+    }
+
+    @Override
     protected void draw(Texture texture, float[] spriteVertices, int offset, int count) {
         Core.batch = source;
         Draw.vert(texture,spriteVertices,offset,count);
+        Core.batch = this;
+    }
+
+    @Override
+    protected void setShader(Shader shader, boolean apply){
+        Core.batch = source;
+        Draw.shader(shader,apply);
         Core.batch = this;
     }
 
@@ -81,7 +96,10 @@ public class DrawBatchRotate extends Batch {
     @Override
     protected void z(float z){
         Core.batch = source;
-        Draw.z(Math.max(z,minZ));
+        if (z < minZ)
+            Draw.z(minZ+z/100f);
+        else
+            Draw.z(z);
         Core.batch = this;
     }
 
