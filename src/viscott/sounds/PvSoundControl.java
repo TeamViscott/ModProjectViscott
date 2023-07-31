@@ -36,7 +36,7 @@ public class PvSoundControl extends SoundControl {
 
     void popAtName(int index,String name,Seq<Cons<?>> seq)
     {
-        Seq<Cons<?>> seq2 = new Seq<>();
+        var seq2 = new Seq<Cons<?>>();
         for(int i = 0;i < index;i++)
             seq2.add(seq.pop());
         if (seq.peek().toString().contains(name))

@@ -31,6 +31,7 @@ import mindustry.type.UnitType;
 import mindustry.world.Tile;
 import viscott.content.PvEffects;
 import viscott.content.PvStatusEffects;
+import viscott.content.PvUnitMapper;
 import viscott.content.PvUnits;
 import viscott.world.statusEffects.CurseStatusEffect;
 import viscott.world.statusEffects.PvStatusEffect;
@@ -130,7 +131,7 @@ public class FrogUnit extends UnitEntity {
     }
     @Override
     public int classId() {
-        return 150;
+        return PvUnitMapper.FrogId;
     }
 
     @Override
@@ -140,7 +141,6 @@ public class FrogUnit extends UnitEntity {
         if (!canTransform)
             forcePhaseTwo.draw(this);
     }
-
     @Override
     public void write(Writes write) {
         super.write(write);

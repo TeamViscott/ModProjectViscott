@@ -11,12 +11,15 @@ import arc.util.Tmp;
 import arc.util.io.Reads;
 import arc.util.io.Writes;
 import mindustry.Vars;
+import mindustry.ai.UnitCommand;
 import mindustry.content.Blocks;
+import mindustry.core.NetServer;
 import mindustry.core.World;
 import mindustry.entities.abilities.Ability;
 import mindustry.entities.part.DrawPart;
 import mindustry.entities.units.WeaponMount;
 import mindustry.gen.Building;
+import mindustry.gen.EntityMapping;
 import mindustry.gen.Groups;
 import mindustry.gen.MechUnit;
 import mindustry.graphics.Drawf;
@@ -28,9 +31,11 @@ import mindustry.world.Tiles;
 import mindustry.world.blocks.defense.turrets.Turret;
 import mindustry.world.blocks.distribution.Conveyor;
 import mindustry.world.blocks.distribution.StackConveyor;
+import mindustry.world.blocks.environment.Prop;
 import mindustry.world.blocks.storage.CoreBlock;
 import mindustry.world.draw.DrawTurret;
 import viscott.content.PvBlocks;
+import viscott.content.PvUnitMapper;
 import viscott.types.GridUnitType;
 import viscott.world.draw.DrawBatchRotate;
 
@@ -170,10 +175,50 @@ public class GridUnit extends MechUnit {
     @Override
     public void update() {
         super.update();
+        float   midX = Mathf.ceil(x / 8) * 8 - 4,
+                midY = Mathf.ceil(y / 8) * 8 - 4;
         if (innerWorld == null) return;
+        if (built && ((player != null && !player.boosting) || (isCommandable() && command().currentCommand() != UnitCommand.boostCommand))) {
+            int bx = Mathf.ceil(midX / 8) - buildSize / 2,
+                by = Mathf.ceil(midY / 8) - buildSize / 2;
+            int rot = (Math.round(rotation / 90) + 4) % 4;
+            boolean canLand = true;
+            for(int xo = 0;xo < buildArea.length;xo++)
+                for(int yo = 0;yo < buildArea[xo].length;yo++)
+                    if (buildArea[xo][yo] && innerWorld.tile(xo,yo).block() != Blocks.air) {
+                        Tile t = null;
+                        switch(rot) {
+                            case 0:
+                                t = Vars.world.tile(bx + xo, by + yo);
+                                break;
+                            case 1:
+                                t = Vars.world.tile(bx + buildSize - yo, by + xo);
+                                break;
+                            case 2:
+                                t = Vars.world.tile(bx + buildSize - xo, by+ buildSize - yo);
+                                break;
+                            case 3:
+                                t = Vars.world.tile(bx + yo, by + buildSize - xo);
+                                break;
+                        }
+                        if (t == null || t.floor() == null) {
+                            canLand = false;
+                            continue;
+                        }
+                        if (t.solid()) {
+                            canLand = false;
+                            continue;
+                        }
+                        if (t.block() != Blocks.air && !(t.block() instanceof Prop)) {
+                            canLand = false;
+                        }
+                    }
+            if (!canLand)
+                updateBoosting(true);
+        }
         if (!isFlying()) {
-            x = Mathf.ceil(x / 8) * 8 - 4;
-            y = Mathf.ceil(y / 8) * 8 - 4;
+            x = midX;
+            y = midY;
             rotation = Math.round(rotation / 90) * 90;
             int bx = Mathf.ceil(x / 8) - buildSize / 2,
                     by = Mathf.ceil(y / 8) - buildSize / 2;
@@ -414,9 +459,8 @@ public class GridUnit extends MechUnit {
 
     @Override
     public int classId() {
-        return 151;
+        return PvUnitMapper.GridUnitId;
     }
-
     @Override
     public void read(Reads read) {
         super.read(read);
