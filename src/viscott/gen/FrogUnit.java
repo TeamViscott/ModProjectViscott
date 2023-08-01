@@ -22,10 +22,7 @@ import mindustry.content.UnitTypes;
 import mindustry.entities.Effect;
 import mindustry.entities.abilities.ForceFieldAbility;
 import mindustry.game.Team;
-import mindustry.gen.EntityMapping;
-import mindustry.gen.Groups;
-import mindustry.gen.Unit;
-import mindustry.gen.UnitEntity;
+import mindustry.gen.*;
 import mindustry.graphics.Layer;
 import mindustry.type.UnitType;
 import mindustry.world.Tile;
@@ -45,13 +42,14 @@ public class FrogUnit extends UnitEntity {
     public float necroRange = 20;
 
     boolean canTransform = true;
-    Seq<UnitType> transformList = Seq.with(UnitTypes.reign,UnitTypes.corvus,UnitTypes.toxopid,UnitTypes.eclipse, PvUnits.pericope);
+    Seq<UnitType> transformList = Seq.with(PvUnits.pericope,PvUnits.hecta);
     Unit transformedUnit;
     boolean hideUnit = false;
     int fleetSize = 24;
     Seq<UnitType> fleetUnits = Seq.with(
             PvUnits.snippet,PvUnits.fragment, PvUnits.excerpt,
-            PvUnits.centi,PvUnits.deci, PvUnits.deci // duplicate is intended to increase chance
+            PvUnits.milli,PvUnits.deci, PvUnits.centi,
+            PvUnits.chime,PvUnits.carillon,PvUnits.peal
     );
     float summonCharges = 2;
     boolean wantsToSummon = true;
@@ -78,12 +76,14 @@ public class FrogUnit extends UnitEntity {
 
         if (canTransform) {
             if (health < maxHealth / 2) {
-                UnitType selected = transformList.random();
-                if (tileOn().solid()) {
-                    while (!selected.flying) selected = transformList.random();
+                if (!Vars.net.client()) {
+                    UnitType selected = transformList.random();
+                    if (tileOn().solid()) {
+                        while (!selected.flying) selected = transformList.random();
+                    }
+                    transformedUnit = selected.spawn(team, x, y);
+                    transformedUnit.health /= 2;
                 }
-                transformedUnit = selected.spawn(team, x, y);
-                transformedUnit.health /= 2;
                 hideUnit = true;
                 x = 0;
                 y = 0;
@@ -110,6 +110,7 @@ public class FrogUnit extends UnitEntity {
     }
 
     public void summonFleet() {
+        if(Vars.net.client()) return;
         for(int i = 0;i < fleetSize;i++)
             Timer.schedule(()-> {
                 float curX = (x() + ((float)Math.random()-0.5f) * 16f * 10);
@@ -119,7 +120,9 @@ public class FrogUnit extends UnitEntity {
                 if (t==null || t.solid())
                     while (!selected.flying) selected = fleetUnits.random();
                 Unit u = selected.spawn(team,curX,curY);
-                summonEffect.at(curX,curY);
+                Call.effect(summonEffect,curX,curY,0,Color.white);
+                if (!Vars.headless)
+                    summonEffect.at(curX,curY,0,Color.white);
                 u.shield = u.maxHealth;
                 u.apply(PvStatusEffects.dataLeak);
             },i/10f);

@@ -11,8 +11,8 @@ public class PvUnitMapper {
     public static int
             FrogId,GridUnitId,MwBossId;
     public static void load() {
-        EntityMapping.register("Frog",FrogUnit::new);
-        EntityMapping.register("Grid",FrogUnit::new);
-        EntityMapping.register("Manu",MwBossUnit::new);
+        FrogId = EntityMapping.register("Frog",FrogUnit::new);
+        GridUnitId = EntityMapping.register("Grid",GridUnit::new);
+        MwBossId = EntityMapping.register("Manu",MwBossUnit::new);
     }
 }

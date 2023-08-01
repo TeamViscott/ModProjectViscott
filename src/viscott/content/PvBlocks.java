@@ -693,7 +693,7 @@ public class PvBlocks {
                     itemCapacity = 200;
                     liquidCapacity = 50;
                     craftTime = 60*9.8f;
-                    craftEffect = new MultiEffect(Fx.smokeCloud,Fx.explosion);
+                    craftEffect = new MultiEffect(Fx.smokeCloud,Fx.explosion,PvEffects.uberbulkCraft);
                     updateEffect = Fx.smoke;
                     consumeItems(with(PvItems.zirconium,100,PvItems.lithium,40,PvItems.nobelium,20,PvItems.carbonFiber,10));
                     outputItem = new ItemStack(PvItems.bulkAlloy,5);
