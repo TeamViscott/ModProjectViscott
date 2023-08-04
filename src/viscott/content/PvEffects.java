@@ -148,6 +148,8 @@ public class PvEffects {
                 float yo = e.y+Mathf.sinDeg(i*90+e.fin()*360*turns+90)*distance*e.fin();
                 DrawPseudo3d.slantTube(e.x,e.y,xo,yo,Interp.circle.apply(e.fout())*8,20*e.fin(),col1,col2,col2,col1);
             }
+            Lines.stroke(e.fout()*4,col1);
+            Lines.circle(e.x,e.y,15*e.fin());
         });
         for(int i = 1;i<=9;i++)
             nullisDeath.add(newNullisDeath(i));

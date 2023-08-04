@@ -889,6 +889,7 @@ public class PvBlocks {
                 }};
                 nueroRemolder = new Reconstructor("nuero-remolder") {{
                     requirements(Category.units,with(PvItems.zirconium,500,PvItems.platinum,100,Items.silicon,40)); //Todo
+                    localizedName = "Neuro Remolder";
                     addUpgrade(PvUnits.particle,PvUnits.snippet);
                     addUpgrade(PvUnits.milli,PvUnits.centi);
                     addUpgrade(PvUnits.pocket,PvUnits.container);

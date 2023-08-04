@@ -37,6 +37,7 @@ import mindustry.world.draw.DrawTurret;
 import viscott.content.PvBlocks;
 import viscott.content.PvUnitMapper;
 import viscott.types.GridUnitType;
+import viscott.utilitys.PvPacketHandler;
 import viscott.world.draw.DrawBatchRotate;
 
 import static mindustry.Vars.*;
@@ -48,7 +49,7 @@ public class GridUnit extends MechUnit {
     public int buildSize = 0;
     public boolean[][] buildArea = new boolean[0][0];
     private DrawBatchRotate drawBatch = new DrawBatchRotate();
-    GridUnitType gu;
+    public GridUnitType gu;
     public GridUnit(GridUnitType type) {
         this();
         gu = type;
@@ -56,9 +57,10 @@ public class GridUnit extends MechUnit {
     }
     public GridUnit() {
         super();
+
     }
 
-    void build() {
+    public void build() {
         buildSize = gu.buildSize;
         buildArea = gu.buildArea;
         innerWorld = buildGrid();
@@ -79,6 +81,7 @@ public class GridUnit extends MechUnit {
     }
 
     public boolean buildAt(Tile c,int x, int y, Building building, byte rotation) {
+        if (Vars.net.client()) return false;
         int cx = c.x,
                 cy = c.y;
         if (building == null || building.block() == null) return false;
@@ -265,6 +268,8 @@ public class GridUnit extends MechUnit {
             });
             Vars.world = w;
             built = true;
+            if (Vars.net.server())
+                PvPacketHandler.gridUnitLoad(this);
         }
 
         Seq<Building> updated = new Seq<>();
