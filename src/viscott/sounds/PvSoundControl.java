@@ -7,6 +7,7 @@ import arc.func.Cons;
 import arc.math.Mathf;
 import arc.struct.ObjectMap;
 import arc.struct.Seq;
+import arc.util.Log;
 import arc.util.Reflect;
 import arc.util.Time;
 import mindustry.Vars;
@@ -36,15 +37,13 @@ public class PvSoundControl extends SoundControl {
 
     void popAtName(int index,String name,Seq<Cons<?>> seq)
     {
-        var seq2 = new Seq<Cons<?>>();
-        for(int i = 0;i < index;i++)
-            seq2.add(seq.pop());
-        if (seq.peek().toString().contains(name))
-            seq.pop();
-        else
-            seq2.add(seq.pop());
-        for(int i = 0;i < index;i++)
-            seq.add(seq2.pop());
+        try {
+            if (seq.get(index).toString() == name)
+                seq.remove(index);
+        }
+        catch (Exception e) {
+            Log.err(e);
+        }
     }
     @Override
     public void playRandom(){
