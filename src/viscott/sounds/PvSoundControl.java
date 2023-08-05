@@ -26,27 +26,26 @@ import static mindustry.Vars.state;
 
 public class PvSoundControl extends SoundControl {
     public static SoundControl ogSoundControl;
+    boolean loaded = false;
     public PvSoundControl()
     {
         super();
         ObjectMap<Object, Seq<Cons<?>>> events = Reflect.get(Events.class,"events");
         if (events.get(EventType.WaveEvent.class).size == 5) {
-            popAtName(3,"SoundControl",events.get(EventType.WaveEvent.class));
-        }
-    }
-
-    void popAtName(int index,String name,Seq<Cons<?>> seq)
-    {
-        try {
-            if (seq.get(index).toString() == name)
-                seq.remove(index);
-        }
-        catch (Exception e) {
-            Log.err(e);
+            try {
+                if (events.get(EventType.WaveEvent.class).get(3).toString().contains("SoundControl")) {
+                    events.get(EventType.WaveEvent.class).remove(3);
+                    loaded = true;
+                }
+            }
+            catch (Exception e) {
+                Log.err(e);
+            }
         }
     }
     @Override
     public void playRandom(){
+        if (!loaded) return;
         playOnce(PvMusics.orbit);
         /*
         if (Vars.state.getPlanet() == PvPlanets.vercilus)
