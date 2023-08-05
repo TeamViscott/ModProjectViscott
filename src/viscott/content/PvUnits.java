@@ -3318,6 +3318,7 @@ public class PvUnits {
             localizedName = "[orange]Peal";
             constructor = EntityMapping.map("toxopid");
             legCount = 8;
+            hitSize = 8*2;
             legMoveSpace = 6f;
             legPairOffset = 4f;
             legLength = 30f;

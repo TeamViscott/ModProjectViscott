@@ -480,18 +480,18 @@ public class GridUnit extends MechUnit {
         world = innerWorld;
         if (built) {
             innerWorld.tiles.each((x,y) -> {
-                Tile t = innerWorld.tile(x,y);
+                Tile t = innerWorld.tile(x, y);
                 int bId = read.i();
-                Log.info(bId);
-                if (bId != -1) {
-                    int rot = read.s();
-                    Block b = content.block(bId);
-                    Building build = b.newBuilding();
-                    build.read(read,(byte)0);
-                    t.setBlock(b,team,rot,()->build);
-                    Groups.all.remove(build);
-                    build.setIndex__all(-1);
-                }
+                if (bId == -1) return;
+                int rot = read.b();
+                Block b = content.block(bId);
+                Building build = b.newBuilding();
+                build.rotation = rot;
+                build.read(read,Byte.MAX_VALUE);
+                t.setBlock(b, team, build.rotation, () -> build);
+                Groups.all.remove(build);
+                build.setIndex__all(-1);
+
             });
             innerWorld.tiles.each((x,y) -> {
                 Building build = innerWorld.tile(x,y).build;
@@ -514,7 +514,7 @@ public class GridUnit extends MechUnit {
                     write.i(-1);
                 else {
                     write.i(t.build.block().id);
-                    write.s(t.build.rotation);
+                    write.b(t.build.rotation);
                     t.build.write(write);
                 }
 

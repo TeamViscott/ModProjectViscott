@@ -247,7 +247,7 @@ public class PvPacketHandler {
 
                 @Override
                 public int readUnsignedByte() throws IOException {
-                    return 0;
+                    return bl.removeFirst() & 0xFF;
                 }
 
                 @Override
@@ -257,7 +257,7 @@ public class PvPacketHandler {
 
                 @Override
                 public int readUnsignedShort() throws IOException {
-                    return 0;
+                    return sl.removeFirst() & 0xFFFF;
                 }
 
                 @Override
@@ -314,7 +314,7 @@ public class PvPacketHandler {
                 Building bu = b.newBuilding();
                 bu.rotation = reader.b();
                 world.tile(x,y).setBlock(b,gu.team,bu.rotation,()->bu);
-                bu.read(reader,(byte)0);
+                bu.read(reader,Byte.MAX_VALUE);
                 Groups.all.remove(bu);
                 bu.setIndex__all(-1);
             });
