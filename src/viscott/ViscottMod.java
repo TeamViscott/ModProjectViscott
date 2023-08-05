@@ -82,7 +82,7 @@ public class ViscottMod extends Mod {
         tu.meta.author = "[yellow]CREDITS[]: \n\n" +
                 "[crimson]Spriters : [green]Ethanol10[], [yellow]ThomasThings \n" +
                 "----------------------------\n" +
-                "[crimson]Sfx/Music : [cyan]Vdoble MSG [yellow]\n" +
+                "[crimson]Sfx/Music : [cyan]Vdoble MSG [yellow], [green]TempoAlch3mist[]\n" +
                 "----------------------------\n" +
                 "[crimson]Programmers : [orange]Si[red]ede ,[purple]Manuwar [yellow],Otamamori [lightgrey],Kapzduke[yellow]\n" +
                 "----------------------------\n" +
