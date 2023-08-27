@@ -24,6 +24,8 @@ import static mindustry.Vars.state;
 public class PvCore extends CoreBlock {
     public Seq<PvFaction> faction = new Seq<>();
     public float healTime = -1;
+    public float minHealCharge = -1;
+    public float healPowerDrain = 0;
     public Effect warmupEffect = Fx.none;
     public Effect spawnEffect = Fx.none;
     public boolean blackListFactions = false;
@@ -81,11 +83,13 @@ public class PvCore extends CoreBlock {
                 return;
             }
             if(playerQue.contains(player)) return;
-            warmupEffect.at(tile);
+            if (!Vars.net.client())
+                warmupEffect.at(tile);
             playerQue.add(player);
             Timer.schedule(()->{
                 Call.playerSpawn(tile, player);
-                spawnEffect.at(tile);
+                if (!Vars.net.client())
+                    spawnEffect.at(tile);
                 playerQue.remove(player);
                 },
                     warmupEffect.lifetime/60);
@@ -103,11 +107,14 @@ public class PvCore extends CoreBlock {
             super.updateTile();
             if (healTime < 1) return;
             if (wasRecentlyDamaged()) return;
+            if (minHealCharge > power.graph.getBatteryStored() || healPowerDrain > power.graph.getBatteryStored()) return;
             if (health != maxHealth) {
                 charge += Time.delta;
                 if (charge > 60) {
                     charge %= 60;
                     heal(maxHealth/healTime);
+                    if (healPowerDrain != 0)
+                        power.graph.useBatteries(healPowerDrain);
                     Fx.healBlockFull.at(x, y, block.size, Pal.heal, block);
                 }
             }

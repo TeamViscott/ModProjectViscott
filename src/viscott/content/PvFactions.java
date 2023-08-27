@@ -13,13 +13,33 @@ public class PvFactions {
     public static void load()
     {
         Xeal = new PvFaction("xeal", Color.valueOf("#57d87e")) {{
-            description = "A faction with an incredible Technological Advantage";
+            description = "A faction with an incredible Technological Advantage.\n" +
+                    "[green]Positive Attributes : \n" +
+                    "   Larger Range of Units and Turrets\n" +
+                    "   Option to select type of Target in its faction Turrets\n" +
+                    "   Energy Core's\n" +
+                    "[red]Negative Attributes : \n" +
+                    "   Overall Weaker Core Units\n";
         }};
         Mortikai = new PvFaction("mortikai",Color.valueOf("#811f1f")){{
-            description = "This faction has solely centered in offense and defense since ancient times. They are specified in defense in a different way than psy";
+            description = "This faction has solely centered in offense and defense since ancient times. They are specified in defense in a different way than psy.\n" +
+                    "[green]Positive Attributes : \n" +
+                    "   Stronger and Tougher Units\n" +
+                    "   Bulk Crafting\n" +
+                    "   Natural Core Protection\n" +
+                    "[red]Negative Attributes : \n" +
+                    "   Weaker Turrets\n" +
+                    "   No access to Logic";
         }};
         Azulex = new PvFaction("azulex",Color.valueOf("#5a56f1")){{
-            description = "Azulex is a faction that has learnt to bend liquids and transport them with ease.";
+            description = "Azulex is a faction that has learnt to bend liquids and transport them with ease.\n"+
+                    "[green]Positive Attributes : \n" +
+                    "   Large array of Liquids and Puddle's with special effects\n" +
+                    "   More Liquid Transport options\n" +
+                    "   More Liquid Turrets and Defenses\n" +
+                    "[red]Negative Attributes : \n" +
+                    "   Limited Item Transportation\n" +
+                    "   No Item Turrets";
         }};
         Nullis = new PvFaction("nullis",Color.valueOf("#ffffff")){{
             description = "Having found a way to extract value from Black Holes made them an unstable Faction.\n" +

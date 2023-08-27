@@ -25,6 +25,7 @@ import mindustry.world.blocks.production.*;
 import mindustry.world.blocks.storage.*;
 import mindustry.world.blocks.units.Reconstructor;
 import mindustry.world.blocks.units.UnitFactory;
+import mindustry.world.consumers.ConsumePower;
 import mindustry.world.draw.*;
 import mindustry.world.meta.BuildVisibility;
 import viscott.types.*;
@@ -1025,8 +1026,14 @@ public class PvBlocks {
                     faction.add(PvFactions.Xeal);
                     health = 3000;
                     size = 4;
+                    healTime = 40;
+                    healPowerDrain = 200;
+                    minHealCharge = 200;
                     unitCapModifier = 32;
                     itemCapacity = 20000;
+                    conductivePower = true;
+                    outputsPower = true;
+                    consumePowerBuffered(1000);
                 }};
                 coreCharge = new PvCore("core-charge")
                 {{
@@ -1037,7 +1044,13 @@ public class PvBlocks {
                     health = 5500;
                     size = 5;
                     unitCapModifier = 48;
+                    healTime = 30;
+                    healPowerDrain = 100;
+                    minHealCharge = 500;
                     itemCapacity = 30000;
+                    conductivePower = true;
+                    outputsPower = true;
+                    consumePowerBuffered(4000);
                 }};
                 coreSurge = new PvCore("core-surge")
                 {{
@@ -1052,6 +1065,9 @@ public class PvBlocks {
                     healTime = 25;
                     warmupEffect = PvEffects.surgeSpawn;
                     spawnEffect = Fx.greenBomb;
+                    conductivePower = true;
+                    outputsPower = true;
+                    consumePowerBuffered(12000);
                 }};
                 yggdrasilsHeartwood = new PvCore("yggdrasils-heartwood")
                 {{
