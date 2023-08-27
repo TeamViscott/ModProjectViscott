@@ -151,7 +151,7 @@ public class VercilusPlanetGenerator extends SerpuloPlanetGenerator {
                 joinLiquid(mx, my, to.x, to.y);
             }
         }
-
+        /*
         cells(4);
         distort(10f, 12f);
 
@@ -565,6 +565,7 @@ public class VercilusPlanetGenerator extends SerpuloPlanetGenerator {
 
         //spawn air only when spawn is blocked
         state.rules.spawns = Waves.generate(difficulty, new Rand(sector.id), state.rules.attackMode, state.rules.attackMode && spawner.countGroundSpawns() == 0, naval);
+         */
     }
 
 }

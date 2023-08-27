@@ -48,13 +48,11 @@ public class PvStatusEffects {
             buildSpeedMultiplier = 0.98f;
             charges = 20;
             color = Pal.sap;
-            staticStat();
         }};
         doused = new StatusEffectStack("doused") {{
             localizedName = "Doused";
             damage = 2f / 60f;
             charges = 30;
-            staticStat();
         }};
         disabled = new StatusEffectStack("disabled") {{
             localizedName = "Disabled";
@@ -62,7 +60,6 @@ public class PvStatusEffects {
             speedMultiplier = 0;
             reloadMultiplier = 0;
             color = Color.valueOf("af3a30");
-            staticStat();
         }};
         expent = new StatusEffectStack("expent") {
             {
@@ -72,7 +69,6 @@ public class PvStatusEffects {
                 speedMultiplier = 0.98f;
                 charges = 12;
                 show = false;
-                staticStat();
             }
         };
         crescendo = new StatusEffectStack("crescendo") {{
@@ -82,7 +78,6 @@ public class PvStatusEffects {
             speedMultiplier = 0.995f;
             charges = 80;
             show = false;
-            staticStat();
         }};
         treeAmp = new StatusEffectStack("tree-amp") {{
             localizedName = "[#766e4d]Tree Amp";
@@ -92,7 +87,6 @@ public class PvStatusEffects {
             speedMultiplier = 0.999f;
             charges = 30;
             show = false;
-            staticStat();
         }};
         resiliant = new StatusEffectStack("resiliant") {{
             localizedName = "Resiliant";
@@ -102,13 +96,11 @@ public class PvStatusEffects {
             healthMultiplier = 1.01f;
             speedMultiplier = 0.999f;
             charges = 100;
-            staticStat();
         }};
         ungratefull = new StatusEffectStack("ungratefull") {{
             localizedName = "Ungratefull";
             description = "The enemy of everyone";
             newTeam = Team.get(250);
-            staticStat();
         }};
         tick = new AlterStatusEffect("tick") {{
             localizedName = "Tick";
@@ -180,7 +172,6 @@ public class PvStatusEffects {
             buildSpeedMultiplier = 0.998f;
             speedMultiplier = 0.999f;
             charges = 60*5;
-            staticStat();
         }};
         voidConsume = new PvStatusEffect("void-consume") {{
             localizedName = "Void Consume";
@@ -316,7 +307,6 @@ public class PvStatusEffects {
             dragMultiplier = 1.01f;
             setStatsInfinity = true;
             charges = (int) POSITIVE_INFINITY;
-            staticStat();
         }};
         endlessDot = new StatusEffectStack("endless-dot") {{
             localizedName = "[purple]Endless[] [red]Damage[]";
@@ -325,7 +315,6 @@ public class PvStatusEffects {
             damage = 0.05f;
             setStatsInfinity = true;
             charges = (int) POSITIVE_INFINITY;
-            staticStat();
         }};
         splintered = new StatusEffect("splintered")
         {{

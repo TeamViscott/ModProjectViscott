@@ -41,7 +41,8 @@ public class PvTurrets {
             xterminium,hel,falarica,spring,shredder, sumaya,
 
             fracture,javelin,
-                    /*Nullis*/ quantum
+                    /*Nullis*/ quantum,
+                    /*Xeal*/ focus
             ;
 
     public static void load(){
@@ -577,6 +578,9 @@ public class PvTurrets {
     }
     public static void loadSize3()
     {
+        focus = new PvItemTurret("focus") {{
+
+        }};
         phantom = new ItemTurret("phantom")
         {{
             requirements(Category.turret,with(PvItems.erbium,450,PvItems.zirconium,300, silicon,75)); //Todo 2

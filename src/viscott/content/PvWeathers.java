@@ -1,7 +1,7 @@
 package viscott.content;
 
 import mindustry.type.Weather;
-import viscott.types.weathers.DangerWeather;
+import viscott.types.weathers.FleetWeather;
 
 public class PvWeathers {
     public static Weather
@@ -9,7 +9,7 @@ public class PvWeathers {
             ;
     public static void load()
     {
-        danger = new DangerWeather("danger")
+        danger = new FleetWeather("danger")
         {{
 
         }};

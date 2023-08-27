@@ -72,7 +72,7 @@ public class PvUnits {
         /*yggdrasil path*/root,stick,branch,tree,cambrium,yggdrasil,
 
         /*Nullis*/
-            /*Storage Con Path*/pocket,container,capsule,vault,chamber,
+            /*Storage Con Path*/pocket,container,capsule,vault,chamber, /* I u I */ symphony,
 
         /*Extra Paths : */
         routerTank, routerBastion, box,blockHost,
@@ -368,7 +368,7 @@ public class PvUnits {
             health = 320;
             armor = 0;
             flying = true;
-            buildSpeed = 1.2f;
+            buildSpeed = 0.4f;
             mineTier = 2;
             mineSpeed = 7f;
             itemCapacity = 50;
@@ -628,6 +628,8 @@ public class PvUnits {
             flying = true;
             speed = 19f/7.5f;
             itemCapacity = 25;
+            engineOffset = 8;
+            engineSize = 6;
             lowAltitude = true;
             canBoost = false;
             range = 48 * 8;
@@ -640,18 +642,20 @@ public class PvUnits {
                         shoot.shots = 3;
                         shoot.shotDelay = 5;
                         reload = 60/1.7f;
+                        rotate = true;
+                        shootCone = 10;
+                        rotateSpeed = 6;
                         mirror = false;
                         recoil = 3;
                         inaccuracy = 5;
                         bullet = new SapBulletType()
                         {{
                             incendChance = 0;
-                            buildingDamageMultiplier = 0.2f;
                             shake = 0;
                             status = StatusEffects.sapped;
                             statusDuration = 120f;
                             sapStrength = 0.85f;
-                            healPercent = 0.05f;
+                            healPercent = 0.02f;
                             length = 24*8f;
                             damage = 50;
                             shootEffect = Fx.shootSmall;
@@ -665,13 +669,14 @@ public class PvUnits {
                     new Weapon()
                     {{
                         x = 0;
-                        y = 4;
+                        y = 30;
                         reload = 60/0.5f;
                         mirror = false;
                         bullet = new RailBulletType(){{
                             shootEffect = Fx.lancerLaserShoot;
-                            length = 36*8;
+                            length = 32*8;
                             pointEffectSpace = 60f;
+                            buildingDamageMultiplier = 0.2f;
                             pierceEffect = Fx.railHit;
                             pointEffect = PvEffects.railFrag;
                             hitEffect = Fx.massiveExplosion;
@@ -690,8 +695,8 @@ public class PvUnits {
             constructor = EntityMapping.map("mega");
             health = 15000;
             armor = 4;
-            hitSize = 8*3;
-            drag = 0.02f;
+            hitSize = 8*4;
+            drag = 0.05f;
             lowAltitude = true;
             flying = true;
             engineOffset = 18;
@@ -722,14 +727,13 @@ public class PvUnits {
                             collidesTeam = true;
                             trailColor = lightColor = backColor = Pal.sap;
                             frontColor = Pal.sap;
-
                         }};
                     }},
             new Weapon(PvUtil.GetName("excerpt-rail-gun"))
             {{
                 x = 0;
-                y = 0;
-                range = 48*8;
+                y = 15;
+                range = 44*8;
                 reload = 120;
                 mirror = false;
                 recoil = 3;
@@ -740,8 +744,8 @@ public class PvUnits {
                     buildingDamageMultiplier = 0.2f;
                     hitShake = 6f;
                     shootEffect = Fx.lancerLaserShoot;
-                    length = 48*8;
-                    pointEffectSpace = 60f;
+                    length = 44*8;
+                    pointEffectSpace = 30f;
                     pierceEffect = Fx.railHit;
                     pointEffect = PvEffects.railFrag;
                     hitEffect = Fx.massiveExplosion;
@@ -1446,6 +1450,65 @@ public class PvUnits {
                     color = Team.green.color;
                 }});
             }
+        }};
+        symphony = new GridUnitType("symphony") {{
+            localizedName = "Symphony";
+            description = "[#b]The Giant of Giants. Its size is perfect for your entire base.";
+            health = 428500;
+            deathExplosionEffect = PvEffects.nullisDeath.get(7);
+            factions.add(PvFactions.Nullis);
+            armor = 30;
+            drownTimeMultiplier = 30;
+            rotateSpeed = 60f/60f;
+            canBoost = true;
+            hitSize = 40*8;
+            buildSize = 34;
+            setGridLayout(new byte[][]{
+                    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                    {0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0},
+                    {0,0,0,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0},
+                    {0,0,0,0,1,1,1,1,1,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,0},
+                    {0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0},
+                    {0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0},
+                    {0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0},
+                    {0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0},
+                    {0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0},
+                    {0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0},
+                    {0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0},
+                    {0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0},
+                    {0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0},
+                    {0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0},
+                    {0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0},
+                    {0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0},
+                    {0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0},
+                    {0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0},
+                    {0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0},
+                    {0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0},
+                    {0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0},
+                    {0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0},
+                    {0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0},
+                    {0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0},
+                    {0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0},
+                    {0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0},
+                    {0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0},
+                    {0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0},
+                    {0,0,0,0,1,1,1,1,1,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,0},
+                    {0,0,0,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0},
+                    {0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0},
+                    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}
+            });
+            healColor = Color.black;
+            engineColor = Color.black;
+            itemCapacity = 200000;
+            speed = 0.004f / 7.5f;
+            boostMultiplier = 450;
+            drag = 0.03f;
+            lowAltitude = true;
+            range = 12*8;
+            engineSize = 0;
+            abilities.add(new VoidAbility(70*8));
         }};
     }
     public static void loadBosses() {

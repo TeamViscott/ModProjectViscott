@@ -93,7 +93,7 @@ public class PvItems {
             radioactivity = -4;
         }};
 
-        vercilusItems.addAll(zirconium,lithium,barium,silicon,nobelium,platinum,erbium,carbonFiber,rushAlloy,tideAlloy);
+        vercilusItems.addAll(zirconium,lithium,barium,silicon,nobelium,platinum,erbium,carbonFiber,rushAlloy,tideAlloy,bulkAlloy);
         vercilusOnlyItems = vercilusItems.copy();
         vercilusOnlyItems.remove(silicon);
     }

@@ -85,6 +85,7 @@ public class PvBlocks {
                     /*Unit Creation*/templateMolder,
                             nueroSpawnPad,eliteSpawnPad,
                             nueroRemolder,
+                            minimalHousingUnit,regularHousingUnit,
                             /*Yggdrasil*/branchMolder,
 
                     /*Nullis*/
@@ -821,7 +822,7 @@ public class PvBlocks {
                     maxBlockSize = 3;
                     consumePower(120/60);
                     constructions.addAll(
-                            airTempT1, airTempT2, airTempT3
+                            airTempT1, airTempT2
                     );
                 }};
                 nueroSpawnPad = new BulkUnitFactory("nuero-spawn-pad")
@@ -900,6 +901,36 @@ public class PvBlocks {
                     constructTime = 60*20;
                     consumePower(200f/60f);
                     consumeItems(with(PvItems.barium,100,Items.silicon,80,PvItems.lithium,40));
+                }};
+                minimalHousingUnit = new HousingUnitBlock("minimal-housing-unit") {{
+                    requirements(Category.units,with(PvItems.zirconium,400,PvItems.lithium,250,Items.silicon,50)); //Todo
+                    localizedName = "Minimal Housing Unit";
+                    health = 540;
+                    size = 3;
+                    itemCapacity = 100;
+                    consumePower(320);
+                    consumeItems(with(PvItems.barium,80,PvItems.zirconium,40,Items.silicon,20));
+                    addUpgrade(PvUnits.particle,PvUnits.snippet);
+                    addUpgrade(PvUnits.milli,PvUnits.centi);
+                    addUpgrade(PvUnits.pocket,PvUnits.container);
+                    addUpgrade(PvUnits.rivulet,PvUnits.bourn);
+                    addUpgrade(PvUnits.chime,PvUnits.carillon);
+                    constructTime = 60*45;
+                }};
+                regularHousingUnit = new HousingUnitBlock("regular-housing-unit") {{
+                    requirements(Category.units,with(PvItems.zirconium,500)); //Todo
+                    localizedName = "Regular Housing Unit";
+                    health = 1400;
+                    size = 5;
+                    itemCapacity = 200;
+                    consumePower(940);
+                    consumeItems(with(PvItems.barium,220,PvItems.lithium,120,Items.silicon,100,PvItems.nobelium,40));
+                    addUpgrade(PvUnits.snippet,PvUnits.fragment);
+                    addUpgrade(PvUnits.centi,PvUnits.deci);
+                    addUpgrade(PvUnits.container,PvUnits.capsule);
+                    addUpgrade(PvUnits.bourn,PvUnits.tributary);
+                    addUpgrade(PvUnits.carillon,PvUnits.peal);
+                    constructTime = 60*70;
                 }};
                 densePayloadConveyor = new PayloadConveyor("dense-payload-conveyor")
                 {{
