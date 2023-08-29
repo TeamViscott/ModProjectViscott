@@ -19,7 +19,7 @@ public class PvFactions {
                     "   Option to select type of Target in its faction Turrets\n" +
                     "   Energy Core's\n" +
                     "[red]Negative Attributes : \n" +
-                    "   Overall Weaker Core Units\n";
+                    "   Overall Weaker Core Units";
         }};
         Mortikai = new PvFaction("mortikai",Color.valueOf("#811f1f")){{
             description = "This faction has solely centered in offense and defense since ancient times. They are specified in defense in a different way than psy.\n" +
@@ -49,13 +49,20 @@ public class PvFactions {
                     "   Near Endless Growth\n" +
                     "[red]Negative Attributes : \n" +
                     "   Base Core Capacity is Low\n" +
-                    "   Slower Startup\n";
+                    "   Slower Startup";
             info = "Nullis is a Faction of Units that have found a way to use Black Hole's in an Efficient way.\n" +
                     "Once a Small Faction with nothing more than a few Units and some machinery to mess around with,\n" +
                     "is now a Force to be reckoned with.\nTheir expansion is close to non once they set up base.";
         }};
         Psy = new PvFaction("psy",Color.valueOf("#e892d1")){{
-            description = "The Psy faction has been able to create extremely powerful shields and walls. They are specified in defense in a different way than mortikai";
+            description = "The Psy faction has been able to create extremely powerful shields and walls. They are specified in defense in a different way than mortikai\n" +
+                    "[green]Positive Attributes : \n" +
+                    "   Incredible Defenses and more Turret options\n" +
+                    "   Compact Factory's\n" +
+                    "   Core Shield\n" +
+                    "[red]Negative Attributes : \n" +
+                    "   Weaker Unit's\n" +
+                    "   Low Unit Cap";
         }};
         Yggdrasil = new PvFaction("team-yggdrasil",Color.valueOf("#766e4d")) {{
             description = "[#e892d1]Psy[][pink] Sub Faction][]\nFollowers of The [green]Omamori[]. they use nature to defend and harvest resources.";

@@ -245,28 +245,54 @@ public class PvUnits {
                             rotationLimit = 30;
                             shootStatus = PvStatusEffects.crescendo;
                             shootStatusDuration = 30;
-                            bullet = new LaserBoltBulletType(8, 20) {{
+                            bullet = new LaserBoltBulletType(16, 14) {{
+                                homingPower = 0.01f;
+                                width = 0;
+                                height = 0;
+                                homingDelay = 1;
+                                buildingDamageMultiplier = 0.01f;
+                                trailLength = 2;
+                                trailWidth = 0.5f;
+                                pierce = true;
+                                pierceCap = 3;
+                                homingRange = 8 * 28f;
+                                lifetime = PvUtil.GetRange(this.speed, 28);
+                                trailColor = backColor = Pal.engine;
+                                lightColor = Color.black;
+                                this.recoil = 0f;
+                                despawnShake = hitShake = 0.1f;
+                            }};
+                        }},
+                    new Weapon("spectrum-weapon2")
+                    {
+                        {
+                            reload = 60f / 2f;
+                            x = 6;
+                            y = 2;
+                            mirror = true;
+                            rotationLimit = 30;
+                            shootStatus = PvStatusEffects.crescendo;
+                            shootStatusDuration = 30;
+                            bullet = new LaserBoltBulletType(8, 18) {{
                                 homingPower = 0.01f;
                                 homingDelay = 1;
                                 buildingDamageMultiplier = 0.01f;
                                 trailLength = 10;
                                 trailWidth = 1;
-                                pierce = true;
-                                pierceCap = 3;
-                                sprite = "circle-bullet";
                                 homingRange = 8 * 28f;
                                 lifetime = PvUtil.GetRange(this.speed, 28);
                                 trailColor = lightColor = backColor = Pal.engine;
                                 this.recoil = 0f;
                                 despawnShake = hitShake = 0.5f;
                                 fragBullets = 3;
+                                hitEffect = despawnEffect = Fx.hitBulletSmall;
                                 fragBullet = new LaserBoltBulletType(6, 6) {{
                                     homingPower = 0.01f;
                                     homingDelay = 1;
                                     buildingDamageMultiplier = 0.01f;
                                     trailLength = 10;
                                     trailWidth = 1;
-                                    sprite = "circle-bullet";
+                                    drag = 0.01f;
                                     homingRange = 8 * 28f;
                                     lifetime = PvUtil.GetRange(this.speed, 14);
                                     trailColor = lightColor = backColor = Pal.engine;

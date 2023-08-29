@@ -6,6 +6,10 @@ import arc.graphics.g2d.TextureRegion;
 import arc.util.Eachable;
 import mindustry.Vars;
 import mindustry.entities.units.BuildPlan;
+import mindustry.gen.Building;
+import mindustry.gen.Icon;
+import mindustry.world.blocks.payloads.Payload;
+import mindustry.world.blocks.payloads.UnitPayload;
 import mindustry.world.blocks.units.Reconstructor;
 
 public class HousingUnitBlock extends Reconstructor {
@@ -13,6 +17,7 @@ public class HousingUnitBlock extends Reconstructor {
     public HousingUnitBlock(String name) {
         super(name);
         rotate = false;
+        outputsPayload = false;
     }
 
     @Override
@@ -41,12 +46,42 @@ public class HousingUnitBlock extends Reconstructor {
     }
 
     public class HousingUnitBuild extends ReconstructorBuild {
+        {
+            rotation = 16;
+        }
         @Override
         public void update() {
             super.update();
             if (payload == null) return;
             if(hasUpgrade(payload.unit.type)) return;
+            payload.unit.x(x);
+            payload.unit.y(y);
             dumpPayload();
+        }
+
+        @Override
+        public boolean acceptPayload(Building source, Payload payload){
+            if(!(this.payload == null
+                    && (this.enabled || source == this)
+                    && payload instanceof UnitPayload pay)){
+                return false;
+            }
+
+            var upgrade = upgrade(pay.unit.type);
+
+            if(upgrade != null){
+                if(!upgrade.unlockedNowHost() && !team.isAI()){
+                    //flash "not researched"
+                    pay.showOverlay(Icon.tree);
+                }
+
+                if(upgrade.isBanned()){
+                    //flash an X, meaning 'banned'
+                    pay.showOverlay(Icon.cancel);
+                }
+            }
+
+            return upgrade != null && (team.isAI() || upgrade.unlockedNowHost()) && !upgrade.isBanned();
         }
 
         @Override
@@ -58,6 +93,11 @@ public class HousingUnitBlock extends Reconstructor {
                 }
                 Draw.rect(this.block.teamRegions[this.team.id], this.x, this.y);
                 Draw.color();
+            }
+            for(int i = 0; i < 4; i++){
+                if(blends(i)){
+                    Draw.rect(inRegion, x, y, (i * 90) - 180);
+                }
             }
             if (payload != null)
                 payload.draw();
