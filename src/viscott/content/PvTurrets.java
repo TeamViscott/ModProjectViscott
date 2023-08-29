@@ -26,6 +26,7 @@ import viscott.content.shootpatterns.CyclicShootPattern;
 import viscott.utilitys.PvUtil;
 import viscott.world.bullets.LargeBranchBulletType;
 import viscott.world.block.defense.PvItemTurret;
+import viscott.world.bullets.LiquidLaserBulletType;
 import viscott.world.bullets.VoidBulletType;
 import viscott.world.pseudo3d.importedcode.BallisticMissileBulletType;
 
@@ -507,21 +508,16 @@ public class PvTurrets {
             reload = 60f/1f;
             range = 28*8;
             ammo(
-                    Liquids.water,new LaserBulletType(13) {{
-                        colors = new Color[3];
-                        colors[0] = colors[1] = colors[2] = Liquids.water.color;
+                    Liquids.water,new LiquidLaserBulletType(13,Liquids.water) {{
                         length = 28*8;
                         status = StatusEffects.wet;
                         statusDuration = 90;
 
                     }},
-                    PvLiquids.kerosene, new LaserBulletType(20){{
-                        colors = new Color[3];
-                        colors[0] = colors[1] = colors[2] = PvLiquids.kerosene.color;
+                    PvLiquids.kerosene, new LiquidLaserBulletType(20,PvLiquids.kerosene){{
                         length = 28*8;
                         status = PvStatusEffects.doused;
                         statusDuration = 90;
-
                     }}
             );
             drawer = new DrawTurret(GetName("Pov"));
@@ -1458,17 +1454,13 @@ public class PvTurrets {
             maxHeatEfficiency = 10;
             range = 47*8;
             ammo(
-                    Liquids.water,new LaserBulletType(24) {{
-                        colors = new Color[3];
-                        colors[0] = colors[1] = colors[2] = Liquids.water.color;
+                    Liquids.water,new LiquidLaserBulletType(24,Liquids.water) {{
                         length = 20*8;
                         width *= 1.4f;
                         status = StatusEffects.wet;
                         statusDuration = 90;
                     }},
-                    PvLiquids.kerosene, new LaserBulletType(52){{
-                        colors = new Color[3];
-                        colors[0] = colors[1] = colors[2] = PvLiquids.kerosene.color;
+                    PvLiquids.kerosene, new LiquidLaserBulletType(52,PvLiquids.kerosene){{
                         length = 20*8;
                         width *= 1.4f;
                         status = PvStatusEffects.doused;

@@ -85,7 +85,8 @@ public class PvBlocks {
                     /*Pressure related*/pressureSource,
                     /*Unit Creation*/templateMolder,
                             nueroSpawnPad,eliteSpawnPad,
-                            nueroRemolder,
+                            nueroRemolder,grandRemolder,
+                            forceModifier,
                             minimalHousingUnit,regularHousingUnit,
                             /*Yggdrasil*/branchMolder,
 
@@ -903,14 +904,39 @@ public class PvBlocks {
                     consumePower(200f/60f);
                     consumeItems(with(PvItems.barium,100,Items.silicon,80,PvItems.lithium,40));
                 }};
+                grandRemolder = new Reconstructor("grand-remolder") {{
+                    requirements(Category.units,with(PvItems.zirconium,1000,PvItems.platinum,700,PvItems.erbium,300,Items.silicon,200,PvItems.nobelium,80)); //Todo
+                    localizedName = "Grand Remolder";
+                    addUpgrade(PvUnits.snippet,PvUnits.excerpt);
+                    //addUpgrade(PvUnits.centi,PvUnits.deci); no T4 yet.
+                    addUpgrade(PvUnits.container,PvUnits.vault);
+                    addUpgrade(PvUnits.bourn,PvUnits.loch);
+                    //addUpgrade(PvUnits.carillon,PvUnits.peal); no T4 yet.
+                    health = 3150;
+                    size = 7;
+                    itemCapacity = 1000;
+                    constructTime = 60*60;
+                    consumePower(1200f/60f);
+                    consumeItems(with(PvItems.barium,600, PvItems.erbium,450,PvItems.platinum,200,PvItems.nobelium,100));
+                }};
+                forceModifier = new Reconstructor("force-modifier") {{
+                    requirements(Category.units,BuildVisibility.sandboxOnly,with(PvItems.zirconium,1000,PvItems.platinum,700,PvItems.erbium,300,Items.silicon,200,PvItems.nobelium,80)); //Todo
+                    localizedName = "Force Modifier";
+                    health = 2600;
+                    size = 5;
+                    itemCapacity = 1000;
+                    constructTime = 60*60;
+                    consumePower(200f/60f);
+                    consumeItems(with(PvItems.barium,100,Items.silicon,80,PvItems.lithium,40));
+                }};
                 minimalHousingUnit = new HousingUnitBlock("minimal-housing-unit") {{
                     requirements(Category.units,with(PvItems.zirconium,400,PvItems.lithium,250,Items.silicon,50)); //Todo
                     localizedName = "Minimal Housing Unit";
                     health = 540;
                     size = 3;
                     itemCapacity = 100;
-                    consumePower(320);
-                    consumeItems(with(PvItems.barium,80,PvItems.zirconium,40,Items.silicon,20));
+                    consumePower(160);
+                    consumeItems(with(PvItems.zirconium,40,Items.silicon,20));
                     addUpgrade(PvUnits.particle,PvUnits.snippet);
                     addUpgrade(PvUnits.milli,PvUnits.centi);
                     addUpgrade(PvUnits.pocket,PvUnits.container);
@@ -919,13 +945,13 @@ public class PvBlocks {
                     constructTime = 60*45;
                 }};
                 regularHousingUnit = new HousingUnitBlock("regular-housing-unit") {{
-                    requirements(Category.units,with(PvItems.zirconium,500)); //Todo
+                    requirements(Category.units,with(PvItems.zirconium,600,PvItems.lithium,400,Items.silicon,120,PvItems.nobelium,60)); //Todo
                     localizedName = "Regular Housing Unit";
                     health = 1400;
                     size = 5;
                     itemCapacity = 200;
-                    consumePower(940);
-                    consumeItems(with(PvItems.barium,220,PvItems.lithium,120,Items.silicon,100,PvItems.nobelium,40));
+                    consumePower(520);
+                    consumeItems(with(PvItems.barium,160,Items.silicon,100,PvItems.nobelium,40));
                     addUpgrade(PvUnits.snippet,PvUnits.fragment);
                     addUpgrade(PvUnits.centi,PvUnits.deci);
                     addUpgrade(PvUnits.container,PvUnits.capsule);

@@ -4,6 +4,8 @@ import arc.func.Cons;
 import arc.graphics.g2d.Draw;
 import arc.graphics.g2d.TextureRegion;
 import arc.math.*;
+import arc.math.geom.Point2;
+import arc.struct.IntSeq;
 import arc.struct.Seq;
 import arc.util.Log;
 import arc.util.Time;
@@ -32,6 +34,9 @@ import mindustry.world.blocks.defense.turrets.Turret;
 import mindustry.world.blocks.distribution.Conveyor;
 import mindustry.world.blocks.distribution.StackConveyor;
 import mindustry.world.blocks.environment.Prop;
+import mindustry.world.blocks.power.PowerBlock;
+import mindustry.world.blocks.power.PowerDiode;
+import mindustry.world.blocks.power.PowerNode;
 import mindustry.world.blocks.storage.CoreBlock;
 import mindustry.world.draw.DrawTurret;
 import viscott.content.PvBlocks;
@@ -115,6 +120,7 @@ public class GridUnit extends MechUnit {
         if (t == null) return false;
         if (t.x + min < 0 || t.y + min < 0) return false;
         if (t.x + max >= buildSize || t.y + max >= buildSize) return false;
+        IntSeq enegyLinks = energyGet(building,t);
         if (building.tile.build == building)
             building.tile.setNet(Blocks.air);
         Vars.world = innerWorld;
@@ -125,8 +131,24 @@ public class GridUnit extends MechUnit {
             building.setIndex__all(-1);
             Groups.all.remove(building);
         }
+        if (enegyLinks != null)
+            building.power.links = enegyLinks;
         Vars.world = curWorld;
         return true;
+    }
+
+    public IntSeq energyGet(Building build,Tile newOrigin) {
+        if (build.power != null) {
+            Tile tileFrom = build.tile;
+            IntSeq newLinks = new IntSeq();
+            build.power.links.each(l -> {
+                int offX = Point2.x(l) - tileFrom.x,
+                    offY = Point2.y(l) - tileFrom.y;
+                newLinks.add(Point2.pack(newOrigin.x+offX,newOrigin.y+offY));
+            });
+            return newLinks;
+        }
+        return null;
     }
 
     public boolean placeFrom(Tile c,int x,int y,byte rotation) {
@@ -262,6 +284,7 @@ public class GridUnit extends MechUnit {
             World w = Vars.world;
             Vars.world = innerWorld;
             proxupdate.each(b -> {
+                if (b.power != null) Log.info(b.power.links);
                 if (!b.isAdded())
                     b.add();
             });
