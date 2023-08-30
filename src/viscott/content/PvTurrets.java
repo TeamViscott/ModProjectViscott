@@ -2118,6 +2118,7 @@ public class PvTurrets {
             inaccuracy = 0f;
             shootX = 0;
             shootY = 0;
+            predictTarget = false;
             health = 12000;
             shootCone = 360f;
             shootSound = Sounds.lasershoot;
