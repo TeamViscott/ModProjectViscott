@@ -83,7 +83,7 @@ public class PvBlocks {
                     smallConcentratedTank,largeConcentratedTank,
                             micropulsePump,effluxPump,
                     /*Pressure related*/pressureSource,
-                    /*Unit Creation*/templateMolder,
+                    /*Unit Creation*/templateMolder,massTemplateMolder,
                             nueroSpawnPad,eliteSpawnPad,
                             nueroRemolder,grandRemolder,
                             forceModifier,
@@ -827,6 +827,18 @@ public class PvBlocks {
                             airTempT1, airTempT2
                     );
                 }};
+                massTemplateMolder = new PvSelectiveConstructor("mass-template-molder") {{
+                    requirements(Category.units,with(PvItems.zirconium,250,Items.silicon,75,PvItems.platinum,40)); //Todo
+                    localizedName = "Mass Template Molder";
+                    health = 1700;
+                    size = 5;
+                    minBlockSize = 1;
+                    maxBlockSize = 4;
+                    consumePower(300/60);
+                    constructions.addAll(
+                            airTempT1, airTempT2,airTempT3
+                    );
+                }};
                 nueroSpawnPad = new BulkUnitFactory("nuero-spawn-pad")
                 {{
                     requirements(Category.units,with(PvItems.zirconium,250,Items.silicon,75,PvItems.platinum,40)); //Todo
@@ -1059,7 +1071,7 @@ public class PvBlocks {
                     itemCapacity = 20000;
                     conductivePower = true;
                     outputsPower = true;
-                    consumePowerBuffered(1000);
+                    consumePowerBuffered(30000);
                 }};
                 coreCharge = new PvCore("core-charge")
                 {{
@@ -1076,7 +1088,7 @@ public class PvBlocks {
                     itemCapacity = 30000;
                     conductivePower = true;
                     outputsPower = true;
-                    consumePowerBuffered(4000);
+                    consumePowerBuffered(75000);
                 }};
                 coreSurge = new PvCore("core-surge")
                 {{
@@ -1093,7 +1105,7 @@ public class PvBlocks {
                     spawnEffect = Fx.greenBomb;
                     conductivePower = true;
                     outputsPower = true;
-                    consumePowerBuffered(12000);
+                    consumePowerBuffered(160000);
                 }};
                 yggdrasilsHeartwood = new PvCore("yggdrasils-heartwood")
                 {{

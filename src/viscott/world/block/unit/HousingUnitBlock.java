@@ -8,6 +8,7 @@ import mindustry.Vars;
 import mindustry.entities.units.BuildPlan;
 import mindustry.gen.Building;
 import mindustry.gen.Icon;
+import mindustry.type.UnitType;
 import mindustry.world.blocks.payloads.Payload;
 import mindustry.world.blocks.payloads.UnitPayload;
 import mindustry.world.blocks.units.Reconstructor;
@@ -18,6 +19,7 @@ public class HousingUnitBlock extends Reconstructor {
         super(name);
         rotate = false;
         outputsPayload = false;
+        solid = false;
     }
 
     @Override
@@ -47,7 +49,7 @@ public class HousingUnitBlock extends Reconstructor {
 
     public class HousingUnitBuild extends ReconstructorBuild {
         {
-            rotation = 16;
+            rotation = -1;
         }
         @Override
         public void update() {
@@ -61,9 +63,7 @@ public class HousingUnitBlock extends Reconstructor {
 
         @Override
         public boolean acceptPayload(Building source, Payload payload){
-            if(!(this.payload == null
-                    && (this.enabled || source == this)
-                    && payload instanceof UnitPayload pay)){
+            if(!(this.payload == null && payload instanceof UnitPayload pay)){
                 return false;
             }
 
@@ -79,9 +79,9 @@ public class HousingUnitBlock extends Reconstructor {
                     //flash an X, meaning 'banned'
                     pay.showOverlay(Icon.cancel);
                 }
+                return (team.isAI() || upgrade.unlockedNowHost()) && !upgrade.isBanned();
             }
-
-            return upgrade != null && (team.isAI() || upgrade.unlockedNowHost()) && !upgrade.isBanned();
+            return false;
         }
 
         @Override
@@ -99,9 +99,17 @@ public class HousingUnitBlock extends Reconstructor {
                     Draw.rect(inRegion, x, y, (i * 90) - 180);
                 }
             }
-            if (payload != null)
+            if (payload != null) {
                 payload.draw();
-            Draw.rect(topRegion,x,y,rotation*90);
+                UnitType u = upgrade(payload.unit.type);
+                if (u != null) {
+                    float a = progress / constructTime;
+                    Draw.alpha(a);
+                    Draw.rect(u.fullIcon, x, y);
+                    Draw.alpha(1);
+                }
+            }
+            Draw.rect(topRegion,x,y);
         }
     }
 }
