@@ -2117,7 +2117,7 @@ public class PvTurrets {
             velocityRnd = 0f;
             inaccuracy = 0f;
             shootX = 0;
-            shootY = 0; //test
+            shootY = 0;
             health = 12000;
             shootCone = 360f;
             shootSound = Sounds.lasershoot;

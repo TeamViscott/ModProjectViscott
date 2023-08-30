@@ -2,11 +2,15 @@ package viscott.world.block.drill;
 
 import arc.Core;
 import arc.math.Mathf;
+import arc.struct.EnumSet;
 import arc.util.Strings;
 import mindustry.graphics.Drawf;
 import mindustry.graphics.Pal;
 import mindustry.ui.Bar;
 import mindustry.world.Block;
+import mindustry.world.blocks.power.PowerNode;
+import mindustry.world.meta.BlockFlag;
+import mindustry.world.meta.BlockGroup;
 import viscott.content.PvAttributes;
 import viscott.world.block.environment.DepositWall;
 
@@ -21,10 +25,19 @@ public class PowerGrinder extends Grinder{
     {
         super(name);
         hasPower = true;
+
         outputsPower = true;
         consumesPower = false;
+
         hasItems = false;
         itemCapacity = 0;
+        group = BlockGroup.power;
+        flags = EnumSet.of(BlockFlag.generator);
+    }
+
+    @Override
+    public void init() {
+        super.init();
     }
 
     public float getMineable(float x,float y)
@@ -87,8 +100,9 @@ public class PowerGrinder extends Grinder{
         }
 
         @Override
-        public void updateTile()
+        public void update()
         {
+            super.update();
             productionEfficiency = Mathf.approachDelta(productionEfficiency,getPower(x/8,y/8),0.1f);
         }
 
