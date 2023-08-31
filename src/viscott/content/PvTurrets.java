@@ -1379,19 +1379,20 @@ public class PvTurrets {
                 size = 4;
                 minWarmup = 0.8f;
                 health = 2800;
-                range = 8 * 60;
+                range = 8 * 66;
                 shootY = 16;
                 recoil = 4;
                 coolant = consumeCoolant(0.1f);
                 ammo(
-                        PvLiquids.liquidNitrogen, new BasicBulletType(1,140) {{
-                            lifetime = PvUtil.GetRange(1,60);
+                        PvLiquids.liquidNitrogen, new BasicBulletType(2,140) {{
+                            lifetime = PvUtil.GetRange(2,58);
                             trailLength = 20;
                             trailWidth = 2;
+                            drag = -0.001f;
                             status = StatusEffects.freezing;
                             statusDuration = 120;
                             trailColor = backColor = lightColor = Pal.lancerLaser;
-                            trailInterval = 10;
+                            trailInterval = 6;
                             intervalRandomSpread = 90;
                             intervalAngle = -45;
                             intervalBullets = 1;
