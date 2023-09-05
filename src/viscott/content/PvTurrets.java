@@ -1389,7 +1389,7 @@ public class PvTurrets {
                             trailLength = 20;
                             trailWidth = 2;
                             drag = -0.001f;
-                            status = StatusEffects.freezing;
+                            status = PvStatusEffects.torture;
                             statusDuration = 120;
                             trailColor = backColor = lightColor = Pal.lancerLaser;
                             trailInterval = 6;
