@@ -327,7 +327,7 @@ public class PvUnits {
                         inaccuracy = 0f;
                         shootSound = Sounds.malignShoot;
                         recoil = 2f;
-                        shootStatus = PvStatusEffects.treeAmp;
+                        shootStatus = PvStatusEffects.photosynthesis;
                         shootStatusDuration = 15;
                         bullet = new BranchBulletType(40) {{
                             branchLength = 9;
@@ -3606,20 +3606,17 @@ public class PvUnits {
         root = new PvUnitType("root") {{
             health = 250;
             armor = 20;
-            speed = 0.6f;
-            hovering = true;
             localizedName = "[#766e4d]Root";
             constructor = EntityMapping.map("toxopid");
+            speed = 0.54f;
+            drag = 0.4f;
+            rotateSpeed = 3f;
             legCount = 6;
-            legMoveSpace = 2f;
-            legPairOffset = 1.5f;
-            legLength = 24f;
-            legExtension = -5;
-            legBaseOffset = 5f;
-            stepShake = 0f;
-            legLengthScl = 0.64f;
-            rippleScale = 1f;
-            legSpeed = 0.15f;
+            legLength = 20f;
+            legForwardScl = 0.8f;
+            legMoveSpace = 1.4f;
+            legBaseOffset = 2f;
+            hovering = true;
             weapons.add(new Weapon(name + "-weapon") {{
                 x = 4f;
                 y = -1f;
@@ -3631,7 +3628,7 @@ public class PvUnits {
                 shoot.shotDelay = 20f;
                 rotate = true;
                 rotateSpeed = 2.8f;
-                shootStatus = PvStatusEffects.treeAmp;
+                shootStatus = PvStatusEffects.photosynthesis;
                 shootStatusDuration = 105;
                 bullet = new BasicBulletType(0.8f, 10f) {{
                     pierce = true;
@@ -3656,17 +3653,22 @@ public class PvUnits {
         stick = new PvUnitType("stick") {{
             health = 750;
             armor = 40;
-            hovering = true;
+            drag = 0.1f;
+            speed = 0.62f;
+
+            rotateSpeed = 2.7f;
+
             legCount = 6;
-            legMoveSpace = 3f;
-            legPairOffset = 2.25f;
-            legLength = 36f;
-            legExtension = -7.5f;
-            legBaseOffset = 7.5f;
-            stepShake = 0f;
+            legMoveSpace = 1f;
+            legPairOffset = 3;
+            legLength = 20f;
+            legExtension = -10;
+            legBaseOffset = 5f;
+            stepShake = 1f;
             legLengthScl = 0.96f;
-            rippleScale = 1.5f;
-            legSpeed = 0.15f;
+            rippleScale = 2f;
+            legSpeed = 0.2f;
+            hovering = true;
             localizedName = "[#766e4d]Stick";
             constructor = EntityMapping.map("toxopid");
             weapons.add(new Weapon(name + "-weapon") {{
@@ -3677,7 +3679,7 @@ public class PvUnits {
                 reload = 40f;
                 inaccuracy = 0f;
                 recoil = 0f;
-                shootStatus = PvStatusEffects.treeAmp;
+                shootStatus = PvStatusEffects.photosynthesis;
                 shootStatusDuration = 45;
                 bullet = new BranchBulletType(25) {{
                     pierce = true;
@@ -3689,19 +3691,24 @@ public class PvUnits {
             }});
         }};
         branch = new PvUnitType("branch") {{
-            health = 20250;
+            health = 2250;
             armor = 80;
+            drag = 0.1f;
+            speed = 0.62f;
+
+            rotateSpeed = 2.7f;
+
+            legCount = 6;
+            legMoveSpace = 1f;
+            legPairOffset = 3;
+            legLength = 30f;
+            legExtension = -15;
+            legBaseOffset = 10f;
+            stepShake = 1f;
+            legLengthScl = 0.96f;
+            rippleScale = 2f;
+            legSpeed = 0.2f;
             hovering = true;
-            legCount = 8;
-            legContinuousMove = true;
-            legMaxLength = 52.8f; //8.8
-            legExtension = -15f;  //2.5
-            legLength = 156.8f; //22.4
-            legBaseOffset = 42; //6
-            legLengthScl = 1.4f; //0.2
-            legMoveSpace = 1.05f; //0.15
-            rippleScale = 7f; //1
-            allowLegStep = true;
             localizedName = "[#766e4d]Branch";
             constructor = EntityMapping.map("toxopid");
             weapons.add(new Weapon(name + "-weapon-strike") {{
@@ -3712,7 +3719,7 @@ public class PvUnits {
                 reload = 100f;
                 inaccuracy = 0f;
                 recoil = 0f;
-                shootStatus = PvStatusEffects.treeAmp;
+                shootStatus = PvStatusEffects.photosynthesis;
                 shootStatusDuration = 105;
                 bullet = new LargeBranchBulletType(250){{
                     pierce = true;
@@ -3724,40 +3731,50 @@ public class PvUnits {
             }});
         }};
         tree = new PvUnitType("tree") {{
-            health = 60750;
+            health = 6750;
             armor = 100;
+            drag = 0.1f;
+            speed = 0.5f;
             hovering = true;
-            legContinuousMove = true;
-            legMaxLength = 61.6f; //8.8
-            legExtension = -17.5f;  //2.5
-            legLength = 179.2f; //22.4
-            legBaseOffset = 48; //6
-            legLengthScl = 1.6f; //0.2
-            legMoveSpace = 1.2f; //0.15
-            rippleScale = 8f; //1
-            legSplashDamage = 3200; //400
-            legSplashRange = 32; //4
-            allowLegStep = true;
+            lightRadius = 140f;
+
+            rotateSpeed = 1.9f;
+            drownTimeMultiplier = 3f;
+
             legCount = 8;
+            legMoveSpace = 0.8f;
+            legPairOffset = 3;
+            legLength = 55f;
+            legExtension = -15;
+            legBaseOffset = 6f;
+            stepShake = 1f;
+            legLengthScl = 0.93f;
+            rippleScale = 3f;
+            legSpeed = 0.19f;
             localizedName = "[#766e4d]Tree";
             constructor = EntityMapping.map("toxopid");
         }};
         cambrium = new PvUnitType("cambrium") {{
-            health = 182250;
+            health = 20250;
             armor = 120;
             hovering = true;
-            legCount = 10;
-            legContinuousMove = true;
-            legMaxLength = 79.2f; //8.8
-            legExtension = -22.5f;  //2.5
-            legLength = 201.6f; //22.4
-            legBaseOffset = 54; //6
-            legLengthScl = 1.8f; //0.2
-            legMoveSpace = 1.35f; //0.15
-            rippleScale = 9f; //1
-            legSplashDamage = 3600; //400
-            legSplashRange = 36; //4
-            allowLegStep = true;
+            drag = 0.1f;
+            speed = 0.5f;
+            lightRadius = 140f;
+
+            rotateSpeed = 1.9f;
+            drownTimeMultiplier = 3f;
+
+            legCount = 8;
+            legMoveSpace = 0.8f;
+            legPairOffset = 3;
+            legLength = 75f;
+            legExtension = -20;
+            legBaseOffset = 8f;
+            stepShake = 1f;
+            legLengthScl = 0.93f;
+            rippleScale = 3f;
+            legSpeed = 0.19f;
             localizedName = "[#766e4d]Cambrium";
             constructor = EntityMapping.map("toxopid");
         }};
@@ -3766,19 +3783,86 @@ public class PvUnits {
             armor = 140;
             hovering = true;
             legCount = 10;
-            legContinuousMove = true;
-            legMaxLength = 88;
-            legExtension = -25;
-            legLength = 224;
-            legBaseOffset = 60;
-            legLengthScl = 2;
-            legMoveSpace = 1.5f;
-            rippleScale = 10f;
-            legSplashDamage = 4000;
-            legSplashRange = 40;
-            allowLegStep = true;
+            legMoveSpace = 5f;
+            legPairOffset = 9f;
+            legLength = 76f;
+            legExtension = -18;
+            legBaseOffset = 24f;
+            stepShake = 0f;
+            legLengthScl = 3.84f;
+            rippleScale = 6f;
+            legSpeed = 0.9f;
             localizedName = "[#766e4d]Yggdrasil";
             constructor = EntityMapping.map("toxopid");
+            weapons.add(new Weapon(name + "-hel") {{
+                x = 0f;
+                y = -6f;
+                mirror = false;
+                reload = 60;
+                inaccuracy = 0;
+                minWarmup = 0.8f;
+                shootY = 16;
+                recoil = 4;
+                rotate = true;
+                rotateSpeed = 2.8f;
+                shootStatus = PvStatusEffects.photosynthesis;
+                shootStatusDuration = 105;
+                bullet = new BasicBulletType(2,140) {{
+                    lifetime = PvUtil.GetRange(2,58);
+                    trailLength = 20;
+                    trailWidth = 2;
+                    drag = -0.001f;
+                    status = PvStatusEffects.torture;
+                    statusDuration = 120;
+                    trailColor = backColor = lightColor = Pal.lancerLaser;
+                    trailInterval = 6;
+                    intervalRandomSpread = 90;
+                    intervalAngle = -45;
+                    intervalBullets = 1;
+                    buildingDamageMultiplier = 0.5f;
+                    fragRandomSpread = 4;
+                    fragSpread = 90f/8f;
+                    fragAngle = 0;
+                    fragBullets = 8;
+                    fragVelocityMax = 1.8f;
+                    fragVelocityMin = 0.8f;
+                    pierce = true;
+                    pierceCap = 3;
+                    pierceBuilding = true;
+                    fragBullet = intervalBullet = new BasicBulletType(4,75)
+                    {{
+                        trailLength = 10;
+                        trailWidth = 2;
+                        trailColor = backColor = lightColor = Pal.lancerLaser;
+                        lifetime = PvUtil.GetRange(4,40);
+                        drag = 0.1f;
+                    }};
+                }};
+                parts.addAll(
+                        Seq.with(
+                                new RegionPart("-l"){{
+                                    progress = PartProgress.warmup;
+                                    heatProgress = PartProgress.warmup;
+                                    heatColor = Color.valueOf("ff6214");
+                                    mirror = false;
+                                    under = false;
+                                    moveY = 1f;
+                                    moveX = -2;
+                                    moveRot = 15;
+                                }},
+                                new RegionPart("-r"){{
+                                    progress = PartProgress.warmup;
+                                    heatProgress = PartProgress.warmup;
+                                    heatColor = Color.valueOf("ff6214");
+                                    mirror = false;
+                                    under = false;
+                                    moveY = 1f;
+                                    moveX = 2;
+                                    moveRot = -15;
+                                }}
+                        )
+                );
+            }});
         }};
     }
 }
