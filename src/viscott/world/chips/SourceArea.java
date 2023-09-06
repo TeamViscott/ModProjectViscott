@@ -17,7 +17,7 @@ import viscott.world.bullets.VoidBulletType;
 import static mindustry.Vars.mods;
 import static mindustry.Vars.renderer;
 
-public interface AntiVoidArea {
+public interface SourceArea {
     default void updateVoid(Building building,float radius)
     {
         Groups.bullet.each(b -> {
@@ -29,7 +29,7 @@ public interface AntiVoidArea {
                     if (unit.team == building.team) {
                         if (Mathf.len(building.x-unit.x,building.y-unit.y) <= radius) {
                             unit.buildSpeedMultiplier*= 100;
-                            unit.apply(PvStatusEffects.antiVoidRepair,30);
+                            unit.apply(PvStatusEffects.sourceRepair,30);
                         }
                     } else {
                         if (Mathf.len(building.x-unit.x,building.y-unit.y) <= radius) {
@@ -50,7 +50,7 @@ public interface AntiVoidArea {
                 {
                     if (unit.team == u.team) {
                         if (Mathf.len(u.x-unit.x,u.y-unit.y) <= radius) {
-                            unit.apply(PvStatusEffects.antiVoidRepair,30);
+                            unit.apply(PvStatusEffects.sourceRepair,30);
                         }
                     } else {
                         if (Mathf.len(u.x-unit.x,u.y-unit.y) <= radius) {
