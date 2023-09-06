@@ -7,6 +7,7 @@ import arc.func.Cons;
 import arc.math.Mathf;
 import arc.struct.ObjectMap;
 import arc.struct.Seq;
+import arc.util.Log;
 import arc.util.Reflect;
 import arc.util.Time;
 import mindustry.Vars;
@@ -25,26 +26,26 @@ import static mindustry.Vars.state;
 
 public class PvSoundControl extends SoundControl {
     public static SoundControl ogSoundControl;
+    boolean loaded = false;
     public PvSoundControl()
     {
         super();
         ObjectMap<Object, Seq<Cons<?>>> events = Reflect.get(Events.class,"events");
         if (events.get(EventType.WaveEvent.class).size == 5) {
-            popAt(3,events.get(EventType.WaveEvent.class));
+            try {
+                if (events.get(EventType.WaveEvent.class).get(3).toString().contains("SoundControl")) {
+                    events.get(EventType.WaveEvent.class).remove(3);
+                    loaded = true;
+                }
+            }
+            catch (Exception e) {
+                Log.err(e);
+            }
         }
-    }
-
-    void popAt(int index,Seq<Cons<?>> seq)
-    {
-        Seq<Cons<?>> seq2 = new Seq<>();
-        for(int i = 0;i < index;i++)
-            seq2.add(seq.pop());
-        seq.pop();
-        for(int i = 0;i < index;i++)
-            seq.add(seq2.pop());
     }
     @Override
     public void playRandom(){
+        if (!loaded) return;
         playOnce(PvMusics.orbit);
         /*
         if (Vars.state.getPlanet() == PvPlanets.vercilus)

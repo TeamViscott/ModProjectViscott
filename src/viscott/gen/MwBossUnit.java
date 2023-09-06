@@ -5,6 +5,7 @@ import mindustry.entities.Effect;
 import mindustry.gen.Unit;
 import mindustry.gen.UnitEntity;
 import mindustry.type.UnitType;
+import viscott.content.PvUnitMapper;
 import viscott.content.PvUnits;
 import viscott.world.statusEffects.CurseStatusEffect;
 
@@ -52,12 +53,13 @@ public class MwBossUnit extends UnitEntity {
     }
     @Override
     public int classId() {
-        return 73;
+        return PvUnitMapper.MwBossId;
     }
 
     @Override
     public void draw() {
         if (!hideUnit)
             super.draw();
+        
     }
 }

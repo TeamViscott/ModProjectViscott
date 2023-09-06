@@ -34,23 +34,6 @@ public class StatusEffectStack extends PvStatusEffect {
         super(name);
     }
 
-    public void staticStat()
-    {
-        statsStatic.clear();
-        statsStatic.add(damageMultiplier);
-        statsStatic.add(healthMultiplier);
-        statsStatic.add(speedMultiplier);
-        statsStatic.add(reloadMultiplier);
-        statsStatic.add(buildSpeedMultiplier);
-        statsStatic.add(dragMultiplier);
-        damageMultiplier = 1;
-        healthMultiplier = 1;
-        speedMultiplier = 1;
-        reloadMultiplier = 1;
-        buildSpeedMultiplier = 1;
-        dragMultiplier = 1;
-    }
-
     @Override
     public void setStats() {
         if (newTeam != null)
@@ -155,6 +138,20 @@ public class StatusEffectStack extends PvStatusEffect {
     @Override
     public void init()
     {
+        statsStatic.clear();
+        statsStatic.add(damageMultiplier);
+        statsStatic.add(healthMultiplier);
+        statsStatic.add(speedMultiplier);
+        statsStatic.add(reloadMultiplier);
+        statsStatic.add(buildSpeedMultiplier);
+        statsStatic.add(dragMultiplier);
+        damageMultiplier = 1;
+        healthMultiplier = 1;
+        speedMultiplier = 1;
+        reloadMultiplier = 1;
+        buildSpeedMultiplier = 1;
+        dragMultiplier = 1;
+
         super.init();
         localName = localizedName;
         Events.run(EventType.Trigger.update,()-> {

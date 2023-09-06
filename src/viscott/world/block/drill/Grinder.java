@@ -36,7 +36,6 @@ public class Grinder extends PvBlock {
 
     public int range = 1;
     public float speedPerOre = 0.2f;
-    public float maxProgress = 100;
     public Effect updateEffect = null;
     public float tier = 1;
     public Seq<Pos> checkPattern = new Seq<>();
@@ -154,8 +153,7 @@ public class Grinder extends PvBlock {
         public void created()
         {
             super.created();
-            maxMineSpeed = getMineSpeed((int)x/8,(int)y/8);
-            hardness = getHardness((int)x/8,(int)y/8);
+            updateProximity();
         }
         float hardness = 0;
         float progress;
@@ -166,6 +164,12 @@ public class Grinder extends PvBlock {
             int fix = 4 + Mathf.floor((size-1)/2)*8;
             Drawf.dashRect(Pal.lighterOrange,x-offset-range*8-fix,y-offset-range*8-fix,size * 8 + range * 16,size * 8 + range * 16);
         }
+        @Override
+        public void updateProximity() {
+            super.updateProximity();
+            maxMineSpeed = getMineSpeed((int)x/8,(int)y/8);
+            hardness = getHardness((int)x/8,(int)y/8);
+        }
 
         @Override
         public boolean enabled()
@@ -173,14 +177,15 @@ public class Grinder extends PvBlock {
             return super.enabled();
         }
         @Override
-        public void updateTile()
+        public void update()
         {
+            super.update();
             if (hardness == -1)
             {
                 maxMineSpeed = getMineSpeed((int)x/8,(int)y/8);
                 hardness = getHardness((int)x/8,(int)y/8);
             }
-            if (efficiency > 0) {
+            if (efficiency > 0 && items != null) {
                 progress = Mathf.approachDelta(progress, 1, ((maxMineSpeed - hardness) / 60)*efficiency);
                 if (progress == 1) {
                     Seq<Block> blockList = getBlocks((int)x/8,(int)y/8);

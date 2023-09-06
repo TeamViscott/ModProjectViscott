@@ -13,7 +13,7 @@ import mindustry.graphics.Pal;
 import mindustry.logic.LStatements;
 import mindustry.type.*;
 import mindustry.world.Block;
-import mindustry.world.blocks.defense.Wall;
+import mindustry.world.blocks.defense.*;
 import mindustry.world.blocks.distribution.*;
 import mindustry.world.blocks.environment.*;
 import mindustry.world.blocks.heat.*;
@@ -24,6 +24,8 @@ import mindustry.world.blocks.power.*;
 import mindustry.world.blocks.production.*;
 import mindustry.world.blocks.storage.*;
 import mindustry.world.blocks.units.Reconstructor;
+import mindustry.world.blocks.units.UnitFactory;
+import mindustry.world.consumers.ConsumePower;
 import mindustry.world.draw.*;
 import mindustry.world.meta.BuildVisibility;
 import viscott.types.*;
@@ -81,9 +83,11 @@ public class PvBlocks {
                     smallConcentratedTank,largeConcentratedTank,
                             micropulsePump,effluxPump,
                     /*Pressure related*/pressureSource,
-                    /*Unit Creation*/templateMolder,
+                    /*Unit Creation*/templateMolder,massTemplateMolder,
                             nueroSpawnPad,eliteSpawnPad,
-                            nueroRemolder,
+                            nueroRemolder,grandRemolder,
+                            forceModifier,
+                            minimalHousingUnit,regularHousingUnit,
                             /*Yggdrasil*/branchMolder,
 
                     /*Nullis*/
@@ -692,7 +696,7 @@ public class PvBlocks {
                     itemCapacity = 200;
                     liquidCapacity = 50;
                     craftTime = 60*9.8f;
-                    craftEffect = new MultiEffect(Fx.smokeCloud,Fx.explosion);
+                    craftEffect = new MultiEffect(Fx.smokeCloud,Fx.explosion,PvEffects.uberbulkCraft);
                     updateEffect = Fx.smoke;
                     consumeItems(with(PvItems.zirconium,100,PvItems.lithium,40,PvItems.nobelium,20,PvItems.carbonFiber,10));
                     outputItem = new ItemStack(PvItems.bulkAlloy,5);
@@ -820,7 +824,19 @@ public class PvBlocks {
                     maxBlockSize = 3;
                     consumePower(120/60);
                     constructions.addAll(
-                            airTempT1, airTempT2, airTempT3
+                            airTempT1, airTempT2
+                    );
+                }};
+                massTemplateMolder = new PvSelectiveConstructor("mass-template-molder") {{
+                    requirements(Category.units,with(PvItems.zirconium,250,Items.silicon,75,PvItems.platinum,40)); //Todo
+                    localizedName = "Mass Template Molder";
+                    health = 1700;
+                    size = 5;
+                    minBlockSize = 1;
+                    maxBlockSize = 4;
+                    consumePower(300/60);
+                    constructions.addAll(
+                            airTempT1, airTempT2,airTempT3
                     );
                 }};
                 nueroSpawnPad = new BulkUnitFactory("nuero-spawn-pad")
@@ -888,6 +904,7 @@ public class PvBlocks {
                 }};
                 nueroRemolder = new Reconstructor("nuero-remolder") {{
                     requirements(Category.units,with(PvItems.zirconium,500,PvItems.platinum,100,Items.silicon,40)); //Todo
+                    localizedName = "Neuro Remolder";
                     addUpgrade(PvUnits.particle,PvUnits.snippet);
                     addUpgrade(PvUnits.milli,PvUnits.centi);
                     addUpgrade(PvUnits.pocket,PvUnits.container);
@@ -898,6 +915,61 @@ public class PvBlocks {
                     constructTime = 60*20;
                     consumePower(200f/60f);
                     consumeItems(with(PvItems.barium,100,Items.silicon,80,PvItems.lithium,40));
+                }};
+                grandRemolder = new Reconstructor("grand-remolder") {{
+                    requirements(Category.units,with(PvItems.zirconium,1000,PvItems.platinum,700,PvItems.erbium,300,Items.silicon,200,PvItems.nobelium,80)); //Todo
+                    localizedName = "Grand Remolder";
+                    addUpgrade(PvUnits.snippet,PvUnits.excerpt);
+                    //addUpgrade(PvUnits.centi,PvUnits.deci); no T4 yet.
+                    addUpgrade(PvUnits.container,PvUnits.vault);
+                    addUpgrade(PvUnits.bourn,PvUnits.loch);
+                    //addUpgrade(PvUnits.carillon,PvUnits.peal); no T4 yet.
+                    health = 3150;
+                    size = 7;
+                    itemCapacity = 1000;
+                    constructTime = 60*60;
+                    consumePower(1200f/60f);
+                    consumeItems(with(PvItems.barium,600, PvItems.erbium,450,PvItems.platinum,200,PvItems.nobelium,100));
+                }};
+                forceModifier = new Reconstructor("force-modifier") {{
+                    requirements(Category.units,BuildVisibility.sandboxOnly,with(PvItems.zirconium,1000,PvItems.platinum,700,PvItems.erbium,300,Items.silicon,200,PvItems.nobelium,80)); //Todo
+                    localizedName = "Force Modifier";
+                    health = 2600;
+                    size = 5;
+                    itemCapacity = 1000;
+                    constructTime = 60*60;
+                    consumePower(200f/60f);
+                    consumeItems(with(PvItems.barium,100,Items.silicon,80,PvItems.lithium,40));
+                }};
+                minimalHousingUnit = new HousingUnitBlock("minimal-housing-unit") {{
+                    requirements(Category.units,with(PvItems.zirconium,400,PvItems.lithium,250,Items.silicon,50)); //Todo
+                    localizedName = "Minimal Housing Unit";
+                    health = 540;
+                    size = 3;
+                    itemCapacity = 100;
+                    consumePower(160);
+                    consumeItems(with(PvItems.zirconium,40,Items.silicon,20));
+                    addUpgrade(PvUnits.particle,PvUnits.snippet);
+                    addUpgrade(PvUnits.milli,PvUnits.centi);
+                    addUpgrade(PvUnits.pocket,PvUnits.container);
+                    addUpgrade(PvUnits.rivulet,PvUnits.bourn);
+                    addUpgrade(PvUnits.chime,PvUnits.carillon);
+                    constructTime = 60*45;
+                }};
+                regularHousingUnit = new HousingUnitBlock("regular-housing-unit") {{
+                    requirements(Category.units,with(PvItems.zirconium,600,PvItems.lithium,400,Items.silicon,120,PvItems.nobelium,60)); //Todo
+                    localizedName = "Regular Housing Unit";
+                    health = 1400;
+                    size = 5;
+                    itemCapacity = 200;
+                    consumePower(520);
+                    consumeItems(with(PvItems.barium,160,Items.silicon,100,PvItems.nobelium,40));
+                    addUpgrade(PvUnits.snippet,PvUnits.fragment);
+                    addUpgrade(PvUnits.centi,PvUnits.deci);
+                    addUpgrade(PvUnits.container,PvUnits.capsule);
+                    addUpgrade(PvUnits.bourn,PvUnits.tributary);
+                    addUpgrade(PvUnits.carillon,PvUnits.peal);
+                    constructTime = 60*70;
                 }};
                 densePayloadConveyor = new PayloadConveyor("dense-payload-conveyor")
                 {{
@@ -992,8 +1064,14 @@ public class PvBlocks {
                     faction.add(PvFactions.Xeal);
                     health = 3000;
                     size = 4;
+                    healTime = 40;
+                    healPowerDrain = 200;
+                    minHealCharge = 200;
                     unitCapModifier = 32;
                     itemCapacity = 20000;
+                    conductivePower = true;
+                    outputsPower = true;
+                    consumePowerBuffered(30000);
                 }};
                 coreCharge = new PvCore("core-charge")
                 {{
@@ -1004,7 +1082,13 @@ public class PvBlocks {
                     health = 5500;
                     size = 5;
                     unitCapModifier = 48;
+                    healTime = 30;
+                    healPowerDrain = 100;
+                    minHealCharge = 500;
                     itemCapacity = 30000;
+                    conductivePower = true;
+                    outputsPower = true;
+                    consumePowerBuffered(75000);
                 }};
                 coreSurge = new PvCore("core-surge")
                 {{
@@ -1019,6 +1103,9 @@ public class PvBlocks {
                     healTime = 25;
                     warmupEffect = PvEffects.surgeSpawn;
                     spawnEffect = Fx.greenBomb;
+                    conductivePower = true;
+                    outputsPower = true;
+                    consumePowerBuffered(160000);
                 }};
                 yggdrasilsHeartwood = new PvCore("yggdrasils-heartwood")
                 {{
@@ -1043,7 +1130,7 @@ public class PvBlocks {
                     health = 2100;
                     unitCapModifier = 60;
                     itemCapacity = 100;
-                    voidRadius = 16;
+                    voidRadius = 22;
                     drawer = new DrawMulti(
                         new DrawLiquidStaticRegion(PvLiquids.concentratedVoid) {{
                             padding = 2;
@@ -1063,7 +1150,7 @@ public class PvBlocks {
                     miners = 3;
                     unitCapModifier = 100;
                     itemCapacity = 200;
-                    voidRadius = 22;
+                    voidRadius = 32;
                     drawer = new DrawMulti(
                             new DrawLiquidStaticRegion(PvLiquids.concentratedVoid) {{
                                 padding = 2;

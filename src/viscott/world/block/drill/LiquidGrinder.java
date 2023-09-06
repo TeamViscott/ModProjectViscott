@@ -28,9 +28,9 @@ public class LiquidGrinder extends Grinder{
     public class LiquidGrinderBuild extends GrinderBuild
     {
         @Override
-        public void updateTile()
+        public void update()
         {
-            super.updateTile();
+            super.update();
             dumpLiquid(extractedLiquid.liquid);
         }
         @Override

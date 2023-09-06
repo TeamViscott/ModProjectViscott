@@ -2,6 +2,7 @@ package viscott.content;
 
 import arc.graphics.Color;
 import arc.math.Mathf;
+import arc.struct.Seq;
 import mindustry.content.Fx;
 import mindustry.content.StatusEffects;
 import mindustry.entities.bullet.BasicBulletType;
@@ -17,11 +18,13 @@ import static java.lang.Float.POSITIVE_INFINITY;
 
 public class PvStatusEffects {
     public static StatusEffect
-    timeWarped,doused, disabled, expent, resiliant, ungratefull, crescendo, treeAmp, tick ,tock,mend,shield, malfunction,
+    timeWarped,doused, disabled, expent, resiliant, ungratefull, crescendo, photosynthesis, tick ,tock,mend,shield, malfunction,
     
 
-    sourceRepair,sourcePurify,sourceRepel, frag,aoe,homing,memoryExchange,dataLeak,endlessAmp, endlessDot, prevention, lastStand, consume,splintered,
+     frag,aoe,homing,memoryExchange,dataLeak,endlessAmp, endlessDot, prevention, lastStand, consume,splintered,torture,
     /*Void*/voidShield,voidDecay,voidConsume,voidDecayExpand,
+
+    /*Source*/sourceRepair,sourcePurify,sourceRepel,
 
     //visual statuses
     preventionFx,lastStandFx,basicFx
@@ -48,13 +51,11 @@ public class PvStatusEffects {
             buildSpeedMultiplier = 0.98f;
             charges = 20;
             color = Pal.sap;
-            staticStat();
         }};
         doused = new StatusEffectStack("doused") {{
             localizedName = "Doused";
             damage = 2f / 60f;
             charges = 30;
-            staticStat();
         }};
         disabled = new StatusEffectStack("disabled") {{
             localizedName = "Disabled";
@@ -62,7 +63,6 @@ public class PvStatusEffects {
             speedMultiplier = 0;
             reloadMultiplier = 0;
             color = Color.valueOf("af3a30");
-            staticStat();
         }};
         expent = new StatusEffectStack("expent") {
             {
@@ -72,7 +72,6 @@ public class PvStatusEffects {
                 speedMultiplier = 0.98f;
                 charges = 12;
                 show = false;
-                staticStat();
             }
         };
         crescendo = new StatusEffectStack("crescendo") {{
@@ -82,17 +81,15 @@ public class PvStatusEffects {
             speedMultiplier = 0.995f;
             charges = 80;
             show = false;
-            staticStat();
         }};
-        treeAmp = new StatusEffectStack("tree-amp") {{
-            localizedName = "[#766e4d]Tree Amp";
+        photosynthesis = new StatusEffectStack("photosynthesis") {{
+            localizedName = "[#766e4d]Photosynthesis";
+            description = "in order to protect itself it starts to absorb light around it";
             healthMultiplier = 1.5f;
             reloadMultiplier = 1.1f;
-            damageMultiplier = 0.95f;
-            speedMultiplier = 0.999f;
+            dragMultiplier = 1.02f;
+            speedMultiplier = 0.990f;
             charges = 30;
-            show = false;
-            staticStat();
         }};
         resiliant = new StatusEffectStack("resiliant") {{
             localizedName = "Resiliant";
@@ -102,13 +99,11 @@ public class PvStatusEffects {
             healthMultiplier = 1.01f;
             speedMultiplier = 0.999f;
             charges = 100;
-            staticStat();
         }};
         ungratefull = new StatusEffectStack("ungratefull") {{
             localizedName = "Ungratefull";
             description = "The enemy of everyone";
             newTeam = Team.get(250);
-            staticStat();
         }};
         tick = new AlterStatusEffect("tick") {{
             localizedName = "Tick";
@@ -180,7 +175,6 @@ public class PvStatusEffects {
             buildSpeedMultiplier = 0.998f;
             speedMultiplier = 0.999f;
             charges = 60*5;
-            staticStat();
         }};
         voidConsume = new PvStatusEffect("void-consume") {{
             localizedName = "Void Consume";
@@ -259,6 +253,20 @@ public class PvStatusEffects {
             homingPower = 0.05f;
             homingDelay = 0;
         }};
+        splintered = new StatusEffect("splintered")
+        {{
+            localizedName = "[#766e4d]Splintered";
+            color = Color.valueOf("392f32");
+            description = "Shards of wood are stuck inside you";
+            damage = 2f/60f;
+            transitionDamage = 80;
+            init(() -> {
+                affinity(StatusEffects.burning, (unit, result, time) -> {
+                    unit.damagePierce(transitionDamage);
+                    Fx.burning.at(unit.x + Mathf.range(unit.bounds() / 2f), unit.y + Mathf.range(unit.bounds() / 2f));
+                });
+            });
+        }};
         //BossEffects
         memoryExchange = new CurseStatusEffect("memory-exchange"){{
             localizedName = "[#b]Memory Exchange";
@@ -303,7 +311,6 @@ public class PvStatusEffects {
             hpThreshhold = 1800;
             radius = 1;
         }};
-        //Fun StatusEffects
         endlessAmp = new StatusEffectStack("endless-amp") {{
             localizedName = "[purple]Endless[] [gold]Amplification[]";
             description = "[red]never ending charges";
@@ -316,7 +323,6 @@ public class PvStatusEffects {
             dragMultiplier = 1.01f;
             setStatsInfinity = true;
             charges = (int) POSITIVE_INFINITY;
-            staticStat();
         }};
         endlessDot = new StatusEffectStack("endless-dot") {{
             localizedName = "[purple]Endless[] [red]Damage[]";
@@ -325,17 +331,91 @@ public class PvStatusEffects {
             damage = 0.05f;
             setStatsInfinity = true;
             charges = (int) POSITIVE_INFINITY;
-            staticStat();
         }};
-        splintered = new StatusEffect("splintered")
+
+        torture = new PvStatusEffect("torture")
+         /*
+         TODO
+          KEEP THIS AT THE BOTTOM NEEDS TO ALWAYS BE LOADED LAST
+            if you status effect is bas pls add it here
+            don't add stacking statuses who know what amalgam of errors would pop up
+         (not a t0d0 its just to make sure u see it)
+         */
         {{
-            localizedName = "[#766e4d]Splintered";
-            color = Color.valueOf("392f32");
-            description = "Shards of wood are stuck inside you";
-            damage = 2f/60f;
-            transitionDamage = 80;
+            localizedName = "[#31343c]Torture";
+            color = Color.valueOf("31343c");
+            description = "Does nothing on it own deal great damage if you where to have another debuff";
+            transitionDamage = 8000;
             init(() -> {
                 affinity(StatusEffects.burning, (unit, result, time) -> {
+                    unit.damagePierce(transitionDamage);
+                    Fx.burning.at(unit.x + Mathf.range(unit.bounds() / 2f), unit.y + Mathf.range(unit.bounds() / 2f));
+                });
+                affinity(StatusEffects.freezing, (unit, result, time) -> {
+                    unit.damagePierce(transitionDamage);
+                    Fx.burning.at(unit.x + Mathf.range(unit.bounds() / 2f), unit.y + Mathf.range(unit.bounds() / 2f));
+                });
+                affinity(StatusEffects.electrified, (unit, result, time) -> {
+                    unit.damagePierce(transitionDamage);
+                    Fx.burning.at(unit.x + Mathf.range(unit.bounds() / 2f), unit.y + Mathf.range(unit.bounds() / 2f));
+                });
+                affinity(StatusEffects.shocked, (unit, result, time) -> {
+                    unit.damagePierce(transitionDamage);
+                    Fx.burning.at(unit.x + Mathf.range(unit.bounds() / 2f), unit.y + Mathf.range(unit.bounds() / 2f));
+                });
+                affinity(StatusEffects.wet, (unit, result, time) -> {
+                    unit.damagePierce(transitionDamage);
+                    Fx.burning.at(unit.x + Mathf.range(unit.bounds() / 2f), unit.y + Mathf.range(unit.bounds() / 2f));
+                });
+                affinity(StatusEffects.melting, (unit, result, time) -> {
+                    unit.damagePierce(transitionDamage);
+                    Fx.burning.at(unit.x + Mathf.range(unit.bounds() / 2f), unit.y + Mathf.range(unit.bounds() / 2f));
+                });
+                affinity(StatusEffects.sapped, (unit, result, time) -> {
+                    unit.damagePierce(transitionDamage);
+                    Fx.burning.at(unit.x + Mathf.range(unit.bounds() / 2f), unit.y + Mathf.range(unit.bounds() / 2f));
+                });
+                affinity(StatusEffects.tarred, (unit, result, time) -> {
+                    unit.damagePierce(transitionDamage);
+                    Fx.burning.at(unit.x + Mathf.range(unit.bounds() / 2f), unit.y + Mathf.range(unit.bounds() / 2f));
+                });
+                affinity(StatusEffects.sporeSlowed, (unit, result, time) -> {
+                    unit.damagePierce(transitionDamage);
+                    Fx.burning.at(unit.x + Mathf.range(unit.bounds() / 2f), unit.y + Mathf.range(unit.bounds() / 2f));
+                });
+                affinity(StatusEffects.blasted, (unit, result, time) -> {
+                    unit.damagePierce(transitionDamage);
+                    Fx.burning.at(unit.x + Mathf.range(unit.bounds() / 2f), unit.y + Mathf.range(unit.bounds() / 2f));
+                });
+                affinity(StatusEffects.corroded, (unit, result, time) -> {
+                    unit.damagePierce(transitionDamage);
+                    Fx.burning.at(unit.x + Mathf.range(unit.bounds() / 2f), unit.y + Mathf.range(unit.bounds() / 2f));
+                });
+                affinity(memoryExchange, (unit, result, time) -> {
+                    unit.damagePierce(transitionDamage);
+                    Fx.burning.at(unit.x + Mathf.range(unit.bounds() / 2f), unit.y + Mathf.range(unit.bounds() / 2f));
+                });
+                affinity(voidDecay, (unit, result, time) -> {
+                    unit.damagePierce(transitionDamage);
+                    Fx.burning.at(unit.x + Mathf.range(unit.bounds() / 2f), unit.y + Mathf.range(unit.bounds() / 2f));
+                });
+                affinity(voidDecayExpand, (unit, result, time) -> {
+                    unit.damagePierce(transitionDamage);
+                    Fx.burning.at(unit.x + Mathf.range(unit.bounds() / 2f), unit.y + Mathf.range(unit.bounds() / 2f));
+                });
+                affinity(voidConsume, (unit, result, time) -> {
+                    unit.damagePierce(transitionDamage);
+                    Fx.burning.at(unit.x + Mathf.range(unit.bounds() / 2f), unit.y + Mathf.range(unit.bounds() / 2f));
+                });
+                affinity(sourcePurify, (unit, result, time) -> {
+                    unit.damagePierce(transitionDamage);
+                    Fx.burning.at(unit.x + Mathf.range(unit.bounds() / 2f), unit.y + Mathf.range(unit.bounds() / 2f));
+                });
+                affinity(sourceRepel, (unit, result, time) -> {
+                    unit.damagePierce(transitionDamage);
+                    Fx.burning.at(unit.x + Mathf.range(unit.bounds() / 2f), unit.y + Mathf.range(unit.bounds() / 2f));
+                });
+                affinity(splintered, (unit, result, time) -> {
                     unit.damagePierce(transitionDamage);
                     Fx.burning.at(unit.x + Mathf.range(unit.bounds() / 2f), unit.y + Mathf.range(unit.bounds() / 2f));
                 });

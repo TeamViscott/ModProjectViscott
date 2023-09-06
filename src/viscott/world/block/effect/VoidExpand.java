@@ -20,6 +20,7 @@ public class VoidExpand extends VoidBlock{
     public float itemDuration = 300;
     public VoidExpand(String name) {
         super(name);
+        canOverdrive = false;
     }
 
     public class VoidExpandBuild extends VoidBuilding

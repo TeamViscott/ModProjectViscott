@@ -1,31 +1,20 @@
 package viscott;
 
 import arc.Events;
-import arc.func.Cons;
 import arc.graphics.Color;
 import arc.graphics.g2d.Draw;
-import arc.struct.ObjectMap;
-import arc.struct.Seq;
 import arc.util.Log;
-import arc.util.Reflect;
-import arc.util.Strings;
 import mindustry.Vars;
 import mindustry.content.TechTree;
-import mindustry.core.NetClient;
 import mindustry.game.EventType;
-import mindustry.gen.Call;
-import mindustry.gen.ClientPacketUnreliableCallPacket;
-import mindustry.gen.UnitEntity;
 import mindustry.graphics.Layer;
 import mindustry.mod.Mod;
 import mindustry.mod.Mods;
-import mindustry.net.Packets;
 import viscott.content.*;
 import viscott.sounds.PvSoundControl;
 import viscott.types.PvFaction;
 import viscott.utilitys.PvPacketHandler;
 import viscott.utilitys.PvWorldState;
-import viscott.world.statusEffects.StatusEffectStack;
 
 import static mindustry.Vars.*;
 
@@ -93,7 +82,7 @@ public class ViscottMod extends Mod {
         tu.meta.author = "[yellow]CREDITS[]: \n\n" +
                 "[crimson]Spriters : [green]Ethanol10[], [yellow]ThomasThings \n" +
                 "----------------------------\n" +
-                "[crimson]Sfx/Music : [cyan]Vdoble MSG [yellow]\n" +
+                "[crimson]Sfx/Music : [cyan]Vdoble MSG [yellow], [green]TempoAlch3mist[]\n" +
                 "----------------------------\n" +
                 "[crimson]Programmers : [orange]Si[red]ede ,[purple]Manuwar [yellow],Otamamori [lightgrey],Kapzduke[yellow]\n" +
                 "----------------------------\n" +
