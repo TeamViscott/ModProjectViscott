@@ -22,7 +22,7 @@ public class PvStatusEffects {
     
 
      frag,aoe,homing,memoryExchange,dataLeak,endlessAmp, endlessDot, prevention, lastStand, consume,splintered,torture,
-    /*Void*/voidShield,voidDecay,voidConsume,voidDecayExpand,
+    /*Void*/voidShield,voidDecay,voidConsume,voidDecayExpand, reapingTouch,
 
     /*Source*/sourceRepair,sourcePurify,sourceRepel,
 
@@ -332,6 +332,14 @@ public class PvStatusEffects {
             setStatsInfinity = true;
             charges = (int) POSITIVE_INFINITY;
         }};
+        reapingTouch = new ExponentialStatusEffectStack("reaping-touch") {
+            {
+                localizedName = "Reaping Touch";
+                description = "Exponential damage, have fun!";
+                details = "Damage over time multiplies by 2 for each charge.";
+                damage = 1/60f;
+                charges = 10;
+            }};
 
         torture = new PvStatusEffect("torture")
          /*
@@ -416,6 +424,10 @@ public class PvStatusEffects {
                     Fx.burning.at(unit.x + Mathf.range(unit.bounds() / 2f), unit.y + Mathf.range(unit.bounds() / 2f));
                 });
                 affinity(splintered, (unit, result, time) -> {
+                    unit.damagePierce(transitionDamage);
+                    Fx.burning.at(unit.x + Mathf.range(unit.bounds() / 2f), unit.y + Mathf.range(unit.bounds() / 2f));
+                });
+                affinity(reapingTouch, (unit, result, time) -> {
                     unit.damagePierce(transitionDamage);
                     Fx.burning.at(unit.x + Mathf.range(unit.bounds() / 2f), unit.y + Mathf.range(unit.bounds() / 2f));
                 });
