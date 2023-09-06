@@ -1130,7 +1130,7 @@ public class PvBlocks {
                     health = 2100;
                     unitCapModifier = 60;
                     itemCapacity = 100;
-                    voidRadius = 16;
+                    voidRadius = 22;
                     drawer = new DrawMulti(
                         new DrawLiquidStaticRegion(PvLiquids.concentratedVoid) {{
                             padding = 2;
@@ -1150,7 +1150,7 @@ public class PvBlocks {
                     miners = 3;
                     unitCapModifier = 100;
                     itemCapacity = 200;
-                    voidRadius = 22;
+                    voidRadius = 32;
                     drawer = new DrawMulti(
                             new DrawLiquidStaticRegion(PvLiquids.concentratedVoid) {{
                                 padding = 2;

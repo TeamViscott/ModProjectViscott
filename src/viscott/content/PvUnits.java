@@ -3399,6 +3399,72 @@ public class PvUnits {
                 }};
             }});
         }};
+        knell = new PvUnitType("knell"){{
+            health = 2750;
+            armor = 7;
+            speed = 6.8f/7.5f;
+            hovering = true;
+            localizedName = "[orange]Knell";
+            constructor = EntityMapping.map("toxopid");
+            legCount = 6;
+            hitSize = 8*2;
+            legMoveSpace = 6f;
+            legPairOffset = 3f;
+            legLength = 24f;
+            legExtension = -4f;
+            legBaseOffset = 4f;
+            stepShake = 0.2f;
+            legLengthScl = 1f;
+            rippleScale = 2f;
+            legSpeed = 0.2f;
+
+            for(int j = 0; j < 4; j++){
+                int i = j;
+                parts.add(new RegionPart("-spine"){{
+                    layerOffset = -0.01f;
+                    heatLayerOffset = 0.005f;
+                    y = 2;
+                    x = 6f;
+                    moveX = 2.5f + i * 1f;
+                    moveY = 5f + -4f * i;
+                    moveRot = 35f - i * 30f;
+                    mirror = true;
+                    progress = PartProgress.warmup.delay(i * 0.2f);
+                    heatProgress = p -> Mathf.absin(Time.time + i * 14f, 7f, 1f);
+
+                    heatColor = Pal.neoplasm1;
+                }});
+            }
+            weapons.add(
+                    new Weapon(name+"-weapon") {{
+                        x = 9f;
+                        y = 6f;
+                        mirror = true;
+                        reload = 60*2f;
+                        shoot.firstShotDelay = 3.2f*60f;
+                        shoot.shotDelay = 60f/3.2f;
+                        alternate = false;
+                        inaccuracy = 0f;
+                        recoil = 0;
+                        baseRotation = -45f;
+                        shootCone = 140;
+                        shootSound = Sounds.mineDeploy;
+                        bullet = new BasicBulletType(2.5f, 18f) {{
+                            splashDamage = 45;
+                            splashDamageRadius = 2.5f;
+                            lifetime = PvUtil.GetRange(2.5f,19);
+                            homingPower = 0.1f;
+                            homingRange = 200;
+                            homingDelay = 10;
+                            trailColor = backColor = lightColor = Pal.neoplasm1;
+                            frontColor = Pal.neoplasm2;
+                            trailLength = 24;
+                            trailChance = 0.1f;
+                            trailWidth = 1.4f;
+                        }};
+                    }}
+            );
+        }};
         peal = new PvUnitType("peal") {{
             health = 18500;
             armor = 10;
