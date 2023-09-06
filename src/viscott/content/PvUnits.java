@@ -3783,18 +3783,20 @@ public class PvUnits {
             armor = 140;
             hovering = true;
             legCount = 10;
-            legMoveSpace = 5f;
+            legMoveSpace = 1.2f;
             legPairOffset = 9f;
-            legLength = 76f;
-            legExtension = -18;
+            legLength = 100f;
+            legExtension = -30;
             legBaseOffset = 24f;
             stepShake = 0f;
-            legLengthScl = 3.84f;
+            legLengthScl = 1.7f;
             rippleScale = 6f;
+            rotateSpeed = 0.25f;
+            speed = 0.4f;
             legSpeed = 0.9f;
             localizedName = "[#766e4d]Yggdrasil";
             constructor = EntityMapping.map("toxopid");
-            weapons.add(new Weapon(name + "-hel") {{
+            weapons.add(new Weapon( "project-viscott-hel") {{
                 x = 0f;
                 y = -6f;
                 mirror = false;
