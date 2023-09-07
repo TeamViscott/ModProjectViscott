@@ -54,21 +54,16 @@ public class FocusItemTurret extends PvItemTurret{
         @Override
         protected void findTarget(){
             float range = range();
-            if (!Units.anyEntities(x,y,range)) return;
             Health hitP = new Health();
             switch(mode) {
                 case closest:
-                    if(targetAir && !targetGround){
-                        target = Units.bestEnemy(team, x, y, range, e -> !e.dead() && !e.isGrounded() && unitFilter.get(e), unitSort);
-                    }else{
-                        target = Units.bestTarget(team, x, y, range, e -> !e.dead() && unitFilter.get(e) && (e.isGrounded() || targetAir) && (!e.isGrounded() || targetGround), b -> targetGround && buildingFilter.get(b), unitSort);
-                    }
+                    target = Units.bestEnemy(team, x, y, range, e -> !e.dead() && !e.isGrounded() && unitFilter.get(e), unitSort);
                     break;
                 case farthest:
                     Groups.unit.each(u->{
                         if (u.team() == team()) return;
                         //  can attack ground and is.              can attack air and is.
-                        if (!((u.isGrounded() && targetGround) || (!u.isGrounded() && targetAir))) return;
+                        if (!(u.isGrounded() == targetGround || !u.isGrounded() == targetAir) || range < Mathf.len(x-u.x,y-u.y)) return;
                         if (target == null) {
                             target = u;
                             return;
@@ -81,7 +76,7 @@ public class FocusItemTurret extends PvItemTurret{
                 case mostHealth:
                     Groups.unit.each(u -> {
                         if (u.team() == team()) return;
-                        if (!((u.isGrounded() && targetGround) || (!u.isGrounded() && targetAir))) return;
+                        if (!(u.isGrounded() == targetGround || !u.isGrounded() == targetAir) || range < Mathf.len(x-u.x,y-u.y)) return;
                         if (u.health() > hitP.hp) {
                             target = u;
                             hitP.hp = u.health();
@@ -93,7 +88,7 @@ public class FocusItemTurret extends PvItemTurret{
                     hitP.hp = Float.MAX_VALUE;
                     Groups.unit.each(u -> {
                         if (u.team() == team()) return;
-                        if (!((u.isGrounded() && targetGround) || (!u.isGrounded() && targetAir))) return;
+                        if (!(u.isGrounded() == targetGround || !u.isGrounded() == targetAir) || range < Mathf.len(x-u.x,y-u.y)) return;
                         if (u.health() < hitP.hp) {
                             target = u;
                             hitP.hp = u.health();
@@ -105,12 +100,14 @@ public class FocusItemTurret extends PvItemTurret{
                     Seq<Unit> targetSeq = new Seq<>();
                     Groups.unit.each(u->{
                         if (u.team() == team()) return;
-                        if (!((u.isGrounded() && targetGround) || (!u.isGrounded() && targetAir))) return;
+                        if (!(u.isGrounded() == targetGround || !u.isGrounded() == targetAir) || range < Mathf.len(x-u.x,y-u.y)) return;
                         targetSeq.add(u);
                     });
                     target = targetSeq.random();
                     break;
             }
+            if (target == null && targetGround)
+                target = Units.bestTarget(team, x, y, range, e -> !e.dead() && unitFilter.get(e) && (e.isGrounded() || targetAir) && (!e.isGrounded() || targetGround), b -> targetGround && buildingFilter.get(b), unitSort);
 
             if(target == null && canHeal()){
                 target = Units.findAllyTile(team, x, y, range, b -> b.damaged() && b != this);
@@ -123,8 +120,8 @@ public class FocusItemTurret extends PvItemTurret{
             Table inner = new Table();
             for(var i : Modes.all) {
                 TextureRegionDrawable draw = Modes.icon.get(i);
-                if (i == mode) draw.tint(Pal.bulletYellow);
                 var b = inner.button(draw,32,() -> {}).tooltip(i.name());
+                if (i == mode) b.disabled(true);
                 b.get().changed(()->{
                     if (b.get().isChecked())
                         configure(i);

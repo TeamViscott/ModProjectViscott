@@ -12,6 +12,7 @@ import mindustry.entities.bullet.*;
 import mindustry.entities.effect.*;
 import mindustry.entities.part.*;
 import mindustry.entities.pattern.*;
+import mindustry.game.Team;
 import mindustry.gen.Sounds;
 import mindustry.graphics.Layer;
 import mindustry.graphics.Pal;
@@ -578,17 +579,37 @@ public class PvTurrets {
         focus = new FocusItemTurret("focus") {{
             requirements(Category.turret,with(PvItems.erbium,450,PvItems.zirconium,300, silicon,75)); //Todo 2
             localizedName = "Phantom";
+            faction.add(PvFactions.Xeal);
             size = 3;
             health = 1980;
             range = 50*8;
             liquidCapacity = 35;
             targetAir = true;
-            targetGround = false;
+            targetGround = true;
             reload = 60f/2f;
+            recoil = 8;
             coolant = consumeCoolant(0.1f);
             ammo(
-                silicon,new BasicBulletType(4,4) {{
-
+                    PvItems.zirconium,new BasicBulletType(10,15) {{
+                        rangeChange = 8*-8;
+                        lifetime = PvUtil.GetRange(this.speed,42);
+                        trailLength = 20;
+                        trailWidth = 1.2f;
+                        width = 12;
+                        height = 12;
+                        trailColor = backColor = Pal.heal;
+                    }},
+                    silicon,new BasicBulletType(10,10) {{
+                        lifetime = PvUtil.GetRange(this.speed,50);
+                        trailLength = 20;
+                        trailWidth = 1.4f;
+                        width = 15;
+                        height = 15;
+                        splashDamage = 18;
+                        splashDamageRadius = 8*3;
+                        homingPower = 0.01f;
+                        homingRange = 8*25;
+                        trailColor = backColor = Pal.heal;
                     }}
             );
         }};
