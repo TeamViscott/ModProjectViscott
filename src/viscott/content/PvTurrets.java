@@ -24,6 +24,7 @@ import mindustry.world.draw.DrawTurret;
 import mindustry.world.meta.BuildVisibility;
 import viscott.content.shootpatterns.CyclicShootPattern;
 import viscott.utilitys.PvUtil;
+import viscott.world.block.defense.FocusItemTurret;
 import viscott.world.bullets.LargeBranchBulletType;
 import viscott.world.block.defense.PvItemTurret;
 import viscott.world.bullets.LiquidLaserBulletType;
@@ -574,8 +575,22 @@ public class PvTurrets {
     }
     public static void loadSize3()
     {
-        focus = new PvItemTurret("focus") {{
+        focus = new FocusItemTurret("focus") {{
+            requirements(Category.turret,with(PvItems.erbium,450,PvItems.zirconium,300, silicon,75)); //Todo 2
+            localizedName = "Phantom";
+            size = 3;
+            health = 1980;
+            range = 50*8;
+            liquidCapacity = 35;
+            targetAir = true;
+            targetGround = false;
+            reload = 60f/2f;
+            coolant = consumeCoolant(0.1f);
+            ammo(
+                silicon,new BasicBulletType(4,4) {{
 
+                    }}
+            );
         }};
         phantom = new ItemTurret("phantom")
         {{
