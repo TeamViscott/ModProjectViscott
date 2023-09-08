@@ -14,25 +14,35 @@ import java.util.Random;
 
 public class CoinUnit extends UnitEntity {
 
-    Unit TeamReference = this;
     int nextTeam;
+    int oldTeam;
+    static BasicBulletType ricoShot = new BasicBulletType(4,10){{
+        homingPower = 1;
+        homingRange = 1600;
+        lifetime = 600;
+        trailLength = 20;
+        trailWidth = 2;
+        trailColor = backColor = lightColor
+                = Pal.missileYellow;
+    }};
 
-    public CoinUnit(){super(); TeamReference.team = team; Random r = new Random();  this.nextTeam = 10 + r.nextInt(10);}
+    public CoinUnit(){
+        super();
+        ricoShot.load();
+        Random r = new Random();
+        oldTeam = this.team.id;
+        this.nextTeam = 10 + r.nextInt(10);
+    }
+    @Override
     public void update(){
-        if (this.team.id != nextTeam){TeamReference.team = this.team;} this.team = Team.get(nextTeam);}
+        super.update();
+        this.team = Team.get(nextTeam);
+    }
     @Override
     public void damage(float damage){
-        BasicBulletType ricoShot = new BasicBulletType(4,damage+10){{
-            homingPower = 1;
-            homingRange = 1600;
-            lifetime = 600;
-            trailLength = 20;
-            trailWidth = 2;
-            trailColor = backColor = lightColor = Pal.missileYellow;
-        }};
-        ricoShot.load();
-        ricoShot.create(TeamReference, x, y, rotation);
+        ricoShot.damage = 10 + damage;
+        this.team = Team.get(oldTeam);
+        ricoShot.create(this, x, y, rotation);
         super.damage(damage);
-
     }
 }
