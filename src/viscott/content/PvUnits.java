@@ -38,6 +38,7 @@ import arc.math.geom.*;
 import arc.math.*;
 
 import mindustry.type.unit.MissileUnitType;
+import viscott.gen.CoinUnit;
 import viscott.types.abilities.EnemyStatusFieldAbility;
 import viscott.content.shootpatterns.ShootSpreadBounce;
 import viscott.gen.FrogUnit;
@@ -75,7 +76,7 @@ public class PvUnits {
             /*Storage Con Path*/pocket,container,capsule,vault,chamber, /* I u I */ symphony,
 
         /*Extra Paths : */
-        routerTank, routerBastion, box,blockHost,
+        routerTank, routerBastion, box,blockHost, coin,
 
                 /*BOSSES*/
                     charlie,
@@ -1310,6 +1311,16 @@ public class PvUnits {
             pickupUnits = true;
             payloadCapacity = tilePayload * (9 * 9);
             range = 12*8;
+        }};
+        coin = new UnitType("coin"){{
+            localizedName = "Coin";
+            constructor = CoinUnit::new;
+            speed = 0.00001f;
+            //TODO allowed to fly for testing purposes
+            canBoost = true;
+            boostMultiplier = 10000;
+            health = 1;
+            description = "A coin. With trickshot capabilities.";
         }};
     }
     public static void loadStoragePath()
@@ -3866,5 +3877,6 @@ public class PvUnits {
                 );
             }});
         }};
+
     }
 }
