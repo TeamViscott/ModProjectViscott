@@ -1,6 +1,7 @@
 package viscott.gen;
 
 import arc.graphics.g2d.TextureRegion;
+import arc.math.Mathf;
 import mindustry.entities.bullet.BasicBulletType;
 import mindustry.game.Team;
 import mindustry.gen.Bullet;
@@ -29,9 +30,8 @@ public class CoinUnit extends UnitEntity {
     public CoinUnit(){
         super();
         ricoShot.load();
-        Random r = new Random();
         oldTeam = this.team.id;
-        this.nextTeam = 10 + r.nextInt(10);
+        this.nextTeam = 10 + Mathf.random(10);
     }
     @Override
     public void update(){
@@ -41,7 +41,7 @@ public class CoinUnit extends UnitEntity {
     @Override
     public void damage(float damage){
         ricoShot.damage = 10 + damage;
-        this.team = Team.get(oldTeam);
+        //this.team = Team.get(oldTeam);
         ricoShot.create(this, x, y, rotation);
         super.damage(damage);
     }

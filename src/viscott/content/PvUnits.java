@@ -49,7 +49,6 @@ import viscott.world.bullets.BranchBulletType;
 import viscott.world.bullets.LargeBranchBulletType;
 import viscott.world.bullets.VoidBulletType;
 import viscott.utilitys.PvUtil;
-import viscott.world.statusEffects.PvStatusEffect;
 
 import static arc.graphics.g2d.Draw.color;
 import static arc.graphics.g2d.Lines.stroke;
@@ -1470,7 +1469,7 @@ public class PvUnits {
             lowAltitude = true;
             range = 12*8;
             engineSize = 0;
-            abilities.add(new VoidAbility(18*8));
+            abilities.add(new VoidAbilityC(18*8));
             engines = Seq.with(
                     new UnitEngine(34,12,10,45),
                     new UnitEngine(-34,12,10,90+45)
@@ -1545,7 +1544,7 @@ public class PvUnits {
             lowAltitude = true;
             range = 12*8;
             engineSize = 0;
-            abilities.add(new VoidAbility(70*8));
+            abilities.add(new VoidAbilityC(70*8));
         }};
     }
     public static void loadBosses() {
@@ -1892,7 +1891,7 @@ public class PvUnits {
                 buildBeamOffset = 12;
                 abilities.add(
                         new EnemyStatusFieldAbility(PvStatusEffects.memoryExchange, 180, 120, 20 * 8),
-                        new VoidAbility(8 * 4)
+                        new VoidAbilityC(8 * 4)
                 );
                 weapons.add(
                         new Weapon() {{
@@ -2054,7 +2053,7 @@ public class PvUnits {
             armor = 14f;
             zepz.abilities.add(new SpawnDeathAbility(this,1,0));
             abilities.add(new EnemyStatusFieldAbility(PvStatusEffects.endlessDot, 60, 10, 400f));
-            abilities.add(new VoidAbility(24 * 4));
+            abilities.add(new VoidAbilityC(24 * 4));
             abilities.add(new SpawnDeathAbility(zepz,1,0));
             weapons.add(
                     new Weapon(name + "shotty"){{

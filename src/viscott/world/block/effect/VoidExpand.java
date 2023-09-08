@@ -3,9 +3,7 @@ package viscott.world.block.effect;
 import arc.graphics.g2d.Draw;
 import arc.math.Mathf;
 import arc.struct.Seq;
-import arc.util.Time;
 import mindustry.Vars;
-import mindustry.gen.Building;
 import mindustry.graphics.Layer;
 import mindustry.type.Item;
 import mindustry.type.ItemStack;
@@ -13,7 +11,6 @@ import mindustry.world.consumers.Consume;
 import mindustry.world.consumers.ConsumeItems;
 import mindustry.world.modules.ItemModule;
 import viscott.content.PvStatusEffects;
-import viscott.world.chips.VoidArea;
 
 public class VoidExpand extends VoidBlock{
     public float voidGrowAmount = 1;
@@ -23,7 +20,7 @@ public class VoidExpand extends VoidBlock{
         canOverdrive = false;
     }
 
-    public class VoidExpandBuild extends VoidBuilding
+    public class VoidExpandBuildC extends VoidBuildingC
     {
         public float consumeTime = 0;
         float buildVoidRad = voidRadius;

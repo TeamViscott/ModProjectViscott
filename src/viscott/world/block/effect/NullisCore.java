@@ -7,16 +7,11 @@ import arc.util.io.Writes;
 import mindustry.Vars;
 import mindustry.gen.*;
 import mindustry.type.Item;
-import mindustry.type.ItemStack;
 import mindustry.type.UnitType;
-import mindustry.world.draw.DrawBlock;
-import mindustry.world.draw.DrawDefault;
 import mindustry.world.modules.ItemModule;
 import viscott.content.PvEffects;
 import viscott.content.PvFactions;
-import viscott.world.chips.VoidArea;
-
-import java.util.HashMap;
+import viscott.world.chips.VoidAreaC;
 
 public class NullisCore extends PvCore {
     public float voidRadius = 5;
@@ -34,7 +29,7 @@ public class NullisCore extends PvCore {
         updateClipRadius(voidRadius*8);
         super.init();
     }
-    public class NullisCoreBlock extends PvCoreBuild implements VoidArea {
+    public class NullisCoreBlock extends PvCoreBuild implements VoidAreaC {
         public float pulsing = 0;
         Seq<Unit> visualizer = new Seq<>();
         ItemModule visualItems = new ItemModule();
