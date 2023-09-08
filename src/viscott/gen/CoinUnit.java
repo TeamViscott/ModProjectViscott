@@ -32,16 +32,16 @@ public class CoinUnit extends UnitEntity {
         ricoShot.load();
         oldTeam = this.team.id;
         this.nextTeam = 10 + Mathf.random(10);
+        this.team = Team.get(nextTeam);
     }
     @Override
     public void update(){
         super.update();
-        this.team = Team.get(nextTeam);
     }
     @Override
     public void damage(float damage){
         ricoShot.damage = 10 + damage;
-        //this.team = Team.get(oldTeam);
+        this.team = Team.get(oldTeam);
         ricoShot.create(this, x, y, rotation);
         super.damage(damage);
     }
