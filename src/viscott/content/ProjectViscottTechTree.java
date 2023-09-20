@@ -7,6 +7,7 @@ import viscott.world.teamResearch;
 
 import static mindustry.content.TechTree.*;
 import static viscott.content.PvBlocks.*;
+import static viscott.content.PvTurrets.*;
 
 public class ProjectViscottTechTree {
     public static void load()
@@ -20,13 +21,47 @@ public class ProjectViscottTechTree {
             node(coreHover,()-> {
                 node(harvestGrinder,()->{
                     node(micromassConveyor,()-> {
-                        node(massJunction);
-                        node(massRouter);
+                        node(massJunction,() -> {
+                            node(pocketContainer,()->{
+                                node(bulkUnloader);
+                            });
+                        });
+                        node(massRouter,() -> {
+                            node(microTransportGate,()->{
+                                node(megaTransportGate);
+                                node(nueromassConveyor,() -> {
+                                    node(megaMassConveyor);
+                                    node(megaMassJunction);
+                                    node(megaMassRouter);
+                                });
+                            });
+                        });
                     });
                     node(harvestDrill);
+                    node(concentratedConduit,()->{
+                        node(concentratedJunction,()->{
+                            node(smallConcentratedTank,()->{
+                                node(largeConcentratedTank);
+                            });
+                        });
+                        node(concentratedRouter,()->{
+                            node(microLiquidTransportGate,()->{
+                                node(megaLiquidTransportGate);
+                            });
+                        });
+                        node(micropulsePump,()->{
+                            node(effluxPump);
+                        });
+                    });
                 });
                 node(coreElevate,()->{
                     node(coreUpraise);
+                });
+                node(splinter,()->{
+                    node(shatter);
+                    node(euro);
+                    node(snap);
+                    node(hourglass);
                 });
             });
         });
