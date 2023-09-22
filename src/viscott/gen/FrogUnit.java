@@ -15,6 +15,7 @@ import arc.util.Timer;
 import arc.util.io.Reads;
 import arc.util.io.Writes;
 import mindustry.Vars;
+import mindustry.ai.types.CommandAI;
 import mindustry.ai.types.FlyingAI;
 import mindustry.content.Fx;
 import mindustry.content.StatusEffects;

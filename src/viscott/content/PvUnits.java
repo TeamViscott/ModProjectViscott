@@ -13,6 +13,7 @@ import mindustry.content.Fx;
 import mindustry.content.Items;
 import mindustry.content.StatusEffects;
 import mindustry.entities.Effect;
+import mindustry.entities.Units;
 import mindustry.entities.abilities.RepairFieldAbility;
 import mindustry.entities.abilities.ShieldArcAbility;
 import mindustry.entities.abilities.SpawnDeathAbility;
@@ -1221,7 +1222,6 @@ public class PvUnits {
             speed = 0;
             canBoost = true;
             hitSize = 8*2f;
-            range = 20*8;
             weapons.add(
                     new Weapon(){{
                         reload = 60;

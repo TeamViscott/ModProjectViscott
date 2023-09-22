@@ -6,6 +6,7 @@ import arc.graphics.g2d.Draw;
 import arc.util.Log;
 import mindustry.Vars;
 import mindustry.content.TechTree;
+import mindustry.content.UnitTypes;
 import mindustry.game.EventType;
 import mindustry.graphics.Layer;
 import mindustry.mod.Mod;
