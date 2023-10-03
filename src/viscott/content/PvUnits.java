@@ -1223,7 +1223,6 @@ public class PvUnits {
             speed = 0;
             canBoost = true;
             hitSize = 8*2f;
-            range = 20*8;
             weapons.add(
                     new Weapon(){{
                         reload = 60;

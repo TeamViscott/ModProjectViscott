@@ -393,6 +393,7 @@ public class PvBlocks {
 
                 smallCarbonPanel = new ConstGenerator("small-carbon-panel")
                 {{
+                    
                     requirements(Category.power, with(Items.silicon,15,PvItems.carbonFiber,5));
                     localizedName = "Carbon panel";
                     size = 2;
