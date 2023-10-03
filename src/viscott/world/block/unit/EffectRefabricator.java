@@ -5,6 +5,7 @@ import arc.math.Mathf;
 import mindustry.content.Fx;
 import mindustry.entities.Effect;
 import mindustry.gen.Building;
+import mindustry.gen.Unit;
 import mindustry.graphics.Drawf;
 import mindustry.graphics.Layer;
 import mindustry.type.StatusEffect;
@@ -23,7 +24,7 @@ public class EffectRefabricator extends Reconstructor {
     }
 
     public class EffectFactoryBuild extends ReconstructorBuild {
-
+        private Unit lastApplied = null;
         @Override
         public boolean acceptPayload(Building source, Payload payload){
             if (this.payload == null && payload instanceof UnitPayload u)
@@ -69,7 +70,7 @@ public class EffectRefabricator extends Reconstructor {
             boolean valid = false;
 
             if(payload != null){
-                if (payload.unit.hasEffect(statusEffect))
+                if (payload.unit.hasEffect(statusEffect) || lastApplied == payload.unit)
                     moveOutPayload();
                 else if (moveInPayload()) {
                     if(efficiency > 0){
@@ -78,6 +79,7 @@ public class EffectRefabricator extends Reconstructor {
                     }
                     if(progress >= constructTime){
                         payload.unit.apply(statusEffect,statusDuration);
+                        lastApplied = payload.unit;
                         progress %= 1;
                         Effect.shake(2f, 3f, this);
                         Fx.producesmoke.at(this);

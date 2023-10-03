@@ -436,13 +436,14 @@ public class PvStatusEffects {
             });
         }};
         forceApply = new AbilityStatusEffect("force-apply") {{
-            localizedName = "[peal]Force Apply";
+            localizedName = "[orange]Force Apply";
             scaleAbility = true;
             ability = new ShieldArcAbility(){{
-                max = 10;
-                radius = 8*3;
+                max = 100;
+                radius = 8*1.2f;
                 x = 0;
-                y = 4;
+                y = 1;
+                angle = 120;
             }};
         }};
     }

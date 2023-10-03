@@ -34,7 +34,7 @@ public class AbilityStatusEffect extends PvStatusEffect{
     public void setStats(){
         super.setStats();
         if (ability != null) {
-            stats.add(Stat.abilities, ability.toString());
+            stats.add(Stat.abilities, ability.localized());
         }
     }
 
@@ -48,6 +48,7 @@ public class AbilityStatusEffect extends PvStatusEffect{
                 c.max = (a.max/100f)*unit.maxHealth;
                 c.x = a.x*unit.hitSize/8;
                 c.y = a.y*unit.hitSize/8;
+                c.radius = a.radius*unit.hitSize/8;
                 c.init(unit.type);
             }
         }
@@ -55,17 +56,16 @@ public class AbilityStatusEffect extends PvStatusEffect{
     }
 
     @Override
-    public void end(Unit unit) {}
-
-    @Override
     public void update(Unit unit, float time){
         super.update(unit,time);
-        if (ability != null && uAbilitys.containsKey(unit)) uAbilitys.get(unit).update(unit);
+        if (ability != null && uAbilitys.containsKey(unit))
+            uAbilitys.get(unit).update(unit);
     }
 
     @Override
     public void draw(Unit unit) {
         super.draw(unit);
-        if (ability != null && uAbilitys.containsKey(unit)) uAbilitys.get(unit).draw(unit);
+        if (ability != null && uAbilitys.containsKey(unit))
+            uAbilitys.get(unit).draw(unit);
     }
 }

@@ -81,7 +81,7 @@ public class PvStatusEffect extends StatusEffect {
         if (shieldDiff > 0)
             unit.shield += Math.min(shield,shieldDiff);
         super.update(unit,time);
-        if (time <= Time.delta * 2f)
+        if (time <= Time.delta * 2f && !permanent)
             end(unit);
     }
 
