@@ -82,11 +82,7 @@ public class PvStatusEffect extends StatusEffect {
             unit.shield += Math.min(shield,shieldDiff);
         super.update(unit,time);
         if (time <= Time.delta * 2f)
-        {{
             end(unit);
-            effectOn.remove(unit);
-            unit.unapply(this);
-        }}
     }
 
     public void start(Unit unit)
@@ -104,5 +100,7 @@ public class PvStatusEffect extends StatusEffect {
                 unit.damage(damageNumbness.get(unit).dmg);
                 damageNumbness.remove(unit);
             }
+        effectOn.remove(unit);
+        unit.unapply(this);
     }
 }

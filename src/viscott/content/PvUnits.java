@@ -9,10 +9,12 @@ import arc.util.Time;
 import mindustry.Vars;
 import mindustry.ai.types.HugAI;
 import mindustry.ai.types.MinerAI;
+import mindustry.content.Bullets;
 import mindustry.content.Fx;
 import mindustry.content.Items;
 import mindustry.content.StatusEffects;
 import mindustry.entities.Effect;
+import mindustry.entities.Units;
 import mindustry.entities.abilities.RepairFieldAbility;
 import mindustry.entities.abilities.ShieldArcAbility;
 import mindustry.entities.abilities.SpawnDeathAbility;
@@ -63,7 +65,7 @@ public class PvUnits {
             wood,
         /*Flying Ion Path*/ particle, snippet, fragment, excerpt, pericope,
 
-        /*Rocket Hover Path*/milli,centi,deci,hecta,
+        /*Rocket Hover Path*/milli,centi,deci,deca,hecto,
 
         /*Xeal Naval Path*/rivulet,bourn,tributary,loch,atlantic,
 
@@ -2863,8 +2865,8 @@ public class PvUnits {
             );
         }};
         //T4 here.
-        hecta = new PvUnitType("hecta") {{
-            localizedName = "Hecta";
+        hecto = new PvUnitType("hecto") {{
+            localizedName = "Hecto";
             constructor = EntityMapping.map("horizon");
             speed = 6f/7.5f;
             drag = 0.1f;
@@ -3437,7 +3439,7 @@ public class PvUnits {
                     x = 6f;
                     moveX = 2.5f + i * 1f;
                     moveY = 5f + -4f * i;
-                    moveRot = 35f - i * 30f;
+                    moveRot = 15f - i * 25f;
                     mirror = true;
                     progress = PartProgress.warmup.delay(i * 0.2f);
                     heatProgress = p -> Mathf.absin(Time.time + i * 14f, 7f, 1f);
@@ -3447,27 +3449,30 @@ public class PvUnits {
             }
             weapons.add(
                     new Weapon(name+"-weapon") {{
-                        x = 9f;
-                        y = 6f;
+                        x = 7f;
+                        y = 4f;
                         mirror = true;
-                        reload = 60*2f;
-                        shoot.firstShotDelay = 3.2f*60f;
-                        shoot.shotDelay = 60f/3.2f;
+                        reload = 30f/3.2f;
                         alternate = false;
-                        inaccuracy = 0f;
                         recoil = 0;
-                        baseRotation = -45f;
-                        shootCone = 140;
+                        baseRotation = -30f;
+                        shootCone = 90;
+                        minWarmup = 0.9f;
+                        shootWarmupSpeed = 0.02f;
                         shootSound = Sounds.mineDeploy;
-                        bullet = new BasicBulletType(2.5f, 18f) {{
-                            splashDamage = 45;
-                            splashDamageRadius = 2.5f;
-                            lifetime = PvUtil.GetRange(2.5f,19);
+                        shootStatus = StatusEffects.slow;
+                        shootStatusDuration = 30;
+                        inaccuracy = 15;
+                        bullet = new BasicBulletType(4f, 45f) {{
+                            splashDamage = 73;
+                            splashDamageRadius = 4*8f;
+                            lifetime = PvUtil.GetRange(4f,25);
                             homingPower = 0.1f;
                             homingRange = 200;
                             homingDelay = 10;
                             trailColor = backColor = lightColor = Pal.neoplasm1;
                             frontColor = Pal.neoplasm2;
+                            despawnEffect = hitEffect = Fx.explosion;
                             trailLength = 24;
                             trailChance = 0.1f;
                             trailWidth = 1.4f;
@@ -3527,7 +3532,7 @@ public class PvUnits {
                 shoot = new ShootSpread(5, 4f);
                 bullet = new BasicBulletType(2.5f, 18f) {{
                     splashDamage = 45;
-                    splashDamageRadius = 2.5f;
+                    splashDamageRadius = 2.5f*8f;
                     lifetime = PvUtil.GetRange(2.5f,19);
                     homingPower = 0.1f;
                     homingRange = 200;

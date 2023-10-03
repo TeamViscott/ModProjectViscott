@@ -24,8 +24,6 @@ import mindustry.world.blocks.power.*;
 import mindustry.world.blocks.production.*;
 import mindustry.world.blocks.storage.*;
 import mindustry.world.blocks.units.Reconstructor;
-import mindustry.world.blocks.units.UnitFactory;
-import mindustry.world.consumers.ConsumePower;
 import mindustry.world.draw.*;
 import mindustry.world.meta.BuildVisibility;
 import viscott.types.*;
@@ -931,15 +929,17 @@ public class PvBlocks {
                     consumePower(1200f/60f);
                     consumeItems(with(PvItems.barium,600, PvItems.erbium,450,PvItems.platinum,200,PvItems.nobelium,100));
                 }};
-                forceModifier = new Reconstructor("force-modifier") {{
+                forceModifier = new EffectRefabricator("force-modifier") {{
                     requirements(Category.units,BuildVisibility.sandboxOnly,with(PvItems.zirconium,1000,PvItems.platinum,700,PvItems.erbium,300,Items.silicon,200,PvItems.nobelium,80)); //Todo
                     localizedName = "Force Modifier";
-                    health = 2600;
+                    health = 3000;
                     size = 5;
-                    itemCapacity = 1000;
-                    constructTime = 60*60;
-                    consumePower(200f/60f);
-                    consumeItems(with(PvItems.barium,100,Items.silicon,80,PvItems.lithium,40));
+                    statusEffect = PvStatusEffects.forceApply;
+                    statusDuration = 60*60;
+                    maxSize = 8*4;
+                    constructTime = 60*25;
+                    consumePower(210f/60f);
+                    consumeItems(with(PvItems.erbium,25));
                 }};
                 minimalHousingUnit = new HousingUnitBlock("minimal-housing-unit") {{
                     requirements(Category.units,with(PvItems.zirconium,400,PvItems.lithium,250,Items.silicon,50)); //Todo

@@ -19,6 +19,7 @@ public class teamResearch extends Block {
     public teamResearch(String name, PvFaction team)
     {
         super(name);
+
         localName = Core.bundle.get("team."+name);
         localizedName= localName;
         refTeam = team;

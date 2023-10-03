@@ -5,6 +5,7 @@ import arc.math.Mathf;
 import arc.struct.Seq;
 import mindustry.content.Fx;
 import mindustry.content.StatusEffects;
+import mindustry.entities.abilities.ShieldArcAbility;
 import mindustry.entities.bullet.BasicBulletType;
 import mindustry.entities.effect.MultiEffect;
 import mindustry.game.Team;
@@ -22,6 +23,7 @@ public class PvStatusEffects {
     
 
      frag,aoe,homing,memoryExchange,dataLeak,endlessAmp, endlessDot, prevention, lastStand, consume,splintered,torture,
+             forceApply,
     /*Void*/voidShield,voidDecay,voidConsume,voidDecayExpand, reapingTouch,
 
     /*Source*/sourceRepair,sourcePurify,sourceRepel,
@@ -432,6 +434,16 @@ public class PvStatusEffects {
                     Fx.burning.at(unit.x + Mathf.range(unit.bounds() / 2f), unit.y + Mathf.range(unit.bounds() / 2f));
                 });
             });
+        }};
+        forceApply = new AbilityStatusEffect("force-apply") {{
+            localizedName = "[peal]Force Apply";
+            scaleAbility = true;
+            ability = new ShieldArcAbility(){{
+                max = 10;
+                radius = 8*3;
+                x = 0;
+                y = 4;
+            }};
         }};
     }
 }

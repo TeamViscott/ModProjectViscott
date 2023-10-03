@@ -18,7 +18,6 @@ import static viscott.world.pseudo3d.importedcode.PMutls.*;
 
 public class MissileFx{
     public static Effect
-
             shootSmokeDownpour = new Effect(70f, e -> {
         rand.setSeed(e.id);
         for(int i = 0; i < 25; i++){

@@ -1,29 +1,15 @@
 package viscott.gen;
 
-import arc.Core;
-import arc.func.Cons;
-import arc.func.Prov;
 import arc.graphics.Color;
-import arc.graphics.g2d.Draw;
-import arc.graphics.g2d.Fill;
-import arc.graphics.g2d.TextureRegion;
-import arc.math.Angles;
 import arc.math.Mathf;
 import arc.struct.Seq;
-import arc.util.Time;
 import arc.util.Timer;
 import arc.util.io.Reads;
 import arc.util.io.Writes;
 import mindustry.Vars;
-import mindustry.ai.types.FlyingAI;
-import mindustry.content.Fx;
-import mindustry.content.StatusEffects;
-import mindustry.content.UnitTypes;
 import mindustry.entities.Effect;
 import mindustry.entities.abilities.ForceFieldAbility;
-import mindustry.game.Team;
 import mindustry.gen.*;
-import mindustry.graphics.Layer;
 import mindustry.type.UnitType;
 import mindustry.world.Tile;
 import viscott.content.PvEffects;
@@ -31,10 +17,6 @@ import viscott.content.PvStatusEffects;
 import viscott.content.PvUnitMapper;
 import viscott.content.PvUnits;
 import viscott.world.statusEffects.CurseStatusEffect;
-import viscott.world.statusEffects.PvStatusEffect;
-
-import java.lang.annotation.Target;
-import java.util.HashMap;
 
 public class FrogUnit extends UnitEntity {
     public CurseStatusEffect necroEffect = (CurseStatusEffect) PvStatusEffects.memoryExchange;
@@ -42,7 +24,7 @@ public class FrogUnit extends UnitEntity {
     public float necroRange = 20;
 
     boolean canTransform = true;
-    Seq<UnitType> transformList = Seq.with(PvUnits.pericope,PvUnits.hecta);
+    Seq<UnitType> transformList = Seq.with(PvUnits.pericope,PvUnits.hecto);
     Unit transformedUnit;
     boolean hideUnit = false;
     int fleetSize = 24;
