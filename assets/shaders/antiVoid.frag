@@ -1,7 +1,7 @@
 #define HIGHP
 
-#define Inner vec4(255.0, 246.0, 125.0,100.0) / 255.0
-#define Border vec4(255.0, 255.0, 255.0,255.0) / 255.0
+#define Inner vec4(255.0, 255.0, 255.0,100.0) / 255.0
+#define Border vec4(0.0, 0.0, 0.0,255.0) / 255.0
 
 #define step 2.0
 
