@@ -24,7 +24,7 @@ public class FrogUnit extends UnitEntity {
     public float necroRange = 20;
 
     boolean canTransform = true;
-    Seq<UnitType> transformList = Seq.with(PvUnits.pericope,PvUnits.hecto);
+    Seq<UnitType> transformList = Seq.with(PvUnits.pericope,PvUnits.kilo);
     Unit transformedUnit;
     boolean hideUnit = false;
     int fleetSize = 24;

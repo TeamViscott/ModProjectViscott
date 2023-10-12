@@ -37,7 +37,7 @@ import static mindustry.type.ItemStack.with;
 import static viscott.utilitys.PvUtil.*;
 
 public class PvTurrets {
-    public static Block
+    public static Turret
             splinter,shatter,euro,snap,hourglass,
             phantom,razor,rainmaker,striker,
             marksman, xacto,reaper,shuttle, nuero, jaeger, glaive,
