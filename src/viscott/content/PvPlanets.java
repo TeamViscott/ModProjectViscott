@@ -39,6 +39,7 @@ public class PvPlanets{
             alwaysUnlocked = true;
             ruleSetter = r -> {
             };
+            defaultCore = PvBlocks.coreHover;
         }};
     }
 }
