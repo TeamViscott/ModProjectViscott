@@ -199,7 +199,7 @@ public class Grinder extends PvBlock {
         }
         public void craft(Block d)
         {
-            if (items.get(d.itemDrop) < itemCapacity)
+            if (items != null || items.get(d.itemDrop) < itemCapacity)
                 items.add(d.itemDrop, 1);
         }
 
