@@ -152,7 +152,7 @@ public class ProjectViscottTechTree {
                         });
                     });
                     node(nueroSpawnPad,()->{
-                        node(nueroRemolder,()->{
+                        node(neuroRemolder,()->{
                             node(grandRemolder);
                             node(regularHousingUnit);
                             node(forceModifier);

@@ -82,8 +82,8 @@ public class PvBlocks {
                             micropulsePump,effluxPump,
                     /*Pressure related*/pressureSource,
                     /*Unit Creation*/templateMolder,massTemplateMolder,
-                            nueroSpawnPad,eliteSpawnPad,
-                            nueroRemolder,grandRemolder,
+                            nueroSpawnPad,
+                            neuroRemolder,grandRemolder,etheriumRemolder,mythicalRemolder,
                             forceModifier,
                             minimalHousingUnit,regularHousingUnit,
                             /*Yggdrasil*/branchMolder,
@@ -859,32 +859,6 @@ public class PvBlocks {
                         new PvUnitPlan(PvUnits.rivulet,10*60f,with(PvItems.zirconium,50,Items.silicon,30))
                     );
                 }};
-                eliteSpawnPad = new BulkUnitFactory("elite-spawn-pad")
-                {{
-                    requirements(Category.units,with(PvItems.zirconium,600,PvItems.platinum,210,Items.silicon,80,PvItems.nobelium,120)); //Todo
-                    localizedName = "Elite Spawn Pad";
-                    health = 3400;
-                    size = 7;
-                    consumePower(480f/60f);
-                    itemCapacity = 8000;
-                    liquidCapacity = 500;
-                    selectionColumns = 4;
-                    maxAmount = 20;
-                    plans = new Seq<>().with(
-                            //Particle Path
-                            new PvUnitPlan(PvUnits.particle,6*60f,with(PvItems.lithium,20,Items.silicon,10),airTempT1),
-                            new PvUnitPlan(PvUnits.snippet,30*60f,with(PvItems.lithium,50,Items.silicon,40,PvItems.nobelium,60),airTempT2),
-                            //Hover Path
-                            new PvUnitPlan(PvUnits.milli,6*60f,with(PvItems.zirconium,160,Items.silicon,60)),
-                            new PvUnitPlan(PvUnits.centi,30*60f,with(PvItems.zirconium,380,Items.silicon,180,PvItems.lithium,100,PvItems.barium,70)),
-                            //Container Path
-                            new PvUnitPlan(PvUnits.pocket,6*60f,with(PvItems.zirconium,40,PvItems.lithium,20)),
-                            new PvUnitPlan(PvUnits.container,30*60f,with(PvItems.zirconium,100,PvItems.lithium,50,Items.silicon,20)),
-                            //Naval Path
-                            new PvUnitPlan(PvUnits.rivulet,6*60f,with(PvItems.zirconium,50,Items.silicon,30)),
-                            new PvUnitPlan(PvUnits.bourn,30*60f,with(PvItems.zirconium,100,Items.silicon,80,PvItems.nobelium,40,PvItems.lithium,100))
-                    );
-                }};
                 branchMolder = new BulkUnitFactory("branch-molder")
                 {{
                     requirements(Category.units,with(Items.copper,250,Items.silicon,75,PvItems.hardenedOak,40));
@@ -901,15 +875,16 @@ public class PvBlocks {
                             new PvUnitPlan(PvUnits.root,20*60f,with(PvItems.hardenedOak,20,Items.silicon,10))
                     );
                 }};
-                nueroRemolder = new Reconstructor("nuero-remolder") {{
+                neuroRemolder = new Reconstructor("neuro-remolder") {{
                     requirements(Category.units,with(PvItems.zirconium,500,PvItems.platinum,100,Items.silicon,40)); //Todo
                     localizedName = "Neuro Remolder";
                     addUpgrade(PvUnits.particle,PvUnits.snippet);
                     addUpgrade(PvUnits.milli,PvUnits.centi);
                     addUpgrade(PvUnits.pocket,PvUnits.container);
                     addUpgrade(PvUnits.rivulet,PvUnits.bourn);
+                    addUpgrade(PvUnits.chime,PvUnits.carillon);
                     health = 1200;
-                    size = 5;
+                    size = 3;
                     itemCapacity = 200;
                     constructTime = 60*20;
                     consumePower(200f/60f);
@@ -918,17 +893,45 @@ public class PvBlocks {
                 grandRemolder = new Reconstructor("grand-remolder") {{
                     requirements(Category.units,with(PvItems.zirconium,1000,PvItems.platinum,700,PvItems.erbium,300,Items.silicon,200,PvItems.nobelium,80)); //Todo
                     localizedName = "Grand Remolder";
-                    addUpgrade(PvUnits.snippet,PvUnits.excerpt);
-                    //addUpgrade(PvUnits.centi,PvUnits.deci); no T4 yet.
-                    addUpgrade(PvUnits.container,PvUnits.vault);
-                    addUpgrade(PvUnits.bourn,PvUnits.loch);
-                    //addUpgrade(PvUnits.carillon,PvUnits.peal); no T4 yet.
+                    addUpgrade(PvUnits.snippet,PvUnits.fragment);
+                    addUpgrade(PvUnits.centi,PvUnits.deci);
+                    addUpgrade(PvUnits.container,PvUnits.capsule);
+                    addUpgrade(PvUnits.bourn,PvUnits.tributary);
+                    addUpgrade(PvUnits.carillon,PvUnits.knell);
+                    health = 3150;
+                    size = 5;
+                    itemCapacity = 1000;
+                    constructTime = 60*40;
+                    consumePower(1200f/60f);
+                    consumeItems(with(PvItems.barium,600, PvItems.erbium,450,PvItems.platinum,200,PvItems.nobelium,100));
+                }};
+                etheriumRemolder = new Reconstructor("etherium-remolder") {{
+                    requirements(Category.units,with(PvItems.zirconium,1000,PvItems.platinum,700,PvItems.erbium,300,Items.silicon,200,PvItems.nobelium,80)); //Todo
+                    localizedName = "Etherium Remolder";
+                    addUpgrade(PvUnits.fragment,PvUnits.excerpt);
+                    addUpgrade(PvUnits.deci,PvUnits.hecto);
+                    addUpgrade(PvUnits.capsule,PvUnits.vault);
+                    addUpgrade(PvUnits.tributary,PvUnits.loch);
+                    addUpgrade(PvUnits.knell,PvUnits.peal);
                     health = 3150;
                     size = 7;
                     itemCapacity = 1000;
                     constructTime = 60*60;
                     consumePower(1200f/60f);
-                    consumeItems(with(PvItems.barium,600, PvItems.erbium,450,PvItems.platinum,200,PvItems.nobelium,100));
+                    consumeItems(with(PvItems.barium,2000,PvItems.nobelium,200,PvItems.platinum,500,Items.silicon,200,PvItems.carbonFiber,60));
+                }};
+                mythicalRemolder = new Reconstructor("mythical-remolder") {{
+                    requirements(Category.units,with(PvItems.zirconium,1000,PvItems.platinum,700,PvItems.erbium,300,Items.silicon,200,PvItems.nobelium,80)); //Todo
+                    localizedName = "Mythical Remolder";
+                    addUpgrade(PvUnits.excerpt,PvUnits.pericope);
+                    addUpgrade(PvUnits.hecto,PvUnits.kilo);
+                    addUpgrade(PvUnits.loch,PvUnits.atlantic);
+                    health = 3150;
+                    size = 9;
+                    itemCapacity = 1000;
+                    constructTime = 60*60;
+                    consumePower(1200f/60f);
+                    consumeItems(with(PvItems.barium,5000,PvItems.erbium,1400,PvItems.rushAlloy,80,PvItems.carbonFiber,150));
                 }};
                 forceModifier = new EffectRefabricator("force-modifier") {{
                     requirements(Category.units,BuildVisibility.sandboxOnly,with(PvItems.zirconium,1000,PvItems.platinum,700,PvItems.erbium,300,Items.silicon,200,PvItems.nobelium,80)); //Todo
@@ -947,14 +950,10 @@ public class PvBlocks {
                     localizedName = "Minimal Housing Unit";
                     health = 540;
                     size = 3;
+                    payloadSize = 2;
                     itemCapacity = 100;
                     consumePower(160);
                     consumeItems(with(PvItems.zirconium,40,Items.silicon,20));
-                    addUpgrade(PvUnits.particle,PvUnits.snippet);
-                    addUpgrade(PvUnits.milli,PvUnits.centi);
-                    addUpgrade(PvUnits.pocket,PvUnits.container);
-                    addUpgrade(PvUnits.rivulet,PvUnits.bourn);
-                    addUpgrade(PvUnits.chime,PvUnits.carillon);
                     constructTime = 60*45;
                 }};
                 regularHousingUnit = new HousingUnitBlock("regular-housing-unit") {{
@@ -962,14 +961,10 @@ public class PvBlocks {
                     localizedName = "Regular Housing Unit";
                     health = 1400;
                     size = 5;
+                    payloadSize = 4;
                     itemCapacity = 200;
                     consumePower(520);
                     consumeItems(with(PvItems.barium,160,Items.silicon,100,PvItems.nobelium,40));
-                    addUpgrade(PvUnits.snippet,PvUnits.fragment);
-                    addUpgrade(PvUnits.centi,PvUnits.deci);
-                    addUpgrade(PvUnits.container,PvUnits.capsule);
-                    addUpgrade(PvUnits.bourn,PvUnits.tributary);
-                    addUpgrade(PvUnits.carillon,PvUnits.peal);
                     constructTime = 60*70;
                 }};
                 densePayloadConveyor = new PayloadConveyor("dense-payload-conveyor")

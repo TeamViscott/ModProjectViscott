@@ -34,10 +34,15 @@ import mindustry.world.TileGen;
 import mindustry.world.Tiles;
 import mindustry.world.blocks.environment.Floor;
 import viscott.content.PvBlocks;
+import viscott.content.PvCoreShematics;
 
 import static mindustry.Vars.*;
 /* SerpuloPlanetGenerator */
 public class VercilusPlanetGenerator extends SerpuloPlanetGenerator {
+    public VercilusPlanetGenerator() {
+        super();
+        defaultLoadout = PvCoreShematics.hover;
+    }
 
     BaseGenerator basegen = new BaseGenerator();
     float scl = 5f;

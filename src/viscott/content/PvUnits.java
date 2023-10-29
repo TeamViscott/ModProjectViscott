@@ -2878,16 +2878,16 @@ public class PvUnits {
             faceTarget = true;
             hovering = true;
             weapons.add(
-                    new Weapon(){{
+                    new Weapon(PvUtil.GetName("hecto-turret")){{
                         reload = 60f/2f;
-                        x = 8f;
-                        shootY = 0f;
-                        y = 2f;
+                        x = 12f;
+                        shootY = 2f;
+                        layerOffset = 1;
+                        y = 6f;
                         mirror = true;
                         alternate = true;
                         ejectEffect = Fx.casing1;
-                        recoil = 0f;
-                        minWarmup = 0.9f;
+                        recoil = 4f;
                         shootWarmupSpeed = 0.1f;
                         rotate = true;
                         rotateSpeed = 2;
@@ -2963,26 +2963,18 @@ public class PvUnits {
                         y = x = 0;
                         moveRot = 15f;
                         under = true;
-                        moves.add(new PartMove(PartProgress.reload, 0f, -1f, 5f));
+                        //moves.add(new PartMove(PartProgress.reload, 0f, -1f, 5f));
                         progress = PartProgress.warmup;
                         mirror = true;
                         children.add(
                                 new RegionPart("-rail") {{
                                     mirror = false;
                                     y = x = 0;
-                                    progress = PartProgress.reload;
-                                    weaponIndex = 1;
-                                    recoilIndex = 0;
-                                }},
-                                new RegionPart("-turret") {{
-                                    y = 2;
-                                    x = -12;
-                                    layerOffset = 0.01f;
                                     moveX = 0;
-                                    moveY = -4;
+                                    moveY = -2;
                                     moveRot = 5;
                                     progress = PartProgress.reload;
-                                    weaponIndex = 0;
+                                    weaponIndex = 2;
                                     recoilIndex = 0;
                                 }}
                         );
