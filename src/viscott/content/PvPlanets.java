@@ -38,7 +38,9 @@ public class PvPlanets{
             iconColor = atmosphereColor = Pal.heal;
             alwaysUnlocked = true;
             ruleSetter = r -> {
+
             };
+            defaultCore = PvBlocks.coreHover;
         }};
     }
 }

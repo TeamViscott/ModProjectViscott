@@ -1,11 +1,16 @@
 package viscott.world.block.unit;
 
 import arc.Core;
+import arc.Events;
 import arc.graphics.g2d.Draw;
 import arc.graphics.g2d.TextureRegion;
+import arc.math.Mathf;
 import arc.util.Eachable;
 import mindustry.Vars;
+import mindustry.content.Fx;
+import mindustry.entities.Effect;
 import mindustry.entities.units.BuildPlan;
+import mindustry.game.EventType;
 import mindustry.gen.Building;
 import mindustry.gen.Icon;
 import mindustry.type.UnitType;
@@ -13,8 +18,11 @@ import mindustry.world.blocks.payloads.Payload;
 import mindustry.world.blocks.payloads.UnitPayload;
 import mindustry.world.blocks.units.Reconstructor;
 
+import static mindustry.Vars.state;
+
 public class HousingUnitBlock extends Reconstructor {
-    //Cheaper Reconstructor. but pops the unit out from the top.
+    //Cheaper Reconstructor. but pops the unit out from the top
+    public int payloadSize = 3;
     public HousingUnitBlock(String name) {
         super(name);
         rotate = false;
@@ -52,13 +60,43 @@ public class HousingUnitBlock extends Reconstructor {
             rotation = -1;
         }
         @Override
-        public void update() {
-            super.update();
-            if (payload == null) return;
-            if(hasUpgrade(payload.unit.type)) return;
-            payload.unit.x(x);
-            payload.unit.y(y);
-            dumpPayload();
+        public void updateTile() {
+            boolean valid = false;
+
+            if(payload != null){
+                    if(moveInPayload()){
+                        if(efficiency > 0){
+                            valid = true;
+                            progress += edelta() * state.rules.unitBuildSpeed(team);
+                        }
+
+                        //upgrade the unit
+                        if(progress >= constructTime){
+                            payload.unit.health = payload.unit.type.health;
+
+                            if(payload.unit.isCommandable()){
+                                if(commandPos != null){
+                                    payload.unit.command().commandPosition(commandPos);
+                                }
+                                if(command != null){
+                                    //this already checks if it is a valid command for the unit type
+                                    payload.unit.command().command(command);
+                                }
+                            }
+
+                            progress %= 1f;
+                            Effect.shake(2f, 3f, this);
+                            Fx.producesmoke.at(this);
+                            consume();
+                            payload.unit.x(x);
+                            payload.unit.y(y);
+                            dumpPayload();
+                        }
+                    }
+            }
+
+            speedScl = Mathf.lerpDelta(speedScl, Mathf.num(valid), 0.05f);
+            time += edelta() * speedScl * state.rules.unitBuildSpeed(team);
         }
 
         @Override
@@ -66,22 +104,7 @@ public class HousingUnitBlock extends Reconstructor {
             if(!(this.payload == null && payload instanceof UnitPayload pay)){
                 return false;
             }
-
-            var upgrade = upgrade(pay.unit.type);
-
-            if(upgrade != null){
-                if(!upgrade.unlockedNowHost() && !team.isAI()){
-                    //flash "not researched"
-                    pay.showOverlay(Icon.tree);
-                }
-
-                if(upgrade.isBanned()){
-                    //flash an X, meaning 'banned'
-                    pay.showOverlay(Icon.cancel);
-                }
-                return (team.isAI() || upgrade.unlockedNowHost()) && !upgrade.isBanned();
-            }
-            return false;
+            return pay.unit.hitSize / 8f <= payloadSize;
         }
 
         @Override

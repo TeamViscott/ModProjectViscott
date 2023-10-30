@@ -8,6 +8,11 @@ import viscott.world.teamResearch;
 import static mindustry.content.TechTree.*;
 import static viscott.content.PvBlocks.*;
 import static viscott.content.PvTurrets.*;
+import static mindustry.content.Items.*;
+import static viscott.content.PvItems.*;
+import static mindustry.content.Liquids.*;
+import static viscott.content.PvLiquids.*;
+import static viscott.content.PvUnits.*;
 
 public class ProjectViscottTechTree {
     public static void load()
@@ -18,6 +23,31 @@ public class ProjectViscottTechTree {
             node(PvFactions.Nullis.icon);
             node(PvFactions.Azulex.icon);
             node(PvFactions.Psy.icon);
+            node(zirconium,()->{
+                node(water,()->{
+                    node(nitrogen,()->{
+                        node(liquidNitrogen);
+                    });
+                    node(oil,()-> {
+                        node(kerosene, () -> {
+                            node(xenon);
+                        });
+                    });
+                });
+                node(lithium,()->{
+                    node(platinum,()->{
+                        node(carbonFiber,()->{
+                            node(rushAlloy);
+                        });
+                    });
+                    node(erbium);
+                });
+                node(barium,()->{
+                    node(silicon,()->{
+                        node(nobelium);
+                    });
+                });
+            });
             node(coreHover,()-> {
                 node(harvestGrinder,()->{
                     node(micromassConveyor,()-> {
@@ -37,7 +67,13 @@ public class ProjectViscottTechTree {
                             });
                         });
                     });
-                    node(harvestDrill);
+                    node(harvestDrill,()->{
+                        node(tetraDrill,()->{
+                            node(spectrumDrill);
+                        });
+                        node(behemothGrinder);
+                        node(oilGrinder);
+                    });
                     node(concentratedConduit,()->{
                         node(concentratedJunction,()->{
                             node(smallConcentratedTank,()->{
@@ -58,10 +94,139 @@ public class ProjectViscottTechTree {
                     node(coreUpraise);
                 });
                 node(splinter,()->{
-                    node(shatter);
-                    node(euro);
-                    node(snap);
-                    node(hourglass);
+                    node(zirconWall,()->{
+                        node(zirconWallLarge);
+                        node(siliconeWall,()-> {
+                            node(siliconeWallLarge);
+                        });
+                        node(platinumWall,()->{
+                            node(platinumWallLarge);
+                            node(erbiumWall,()->{
+                                node(erbiumWallLarge);
+                            });
+                            node(carbonWall,()->{
+                                node(carbonWallLarge);
+                            });
+                        });
+                    });
+                    node(shatter,()->{
+                        node(shredder);
+                        node(glaive,()->{
+                            node(hel);
+                            node(reaper);
+                        });
+                    });
+                    node(euro,()->{
+                        node(phantom);
+                        node(marksman);
+                        node(nuero,()->{
+                            node(jaeger);
+                            node(razor,()->{
+                                node(rainmaker);
+                                node(xacto,()->{
+                                    node(shuttle);
+                                });
+                            });
+                        });
+                    });
+                    node(snap,()->{
+                        node(spring);
+                        node(hourglass,()->{
+                            node(striker);
+                            node(falarica,()->{
+                                node(javelin);
+                                node(sumaya);
+                            });
+                        });
+                    });
+                });
+                node(templateMolder,()->{
+                    node(densePayloadConveyor,()->{
+                        node(densePayloadRouter,()->{
+                            node(denseConstructor,()-> {
+                                node(denseDeconstructor);
+                            });
+                            node(denseLoader,()->{
+                                node(denseUnloader);
+                            });
+                        });
+                    });
+                    node(nueroSpawnPad,()->{
+                        node(neuroRemolder,()->{
+                            node(grandRemolder);
+                            node(regularHousingUnit);
+                            node(forceModifier);
+
+                        });
+                        node(minimalHousingUnit);
+                        node(particle,()->{
+                            node(snippet,()->{
+                                node(fragment,()->{
+                                    node(excerpt,()->{
+                                        node(pericope);
+                                    });
+                                });
+                            });
+                        });
+                        node(milli,()->{
+                            node(centi,()->{
+                                node(deci,()->{
+                                    node(hecto,()->{
+                                        node(kilo);
+                                    });
+                                });
+                            });
+                        });
+                        node(chime,()->{
+                            node(carillon,()->{
+                                node(knell,()->{
+                                    node(peal);
+                                });
+                            });
+                        });
+                    });
+                });
+                node(piscoProcessor,()->{
+                    node(labelHandler);
+                    node(memoryByte);
+                    node(statusSelector);
+                });
+            });
+            node(siliconMassForge,()->{
+                node(heatPathfinder,()->{
+                    node(keroseneHeater,()->{
+                        node(xeroPointHeater);
+                    });
+                    node(blastHeater,()->{
+                        node(hybridHeater);
+                    });
+                });
+                node(particalAccelerator,()->{
+                    node(carbonWeaver,()->{
+                        node(quadRushForge);
+                    });
+                });
+                node(nitrogenDistiller,()->{
+                    node(fractionIonizer);
+                    node(utilityProjector);
+                });
+                node(keroseneMixer);
+            });
+            node(opticalNode,()->{
+                node(auditoryNode);
+                node(compressedBattery);
+                node(radiator,()->{
+                    node(smallCarbonPanel,()->{
+                        node(largeCarbonPanel);
+                    });
+                });
+                node(lithiumDegenerator,()->{
+                    node(keroseneGenerator,()->{
+                        node(subzeroReactor);
+                    });
+                    node(blastReactor,()->{
+                        node(feverReactor);
+                    });
                 });
             });
         });

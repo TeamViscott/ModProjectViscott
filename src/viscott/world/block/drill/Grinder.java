@@ -185,7 +185,7 @@ public class Grinder extends PvBlock {
                 maxMineSpeed = getMineSpeed((int)x/8,(int)y/8);
                 hardness = getHardness((int)x/8,(int)y/8);
             }
-            if (efficiency > 0 && items != null) {
+            if (efficiency > 0) {
                 progress = Mathf.approachDelta(progress, 1, ((maxMineSpeed - hardness) / 60)*efficiency);
                 if (progress == 1) {
                     Seq<Block> blockList = getBlocks((int)x/8,(int)y/8);
@@ -199,7 +199,7 @@ public class Grinder extends PvBlock {
         }
         public void craft(Block d)
         {
-            if (items.get(d.itemDrop) < itemCapacity)
+            if (hasItems && items.get(d.itemDrop) < itemCapacity)
                 items.add(d.itemDrop, 1);
         }
 

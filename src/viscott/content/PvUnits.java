@@ -9,12 +9,10 @@ import arc.util.Time;
 import mindustry.Vars;
 import mindustry.ai.types.HugAI;
 import mindustry.ai.types.MinerAI;
-import mindustry.content.Bullets;
 import mindustry.content.Fx;
 import mindustry.content.Items;
 import mindustry.content.StatusEffects;
 import mindustry.entities.Effect;
-import mindustry.entities.Units;
 import mindustry.entities.abilities.RepairFieldAbility;
 import mindustry.entities.abilities.ShieldArcAbility;
 import mindustry.entities.abilities.SpawnDeathAbility;
@@ -65,7 +63,7 @@ public class PvUnits {
             wood,
         /*Flying Ion Path*/ particle, snippet, fragment, excerpt, pericope,
 
-        /*Rocket Hover Path*/milli,centi,deci,deca,hecto,
+        /*Rocket Hover Path*/milli,centi,deci,hecto, kilo,
 
         /*Xeal Naval Path*/rivulet,bourn,tributary,loch,atlantic,
 
@@ -2743,7 +2741,7 @@ public class PvUnits {
             drag = 0.13f;
             buildSpeed = 2.2f;
             buildBeamOffset = 0;
-            hitSize = 10f;
+            hitSize = 8f*2;
             health = 2500;
             armor = 7;
             range = 34*8;
@@ -2863,9 +2861,127 @@ public class PvUnits {
                     }}
             );
         }};
-        //T4 here.
         hecto = new PvUnitType("hecto") {{
             localizedName = "Hecto";
+            constructor = EntityMapping.map("ElevationMoveUnit");
+            speed = 6.2f/7.5f;
+            engineOffset = 8;
+            drag = 0.13f;
+            buildSpeed = 2.2f;
+            buildBeamOffset = 0;
+            hitSize = 8*5f;
+            health = 18500;
+            armor = 9;
+            range = 34*8;
+            accel = 0.4f;
+            rotateSpeed = 3.3f;
+            faceTarget = true;
+            hovering = true;
+            weapons.add(
+                    new Weapon(PvUtil.GetName("hecto-turret")){{
+                        reload = 60f/2f;
+                        x = 12f;
+                        shootY = 2f;
+                        layerOffset = 1;
+                        y = 6f;
+                        mirror = true;
+                        alternate = true;
+                        ejectEffect = Fx.casing1;
+                        recoil = 4f;
+                        shootWarmupSpeed = 0.1f;
+                        rotate = true;
+                        rotateSpeed = 2;
+                        rotationLimit = 90;
+                        shoot = new ShootHelix();
+                        bullet = new MissileBulletType(3f, 84){{
+                            width = 6f;
+                            height = 8f;
+                            homingPower = 0.01f;
+                            lifetime = PvUtil.GetRange(this.speed,34);
+                            trailColor = backColor = lightColor = Pal.neoplasm1;
+                            frontColor = Pal.neoplasm2;
+                            trailLength = 12;
+                            trailChance = 0.1f;
+                            trailWidth = 0.6f;
+                            splashDamage = 22;
+                            splashDamageRadius = 10f;
+                            ammoMultiplier = 2;
+                            despawnEffect = hitEffect = new MultiEffect(Fx.explosion,Fx.smokeCloud);
+                        }};
+                    }}, new Weapon(){{
+                        reload = 60f / 0.7f;
+                        minWarmup = 0.9f;
+                        x = 0;
+                        y = 0;
+                        mirror = false;
+                        shootWarmupSpeed = 0.1f;
+                        bullet = new MissileBulletType(3f,84f) {{
+                            width = 12f;
+                            height = 16f;
+                            homingPower = 0.01f;
+                            lifetime = PvUtil.GetRange(this.speed,34);
+                            trailColor = backColor = lightColor = Pal.neoplasm1;
+                            frontColor = Pal.neoplasm2;
+                            trailLength = 30;
+                            trailChance = 0.1f;
+                            trailWidth = 1.2f;
+                            splashDamage = 40;
+                            splashDamageRadius = 8*1.5f;
+                            despawnEffect = hitEffect = new MultiEffect(Fx.explosion,Fx.smokeCloud);
+                            fragBullets = 10;
+                            fragBullet = new MissileBulletType(2,24)
+                            {{
+                                width = 3f;
+                                height = 4f;
+                                homingPower = 0.01f;
+                                lifetime = PvUtil.GetRange(this.speed,5);
+                                trailColor = backColor = lightColor = Pal.neoplasm1;
+                                frontColor = Pal.neoplasm2;
+                                trailLength = 12;
+                                trailChance = 0.1f;
+                                trailWidth = 0.6f;
+                                splashDamage = 22;
+                                splashDamageRadius = 10f;
+                                ammoMultiplier = 2;
+                            }};
+                        }};
+                    }}
+            );
+            parts.add(
+                    new HoverPart(){{
+                        x = -14f;
+                        y = -14;
+                        mirror = true;
+                        radius = 10;
+                        phase = 60f;
+                        stroke = 5f;
+                        layerOffset = -0.1f;
+                        color = Pal.neoplasmMid;
+                        //back hovers
+                    }},
+                    new RegionPart("-front"){{
+                        y = x = 0;
+                        moveRot = 15f;
+                        under = true;
+                        //moves.add(new PartMove(PartProgress.reload, 0f, -1f, 5f));
+                        progress = PartProgress.warmup;
+                        mirror = true;
+                        children.add(
+                                new RegionPart("-rail") {{
+                                    mirror = false;
+                                    y = x = 0;
+                                    moveX = 0;
+                                    moveY = -2;
+                                    moveRot = 5;
+                                    progress = PartProgress.reload;
+                                    weaponIndex = 2;
+                                    recoilIndex = 0;
+                                }}
+                        );
+                    }});
+        }};
+        kilo = new PvUnitType("kilo") {{
+            localizedName = "Kilo";
             constructor = EntityMapping.map("horizon");
             speed = 6f/7.5f;
             drag = 0.1f;

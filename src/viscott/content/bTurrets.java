@@ -25,6 +25,7 @@ public class bTurrets {
         bScatter = new ItemTurret("b-scatter"){{
             requirements(Category.turret, with(Items.copper, 35));
             localizedName = "Photon";
+            
             ammo(
                     Items.copper,  new BasicBulletType(5f, 19){{
                         width = 7f;
