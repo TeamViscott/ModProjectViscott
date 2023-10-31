@@ -2274,7 +2274,7 @@ public class PvUnits {
                 drag = 0.1f;
                 speed = 0.5f;
                 health = 80000;
-                hitSize = 40;
+                hitSize = 8*8;
                 armor = 50f;
                 omniMovement = false;
                 faceTarget = false;
@@ -2543,7 +2543,7 @@ public class PvUnits {
                             constructor = EntityMapping.map("stell");
                             drag = 0.1f;
                             speed = 0.6f;
-                            hitSize = 8f;
+                            this.hitSize = 8f;
                             health = 4000;
                             armor = 20f;
                             omniMovement = false;
@@ -2618,7 +2618,6 @@ public class PvUnits {
                                 heatColor = Color.valueOf("addada");
                                 recoil = 0f;
                                 shootCone = 360;
-                                hitSize = 6;
                                 shoot.shots = 180;
                                 shoot.shotDelay = 0f;
                                 useAmmo = false;
@@ -3397,7 +3396,7 @@ public class PvUnits {
             );
             for shield abillty /otamamori
             */
-            hitSize = 18f;
+            hitSize = 3*8f;
             health = 24000;
             armor = 12;
             accel = 0.4f;
@@ -3410,7 +3409,6 @@ public class PvUnits {
                 shoot.shotDelay = 5;
                 x = 17f;
                 shootY = 2f;
-                hitSize = 2*8;
                 inaccuracy = 3;
                 layerOffset = 0.001f;
                 y = -12f;
@@ -3463,7 +3461,6 @@ public class PvUnits {
                 shoot.shotDelay = 5;
                 x = 17f;
                 shootY = 2f;
-                hitSize = 2*8;
                 inaccuracy = 3;
                 y = 4f;
                 recoil = 2;
