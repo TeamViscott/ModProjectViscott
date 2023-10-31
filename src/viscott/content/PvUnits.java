@@ -39,6 +39,7 @@ import arc.math.*;
 
 import mindustry.type.unit.MissileUnitType;
 import viscott.gen.CoinUnit;
+import viscott.gen.weapons.RandWeapon;
 import viscott.types.abilities.EnemyStatusFieldAbility;
 import viscott.content.shootpatterns.ShootSpreadBounce;
 import viscott.gen.FrogUnit;
@@ -83,7 +84,8 @@ public class PvUnits {
                     siede,
                     frire, /*swarm mini extra*/lilshts,
                     zepz, baron, //kapzduke's twin bosses
-                    omamori;
+                    omamori,
+                    plays; //a guy's boss cuz why not.
     public static void load()
     {
         //Base UnitLoads
@@ -1948,6 +1950,61 @@ public class PvUnits {
                 range = 8 * 14;
             }
         };
+        plays = new PvUnitType("plays") {{
+            health = 500000;
+            armor = 20;
+            localizedName = "Plays";
+            constructor = EntityMapping.map("eclipse");
+            speed = 6f / 7.5f;
+            rotateSpeed = 2f;
+            drag = 0.02f;
+            accel = 0.03f;
+            hitSize = 8*6;
+            flying = true;
+            drawCell = false;
+            engineOffset = 26;
+            engineSize = 6;
+            weapons.add(
+                new Weapon() {{ //Laser Side Cannons
+                    x = 20;
+                    y = 8;
+                    reload = 30f/0.6f;
+                    mirror = true;
+                    shootCone = 360;
+                    rotationLimit = 45;
+                    bullet = new LaserBulletType() {{
+                        colors = new Color[]{Pal.heal, Pal.heal.cpy().add(50,50,50), Color.white};
+                        damage = 600;
+                        length = 8*33;
+                        lifetime = 30;
+                    }};
+                }},
+                new RandWeapon() {{ //Bullet Barrage.
+                    bulletSpeedMin = 2;
+                    bulletSpeedMax = 6;
+                    shootCone = 90;
+                    inaccuracy = 10;
+                    x = 0;
+                    y = 0;
+                    shootY = 16;
+                    mirror = false;
+                    reload = 60*8f;
+                    rotationLimit = 10;
+                    shoot.shots = 120;
+                    shoot.shotDelay = 0.4f;
+                    shoot.firstShotDelay = Fx.greenLaserCharge.lifetime;
+                    bullet = new BasicBulletType(6,60) {{
+                        chargeEffect = Fx.greenLaserCharge;
+                        frontColor = Color.white;
+                        trailColor = backColor = Pal.gray;
+                        trailWidth = 1;
+                        trailLength = 20;
+                        homingPower = 0.08f;
+                        homingDelay = 20;
+                    }};
+                }}
+            );
+        }};
         lilshts = new PvUnitType("lilshts") {{
             health = 650;
             armor = 20;
@@ -2603,8 +2660,6 @@ public class PvUnits {
             speed = 12.3f/7.5f;
             engineOffset = 8;
             drag = 0.13f;
-            buildSpeed = 2.2f;
-            buildBeamOffset = 0;
             hitSize = 10f;
             health = 275;
             armor = 3;
@@ -2654,8 +2709,6 @@ public class PvUnits {
             speed = 9.8f/7.5f;
             engineOffset = 8;
             drag = 0.13f;
-            buildSpeed = 2.2f;
-            buildBeamOffset = 0;
             hitSize = 10f;
             health = 925;
             armor = 5;
@@ -2739,8 +2792,6 @@ public class PvUnits {
             speed = 8.5f/7.5f;
             engineOffset = 8;
             drag = 0.13f;
-            buildSpeed = 2.2f;
-            buildBeamOffset = 0;
             hitSize = 8f*2;
             health = 2500;
             armor = 7;
@@ -2867,8 +2918,6 @@ public class PvUnits {
             speed = 6.2f/7.5f;
             engineOffset = 8;
             drag = 0.13f;
-            buildSpeed = 2.2f;
-            buildBeamOffset = 0;
             hitSize = 8*5f;
             health = 18500;
             armor = 9;
@@ -2879,7 +2928,7 @@ public class PvUnits {
             hovering = true;
             weapons.add(
                     new Weapon(PvUtil.GetName("hecto-turret")){{
-                        reload = 60f/2f;
+                        reload = 60f/2.3f;
                         x = 12f;
                         shootY = 2f;
                         layerOffset = 1;
@@ -2893,7 +2942,7 @@ public class PvUnits {
                         rotateSpeed = 2;
                         rotationLimit = 90;
                         shoot = new ShootHelix();
-                        bullet = new MissileBulletType(3f, 84){{
+                        bullet = new MissileBulletType(3f, 12){{
                             width = 6f;
                             height = 8f;
                             homingPower = 0.01f;
@@ -2915,35 +2964,72 @@ public class PvUnits {
                         y = 0;
                         mirror = false;
                         shootWarmupSpeed = 0.1f;
-                        bullet = new MissileBulletType(3f,84f) {{
-                            width = 12f;
-                            height = 16f;
-                            homingPower = 0.01f;
-                            lifetime = PvUtil.GetRange(this.speed,34);
-                            trailColor = backColor = lightColor = Pal.neoplasm1;
-                            frontColor = Pal.neoplasm2;
-                            trailLength = 30;
-                            trailChance = 0.1f;
-                            trailWidth = 1.2f;
-                            splashDamage = 40;
-                            splashDamageRadius = 8*1.5f;
-                            despawnEffect = hitEffect = new MultiEffect(Fx.explosion,Fx.smokeCloud);
-                            fragBullets = 10;
-                            fragBullet = new MissileBulletType(2,24)
-                            {{
-                                width = 3f;
-                                height = 4f;
-                                homingPower = 0.01f;
-                                lifetime = PvUtil.GetRange(this.speed,5);
-                                trailColor = backColor = lightColor = Pal.neoplasm1;
-                                frontColor = Pal.neoplasm2;
-                                trailLength = 12;
-                                trailChance = 0.1f;
-                                trailWidth = 0.6f;
-                                splashDamage = 22;
-                                splashDamageRadius = 10f;
-                                ammoMultiplier = 2;
+                        bullet = new BasicBulletType(5,50){{
+                            shootEffect = new MultiEffect(Fx.shootTitan, new WaveEffect(){{
+                                colorTo = Pal.neoplasm1;
+                                sizeTo = 26f;
+                                lifetime = 14f;
+                                strokeFrom = 4f;
+                            }});
+                            smokeEffect = Fx.shootSmokeTitan;
+                            hitColor = Pal.neoplasm1;
+
+                            sprite = "large-orb";
+                            trailEffect = Fx.missileTrail;
+                            trailInterval = 3f;
+                            trailParam = 4f;
+                            pierceCap = 3;
+                            fragOnHit = true;
+                            lifetime = PvUtil.GetRange(this.speed,39);
+                            width = height = 16f;
+                            backColor = Pal.neoplasm1;
+                            frontColor = Color.white;
+                            shrinkX = shrinkY = 0f;
+                            trailColor = Pal.neoplasm1;
+                            trailLength = 12;
+                            trailWidth = 2.2f;
+                            despawnEffect = hitEffect = new ExplosionEffect(){{
+                                waveColor = Pal.neoplasm1;
+                                smokeColor = Color.gray;
+                                sparkColor = Pal.sap;
+                                waveStroke = 4f;
+                                waveRad = 40f;
                             }};
+                            despawnSound = Sounds.dullExplosion;
+
+                            //TODO shoot sound
+                            shootSound = Sounds.cannon;
+
+                            fragBullet = intervalBullet = new BasicBulletType(3f, 35){{
+                                width = 9f;
+                                hitSize = 5f;
+                                height = 15f;
+                                pierce = true;
+                                lifetime = 35f;
+                                pierceBuilding = true;
+                                hitColor = backColor = trailColor = Pal.neoplasm1;
+                                frontColor = Color.white;
+                                trailWidth = 2.1f;
+                                trailLength = 5;
+                                hitEffect = despawnEffect = new WaveEffect(){{
+                                    colorFrom = colorTo = Pal.neoplasm1;
+                                    sizeTo = 4f;
+                                    strokeFrom = 4f;
+                                    lifetime = 10f;
+                                }};
+                                homingPower = 0.2f;
+                            }};
+
+                            bulletInterval = 5f;
+                            intervalRandomSpread = 15f;
+                            intervalBullets = 2;
+                            intervalAngle = 180f;
+                            intervalSpread = 300f;
+
+                            fragBullets = 10;
+                            fragVelocityMin = 0.6f;
+                            fragVelocityMax = 1.0f;
+                            fragLifeMin = 0.8f;
                         }};
                     }}
             );
@@ -2966,6 +3052,8 @@ public class PvUnits {
                         //moves.add(new PartMove(PartProgress.reload, 0f, -1f, 5f));
                         progress = PartProgress.warmup;
                         mirror = true;
+                        weaponIndex = 2;
+                        recoilIndex = 0;
                         children.add(
                                 new RegionPart("-rail") {{
                                     mirror = false;
@@ -2974,8 +3062,6 @@ public class PvUnits {
                                     moveY = -2;
                                     moveRot = 5;
                                     progress = PartProgress.reload;
-                                    weaponIndex = 2;
-                                    recoilIndex = 0;
                                 }}
                         );
                     }});
@@ -2985,8 +3071,6 @@ public class PvUnits {
             constructor = EntityMapping.map("horizon");
             speed = 6f/7.5f;
             drag = 0.1f;
-            buildSpeed = 1.6f;
-            buildBeamOffset = 0;
             hitSize = 8*4f;
             health = 18000;
             armor = 16;
