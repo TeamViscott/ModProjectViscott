@@ -2283,7 +2283,8 @@ public class PvUnits {
                 buildSpeed = 0.2f;
                 ammoType = new ItemAmmoType(PvItems.darkMatter, 8);
                 treadPullOffset = 5;
-                /*treadRects = new Rect[]{new Rect(56f, 275f, 64f, -137)};TODO figure out why this crashes mindustry*/
+                treadRects = new Rect[]{new Rect(-120f, -140f, 55f, 280)};
+                treadFrames = 2*28;
                 abilities.add(new StatusFieldAbility(PvStatusEffects.prevention, 10f, 6000f, 400f));
                 abilities.add(new StatusFieldAbility(PvStatusEffects.lastStand, 10f, 2000f, 400f));
                 abilities.add(new RepairFieldAbility(5000f, 4000, 400f));
