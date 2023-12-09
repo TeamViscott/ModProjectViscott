@@ -24,6 +24,7 @@ import mindustry.entities.effect.WaveEffect;
 import mindustry.entities.effect.WrapEffect;
 import mindustry.entities.part.*;
 import mindustry.entities.pattern.ShootHelix;
+import mindustry.entities.pattern.ShootSine;
 import mindustry.entities.pattern.ShootSpread;
 import mindustry.game.Team;
 import mindustry.gen.*;
@@ -37,7 +38,9 @@ import mindustry.type.ammo.ItemAmmoType;
 import arc.math.geom.*;
 import arc.math.*;
 
+import mindustry.type.unit.ErekirUnitType;
 import mindustry.type.unit.MissileUnitType;
+import viscott.content.shootpatterns.CyclicShootPattern;
 import viscott.gen.CoinUnit;
 import viscott.gen.weapons.RandWeapon;
 import viscott.types.abilities.EnemyStatusFieldAbility;
@@ -58,7 +61,7 @@ import static mindustry.Vars.tilePayload;
 public class PvUnits {
     public static UnitType
         /*Core Units*/micro,infrared, spectrum,
-            shadow,vessel,proton,
+            shadow,vessel,shell,puppet,
             amp,volt,watt,
 
             wood,
@@ -409,6 +412,7 @@ public class PvUnits {
                     new Weapon()
                     {{
                         x = 0;
+                        mirror = false;
                         reload = 60f;
                         shoot.shots = 3;
                         shoot.shotDelay = 10;
@@ -418,16 +422,111 @@ public class PvUnits {
                         bullet = new VoidBulletType(6,30)
                         {{
                             recoil = 0.5f;
-                            homingPower = 0.01f;
                             trailLength = 20;
                             trailWidth = 2;
                             lifetime = 2;
-                            homingDelay = 1;
+                            homingDelay = 0;
                             homingRange = 8*17f;
+                            homingPower = 0.001f;
                         }};
                     }}
             );
         }};
+        shell = new NullisUnitType("shell") {{
+            localizedName = "Shell";
+            constructor = EntityMapping.map("beta");
+            health = 540;
+            armor = 0;
+            flying = true;
+            hitSize = 8*1f;
+            buildSpeed = 0.6f;
+            mineTier = 2;
+            mineSpeed = 10f;
+            itemCapacity = 120;
+            speed = 21.2f / 7.5f;
+            trailLength = 60;
+            trailScl = 1;
+            trailColor = Color.black;
+            engineColor = Color.black;
+            healColor = Color.black;
+            drag = 0.1f;
+            range = 22*8;
+            weapons.add(
+                    new Weapon()
+                    {{
+                        reload = 35f;
+                        x = 0f;
+                        y = 6.5f;
+                        shootY = 5f;
+                        recoil = 1f;
+                        rotate = false;
+                        shootCone = 30;
+                        mirror = false;
+                        shoot = new CyclicShootPattern(2,2,10);
+                        bullet = new VoidBulletType(5f, 34){{
+                            recoil = 0.2f;
+                            width = 7f;
+                            height = 12f;
+                            lifetime = 2f;
+                            frontColor = Color.white;
+                            trailWidth = 1.5f;
+                            trailLength = 5;
+                            homingDelay = 0;
+                            homingRange = 8*2;
+                            homingPower = 0.01f;
+                            hitEffect = despawnEffect = Fx.hitBulletColor;
+                        }};
+                    }}
+            );
+        }};
+        puppet = new NullisUnitType("puppet") {{
+            localizedName = "Puppet";
+            constructor = EntityMapping.map("beta");
+            health = 800;
+            armor = 0;
+            flying = true;
+            hitSize = 8*1.5f;
+            buildSpeed = 1f;
+            mineTier = 2;
+            mineSpeed = 14f;
+            itemCapacity = 200;
+            speed = 18.2f / 7.5f;
+            trailLength = 60;
+            trailScl = 1;
+            trailColor = Color.black;
+            engineColor = Color.black;
+            healColor = Color.black;
+            drag = 0.1f;
+            range = 22*8;
+            weapons.add(
+                    new Weapon()
+                    {{
+                        reload = 35f;
+                        x = 0f;
+                        y = 6.5f;
+                        shootY = 5f;
+                        recoil = 1f;
+                        rotate = false;
+                        shootCone = 30;
+                        mirror = false;
+                        shoot = new CyclicShootPattern(2,2,10);
+                        bullet = new VoidBulletType(5f, 34){{
+                            recoil = 0.2f;
+                            width = 7f;
+                            height = 12f;
+                            lifetime = 2f;
+                            frontColor = Color.white;
+                            trailWidth = 1.5f;
+                            trailLength = 5;
+                            homingDelay = 0;
+                            homingRange = 8*2;
+                            homingPower = 0.01f;
+                            hitEffect = despawnEffect = Fx.hitBulletColor;
+                        }};
+                    }}
+            );
+        }};
+
         //Xeal
         amp = new PvUnitType("amp")
         {{

@@ -1138,7 +1138,7 @@ public class PvBlocks {
                 {{
                     requirements(Category.effect,with(PvItems.zirconium,1400,PvItems.lithium,800,PvItems.platinum,400,PvItems.erbium,100,Items.silicon,100,PvItems.nobelium,100));
                     localizedName = "Core Void";
-                    unitType = PvUnits.vessel;
+                    unitType = PvUnits.shell;
                     defaultMiner = PvUnits.shadow;
                     size = 4;
                     health = 4600;
