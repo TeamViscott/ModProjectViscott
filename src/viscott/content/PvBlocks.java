@@ -28,6 +28,7 @@ import mindustry.world.draw.*;
 import mindustry.world.meta.BuildVisibility;
 import viscott.types.*;
 import viscott.types.drawer.PvDrawPulse;
+import viscott.world.block.defense.VoidWall;
 import viscott.world.block.effect.VoidBlock;
 import viscott.world.block.defense.PvWall;
 import viscott.world.block.distribution.*;
@@ -102,6 +103,7 @@ public class PvBlocks {
                             /*Xeal*/coreSpark,coreCharge,coreSurge,
                     /*Effects*/utilityProjector,pocketContainer,
                             /*Nullis*/voidNode,voidBeacon,voidExpander,
+                                    voidWall,voidWallLarge,
 
                             /*Walls*/
                             zirconWall,zirconWallLarge,
@@ -1336,6 +1338,28 @@ public class PvBlocks {
                     health = 5250;
                     size = 2;
                     pierceReduction = 2;
+                }};
+                voidWall = new VoidWall("void-wall") {{
+                    requirements(Category.defense, with(PvItems.carbonFiber,6));
+                    faction.add(PvFactions.Nullis);
+                    localizedName = "Void Wall";
+                    description = "A wall concentrating Dark matter. its fragile, but absorbs anything it can.";
+                    size = 1;
+                    pierceReduction = 99;
+                    absorbLasers = true;
+                    health = 920;
+                    regenRate = 10;
+                }};
+                voidWallLarge = new VoidWall("void-wall-large") {{
+                    requirements(Category.defense, with(PvItems.carbonFiber,30));
+                    faction.add(PvFactions.Nullis);
+                    localizedName = "Large Void Wall";
+                    description = "A wall concentrating Dark matter. its fragile, but absorbs anything it can.";
+                    size = 2;
+                    pierceReduction = 99;
+                    absorbLasers = true;
+                    health = 2400;
+                    regenRate = 20;
                 }};
                 micropulsePump = new Pump("micropulse-pump")
                 {{

@@ -9,6 +9,7 @@ import mindustry.gen.*;
 import mindustry.graphics.Layer;
 import mindustry.type.StatusEffect;
 import viscott.content.PvStatusEffects;
+import viscott.world.block.defense.VoidWall;
 import viscott.world.bullets.VoidBulletType;
 
 import static mindustry.Vars.renderer;
@@ -39,6 +40,10 @@ public interface VoidAreaC {
                     }
                 }
         );
+        t.team().data().buildings.each(b -> {
+            if (b instanceof VoidWall.VoidWallBuild v && Mathf.len(t.x()-b.x,t.y()-b.y) <= radius)
+                v.inVoid = true;
+        });
     }
     default void drawVoid(Posc pos,float radius)
     {
