@@ -4,18 +4,33 @@ import arc.Core;
 import arc.graphics.Color;
 import arc.struct.Seq;
 import mindustry.Vars;
+import mindustry.entities.part.DrawPart;
 import mindustry.game.Gamemode;
+import mindustry.gen.Unit;
 import mindustry.type.UnitType;
 import viscott.content.PvFactions;
+import viscott.world.draw.ChangeRegionPart;
 
 import java.awt.*;
 
 public class PvUnitType extends UnitType {
     public Seq<PvFaction> factions = new Seq<>();
+    DrawPart.PartParams partp = new DrawPart.PartParams();
     public PvUnitType(String name)
     {
         super(name);
         outlineColor = Color.valueOf("#181a1b");
+    }
+
+    @Override
+    public void draw(Unit unit){
+        partp.set(0,0,0,0,0,0,unit.x,unit.y,unit.rotation);
+        partp.life = unit.health / unit.maxHealth;
+        for(var part : unit.type.parts) {
+            if (part instanceof ChangeRegionPart c && c.lifeEnabled)
+                part.draw(partp);
+        }
+        super.draw(unit);
     }
 
     @Override

@@ -98,7 +98,7 @@ public class PvBlocks {
                     /*Core's*/coreHover,coreElevate,coreUpraise,yggdrasilsHeartwood,
 
                             bulkUnloader,
-                            /*Nullis*/nullisCore, nullisVoid,
+                            /*Nullis*/nullisCore, nullisVoid, nullisAbyss,
                             /*Xeal*/coreSpark,coreCharge,coreSurge,
                     /*Effects*/utilityProjector,pocketContainer,
                             /*Nullis*/voidNode,voidBeacon,voidExpander,
@@ -1147,6 +1147,25 @@ public class PvBlocks {
                     unitCapModifier = 100;
                     itemCapacity = 200;
                     voidRadius = 32;
+                    drawer = new DrawMulti(
+                            new DrawLiquidStaticRegion(PvLiquids.concentratedVoid) {{
+                                padding = 2;
+                            }},
+                            new DrawDefault()
+                    );
+                }};
+                nullisAbyss = new NullisCore("core-abyss") {{
+                    requirements(Category.effect,with(PvItems.zirconium,6000,PvItems.lithium,4000,PvItems.platinum,3200,PvItems.erbium,2400,Items.silicon,2000,PvItems.nobelium,1800,PvItems.rushAlloy,1000));
+                    localizedName = "Core Abyss";
+                    unitType = PvUnits.puppet;
+                    defaultMiner = PvUnits.shadow;
+                    size = 5;
+                    health = 8200;
+                    armor = 5;
+                    miners = 6;
+                    unitCapModifier = 140;
+                    itemCapacity = 500;
+                    voidRadius = 44;
                     drawer = new DrawMulti(
                             new DrawLiquidStaticRegion(PvLiquids.concentratedVoid) {{
                                 padding = 2;

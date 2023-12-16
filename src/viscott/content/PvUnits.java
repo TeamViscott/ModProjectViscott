@@ -53,6 +53,7 @@ import viscott.world.bullets.BranchBulletType;
 import viscott.world.bullets.LargeBranchBulletType;
 import viscott.world.bullets.VoidBulletType;
 import viscott.utilitys.PvUtil;
+import viscott.world.draw.ChangeRegionPart;
 
 import static arc.graphics.g2d.Draw.color;
 import static arc.graphics.g2d.Lines.stroke;
@@ -463,6 +464,7 @@ public class PvUnits {
                         shootCone = 30;
                         mirror = false;
                         shoot = new CyclicShootPattern(2,2,10);
+                        shoot.shotDelay = 0;
                         bullet = new VoidBulletType(5f, 34){{
                             recoil = 0.2f;
                             width = 7f;
@@ -491,7 +493,8 @@ public class PvUnits {
             mineSpeed = 14f;
             itemCapacity = 200;
             speed = 18.2f / 7.5f;
-            trailLength = 60;
+            trailLength = 90;
+            engineOffset = 8;
             trailScl = 1;
             trailColor = Color.black;
             engineColor = Color.black;
@@ -509,7 +512,7 @@ public class PvUnits {
                         rotate = false;
                         shootCone = 30;
                         mirror = false;
-                        shoot = new CyclicShootPattern(2,2,10);
+                        shoot = new CyclicShootPattern(4,3,0);
                         bullet = new VoidBulletType(5f, 34){{
                             recoil = 0.2f;
                             width = 7f;
@@ -524,6 +527,20 @@ public class PvUnits {
                             hitEffect = despawnEffect = Fx.hitBulletColor;
                         }};
                     }}
+            );
+            parts.addAll(
+                new RegionPart("-arm") {{
+                    mirror = true;
+                    moveRot = 30;
+                    progress = PartProgress.smoothReload;
+                }},
+                new ChangeRegionPart("-strings") {{
+                    mirror = false;
+                    parts = 4;
+                    layerOffset = -0.1f;
+                    progress = PartProgress.life;
+                    lifeEnabled = true;
+                }}
             );
         }};
 
