@@ -1340,7 +1340,7 @@ public class PvBlocks {
                     pierceReduction = 2;
                 }};
                 voidWall = new VoidWall("void-wall") {{
-                    requirements(Category.defense, with(PvItems.carbonFiber,6));
+                    requirements(Category.defense, with(PvItems.singularityAlloy,6));
                     faction.add(PvFactions.Nullis);
                     localizedName = "Void Wall";
                     description = "A wall concentrating Dark matter. its fragile, but absorbs anything it can.";
@@ -1351,7 +1351,7 @@ public class PvBlocks {
                     regenRate = 10;
                 }};
                 voidWallLarge = new VoidWall("void-wall-large") {{
-                    requirements(Category.defense, with(PvItems.carbonFiber,30));
+                    requirements(Category.defense, with(PvItems.singularityAlloy,30));
                     faction.add(PvFactions.Nullis);
                     localizedName = "Large Void Wall";
                     description = "A wall concentrating Dark matter. its fragile, but absorbs anything it can.";
