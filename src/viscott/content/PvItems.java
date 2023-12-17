@@ -11,7 +11,7 @@ import static mindustry.content.Items.silicon;
 public class PvItems {
     public static Item
     zirconium,lithium,barium,nobelium,platinum,erbium,carbonFiber,copium,
-            rushAlloy,tideAlloy,bulkAlloy,darkMatter,hardenedOak
+            rushAlloy,tideAlloy,bulkAlloy,singularityAlloy,darkMatter,hardenedOak
     ;
     public static Seq<Item> vercilusItems = new Seq<Item>(),
                             vercilusOnlyItems = new Seq<Item>();
@@ -74,6 +74,15 @@ public class PvItems {
         {{
             localizedName = "Bulk Alloy";
             color = Pal.neoplasm1;
+        }};
+        singularityAlloy = new Item("singularity-alloy") {{
+            localizedName = "Singularity Alloy";
+            color = Color.black;
+            description = "The most dense metal forged directly infront of the Singularity event of a black hole with dark matter. its structure is unstable and unbreakable.";
+            radioactivity = -1;
+            flammability = -1;
+            explosiveness = 1;
+            charge = 10;
         }};
         //fun item mainly for omamori/omai and neuro/jaeger
         darkMatter = new Item("dark-matter")
