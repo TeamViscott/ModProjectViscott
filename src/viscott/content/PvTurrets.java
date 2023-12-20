@@ -13,6 +13,7 @@ import mindustry.entities.effect.*;
 import mindustry.entities.part.*;
 import mindustry.entities.pattern.*;
 import mindustry.game.Team;
+import mindustry.gen.Bullet;
 import mindustry.gen.Sounds;
 import mindustry.graphics.Layer;
 import mindustry.graphics.Pal;
@@ -29,6 +30,7 @@ import viscott.world.block.defense.FocusItemTurret;
 import viscott.world.bullets.LargeBranchBulletType;
 import viscott.world.block.defense.PvItemTurret;
 import viscott.world.bullets.LiquidLaserBulletType;
+import viscott.world.bullets.VariantBulletType;
 import viscott.world.bullets.VoidBulletType;
 import viscott.world.pseudo3d.importedcode.BallisticMissileBulletType;
 
@@ -45,7 +47,8 @@ public class PvTurrets {
 
             fracture,javelin,
                     /*Nullis*/ quantum,
-                    /*Xeal*/ focus
+                    /*Xeal*/ focus,
+                    /*mortikai?*/ partition
             ;
 
     public static void load(){
@@ -925,6 +928,32 @@ public class PvTurrets {
                     }}
             );
             drawer = new DrawTurret(GetName("Pov"));
+        }};
+        partition = new ItemTurret("partition")
+        {{
+            requirements(Category.turret,with(PvItems.nobelium,30,PvItems.lithium,140)); //Todo 2
+            localizedName = "Partition";
+            size = 3; //Size is not final
+            health = 2175; //Health is not final
+            range = 30*8; //Range is not final
+            liquidCapacity = 20; //Liquid capacity may be removed
+            targetAir = true; //Don't touch these two
+            targetGround = true;
+            reload = 60f/4.8f; //Reload is also subject to changes
+            recoil = 3; //This is only visual soooooo no need to change it yet
+            coolant = consumeCoolant(0.1f);
+            ammo(
+                    PvItems.platinum /*TODO change the ammo + balancing*/,new VariantBulletType()
+                    {{
+
+                        variants.add(new BasicBulletType(1, 100));
+                        variants.add(new BasicBulletType(2, 50));
+                        variants.add(new BasicBulletType(3, 25));
+                        variants.remove(0);
+                    }}
+            );
+            drawer = new DrawTurret(GetName("Pov")){{
+            }};
         }};
     }
     public static void loadSize4()
