@@ -942,7 +942,7 @@ public class PvBlocks {
                     size = 5;
                     statusEffect = PvStatusEffects.forceApply;
                     statusDuration = 60*60;
-                    maxSize = 8*4;
+                    maxSize = 8*16;
                     constructTime = 60*25;
                     consumePower(210f/60f);
                     consumeItems(with(PvItems.erbium,25));
