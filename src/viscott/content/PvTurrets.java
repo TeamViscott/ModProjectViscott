@@ -594,8 +594,8 @@ public class PvTurrets {
             coolant = consumeCoolant(0.1f);
             ammo(
                     PvItems.zirconium,new BasicBulletType(10,15) {{
-                        rangeChange = 8*-8;
-                        lifetime = PvUtil.GetRange(this.speed,42);
+                        rangeChange = 8*-5;
+                        lifetime = PvUtil.GetRange(this.speed,45);
                         trailLength = 20;
                         trailWidth = 1.2f;
                         width = 12;
@@ -613,8 +613,89 @@ public class PvTurrets {
                         homingPower = 0.01f;
                         homingRange = 8*25;
                         trailColor = backColor = Pal.heal;
+                    }},
+
+                    PvItems.platinum,new BasicBulletType(10,22) {{
+                        lifetime = PvUtil.GetRange(this.speed,50);
+                        trailLength = 20;
+                        trailWidth = 1f;
+                        width = 12;
+                        height = 12;
+                        trailColor = backColor = Pal.heal.cpy().add(0.5f,0.5f,0.5f);
+                        fragBullets = 3;
+                        fragRandomSpread = 360;
+                        fragSpread = 0;
+                        fragLifeMin = 0.8f;
+                        fragLifeMax = 1.2f;
+                        fragBullet = new LightningBulletType() {{
+                            this.lightningDamage = 10;
+                            this.lightningLength = 16;
+                        }};
+                    }},
+                    PvItems.erbium,new BasicBulletType(10,58) {{
+                        lifetime = 0;
+                        reloadMultiplier = 3;
+                        fragRandomSpread = fragSpread = 10;
+                        despawnEffect = hitEffect = Fx.none;
+                        fragLifeMin = fragLifeMax = fragVelocityMin = fragVelocityMax = 1;
+                        fragBullets = 1;
+                        fragBullet = new BasicBulletType(10,58) {{
+                            lifetime = PvUtil.GetRange(this.speed,50);
+                            pierceCap = 10;
+                            trailColor = backColor = Pal.heal;
+                            trailLength = 20;
+                            trailWidth = 1f;
+                            width = 12;
+                            height = 12;
+                        }};
+                    }},
+                    PvItems.carbonFiber,new LaserBulletType(150) {{
+                        reloadMultiplier = 0.3f;
+                        rangeChange = 8*50;
+                        length = 8*100;
+                        colors = new Color[]{Pal.heal, Pal.heal.cpy().add(0.2f, 0.2f, 0.2f), Color.white};
+                    }},
+                    PvItems.rushAlloy,new BasicBulletType(14,80) {{
+                        rangeChange = 8*5;
+                        lifetime = PvUtil.GetRange(this.speed,55);
+                        trailLength = 20;
+                        ammoMultiplier = 5;
+                        trailWidth = 1.2f;
+                        width = 12;
+                        height = 12;
+                        trailColor = backColor = Pal.heal;
+                        intervalBullets = fragBullets = 2;
+                        intervalRandomSpread = fragRandomSpread = 0;
+                        intervalSpread = fragSpread = 250;
+                        bulletInterval = 2;
+                        pierceCap = 3;
+                        fragVelocityMin = fragVelocityMax = fragLifeMin = fragLifeMax = 1;
+                        fragOnHit = true;
+                        fragOnAbsorb = false;
+                        fragBullet = intervalBullet = new BasicBulletType(14,20) {{
+                            lifetime = PvUtil.GetRange(this.speed,4);
+                            trailLength = 20;
+                            trailWidth = 1f;
+                            width = 12;
+                            height = 12;
+                            trailColor = backColor = Pal.heal;
+                        }};
+                    }},
+                    PvItems.tideAlloy,new BasicBulletType(10,120) {{
+                        reloadMultiplier = 4;
+                        weaveRandom = true;
+                        weaveScale = 1;
+                        weaveMag = 4;
+                        lifetime = PvUtil.GetRange(this.speed,50);
+                        pierceCap = 2;
+                        trailColor = backColor = Pal.heal;
+                        trailLength = 20;
+                        trailWidth = 1f;
+                        width = 12;
+                        height = 12;
                     }}
             );
+            drawer = new DrawTurret(GetName("Pov"));
         }};
         phantom = new ItemTurret("phantom")
         {{

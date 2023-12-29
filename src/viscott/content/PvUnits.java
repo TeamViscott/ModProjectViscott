@@ -576,7 +576,7 @@ public class PvUnits {
                             buildingDamageMultiplier = 0.01f;
                             trailColor = backColor = lightColor = Pal.heal;
                             trailWidth = 2;
-                            knockback = 2.5f;
+                            knockback = 4f;
                             trailLength = 25;
                             hitEffect = Fx.hitLancer;
                             lifetime = PvUtil.GetRange(8,21);
@@ -617,7 +617,7 @@ public class PvUnits {
                             buildingDamageMultiplier = 0.01f;
                             trailColor = backColor = lightColor = Pal.heal;
                             trailWidth = 2;
-                            knockback = 3f;
+                            knockback = 5f;
                             trailLength = 25;
                             hitEffect = Fx.hitLancer;
                             lifetime = PvUtil.GetRange(10,25);
@@ -657,7 +657,7 @@ public class PvUnits {
                             buildingDamageMultiplier = 0.01f;
                             trailColor = backColor = lightColor = Pal.heal;
                             trailWidth = 2;
-                            knockback = 5f;
+                            knockback = 8f;
                             trailLength = 35;
                             lifetime = PvUtil.GetRange(14,25);
                             status = StatusEffects.shocked;
