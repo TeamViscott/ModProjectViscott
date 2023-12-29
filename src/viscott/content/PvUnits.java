@@ -537,7 +537,7 @@ public class PvUnits {
                 new ChangeRegionPart("-strings") {{
                     mirror = false;
                     parts = 4;
-                    layerOffset = -0.1f;
+                    layer = Layer.effect;
                     progress = PartProgress.life;
                     lifeEnabled = true;
                 }}
