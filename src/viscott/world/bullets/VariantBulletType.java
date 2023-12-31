@@ -9,8 +9,9 @@ import mindustry.gen.Bullet;
 public class VariantBulletType extends BasicBulletType {
  @Override
  public void init(Bullet bullet){
+  bullet.type = variants.random();
   super.init(bullet);
-  bullet.data = randomizeBullet();
+
  }
  public Seq<BulletType> variants = new Seq().with(new BasicBulletType(0, 0)); //Remember to remove this one when using this.
  private BulletType randomizeBullet(){
