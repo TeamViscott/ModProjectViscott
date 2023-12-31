@@ -1030,7 +1030,6 @@ public class PvTurrets {
                         variants.add(new BasicBulletType(1, 100));
                         variants.add(new BasicBulletType(2, 50));
                         variants.add(new BasicBulletType(3, 25));
-                        variants.remove(0);
                     }}
             );
             drawer = new DrawTurret(GetName("Pov")){{
