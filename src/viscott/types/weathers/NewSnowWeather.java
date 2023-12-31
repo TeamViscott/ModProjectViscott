@@ -25,6 +25,7 @@ import viscott.world.block.drill.Grinder;
 public class NewSnowWeather extends ParticleWeather {
     static TextureRegion[] snowOverlay;
     static TextureRegion[] snowOverlayConveyor;
+    static final int maxSnowSize = 3;
     float alpha = 0;
     public NewSnowWeather(String name) {
         super(name);
@@ -38,8 +39,8 @@ public class NewSnowWeather extends ParticleWeather {
         for(int i = 0;i < 4;i++)
             snowOverlayConveyor[i] = Core.atlas.find(PvUtil.GetName("snow-1-"+i));
 
-        snowOverlay = new TextureRegion[2];
-        for(int i = 0;i < 2;i++)
+        snowOverlay = new TextureRegion[maxSnowSize];
+        for(int i = 0;i < maxSnowSize;i++)
             snowOverlay[i] = Core.atlas.find(PvUtil.GetName("snow-"+(i+1)));
     }
 
@@ -65,7 +66,7 @@ public class NewSnowWeather extends ParticleWeather {
                             if ((cb.rotation == i && cb.nearby(i) == null) || (cb.rotation != i && (cb.nearby(i) == null || !(cb.nearby(i).block instanceof StackConveyor && (cb.nearby(i).rotation+2)%4 == i))))
                                 Draw.rect(snowOverlayConveyor[i],building.x,building.y);
                     } else {
-                        if (snowOverlay.length >= building.block.size)
+                        if (maxSnowSize >= building.block.size)
                             Draw.rect(snowOverlay[building.block.size - 1], building.x, building.y);
                     }
                 });
