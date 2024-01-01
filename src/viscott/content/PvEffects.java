@@ -4,6 +4,7 @@ import arc.graphics.Color;
 import arc.graphics.g2d.Draw;
 import arc.graphics.g2d.Fill;
 import arc.graphics.g2d.Lines;
+import arc.graphics.g2d.TextureRegion;
 import arc.math.Interp;
 import arc.math.Mathf;
 import arc.struct.Seq;
@@ -12,6 +13,7 @@ import mindustry.game.Team;
 import mindustry.graphics.Drawf;
 import mindustry.graphics.Layer;
 import mindustry.graphics.Pal;
+import viscott.types.weathers.NewSnowWeather;
 import viscott.world.pseudo3d.importedcode.DrawPseudo3d;
 import static arc.graphics.g2d.Draw.*;
 import static arc.graphics.g2d.Lines.*;
@@ -22,7 +24,7 @@ public class PvEffects {
             railFrag,waveBulletFalerica,waveBulletJavelin,sumayaShoot, sumayaImpact,
 
             quadRushCraft,cascadeCraft,uberbulkCraft,
-                    surgeSpawn,siedeSummon,chargeUpHecta,
+                    surgeSpawn,siedeSummon,chargeUpHecta,snowPrint,
                     branch
             ;
     public static Seq<Effect> nullisDeath = new Seq<>();
@@ -179,6 +181,15 @@ public class PvEffects {
             Draw.color(Pal.redderDust);
             Lines.stroke(e.fin()*8);
             Lines.circle(e.x,e.y,e.fout()*8*5);
+        });
+        snowPrint = new Effect(300,e->{
+            if (e.data instanceof TextureRegion tx) {
+                Draw.z(Layer.floor+1);
+                Draw.color(Color.black);
+                Draw.alpha(((NewSnowWeather)PvWeathers.newSnow).alpha * 0.5f * e.fout());
+                Draw.rect(tx,e.x,e.y,e.rotation);
+            }
+            Draw.z(Layer.effect);
         });
     }
 
