@@ -6,7 +6,7 @@ import mindustry.world.meta.StatCat;
 public class PvStats {
     public static Stat
     maxDamage,maxDamageMultiplier,maxHealthMultiplier,maxSpeedMultiplier,maxReloadSpeedMultiplier, maxBuildSpeedMultiplier,maxCharges,maxHealing,dragMultiplier,maxDragMultiplier,newTeam,
-    grinderTier,pierceReduction,shield,maxShield,hpLimit,maxConsumes
+    grinderTier,pierceReduction,shield,maxShield,hpLimit,maxConsumes,damageMultAtMaxPower
             ;
     public static void load()
     {
@@ -27,5 +27,6 @@ public class PvStats {
         maxShield = new Stat("maxShield",StatCat.function);
         hpLimit = new Stat("hpLimit",StatCat.function);
         maxConsumes = new Stat("maxConsumes",StatCat.function);
+        damageMultAtMaxPower = new Stat("damageMultAtMaxPower",StatCat.power);
     }
 }

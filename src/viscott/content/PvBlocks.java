@@ -2,6 +2,7 @@ package viscott.content;
 
 import arc.func.Prov;
 import arc.graphics.Color;
+import arc.math.Interp;
 import arc.math.Mathf;
 import arc.struct.Seq;
 import arc.util.Time;
@@ -1288,19 +1289,21 @@ public class PvBlocks {
                     faction.add(PvFactions.Xeal);
                     size = 3;
                 }};
-                siliconeWall = new Battery("silicone-wall")
+                siliconeWall = new PvBattery("silicone-wall")
                 {{
                     requirements(Category.defense, with(Items.silicon,4));
                     localizedName = "Silicone Wall";
                     health = 260;
+                    damageMult = (power) -> Interp.circle.apply(power*-1+1)*0.2f+0.8f;
                     consumePowerBuffered(500);
                 }};
-                siliconeWallLarge = new Battery("silicone-wall-large")
+                siliconeWallLarge = new PvBattery("silicone-wall-large")
                 {{
                     requirements(Category.defense, with(Items.silicon,24));
                     localizedName = "Large Silicone Wall";
                     health = 1175;
                     size = 2;
+                    damageMult = (power) -> Interp.circle.apply(power*-1+1)*0.2f+0.8f;
                     consumePowerBuffered(2000);
                 }};
                 siliconeWallHuge = new PvBattery("silicone-wall-huge") {{
@@ -1309,6 +1312,7 @@ public class PvBlocks {
                     health = 5025;
                     faction.add(PvFactions.Xeal);
                     size = 3;
+                    damageMult = (power) -> Interp.circle.apply(power*-1+1)*0.2f+0.8f;
                     consumePowerBuffered(8000);
                 }};
                 platinumWall = new PvWall("platinum-wall")
