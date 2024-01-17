@@ -37,6 +37,7 @@ import viscott.world.block.effect.*;
 import viscott.world.block.environment.DepositWall;
 import viscott.world.block.logic.*;
 import viscott.world.block.power.ConstGenerator;
+import viscott.world.block.power.PvBattery;
 import viscott.world.block.production.*;
 import viscott.world.block.unit.*;
 import viscott.world.draw.*;
@@ -112,7 +113,8 @@ public class PvBlocks {
                             erbiumWall,erbiumWallLarge,
                             carbonWall,carbonWallLarge,
                             yggdrasilsBark,
-                    /*Logic*/
+                         /* Xeal*/ zirconWallHuge,siliconeWallHuge,platinumWallHuge,erbiumWallHuge,carbonWallHuge,
+                          /*Logic*/
                             piscoProcessor,memoryByte,statusSelector,labelHandler,
                             /*Nullis*/voidReprocessingUnit,
                             /*Testing*/
@@ -1279,6 +1281,13 @@ public class PvBlocks {
                     health = 1680;
                     size = 2;
                 }};
+                zirconWallHuge = new PvWall("zircon-wall-huge") {{
+                    requirements(Category.defense, with(PvItems.zirconium,128));
+                    localizedName = "Huge Zircon Wall";
+                    health = 7000;
+                    faction.add(PvFactions.Xeal);
+                    size = 3;
+                }};
                 siliconeWall = new Battery("silicone-wall")
                 {{
                     requirements(Category.defense, with(Items.silicon,4));
@@ -1293,6 +1302,14 @@ public class PvBlocks {
                     health = 1175;
                     size = 2;
                     consumePowerBuffered(2000);
+                }};
+                siliconeWallHuge = new PvBattery("silicone-wall-huge") {{
+                    requirements(Category.defense, with(Items.silicon,128));
+                    localizedName = "Huge Silicone Wall";
+                    health = 5025;
+                    faction.add(PvFactions.Xeal);
+                    size = 3;
+                    consumePowerBuffered(8000);
                 }};
                 platinumWall = new PvWall("platinum-wall")
                 {{
@@ -1309,6 +1326,14 @@ public class PvBlocks {
                     pierceReduction = 2;
                     size = 2;
                 }};
+                platinumWallHuge = new PvWall("platinum-wall-huge") {{
+                    requirements(Category.defense, with(PvItems.platinum,128));
+                    localizedName = "Huge Platinum Wall";
+                    health = 9200;
+                    faction.add(PvFactions.Xeal);
+                    pierceReduction = 3;
+                    size = 3;
+                }};
                 erbiumWall = new PvWall("erbium-wall")
                 {{
                     requirements(Category.defense, with(PvItems.erbium,4));
@@ -1323,6 +1348,14 @@ public class PvBlocks {
                     health = 3800;
                     size = 2;
                     absorbLasers = true;
+                }};
+                erbiumWallHuge = new PvWall("erbium-wall-huge") {{
+                    requirements(Category.defense, with(PvItems.erbium,128));
+                    localizedName = "Huge Erbium Wall";
+                    health = 14600;
+                    faction.add(PvFactions.Xeal);
+                    absorbLasers = true;
+                    size = 3;
                 }};
                 carbonWall = new PvWall("carbon-wall")
                 {{
@@ -1339,6 +1372,14 @@ public class PvBlocks {
                     size = 2;
                     pierceReduction = 2;
                 }};
+                carbonWallHuge = new PvWall("carbon-wall-huge") {{
+                    requirements(Category.defense, with(PvItems.carbonFiber,128));
+                    localizedName = "Huge Carbon Wall";
+                    health = 21250;
+                    faction.add(PvFactions.Xeal);
+                    pierceReduction = 3;
+                    size = 3;
+                }};
                 voidWall = new VoidWall("void-wall") {{
                     requirements(Category.defense, with(PvItems.singularityAlloy,6));
                     faction.add(PvFactions.Nullis);
@@ -1354,7 +1395,7 @@ public class PvBlocks {
                     requirements(Category.defense, with(PvItems.singularityAlloy,30));
                     faction.add(PvFactions.Nullis);
                     localizedName = "Large Void Wall";
-                    description = "A wall concentrating Dark matter. its fragile, but absorbs anything it can.";
+                    description = "A larger wall concentrating Dark matter. its more sturdy but still fragile. Can absorbs anything.";
                     size = 2;
                     pierceReduction = 99;
                     absorbLasers = true;
