@@ -5,8 +5,11 @@ import arc.graphics.g2d.Draw;
 import arc.graphics.g2d.Fill;
 import arc.graphics.g2d.Lines;
 import arc.graphics.g2d.TextureRegion;
+import arc.math.Angles;
 import arc.math.Interp;
 import arc.math.Mathf;
+import arc.math.geom.Circle;
+import arc.math.geom.Rect;
 import arc.struct.Seq;
 import mindustry.entities.Effect;
 import mindustry.game.Team;
@@ -24,7 +27,7 @@ public class PvEffects {
             railFrag,waveBulletFalerica,waveBulletJavelin,sumayaShoot, sumayaImpact,
 
             quadRushCraft,cascadeCraft,uberbulkCraft,
-                    surgeSpawn,siedeSummon,chargeUpHecta,snowPrint,
+                    surgeSpawn,siedeSummon,chargeUpHecta,snowPrintL,snowPrintR,snowPrint,
                     branch
             ;
     public static Seq<Effect> nullisDeath = new Seq<>();
@@ -182,12 +185,32 @@ public class PvEffects {
             Lines.stroke(e.fin()*8);
             Lines.circle(e.x,e.y,e.fout()*8*5);
         });
-        snowPrint = new Effect(300,e->{
+        snowPrintL = new Effect(300,e->{
             if (e.data instanceof TextureRegion tx) {
                 Draw.z(Layer.floor+1);
                 Draw.color(Color.black);
                 Draw.alpha(((NewSnowWeather)PvWeathers.newSnow).alpha * 0.5f * e.fout());
+                Draw.rect(tx,e.x,e.y,tx.width * tx.scl(),tx.height * -1 * tx.scl(),e.rotation);
+            }
+            Draw.z(Layer.effect);
+        });
+        snowPrintR = new Effect(300,e->{
+            if (e.data instanceof TextureRegion tx) {
+                Draw.z(Layer.floor+1);
+                Draw.color(Color.black);
+                Draw.alpha(((NewSnowWeather)PvWeathers.newSnow).alpha * 0.5f * e.fout());
+                Draw.rect(tx,e.x,e.y,tx.width * -1 * tx.scl(),tx.height * -1 * tx.scl(),e.rotation);
+            }
+            Draw.z(Layer.effect);
+        });
+        snowPrint = new Effect(300,e->{
+            Draw.z(Layer.floor+1);
+            Draw.color(Color.black);
+            Draw.alpha(((NewSnowWeather)PvWeathers.newSnow).alpha * 0.5f * e.fout());
+            if (e.data instanceof TextureRegion tx) {
                 Draw.rect(tx,e.x,e.y,e.rotation);
+            } else {
+                Fill.circle(e.x,e.y,2);
             }
             Draw.z(Layer.effect);
         });

@@ -55,6 +55,7 @@ public class ViscottMod extends Mod {
         PvWorldState.load();
         PvUnitMapper.load();
         PvMusics.load();
+        PvSounds.load();
         PvLogic.load();
         PvFactions.load();
         PvUIs.load();

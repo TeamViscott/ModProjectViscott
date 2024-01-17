@@ -117,6 +117,7 @@ public class PvTurrets {
             health = 875;
             range = 26 * 8;
             recoil = 2;
+            shootSound = PvSounds.splinter;
             rotateSpeed = 6f;
             requirements(Category.turret, with(PvItems.zirconium, 75));
             ammo(

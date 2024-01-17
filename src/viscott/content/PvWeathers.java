@@ -1,5 +1,6 @@
 package viscott.content;
 
+import mindustry.content.Weathers;
 import mindustry.gen.Sounds;
 import mindustry.type.Weather;
 import mindustry.world.meta.Attribute;
