@@ -1282,7 +1282,7 @@ public class PvBlocks {
                     size = 2;
                 }};
                 zirconWallHuge = new PvWall("zircon-wall-huge") {{
-                    requirements(Category.defense, with(PvItems.zirconium,128));
+                    requirements(Category.defense, with(PvItems.zirconium,128,PvItems.tideAlloy,6));
                     localizedName = "Huge Zircon Wall";
                     health = 7000;
                     faction.add(PvFactions.Xeal);
@@ -1304,7 +1304,7 @@ public class PvBlocks {
                     consumePowerBuffered(2000);
                 }};
                 siliconeWallHuge = new PvBattery("silicone-wall-huge") {{
-                    requirements(Category.defense, with(Items.silicon,128));
+                    requirements(Category.defense, with(Items.silicon,128,PvItems.tideAlloy,6));
                     localizedName = "Huge Silicone Wall";
                     health = 5025;
                     faction.add(PvFactions.Xeal);
@@ -1327,7 +1327,7 @@ public class PvBlocks {
                     size = 2;
                 }};
                 platinumWallHuge = new PvWall("platinum-wall-huge") {{
-                    requirements(Category.defense, with(PvItems.platinum,128));
+                    requirements(Category.defense, with(PvItems.platinum,128,PvItems.tideAlloy,6));
                     localizedName = "Huge Platinum Wall";
                     health = 9200;
                     faction.add(PvFactions.Xeal);
@@ -1350,7 +1350,7 @@ public class PvBlocks {
                     absorbLasers = true;
                 }};
                 erbiumWallHuge = new PvWall("erbium-wall-huge") {{
-                    requirements(Category.defense, with(PvItems.erbium,128));
+                    requirements(Category.defense, with(PvItems.erbium,128,PvItems.tideAlloy,6));
                     localizedName = "Huge Erbium Wall";
                     health = 14600;
                     faction.add(PvFactions.Xeal);
@@ -1373,7 +1373,7 @@ public class PvBlocks {
                     pierceReduction = 2;
                 }};
                 carbonWallHuge = new PvWall("carbon-wall-huge") {{
-                    requirements(Category.defense, with(PvItems.carbonFiber,128));
+                    requirements(Category.defense, with(PvItems.carbonFiber,128,PvItems.tideAlloy,6));
                     localizedName = "Huge Carbon Wall";
                     health = 21250;
                     faction.add(PvFactions.Xeal);
