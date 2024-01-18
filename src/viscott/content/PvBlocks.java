@@ -109,12 +109,12 @@ public class PvBlocks {
 
                             /*Walls*/
                             zirconWall,zirconWallLarge,
-                            siliconeWall,siliconeWallLarge,
+                            siliconWall,siliconWallLarge,
                             platinumWall,platinumWallLarge,
                             erbiumWall,erbiumWallLarge,
                             carbonWall,carbonWallLarge,
                             yggdrasilsBark,
-                         /* Xeal*/ zirconWallHuge,siliconeWallHuge,platinumWallHuge,erbiumWallHuge,carbonWallHuge,
+                         /* Xeal*/ zirconWallHuge,siliconWallHuge,platinumWallHuge,erbiumWallHuge,carbonWallHuge,
                           /*Logic*/
                             piscoProcessor,memoryByte,statusSelector,labelHandler,
                             /*Nullis*/voidReprocessingUnit,
@@ -1283,37 +1283,37 @@ public class PvBlocks {
                     size = 2;
                 }};
                 zirconWallHuge = new PvWall("zircon-wall-huge") {{
-                    requirements(Category.defense, with(PvItems.zirconium,128,PvItems.tideAlloy,6));
+                    requirements(Category.defense, with(PvItems.zirconium,128,PvItems.tideAlloy,2));
                     localizedName = "Huge Zircon Wall";
                     health = 7000;
                     faction.add(PvFactions.Xeal);
                     size = 3;
                 }};
-                siliconeWall = new PvBattery("silicone-wall")
+                siliconWall = new PvBattery("silicon-wall")
                 {{
                     requirements(Category.defense, with(Items.silicon,4));
-                    localizedName = "Silicone Wall";
+                    localizedName = "Silicon Wall";
                     health = 260;
-                    damageMult = (power) -> Interp.circle.apply(power*-1+1)*0.2f+0.8f;
+                    damageMult = (power) -> Interp.circle.apply(power*-1+1)*0.5f+0.5f; /* 50% reduction */
                     consumePowerBuffered(500);
                 }};
-                siliconeWallLarge = new PvBattery("silicone-wall-large")
+                siliconWallLarge = new PvBattery("silicon-wall-large")
                 {{
                     requirements(Category.defense, with(Items.silicon,24));
-                    localizedName = "Large Silicone Wall";
+                    localizedName = "Large Silicon Wall";
                     health = 1175;
                     size = 2;
-                    damageMult = (power) -> Interp.circle.apply(power*-1+1)*0.2f+0.8f;
+                    damageMult = (power) -> Interp.circle.apply(power*-1+1)*(1f/3f)+(2f/3f); /* 33% reduction */
                     consumePowerBuffered(2000);
                 }};
-                siliconeWallHuge = new PvBattery("silicone-wall-huge") {{
-                    requirements(Category.defense, with(Items.silicon,128,PvItems.tideAlloy,6));
-                    localizedName = "Huge Silicone Wall";
+                siliconWallHuge = new PvBattery("silicon-wall-huge") {{
+                    requirements(Category.defense, with(Items.silicon,128,PvItems.tideAlloy,2));
+                    localizedName = "Huge Silicon Wall";
                     health = 5025;
                     faction.add(PvFactions.Xeal);
                     size = 3;
-                    damageMult = (power) -> Interp.circle.apply(power*-1+1)*0.2f+0.8f;
-                    consumePowerBuffered(8000);
+                    damageMult = (power) -> Interp.circle.apply(power*-1+1)*0.2f+0.8f; /* 20% reduction */
+                    consumePowerBuffered(8000); /*e*/
                 }};
                 platinumWall = new PvWall("platinum-wall")
                 {{
@@ -1331,7 +1331,7 @@ public class PvBlocks {
                     size = 2;
                 }};
                 platinumWallHuge = new PvWall("platinum-wall-huge") {{
-                    requirements(Category.defense, with(PvItems.platinum,128,PvItems.tideAlloy,6));
+                    requirements(Category.defense, with(PvItems.platinum,128,PvItems.tideAlloy,4));
                     localizedName = "Huge Platinum Wall";
                     health = 9200;
                     faction.add(PvFactions.Xeal);
@@ -1354,7 +1354,7 @@ public class PvBlocks {
                     absorbLasers = true;
                 }};
                 erbiumWallHuge = new PvWall("erbium-wall-huge") {{
-                    requirements(Category.defense, with(PvItems.erbium,128,PvItems.tideAlloy,6));
+                    requirements(Category.defense, with(PvItems.erbium,128,PvItems.tideAlloy,4));
                     localizedName = "Huge Erbium Wall";
                     health = 14600;
                     faction.add(PvFactions.Xeal);
@@ -1600,7 +1600,17 @@ public class PvBlocks {
                 {{
                     requirements(Category.defense, BuildVisibility.sandboxOnly, with(PvItems.nobelium,1));
                     localizedName = "Sus";
-                    description = "its litteraly 1 peice of nobelium wi-\n[red]Emergency Meeting[]\n[orange]Orange :[] [red]Red[] is Sus!\n[red]Red :[] What.\n[grey]Red was the Imposter[]";
+                    description = """
+                    its litteraly 1 peice of nobelium wi-
+                    [teal]*[red]Emergency Meeting[]*[]
+                    - [orange][[Orange] :[] [red]Red[] is [crimson]Sus[]!
+                    - [red][[Red] :[] What.
+                    [gold]Vote was cast. 3 remaining.
+                    Vote was cast. 2 remaining.
+                    Vote was cast. 1 remaining.[]
+                    - [red][[Red] :[] You've got to be kiddin-
+                    [grey]Red was the Imposter[]
+                    """;
                     health = 8000;
                     armor = 10;
                     pierceReduction = 99;

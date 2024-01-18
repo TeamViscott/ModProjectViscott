@@ -96,8 +96,8 @@ public class ProjectViscottTechTree {
                 node(splinter,()->{
                     node(zirconWall,()->{
                         node(zirconWallLarge);
-                        node(siliconeWall,()-> {
-                            node(siliconeWallLarge);
+                        node(siliconWall,()-> {
+                            node(siliconWallLarge);
                         });
                         node(platinumWall,()->{
                             node(platinumWallLarge);
