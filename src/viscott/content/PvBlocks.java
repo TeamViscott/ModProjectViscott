@@ -115,7 +115,7 @@ public class PvBlocks {
                             erbiumWall,erbiumWallLarge,
                             carbonWall,carbonWallLarge,
                             yggdrasilsBark,
-                         /* Xeal*/ zirconWallHuge,siliconWallHuge,platinumWallHuge,erbiumWallHuge,carbonWallHuge,
+                         /* Xeal*/ zirconWallHuge,siliconWallHuge,platinumWallHuge,erbiumWallHuge,carbonWallHuge,tideWall,tideWallLarge,
                           /*Logic*/
                             piscoProcessor,memoryByte,statusSelector,labelHandler,
                             /*Nullis*/voidReprocessingUnit,
@@ -1420,6 +1420,24 @@ public class PvBlocks {
                     absorbLasers = true;
                     health = 2400;
                     regenRate = 20;
+                }};
+                tideWall = new PvWall("tide-wall") {{
+                    requirements(Category.defense, with(PvItems.tideAlloy,24));
+                    faction.add(PvFactions.Xeal);
+                    localizedName = "Tide Wall";
+                    description = "The Sturdiest of walls. its only drawback? its costly. Absorbs lasers.";
+                    size = 1;
+                    absorbLasers = true;
+                    health = 4125;
+                }};
+                tideWallLarge = new PvWall("tide-wall-large") {{
+                    requirements(Category.defense, with(PvItems.tideAlloy,120));
+                    faction.add(PvFactions.Xeal);
+                    localizedName = "Large Tide Wall";
+                    description = "The Sturdiest of walls. its only drawback? its costly. Absorbs lasers.";
+                    size = 2;
+                    absorbLasers = true;
+                    health = 17500;
                 }};
                 micropulsePump = new Pump("micropulse-pump")
                 {{
