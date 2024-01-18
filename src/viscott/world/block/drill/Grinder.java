@@ -20,6 +20,8 @@ import mindustry.ui.Bar;
 import mindustry.world.Block;
 import mindustry.world.Build;
 import mindustry.world.Tile;
+import mindustry.world.draw.DrawBlock;
+import mindustry.world.draw.DrawDefault;
 import mindustry.world.meta.StatValue;
 import mindustry.world.meta.StatValues;
 import viscott.content.PvStats;
@@ -39,6 +41,7 @@ public class Grinder extends PvBlock {
     public Effect updateEffect = null;
     public float tier = 1;
     public Seq<Pos> checkPattern = new Seq<>();
+    public DrawBlock drawer = new DrawDefault();
     int sizeOffset = 0;
     public Grinder(String name)
     {
@@ -60,6 +63,7 @@ public class Grinder extends PvBlock {
     public void init()
     {
         super.init();
+        drawer.load(this);
         sizeOffset = size/2;
         int blockRange = range*2 + size;
         int ind = 0;
@@ -169,6 +173,10 @@ public class Grinder extends PvBlock {
             super.updateProximity();
             maxMineSpeed = getMineSpeed((int)x/8,(int)y/8);
             hardness = getHardness((int)x/8,(int)y/8);
+        }
+        @Override
+        public void draw() {
+            drawer.draw(this);
         }
 
         @Override

@@ -67,7 +67,7 @@ public class PvBlocks {
 
                     /*Drills*/harvestDrill,tetraDrill,spectrumDrill,rootHarvester,
                     /*Grinders*/harvestGrinder,behemothGrinder,oilGrinder,
-                        /* Xeal */waveGrinder,
+                        /* Xeal */eradicarialGrinder,
 
                     /*Power*/opticalNode,auditoryNode,compressedBattery,lifeForceConverter,oakDengerizer,
                     /*Power Production*/smallCarbonPanel,largeCarbonPanel,lithiumDegenerator,
@@ -296,6 +296,7 @@ public class PvBlocks {
                 {{
                     requirements(Category.production, with(PvItems.zirconium,35));
                     localizedName = "Harvest Grinder";
+                    squareSprite = false;
                     health = 200;
                     liquidCapacity = 20;
                     size = 2;
@@ -308,6 +309,7 @@ public class PvBlocks {
                 {{
                     requirements(Category.production, with(PvItems.zirconium,100,Items.silicon,20));
                     localizedName = "Behemoth Grinder";
+                    squareSprite = false;
                     health = 570;
                     liquidCapacity = 20;
                     consumePower(50f/60f);
@@ -318,12 +320,13 @@ public class PvBlocks {
                     itemCapacity = 40;
                     updateEffect = Fx.smeltsmoke;
                 }};
-                waveGrinder = new Grinder("wave-grinder") {{
+                eradicarialGrinder = new Grinder("eradicarial-grinder") {{
                     requirements(Category.production, with(PvItems.erbium,600,Items.silicon,200,PvItems.tideAlloy,10));
-                    localizedName = "Wave Grinder";
-                    health = 1320;
-                    liquidCapacity = 100;
-                    consumePower(200f/60f);
+                    localizedName = "Eradicarial Grinder";
+                    health = 820;
+                    liquidCapacity = 20;
+                    consumeLiquid(PvLiquids.xenon,4.6f/60f).boost();
+                    consumePower(175f/60f);
                     faction.add(PvFactions.Xeal);
                     size = 4;
                     tier = 3;
@@ -331,6 +334,13 @@ public class PvBlocks {
                     speedPerOre = 0.25f;
                     itemCapacity = 100;
                     updateEffect = Fx.smeltsmoke;
+                    squareSprite = false;
+                    drawer = new DrawMulti(
+                        new DrawRegion("-bottom"),
+                        new DrawLiquidRegion(PvLiquids.xenon) {{ this.suffix = "-liquid"; }},
+                        new DrawDefault()
+                    );
+
                 }};
                 harvestDrill = new Drill("harvest-drill")
                 {{
@@ -343,6 +353,7 @@ public class PvBlocks {
                     health = 225;
                     liquidCapacity = 5;
                     consumeLiquid(Liquids.water,2.5f/60f).boost();
+
                 }};
                 tetraDrill = new Drill("tetra-drill")
                 {{

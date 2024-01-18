@@ -51,6 +51,7 @@ import viscott.types.*;
 import viscott.types.abilities.*;
 import viscott.world.bullets.BranchBulletType;
 import viscott.world.bullets.LargeBranchBulletType;
+import viscott.world.bullets.RaygunBulletType;
 import viscott.world.bullets.VoidBulletType;
 import viscott.utilitys.PvUtil;
 import viscott.world.draw.ChangeRegionPart;
@@ -3184,82 +3185,161 @@ public class PvUnits {
         }};
         kilo = new PvUnitType("kilo") {{
             localizedName = "Kilo";
-            constructor = EntityMapping.map("horizon");
-            speed = 6f/7.5f;
-            drag = 0.1f;
-            hitSize = 8*4f;
-            health = 18000;
-            armor = 16;
+            constructor = EntityMapping.map("ElevationMoveUnit");
+            speed = 6.2f/7.5f;
+            engineOffset = 8;
+            drag = 0.13f;
+            hitSize = 8*5f;
+            health = 18500;
+            armor = 9;
             range = 34*8;
-            accel = 0.2f;
-            rotateSpeed = 2f;
+            accel = 0.4f;
+            rotateSpeed = 3.3f;
             faceTarget = true;
-            flying = true;
-            engineSize = 2;
-            engineOffset = 18;
+            hovering = true;
             weapons.add(
-                    new Weapon() {{
-                        reload = 240;
-                        mirror = false;
+                    new Weapon(PvUtil.GetName("kilo-weapon")){{
+                        reload = 60f/2.3f;
+                        x = 22f;
+                        shootY = 2f;
+                        layerOffset = 1;
+                        y = 12f;
+                        mirror = true;
+                        alternate = true;
+                        ejectEffect = Fx.casing1;
+                        recoil = 4f;
+                        shootWarmupSpeed = 0.1f;
+                        rotate = true;
+                        rotateSpeed = 2;
+                        rotationLimit = 90;
+                        shoot = new ShootHelix();
+                        bullet = new RaygunBulletType( 875){{
+                            width = 2f;
+                            homingPower = 0.01f;
+                            colors = new Color[]{Color.white,Color.white,Color.white};
+                            lifetime = 60*5;
+                            splashDamage = 22;
+                            splashDamageRadius = 10f;
+                            ammoMultiplier = 2;
+                            intervalDelay = 0;
+                            despawnEffect = hitEffect = new MultiEffect(Fx.explosion,Fx.smokeCloud);
+                            trailBullet = new BasicBulletType(0,100) {{
+                                speed = 0;
+                                drag = 1;
+                                lifetime = 60*5;
+                                frontColor = backColor = Color.black;
+                                despawnEffect = Fx.none;
+                                hitEffect = Fx.hitLancer;
+                            }};
+                        }};
+                    }}, new Weapon(){{
+                        reload = 60f / 0.7f;
+                        minWarmup = 0.9f;
                         x = 0;
-                        y = -4;
-                        rotate = false;
-                        shootStatus = StatusEffects.slow;
-                        shootStatusDuration = shoot.firstShotDelay = PvEffects.chargeUpHecta.lifetime;
-                        parentizeEffects = true;
-                        bullet = new LaserBulletType(450) {{
-                            chargeEffect = PvEffects.chargeUpHecta;
-                            length = 8*58;
-                            laserAbsorb = true;
-                            colors = new Color[]{Pal.redDust,Pal.redLight,Color.white};
-                            width = 8*5;
-                            lifetime = 60;
-                            lightningSpacing = 5f;
-                            lightningLength = 10;
-                            lightningDelay = 0.5f;
-                            lightningLengthRand = 10;
-                            lightningDamage = 50;
-                            lightningAngleRand = 40f;
-                            largeHit = true;
-                            lightColor = lightningColor = Pal.redDust;
+                        y = 0;
+                        mirror = false;
+                        shootWarmupSpeed = 0.1f;
+                        bullet = new BasicBulletType(5,50){{
+                            shootEffect = new MultiEffect(Fx.shootTitan, new WaveEffect(){{
+                                colorTo = Pal.neoplasm1;
+                                sizeTo = 26f;
+                                lifetime = 14f;
+                                strokeFrom = 4f;
+                            }});
+                            smokeEffect = Fx.shootSmokeTitan;
+                            hitColor = Pal.neoplasm1;
+
+                            sprite = "large-orb";
+                            trailEffect = Fx.missileTrail;
+                            trailInterval = 3f;
+                            trailParam = 4f;
+                            pierceCap = 3;
+                            fragOnHit = true;
+                            lifetime = PvUtil.GetRange(this.speed,39);
+                            width = height = 16f;
+                            backColor = Pal.neoplasm1;
+                            frontColor = Color.white;
+                            shrinkX = shrinkY = 0f;
+                            trailColor = Pal.neoplasm1;
+                            trailLength = 12;
+                            trailWidth = 2.2f;
+                            despawnEffect = hitEffect = new ExplosionEffect(){{
+                                waveColor = Pal.neoplasm1;
+                                smokeColor = Color.gray;
+                                sparkColor = Pal.sap;
+                                waveStroke = 4f;
+                                waveRad = 40f;
+                            }};
+                            despawnSound = Sounds.dullExplosion;
+
+                            //TODO shoot sound
+                            shootSound = Sounds.cannon;
+
+                            fragBullet = intervalBullet = new BasicBulletType(3f, 35){{
+                                width = 9f;
+                                hitSize = 5f;
+                                height = 15f;
+                                pierce = true;
+                                lifetime = 35f;
+                                pierceBuilding = true;
+                                hitColor = backColor = trailColor = Pal.neoplasm1;
+                                frontColor = Color.white;
+                                trailWidth = 2.1f;
+                                trailLength = 5;
+                                hitEffect = despawnEffect = new WaveEffect(){{
+                                    colorFrom = colorTo = Pal.neoplasm1;
+                                    sizeTo = 4f;
+                                    strokeFrom = 4f;
+                                    lifetime = 10f;
+                                }};
+                                homingPower = 0.2f;
+                            }};
+
+                            bulletInterval = 5f;
+                            intervalRandomSpread = 15f;
+                            intervalBullets = 2;
+                            intervalAngle = 180f;
+                            intervalSpread = 300f;
+
+                            fragBullets = 10;
+                            fragVelocityMin = 0.6f;
+                            fragVelocityMax = 1.0f;
+                            fragLifeMin = 0.8f;
                         }};
                     }}
             );
-            parts.addAll(
-                new RegionPart("-arm1") {{
-                    progress = PartProgress.reload.sustain(0.2f,0.1f,0.8f);
-                    under = true;
-                    layerOffset = -0.01f;
-                    mirror = true;
-                    moveX = 4;
-                }},
-                new RegionPart("-arm2") {{
-                    progress = PartProgress.reload.sustain(0.3f,0.1f,0.5f);
-                    mirror = true;
-                    moveX = 4;
-                }},
-                new RegionPart("-arm3") {{
-                    progress = PartProgress.reload.sustain(0.4f,0.1f,0.2f);
-                    under = true;
-                    layerOffset = -0.01f;
-                    mirror = true;
-                    moveX = 4;
-                }},
-                new RegionPart("-leg1") {{
-                    progress = (p) -> (Mathf.sin(Time.time/60) +1f)*0.5f;
-                    mirror = true;
-                    moveRot = 2;
-                    moveY = -1;
-                }},
-                new RegionPart("-leg2") {{
-                    progress = (p) -> (Mathf.cos(Time.time/60) +1f)*0.5f;
-                    under = true;
-                    moveY = -2;
-                    moveX = -1;
-                    layerOffset = -0.01f;
-                    mirror = true;
-                }}
-            );
+            parts.add(
+                    new HoverPart(){{
+                        x = -14f;
+                        y = -14;
+                        mirror = true;
+                        radius = 10;
+                        phase = 60f;
+                        stroke = 5f;
+                        layerOffset = -0.1f;
+                        color = Pal.neoplasmMid;
+                        //back hovers
+                    }},
+                    new RegionPart("-front"){{
+                        y = x = 0;
+                        moveRot = 15f;
+                        under = true;
+                        //moves.add(new PartMove(PartProgress.reload, 0f, -1f, 5f));
+                        progress = PartProgress.warmup;
+                        mirror = true;
+                        weaponIndex = 2;
+                        recoilIndex = 0;
+                        children.add(
+                                new RegionPart("-rail") {{
+                                    mirror = false;
+                                    y = x = 0;
+                                    moveX = 0;
+                                    moveY = -2;
+                                    moveRot = 5;
+                                    progress = PartProgress.reload;
+                                }}
+                        );
+                    }});
         }};
     }
 
