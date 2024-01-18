@@ -1,8 +1,11 @@
 package viscott.content;
 
 import arc.Events;
+import arc.struct.Seq;
 import mindustry.Vars;
 import mindustry.game.EventType;
+import mindustry.game.Objectives;
+import viscott.gen.TechtreeObjective;
 import viscott.world.teamResearch;
 
 import static mindustry.content.TechTree.*;
@@ -247,8 +250,11 @@ public class ProjectViscottTechTree {
             });
         });
         PvFactions.Xeal.techTree = nodeRoot("Xeal", PvFactions.Xeal.icon,() -> {
-            node(auditoryNode,() -> {
-
+            node(zirconWallHuge, Seq.with(TechtreeObjective.newObjective(zirconWallLarge)),() -> {
+                node(siliconWallHuge,Seq.with(TechtreeObjective.newObjective(siliconWallLarge)),() -> {});
+                node(platinumWallHuge,Seq.with(TechtreeObjective.newObjective(platinumWallLarge)),() -> {});
+                node(erbiumWallHuge,Seq.with(TechtreeObjective.newObjective(erbiumWallLarge)),() -> {});
+                node(carbonWallHuge,Seq.with(TechtreeObjective.newObjective(carbonWallLarge)),() -> {});
             });
         });
         PvFactions.Nullis.techTree = nodeRoot("Nullis", PvFactions.Nullis.icon,() -> {
