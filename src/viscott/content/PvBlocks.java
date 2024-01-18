@@ -67,6 +67,7 @@ public class PvBlocks {
 
                     /*Drills*/harvestDrill,tetraDrill,spectrumDrill,rootHarvester,
                     /*Grinders*/harvestGrinder,behemothGrinder,oilGrinder,
+                        /* Xeal */waveGrinder,
 
                     /*Power*/opticalNode,auditoryNode,compressedBattery,lifeForceConverter,oakDengerizer,
                     /*Power Production*/smallCarbonPanel,largeCarbonPanel,lithiumDegenerator,
@@ -315,6 +316,20 @@ public class PvBlocks {
                     range = 4;
                     speedPerOre = 0.2f;
                     itemCapacity = 40;
+                    updateEffect = Fx.smeltsmoke;
+                }};
+                waveGrinder = new Grinder("wave-grinder") {{
+                    requirements(Category.production, with(PvItems.erbium,600,Items.silicon,200,PvItems.tideAlloy,10));
+                    localizedName = "Wave Grinder";
+                    health = 1320;
+                    liquidCapacity = 100;
+                    consumePower(200f/60f);
+                    faction.add(PvFactions.Xeal);
+                    size = 4;
+                    tier = 3;
+                    range = 6;
+                    speedPerOre = 0.25f;
+                    itemCapacity = 100;
                     updateEffect = Fx.smeltsmoke;
                 }};
                 harvestDrill = new Drill("harvest-drill")
