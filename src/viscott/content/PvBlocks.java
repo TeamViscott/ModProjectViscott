@@ -299,11 +299,18 @@ public class PvBlocks {
                     squareSprite = false;
                     health = 200;
                     liquidCapacity = 20;
+                    consumeLiquid(PvLiquids.xenon,4.6f/60f).boost();
+                    boostMult = 3;
                     size = 2;
                     range = 2;
                     speedPerOre = 0.1f;
                     itemCapacity = 20;
                     updateEffect = Fx.smokeCloud;
+                    drawer = new DrawMulti(
+                            new DrawRegion("-bottom"),
+                            new DrawLiquidRegion() {{ this.suffix = "-liquid"; }},
+                            new DrawDefault()
+                    );
                 }};
                 behemothGrinder = new Grinder("behemoth-grinder")
                 {{
@@ -313,12 +320,19 @@ public class PvBlocks {
                     health = 570;
                     liquidCapacity = 20;
                     consumePower(50f/60f);
+                    consumeLiquid(PvLiquids.xenon,4.6f/60f).boost();
+                    boostMult = 2;
                     size = 3;
                     tier = 2;
                     range = 4;
                     speedPerOre = 0.2f;
                     itemCapacity = 40;
                     updateEffect = Fx.smeltsmoke;
+                    drawer = new DrawMulti(
+                            new DrawRegion("-bottom"),
+                            new DrawLiquidRegion() {{ this.suffix = "-liquid"; }},
+                            new DrawDefault()
+                    );
                 }};
                 eradicarialGrinder = new Grinder("eradicarial-grinder") {{
                     requirements(Category.production, with(PvItems.erbium,600,Items.silicon,200,PvItems.tideAlloy,10));
@@ -326,6 +340,7 @@ public class PvBlocks {
                     health = 820;
                     liquidCapacity = 20;
                     consumeLiquid(PvLiquids.xenon,4.6f/60f).boost();
+                    boostMult = 1;
                     consumePower(175f/60f);
                     faction.add(PvFactions.Xeal);
                     size = 4;
@@ -337,10 +352,9 @@ public class PvBlocks {
                     squareSprite = false;
                     drawer = new DrawMulti(
                         new DrawRegion("-bottom"),
-                        new DrawLiquidRegion(PvLiquids.xenon) {{ this.suffix = "-liquid"; }},
+                        new DrawLiquidRegion() {{ this.suffix = "-liquid"; }},
                         new DrawDefault()
                     );
-
                 }};
                 harvestDrill = new Drill("harvest-drill")
                 {{

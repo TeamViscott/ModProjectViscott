@@ -20,8 +20,10 @@ import mindustry.ui.Bar;
 import mindustry.world.Block;
 import mindustry.world.Build;
 import mindustry.world.Tile;
+import mindustry.world.consumers.Consume;
 import mindustry.world.draw.DrawBlock;
 import mindustry.world.draw.DrawDefault;
+import mindustry.world.meta.Stat;
 import mindustry.world.meta.StatValue;
 import mindustry.world.meta.StatValues;
 import viscott.content.PvStats;
@@ -32,6 +34,7 @@ import static mindustry.Vars.*;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Stack;
+import java.util.function.Consumer;
 import java.util.stream.Stream;
 
 public class Grinder extends PvBlock {
@@ -40,6 +43,7 @@ public class Grinder extends PvBlock {
     public float speedPerOre = 0.2f;
     public Effect updateEffect = null;
     public float tier = 1;
+    public float boostMult = 1;
     public Seq<Pos> checkPattern = new Seq<>();
     public DrawBlock drawer = new DrawDefault();
     int sizeOffset = 0;
@@ -63,6 +67,8 @@ public class Grinder extends PvBlock {
     public void init()
     {
         super.init();
+        if (optionalConsumers.length == 0)
+            boostMult = 0;
         drawer.load(this);
         sizeOffset = size/2;
         int blockRange = range*2 + size;
@@ -81,7 +87,6 @@ public class Grinder extends PvBlock {
                 }
             }
         }
-
     }
 
     @Override
@@ -139,6 +144,8 @@ public class Grinder extends PvBlock {
     public void setStats()
     {
         super.setStats();
+        if (boostMult > 0)
+            stats.addPercent(Stat.boostEffect,boostMult);
         stats.add(PvStats.grinderTier,StatValues.blocks(b -> b instanceof DepositWall d && d.tier <= tier));
     }
     @Override
@@ -189,13 +196,14 @@ public class Grinder extends PvBlock {
         {
             super.update();
             if (hardness == -1)
-            {
-                maxMineSpeed = getMineSpeed((int)x/8,(int)y/8);
-                hardness = getHardness((int)x/8,(int)y/8);
-            }
+                updateProximity();
             if (efficiency > 0) {
-                progress = Mathf.approachDelta(progress, 1, ((maxMineSpeed - hardness) / 60)*efficiency);
-                if (progress == 1) {
+                float percent = 0;
+                for(Consume c : optionalConsumers)
+                    percent+=c.efficiency(this);
+                percent/=optionalConsumers.length;
+                progress = Mathf.approachDelta(progress, 1, ((maxMineSpeed - hardness) / 60)*(efficiency+boostMult*percent));
+                if (progress >= 1) {
                     Seq<Block> blockList = getBlocks((int)x/8,(int)y/8);
                     blockList.each(b -> craft(b));
                     if (updateEffect != null)
