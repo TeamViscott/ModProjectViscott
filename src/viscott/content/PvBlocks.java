@@ -860,7 +860,7 @@ public class PvBlocks {
                     size = 7;
                 }};
                 templateMolder = new PvSelectiveConstructor("template-molder") {{
-                    requirements(Category.units,with(PvItems.zirconium,250,Items.silicon,75,PvItems.platinum,40)); //Todo
+                    requirements(Category.units,with(PvItems.zirconium,250,Items.silicon,75)); //Todo
                     localizedName = "Template Molder";
                     health = 500;
                     size = 3;
@@ -885,7 +885,7 @@ public class PvBlocks {
                 }};
                 nueroSpawnPad = new BulkUnitFactory("nuero-spawn-pad")
                 {{
-                    requirements(Category.units,with(PvItems.zirconium,250,Items.silicon,75,PvItems.platinum,40)); //Todo
+                    requirements(Category.units,with(PvItems.zirconium,250,Items.silicon,75)); //Todo
                     localizedName = "Nuero Spawn Pad";
                     health = 1600;
                     size = 5;
