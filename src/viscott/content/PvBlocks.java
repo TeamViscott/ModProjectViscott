@@ -104,7 +104,7 @@ public class PvBlocks {
                             bulkUnloader,
                             /*Nullis*/nullisCore, nullisVoid, nullisAbyss,
                             /*Xeal*/coreSpark,coreCharge,coreSurge,
-                    /*Effects*/utilityProjector,pocketContainer,
+                    /*Effects*/utilityProjector,pocketContainer,hydroProjector,
                             /*Nullis*/voidNode,voidBeacon,voidExpander,
                                     voidWall,voidWallLarge,
 
@@ -299,8 +299,8 @@ public class PvBlocks {
                     squareSprite = false;
                     health = 200;
                     liquidCapacity = 20;
-                    consumeLiquid(PvLiquids.xenon,4.6f/60f).boost();
-                    boostMult = 3;
+                    consumeLiquid(PvLiquids.xenon,2f/60f).boost();
+                    boostMult = 4.6f;
                     size = 2;
                     range = 2;
                     speedPerOre = 0.1f;
@@ -320,8 +320,8 @@ public class PvBlocks {
                     health = 570;
                     liquidCapacity = 20;
                     consumePower(50f/60f);
-                    consumeLiquid(PvLiquids.xenon,4.6f/60f).boost();
-                    boostMult = 2;
+                    consumeLiquid(PvLiquids.xenon,4f/60f).boost();
+                    boostMult = 4.6f;
                     size = 3;
                     tier = 2;
                     range = 4;
@@ -339,8 +339,8 @@ public class PvBlocks {
                     localizedName = "Eradicarial Grinder";
                     health = 820;
                     liquidCapacity = 20;
-                    consumeLiquid(PvLiquids.xenon,4.6f/60f).boost();
-                    boostMult = 1;
+                    consumeLiquid(PvLiquids.xenon,8f/60f).boost();
+                    boostMult = 4.6f;
                     consumePower(175f/60f);
                     faction.add(PvFactions.Xeal);
                     size = 4;
@@ -1682,6 +1682,33 @@ public class PvBlocks {
                     health = 380;
                     size = 2;
                     itemCapacity = 400;
+                }};
+                hydroProjector = new LiquidProjector("hydro-projector") {{
+                    requirements(Category.effect,with(PvItems.zirconium,100,PvItems.lithium,80,PvItems.erbium,60,Items.silicon,50));
+                    localizedName = "Hydro Projector";
+                    health = 400;
+                    range = 7.3f*8;
+                    consumePower(25f/60f);
+                    size = 1;
+                    drawer = new DrawMulti(
+                            new DrawDefault(),
+                            new DrawMoveRegion("-spine") {{
+                                rotateSpeed = 1;
+                                rotation = 0;
+                            }},
+                            new DrawRegion("-spine") {{
+                                rotateSpeed = 1;
+                                rotation = 90;
+                            }},
+                            new DrawRegion("-spine") {{
+                                rotateSpeed = 1;
+                                rotation = 180;
+                            }},
+                            new DrawRegion("-spine") {{
+                                rotateSpeed = 1;
+                                rotation = 270;
+                            }}
+                    );
                 }};
                 utilityProjector = new UtilityProjector("utility-projector")
                 {{
