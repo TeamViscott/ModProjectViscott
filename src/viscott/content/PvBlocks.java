@@ -1688,6 +1688,7 @@ public class PvBlocks {
                     localizedName = "Hydro Projector";
                     health = 400;
                     range = 7.3f*8;
+                    defaultLiquid = Liquids.water;
                     consumePower(25f/60f);
                     size = 1;
                     drawer = new DrawMulti(

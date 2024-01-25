@@ -6,6 +6,7 @@ import arc.graphics.g2d.Lines;
 import arc.math.Mathf;
 import arc.struct.Seq;
 import mindustry.Vars;
+import mindustry.content.Liquids;
 import mindustry.core.World;
 import mindustry.entities.Fires;
 import mindustry.entities.Units;
@@ -29,9 +30,16 @@ public class LiquidProjector extends PvBlock {
     public DrawBlock drawer = new DrawDefault();
     public float activeDrain = 1;
 
+    public Liquid defaultLiquid = null;
+    /// if this is set, liquid will not be required.
+
     public Seq<Liquid> liquidsAllowed = Vars.content.liquids();
 
     public void init() {
+        if (defaultLiquid == null) {
+            liquidCapacity = 0;
+            hasLiquids = false;
+        }
         super.init();
         drawer.load(this);
     }
@@ -40,6 +48,7 @@ public class LiquidProjector extends PvBlock {
         update = true;
         liquidCapacity = 10;
         hasLiquids = true;
+        defaultLiquid = Liquids.water;
     }
     public void drawPlace(int x,int y,int rotation,boolean valid) {
         super.drawPlace(x,y,rotation,valid);
@@ -69,14 +78,12 @@ public class LiquidProjector extends PvBlock {
         }
         @Override
         public void update() {
-            if (liquids.current() == null || liquids.currentAmount() <= 0 || (power != null && power.status == 0)) {
-                efficiency = Mathf.lerpDelta(efficiency,0,0.1f);
-                if (extinguishI < 60)
-                    extinguishI += 0.5f;
-                return;
-            }
+            if (extinguishI < 60)
+                extinguishI += 0.5f;
+            if (hasLiquids && (liquids.current() == null || liquids.currentAmount() <= 0)) return;
+            if (power != null && power.status == 0) return;
             boolean activate = false;
-            Liquid current = liquids.current();
+            Liquid current = hasLiquids ? defaultLiquid : liquids.current();
             boolean dangerous = current.gas || current.viscosity > 0.5;
             boolean canExtinguish = current.canExtinguish();
             StatusEffect givenEffect = current.effect;
@@ -114,20 +121,15 @@ public class LiquidProjector extends PvBlock {
                     }
                 }
                 float max = power == null ? 1 : power.status;
-                extinguishI += efficiency;
                 efficiency = Mathf.lerpDelta(efficiency,max,0.1f);
-                liquids.remove(current,efficiency/60 * activeDrain);
+                if (hasLiquids) liquids.remove(current,efficiency/60 * max * activeDrain);
                 Units.nearby(x-range,y-range,range*2,range*2,(unit) -> {
                     if (range <= Mathf.len(unit.x-x,unit.y-y)) return;
                     unit.apply(givenEffect,60 * efficiency);
-
                 });
 
-            } else {
+            } else
                 efficiency = Mathf.lerpDelta(efficiency,0,0.1f);
-                if (extinguishI < 60)
-                    extinguishI += 0.5f;
-            }
         }
     }
 }
