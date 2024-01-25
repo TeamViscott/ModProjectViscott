@@ -30,25 +30,25 @@ public class LiquidProjector extends PvBlock {
     public DrawBlock drawer = new DrawDefault();
     public float activeDrain = 1;
 
-    public Liquid defaultLiquid = null;
-    /// if this is set, liquid will not be required.
+    public Liquid defaultLiquid;
 
-    public Seq<Liquid> liquidsAllowed = Vars.content.liquids();
+    public Seq<Liquid> liquidsAllowed;
 
     public void init() {
-        if (defaultLiquid == null) {
+        if (defaultLiquid != null) {
             liquidCapacity = 0;
             hasLiquids = false;
+            //liquidsAllowed.clear();
         }
         super.init();
         drawer.load(this);
     }
     public LiquidProjector(String name) {
         super(name);
+        liquidsAllowed = Vars.content.liquids();
         update = true;
         liquidCapacity = 10;
         hasLiquids = true;
-        defaultLiquid = Liquids.water;
     }
     public void drawPlace(int x,int y,int rotation,boolean valid) {
         super.drawPlace(x,y,rotation,valid);
@@ -60,7 +60,7 @@ public class LiquidProjector extends PvBlock {
         float extinguishI = 0;
         @Override
         public boolean acceptLiquid(Building source,Liquid liquid) {
-            return (liquids.currentAmount() <= 0 || liquids.current() == liquid) && liquidCapacity > liquids.currentAmount();
+            return hasLiquids && (liquids.currentAmount() <= 0 || liquids.current() == liquid) && liquidCapacity > liquids.currentAmount();
         }
         @Override
         public void draw() {
