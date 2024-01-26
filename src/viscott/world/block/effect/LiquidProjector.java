@@ -4,13 +4,17 @@ import arc.graphics.Color;
 import arc.graphics.g2d.Draw;
 import arc.graphics.g2d.Lines;
 import arc.math.Mathf;
+import arc.scene.ui.layout.Table;
 import arc.struct.Seq;
+import arc.util.Align;
 import mindustry.Vars;
 import mindustry.content.Liquids;
+import mindustry.content.StatusEffects;
 import mindustry.core.World;
 import mindustry.entities.Fires;
 import mindustry.entities.Units;
 import mindustry.gen.Building;
+import mindustry.gen.Tex;
 import mindustry.graphics.Drawf;
 import mindustry.graphics.Pal;
 import mindustry.type.Liquid;
@@ -19,6 +23,8 @@ import mindustry.world.Tile;
 import mindustry.world.draw.DrawBlock;
 import mindustry.world.draw.DrawDefault;
 import mindustry.world.draw.DrawMulti;
+import mindustry.world.meta.Stat;
+import mindustry.world.meta.StatValue;
 import viscott.world.block.PvBlock;
 
 import static mindustry.Vars.tilesize;
@@ -30,22 +36,85 @@ public class LiquidProjector extends PvBlock {
     public DrawBlock drawer = new DrawDefault();
     public float activeDrain = 1;
 
+    /// removes the liquid component if set. if unset will use liquidsAllowed to have a list of liquids that can be inserted.
     public Liquid defaultLiquid;
+
+    /// Overrides the effectiveness of extinguish. Should only be used with default Liquid.
+    public float defaultExtinguish = -1;
 
     public Seq<Liquid> liquidsAllowed;
 
     public void init() {
-        if (defaultLiquid != null) {
+        if (defaultLiquid != null) { /* Should not have liquid if defaultLiquid is chosen */
             liquidCapacity = 0;
             hasLiquids = false;
-            //liquidsAllowed.clear();
+            liquidsAllowed.clear(); // clear allowed Liquids.
         }
         super.init();
         drawer.load(this);
     }
+
+    @Override
+    public void setStats() {
+        super.setStats();
+        stats.add(Stat.range,range/8);
+        if (defaultLiquid == null)
+            stats.add(Stat.ammo, (t) -> {
+                Table table = new Table();
+                table.setWidth(220f);
+                table.align(Align.left);
+                liquidsAllowed.each( l -> {
+                    Table liq = new Table();
+                    liq.setWidth(liq.getMaxWidth());
+                    liq.background(Tex.whiteui);
+                    liq.setColor(Pal.darkestGray);
+                    liq.margin(5f);
+                    liq.image(l.uiIcon).padLeft(20f);
+                    liq.add(l.localizedName).left();
+                    if (liquidExtinguish(l)) { // Extinguishable
+                        liq.row();
+                        liq.add("- auto Extinguish",Pal.gray);
+                    }
+                    if (liquidDefend(l)) { // Dangerous
+                        liq.row();
+                        liq.add("- auto Defense",Pal.gray);
+                    }
+                    liq.marginBottom(10f);
+                    table.add(liq).pad(10).grow();
+                    table.row();
+                });
+                t.add(table);
+            });
+        else
+            stats.add(Stat.ammoUse, (t) -> {
+                Table table = new Table();
+                table.setWidth(220f);
+                table.background(Tex.whiteui);
+                table.setColor(Pal.darkestGray);
+                table.image(defaultLiquid.uiIcon).padLeft(20f);
+                table.add(defaultLiquid.localizedName).left();
+                if (liquidExtinguish(defaultLiquid)) { // Extinguishable
+                    table.row();
+                    table.add("- auto Extinguish",Pal.gray);
+                }
+                if (liquidDefend(defaultLiquid)) { // Dangerous
+                    table.row();
+                    table.add("- auto Defense",Pal.gray);
+                }
+                table.row();
+                table.margin(5f);
+                t.add(table);
+            });
+    }
+    private boolean liquidExtinguish(Liquid liquid) {
+        return liquid.canExtinguish() && liquid.temperature < 1;
+    }
+    private boolean liquidDefend(Liquid liquid) {
+        return (!liquid.gas || liquid.viscosity > 0.5) && liquid.effect != StatusEffects.none;
+    }
     public LiquidProjector(String name) {
         super(name);
-        liquidsAllowed = Vars.content.liquids();
+        liquidsAllowed = Vars.content.liquids().copy().retainAll(l->liquidExtinguish(l) || liquidDefend(l));
         update = true;
         liquidCapacity = 10;
         hasLiquids = true;
@@ -60,7 +129,7 @@ public class LiquidProjector extends PvBlock {
         float extinguishI = 0;
         @Override
         public boolean acceptLiquid(Building source,Liquid liquid) {
-            return hasLiquids && (liquids.currentAmount() <= 0 || liquids.current() == liquid) && liquidCapacity > liquids.currentAmount();
+            return hasLiquids && ((liquids.currentAmount() <= 0 || liquids.current() == liquid) && liquidCapacity > liquids.currentAmount());
         }
         @Override
         public void draw() {
@@ -83,11 +152,11 @@ public class LiquidProjector extends PvBlock {
             if (hasLiquids && (liquids.current() == null || liquids.currentAmount() <= 0)) return;
             if (power != null && power.status == 0) return;
             boolean activate = false;
-            Liquid current = hasLiquids ? defaultLiquid : liquids.current();
-            boolean dangerous = current.gas || current.viscosity > 0.5;
-            boolean canExtinguish = current.canExtinguish();
+            Liquid current = hasLiquids ? liquids.current() : defaultLiquid;
+            boolean dangerous = liquidDefend(current);
+            boolean canExtinguish = liquidExtinguish(current);
             StatusEffect givenEffect = current.effect;
-            if (canExtinguish) { // Activate when fire.
+            if (canExtinguish) { // Activate when Fire.
                 int tx = World.toTile(x), ty = World.toTile(y);
                 int tr = (int)(range / tilesize);
                 for(int x = -tr; x <= tr; x++){
@@ -98,9 +167,12 @@ public class LiquidProjector extends PvBlock {
                         //do not extinguish fires on other team blocks
                         if(other != null && fire != null && Fires.has(other.x, other.y) && dst <= range * range && (other.build == null || other.team() == team)){
                             activate = true;
+                            if (extinguishI >= 60) {
+                                float eff = defaultExtinguish < 0 ? (1 - current.temperature) * efficiency : defaultExtinguish * efficiency;
+                                Fires.extinguish(other, (1 - current.temperature) * efficiency);
+                                current.vaporEffect.at(other.x,other.y,current.color);
+                            }
                         }
-                        if (extinguishI >= 60)
-                            Fires.extinguish(other,(1-current.temperature)*efficiency);
                     }
                 }
             }
@@ -119,12 +191,13 @@ public class LiquidProjector extends PvBlock {
                         float vy = Mathf.sinDeg(i*6+90)*range;
                         current.vaporEffect.at(x+vx,y+vy,current.color);
                     }
+                    current.vaporEffect.at(x,y,current.color);
                 }
                 float max = power == null ? 1 : power.status;
                 efficiency = Mathf.lerpDelta(efficiency,max,0.1f);
                 if (hasLiquids) liquids.remove(current,efficiency/60 * max * activeDrain);
                 Units.nearby(x-range,y-range,range*2,range*2,(unit) -> {
-                    if (range <= Mathf.len(unit.x-x,unit.y-y)) return;
+                    if (unit.team == team || range <= Mathf.len(unit.x-x,unit.y-y)) return;
                     unit.apply(givenEffect,60 * efficiency);
                 });
 
