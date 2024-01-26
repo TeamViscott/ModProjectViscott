@@ -110,7 +110,7 @@ public class LiquidProjector extends PvBlock {
         return liquid.canExtinguish() && liquid.temperature < 1;
     }
     private boolean liquidDefend(Liquid liquid) {
-        return (!liquid.gas || liquid.viscosity > 0.5) && liquid.effect != StatusEffects.none;
+        return (!liquid.gas && liquid.viscosity > 0.5) && liquid.effect != StatusEffects.none;
     }
     public LiquidProjector(String name) {
         super(name);
