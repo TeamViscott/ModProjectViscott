@@ -1690,7 +1690,7 @@ public class PvBlocks {
                     health = 140;
                     range = 7.3f*8;
                     defaultLiquid = Liquids.water;
-                    defaultExtinguish = 10f;
+                    defaultExtinguish = 100f;
                     consumePower(25f/60f);
                     size = 1;
                     drawer = new DrawMulti(

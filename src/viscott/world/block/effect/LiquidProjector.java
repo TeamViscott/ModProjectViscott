@@ -169,7 +169,7 @@ public class LiquidProjector extends PvBlock {
                             activate = true;
                             if (extinguishI >= 60) {
                                 float eff = defaultExtinguish < 0 ? (1 - current.temperature) * efficiency : defaultExtinguish * efficiency;
-                                Fires.extinguish(other, (1 - current.temperature) * efficiency);
+                                Fires.extinguish(other, eff);
                                 current.vaporEffect.at(other.x,other.y,current.color);
                             }
                         }
