@@ -1690,7 +1690,7 @@ public class PvBlocks {
                     health = 140;
                     range = 7.3f*8;
                     defaultLiquid = Liquids.water;
-                    defaultExtinguish = 100f;
+                    extinguishMultiplier = 100f;
                     consumePower(25f/60f);
                     size = 1;
                     drawer = new DrawMulti(
@@ -1717,6 +1717,7 @@ public class PvBlocks {
                 requirements(Category.effect, BuildVisibility.sandboxOnly,with(PvItems.zirconium,100,PvItems.lithium,80,PvItems.erbium,60,Items.silicon,50));
                 localizedName = "Hydro Tester";
                 health = 600;
+                extinguishMultiplier = 100;
                 range = 10f*8;
                 consumePower(50f/60f);
                 size = 1;

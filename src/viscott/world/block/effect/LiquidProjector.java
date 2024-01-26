@@ -39,8 +39,7 @@ public class LiquidProjector extends PvBlock {
     /// removes the liquid component if set. if unset will use liquidsAllowed to have a list of liquids that can be inserted.
     public Liquid defaultLiquid;
 
-    /// Overrides the effectiveness of extinguish. Should only be used with default Liquid.
-    public float defaultExtinguish = -1;
+    public float extinguishMultiplier = 1;
 
     public Seq<Liquid> liquidsAllowed;
 
@@ -127,6 +126,7 @@ public class LiquidProjector extends PvBlock {
 
     public class LiquidProjectorBuild extends Building {
         float extinguishI = 0;
+        float effectI = 0;
         @Override
         public boolean acceptLiquid(Building source,Liquid liquid) {
             return hasLiquids && ((liquids.currentAmount() <= 0 || liquids.current() == liquid) && liquidCapacity > liquids.currentAmount());
@@ -147,8 +147,8 @@ public class LiquidProjector extends PvBlock {
         }
         @Override
         public void update() {
-            if (extinguishI < 60)
-                extinguishI += 0.5f;
+            effectI += delta();
+            extinguishI += delta();
             if (hasLiquids && (liquids.current() == null || liquids.currentAmount() <= 0)) return;
             if (power != null && power.status == 0) return;
             boolean activate = false;
@@ -167,8 +167,8 @@ public class LiquidProjector extends PvBlock {
                         //do not extinguish fires on other team blocks
                         if(other != null && fire != null && Fires.has(other.x, other.y) && dst <= range * range && (other.build == null || other.team() == team)){
                             activate = true;
-                            if (extinguishI >= 60) {
-                                float eff = defaultExtinguish < 0 ? (1 - current.temperature) * efficiency : defaultExtinguish * efficiency;
+                            if (extinguishI >= 10) {
+                                float eff = (1 - current.temperature) * extinguishMultiplier * efficiency;
                                 Fires.extinguish(other, eff);
                                 current.vaporEffect.at(other.x,other.y,current.color);
                             }
@@ -184,8 +184,9 @@ public class LiquidProjector extends PvBlock {
             }
 
             if (activate) {
-                if (extinguishI >= 60) {
-                    extinguishI %= 60;
+                extinguishI %= 10;
+                if (effectI >= 60) {
+                    effectI %= 60;
                     for(int i = 0;i<60;i++) {
                         float vx = Mathf.sinDeg(i*6)*range;
                         float vy = Mathf.sinDeg(i*6+90)*range;
