@@ -57,7 +57,7 @@ public class LiquidProjector extends PvBlock {
     @Override
     public void setStats() {
         super.setStats();
-        stats.add(Stat.range,range/8);
+        stats.add(Stat.range,(range/8) + " Blocks");
         if (defaultLiquid == null)
             stats.add(Stat.ammo, (t) -> {
                 Table table = new Table();
