@@ -36,8 +36,9 @@ public class LiquidGrinder extends Grinder{
         @Override
         public void craft(Block d)
         {
-            if (liquids.currentAmount() < liquidCapacity)
-                liquids.add(extractedLiquid.liquid,extractedLiquid.amount);
+            float ext = Math.min(liquidCapacity-liquids.currentAmount(),extractedLiquid.amount);
+            if (ext > 0)
+                liquids.add(extractedLiquid.liquid,ext);
         }
     }
 }

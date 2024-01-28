@@ -199,9 +199,11 @@ public class Grinder extends PvBlock {
                 updateProximity();
             if (efficiency > 0) {
                 float percent = 0;
-                for(Consume c : optionalConsumers)
-                    percent+=c.efficiency(this);
-                percent/=optionalConsumers.length;
+                if (optionalConsumers.length > 0) {
+                    for (Consume c : optionalConsumers)
+                        percent += c.efficiency(this);
+                    percent /= optionalConsumers.length;
+                }
                 progress = Mathf.approachDelta(progress, 1, ((maxMineSpeed - hardness) / 60)*(efficiency+boostMult*percent));
                 if (progress >= 1) {
                     Seq<Block> blockList = getBlocks((int)x/8,(int)y/8);
