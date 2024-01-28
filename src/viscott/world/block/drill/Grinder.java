@@ -153,7 +153,7 @@ public class Grinder extends PvBlock {
         super.setBars();
         if (itemCapacity != 0)
         addBar("grindspeed", (GrinderBuild e) ->
-                new Bar(() -> Core.bundle.format("bar.grindspeed", Strings.fixed((e.maxMineSpeed - getHardness((int)e.x/8+sizeOffset,(int)e.y/8+sizeOffset)) * e.timeScale(), 2)), () -> Pal.lighterOrange, () -> e.progress));
+                new Bar(() -> Core.bundle.format("bar.grindspeed", Strings.fixed((e.maxMineSpeed - getHardness((int)e.x/8+sizeOffset,(int)e.y/8+sizeOffset)) * e.timeScale() * e.disEff, 2)), () -> Pal.lighterOrange, () -> e.progress));
     }
 
     public class GrinderBuild extends Building
@@ -167,6 +167,7 @@ public class Grinder extends PvBlock {
             updateProximity();
         }
         float hardness = 0;
+        float disEff = efficiency;
         float progress;
 
         @Override
@@ -204,7 +205,8 @@ public class Grinder extends PvBlock {
                         percent += c.efficiency(this);
                     percent /= optionalConsumers.length;
                 }
-                progress = Mathf.approachDelta(progress, 1, ((maxMineSpeed - hardness) / 60)*(efficiency+boostMult*percent));
+                disEff = (efficiency+boostMult*percent);
+                progress = Mathf.approachDelta(progress, 1, ((maxMineSpeed - hardness) / 60)*disEff);
                 if (progress >= 1) {
                     Seq<Block> blockList = getBlocks((int)x/8,(int)y/8);
                     blockList.each(b -> craft(b));
@@ -217,8 +219,11 @@ public class Grinder extends PvBlock {
         }
         public void craft(Block d)
         {
-            if (hasItems && items.get(d.itemDrop) < itemCapacity)
+            if (hasItems && items.get(d.itemDrop) < itemCapacity) {
                 items.add(d.itemDrop, 1);
+                if (items.get(d.itemDrop) == itemCapacity) //lul
+                    dump();
+            }
         }
 
         @Override
