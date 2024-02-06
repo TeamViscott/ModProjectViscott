@@ -93,24 +93,27 @@ public class PvSelector extends Block {
         @Override
         public void buildConfiguration(Table table){
             super.buildConfiguration(table);
-            Table ics = new Table();
-            ics.background(Styles.black6);
-            int i = 0;
-            for(TextureRegionDrawable icon : icons)
-            {
-                ImageButton button = ics.button(Tex.whiteui, Styles.clearNoneTogglei, 40f, () -> {
-                    control.input.config.hideConfig();
-                }).get();
-                button.getStyle().imageUp = icon;
-                button.changed(() -> {if(button.isChecked()) configure(icons.indexOf(icon)); else configure(-1);} );
-                button.update(() -> button.setChecked(selectedIcon == -1 ? false : icons.get(selectedIcon) == icon));
-                if (i++ == configWidth)
-                {
-                    ics.row();
-                    i %= configWidth;
+            if (icons.size > 0) {
+                Table ics = new Table();
+                ics.background(Styles.black6);
+                int i = 0;
+                for (TextureRegionDrawable icon : icons) {
+                    ImageButton button = ics.button(Tex.whiteui, Styles.clearNoneTogglei, 40f, () -> {
+                        control.input.config.hideConfig();
+                    }).get();
+                    button.getStyle().imageUp = icon;
+                    button.changed(() -> {
+                        if (button.isChecked()) configure(icons.indexOf(icon));
+                        else configure(-1);
+                    });
+                    button.update(() -> button.setChecked(selectedIcon == -1 ? false : icons.get(selectedIcon) == icon));
+                    if (i++ == configWidth) {
+                        ics.row();
+                        i %= configWidth;
+                    }
                 }
+                table.add(ics);
             }
-            table.add(ics);
             Table adRem = new Table();
             adRem.background(Styles.black6);
             if (icons.size < maxConfigs) {

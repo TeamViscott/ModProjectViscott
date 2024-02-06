@@ -12,6 +12,7 @@ import mindustry.graphics.Layer;
 import mindustry.mod.Mod;
 import mindustry.mod.Mods;
 import viscott.content.*;
+import viscott.maps.filters.PvFilterOption;
 import viscott.sounds.PvSoundControl;
 import viscott.types.PvFaction;
 import viscott.utilitys.PvPacketHandler;
@@ -76,22 +77,37 @@ public class ViscottMod extends Mod {
         PvVanillaChanges.load();
         ProjectViscottTechTree.load();
         bTurrets.load();
+
+        PvFilterOption.init();
+
         Log.info("PV content load finished");
     }
     @Override
     public void init(){
         Mods.LoadedMod tu = mods.locateMod("project-viscott");
-        tu.meta.author = "[yellow]CREDITS[]: \n\n" +
-                "[crimson]Spriters : [green]Ethanol10[], [yellow]ThomasThings \n" +
-                "----------------------------\n" +
-                "[crimson]Sfx/Music : [cyan]Vdoble MSG [yellow], [green]TempoAlch3mist[]\n" +
-                "----------------------------\n" +
-                "[crimson]Programmers : [orange]Si[red]ede ,[purple]Manuwar [yellow],Otamamori [lightgrey],Kapzduke[yellow]\n" +
-                "----------------------------\n" +
-                "[crimson]Mappers : [purple]Nicodium[yellow] \n" +
-                "----------------------------\n \n " +
-                "[purple]Special thanks to MEEPofFaith for creating the pseudo3d system.";
-        tu.meta.description = "[green]Project viscott[] is a mindustry mod that adds a \nnew Planet to the campaign, [purple]Vercilus[], and gives the player a [orange]new[] and [red]unique[] gameplay experience \nIt adds [blue]5 new Factions[], each with their own [orange]tech tree[]\nTo add to that, this mod makes a completely new progression and a new way to make units, [yellow]bulk factories[].\n\nThis mod is [yellow]still in development[]. \n Expect it to have some[scarlet] slight balancing issues[]";
+        tu.meta.author = """
+                [yellow]CREDITS[]:
+                
+                [crimson]Spriters : [green]Ethanol10[], [yellow]ThomasThings
+                ----------------------------
+                [crimson]Sfx/Music : [cyan]Vdoble MSG [yellow], [green]TempoAlch3mist[]
+                ----------------------------
+                [crimson]Programmers : [orange]Si[red]ede ,[purple]Manuwar [yellow],Otamamori [lightgrey],Kapzduke[yellow]
+                ----------------------------
+                [crimson]Mappers : [purple]Nicodium[yellow]
+                ----------------------------
+                
+                [purple]Special thanks to MEEPofFaith for creating the pseudo3d system.
+                """;
+        tu.meta.description = """
+                [green]Project viscott[] is a mindustry mod that adds a 
+                new Planet to the campaign, [purple]Vercilus[], and gives the player a [orange]new[] and [red]unique[] gameplay experience 
+                It adds [blue]5 new Factions[], each with their own [orange]tech tree[]
+                To add to that, this mod makes a completely new progression and a new way to make units, [yellow]bulk factories[].
+                
+                This mod is [yellow]still in development[]. 
+                Expect it to have some[scarlet] slight balancing issues[]
+                """;
         super.init();
         overRideOldSound();
         PvUIs.init();

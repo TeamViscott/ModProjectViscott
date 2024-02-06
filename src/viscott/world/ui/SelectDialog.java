@@ -1,5 +1,6 @@
 package viscott.world.ui;
 
+import arc.Core;
 import arc.scene.style.TextureRegionDrawable;
 import arc.scene.ui.ImageButton;
 import arc.scene.ui.layout.Table;
@@ -36,10 +37,15 @@ public class SelectDialog extends BaseDialog {
         onResize(() -> {
             setup();
         });
-        add(selection);
+        add("Select an icon :").growX().center().name("Pcanvas");
+
         row();
+
+        add(selection).grow().name("Pcanvas");
+
         row();
-        add(buttons);
+
+        add(buttons).growX().name("Pcanvas");
     }
     public void call(Building build)
     {

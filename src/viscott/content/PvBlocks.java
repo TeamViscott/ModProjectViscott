@@ -921,10 +921,10 @@ public class PvBlocks {
                             new PvUnitPlan(PvUnits.root,20*60f,with(PvItems.hardenedOak,20,Items.silicon,10))
                     );
                 }};
-                neuroRemolder = new Reconstructor("neuro-remolder") {{
+                neuroRemolder = new RemolderFactory("neuro-remolder") {{
                     requirements(Category.units,with(PvItems.zirconium,500,PvItems.platinum,100,Items.silicon,40)); //Todo
                     localizedName = "Neuro Remolder";
-                    addUpgrade(PvUnits.particle,PvUnits.snippet);
+                    addUpgrade(PvUnits.particle,PvUnits.snippet, (PvTemplate) airTempT2);
                     addUpgrade(PvUnits.milli,PvUnits.centi);
                     addUpgrade(PvUnits.pocket,PvUnits.container);
                     addUpgrade(PvUnits.rivulet,PvUnits.bourn);
@@ -936,10 +936,10 @@ public class PvBlocks {
                     consumePower(200f/60f);
                     consumeItems(with(PvItems.barium,100,Items.silicon,80,PvItems.lithium,40));
                 }};
-                grandRemolder = new Reconstructor("grand-remolder") {{
+                grandRemolder = new RemolderFactory("grand-remolder") {{
                     requirements(Category.units,with(PvItems.zirconium,1000,PvItems.platinum,700,PvItems.erbium,300,Items.silicon,200,PvItems.nobelium,80)); //Todo
                     localizedName = "Grand Remolder";
-                    addUpgrade(PvUnits.snippet,PvUnits.fragment);
+                    addUpgrade(PvUnits.snippet,PvUnits.fragment, (PvTemplate) airTempT3);
                     addUpgrade(PvUnits.centi,PvUnits.deci);
                     addUpgrade(PvUnits.container,PvUnits.capsule);
                     addUpgrade(PvUnits.bourn,PvUnits.tributary);
@@ -951,10 +951,10 @@ public class PvBlocks {
                     consumePower(1200f/60f);
                     consumeItems(with(PvItems.barium,600, PvItems.erbium,450,PvItems.platinum,200,PvItems.nobelium,100));
                 }};
-                etheriumRemolder = new Reconstructor("etherium-remolder") {{
+                etheriumRemolder = new RemolderFactory("etherium-remolder") {{
                     requirements(Category.units,with(PvItems.zirconium,1000,PvItems.platinum,700,PvItems.erbium,300,Items.silicon,200,PvItems.nobelium,80)); //Todo
                     localizedName = "Etherium Remolder";
-                    addUpgrade(PvUnits.fragment,PvUnits.excerpt);
+                    addUpgrade(PvUnits.fragment,PvUnits.excerpt, (PvTemplate) airTempT4);
                     addUpgrade(PvUnits.deci,PvUnits.hecto);
                     addUpgrade(PvUnits.capsule,PvUnits.vault);
                     addUpgrade(PvUnits.tributary,PvUnits.loch);
@@ -966,10 +966,10 @@ public class PvBlocks {
                     consumePower(1200f/60f);
                     consumeItems(with(PvItems.barium,2000,PvItems.nobelium,200,PvItems.platinum,500,Items.silicon,200,PvItems.carbonFiber,60));
                 }};
-                mythicalRemolder = new Reconstructor("mythical-remolder") {{
+                mythicalRemolder = new RemolderFactory("mythical-remolder") {{
                     requirements(Category.units,with(PvItems.zirconium,1000,PvItems.platinum,700,PvItems.erbium,300,Items.silicon,200,PvItems.nobelium,80)); //Todo
                     localizedName = "Mythical Remolder";
-                    addUpgrade(PvUnits.excerpt,PvUnits.pericope);
+                    addUpgrade(PvUnits.excerpt,PvUnits.pericope, (PvTemplate) airTempT5);
                     addUpgrade(PvUnits.hecto,PvUnits.kilo);
                     addUpgrade(PvUnits.loch,PvUnits.atlantic);
                     health = 3150;

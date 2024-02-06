@@ -26,7 +26,7 @@ public class PvLabelBlock extends MessageBlock {
         update = true;
     }
     public class PvLabelBuild extends MessageBuild {
-        Table t = new Table();
+        Font font = Fonts.outline;
 
         float smoothEfficiency = 0;
 
@@ -41,22 +41,30 @@ public class PvLabelBlock extends MessageBlock {
         @Override
         public void draw() {
             super.draw();
-            if (smoothEfficiency < 0.5) return;
+            if (smoothEfficiency < 0.05) return;
             Draw.z(Layer.endPixeled);
-            CharSequence mes = message;
-            String[] labels = mes.toString().split("\n");
-            t.clear();
-            t.setPosition(x,y);
-            t.layout();
-            for(String s : labels) {
-                Table it = new Table();
-                it.background(Styles.black6);
-                it.add(s, 0.3f * (smoothEfficiency*2-1)).row();
-                it.margin(1);
-                t.add(it).row();
 
-            }
-            t.draw();
+            float fontSize = 1.5f * smoothEfficiency;
+
+            GlyphLayout layout = Pools.obtain(GlyphLayout.class, GlyphLayout::new);
+
+            boolean ints = font.usesIntegerPositions();
+            font.setUseIntegerPositions(false);
+            font.getData().setScale(0.25f / Scl.scl(1f) * fontSize);
+            layout.setText(font, message);
+
+            Draw.color(0f, 0f, 0f, 0.3f);
+            Fill.rect(x, y /* - layout.height / 2 */, layout.width + 2, layout.height + 3);
+            Draw.color();
+
+            font.setColor(Color.white);
+            font.draw(message, x, y + layout.height / 2, 0, Align.center, false);
+
+            Draw.reset();
+            Pools.free(layout);
+            font.getData().setScale(1f);
+            font.setColor(Color.white);
+            font.setUseIntegerPositions(ints);
         }
     }
 }
