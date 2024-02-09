@@ -105,7 +105,7 @@ public class PvBlocks {
                             bulkUnloader,
                             /*Nullis*/nullisCore, nullisVoid, nullisAbyss,
                             /*Xeal*/coreSpark,coreCharge,coreSurge,
-                    /*Effects*/utilityProjector,pocketContainer,hydroProjector,hydroTester,
+                    /*Effects*/utilityProjector,pocketContainer,hydroProjector,liquidProjector,
                             /*Nullis*/voidNode,voidBeacon,voidExpander,
                                     voidWall,voidWallLarge,
 
@@ -1685,7 +1685,7 @@ public class PvBlocks {
                     itemCapacity = 400;
                 }};
                 hydroProjector = new LiquidProjector("hydro-projector") {{
-                    requirements(Category.effect,with(PvItems.zirconium,100,PvItems.lithium,80,PvItems.erbium,60,Items.silicon,50));
+                    requirements(Category.effect,with(PvItems.zirconium,100,PvItems.lithium,80,Items.silicon,50));
                     localizedName = "Hydro Projector";
                     health = 140;
                     range = 7.3f*8;
@@ -1713,15 +1713,19 @@ public class PvBlocks {
                             }}
                     );
                 }};
-                hydroTester = new LiquidProjector("hydro-tester") {{
-                requirements(Category.effect, BuildVisibility.sandboxOnly,with(PvItems.zirconium,100,PvItems.lithium,80,PvItems.erbium,60,Items.silicon,50));
-                localizedName = "Hydro Tester";
-                health = 600;
-                extinguishMultiplier = 100;
-                range = 10f*8;
-                consumePower(50f/60f);
-                size = 1;
-            }};
+                liquidProjector = new LiquidProjector("liquid-projector") {{
+                    requirements(Category.effect, BuildVisibility.sandboxOnly,with(PvItems.zirconium,100,PvItems.lithium,80,PvItems.erbium,60,Items.silicon,50));
+                    localizedName = "Liquid Projector";
+                    health = 600;
+                    extinguishMultiplier = 100;
+                    range = 10f*8;
+                    consumePower(50f/60f);
+                    size = 1;
+                    drawer = new DrawMulti(
+                            new DrawDefault(),
+                            new DrawTeamRegion()
+                    );
+                }};
                 utilityProjector = new UtilityProjector("utility-projector")
                 {{
                     requirements(Category.effect,with(PvItems.zirconium,250,PvItems.lithium,100,PvItems.nobelium,50));

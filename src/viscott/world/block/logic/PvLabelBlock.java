@@ -53,13 +53,16 @@ public class PvLabelBlock extends MessageBlock {
             font.getData().setScale(0.25f / Scl.scl(1f) * fontSize);
             layout.setText(font, message);
 
+            // Box draw
             Draw.color(0f, 0f, 0f, 0.3f);
             Fill.rect(x, y /* - layout.height / 2 */, layout.width + 2, layout.height + 3);
             Draw.color();
 
+            // Text draw
             font.setColor(Color.white);
             font.draw(message, x, y + layout.height / 2, 0, Align.center, false);
 
+            // Resets the font and pools.
             Draw.reset();
             Pools.free(layout);
             font.getData().setScale(1f);
