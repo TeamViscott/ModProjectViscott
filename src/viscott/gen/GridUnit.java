@@ -53,7 +53,7 @@ public class GridUnit extends MechUnit {
     public boolean built = false;
     public int buildSize = 0;
     public boolean[][] buildArea = new boolean[0][0];
-    private DrawBatchRotate drawBatch = new DrawBatchRotate();
+    private static DrawBatchRotate drawBatch = new DrawBatchRotate();
     public GridUnitType gu;
     public GridUnit(GridUnitType type) {
         this();
