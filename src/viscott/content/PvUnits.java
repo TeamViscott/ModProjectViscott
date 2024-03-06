@@ -3183,164 +3183,157 @@ public class PvUnits {
                         );
                     }});
         }};
-        kilo = new PvUnitType("kilo") {{
-            localizedName = "Kilo";
-            constructor = EntityMapping.map("ElevationMoveUnit");
-            speed = 6.2f/7.5f;
-            engineOffset = 8;
-            drag = 0.13f;
-            hitSize = 8*5f;
-            health = 18500;
-            armor = 9;
-            range = 34*8;
-            accel = 0.4f;
-            rotateSpeed = 3.3f;
-            faceTarget = true;
-            hovering = true;
-            weapons.add(
-                    new Weapon(PvUtil.GetName("kilo-weapon")){{
-                        reload = 60f/2.3f;
-                        x = 22f;
-                        shootY = 2f;
-                        layerOffset = 1;
-                        y = 12f;
-                        mirror = true;
-                        alternate = true;
-                        ejectEffect = Fx.casing1;
-                        recoil = 4f;
-                        shootWarmupSpeed = 0.1f;
-                        rotate = true;
-                        rotateSpeed = 2;
-                        rotationLimit = 90;
-                        shoot = new ShootHelix();
-                        bullet = new RaygunBulletType( 875){{
-                            width = 2f;
-                            homingPower = 0.01f;
-                            colors = new Color[]{Color.white,Color.white,Color.white};
-                            lifetime = 60*5;
-                            splashDamage = 22;
-                            splashDamageRadius = 10f;
-                            ammoMultiplier = 2;
-                            intervalDelay = 0;
-                            despawnEffect = hitEffect = new MultiEffect(Fx.explosion,Fx.smokeCloud);
-                            trailBullet = new BasicBulletType(0,100) {{
-                                speed = 0;
-                                drag = 1;
-                                lifetime = 60*5;
-                                frontColor = backColor = Color.black;
-                                despawnEffect = Fx.none;
-                                hitEffect = Fx.hitLancer;
-                            }};
-                        }};
-                    }}, new Weapon(){{
-                        reload = 60f / 0.7f;
-                        minWarmup = 0.9f;
-                        x = 0;
-                        y = 0;
-                        mirror = false;
-                        shootWarmupSpeed = 0.1f;
-                        bullet = new BasicBulletType(5,50){{
-                            shootEffect = new MultiEffect(Fx.shootTitan, new WaveEffect(){{
-                                colorTo = Pal.neoplasm1;
-                                sizeTo = 26f;
-                                lifetime = 14f;
-                                strokeFrom = 4f;
-                            }});
-                            smokeEffect = Fx.shootSmokeTitan;
-                            hitColor = Pal.neoplasm1;
-
-                            sprite = "large-orb";
-                            trailEffect = Fx.missileTrail;
-                            trailInterval = 3f;
-                            trailParam = 4f;
-                            pierceCap = 3;
-                            fragOnHit = true;
-                            lifetime = PvUtil.GetRange(this.speed,39);
-                            width = height = 16f;
-                            backColor = Pal.neoplasm1;
-                            frontColor = Color.white;
-                            shrinkX = shrinkY = 0f;
-                            trailColor = Pal.neoplasm1;
-                            trailLength = 12;
-                            trailWidth = 2.2f;
-                            despawnEffect = hitEffect = new ExplosionEffect(){{
-                                waveColor = Pal.neoplasm1;
-                                smokeColor = Color.gray;
-                                sparkColor = Pal.sap;
-                                waveStroke = 4f;
-                                waveRad = 40f;
-                            }};
-                            despawnSound = Sounds.dullExplosion;
-
-                            //TODO shoot sound
-                            shootSound = Sounds.cannon;
-
-                            fragBullet = intervalBullet = new BasicBulletType(3f, 35){{
-                                width = 9f;
-                                hitSize = 5f;
-                                height = 15f;
-                                pierce = true;
-                                lifetime = 35f;
-                                pierceBuilding = true;
-                                hitColor = backColor = trailColor = Pal.neoplasm1;
-                                frontColor = Color.white;
-                                trailWidth = 2.1f;
-                                trailLength = 5;
-                                hitEffect = despawnEffect = new WaveEffect(){{
-                                    colorFrom = colorTo = Pal.neoplasm1;
-                                    sizeTo = 4f;
-                                    strokeFrom = 4f;
-                                    lifetime = 10f;
+        kilo = new PvUnitType("kilo") {
+            {
+                localizedName = "Kilo";
+                constructor = EntityMapping.map("ElevationMoveUnit");
+                speed = 6.2f / 7.5f;
+                engineOffset = 8;
+                drag = 0.13f;
+                hitSize = 8 * 5f;
+                health = 18500;
+                armor = 9;
+                range = 34 * 8;
+                accel = 0.4f;
+                rotateSpeed = 3.3f;
+                faceTarget = true;
+                hovering = true;
+                weapons.add(
+                        new Weapon(PvUtil.GetName("kilo-weapon")) {{
+                            reload = 60f / 2.3f;
+                            x = 22f;
+                            shootY = 10f;
+                            layerOffset = 1;
+                            y = 12f;
+                            mirror = true;
+                            alternate = true;
+                            ejectEffect = Fx.casing1;
+                            recoil = 4f;
+                            shootWarmupSpeed = 0.1f;
+                            rotate = true;
+                            rotateSpeed = 2;
+                            rotationLimit = 90;
+                            shoot = new ShootHelix();
+                            bullet = new RaygunBulletType(875) {{
+                                width = 2f;
+                                homingPower = 0.01f;
+                                colors = new Color[]{Color.white, Color.white, Color.white};
+                                lifetime = 60 * 5;
+                                splashDamage = 22;
+                                splashDamageRadius = 10f;
+                                ammoMultiplier = 2;
+                                intervalDelay = 0;
+                                despawnEffect = hitEffect = new MultiEffect(Fx.explosion, Fx.smokeCloud);
+                                trailBullet = new BasicBulletType(0, 100) {{
+                                    speed = 0;
+                                    drag = 1;
+                                    lifetime = 60 * 5;
+                                    frontColor = backColor = Color.black;
+                                    despawnEffect = Fx.none;
+                                    hitEffect = Fx.hitLancer;
                                 }};
-                                homingPower = 0.2f;
                             }};
+                        }}, new Weapon() {{
+                            reload = 60f / 0.7f;
+                            minWarmup = 0.9f;
 
-                            bulletInterval = 5f;
-                            intervalRandomSpread = 15f;
-                            intervalBullets = 2;
-                            intervalAngle = 180f;
-                            intervalSpread = 300f;
+                            x = 0;
+                            y = 16;
+                            mirror = false;
+                            shootWarmupSpeed = 0.1f;
+                            bullet = new BasicBulletType(5, 50) {{
+                                shootEffect = new MultiEffect(Fx.shootTitan, new WaveEffect() {{
+                                    colorTo = Pal.neoplasm1;
+                                    sizeTo = 26f;
+                                    lifetime = 14f;
+                                    strokeFrom = 4f;
+                                }});
+                                smokeEffect = Fx.shootSmokeTitan;
+                                hitColor = Pal.neoplasm1;
 
-                            fragBullets = 10;
-                            fragVelocityMin = 0.6f;
-                            fragVelocityMax = 1.0f;
-                            fragLifeMin = 0.8f;
-                        }};
-                    }}
-            );
-            parts.add(
-                    new HoverPart(){{
-                        x = -14f;
-                        y = -14;
-                        mirror = true;
-                        radius = 10;
-                        phase = 60f;
-                        stroke = 5f;
-                        layerOffset = -0.1f;
-                        color = Pal.neoplasmMid;
-                        //back hovers
-                    }},
-                    new RegionPart("-front"){{
-                        y = x = 0;
-                        moveRot = 15f;
-                        under = true;
-                        //moves.add(new PartMove(PartProgress.reload, 0f, -1f, 5f));
-                        progress = PartProgress.warmup;
-                        mirror = true;
-                        weaponIndex = 2;
-                        recoilIndex = 0;
-                        children.add(
-                                new RegionPart("-rail") {{
-                                    mirror = false;
-                                    y = x = 0;
-                                    moveX = 0;
-                                    moveY = -2;
-                                    moveRot = 5;
-                                    progress = PartProgress.reload;
-                                }}
-                        );
-                    }});
-        }};
+                                sprite = "large-orb";
+                                trailEffect = Fx.missileTrail;
+                                trailInterval = 3f;
+                                trailParam = 4f;
+                                pierceCap = 3;
+                                fragOnHit = true;
+                                lifetime = PvUtil.GetRange(this.speed, 39);
+                                width = height = 16f;
+                                backColor = Pal.neoplasm1;
+                                frontColor = Color.white;
+                                shrinkX = shrinkY = 0f;
+                                trailColor = Pal.neoplasm1;
+                                trailLength = 12;
+                                trailWidth = 2.2f;
+                                despawnEffect = hitEffect = new ExplosionEffect() {{
+                                    waveColor = Pal.neoplasm1;
+                                    smokeColor = Color.gray;
+                                    sparkColor = Pal.sap;
+                                    waveStroke = 4f;
+                                    waveRad = 40f;
+                                }};
+                                despawnSound = Sounds.dullExplosion;
+
+                                //TODO shoot sound
+                                shootSound = Sounds.cannon;
+
+                                fragBullet = intervalBullet = new BasicBulletType(3f, 35) {{
+                                    width = 9f;
+                                    hitSize = 5f;
+                                    height = 15f;
+                                    pierce = true;
+                                    lifetime = 35f;
+                                    pierceBuilding = true;
+                                    hitColor = backColor = trailColor = Pal.neoplasm1;
+                                    frontColor = Color.white;
+                                    trailWidth = 2.1f;
+                                    trailLength = 5;
+                                    hitEffect = despawnEffect = new WaveEffect() {{
+                                        colorFrom = colorTo = Pal.neoplasm1;
+                                        sizeTo = 4f;
+                                        strokeFrom = 4f;
+                                        lifetime = 10f;
+                                    }};
+                                    homingPower = 0.2f;
+                                }};
+
+                                bulletInterval = 5f;
+                                intervalRandomSpread = 15f;
+                                intervalBullets = 2;
+                                intervalAngle = 180f;
+                                intervalSpread = 300f;
+
+                                fragBullets = 10;
+                                fragVelocityMin = 0.6f;
+                                fragVelocityMax = 1.0f;
+                                fragLifeMin = 0.8f;
+                            }};
+                        }}
+                );
+                parts.add(
+                        new HoverPart() {{
+                            x = -14f;
+                            y = -22f;
+                            mirror = true;
+                            radius = 20;
+                            phase = 120f;
+                            stroke = 5f;
+                            layerOffset = -0.1f;
+                            color = Pal.neoplasmMid;
+                            //back hovers
+                        }},
+                        new HoverPart() {{
+                            x = 28f;
+                            y = 28f;
+                            mirror = true;
+                            radius = 12;
+                            phase = 90f;
+                            stroke = 5f;
+                            layerOffset = -0.1f;
+                            color = Pal.neoplasmMid;
+                        }}
+                );
+            }};
     }
 
     public static void loadXeonNavalPath()

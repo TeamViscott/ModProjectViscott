@@ -929,6 +929,7 @@ public class PvBlocks {
                     addUpgrade(PvUnits.pocket,PvUnits.container);
                     addUpgrade(PvUnits.rivulet,PvUnits.bourn);
                     addUpgrade(PvUnits.chime,PvUnits.carillon);
+                    templateUseCount = 15;
                     health = 1200;
                     size = 3;
                     itemCapacity = 200;
@@ -944,6 +945,7 @@ public class PvBlocks {
                     addUpgrade(PvUnits.container,PvUnits.capsule);
                     addUpgrade(PvUnits.bourn,PvUnits.tributary);
                     addUpgrade(PvUnits.carillon,PvUnits.knell);
+                    templateUseCount = 10;
                     health = 3150;
                     size = 5;
                     itemCapacity = 1000;
@@ -959,6 +961,7 @@ public class PvBlocks {
                     addUpgrade(PvUnits.capsule,PvUnits.vault);
                     addUpgrade(PvUnits.tributary,PvUnits.loch);
                     addUpgrade(PvUnits.knell,PvUnits.peal);
+                    templateUseCount = 5;
                     health = 3150;
                     size = 7;
                     itemCapacity = 1000;
@@ -972,6 +975,7 @@ public class PvBlocks {
                     addUpgrade(PvUnits.excerpt,PvUnits.pericope, (PvTemplate) airTempT5);
                     addUpgrade(PvUnits.hecto,PvUnits.kilo);
                     addUpgrade(PvUnits.loch,PvUnits.atlantic);
+                    templateUseCount = 2;
                     health = 3150;
                     size = 9;
                     itemCapacity = 1000;
