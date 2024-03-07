@@ -32,6 +32,8 @@ import mindustry.type.weather.ParticleWeather;
 import mindustry.world.blocks.distribution.Conveyor;
 import mindustry.world.blocks.distribution.StackConveyor;
 import mindustry.world.blocks.liquid.Conduit;
+import mindustry.world.blocks.payloads.PayloadConveyor;
+import mindustry.world.blocks.payloads.PayloadRouter;
 import mindustry.world.draw.DrawRegion;
 import mindustry.world.meta.Attribute;
 import viscott.content.PvEffects;
@@ -44,6 +46,7 @@ import java.util.HashMap;
 public class NewSnowWeather extends ParticleWeather {
     static TextureRegion[] snowOverlay;
     static TextureRegion[][] snowOverlayConveyor;
+    static TextureRegion[] snowOverlayPayConv;
     static final int maxSnowSize = 5;
     public float alpha = 0;
     HashMap<Unit,Byte> walkPrintDirectory = new HashMap<>();
@@ -73,7 +76,9 @@ public class NewSnowWeather extends ParticleWeather {
         for(int i = 0;i < 4;i++)
             for(int i2 = 0;i2 < 4;i2++)
                 snowOverlayConveyor[i][i2] = Core.atlas.find(PvUtil.GetName("snow-c-"+i+"-"+i2));
-
+        snowOverlayPayConv = new TextureRegion[4];
+        for(int i = 0;i < 4;i++)
+            snowOverlayPayConv[i] = Core.atlas.find(PvUtil.GetName("snow-3-"+i));
         snowOverlay = new TextureRegion[maxSnowSize];
         for(int i = 0;i < maxSnowSize;i++)
             snowOverlay[i] = Core.atlas.find(PvUtil.GetName("snow-"+(i+1)));
@@ -94,16 +99,30 @@ public class NewSnowWeather extends ParticleWeather {
                     int ns = Mathf.floor(Math.abs(Noise.noise(building.x,building.y,0xffff,0xffff)))%4;
                     if (building instanceof Conveyor.ConveyorBuild cb ) {
                         for(int i = 0;i < 4;i++)
-                            if (cb.rotation != i && (cb.nearby(i) == null || !(cb.nearby(i).block instanceof Conveyor && (cb.nearby(i).rotation+2)%4 == i)))
+                            if (cb.rotation != i ? cb.nearby(i) == null : !(cb.nearby(i).block instanceof Conveyor && (cb.nearby(i).rotation+2)%4 == i))
                                 Draw.rect(snowOverlayConveyor[i][ns],building.x,building.y);
                     } else if (building instanceof Conduit.ConduitBuild cb) {
                         for(int i = 0;i < 4;i++)
-                            if (cb.rotation != i && (cb.nearby(i) == null || !(cb.nearby(i).block instanceof Conduit && (cb.nearby(i).rotation+2)%4 == i)))
+                            if (cb.rotation != i ? cb.nearby(i) == null : !(cb.nearby(i).block instanceof Conduit && (cb.nearby(i).rotation+2)%4 == i))
                                 Draw.rect(snowOverlayConveyor[i][ns],building.x,building.y);
                     } else if (building instanceof StackConveyor.StackConveyorBuild cb) {
-                        for(int i = 0;i < 4;i++)
-                            if ((cb.rotation == i && cb.nearby(i) == null) || (cb.rotation != i && (cb.nearby(i) == null || !(cb.nearby(i).block instanceof StackConveyor && (cb.nearby(i).rotation+2)%4 == i))))
-                                Draw.rect(snowOverlayConveyor[i][ns],building.x,building.y);
+                        for (int i = 0; i < 4; i++) {
+                            var nb = cb.nearby(i);
+                            if (nb == null || !(cb.rotation == i || nb.block instanceof StackConveyor && (nb.rotation + 2) % 4 == i))
+                                Draw.rect(snowOverlayConveyor[i][ns], building.x, building.y);
+                        }
+                    } else if (building instanceof PayloadConveyor.PayloadConveyorBuild cb) {
+                        for (int i = 0; i < 4; i++) {
+                            var pos = new Vec2[]{
+                                    new Vec2(3,0),
+                                    new Vec2(0,3),
+                                    new Vec2(-3,0),
+                                    new Vec2(0,-3)
+                            };
+                            var nb = cb.nearby((int)pos[i].x,(int)pos[i].y);
+                            if (nb == null || (nb.tileX() != pos[i].x+cb.tileX() || nb.tileY() != pos[i].y+cb.tileY()) || !(cb.block instanceof PayloadRouter ? nb.block instanceof PayloadConveyor : (cb.rotation == i || nb.block instanceof PayloadConveyor && nb.block instanceof PayloadRouter ? true : (nb.rotation + 2) % 4 == i)))
+                                Draw.rect(snowOverlayPayConv[i], building.x, building.y);
+                        }
                     } else {
                         if (maxSnowSize >= building.block.size)
                             Draw.rect(snowOverlay[building.block.size - 1], building.x, building.y);
