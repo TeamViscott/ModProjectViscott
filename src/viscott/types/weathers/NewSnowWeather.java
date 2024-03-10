@@ -78,7 +78,7 @@ public class NewSnowWeather extends ParticleWeather {
                 snowOverlayConveyor[i][i2] = Core.atlas.find(PvUtil.GetName("snow-c-"+i+"-"+i2));
         snowOverlayPayConv = new TextureRegion[4];
         for(int i = 0;i < 4;i++)
-            snowOverlayPayConv[i] = Core.atlas.find(PvUtil.GetName("snow-3-"+i));
+            snowOverlayPayConv[i] = Core.atlas.find(PvUtil.GetName("snow-3-c-"+i));
         snowOverlay = new TextureRegion[maxSnowSize];
         for(int i = 0;i < maxSnowSize;i++)
             snowOverlay[i] = Core.atlas.find(PvUtil.GetName("snow-"+(i+1)));

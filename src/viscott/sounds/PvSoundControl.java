@@ -27,6 +27,7 @@ import static mindustry.Vars.state;
 public class PvSoundControl extends SoundControl {
     public static SoundControl ogSoundControl;
     boolean loaded = false;
+    protected float fade; // .-.
     public PvSoundControl()
     {
         super();
@@ -63,10 +64,14 @@ public class PvSoundControl extends SoundControl {
         lastRandomPlayed = music;
 
         //set fade to 1 and play it, stopping the current when it's done
-        fade = 1f;
+        super.fade = 1f;
         current = music;
         current.setVolume(1f);
         current.setLooping(false);
         current.play();
+    }
+
+    public void silence() {
+        super.silence();
     }
 }
