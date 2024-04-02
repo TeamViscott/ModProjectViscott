@@ -63,9 +63,9 @@ import static mindustry.Vars.tilePayload;
 public class PvUnits {
     public static UnitType
         /*Core Units*/micro,infrared, spectrum,
-            shadow,vessel,shell,puppet,
-            amp,volt,watt,
-
+            /*nullis*/shadow,vessel,shell,puppet,
+            /*xeal*/amp,volt,watt,
+            /*psy*/warden,
             wood,
         /*Flying Ion Path*/ particle, snippet, fragment, excerpt, pericope,
 
@@ -100,19 +100,21 @@ public class PvUnits {
         //Faction Based UnitLoads
         loadXeonNavalPath();
         loadStoragePath();
-        //Extra UnitLoads
+
         loadYggdrasilPath();
+        //Extra UnitLoads
         loadCorePath();
         loadExtra();
 
         //For Every UnitType loaded in loadBosses it shall do that.
         Seq<UnitType> l = Vars.content.units().copy();
-        loadBosses();
+        loadBosses(); // code around it is like a wrapper. it does things to units loaded in this function.
         Vars.content.units().copy().removeAll(u->l.contains(u)).each(u->
-                u.immunities.addAll(
+                u.immunities.addAll( // These are boss status effects that can be very powerfull if applied to a boss.
                         PvStatusEffects.memoryExchange,
                         PvStatusEffects.prevention,
-                        PvStatusEffects.lastStand                )
+                        PvStatusEffects.lastStand
+                )
         );
     }
     public static void loadCorePath()
@@ -674,6 +676,34 @@ public class PvUnits {
                                 lightningLength = 8;
                                 collidesAir = true;
                             }};
+                        }};
+                    }}
+            );
+        }};
+        warden = new PvUnitType("warden") {{
+            localizedName = "Warden";
+            constructor = EntityMapping.map("alpha");
+            health = 160;
+            armor = 0;
+            drawCell = drawBody = false;
+            flying = true;
+            strafePenalty = 0.5f;
+            engineOffset = 8;
+            itemCapacity = 30;
+            speed = 30f / 7.5f;
+            drag = 0.1f;
+            range = 17*8;
+            weapons.add(
+                    new Weapon()
+                    {{
+                        mirror = false;
+                        top = false;
+                        x = 0;
+                        y = 0;
+                        reload = 60f/3f;
+                        alternate = false;
+                        bullet = new LaserBoltBulletType(14,22)
+                        {{
                         }};
                     }}
             );
