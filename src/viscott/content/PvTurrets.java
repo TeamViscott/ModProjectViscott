@@ -27,11 +27,8 @@ import mindustry.world.meta.BuildVisibility;
 import viscott.content.shootpatterns.CyclicShootPattern;
 import viscott.utilitys.PvUtil;
 import viscott.world.block.defense.FocusItemTurret;
-import viscott.world.bullets.LargeBranchBulletType;
+import viscott.world.bullets.*;
 import viscott.world.block.defense.PvItemTurret;
-import viscott.world.bullets.LiquidLaserBulletType;
-import viscott.world.bullets.VariantBulletType;
-import viscott.world.bullets.VoidBulletType;
 import viscott.world.pseudo3d.importedcode.BallisticMissileBulletType;
 
 import static mindustry.content.Items.*;
@@ -84,7 +81,12 @@ public class PvTurrets {
                     splashDamageRadius = 8*2f;
                     despawnEffect = hitEffect = Fx.wet;
                     ammoMultiplier = 10;
-                    }}
+                    fragBullet = new VoidAreaBulletType(){{
+                        voidRadius = 8*2;
+                        lifetime = 60*2;
+
+                    }};
+                }}
             );
             drawer = new DrawTurret(GetName("Pov")) {{
                 parts.add(

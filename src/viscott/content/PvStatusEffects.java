@@ -5,7 +5,9 @@ import arc.math.Mathf;
 import arc.struct.Seq;
 import mindustry.content.Fx;
 import mindustry.content.StatusEffects;
+import mindustry.entities.abilities.RepairFieldAbility;
 import mindustry.entities.abilities.ShieldArcAbility;
+import mindustry.entities.abilities.StatusFieldAbility;
 import mindustry.entities.bullet.BasicBulletType;
 import mindustry.entities.effect.MultiEffect;
 import mindustry.game.Team;
@@ -29,7 +31,10 @@ public class PvStatusEffects {
     /*Source*/sourceRepair,sourcePurify,sourceRepel,
 
     //visual statuses
-    preventionFx,lastStandFx,basicFx
+    preventionFx,lastStandFx,basicFx,
+
+    //examples
+            chainExcert, excert
             ;
     public static void load() {
         //visual statuses
@@ -446,5 +451,18 @@ public class PvStatusEffects {
                 angle = 120;
             }};
         }};
+
+        /*
+        excert = new AbilityStatusEffect("excert") {{
+            ability = new RepairFieldAbility(40,60,8*8);
+            localizedName = "Excert";
+            permanent = false;
+        }};
+        chainExcert = new AbilityStatusEffect("chain-excert") {{
+            ability = new StatusFieldAbility(excert,90,60,8*8);
+            localizedName = "Chain Excert";
+            permanent = false;
+        }};
+        // */
     }
 }

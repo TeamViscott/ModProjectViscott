@@ -14,7 +14,6 @@ import mindustry.graphics.Pal;
 import mindustry.logic.LStatements;
 import mindustry.type.*;
 import mindustry.world.Block;
-import mindustry.world.Build;
 import mindustry.world.blocks.defense.*;
 import mindustry.world.blocks.distribution.*;
 import mindustry.world.blocks.environment.*;
@@ -25,7 +24,6 @@ import mindustry.world.blocks.payloads.*;
 import mindustry.world.blocks.power.*;
 import mindustry.world.blocks.production.*;
 import mindustry.world.blocks.storage.*;
-import mindustry.world.blocks.units.Reconstructor;
 import mindustry.world.draw.*;
 import mindustry.world.meta.BuildVisibility;
 import viscott.types.*;
@@ -103,8 +101,10 @@ public class PvBlocks {
                     /*Core's*/coreHover,coreElevate,coreUpraise,yggdrasilsHeartwood,
 
                             bulkUnloader,
-                            /*Nullis*/nullisCore, nullisVoid, nullisAbyss,
+                            /*Nullis*/coreNull, coreVoid, coreAbyss,
                             /*Xeal*/coreSpark,coreCharge,coreSurge,
+
+                            /*Psy*/coreWarden,coreGuardian,coreSentinel,
                     /*Effects*/utilityProjector,pocketContainer,hydroProjector,liquidProjector,
                             /*Nullis*/voidNode,voidBeacon,voidExpander,
                                     voidWall,voidWallLarge,
@@ -1075,7 +1075,7 @@ public class PvBlocks {
                     unitCapModifier = 30;
                     itemCapacity = 6000;
                     blackListFactions = true;
-                    faction.addAll(PvFactions.Xeal,PvFactions.Nullis);
+                    faction.addAll(PvFactions.Xeal,PvFactions.Nullis,PvFactions.Psy);
                 }};
                 coreElevate = new PvCore("core-elevate")
                 {{
@@ -1087,7 +1087,7 @@ public class PvBlocks {
                     unitCapModifier = 50;
                     itemCapacity = 11000;
                     blackListFactions = true;
-                    faction.addAll(PvFactions.Xeal,PvFactions.Nullis);
+                    faction.addAll(PvFactions.Xeal,PvFactions.Nullis,PvFactions.Psy);
                 }};
                 coreUpraise = new PvCore("core-upraise")
                 {{
@@ -1099,7 +1099,7 @@ public class PvBlocks {
                     unitCapModifier = 84;
                     itemCapacity = 16000;
                     blackListFactions = true;
-                    faction.addAll(PvFactions.Xeal,PvFactions.Nullis);
+                    faction.addAll(PvFactions.Xeal,PvFactions.Nullis,PvFactions.Psy);
                 }};
                 coreSpark = new PvCore("core-spark")
                 {{
@@ -1165,7 +1165,20 @@ public class PvBlocks {
                     unitCapModifier = 16;
                     itemCapacity = 6000;
                 }};
-                nullisCore = new NullisCore("core-null")
+
+                coreWarden = new PvCore("core-warden") {{
+                    requirements(Category.effect, with(PvItems.zirconium,5000,PvItems.lithium,4000,Items.silicon,900));
+                    localizedName = "Core Warden";
+                    faction.add(PvFactions.Psy);
+                    alwaysUnlocked = true;
+                    unitType = PvUnits.vessel; //TODO : makae an actual coreUnit.
+                    health = 6000;
+                    size = 3;
+                    unitCapModifier = 20;
+                    itemCapacity = 15000;
+                }};
+
+                coreNull = new NullisCore("core-null")
                 {{
                     requirements(Category.effect,with(PvItems.zirconium,500,PvItems.lithium,200,PvItems.platinum,100));
                     localizedName = "Core Null";
@@ -1184,7 +1197,7 @@ public class PvBlocks {
                         new DrawDefault()
                     );
                 }};
-                nullisVoid = new NullisCore("core-void")
+                coreVoid = new NullisCore("core-void")
                 {{
                     requirements(Category.effect,with(PvItems.zirconium,1400,PvItems.lithium,800,PvItems.platinum,400,PvItems.erbium,100,Items.silicon,100,PvItems.nobelium,100));
                     localizedName = "Core Void";
@@ -1204,7 +1217,7 @@ public class PvBlocks {
                             new DrawDefault()
                     );
                 }};
-                nullisAbyss = new NullisCore("core-abyss") {{
+                coreAbyss = new NullisCore("core-abyss") {{
                     requirements(Category.effect,with(PvItems.zirconium,6000,PvItems.lithium,4000,PvItems.platinum,3200,PvItems.erbium,2400,Items.silicon,2000,PvItems.nobelium,1800,PvItems.rushAlloy,1000));
                     localizedName = "Core Abyss";
                     unitType = PvUnits.puppet;
