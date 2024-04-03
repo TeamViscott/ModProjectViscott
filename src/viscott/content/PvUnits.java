@@ -4032,6 +4032,53 @@ public class PvUnits {
                 }};
             }});
         }};
+        reverberate = new PvUnitType("reverberate") {{
+            health = 18500;
+            armor = 10;
+            speed = 5.6f/7.5f;
+            hovering = true;
+            localizedName = "[orange]Reverberate";
+            constructor = EntityMapping.map("toxopid");
+            legCount = 8;
+            hitSize = 8*2;
+            legMoveSpace = 6f;
+            legPairOffset = 4f;
+            legLength = 30f;
+            legExtension = -4f;
+            legBaseOffset = 4f;
+            stepShake = 0.5f;
+            legLengthScl = 0.94f;
+            rippleScale = 4f;
+            legSpeed = 0.1f;
+            weapons.add(
+                    new Weapon(name+"-weapon") {{
+                        x = 9f;
+                        y = 6f;
+                        mirror = true;
+                        reload = 82f;
+                        alternate = false;
+                        inaccuracy = 0f;
+                        recoil = 0;
+                        baseRotation = -45f;
+                        shootCone = 140;
+                        shootSound = Sounds.mineDeploy;
+
+                        shoot = new ShootSpread(5, 4f);
+                        bullet = new BasicBulletType(2.5f, 18f) {{
+                            splashDamage = 45;
+                            splashDamageRadius = 2.5f*8f;
+                            lifetime = PvUtil.GetRange(2.5f,19);
+                            homingPower = 0.1f;
+                            homingRange = 200;
+                            homingDelay = 10;
+                            trailColor = backColor = lightColor = Pal.neoplasm1;
+                            frontColor = Pal.neoplasm2;
+                            trailLength = 24;
+                            trailChance = 0.1f;
+                            trailWidth = 1.4f;
+                        }};
+                    }});
+        }};
     }
     public static void loadYggdrasilPath() {
         root = new PvUnitType("root") {{

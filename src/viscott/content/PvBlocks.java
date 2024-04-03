@@ -1171,7 +1171,7 @@ public class PvBlocks {
                     localizedName = "Core Warden";
                     faction.add(PvFactions.Psy);
                     alwaysUnlocked = true;
-                    unitType = PvUnits.vessel; //TODO : makae an actual coreUnit.
+                    unitType = PvUnits.warden; //TODO : makae an actual coreUnit.
                     health = 6000;
                     size = 3;
                     unitCapModifier = 20;

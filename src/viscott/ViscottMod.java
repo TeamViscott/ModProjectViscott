@@ -88,7 +88,7 @@ public class ViscottMod extends Mod {
         tu.meta.author = """
                 [yellow]CREDITS[]:
                 
-                [crimson]Spriters : [green]Ethanol10[], [yellow]ThomasThings
+                [crimson]Spriters : [green]Ethanol10[], [yellow]ThomasThings[], [green]TLB1[]
                 ----------------------------
                 [crimson]Sfx/Music : [cyan]Vdoble MSG [yellow], [green]TempoAlch3mist[]
                 ----------------------------
