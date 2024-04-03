@@ -61,6 +61,10 @@ public class teamResearch extends Block {
             super.add();
             if (!refTeam.add(team))
                 refTeam.remove(team);
+        }
+
+        @Override
+        public void update() {
             kill();
         }
     }
