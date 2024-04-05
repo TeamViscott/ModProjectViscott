@@ -49,10 +49,7 @@ import viscott.gen.FrogUnit;
 import viscott.gen.ai.FrireAI;
 import viscott.types.*;
 import viscott.types.abilities.*;
-import viscott.world.bullets.BranchBulletType;
-import viscott.world.bullets.LargeBranchBulletType;
-import viscott.world.bullets.RaygunBulletType;
-import viscott.world.bullets.VoidBulletType;
+import viscott.world.bullets.*;
 import viscott.utilitys.PvUtil;
 import viscott.world.draw.ChangeRegionPart;
 
@@ -337,7 +334,7 @@ public class PvUnits {
                         shootSound = Sounds.malignShoot;
                         recoil = 2f;
                         shootStatus = PvStatusEffects.photosynthesis;
-                        shootStatusDuration = 15;
+                        shootStatusDuration = 30;
                         bullet = new BranchBulletType(40) {{
                             branchLength = 9;
                             branchLengthRand = 3;
@@ -3243,100 +3240,215 @@ public class PvUnits {
                             rotate = true;
                             rotateSpeed = 2;
                             rotationLimit = 90;
-                            shoot = new ShootHelix();
-                            bullet = new RaygunBulletType(875) {{
-                                width = 2f;
-                                homingPower = 0.01f;
-                                colors = new Color[]{Color.white, Color.white, Color.white};
-                                lifetime = 60 * 5;
-                                splashDamage = 22;
-                                splashDamageRadius = 10f;
-                                ammoMultiplier = 2;
-                                intervalDelay = 0;
-                                despawnEffect = hitEffect = new MultiEffect(Fx.explosion, Fx.smokeCloud);
-                                trailBullet = new BasicBulletType(0, 100) {{
-                                    speed = 0;
-                                    drag = 1;
-                                    lifetime = 60 * 5;
-                                    frontColor = backColor = Color.black;
-                                    despawnEffect = Fx.none;
-                                    hitEffect = Fx.hitLancer;
-                                }};
+                            bullet = new RailBulletType() {{
+                                length = 300f;
+                                damage = 50f;
+                                hitColor = Pal.neoplasm1;
+                                hitEffect = endEffect = Fx.hitBulletColor;
+                                pierce = true;
+                                pierceBuilding = true;
+                                pierceCap = 4;
+                                laserAbsorb = false;
+                                smokeEffect = Fx.colorSpark;
+                                endEffect = new Effect(14f, e -> {
+                                    color(e.color);
+                                    Drawf.tri(e.x, e.y, e.fout() * 1.5f, 5f, e.rotation);
+                                });
+                                shootEffect = new Effect(10, e -> {
+                                    color(e.color);
+                                    float w = 1.2f + 7 * e.fout();
+                                    Drawf.tri(e.x, e.y, w, 30f * e.fout(), e.rotation);
+                                    color(e.color);
+                                    for(int i : Mathf.signs){
+                                        Drawf.tri(e.x, e.y, w * 0.9f, 18f * e.fout(), e.rotation + i * 90f);
+                                    }
+                                    Drawf.tri(e.x, e.y, w, 4f * e.fout(), e.rotation + 180f);
+                                });
+                                lineEffect = new Effect(20f, e -> {
+                                    if(!(e.data instanceof Vec2 v)) return;
+                                    color(e.color);
+                                    stroke(e.fout() * 0.9f + 0.6f);
+                                    Fx.rand.setSeed(e.id);
+                                    for(int i = 0; i < 7; i++){
+                                        Fx.v.trns(e.rotation, Fx.rand.random(8f, v.dst(e.x, e.y) - 8f));
+                                        Lines.lineAngleCenter(e.x + Fx.v.x, e.y + Fx.v.y, e.rotation + e.finpow(), e.foutpowdown() * 20f * Fx.rand.random(0.5f, 1f) + 0.3f);
+                                    }
+                                    e.scaled(14f, b -> {
+                                        stroke(b.fout() * 1.5f);
+                                        color(e.color);
+                                        Lines.line(e.x, e.y, v.x, v.y);
+                                    });
+                                });
                             }};
                         }}, new Weapon() {{
-                            reload = 60f / 0.7f;
+                            reload = 60f / 0.2f;
                             minWarmup = 0.9f;
-
                             x = 0;
                             y = 16;
                             mirror = false;
                             shootWarmupSpeed = 0.1f;
-                            bullet = new BasicBulletType(5, 50) {{
-                                shootEffect = new MultiEffect(Fx.shootTitan, new WaveEffect() {{
-                                    colorTo = Pal.neoplasm1;
-                                    sizeTo = 26f;
-                                    lifetime = 14f;
-                                    strokeFrom = 4f;
-                                }});
-                                smokeEffect = Fx.shootSmokeTitan;
-                                hitColor = Pal.neoplasm1;
-
-                                sprite = "large-orb";
-                                trailEffect = Fx.missileTrail;
-                                trailInterval = 3f;
-                                trailParam = 4f;
-                                pierceCap = 3;
-                                fragOnHit = true;
-                                lifetime = PvUtil.GetRange(this.speed, 39);
-                                width = height = 16f;
-                                backColor = Pal.neoplasm1;
-                                frontColor = Color.white;
-                                shrinkX = shrinkY = 0f;
-                                trailColor = Pal.neoplasm1;
-                                trailLength = 12;
-                                trailWidth = 2.2f;
-                                despawnEffect = hitEffect = new ExplosionEffect() {{
-                                    waveColor = Pal.neoplasm1;
-                                    smokeColor = Color.gray;
-                                    sparkColor = Pal.sap;
-                                    waveStroke = 4f;
-                                    waveRad = 40f;
+                            bullet = new BasicBulletType() {{
+                                var CoLor = Pal.neoplasm1;
+                                lifetime = PvUtil.GetRange(10f, 35);
+                                speed = 10f;
+                                knockback = pierceCap = 4;
+                                damage = 600;
+                                splashDamageRadius = 20;
+                                splashDamage = 600;
+                                impact = pierce = pierceBuilding = true;
+                                collidesAir = true;
+                                collidesGround = true;
+                                bulletInterval = 0.1f;
+                                intervalBullets = 1;
+                                lightColor = backColor = CoLor;
+                                fragBullets = 1;
+                                fragOnHit = false;
+                                fragAngle = fragSpread = fragRandomSpread = 0;
+                                intervalRandomSpread = intervalSpread = intervalAngle = 0;
+                                intervalBullet = new AreaShockBulletType(600, 20) {{
+                                    sprite = PvUtil.GetName("arrow");
+                                    backSprite = PvUtil.GetName("arrow-back");
+                                    height = width = 20;
+                                    splashDelay = 40;
+                                    splashAmount = 12;
+                                    frontColor = CoLor.cpy().a(0.4f);
+                                    particleColor = bottomColor = backColor = CoLor;
                                 }};
-                                despawnSound = Sounds.dullExplosion;
-
-                                //TODO shoot sound
-                                shootSound = Sounds.cannon;
-
-                                fragBullet = intervalBullet = new BasicBulletType(3f, 35) {{
-                                    width = 9f;
-                                    hitSize = 5f;
-                                    height = 15f;
-                                    pierce = true;
-                                    lifetime = 35f;
-                                    pierceBuilding = true;
-                                    hitColor = backColor = trailColor = Pal.neoplasm1;
-                                    frontColor = Color.white;
-                                    trailWidth = 2.1f;
-                                    trailLength = 5;
-                                    hitEffect = despawnEffect = new WaveEffect() {{
-                                        colorFrom = colorTo = Pal.neoplasm1;
-                                        sizeTo = 4f;
-                                        strokeFrom = 4f;
-                                        lifetime = 10f;
+                                fragBullet = new BasicBulletType(){{
+                                    lifetime = PvUtil.GetRange(10f, 35);
+                                    speed = 10f;
+                                    knockback = pierceCap = 4;
+                                    damage = 500;
+                                    splashDamageRadius = 40;
+                                    splashDamage = 500;
+                                    impact = pierce = pierceBuilding = true;
+                                    collidesAir = true;
+                                    collidesGround = true;
+                                    bulletInterval = 0.1f;
+                                    intervalBullets = 1;
+                                    lightColor = backColor = CoLor;
+                                    fragBullets = 1;
+                                    fragOnHit = false;
+                                    fragAngle = fragSpread = fragRandomSpread = 0;
+                                    intervalRandomSpread = intervalSpread = intervalAngle = 0;
+                                    intervalBullet = new AreaShockBulletType(500, 40) {{
+                                        sprite = PvUtil.GetName("arrow");
+                                        backSprite = PvUtil.GetName("arrow-back");
+                                        height = width = 20;
+                                        splashDelay = 40;
+                                        splashAmount = 12;
+                                        frontColor = CoLor.cpy().a(0.4f);
+                                        particleColor = bottomColor = backColor = CoLor;
                                     }};
-                                    homingPower = 0.2f;
+                                    fragBullet = new BasicBulletType(){{
+                                        lifetime = PvUtil.GetRange(10f, 35);
+                                        speed = 10f;
+                                        knockback = pierceCap = 4;
+                                        damage = 400;
+                                        splashDamageRadius = 60;
+                                        splashDamage = 400;
+                                        impact = pierce = pierceBuilding = true;
+                                        collidesAir = true;
+                                        collidesGround = true;
+                                        bulletInterval = 0.1f;
+                                        intervalBullets = 1;
+                                        lightColor = backColor = CoLor;
+                                        fragBullets = 1;
+                                        fragOnHit = false;
+                                        fragAngle = fragSpread = fragRandomSpread = 0;
+                                        intervalRandomSpread = intervalSpread = intervalAngle = 0;
+                                        intervalBullet = new AreaShockBulletType(400, 60) {{
+                                            sprite = PvUtil.GetName("arrow");
+                                            backSprite = PvUtil.GetName("arrow-back");
+                                            height = width = 20;
+                                            splashDelay = 40;
+                                            splashAmount = 12;
+                                            frontColor = CoLor.cpy().a(0.4f);
+                                            particleColor = bottomColor = backColor = CoLor;
+                                        }};
+                                        fragBullet = new BasicBulletType() {{
+                                            lifetime = PvUtil.GetRange(10f, 35);
+                                            speed = 10f;
+                                            knockback = pierceCap = 4;
+                                            damage = 300;
+                                            splashDamageRadius = 80;
+                                            splashDamage = 300;
+                                            impact = pierce = pierceBuilding = true;
+                                            collidesAir = true;
+                                            collidesGround = true;
+                                            bulletInterval = 0.1f;
+                                            intervalBullets = 1;
+                                            lightColor = backColor = CoLor;
+                                            fragBullets = 1;
+                                            fragOnHit = false;
+                                            fragAngle = fragSpread = fragRandomSpread = 0;
+                                            intervalRandomSpread = intervalSpread = intervalAngle = 0;
+                                            intervalBullet = new AreaShockBulletType(300, 80) {{
+                                                sprite = PvUtil.GetName("arrow");
+                                                backSprite = PvUtil.GetName("arrow-back");
+                                                height = width = 20;
+                                                splashDelay = 40;
+                                                splashAmount = 12;
+                                                frontColor = CoLor.cpy().a(0.4f);
+                                                particleColor = bottomColor = backColor = CoLor;
+                                            }};
+                                            fragBullet = new BasicBulletType(){{
+                                                lifetime = PvUtil.GetRange(10f, 35);
+                                                speed = 10f;
+                                                knockback = pierceCap = 4;
+                                                damage = 200;
+                                                splashDamageRadius = 100;
+                                                splashDamage = 200;
+                                                impact = pierce = pierceBuilding = true;
+                                                collidesAir = true;
+                                                collidesGround = true;
+                                                bulletInterval = 0.1f;
+                                                intervalBullets = 1;
+                                                lightColor = backColor = CoLor;
+                                                fragBullets = 1;
+                                                fragOnHit = false;
+                                                fragAngle = fragSpread = fragRandomSpread = 0;
+                                                intervalRandomSpread = intervalSpread = intervalAngle = 0;
+                                                intervalBullet = new AreaShockBulletType(200, 100) {{
+                                                    sprite = PvUtil.GetName("arrow");
+                                                    backSprite = PvUtil.GetName("arrow-back");
+                                                    height = width = 20;
+                                                    splashDelay = 40;
+                                                    splashAmount = 12;
+                                                    frontColor = CoLor.cpy().a(0.4f);
+                                                    particleColor = bottomColor = backColor = CoLor;
+                                                }};
+                                                fragBullet = new BasicBulletType(){{
+                                                    lifetime = PvUtil.GetRange(10f, 35);
+                                                    speed = 10f;
+                                                    knockback = pierceCap = 4;
+                                                    damage = 100;
+                                                    splashDamageRadius = 120;
+                                                    splashDamage = 100;
+                                                    impact = pierce = pierceBuilding = true;
+                                                    collidesAir = true;
+                                                    collidesGround = true;
+                                                    bulletInterval = 0.1f;
+                                                    intervalBullets = 1;
+                                                    lightColor = backColor = CoLor;
+                                                    fragBullets = 1;
+                                                    fragOnHit = false;
+                                                    fragAngle = fragSpread = fragRandomSpread = 0;
+                                                    intervalRandomSpread = intervalSpread = intervalAngle = 0;
+                                                    intervalBullet = new AreaShockBulletType(100, 120) {{
+                                                        sprite = PvUtil.GetName("arrow");
+                                                        backSprite = PvUtil.GetName("arrow-back");
+                                                        height = width = 20;
+                                                        splashDelay = 40;
+                                                        splashAmount = 12;
+                                                        frontColor = CoLor.cpy().a(0.4f);
+                                                        particleColor = bottomColor = backColor = CoLor;
+                                                    }};
+                                                }};
+                                            }};
+                                        }};
+                                    }};
                                 }};
-
-                                bulletInterval = 5f;
-                                intervalRandomSpread = 15f;
-                                intervalBullets = 2;
-                                intervalAngle = 180f;
-                                intervalSpread = 300f;
-
-                                fragBullets = 10;
-                                fragVelocityMin = 0.6f;
-                                fragVelocityMax = 1.0f;
-                                fragLifeMin = 0.8f;
                             }};
                         }}
                 );
@@ -4089,11 +4201,12 @@ public class PvUnits {
             speed = 0.54f;
             drag = 0.4f;
             rotateSpeed = 3f;
-            legCount = 6;
-            legLength = 20f;
+            legCount = 4;
+            legLength = 22f;
             legForwardScl = 0.8f;
             legMoveSpace = 1.4f;
-            legBaseOffset = 2f;
+            legBaseOffset = 0f;
+            legExtension = -3;
             hovering = true;
             weapons.add(new Weapon(name + "-weapon") {{
                 x = 4f;
@@ -4150,13 +4263,14 @@ public class PvUnits {
             localizedName = "[#766e4d]Stick";
             constructor = EntityMapping.map("toxopid");
             weapons.add(new Weapon(name + "-weapon") {{
-                x = 0f;
-                y = 0f;
-                top = false;
+                x = 5f;
+                y = -1;
                 mirror = true;
                 reload = 40f;
                 inaccuracy = 0f;
                 recoil = 0f;
+                rotate = true;
+                rotateSpeed = 2.8f;
                 shootStatus = PvStatusEffects.photosynthesis;
                 shootStatusDuration = 45;
                 bullet = new BranchBulletType(25) {{
@@ -4189,11 +4303,12 @@ public class PvUnits {
             hovering = true;
             localizedName = "[#766e4d]Branch";
             constructor = EntityMapping.map("toxopid");
-            weapons.add(new Weapon(name + "-weapon-strike") {{
+            weapons.add(new Weapon(PvUtil.GetName("stick-weapon")) {{
                 x = 0f;
                 y = 0f;
-                top = false;
                 mirror = true;
+                rotate = true;
+                rotateSpeed = 2.8f;
                 reload = 100f;
                 inaccuracy = 0f;
                 recoil = 0f;
@@ -4206,7 +4321,39 @@ public class PvUnits {
                     laserAbsorb = false;
                     smokeEffect = Fx.colorSpark;
                 }};
-            }});
+            }},
+                    new Weapon(PvUtil.GetName("root-weapon")) {{
+                        x = 4f;
+                        y = -1f;
+                        mirror = true;
+                        reload = 100f;
+                        inaccuracy = 10f;
+                        shootSound = Sounds.mud;
+                        shoot.shots = 2;
+                        shoot.shotDelay = 20f;
+                        rotate = true;
+                        rotateSpeed = 2.8f;
+                        shootStatus = PvStatusEffects.photosynthesis;
+                        shootStatusDuration = 105;
+                        bullet = new BasicBulletType(0.8f, 10f) {{
+                            pierce = true;
+                            pierceBuilding = true;
+                            pierceCap = 2;
+                            sprite = PvUtil.GetName("leaf-bullet");
+                            backSprite = PvUtil.GetName("leaf-bullet-back");
+                            shootEffect = smokeEffect = Fx.none;
+                            height = width = 10f;
+                            spin = 0.4f;
+                            lifetime = 180f;
+                            backColor = Color.valueOf("61726a");
+                            frontColor = Color.valueOf("ccdd98");
+                            hitEffect = despawnEffect = Fx.hitLaser;
+                            laserAbsorb = false;
+                            homingRange = 400f;
+                            homingPower = 0.02f;
+                            homingDelay = 10f;
+                        }};
+                    }});
         }};
         tree = new PvUnitType("tree") {{
             health = 6750;
@@ -4231,6 +4378,122 @@ public class PvUnits {
             legSpeed = 0.19f;
             localizedName = "[#766e4d]Tree";
             constructor = EntityMapping.map("toxopid");
+            weapons.add(new Weapon() {{
+                x = 0f;
+                y = 0f;
+                top = false;
+                mirror = false;
+                reload = 50f;
+                inaccuracy = 360f;
+                shootCone = 360;
+                shoot = new ShootSpread(){{
+                    shots = 8;
+                    spread = 45;
+                }};
+                recoil = 0f;
+                shootStatus = PvStatusEffects.photosynthesis;
+                shootStatusDuration = 55;
+                bullet = new VariantBulletType(){{
+                    variants.add(new BasicBulletType(0.8f, 5f) {{
+                        pierce = true;
+                        pierceBuilding = true;
+                        pierceCap = 2;
+                        sprite = PvUtil.GetName("leaf-bullet");
+                        backSprite = PvUtil.GetName("leaf-bullet-back");
+                        shootEffect = smokeEffect = Fx.none;
+                        height = width = 10f;
+                        spin = 0.4f;
+                        lifetime = 180f;
+                        backColor = Color.valueOf("61726a");
+                        frontColor = Color.valueOf("ccdd98");
+                        hitEffect = despawnEffect = Fx.hitLaser;
+                        laserAbsorb = false;
+                        homingRange = 400f;
+                        homingPower = 0.02f;
+                        homingDelay = 10f;
+                    }});
+                    variants.add(new BranchBulletType(30) {{
+                        pierce = true;
+                        pierceBuilding = true;
+                        pierceCap = 4;
+                        laserAbsorb = false;
+                        smokeEffect = Fx.colorSpark;
+                        bulletInterval = 5;
+                        intervalBullet = new BasicBulletType(0.8f, 5f) {{
+                            pierce = true;
+                            pierceBuilding = true;
+                            pierceCap = 2;
+                            sprite = PvUtil.GetName("leaf-bullet");
+                            backSprite = PvUtil.GetName("leaf-bullet-back");
+                            shootEffect = smokeEffect = Fx.none;
+                            height = width = 10f;
+                            spin = 0.4f;
+                            lifetime = 180f;
+                            backColor = Color.valueOf("61726a");
+                            frontColor = Color.valueOf("ccdd98");
+                            hitEffect = despawnEffect = Fx.hitLaser;
+                            laserAbsorb = false;
+                            homingRange = 400f;
+                            homingPower = 0.02f;
+                            homingDelay = 10f;
+                        }};
+                    }});
+                    variants.add(new LargeBranchBulletType(100){{
+                        pierce = true;
+                        pierceBuilding = true;
+                        pierceCap = 4;
+                        laserAbsorb = false;
+                        smokeEffect = Fx.colorSpark;
+                        bulletInterval = 5;
+                        intervalBullet = new VariantBulletType(){{
+                            variants.add(new BasicBulletType(0.8f, 5f) {{
+                                pierce = true;
+                                pierceBuilding = true;
+                                pierceCap = 2;
+                                sprite = PvUtil.GetName("leaf-bullet");
+                                backSprite = PvUtil.GetName("leaf-bullet-back");
+                                shootEffect = smokeEffect = Fx.none;
+                                height = width = 10f;
+                                spin = 0.4f;
+                                lifetime = 180f;
+                                backColor = Color.valueOf("61726a");
+                                frontColor = Color.valueOf("ccdd98");
+                                hitEffect = despawnEffect = Fx.hitLaser;
+                                laserAbsorb = false;
+                                homingRange = 400f;
+                                homingPower = 0.02f;
+                                homingDelay = 10f;
+                            }});
+                            variants.add(new BranchBulletType(30) {{
+                                pierce = true;
+                                pierceBuilding = true;
+                                pierceCap = 4;
+                                laserAbsorb = false;
+                                smokeEffect = Fx.colorSpark;
+                                bulletInterval = 5;
+                                intervalBullet = new BasicBulletType(0.8f, 5f) {{
+                                    pierce = true;
+                                    pierceBuilding = true;
+                                    pierceCap = 2;
+                                    sprite = PvUtil.GetName("leaf-bullet");
+                                    backSprite = PvUtil.GetName("leaf-bullet-back");
+                                    shootEffect = smokeEffect = Fx.none;
+                                    height = width = 10f;
+                                    spin = 0.4f;
+                                    lifetime = 180f;
+                                    backColor = Color.valueOf("61726a");
+                                    frontColor = Color.valueOf("ccdd98");
+                                    hitEffect = despawnEffect = Fx.hitLaser;
+                                    laserAbsorb = false;
+                                    homingRange = 400f;
+                                    homingPower = 0.02f;
+                                    homingDelay = 10f;
+                                }};
+                            }});
+                        }};
+                    }});
+                }};
+            }});
         }};
         cambrium = new PvUnitType("cambrium") {{
             health = 20250;
