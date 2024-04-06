@@ -323,29 +323,6 @@ public class PvUnits {
             speed = 20.7f / 7.5f;
             drag = 0.15f;
             range = 17*8;
-            weapons.add(
-                    new Weapon(name + "-weapon") {{
-                        x = 5f;
-                        y = 0f;
-                        top = false;
-                        mirror = true;
-                        reload = 10f;
-                        inaccuracy = 0f;
-                        shootSound = Sounds.malignShoot;
-                        recoil = 2f;
-                        shootStatus = PvStatusEffects.photosynthesis;
-                        shootStatusDuration = 30;
-                        bullet = new BranchBulletType(40) {{
-                            branchLength = 9;
-                            branchLengthRand = 3;
-                            buildingDamageMultiplier = 0.1f;
-                            pierce = true;
-                            pierceBuilding = true;
-                            pierceCap = 4;
-                            laserAbsorb = false;
-                            smokeEffect = Fx.colorSpark;
-                        }};
-                    }});
         }};
 
 
@@ -4198,6 +4175,7 @@ public class PvUnits {
             armor = 20;
             localizedName = "[#766e4d]Root";
             constructor = EntityMapping.map("toxopid");
+            hitSize = 12;
             speed = 0.54f;
             drag = 0.4f;
             rotateSpeed = 3f;
@@ -4215,13 +4193,13 @@ public class PvUnits {
                 reload = 100f;
                 inaccuracy = 10f;
                 shootSound = Sounds.mud;
-                shoot.shots = 2;
+                shoot.shots = 4;
                 shoot.shotDelay = 20f;
                 rotate = true;
                 rotateSpeed = 2.8f;
                 shootStatus = PvStatusEffects.photosynthesis;
                 shootStatusDuration = 105;
-                bullet = new BasicBulletType(0.8f, 10f) {{
+                bullet = new BasicBulletType(0.8f, 15f) {{
                     pierce = true;
                     pierceBuilding = true;
                     pierceCap = 2;
@@ -4230,7 +4208,7 @@ public class PvUnits {
                     shootEffect = smokeEffect = Fx.none;
                     height = width = 10f;
                     spin = 0.4f;
-                    lifetime = 180f;
+                    lifetime = 280f;
                     backColor = Color.valueOf("61726a");
                     frontColor = Color.valueOf("ccdd98");
                     hitEffect = despawnEffect = Fx.hitLaser;
@@ -4241,11 +4219,12 @@ public class PvUnits {
                 }};
             }});
         }};
-        stick = new PvUnitType("stick") {{
+        stick = new TreebUnitType("stick") {{
             health = 750;
             armor = 40;
             drag = 0.1f;
             speed = 0.62f;
+            hitSize = 24;
 
             rotateSpeed = 2.7f;
 
@@ -4260,29 +4239,23 @@ public class PvUnits {
             rippleScale = 2f;
             legSpeed = 0.2f;
             hovering = true;
+            bLength = 1;
+            bDamage = 3;
+            range = 21 * 8;
             localizedName = "[#766e4d]Stick";
-            constructor = EntityMapping.map("toxopid");
-            weapons.add(new Weapon(name + "-weapon") {{
-                x = 5f;
-                y = -1;
-                mirror = true;
-                reload = 40f;
-                inaccuracy = 0f;
-                recoil = 0f;
-                rotate = true;
-                rotateSpeed = 2.8f;
+            weapons.add(new Weapon() {{
+                display = false;
+                shootSound = Sounds.none;
                 shootStatus = PvStatusEffects.photosynthesis;
-                shootStatusDuration = 45;
-                bullet = new BranchBulletType(25) {{
-                    pierce = true;
-                    pierceBuilding = true;
-                    pierceCap = 4;
-                    laserAbsorb = false;
-                    smokeEffect = Fx.colorSpark;
+                shootStatusDuration = 65;
+                reload = 60;
+                bullet = new BulletType() {{
+                    instantDisappear = true;
+                    smokeEffect = shootEffect = hitEffect = despawnEffect = Fx.none;
                 }};
             }});
         }};
-        branch = new PvUnitType("branch") {{
+        branch = new TreebUnitType("branch") {{
             health = 2250;
             armor = 80;
             drag = 0.1f;
@@ -4301,41 +4274,24 @@ public class PvUnits {
             rippleScale = 2f;
             legSpeed = 0.2f;
             hovering = true;
+            bDamage = 5;
+            bLength = 2;
+            range = 30 * 8;
             localizedName = "[#766e4d]Branch";
-            constructor = EntityMapping.map("toxopid");
-            weapons.add(new Weapon(PvUtil.GetName("stick-weapon")) {{
-                x = 0f;
-                y = 0f;
-                mirror = true;
-                rotate = true;
-                rotateSpeed = 2.8f;
-                reload = 100f;
-                inaccuracy = 0f;
-                recoil = 0f;
-                shootStatus = PvStatusEffects.photosynthesis;
-                shootStatusDuration = 105;
-                bullet = new LargeBranchBulletType(250){{
-                    pierce = true;
-                    pierceBuilding = true;
-                    pierceCap = 4;
-                    laserAbsorb = false;
-                    smokeEffect = Fx.colorSpark;
-                }};
-            }},
-                    new Weapon(PvUtil.GetName("root-weapon")) {{
+            weapons.add(new Weapon(PvUtil.GetName("root-weapon")) {{
                         x = 4f;
                         y = -1f;
                         mirror = true;
                         reload = 100f;
                         inaccuracy = 10f;
                         shootSound = Sounds.mud;
-                        shoot.shots = 2;
+                        shoot.shots = 4;
                         shoot.shotDelay = 20f;
                         rotate = true;
                         rotateSpeed = 2.8f;
                         shootStatus = PvStatusEffects.photosynthesis;
                         shootStatusDuration = 105;
-                        bullet = new BasicBulletType(0.8f, 10f) {{
+                        bullet = new BasicBulletType(0.8f, 15f) {{
                             pierce = true;
                             pierceBuilding = true;
                             pierceCap = 2;
@@ -4344,7 +4300,7 @@ public class PvUnits {
                             shootEffect = smokeEffect = Fx.none;
                             height = width = 10f;
                             spin = 0.4f;
-                            lifetime = 180f;
+                            lifetime = 280f;
                             backColor = Color.valueOf("61726a");
                             frontColor = Color.valueOf("ccdd98");
                             hitEffect = despawnEffect = Fx.hitLaser;
@@ -4355,7 +4311,7 @@ public class PvUnits {
                         }};
                     }});
         }};
-        tree = new PvUnitType("tree") {{
+        tree = new TreebUnitType("tree") {{
             health = 6750;
             armor = 100;
             drag = 0.1f;
@@ -4376,8 +4332,10 @@ public class PvUnits {
             legLengthScl = 0.93f;
             rippleScale = 3f;
             legSpeed = 0.19f;
+            bDamage = 8;
+            bLength = 3f;
+            range = 45 * 8;
             localizedName = "[#766e4d]Tree";
-            constructor = EntityMapping.map("toxopid");
             weapons.add(new Weapon() {{
                 x = 0f;
                 y = 0f;
@@ -4394,7 +4352,7 @@ public class PvUnits {
                 shootStatus = PvStatusEffects.photosynthesis;
                 shootStatusDuration = 55;
                 bullet = new VariantBulletType(){{
-                    variants.add(new BasicBulletType(0.8f, 5f) {{
+                    variants.add(new BasicBulletType(0.8f, 15f) {{
                         pierce = true;
                         pierceBuilding = true;
                         pierceCap = 2;
@@ -4403,7 +4361,7 @@ public class PvUnits {
                         shootEffect = smokeEffect = Fx.none;
                         height = width = 10f;
                         spin = 0.4f;
-                        lifetime = 180f;
+                        lifetime = 280f;
                         backColor = Color.valueOf("61726a");
                         frontColor = Color.valueOf("ccdd98");
                         hitEffect = despawnEffect = Fx.hitLaser;
@@ -4412,14 +4370,11 @@ public class PvUnits {
                         homingPower = 0.02f;
                         homingDelay = 10f;
                     }});
-                    variants.add(new BranchBulletType(30) {{
-                        pierce = true;
-                        pierceBuilding = true;
-                        pierceCap = 4;
-                        laserAbsorb = false;
-                        smokeEffect = Fx.colorSpark;
+                    variants.add(new BulletType() {{
+                        instantDisappear = true;
+                        smokeEffect = shootEffect = hitEffect = despawnEffect = Fx.none;
                         bulletInterval = 5;
-                        intervalBullet = new BasicBulletType(0.8f, 5f) {{
+                        intervalBullet = new BasicBulletType(0.8f, 15f) {{
                             pierce = true;
                             pierceBuilding = true;
                             pierceCap = 2;
@@ -4428,7 +4383,7 @@ public class PvUnits {
                             shootEffect = smokeEffect = Fx.none;
                             height = width = 10f;
                             spin = 0.4f;
-                            lifetime = 180f;
+                            lifetime = 280f;
                             backColor = Color.valueOf("61726a");
                             frontColor = Color.valueOf("ccdd98");
                             hitEffect = despawnEffect = Fx.hitLaser;
@@ -4438,15 +4393,12 @@ public class PvUnits {
                             homingDelay = 10f;
                         }};
                     }});
-                    variants.add(new LargeBranchBulletType(100){{
-                        pierce = true;
-                        pierceBuilding = true;
-                        pierceCap = 4;
-                        laserAbsorb = false;
-                        smokeEffect = Fx.colorSpark;
+                    variants.add(new BulletType() {{
+                        instantDisappear = true;
+                        smokeEffect = shootEffect = hitEffect = despawnEffect = Fx.none;
                         bulletInterval = 5;
                         intervalBullet = new VariantBulletType(){{
-                            variants.add(new BasicBulletType(0.8f, 5f) {{
+                            variants.add(new BasicBulletType(0.8f, 15f) {{
                                 pierce = true;
                                 pierceBuilding = true;
                                 pierceCap = 2;
@@ -4455,7 +4407,7 @@ public class PvUnits {
                                 shootEffect = smokeEffect = Fx.none;
                                 height = width = 10f;
                                 spin = 0.4f;
-                                lifetime = 180f;
+                                lifetime = 280f;
                                 backColor = Color.valueOf("61726a");
                                 frontColor = Color.valueOf("ccdd98");
                                 hitEffect = despawnEffect = Fx.hitLaser;
@@ -4464,14 +4416,11 @@ public class PvUnits {
                                 homingPower = 0.02f;
                                 homingDelay = 10f;
                             }});
-                            variants.add(new BranchBulletType(30) {{
-                                pierce = true;
-                                pierceBuilding = true;
-                                pierceCap = 4;
-                                laserAbsorb = false;
-                                smokeEffect = Fx.colorSpark;
+                            variants.add(new BulletType() {{
+                                instantDisappear = true;
+                                smokeEffect = shootEffect = hitEffect = despawnEffect = Fx.none;
                                 bulletInterval = 5;
-                                intervalBullet = new BasicBulletType(0.8f, 5f) {{
+                                intervalBullet = new BasicBulletType(0.8f, 15f) {{
                                     pierce = true;
                                     pierceBuilding = true;
                                     pierceCap = 2;
@@ -4480,7 +4429,7 @@ public class PvUnits {
                                     shootEffect = smokeEffect = Fx.none;
                                     height = width = 10f;
                                     spin = 0.4f;
-                                    lifetime = 180f;
+                                    lifetime = 280f;
                                     backColor = Color.valueOf("61726a");
                                     frontColor = Color.valueOf("ccdd98");
                                     hitEffect = despawnEffect = Fx.hitLaser;
@@ -4495,7 +4444,7 @@ public class PvUnits {
                 }};
             }});
         }};
-        cambrium = new PvUnitType("cambrium") {{
+        cambrium = new TreebUnitType("cambrium") {{
             health = 20250;
             armor = 120;
             hovering = true;
@@ -4516,10 +4465,12 @@ public class PvUnits {
             legLengthScl = 0.93f;
             rippleScale = 3f;
             legSpeed = 0.19f;
+            bDamage = 10;
+            bLength = 4;
+            range = 60 * 8;
             localizedName = "[#766e4d]Cambrium";
-            constructor = EntityMapping.map("toxopid");
         }};
-        yggdrasil = new PvUnitType("yggdrasil") {{
+        yggdrasil = new TreebUnitType("yggdrasil") {{
             health = 546750;
             armor = 140;
             hovering = true;
@@ -4535,8 +4486,10 @@ public class PvUnits {
             rotateSpeed = 0.25f;
             speed = 0.4f;
             legSpeed = 0.9f;
+            bDamage = 15;
+            bLength = 6;
+            range = 90 * 8;
             localizedName = "[#766e4d]Yggdrasil";
-            constructor = EntityMapping.map("toxopid");
             weapons.add(new Weapon( "project-viscott-hel") {{
                 x = 0f;
                 y = -6f;

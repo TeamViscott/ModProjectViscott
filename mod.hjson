@@ -14,7 +14,7 @@ main: "viscott.ViscottMod"
 description: "[00ffbf]Project viscott[] is a mindustry mod that adds a \nnew Planet to the campaign, [f8ff78]Vercilus[], and gives the player a new and unique gameplay experience \n\nThis mod is [yellow]still in development[]. \n Expect it to have some[scarlet] slight balancing issues[]"
 
 #the mod version
-version: 0.1.8.6
+version: 0.1.9.6
 
 #the minimum game build required to run this mod
 minGameVersion: 142
