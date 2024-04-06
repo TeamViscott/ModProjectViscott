@@ -9,9 +9,11 @@ import mindustry.content.Fx;
 import mindustry.game.Team;
 import mindustry.gen.Building;
 import mindustry.gen.Groups;
+import mindustry.gen.Posc;
 import mindustry.gen.Unit;
 import mindustry.graphics.Layer;
 import viscott.content.PvStatusEffects;
+import viscott.types.PvLayers;
 import viscott.world.bullets.VoidBulletType;
 
 import static mindustry.Vars.mods;
@@ -61,34 +63,19 @@ public interface SourceArea {
                 }
         );
     }
-    default void drawVoid(Building building,float radius)
+    default void drawVoid(Posc pos, float radius)
     {
-        Draw.z(Layer.bullet+38);
-        Draw.color(Color.black);
-        if(renderer.animateShields)
-            Fill.poly(building.x,building.y,60,radius);
-        else
-        {
-            Lines.stroke(2);
-            Lines.poly(building.x,building.y,60,radius);
-            Draw.color(Color.white.cpy().a(0.2f));
-            Draw.z(Layer.bullet+37);
-            Fill.poly(building.x,building.y,60,radius);
-        }
-    }
-    default void drawVoid(Unit unit,float radius)
-    {
-        Draw.z(Layer.bullet+38);
+        Draw.z(PvLayers.antivoidLayer);
         Draw.color(Color.white);
         if(renderer.animateShields)
-            Fill.poly(unit.x,unit.y,60,radius);
+            Fill.poly(pos.x(),pos.y(),60,radius);
         else
         {
             Lines.stroke(2);
-            Lines.poly(unit.x,unit.y,60,radius);
+            Lines.poly(pos.x(),pos.y(),60,radius);
             Draw.color(Team.sharded.color.cpy().a(0.2f));
-            Draw.z(Layer.bullet+37);
-            Fill.poly(unit.x,unit.y,60,radius);
+            Draw.z(PvLayers.antivoidLayer);
+            Fill.poly(pos.x(),pos.y(),60,radius);
         }
     }
 }

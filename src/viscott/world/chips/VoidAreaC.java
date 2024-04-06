@@ -9,6 +9,7 @@ import mindustry.gen.*;
 import mindustry.graphics.Layer;
 import mindustry.type.StatusEffect;
 import viscott.content.PvStatusEffects;
+import viscott.types.PvLayers;
 import viscott.world.block.defense.VoidWall;
 import viscott.world.bullets.VoidBulletType;
 
@@ -47,7 +48,7 @@ public interface VoidAreaC {
     }
     default void drawVoid(Posc pos,float radius)
     {
-        Draw.z(Layer.bullet+35);
+        Draw.z(PvLayers.voidLayer);
         Draw.color(Color.white);
         if(renderer.animateShields)
             Fill.poly(pos.x(),pos.y(),60,radius);
@@ -56,7 +57,7 @@ public interface VoidAreaC {
             Lines.stroke(2);
             Lines.poly(pos.x(),pos.y(),60,radius);
             Draw.color(Color.black.cpy().a(0.2f));
-            Draw.z(Layer.bullet+34);
+            Draw.z(PvLayers.voidLayer-0.1f);
             Fill.poly(pos.x(),pos.y(),60,radius);
         }
     }
