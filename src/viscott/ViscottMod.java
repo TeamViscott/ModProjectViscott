@@ -15,6 +15,7 @@ import viscott.content.*;
 import viscott.maps.filters.PvFilterOption;
 import viscott.sounds.PvSoundControl;
 import viscott.types.PvFaction;
+import viscott.types.PvLayers;
 import viscott.utilitys.PvPacketHandler;
 import viscott.utilitys.PvWorldState;
 
@@ -25,7 +26,7 @@ public class ViscottMod extends Mod {
     public ViscottMod(){
         Events.run(EventType.Trigger.drawOver, () -> {
             if (Vars.renderer.animateShields && PvShaders.nullisAura != null)
-                Draw.drawRange(Layer.bullet+35, 2f, () -> {
+                Draw.drawRange(PvLayers.voidLayer, 0.1f, () -> {
                     if (!Vars.renderer.effectBuffer.isBound())
                         Vars.renderer.effectBuffer.begin(Color.clear);
                 }, () ->
@@ -36,7 +37,7 @@ public class ViscottMod extends Mod {
                         Vars.renderer.effectBuffer.endBind();
                 });
             if (Vars.renderer.animateShields && PvShaders.antiVoid != null)
-                Draw.drawRange(Layer.bullet+38, 1f, () -> {
+                Draw.drawRange(PvLayers.antivoidLayer, 0.1f, () -> {
                     if (!Vars.renderer.effectBuffer.isBound())
                         Vars.renderer.effectBuffer.begin(Color.clear);
                 }, () ->
