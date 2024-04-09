@@ -36,6 +36,7 @@ public class ViscottMod extends Mod {
                     if (Vars.renderer.effectBuffer.isBound())
                         Vars.renderer.effectBuffer.endBind();
                 });
+
             if (Vars.renderer.animateShields && PvShaders.antiVoid != null)
                 Draw.drawRange(PvLayers.antivoidLayer, 0.1f, () -> {
                     if (!Vars.renderer.effectBuffer.isBound())
