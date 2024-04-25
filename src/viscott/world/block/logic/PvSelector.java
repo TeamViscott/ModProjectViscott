@@ -44,6 +44,15 @@ public class PvSelector extends Block {
             if (n.intValue() < entity.icons.size && n.intValue() > -2)
                 entity.selectedIcon = n.intValue();
         });
+        config(String.class,(PvSelectorBuild entity, String s) -> {
+            var v = s.split(";");
+            if (v.length > entity.icons.size) {
+                
+            }
+            for (String ic : v) {
+
+            }
+        });
         configClear((PvSelectorBuild entity) -> {
             entity.selectedIcon = -1;
         });

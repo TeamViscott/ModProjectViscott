@@ -18,6 +18,8 @@ import viscott.content.PvUnitMapper;
 import viscott.content.PvUnits;
 import viscott.world.statusEffects.CurseStatusEffect;
 
+import java.io.DataInput;
+
 public class FrogUnit extends UnitEntity {
     public CurseStatusEffect necroEffect = (CurseStatusEffect) PvStatusEffects.memoryExchange;
     public Effect summonEffect = PvEffects.siedeSummon;

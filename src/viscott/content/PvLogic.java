@@ -23,6 +23,7 @@ public class PvLogic {
         PvParser.addLoad("shield",new ShieldStatement());
         PvParser.addLoad("dj",new DynamicJumpStatement());
         PvParser.addLoad("iptmv",new TransmitIptStatement());
+        PvParser.addLoad("ctb",new CreateTextBox());
     }
     public static String tokens(String... token)
     {
@@ -415,6 +416,65 @@ public class PvLogic {
                     exec.setnum(exec.iptIndex,exec.build.ipt);
                     logicBuild.executor.setnum(logicBuild.executor.iptIndex,logicBuild.ipt);
                 }
+            }
+        }
+    }
+
+    public static class CreateTextBox extends LStatement {
+        public String textstr = "";
+
+        public CreateTextBox() {
+            super();
+        }
+        public CreateTextBox(String text) {
+            super();
+            this.textstr = text;
+        }
+
+        @Override
+        public LCategory category() {
+            return LCategory.world;
+        }
+        @Override
+        public void build(Table table){
+            table.area(textstr, Styles.nodeArea, v -> textstr = v).growX().height(90f).padLeft(2).padRight(6).color(table.color);
+        }
+
+        @Override
+        public LStatement copy()
+        {
+            return new CommentStatement(textstr);
+        }
+
+        @Override
+        public void write(StringBuilder builder){
+            builder.append("ctb "+ textstr.replace(' ','_').replace('\n','@'));
+        }
+        @Override
+        public void afterRead()
+        {
+            textstr = PvParser.allToken[1].replace('_',' ').replace('@','\n');
+        }
+
+        @Override
+        public LExecutor.LInstruction build(LAssembler builder) {
+            return null;
+        }
+
+        public static class TextBoxI implements LExecutor.LInstruction {
+            public int textID;
+
+            public TextBoxI(int textID){
+                this.textID = textID;
+            }
+
+            public TextBoxI(){
+            }
+
+            @Override
+            public void run(LExecutor exec) {
+                var text = exec.var(textID).toString();
+                
             }
         }
     }
