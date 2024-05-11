@@ -21,22 +21,30 @@ public interface VoidAreaC {
     }
     default void updateVoid(Teamc t, float radius, StatusEffect ef, StatusEffect af)
     {
-        Groups.bullet.each(b -> {
-            if (b.type instanceof VoidBulletType && Mathf.len(t.x()-b.x,t.y()-b.y) <= radius)
-                b.keepAlive = true;
-        });
+        updateVoid(t,radius,ef,af,30f);
+    }
+    default void updateVoid(Teamc t, float radius, StatusEffect ef, StatusEffect af,float effectTimer)
+    {
+        updateVoid(t,radius,ef,af,30f,true);
+    }
+    default void updateVoid(Teamc t, float radius, StatusEffect ef, StatusEffect af,float effectTimer,boolean voidEffect)
+    {
+        if (voidEffect)
+            Groups.bullet.each(b -> {
+                if (b.type instanceof VoidBulletType && Mathf.len(t.x()-b.x,t.y()-b.y) <= radius)
+                    b.keepAlive = true;
+            });
         Groups.unit.each(unit ->
                 {
                     if (unit.team == t.team()) {
                         if (af == null) return;
                         if (Mathf.len(t.x()-unit.x,t.y()-unit.y) <= radius) {
-                            unit.apply(af,30);
+                            unit.apply(af,effectTimer);
                         }
                     } else {
                         if (ef == null) return;
                         if (Mathf.len(t.x()-unit.x,t.y()-unit.y) <= radius) {
-                            unit.apply(ef,30);
-
+                            unit.apply(ef,effectTimer);
                         }
                     }
                 }
@@ -46,9 +54,13 @@ public interface VoidAreaC {
                 v.inVoid = true;
         });
     }
-    default void drawVoid(Posc pos,float radius)
+
+    default void drawVoid(Posc pos,float radius) {
+        drawArea(pos,radius,PvLayers.voidLayer);
+    }
+    default void drawArea(Posc pos,float radius,float layer)
     {
-        Draw.z(PvLayers.voidLayer);
+        Draw.z(layer);
         Draw.color(Color.white);
         if(renderer.animateShields)
             Fill.poly(pos.x(),pos.y(),60,radius);
@@ -57,7 +69,7 @@ public interface VoidAreaC {
             Lines.stroke(2);
             Lines.poly(pos.x(),pos.y(),60,radius);
             Draw.color(Color.black.cpy().a(0.2f));
-            Draw.z(PvLayers.voidLayer-0.1f);
+            Draw.z(layer-0.1f);
             Fill.poly(pos.x(),pos.y(),60,radius);
         }
     }

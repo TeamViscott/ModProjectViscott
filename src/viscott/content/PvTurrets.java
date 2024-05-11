@@ -25,8 +25,10 @@ import mindustry.world.blocks.defense.turrets.*;
 import mindustry.world.draw.DrawTurret;
 import mindustry.world.meta.BuildVisibility;
 import viscott.content.shootpatterns.CyclicShootPattern;
+import viscott.types.PvLayers;
 import viscott.utilitys.PvUtil;
 import viscott.world.block.defense.FocusItemTurret;
+import viscott.world.block.defense.PvLiquidTurret;
 import viscott.world.bullets.*;
 import viscott.world.block.defense.PvItemTurret;
 import viscott.world.pseudo3d.importedcode.BallisticMissileBulletType;
@@ -44,7 +46,7 @@ public class PvTurrets {
 
             fracture,javelin,
                     /*Nullis*/ quantum,
-                    /*Xeal*/ focus,
+                    /*Xeal*/ focus,chronos,
                     /*mortikai?*/ partition
             ;
 
@@ -1908,6 +1910,81 @@ public class PvTurrets {
                             layer = Layer.effect;
                             y = -25;
                         }}
+                );
+            }};
+        }};
+        chronos = new PvLiquidTurret("chronos"){{
+            localizedName = "Chronos";
+            size = 5;
+            reload = 60f/0.15f;
+            health = 8550;
+            liquidCapacity = 60;
+            range = 38*8;
+            coolant = consumeCoolant(0.1f);
+            requirements(Category.turret,with(PvItems.zirconium,100,silicon,50)); //Todo 2
+            ammo(
+                    PvLiquids.xenon,new BasicBulletType(8,0)
+                    {{
+                        trailColor = frontColor = backColor = Pal.sap;
+                        trailLength = 10;
+                        trailWidth = 2;
+                        lifetime = PvUtil.GetRange(this.speed,38);
+                        despawnEffect = hitEffect = PvEffects.slowEnergeticEffect;
+                        fragBullets = 1;
+                        fragBullet = new VoidAreaBulletType(){{
+                            voidRadius = 8*16.5f;
+                            lifetime = 60*3.2f;
+                            voidEffectEnemy = PvStatusEffects.timeWarped;
+                            statusDuration = 60*6.2f;
+                            voidDrawLayer = PvLayers.timeWarp;
+                            voidEffect = false;
+                        }};
+                    }}
+            );
+            drawer = new DrawTurret(GetName("Pov")){{
+                parts.addAll(
+                        parts.add(
+                                new RegionPart("-arm-l"){{
+                                    progress = PartProgress.recoil;
+                                    heatProgress = PartProgress.recoil;
+                                    heatColor = Color.valueOf("ff6214");
+                                    mirror = false;
+                                    under = false;
+                                    moveX = -1f;
+                                    moveRot = 7f;
+                                    moves.add(new PartMove(PartProgress.recoil, 1f, 0f, 10f));
+                                }},
+                                new RegionPart("-arm-r"){{
+                                    progress = PartProgress.recoil;
+                                    heatProgress = PartProgress.recoil;
+                                    heatColor = Color.valueOf("ff6214");
+                                    mirror = false;
+                                    under = false;
+                                    moveX = 1f;
+                                    moveRot = -7f;
+                                    moves.add(new PartMove(PartProgress.recoil, -1f, 0f, -10f));
+                                }},
+                                new RegionPart("-back-l"){{
+                                    progress = PartProgress.recoil;
+                                    heatProgress = PartProgress.recoil;
+                                    heatColor = Color.valueOf("ff6214");
+                                    mirror = false;
+                                    under = false;
+                                    moveX = -1f;
+                                    moveRot = -7f;
+                                    moves.add(new PartMove(PartProgress.recoil, 1f, 0f, 10f));
+                                }},
+                                new RegionPart("-back-r"){{
+                                    progress = PartProgress.recoil;
+                                    heatProgress = PartProgress.recoil;
+                                    heatColor = Color.valueOf("ff6214");
+                                    mirror = false;
+                                    under = false;
+                                    moveX = 1f;
+                                    moveRot = 7f;
+                                    moves.add(new PartMove(PartProgress.recoil, -1f, 0f, -10f));
+                                }}
+                        )
                 );
             }};
         }};

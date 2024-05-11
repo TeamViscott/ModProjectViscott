@@ -190,7 +190,7 @@ public class StatusEffectStack extends PvStatusEffect {
     public void update(Unit unit, float time){
         if (!unitCharges.containsKey(unit))
             start(unit,time);
-        if (unitTime.get(unit) < time)
+        else if (unitTime.get(unit) <= time)
             start(unit,time);
         unitTime.replace(unit,time);
         unit.damageMultiplier *= 1+(statsStatic.get(0)-1)*unitCharges.get(unit);

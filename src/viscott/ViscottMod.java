@@ -48,6 +48,18 @@ public class ViscottMod extends Mod {
                     if (Vars.renderer.effectBuffer.isBound())
                         Vars.renderer.effectBuffer.endBind();
                 });
+
+            if (Vars.renderer.animateShields && PvShaders.timeWarpAura != null)
+                Draw.drawRange(PvLayers.timeWarp, 0.1f, () -> {
+                    if (!Vars.renderer.effectBuffer.isBound())
+                        Vars.renderer.effectBuffer.begin(Color.clear);
+                }, () ->
+                {
+                    Vars.renderer.effectBuffer.end();
+                    Vars.renderer.effectBuffer.blit(PvShaders.timeWarpAura);
+                    if (Vars.renderer.effectBuffer.isBound())
+                        Vars.renderer.effectBuffer.endBind();
+                });
         });
     }
 

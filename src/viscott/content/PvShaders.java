@@ -7,11 +7,12 @@ import arc.util.Time;
 import mindustry.Vars;
 
 public class PvShaders {
-    public static ModShieldShader nullisAura, antiVoid;
+    public static ModShieldShader nullisAura, antiVoid, timeWarpAura;
     public static void init() {
         if (!Vars.headless) {
             nullisAura = new ModShieldShader("nullisAura", "screenspace");
             antiVoid = new ModShieldShader("antiVoid", "screenspace");
+            timeWarpAura = new ModShieldShader("timeWarpAura","screenspace");
         }
     }
 
