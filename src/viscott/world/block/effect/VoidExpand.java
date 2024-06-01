@@ -20,7 +20,7 @@ public class VoidExpand extends VoidBlock{
         canOverdrive = false;
     }
 
-    public class VoidExpandBuildC extends VoidBuildingC
+    public class EffectExpandBuildC extends EffectBuildingC
     {
         public float consumeTime = 0;
         float buildVoidRad = voidRadius;

@@ -24,7 +24,6 @@ import mindustry.entities.effect.WaveEffect;
 import mindustry.entities.effect.WrapEffect;
 import mindustry.entities.part.*;
 import mindustry.entities.pattern.ShootHelix;
-import mindustry.entities.pattern.ShootSine;
 import mindustry.entities.pattern.ShootSpread;
 import mindustry.game.Team;
 import mindustry.gen.*;
@@ -38,7 +37,6 @@ import mindustry.type.ammo.ItemAmmoType;
 import arc.math.geom.*;
 import arc.math.*;
 
-import mindustry.type.unit.ErekirUnitType;
 import mindustry.type.unit.MissileUnitType;
 import viscott.content.shootpatterns.CyclicShootPattern;
 import viscott.gen.CoinUnit;
@@ -1591,7 +1589,7 @@ public class PvUnits {
             lowAltitude = true;
             range = 12*8;
             engineSize = 0;
-            abilities.add(new VoidAbilityC(18*8));
+            abilities.add(new EffectAbilityC(18*8));
             engines = Seq.with(
                     new UnitEngine(34,12,10,45),
                     new UnitEngine(-34,12,10,90+45)
@@ -1666,7 +1664,7 @@ public class PvUnits {
             lowAltitude = true;
             range = 12*8;
             engineSize = 0;
-            abilities.add(new VoidAbilityC(70*8));
+            abilities.add(new EffectAbilityC(70*8));
         }};
     }
     public static void loadBosses() {
@@ -2013,7 +2011,7 @@ public class PvUnits {
                 buildBeamOffset = 12;
                 abilities.add(
                         new EnemyStatusFieldAbility(PvStatusEffects.memoryExchange, 180, 120, 20 * 8),
-                        new VoidAbilityC(8 * 4)
+                        new EffectAbilityC(8 * 4)
                 );
                 weapons.add(
                         new Weapon() {{
@@ -2230,7 +2228,7 @@ public class PvUnits {
             armor = 14f;
             zepz.abilities.add(new SpawnDeathAbility(this,1,0));
             abilities.add(new EnemyStatusFieldAbility(PvStatusEffects.endlessDot, 60, 10, 400f));
-            abilities.add(new VoidAbilityC(24 * 4));
+            abilities.add(new EffectAbilityC(24 * 4));
             abilities.add(new SpawnDeathAbility(zepz,1,0));
             weapons.add(
                     new Weapon(name + "shotty"){{

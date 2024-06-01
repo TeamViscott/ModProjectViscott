@@ -11,7 +11,7 @@ import mindustry.type.UnitType;
 import mindustry.world.modules.ItemModule;
 import viscott.content.PvEffects;
 import viscott.content.PvFactions;
-import viscott.world.chips.VoidAreaC;
+import viscott.world.chips.EffectAreaC;
 
 public class NullisCore extends PvCore {
     public float voidRadius = 5;
@@ -29,7 +29,7 @@ public class NullisCore extends PvCore {
         updateClipRadius(voidRadius*8);
         super.init();
     }
-    public class NullisCoreBlock extends PvCoreBuild implements VoidAreaC {
+    public class NullisCoreBlock extends PvCoreBuild implements EffectAreaC {
         public float pulsing = 0;
         Seq<Unit> visualizer = new Seq<>();
         ItemModule visualItems = new ItemModule();

@@ -2,12 +2,12 @@ package viscott.types.abilities;
 
 import mindustry.entities.abilities.Ability;
 import mindustry.gen.Unit;
-import viscott.world.chips.VoidAreaC;
+import viscott.world.chips.EffectAreaC;
 
-public class VoidAbilityC extends Ability implements VoidAreaC {
+public class EffectAbilityC extends Ability implements EffectAreaC {
 
     public float range = 8;
-    public VoidAbilityC(float range) {
+    public EffectAbilityC(float range) {
         this.range = range;
     }
     @Override

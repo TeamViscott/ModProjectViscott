@@ -6,7 +6,6 @@ import arc.graphics.g2d.Fill;
 import arc.graphics.g2d.Lines;
 import arc.math.Mathf;
 import mindustry.gen.*;
-import mindustry.graphics.Layer;
 import mindustry.type.StatusEffect;
 import viscott.content.PvStatusEffects;
 import viscott.types.PvLayers;
@@ -15,7 +14,7 @@ import viscott.world.bullets.VoidBulletType;
 
 import static mindustry.Vars.renderer;
 
-public interface VoidAreaC {
+public interface EffectAreaC {
     default void updateVoid(Teamc t,float radius) {
         updateVoid(t,radius,PvStatusEffects.voidDecay,PvStatusEffects.voidShield);
     }
@@ -25,15 +24,26 @@ public interface VoidAreaC {
     }
     default void updateVoid(Teamc t, float radius, StatusEffect ef, StatusEffect af,float effectTimer)
     {
-        updateVoid(t,radius,ef,af,30f,true);
+        updateVoid(t,radius,ef,af,30f,EffectAreaTags.voidEffects);
     }
-    default void updateVoid(Teamc t, float radius, StatusEffect ef, StatusEffect af,float effectTimer,boolean voidEffect)
+    default void updateVoid(Teamc t, float radius, StatusEffect ef, StatusEffect af,float effectTimer,EffectAreaTags tag)
     {
-        if (voidEffect)
-            Groups.bullet.each(b -> {
-                if (b.type instanceof VoidBulletType && Mathf.len(t.x()-b.x,t.y()-b.y) <= radius)
-                    b.keepAlive = true;
-            });
+        switch (tag) {
+            case voidEffects:
+                Groups.bullet.each(b -> {
+                    if (b.type instanceof VoidBulletType && Mathf.len(t.x()-b.x,t.y()-b.y) <= radius)
+                        b.keepAlive = true;
+                });
+                break;
+            case timeRippleEffects:
+                Groups.bullet.each(b -> {
+                    if (b.type instanceof VoidBulletType && Mathf.len(t.x()-b.x,t.y()-b.y) <= radius) {
+                        b.vel.x *= 0.99;
+                        b.vel.y *= 0.99;
+                    }
+                });
+                break;
+        }
         Groups.unit.each(unit ->
                 {
                     if (unit.team == t.team()) {

@@ -1,25 +1,24 @@
 package viscott.world.bullets;
 
-import arc.util.Log;
 import mindustry.content.Fx;
-import mindustry.content.StatusEffects;
 import mindustry.entities.bullet.*;
 import mindustry.gen.Bullet;
 import mindustry.type.StatusEffect;
 import viscott.content.PvStatusEffects;
 import viscott.types.PvLayers;
-import viscott.world.chips.VoidAreaC;
+import viscott.world.chips.EffectAreaC;
+import viscott.world.chips.EffectAreaTags;
 
-public class VoidAreaBulletType extends BasicBulletType implements VoidAreaC {
+public class EffectAreaBulletType extends BasicBulletType implements EffectAreaC {
     public float voidRadius = 8*5;
     public StatusEffect voidEffectAlly = null;
     public StatusEffect voidEffectEnemy = PvStatusEffects.voidDecay;
     public float voidDrawLayer = PvLayers.voidLayer;
-    public boolean voidEffect = true;
-    public VoidAreaBulletType() {
+    public EffectAreaTags areaTag = EffectAreaTags.voidEffects;
+    public EffectAreaBulletType() {
         this(0,0);
     }
-    public VoidAreaBulletType(float speed,float damage)
+    public EffectAreaBulletType(float speed, float damage)
     {
         super(speed,damage);
         collideFloor = collidesAir = collidesTeam = collides = false;
@@ -40,6 +39,6 @@ public class VoidAreaBulletType extends BasicBulletType implements VoidAreaC {
     @Override
     public void update(Bullet b) {
         super.update(b);
-        updateVoid(b,b.fout()*voidRadius,voidEffectEnemy,voidEffectAlly,statusDuration,voidEffect);
+        updateVoid(b,b.fout()*voidRadius,voidEffectEnemy,voidEffectAlly,statusDuration,areaTag);
     }
 }

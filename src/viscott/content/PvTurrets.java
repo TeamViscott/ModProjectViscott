@@ -4,7 +4,6 @@ import arc.graphics.Color;
 import arc.math.Mathf;
 import arc.struct.Seq;
 import mindustry.content.Fx;
-import mindustry.content.Items;
 import mindustry.content.Liquids;
 import mindustry.content.StatusEffects;
 import mindustry.entities.*;
@@ -12,15 +11,12 @@ import mindustry.entities.bullet.*;
 import mindustry.entities.effect.*;
 import mindustry.entities.part.*;
 import mindustry.entities.pattern.*;
-import mindustry.game.Team;
-import mindustry.gen.Bullet;
 import mindustry.gen.Sounds;
 import mindustry.graphics.Layer;
 import mindustry.graphics.Pal;
 import mindustry.type.Category;
 import mindustry.type.Weapon;
 import mindustry.type.unit.MissileUnitType;
-import mindustry.world.Block;
 import mindustry.world.blocks.defense.turrets.*;
 import mindustry.world.draw.DrawTurret;
 import mindustry.world.meta.BuildVisibility;
@@ -31,6 +27,7 @@ import viscott.world.block.defense.FocusItemTurret;
 import viscott.world.block.defense.PvLiquidTurret;
 import viscott.world.bullets.*;
 import viscott.world.block.defense.PvItemTurret;
+import viscott.world.chips.EffectAreaTags;
 import viscott.world.pseudo3d.importedcode.BallisticMissileBulletType;
 
 import static mindustry.content.Items.*;
@@ -40,7 +37,7 @@ import static viscott.utilitys.PvUtil.*;
 public class PvTurrets {
     public static Turret
             splinter,shatter,euro,snap,hourglass,
-            phantom,razor,rainmaker,striker,
+            phantom,razor,rainmaker,striker,xero,
             marksman, xacto,reaper,shuttle, nuero, jaeger, glaive,
             xterminium,hel,falarica,spring,shredder, sumaya,
 
@@ -83,7 +80,7 @@ public class PvTurrets {
                     splashDamageRadius = 8*2f;
                     despawnEffect = hitEffect = Fx.wet;
                     ammoMultiplier = 10;
-                    fragBullet = new VoidAreaBulletType(){{
+                    fragBullet = new EffectAreaBulletType(){{
                         voidRadius = 8*2;
                         lifetime = 60*2;
 
@@ -1015,6 +1012,77 @@ public class PvTurrets {
             );
             drawer = new DrawTurret(GetName("Pov"));
         }};
+        xero = new PvLiquidTurret("xero")
+        {{
+            requirements(Category.turret,with(PvItems.platinum,1800,PvItems.nobelium,100,PvItems.zirconium,500)); //TODO items
+            localizedName = "Xero";
+            faction.add(PvFactions.Xeal);
+            description = "A turret specializing in breaking shields. ";
+            size = 4;
+            reload = 60f/10f;
+            health = 2850;
+            liquidCapacity = 40;
+            range = 55*8;
+            ammo(
+                    PvLiquids.xenon,new ShieldBulletType(12,10.6f)
+                    {{
+                        shieldDamage = 230;
+                        trailColor = frontColor = backColor = PvLiquids.xenon.color;
+                        trailLength = 30;
+                        trailWidth = 2;
+                        trailEffect = Fx.vaporSmall;
+                        trailChance = 100;
+                        lifetime = PvUtil.GetRange(this.speed,55);
+                        despawnEffect = hitEffect = Fx.vapor;
+                    }}
+            );
+            drawer = new DrawTurret(GetName("Pov")){{
+                parts.addAll(
+                        parts.add(
+                                new RegionPart("-arm-l"){{
+                                    progress = PartProgress.recoil;
+                                    heatProgress = PartProgress.recoil;
+                                    heatColor = Color.valueOf("ff6214");
+                                    mirror = false;
+                                    under = false;
+                                    moveX = -1f;
+                                    moveRot = 7f;
+                                    moves.add(new PartMove(PartProgress.recoil, 1f, 0f, 10f));
+                                }},
+                                new RegionPart("-arm-r"){{
+                                    progress = PartProgress.recoil;
+                                    heatProgress = PartProgress.recoil;
+                                    heatColor = Color.valueOf("ff6214");
+                                    mirror = false;
+                                    under = false;
+                                    moveX = 1f;
+                                    moveRot = -7f;
+                                    moves.add(new PartMove(PartProgress.recoil, -1f, 0f, -10f));
+                                }},
+                                new RegionPart("-back-l"){{
+                                    progress = PartProgress.recoil;
+                                    heatProgress = PartProgress.recoil;
+                                    heatColor = Color.valueOf("ff6214");
+                                    mirror = false;
+                                    under = false;
+                                    moveX = -1f;
+                                    moveRot = -7f;
+                                    moves.add(new PartMove(PartProgress.recoil, 1f, 0f, 10f));
+                                }},
+                                new RegionPart("-back-r"){{
+                                    progress = PartProgress.recoil;
+                                    heatProgress = PartProgress.recoil;
+                                    heatColor = Color.valueOf("ff6214");
+                                    mirror = false;
+                                    under = false;
+                                    moveX = 1f;
+                                    moveRot = 7f;
+                                    moves.add(new PartMove(PartProgress.recoil, -1f, 0f, -10f));
+                                }}
+                        )
+                );
+            }};
+        }};
         partition = new ItemTurret("partition")
         {{
             requirements(Category.turret,with(PvItems.nobelium,30,PvItems.lithium,140)); //Todo 2
@@ -1931,13 +1999,13 @@ public class PvTurrets {
                         lifetime = PvUtil.GetRange(this.speed,38);
                         despawnEffect = hitEffect = PvEffects.slowEnergeticEffect;
                         fragBullets = 1;
-                        fragBullet = new VoidAreaBulletType(){{
+                        fragBullet = new EffectAreaBulletType(){{
                             voidRadius = 8*16.5f;
                             lifetime = 60*3.2f;
-                            voidEffectEnemy = PvStatusEffects.timeWarped;
+                            voidEffectEnemy = PvStatusEffects.timeRipple;
                             statusDuration = 60*6.2f;
                             voidDrawLayer = PvLayers.timeWarp;
-                            voidEffect = false;
+                            areaTag = EffectAreaTags.timeRippleEffects;
                         }};
                     }}
             );

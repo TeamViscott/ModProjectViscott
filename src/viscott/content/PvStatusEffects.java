@@ -26,6 +26,7 @@ public class PvStatusEffects {
 
      frag,aoe,homing,memoryExchange,dataLeak,endlessAmp, endlessDot, prevention, lastStand, consume,splintered,torture,
              forceApply,
+    /*Xeal*/timeRipple,
     /*Void*/voidShield,voidDecay,voidConsume,voidDecayExpand, reapingTouch,
 
     /*Source*/sourceRepair,sourcePurify,sourceRepel,
@@ -57,6 +58,15 @@ public class PvStatusEffects {
             reloadMultiplier = 0.98f;
             buildSpeedMultiplier = 0.98f;
             charges = 20;
+            color = Pal.sap;
+        }};
+        timeRipple = new StatusEffectStack("time-ripple") {{
+            localizedName = "Time Ripple";
+            speedMultiplier = 0.995f;
+            dragMultiplier = 0.995f;
+            reloadMultiplier = 0.995f;
+            buildSpeedMultiplier = 0.995f;
+            charges = 200;
             color = Pal.sap;
         }};
         doused = new StatusEffectStack("doused") {{

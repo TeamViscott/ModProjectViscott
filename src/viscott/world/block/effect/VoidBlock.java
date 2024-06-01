@@ -15,7 +15,7 @@ import mindustry.world.draw.DrawBlock;
 import mindustry.world.draw.DrawDefault;
 import viscott.content.PvFactions;
 import viscott.world.block.PvBlock;
-import viscott.world.chips.VoidAreaC;
+import viscott.world.chips.EffectAreaC;
 
 import static mindustry.Vars.tilesize;
 import static mindustry.Vars.world;
@@ -47,7 +47,7 @@ public class VoidBlock extends PvBlock {
         if(src == null || other == null) return true;
         return Intersector.overlaps(Tmp.cr1.set(src.worldx() + offset, src.worldy() + offset, voidRadius * tilesize), Tmp.r1.setSize(size * tilesize).setCenter(other.worldx() + offset, other.worldy() + offset));
     }
-    public class VoidBuildingC extends Building implements VoidAreaC
+    public class EffectBuildingC extends Building implements EffectAreaC
     {
         float time = 0;
         @Override
