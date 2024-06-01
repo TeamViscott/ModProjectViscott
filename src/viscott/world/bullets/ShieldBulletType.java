@@ -2,9 +2,11 @@ package viscott.world.bullets;
 
 import arc.Events;
 import arc.util.Tmp;
+import mindustry.entities.Fires;
 import mindustry.entities.bullet.BasicBulletType;
 import mindustry.game.EventType;
 import mindustry.gen.*;
+import mindustry.world.blocks.ConstructBlock;
 
 public class ShieldBulletType extends BasicBulletType {
     static final EventType.UnitDamageEvent bulletDamageEvent = new EventType.UnitDamageEvent();
@@ -23,7 +25,6 @@ public class ShieldBulletType extends BasicBulletType {
 
     @Override
     public void hitEntity(Bullet b, Hitboxc entity, float health) {
-        float sDamage = b.damage/damage*shieldDamage;
         boolean wasDead = false;
         if (entity instanceof Unit unit) {
             if (unit.dead) {
@@ -31,15 +32,15 @@ public class ShieldBulletType extends BasicBulletType {
             }
         }
         if (entity instanceof Shieldc s) {
-            if (s.shield() > sDamage)
-                s.damagePierce(sDamage);
+            if (s.shield() > b.damage)
+                s.damagePierce(b.damage);
             else {
-                float remainder = 1-s.shield()/sDamage;
-                s.damagePierce(sDamage*(1-remainder));
+                float remainder = 1-s.shield()/b.damage;
+                s.damagePierce(b.damage*(1-remainder));
                 if (pierce)
-                    s.damagePierce(b.damage*remainder);
+                    s.damagePierce(baseDamage*remainder);
                 else
-                    s.damage(b.damage*remainder);
+                    s.damage(baseDamage*remainder);
             }
         }
 
@@ -61,5 +62,23 @@ public class ShieldBulletType extends BasicBulletType {
         }
 
         this.handlePierce(b, health, entity.x(), entity.y());
+    }
+
+    @Override
+    public void hitTile(Bullet b, Building build, float x, float y, float initialHealth, boolean direct) {
+        float perc = b.damage/damage;
+        b.damage = perc*baseDamage;
+        if (this.makeFire && build.team != b.team) {
+            Fires.create(build.tile);
+        }
+
+        if (this.heals() && build.team == b.team && !(build.block instanceof ConstructBlock)) {
+            this.healEffect.at(build.x, build.y, 0.0F, this.healColor, build.block);
+            build.heal(this.healPercent / 100.0F * build.maxHealth + this.healAmount);
+        } else if (build.team != b.team && direct) {
+            this.hit(b);
+        }
+        this.handlePierce(b, initialHealth, x, y);
+        b.damage = perc*damage;
     }
 }

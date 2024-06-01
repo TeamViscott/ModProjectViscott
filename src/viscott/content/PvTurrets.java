@@ -583,7 +583,7 @@ public class PvTurrets {
     {
         focus = new FocusItemTurret("focus") {{
             requirements(Category.turret,with(PvItems.erbium,450,PvItems.zirconium,300, silicon,75)); //Todo 2
-            localizedName = "Phantom";
+            localizedName = "Focus";
             faction.add(PvFactions.Xeal);
             size = 3;
             health = 1980;

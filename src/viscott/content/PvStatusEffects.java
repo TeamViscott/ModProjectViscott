@@ -66,7 +66,7 @@ public class PvStatusEffects {
             dragMultiplier = 0.995f;
             reloadMultiplier = 0.995f;
             buildSpeedMultiplier = 0.995f;
-            charges = 200;
+            charges = 180;
             color = Pal.sap;
         }};
         doused = new StatusEffectStack("doused") {{
