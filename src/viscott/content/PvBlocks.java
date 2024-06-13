@@ -105,6 +105,7 @@ public class PvBlocks {
                             /*Xeal*/coreSpark,coreCharge,coreSurge,
 
                             /*Psy*/coreWarden,coreGuardian,coreSentinel,
+                            /*Mortikai*/coreBunker,
                     /*Effects*/utilityProjector,pocketContainer,hydroProjector,liquidProjector,
                             /*Nullis*/voidNode,voidBeacon,voidExpander,
                                     voidWall,voidWallLarge,
@@ -1176,6 +1177,18 @@ public class PvBlocks {
                     size = 3;
                     unitCapModifier = 20;
                     itemCapacity = 15000;
+                }};
+
+                coreBunker = new PvCore("core-bunker") {{
+                    requirements(Category.effect, with(PvItems.zirconium,5000,PvItems.lithium,4000,Items.silicon,900)); //TODO : COST
+                    localizedName = "Core Warden";
+                    faction.add(PvFactions.Mortikai);
+                    alwaysUnlocked = true;
+                    unitType = PvUnits.watt; //TODO : makae an actual coreUnit.
+                    health = 7500;
+                    size = 4;
+                    unitCapModifier = 15;
+                    itemCapacity = 8000;
                 }};
 
                 coreNull = new NullisCore("core-null")
