@@ -57,6 +57,7 @@ public class GridUnit extends MechUnit {
     public GridUnitType gu;
     public GridUnit(GridUnitType type) {
         this();
+
         gu = type;
         build();
     }
@@ -83,6 +84,7 @@ public class GridUnit extends MechUnit {
         };
         gen.get(gridWorld.tiles);
         return gridWorld;
+
     }
 
     public boolean buildAt(Tile c,int x, int y, Building building, byte rotation) {

@@ -66,10 +66,12 @@ public class VercilusPlanetGenerator extends SerpuloPlanetGenerator {
         return Simplex.noise3d(seed,7,0.5f,1f/3f,position.x,position.y,position.z)*2f-2f;
     }
 
+    /*
     @Override
     public Color getColor(Vec3 position){
         return Pal.heal.cpy().lerp(Pal.techBlue, Simplex.noise3d(seed,7,0.5f,1f/3f,position.x,position.y,position.z)*1f);
     }
+     */
 
     @Override
     protected void generate(){

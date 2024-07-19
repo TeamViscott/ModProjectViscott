@@ -60,6 +60,7 @@ public class PvUnits {
         /*Core Units*/micro,infrared, spectrum,
             /*nullis*/shadow,vessel,shell,puppet,
             /*xeal*/amp,volt,watt,
+            /*malakai*/substance,
             /*psy*/warden,
             wood,
         /*Flying Ion Path*/ particle, snippet, fragment, excerpt, pericope,
@@ -81,6 +82,7 @@ public class PvUnits {
                 /*BOSSES*/
                     charlie,
                     vdoble,
+                    ethanol,
                     siede,
                     frire, /*swarm mini extra*/lilshts,
                     zepz, baron, //kapzduke's twin bosses
@@ -577,7 +579,7 @@ public class PvUnits {
             itemCapacity = 80;
             speed = 26.8f / 7.5f;
             drag = 0.1f;
-            range = 17*8;
+            range = 25*8;
             weapons.add(
                     new Weapon()
                     {{
@@ -652,16 +654,53 @@ public class PvUnits {
                     }}
             );
         }};
+        substance = new PvUnitType("substance") {{
+            localizedName = "Substance";
+            constructor = EntityMapping.map("LegsUnit");
+            health = 300;
+            armor = 3;
+            flying = false;
+            strafePenalty = 0.5f;
+            engineOffset = 8;
+            buildSpeed = 0.8f;
+            mineSpeed = 4.75f;
+            itemCapacity = 30;
+            speed = 30f / 18.5f;
+            drag = 0.1f;
+            range = 28*8;
+            weapons.add(
+                    new Weapon()
+                    {{
+                        mirror = false;
+                        top = false;
+                        x = 0;
+                        y = 0;
+                        reload = 60f*2f;
+                        alternate = false;
+                        shoot.firstShotDelay = Fx.lancerLaserCharge.lifetime;
+                        bullet = new LaserBoltBulletType(24,125)
+                        {{
+                            chargeEffect = Fx.lancerLaserCharge;
+                            lifetime = PvUtil.GetRange(24,28);
+                            buildingDamageMultiplier = 0.01f;
+                        }};
+                    }}
+            );
+        }};
         warden = new PvUnitType("warden") {{
             localizedName = "Warden";
-            constructor = EntityMapping.map("alpha");
+            constructor = EntityMapping.map("CrawlUnit");
             health = 160;
             armor = 0;
             drawCell = drawBody = false;
-            flying = true;
+            flying = false;
+            segments = 3;
+
             strafePenalty = 0.5f;
             engineOffset = 8;
             itemCapacity = 30;
+            buildSpeed = 4f;
+            mineSpeed = 3f;
             speed = 30f / 7.5f;
             drag = 0.1f;
             range = 17*8;
@@ -1982,25 +2021,101 @@ public class PvUnits {
                         }});
             }
         };
+        ethanol = new PvUnitType("ethanol") {{
+                localizedName = "[lime]Ethanol[]";
+                description = "N/A";
+                details = """
+                    Hundreds of generations after the Corvus was originally built and countless modifications had led to the creation of the [lime]Ethanol[]
+                    While this unit resembles nothing of its predecessor's spider like appearance. it still retains that long range and [green]support capabilities[].
+                    The designer of this [gold]behemoth[] is the infamous [teal]Dr Lupellia![] However she had recently [crimson]gone missing[] for [purple]unknown reasons.[] 
+                    [crimson]Rumors[] have spread that she was [purple]kidnapped[] by the [crimson]Mortikai Stealth team[] to force intel and blueprints from her.
+                
+                    [orange]Usual Behaviour Between Factions : 
+                    [green]Ally Factions : []None
+                    [red]Enemy Factions : []Mortikai
+                    """;
+                constructor = EntityMapping.map("eclipse");
+                health = 100000;
+                armor = 15;
+                flying = true;
+                speed = 5.1f/7.5f;
+                engineOffset = 40;
+                engineSize = 8*5;
+                hitSize = 8*14;
+                range = 60*8;
+                abilities.add(
+                        new StatusFieldAbility(StatusEffects.overdrive,360,300,8*14)
+                );
+                weapons.add(
+                    new Weapon() {{
+                        reload = 60f;
+                        shoot.shots = 5;
+                        shoot.shotDelay = 5f;
+                        mirror = true;
+                        x = 4*14;
+                        y = 2*8;
+                        inaccuracy = 5f;
+                        bullet = new BasicBulletType(32,360) {{
+                            trailLength = 60;
+                            trailWidth = 1;
+                            trailColor = backColor = lightColor = Pal.heal;
+                            frontColor = Color.white;
+                            homingDelay = 0;
+                            homingPower =  0.08f;
+                            homingRange = 8*30;
+                            lifetime = PvUtil.GetRange(32,60);
+                            pierce = true;
+                            pierceCap = 3;
+                            status = StatusEffects.shocked;
+                            statusDuration = 180;
+                            splashDamage = 100;
+                            splashDamageRadius = 7.5f * 4;
+                        }};
+                    }},
+                    new Weapon() {{
+                        reload = 60f/0.05f;
+                        x = 0;
+                        y = 2*8;
+                        mirror = false;
+                        shoot.firstShotDelay = Fx.greenLaserCharge.lifetime;
+                        bullet = new BasicBulletType(8,2300) {{
+                            chargeEffect = Fx.greenLaserCharge;
+                            trailLength = 30;
+                            trailWidth = 1;
+                            trailColor = backColor = lightColor = Pal.lancerLaser;
+                            frontColor = Color.white;
+                            lifetime = PvUtil.GetRange(8,44);
+                            splashDamage = 100;
+                            splashDamageRadius = 18*8;
+                            despawnEffect = hitEffect = Fx.massiveExplosion;
+                        }};
+                    }}
+                );
+                parts.addAll(
+                    new RegionPart("-arm") {{
+                        mirror = true;
+                        x = 0;
+                        y = 0;
+                        moveY = 5;
+                        recoilIndex = 0;
+                    }}
+                );
+        }};
         siede = new PvUnitType("siede") {
             {
                 localizedName = "[orange]Sie[red]de[][]";
                 description = "A Powerful Programmer Capable of doing a lot of things. His many Attributes are [orange]\n1. Control Units\n2. Summon Units\n3. Transform into a Tier 5 unit\n4. Use a Shield";
-                Seq<String> detailList = new Seq<>();
-                detailList.addAll(
-                        "[gold]Siede[]. the so called [#b]\"Necromaniac\"[] is widely known for his strategic Power.",
-                        "No matter how or when, even a million Flares would falter to this menace of a unit.",
-                        "[orange]The Fallen[] [crimson]close[] to him would just get sucked up and get [purple]Reused[] to help him Fight.",
-                        "Mindless Spamming will not get you anywhere with this Foe. try to have a mix of Weak and Strong units.",
-                        "His [purple]Corruption[] [blue]slowly creeps[] into any [#b]Unit's software[], so be sure that they [orange]Target the Weak[] as to not risk losing the Strong units.",
-                        "[orange]Usual Behaviour Between Factions : ",
-                        "[green]Ally Factions : []Nullis , Psy",
-                        "[red]Enemy Factions : []Xeal, Mortikai, Azulex"
-                );
-                StringBuilder sb = new StringBuilder();
-                detailList.each(cs -> sb.append(cs + "\n"));
-                sb.replace(sb.length() - 1, sb.length(), "");
-                details = sb.toString();
+                details = """
+                    [gold]Siede[]. the so called [#b]\"Necromaniac\"[] is widely known for his strategic Power.
+                    No matter how or when, even a million Units would falter to this menace of a unit.
+                    [orange]The Fallen[] [crimson]close[] to him would just get sucked up and get [purple]Reused[] to help him Fight.
+                    Mindless Spamming will not get you anywhere with this Foe. try to have a mix of Weak and Strong units.
+                    His [purple]Corruption[] [blue]slowly creeps[] into any [#b]Unit's software[], so be sure that they [orange]Target the Weak[] as to not risk losing the Strong units.
+                    
+                    [orange]Usual Behaviour Between Factions : 
+                    [green]Ally Factions : []Nullis , Psy
+                    [red]Enemy Factions : []Xeal, Mortikai, Azulex
+                    """;
                 constructor = FrogUnit::new;
                 flying = true;
                 engineColor = Color.black;
@@ -2042,6 +2157,7 @@ public class PvUnits {
                         }}
                 );
                 float swingTime = 60;
+                float swingTime2 = 50;
                 parts.addAll(
                         new RegionPart("-l1") {{
                             progress = p -> Mathf.cos(Time.time / swingTime) / 2 + 0.5f;
@@ -2049,7 +2165,7 @@ public class PvUnits {
                             moveY = -4;
                         }},
                         new RegionPart("-l2") {{
-                            progress = p -> Mathf.sin(Time.time / swingTime) / 2 + 0.5f;
+                            progress = p -> Mathf.sin(Time.time / swingTime2) / 2 + 0.5f;
                             mirror = true;
                             moveY = -4;
                         }},
