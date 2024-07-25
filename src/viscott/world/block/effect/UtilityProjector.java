@@ -53,6 +53,7 @@ public class UtilityProjector extends Block {
         update = true;
         category = Category.effect;
         configurable = true;
+
         clearOnDoubleTap = true;
         group = BlockGroup.projectors;
         config(Integer.class,(UtilityProjectorBuild b,Integer i) -> {

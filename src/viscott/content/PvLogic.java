@@ -11,6 +11,7 @@ import mindustry.ui.Styles;
 import mindustry.world.blocks.logic.LogicBlock;
 import viscott.types.logic.PvParser;
 import viscott.world.block.logic.PvLogicBlock;
+import viscott.world.ui.PvUI;
 
 import static mindustry.Vars.*;
 import static mindustry.logic.LExecutor.varCounter;
@@ -443,7 +444,7 @@ public class PvLogic {
         @Override
         public LStatement copy()
         {
-            return new CommentStatement(textstr);
+            return new CreateTextBox(textstr);
         }
 
         @Override
@@ -474,7 +475,7 @@ public class PvLogic {
             @Override
             public void run(LExecutor exec) {
                 var text = exec.var(textID).toString();
-                
+                PvUIs.extraUI.textBoxDialog.show(text);
             }
         }
     }

@@ -2077,6 +2077,7 @@ public class PvUnits {
                         x = 0;
                         y = 2*8;
                         mirror = false;
+                        
                         shoot.firstShotDelay = Fx.greenLaserCharge.lifetime;
                         bullet = new BasicBulletType(8,2300) {{
                             chargeEffect = Fx.greenLaserCharge;
@@ -2092,13 +2093,22 @@ public class PvUnits {
                     }}
                 );
                 parts.addAll(
-                    new RegionPart("-arm") {{
-                        mirror = true;
-                        x = 0;
-                        y = 0;
-                        moveY = 5;
-                        recoilIndex = 0;
-                    }}
+                        new RegionPart("-arm-l") {{
+                            progress = PartProgress.reload;
+                            mirror = false;
+                            x = 0;
+                            y = 0;
+                            moveRot = 5;
+                            weaponIndex = 1;
+                        }},
+                        new RegionPart("-arm-r") {{
+                            progress = PartProgress.reload;
+                            mirror = false;
+                            x = 0;
+                            y = 0;
+                            moveRot = -5;
+                            weaponIndex = 0;
+                        }}
                 );
         }};
         siede = new PvUnitType("siede") {

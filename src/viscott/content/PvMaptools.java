@@ -11,6 +11,7 @@ import mindustry.world.blocks.defense.OverdriveProjector;
 import mindustry.world.blocks.sandbox.PowerSource;
 import mindustry.world.blocks.storage.CoreBlock;
 import mindustry.world.meta.BuildVisibility;
+import viscott.types.logic.PvParser;
 import viscott.world.block.liquids.SpecialSource;
 import viscott.world.block.logic.PvLogicBlock;
 import viscott.world.block.sandbox.PvItemSource;
@@ -194,11 +195,7 @@ public class PvMaptools {
             localizedName = "Universal Processor";
             description = "The Everything Processor basicaly.";
             allStatements.addAll(
-                    PvLogic.ShieldStatement::new,
-                    PvLogic.CommentStatement::new,
-                    PvLogic.DynamicJumpStatement::new,
-                    PvLogic.HealStatement::new,
-                    PvLogic.TransmitIptStatement::new
+                    PvParser.customLogic
             );
         }};
     }

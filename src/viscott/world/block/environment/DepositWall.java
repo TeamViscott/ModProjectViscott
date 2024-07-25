@@ -15,7 +15,6 @@ import static mindustry.Vars.world;
 
 public class DepositWall extends TallBlock {
     public float tier = 1;
-    public float hardness = 0;
 
     public TextureRegion large;
 

@@ -8,6 +8,7 @@ import arc.util.Strings;
 import mindustry.gen.LogicIO;
 import mindustry.logic.*;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 
 public class PvParser {
@@ -23,6 +24,7 @@ public class PvParser {
 
     Seq<LStatement> statements = new Seq<>();
     static HashMap<String,LStatement> connector = new HashMap<>();
+    public static Seq<Prov<LStatement>> customLogic = new Seq<>();
     public static String[] allToken;
     char[] chars;
     int pos, line, tok;
@@ -30,9 +32,9 @@ public class PvParser {
 
     Seq<Prov<LStatement>> allStatements;
 
-    public static void addLoad(String ent,LStatement statement)
-    {
+    public static void addLoad(String ent,LStatement statement){
         connector.put(ent,statement);
+        customLogic.add(() -> statement.copy());
     }
 
     public PvParser(String text, Seq<Prov<LStatement>> allStatements){

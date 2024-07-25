@@ -44,8 +44,9 @@ public class Grinder extends PvBlock {
     public Effect updateEffect = null;
     public float tier = 1;
     public float boostMult = 1;
-    public Seq<Pos> checkPattern = new Seq<>();
     public DrawBlock drawer = new DrawDefault();
+
+    protected Seq<Pos> checkPattern = new Seq<>();
     int sizeOffset = 0;
     public Grinder(String name)
     {
@@ -100,7 +101,7 @@ public class Grinder extends PvBlock {
         if (itemCapacity != 0) {
             int fix = (size % 2) * 4 + Mathf.floor((size - 1) / 2) * 8;
             Drawf.dashRect(Pal.lighterOrange, x * 8 - offset - range * 8 - fix, y * 8 - offset - range * 8 - fix, size * 8 + range * 16, size * 8 + range * 16);
-            float width = drawPlaceText(Core.bundle.format("bar.grindspeed", Strings.fixed(getMineSpeed(x, y) - getHardness(x, y), 2)), x, y + size / 2, true);
+            float width = drawPlaceText(Core.bundle.format("bar.grindspeed", Strings.fixed(getMineSpeed(x, y) * getHardness(x, y), 2)), x, y + size / 2, true);
         }
     }
 
@@ -125,16 +126,21 @@ public class Grinder extends PvBlock {
     public float getMineSpeed(int x,int y)
     {
         Seq<Block> newBlockList = ScanRect.getMinableBlocks.get(checkPattern,x+sizeOffset,y+sizeOffset,tier);
-        return newBlockList.size * speedPerOre * 60 / 100;
+        return newBlockList.size * speedPerOre * 60;
     }
     public float getHardness(int x,int y)
     {
         Seq<Block> newBlockList = ScanRect.getMinableBlocks.get(checkPattern,x+sizeOffset,y+sizeOffset,tier);
-        float totalHardness = 0;
+        float avgHardness = 0;
+        float div = 0;
         for (Block b : newBlockList)
-            if(b instanceof DepositWall d)
-                totalHardness += d.hardness;
-        return totalHardness;
+            if(b instanceof DepositWall d) {
+                if (++div == 1)
+                    avgHardness = d.tier;
+                else
+                    avgHardness = (avgHardness * ((div-1) / div) + d.tier * (1 / div));
+            }
+        return tier/avgHardness;
     }
     public Seq<Block> getBlocks(int x,int y)
     {
@@ -153,7 +159,7 @@ public class Grinder extends PvBlock {
         super.setBars();
         if (itemCapacity != 0)
         addBar("grindspeed", (GrinderBuild e) ->
-                new Bar(() -> Core.bundle.format("bar.grindspeed", Strings.fixed((e.maxMineSpeed - getHardness((int)e.x/8+sizeOffset,(int)e.y/8+sizeOffset)) * e.timeScale() * e.disEff, 2)), () -> Pal.lighterOrange, () -> e.progress));
+                new Bar(() -> Core.bundle.format("bar.grindspeed", Strings.fixed((e.maxMineSpeed * getHardness((int)e.x/8+sizeOffset,(int)e.y/8+sizeOffset)) * e.timeScale() * e.disEff, 2)), () -> Pal.lighterOrange, () -> e.progress));
     }
 
     public class GrinderBuild extends Building
@@ -206,7 +212,7 @@ public class Grinder extends PvBlock {
                     percent /= optionalConsumers.length;
                 }
                 disEff = (efficiency+boostMult*percent);
-                progress = Mathf.approachDelta(progress, 1, ((maxMineSpeed - hardness) / 60)*disEff);
+                progress = Mathf.approachDelta(progress, 1, ((maxMineSpeed * hardness) / 60)*disEff);
                 if (progress >= 1) {
                     Seq<Block> blockList = getBlocks((int)x/8,(int)y/8);
                     blockList.each(b -> craft(b));

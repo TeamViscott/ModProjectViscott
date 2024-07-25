@@ -35,7 +35,7 @@ public class ConsumeStatusEffect extends PvStatusEffect{
         for(int xo = -radius;xo <= radius;xo++)
             for(int yo = -radius;yo <= radius;yo++) {
                 Tile n = t.nearby(xo,yo);
-                if (n.build != null && n.build.health <= hpThreshhold) {
+                if (n != null && n.build != null && n.build.health <= hpThreshhold) {
                     float hpGap = unit.maxHealth - unit.health;
                     if (hpGap == 0 && n.build.team() == unit.team()) continue;
                     unit.health+=Math.min(n.build.health,hpGap);

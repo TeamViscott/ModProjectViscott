@@ -20,6 +20,7 @@ import mindustry.game.Team;
 import mindustry.gen.*;
 import mindustry.graphics.Pal;
 import mindustry.logic.*;
+import mindustry.type.Item;
 import mindustry.ui.Fonts;
 import mindustry.ui.Styles;
 import mindustry.ui.dialogs.BaseDialog;
@@ -68,6 +69,7 @@ public class PvLogicDialog extends BaseDialog {
                 !s.isobj ? Pal.place :
                 s.objval == null ? Color.darkGray :
                 s.objval instanceof String ? Pal.ammo :
+                s.objval instanceof Item ? Pal.sap :
                 s.objval instanceof Content ? Pal.logicOperations :
                 s.objval instanceof Building ? Pal.logicBlocks :
                 s.objval instanceof Unit ? Pal.logicUnits :
@@ -82,6 +84,7 @@ public class PvLogicDialog extends BaseDialog {
                 !s.isobj ? "number" :
                 s.objval == null ? "null" :
                 s.objval instanceof String ? "string" :
+                s.objval instanceof Item ? "item" :
                 s.objval instanceof Content ? "content" :
                 s.objval instanceof Building ? "building" :
                 s.objval instanceof Team ? "team" :

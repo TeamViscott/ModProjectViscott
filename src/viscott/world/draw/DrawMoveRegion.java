@@ -5,8 +5,10 @@ import arc.func.Cons2;
 import arc.func.Prov;
 import arc.graphics.g2d.Draw;
 import arc.math.Mathf;
+import mindustry.entities.part.DrawPart;
 import mindustry.gen.Building;
 import mindustry.graphics.Drawf;
+import mindustry.world.blocks.heat.HeatBlock;
 import mindustry.world.draw.DrawRegion;
 import viscott.world.chips.Grab;
 
@@ -23,6 +25,7 @@ public class DrawMoveRegion extends DrawRegion {
     @Override
     public void draw(Building build){
         float prog = 0;
+
         if (progress != null)
             prog = Mathf.clamp(progress.get(build),-1,1);
         float z = Draw.z();

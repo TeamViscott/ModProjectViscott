@@ -161,7 +161,6 @@ public class PvBlocks {
                     clipSize = 256;
                     localizedName = "Erbium Deposit";
                     itemDrop = PvItems.erbium;
-                    hardness = 0.02f;
                     attributes.set(PvAttributes.power,0.8f);
                 }};
                 lithiumDeposit = new DepositWall("lithium-deposit") //Todo
@@ -179,7 +178,6 @@ public class PvBlocks {
                     localizedName = "Platinum Deposit";
                     itemDrop = PvItems.platinum;
                     tier = 2;
-                    hardness = 0.06f;
                     attributes.set(PvAttributes.power,0.5f);
                 }};
                 zirconiumDeposit = new DepositWall("zirconium-deposit") //Todo
@@ -208,6 +206,7 @@ public class PvBlocks {
                     itemCapacity = 10;
                     speed = 40f/(300);
                 }};
+
                 megaMassConveyor = new MassConveyor("megamass-conveyor")
                 {{
                     requirements(Category.distribution, with(Items.silicon, 3, PvItems.carbonFiber,1));
@@ -304,7 +303,7 @@ public class PvBlocks {
                     boostMult = 4.6f;
                     size = 2;
                     range = 2;
-                    speedPerOre = 0.1f;
+                    speedPerOre = 0.5f/60f;
                     itemCapacity = 20;
                     updateEffect = Fx.smokeCloud;
                     drawer = new DrawMulti(
@@ -326,7 +325,7 @@ public class PvBlocks {
                     size = 3;
                     tier = 2;
                     range = 4;
-                    speedPerOre = 0.2f;
+                    speedPerOre = 0.8f/60f;
                     itemCapacity = 40;
                     updateEffect = Fx.smeltsmoke;
                     drawer = new DrawMulti(
