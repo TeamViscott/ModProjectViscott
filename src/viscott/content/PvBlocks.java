@@ -757,6 +757,7 @@ public class PvBlocks {
                     size = 4;
                     loopSound = Sounds.pulse;
                     consumePower(1260f/60f);
+                    squareSprite = false;
                     itemCapacity = 50;
                     liquidCapacity = 50;
                     craftTime = 60*2f;
@@ -1335,6 +1336,7 @@ public class PvBlocks {
                     range = 3;
                     tier = 2;
                     size = 2;
+                    speedPerOre = 0.15f/60f;
                     health = 190;
                     liquidCapacity = 40;
                 }};

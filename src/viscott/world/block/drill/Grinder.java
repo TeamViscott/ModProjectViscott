@@ -135,6 +135,7 @@ public class Grinder extends PvBlock {
         float div = 0;
         for (Block b : newBlockList)
             if(b instanceof DepositWall d) {
+                float tier = Math.min(d.tier,Math.min(this.tier,1));
                 if (++div == 1)
                     avgHardness = d.tier;
                 else
