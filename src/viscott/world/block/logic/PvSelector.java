@@ -8,8 +8,10 @@ import arc.scene.ui.layout.Table;
 import arc.struct.Seq;
 import arc.util.io.Reads;
 import arc.util.io.Writes;
+import mindustry.Vars;
 import mindustry.ctype.Content;
 import mindustry.gen.Building;
+import mindustry.gen.Call;
 import mindustry.gen.Icon;
 import mindustry.gen.Tex;
 import mindustry.logic.LAccess;
@@ -37,21 +39,16 @@ public class PvSelector extends Block {
         envEnabled = Env.any;
         saveConfig = true;
         config(Integer.class, (PvSelectorBuild entity, Integer i) -> {
-            if (i < entity.icons.size)
-                entity.selectedIcon = i;
+            if (i == -2)
+                entity.icons.pop();
+            else
+                if (i < entity.icons.size)
+                    entity.selectedIcon = i;
         });
-        config(Double.class, (PvSelectorBuild entity, Double n) -> {
-            if (n.intValue() < entity.icons.size && n.intValue() > -2)
-                entity.selectedIcon = n.intValue();
-        });
-        config(String.class,(PvSelectorBuild entity, String s) -> {
-            var v = s.split(";");
-            if (v.length > entity.icons.size) {
-                
-            }
-            for (String ic : v) {
-
-            }
+        config(String.class, (PvSelectorBuild entity, String n) -> {
+            if (entity.icons.size >= 3)
+                return;
+            entity.icons.add(Icon.icons.get(n));
         });
         configClear((PvSelectorBuild entity) -> {
             entity.selectedIcon = -1;
@@ -62,12 +59,6 @@ public class PvSelector extends Block {
     {
         Seq<TextureRegionDrawable> icons = new Seq<>();
         int selectedIcon = -1;
-
-        @Override
-        public Integer config()
-        {
-            return selectedIcon;
-        }
 
         @Override
         public void control(LAccess type, double p1, double p2, double p3, double p4) {
@@ -112,8 +103,7 @@ public class PvSelector extends Block {
                     }).get();
                     button.getStyle().imageUp = icon;
                     button.changed(() -> {
-                        if (button.isChecked()) configure(icons.indexOf(icon));
-                        else configure(-1);
+                        configure(button.isChecked() ? icons.indexOf(icon) : -1);
                     });
                     button.update(() -> button.setChecked(selectedIcon == -1 ? false : icons.get(selectedIcon) == icon));
                     if (i++ == configWidth) {
@@ -145,15 +135,16 @@ public class PvSelector extends Block {
                 rem.getStyle().imageUp = Icon.cancel;
                 rem.changed(() -> {
                     if (selectedIcon >= icons.size-1) configure(-1);
-                    icons.pop();
+                    configure(-2);
                 });
             }
             table.add(adRem);
         }
 
         public void addIcon(TextureRegionDrawable icon) {
-            if (icons.size < maxConfigs)
-                icons.add(icon);
+            if (icons.size < maxConfigs) {
+                configure(Icon.icons.findKey(icon,true));
+            }
         }
         public boolean hasIcon(TextureRegionDrawable icon) {
             return icons.find(i -> i == icon) != null;
