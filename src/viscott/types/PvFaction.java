@@ -22,6 +22,7 @@ public class PvFaction {
     static int idGiver = 0;
     public static Seq<PvFaction> all = new Seq<>();
     public teamResearch icon;
+    public boolean isExtraFaction = false;
     public PvFaction(String name, Color color)
     {
         id = idGiver++;

@@ -62,7 +62,7 @@ public class SelectDialog extends BaseDialog {
         buttons.button("@back", Icon.left, this::hide).name("back");
         int index = 0;
         for(String iconName : Icon.icons.keys()) {
-            if (caller.hasIcon(Icon.icons.get(iconName))) continue;
+            if (!caller.block.privileged && caller.hasIcon(Icon.icons.get(iconName))) continue;
             if (iconName.contains("Small")) continue;
             ImageButton btn = selection.button(Tex.whiteui, Styles.clearNoneTogglei, 40, () -> {
                 control.input.config.hideConfig();

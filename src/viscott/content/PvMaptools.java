@@ -14,6 +14,7 @@ import mindustry.world.meta.BuildVisibility;
 import viscott.types.logic.PvParser;
 import viscott.world.block.liquids.SpecialSource;
 import viscott.world.block.logic.PvLogicBlock;
+import viscott.world.block.logic.PvSelector;
 import viscott.world.block.sandbox.PvItemSource;
 import viscott.world.block.sandbox.PvLiquidSource;
 
@@ -25,7 +26,7 @@ public class PvMaptools {
     public static Block
     basicsource, normalsource, advancedsource, ultrasource,
     basicliquidsource, advancedliquidsource, ultraliquidsource, normalliquidsource, coreIntrusion, ultrapowersource,
-    voidsource,sourcesource,universalProcessor,
+    voidsource,sourcesource,universalProcessor,worldSelector,
     tier1overdrive, tier2overdrive, tier3overdrive, tier4overdrive;
     public static void load()
     {
@@ -197,6 +198,15 @@ public class PvMaptools {
             allStatements.addAll(
                     PvParser.customLogic
             );
+        }};
+        worldSelector = new PvSelector("world-selector") {{
+            requirements(Category.logic,BuildVisibility.editorOnly,with());
+            health = Integer.MAX_VALUE;
+            privileged = true;
+            maxConfigs = 100;
+            configWidth = 5;
+            localizedName = "World Selector";
+            description = "A Selector for EVERYTHING.";
         }};
     }
 }

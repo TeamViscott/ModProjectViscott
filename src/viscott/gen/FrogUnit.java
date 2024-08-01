@@ -45,7 +45,7 @@ public class FrogUnit extends UnitEntity {
     public void update() {
         if (!hideUnit)
             super.update();
-        else if (!transformedUnit.isValid()) {
+        else if (transformedUnit != null && !transformedUnit.isValid()) {
             hideUnit = false;
             set(transformedUnit.x(),transformedUnit.y());
         }
@@ -66,6 +66,7 @@ public class FrogUnit extends UnitEntity {
                         while (!selected.flying) selected = transformList.random();
                     }
                     transformedUnit = selected.spawn(team, x, y);
+
                     transformedUnit.health /= 2;
                 }
                 hideUnit = true;

@@ -4,7 +4,9 @@ import arc.graphics.g2d.Draw;
 import arc.math.Mathf;
 import arc.struct.Seq;
 import mindustry.Vars;
+import mindustry.graphics.Drawf;
 import mindustry.graphics.Layer;
+import mindustry.graphics.Pal;
 import mindustry.type.Item;
 import mindustry.type.ItemStack;
 import mindustry.world.consumers.Consume;
@@ -20,6 +22,11 @@ public class VoidExpand extends VoidBlock{
         canOverdrive = false;
     }
 
+    @Override
+    public void drawPlace(int x, int y, int rotation, boolean valid) {
+        super.drawPlace(x,y,rotation,valid);
+        Drawf.dashCircle(x*8+offset,y*8+offset,(voidGrowAmount*itemCapacity+voidRadius)*8, Pal.sap);
+    }
     public class EffectExpandBuildC extends EffectBuildingC
     {
         public float consumeTime = 0;

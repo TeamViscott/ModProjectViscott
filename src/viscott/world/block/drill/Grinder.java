@@ -46,6 +46,8 @@ public class Grinder extends PvBlock {
     public float boostMult = 1;
     public DrawBlock drawer = new DrawDefault();
 
+    public float tierMultiplier = 1.5f;
+
     protected Seq<Pos> checkPattern = new Seq<>();
     int sizeOffset = 0;
     public Grinder(String name)
@@ -141,7 +143,8 @@ public class Grinder extends PvBlock {
                 else
                     avgHardness = (avgHardness * ((div-1) / div) + d.tier * (1 / div));
             }
-        return tier/avgHardness;
+        float speedMultiplier = tier/avgHardness;
+        return Math.max(speedMultiplier*tierMultiplier,1f);
     }
     public Seq<Block> getBlocks(int x,int y)
     {

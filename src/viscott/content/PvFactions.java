@@ -69,9 +69,11 @@ public class PvFactions {
             info = "once upon a time there was the [green]Omamori[]. the Peaceful giant who loved to move around and nurture the wildlife around him.\n" +
                     "Over time. he accumulated followers who called themselves the Yggdrasil's, who wanted to follow in the Giants footsteps.\n" +
                     "And so the Giant helped them build in a way as to not hurt mother nature.";
+            isExtraFaction = true;
         }};
-        /*Unix = new PvFaction("unix",Color.purple) {{
+        Unix = new PvFaction("unix",Color.purple) {{ // LOL
             description = "[pink][Extra Faction][]\nInterdimensional Travel goes brrrrr";
-        }};*/
+            isExtraFaction = true;
+        }};
     }
 }

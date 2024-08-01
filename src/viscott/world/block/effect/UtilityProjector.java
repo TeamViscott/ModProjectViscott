@@ -66,7 +66,6 @@ public class UtilityProjector extends Block {
     @Override
     public void drawPlace(int x, int y, int rotation, boolean valid) {
         super.drawPlace(x,y,rotation,valid);
-        float offset = (size-1)*4;
         Drawf.dashCircle(x*8+offset,y*8+offset,range,Pal.lighterOrange);
     }
     @Override

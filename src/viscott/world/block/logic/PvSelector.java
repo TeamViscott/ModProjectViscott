@@ -20,6 +20,7 @@ import mindustry.ui.Styles;
 import mindustry.world.Block;
 import mindustry.world.meta.BlockGroup;
 import mindustry.world.meta.Env;
+import viscott.content.PvStats;
 import viscott.content.PvUIs;
 
 import static mindustry.Vars.control;
@@ -28,6 +29,7 @@ import static mindustry.logic.LAccess.config;
 public class PvSelector extends Block {
     public int configWidth = 4;
     public int maxConfigs = 3;
+
     public PvSelector(String name)
     {
         super(name);
@@ -46,13 +48,18 @@ public class PvSelector extends Block {
                     entity.selectedIcon = i;
         });
         config(String.class, (PvSelectorBuild entity, String n) -> {
-            if (entity.icons.size >= 3)
+            if (entity.icons.size >= maxConfigs)
                 return;
             entity.icons.add(Icon.icons.get(n));
         });
         configClear((PvSelectorBuild entity) -> {
             entity.selectedIcon = -1;
         });
+    }
+
+    @Override public void setStats() {
+        super.setStats();
+        stats.add(PvStats.selectableAmount,maxConfigs);
     }
 
     public class PvSelectorBuild extends Building
@@ -63,8 +70,7 @@ public class PvSelector extends Block {
         @Override
         public void control(LAccess type, double p1, double p2, double p3, double p4) {
             if (type == config && logicConfigurable) {
-                if (this.block.configurations.containsKey(Double.class))
-                    this.block.configurations.get(Double.class).get(this, p1);
+                configure((int)Math.round(p1));
             }
             else
                 super.control(type,p1,p2,p3,p4);
@@ -97,48 +103,53 @@ public class PvSelector extends Block {
                 Table ics = new Table();
                 ics.background(Styles.black6);
                 int i = 0;
-                for (TextureRegionDrawable icon : icons) {
+                for (int index = 0; index < icons.size;index++) {
+                    TextureRegionDrawable icon = icons.get(index);
                     ImageButton button = ics.button(Tex.whiteui, Styles.clearNoneTogglei, 40f, () -> {
                         control.input.config.hideConfig();
                     }).get();
                     button.getStyle().imageUp = icon;
+
+                    int buttonIndex = index;
                     button.changed(() -> {
-                        configure(button.isChecked() ? icons.indexOf(icon) : -1);
+                        configure(button.isChecked() ? buttonIndex : -1);
                     });
-                    button.update(() -> button.setChecked(selectedIcon == -1 ? false : icons.get(selectedIcon) == icon));
-                    if (i++ == configWidth) {
+                    button.update(() -> button.setChecked(buttonIndex == selectedIcon));
+                    if (++i == configWidth) {
                         ics.row();
                         i %= configWidth;
                     }
                 }
                 table.add(ics);
             }
-            Table adRem = new Table();
-            adRem.background(Styles.black6);
-            if (icons.size < maxConfigs) {
-                ImageButton add = adRem.button(Tex.whiteui, Styles.clearNoneTogglei, 40, () -> {
-                    control.input.config.hideConfig();
-                }).get();
-                add.getStyle().imageUp = Icon.add;
-                add.changed(() -> {
-                    PvUIs.extraUI.selectedDialog.call(this);
-                });
-            }
-            if (icons.size > 0) {
-                table.row();
-                table.add("");
-                table.row();
+            if (!privileged || Vars.state.isEditor()) {
+                Table adRem = new Table();
+                adRem.background(Styles.black6);
+                if (icons.size < maxConfigs) {
+                    ImageButton add = adRem.button(Tex.whiteui, Styles.clearNoneTogglei, 40, () -> {
+                        control.input.config.hideConfig();
+                    }).get();
+                    add.getStyle().imageUp = Icon.add;
+                    add.changed(() -> {
+                        PvUIs.extraUI.selectedDialog.call(this);
+                    });
+                }
+                if (icons.size > 0) {
+                    table.row();
+                    table.add("");
+                    table.row();
 
-                ImageButton rem = adRem.button(Tex.whiteui, Styles.clearNoneTogglei, 40, () -> {
-                    control.input.config.hideConfig();
-                }).get();
-                rem.getStyle().imageUp = Icon.cancel;
-                rem.changed(() -> {
-                    if (selectedIcon >= icons.size-1) configure(-1);
-                    configure(-2);
-                });
+                    ImageButton rem = adRem.button(Tex.whiteui, Styles.clearNoneTogglei, 40, () -> {
+                        control.input.config.hideConfig();
+                    }).get();
+                    rem.getStyle().imageUp = Icon.cancel;
+                    rem.changed(() -> {
+                        if (selectedIcon >= icons.size - 1) configure(-1);
+                        configure(-2);
+                    });
+                }
+                table.add(adRem);
             }
-            table.add(adRem);
         }
 
         public void addIcon(TextureRegionDrawable icon) {
@@ -155,7 +166,7 @@ public class PvSelector extends Block {
             super.write(write);
             write.i(icons.size);
             for(var icon : icons)
-                write.str(Icon.icons.findKey(icon,false));
+                write.str(Icon.icons.findKey(icon,true));
             write.i(selectedIcon);
         }
 

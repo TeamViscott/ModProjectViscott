@@ -19,6 +19,7 @@ import viscott.types.PvLayers;
 import viscott.utilitys.PvPacketHandler;
 import viscott.utilitys.PvWorldState;
 
+import static arc.Core.*;
 import static mindustry.Vars.*;
 
 public class ViscottMod extends Mod {
@@ -66,6 +67,7 @@ public class ViscottMod extends Mod {
     @Override
     public void loadContent(){
         Log.info("Loading PV content");
+
         PvPacketHandler.load();
         PvWorldState.load();
         PvUnitMapper.load();
@@ -96,8 +98,14 @@ public class ViscottMod extends Mod {
 
         Log.info("PV content load finished");
     }
+    public void loadSettings() {
+        ui.settings.addCategory(bundle.get("setting.pv-title"), "test-utils-settings-icon", t -> {
+            t.checkPref("pv-extra-factions", false);
+        });
+    }
     @Override
     public void init(){
+        loadSettings();
         Mods.LoadedMod tu = mods.locateMod("project-viscott");
         tu.meta.author = """
                 [yellow]CREDITS[]:

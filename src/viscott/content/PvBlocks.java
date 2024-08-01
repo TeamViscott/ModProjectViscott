@@ -302,8 +302,9 @@ public class PvBlocks {
                     consumeLiquid(PvLiquids.xenon,2f/60f).boost();
                     boostMult = 4.6f;
                     size = 2;
+                    tierMultiplier = 0.8f;
                     range = 2;
-                    speedPerOre = 0.5f/60f;
+                    speedPerOre = 0.15f/60f;
                     itemCapacity = 20;
                     updateEffect = Fx.smokeCloud;
                     drawer = new DrawMulti(
@@ -324,8 +325,9 @@ public class PvBlocks {
                     boostMult = 4.6f;
                     size = 3;
                     tier = 2;
+                    tierMultiplier = 0.7f;
                     range = 4;
-                    speedPerOre = 0.8f/60f;
+                    speedPerOre = 0.18f/60f;
                     itemCapacity = 40;
                     updateEffect = Fx.smeltsmoke;
                     drawer = new DrawMulti(
@@ -345,8 +347,9 @@ public class PvBlocks {
                     faction.add(PvFactions.Xeal);
                     size = 4;
                     tier = 3;
+                    tierMultiplier = 0.6f;
                     range = 6;
-                    speedPerOre = 0.25f;
+                    speedPerOre = 0.2f/60f;
                     itemCapacity = 100;
                     updateEffect = Fx.smeltsmoke;
                     squareSprite = false;

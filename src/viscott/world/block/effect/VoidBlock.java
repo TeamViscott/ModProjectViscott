@@ -8,7 +8,9 @@ import arc.util.Nullable;
 import arc.util.Time;
 import arc.util.Tmp;
 import mindustry.gen.Building;
+import mindustry.graphics.Drawf;
 import mindustry.graphics.Layer;
+import mindustry.graphics.Pal;
 import mindustry.input.Placement;
 import mindustry.world.Tile;
 import mindustry.world.draw.DrawBlock;
@@ -43,6 +45,11 @@ public class VoidBlock extends PvBlock {
         Placement.calculateNodes(points, this, rotation, (point, other) -> overlaps(world.tile(point.x, point.y), world.tile(other.x, other.y)));
     }
 
+    @Override
+    public void drawPlace(int x, int y, int rotation, boolean valid) {
+        super.drawPlace(x,y,rotation,valid);
+        Drawf.dashCircle(x*8+offset,y*8+offset,voidRadius*8, Pal.lighterOrange);
+    }
     boolean overlaps(@Nullable Tile src, @Nullable Tile other){
         if(src == null || other == null) return true;
         return Intersector.overlaps(Tmp.cr1.set(src.worldx() + offset, src.worldy() + offset, voidRadius * tilesize), Tmp.r1.setSize(size * tilesize).setCenter(other.worldx() + offset, other.worldy() + offset));

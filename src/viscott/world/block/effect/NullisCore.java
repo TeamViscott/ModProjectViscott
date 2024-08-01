@@ -6,6 +6,8 @@ import arc.util.io.Reads;
 import arc.util.io.Writes;
 import mindustry.Vars;
 import mindustry.gen.*;
+import mindustry.graphics.Drawf;
+import mindustry.graphics.Pal;
 import mindustry.type.Item;
 import mindustry.type.UnitType;
 import mindustry.world.modules.ItemModule;
@@ -28,6 +30,12 @@ public class NullisCore extends PvCore {
     {
         updateClipRadius(voidRadius*8);
         super.init();
+    }
+
+    @Override
+    public void drawPlace(int x, int y, int rotation, boolean valid) {
+        super.drawPlace(x,y,rotation,valid);
+        Drawf.dashCircle(x*8+offset,y*8+offset,voidRadius*8, Pal.lighterOrange);
     }
     public class NullisCoreBlock extends PvCoreBuild implements EffectAreaC {
         public float pulsing = 0;

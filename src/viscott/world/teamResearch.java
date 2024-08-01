@@ -3,8 +3,7 @@ package viscott.world;
 import arc.Core;
 import arc.Events;
 import mindustry.Vars;
-import mindustry.ctype.ContentType;
-import mindustry.ctype.UnlockableContent;
+import mindustry.entities.units.BuildPlan;
 import mindustry.game.EventType;
 import mindustry.gen.Building;
 import mindustry.type.Category;
@@ -12,6 +11,10 @@ import mindustry.type.ItemStack;
 import mindustry.world.Block;
 import mindustry.world.meta.BuildVisibility;
 import viscott.types.PvFaction;
+
+import java.util.concurrent.atomic.AtomicReference;
+
+import static mindustry.Vars.state;
 
 public class teamResearch extends Block {
     public PvFaction refTeam;
@@ -27,6 +30,11 @@ public class teamResearch extends Block {
         health = 1;
         update = true;
         rebuildable = false;
+    }
+
+    @Override
+    public boolean isVisible(){
+        return super.isVisible() && (!refTeam.isExtraFaction || Core.settings.getBool("pv-extra-factions"));
     }
 
     @Override
@@ -65,7 +73,23 @@ public class teamResearch extends Block {
 
         @Override
         public void update() {
-            kill();
+            if (!Vars.net.client())
+                kill();
+        }
+
+        @Override
+        public void killed() {
+            if (Vars.net.client()) {
+                AtomicReference<BuildPlan> plan = new AtomicReference<>(null);
+                Vars.player.unit().plans.each(c -> {
+                    if (c.build() == this)
+                        plan.set(c);
+                });
+                if (plan.get() != null) {
+                    Vars.player.unit().plans.remove(plan.get());
+                }
+            }
+            super.killed();
         }
     }
 }

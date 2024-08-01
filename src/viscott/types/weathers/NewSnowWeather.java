@@ -2,44 +2,34 @@ package viscott.types.weathers;
 
 import arc.Core;
 import arc.Events;
-import arc.fx.filters.FxaaFilter;
 import arc.graphics.Color;
-import arc.graphics.Texture;
 import arc.graphics.g2d.Draw;
-import arc.graphics.g2d.Fill;
 import arc.graphics.g2d.TextureRegion;
 import arc.math.Angles;
 import arc.math.Mathf;
-import arc.math.geom.Position;
 import arc.math.geom.Rect;
 import arc.math.geom.Vec2;
 import arc.struct.Seq;
-import arc.util.Log;
-import arc.util.Time;
 import arc.util.noise.Noise;
 import mindustry.Vars;
 import mindustry.content.Fx;
 import mindustry.content.UnitTypes;
-import mindustry.content.Weathers;
 import mindustry.entities.Leg;
 import mindustry.game.EventType;
 import mindustry.gen.*;
 import mindustry.graphics.Layer;
 import mindustry.graphics.Trail;
-import mindustry.type.UnitType;
 import mindustry.type.unit.TankUnitType;
 import mindustry.type.weather.ParticleWeather;
 import mindustry.world.blocks.distribution.Conveyor;
+import mindustry.world.blocks.distribution.Duct;
 import mindustry.world.blocks.distribution.StackConveyor;
 import mindustry.world.blocks.liquid.Conduit;
 import mindustry.world.blocks.payloads.PayloadConveyor;
 import mindustry.world.blocks.payloads.PayloadRouter;
-import mindustry.world.draw.DrawRegion;
-import mindustry.world.meta.Attribute;
 import viscott.content.PvEffects;
 import viscott.content.PvSounds;
 import viscott.utilitys.PvUtil;
-import viscott.world.block.drill.Grinder;
 
 import java.util.HashMap;
 
@@ -84,6 +74,7 @@ public class NewSnowWeather extends ParticleWeather {
             snowOverlay[i] = Core.atlas.find(PvUtil.GetName("snow-"+(i+1)));
     }
 
+
     @Override
     public void init() {
         super.init();
@@ -97,18 +88,26 @@ public class NewSnowWeather extends ParticleWeather {
             Vars.state.teams.getActive().each((teamData) -> {
                 teamData.buildings.each((building) -> {
                     int ns = Mathf.floor(Math.abs(Noise.noise(building.x,building.y,0xffff,0xffff)))%4;
-                    if (building instanceof Conveyor.ConveyorBuild cb ) {
+
+                    if (building.block instanceof Conveyor type ) {
                         for(int i = 0;i < 4;i++)
-                            if (cb.rotation != i ? cb.nearby(i) == null : !(cb.nearby(i).block instanceof Conveyor && (cb.nearby(i).rotation+2)%4 == i))
+                            if (building.nearby(i) == null || !(building.rotation == i || building.nearby(i).block instanceof Conveyor && (building.nearby(i).rotation + 2) % 4 == i))
                                 Draw.rect(snowOverlayConveyor[i][ns],building.x,building.y);
-                    } else if (building instanceof Conduit.ConduitBuild cb) {
+
+                    } else if (building.block instanceof Conduit type) {
                         for(int i = 0;i < 4;i++)
-                            if (cb.rotation != i ? cb.nearby(i) == null : !(cb.nearby(i).block instanceof Conduit && (cb.nearby(i).rotation+2)%4 == i))
+                            if (building.nearby(i) == null || !(building.rotation == i || building.nearby(i).block instanceof Conduit && (building.nearby(i).rotation + 2) % 4 == i))
                                 Draw.rect(snowOverlayConveyor[i][ns],building.x,building.y);
-                    } else if (building instanceof StackConveyor.StackConveyorBuild cb) {
+
+                    // WHY ARE YOU LIKE THIS
+                    } else if (building.block instanceof Duct type) {
+                        for(int i = 0;i < 4;i++)
+                            if (building.nearby(i) == null || !(building.rotation == i || building.nearby(i).block instanceof Duct && (building.nearby(i).rotation + 2) % 4 == i))
+                                Draw.rect(snowOverlayConveyor[i][ns],building.x,building.y);
+
+                    } else if (building.block instanceof StackConveyor type) {
                         for (int i = 0; i < 4; i++) {
-                            var nb = cb.nearby(i);
-                            if (nb == null || !(cb.rotation == i || nb.block instanceof StackConveyor && (nb.rotation + 2) % 4 == i))
+                            if (building.nearby(i) == null || !(building.rotation == i || building.nearby(i).block instanceof StackConveyor && (building.nearby(i).rotation + 2) % 4 == i))
                                 Draw.rect(snowOverlayConveyor[i][ns], building.x, building.y);
                         }
                     } else if (building instanceof PayloadConveyor.PayloadConveyorBuild cb) {
