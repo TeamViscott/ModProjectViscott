@@ -1,6 +1,7 @@
 package viscott.types;
 
 import arc.Core;
+import arc.KeyBinds;
 import arc.graphics.Pixmap;
 import arc.graphics.Pixmaps;
 import arc.graphics.g2d.Draw;
@@ -61,6 +62,7 @@ public class BuildUnitType extends PvUnitType{
                     Turret.TurretBuild build = (Turret.TurretBuild)buildPay.build;
                     build.x(unit.x);
                     build.y(unit.y);
+                    boolean valid = false;
                     if(build.block.consumesPower && build.power != null) {
                         if (unit.stack.amount != 0) {
                             float TakeTime = BaseItemDelpeltionRate;
@@ -68,8 +70,12 @@ public class BuildUnitType extends PvUnitType{
                             if (unit.stack.item.charge != 0 || unit.stack.item.flammability != 0) {
                                 if (unit.stack.item.charge > unit.stack.item.flammability) {
                                     ItemDepleteRate = unit.stack.item.charge;
+                                    valid = true;
                                 } else if (unit.stack.item.flammability > unit.stack.item.charge) {
                                     ItemDepleteRate = unit.stack.item.flammability;
+                                    valid = true;
+                                } else {
+                                    valid = false;
                                 }
                                 if (powTick == 1) {
                                     unit.stack.amount -= 1;
@@ -89,20 +95,21 @@ public class BuildUnitType extends PvUnitType{
                             Itembuild.handleItem(null, unit.item());
                             unit.stack.amount -= 1;
                         }
-                        tickEnd(Itembuild);
+                        tickEnd(Itembuild,valid);
                     }else{
-                        tickEnd(build);
+                        tickEnd(build,valid);
                     }
                 }
             }
         }
-        public void tickEnd(Building build){
+        public void tickEnd(Building build,Boolean valid){
             if (build.block.consumesPower && build.power != null) {
-                build.power.status = 1;
-                powTick += 1;
-                if(Core.input.keyTap(rightBracket)){
-                    build.power.status = 0;
+                if (valid) {
+                    build.power.status = 1;
+                } else {
+                    build.power.status = 0f;
                 }
+                powTick += 1;
             }
             build.update();
             build.warmup();
