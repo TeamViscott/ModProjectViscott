@@ -72,7 +72,18 @@ public class PvFactions {
             isExtraFaction = true;
         }};
         Unix = new PvFaction("unix",Color.purple) {{ // LOL
-            description = "[pink][Extra Faction][]\nInterdimensional Travel goes brrrrr";
+            description = """
+            [pink][Extra Faction][]\nInterdimensional Travel goes brrrrr
+            
+            The Unix, a special faction consistant of units often built for space travel, their strength lies with their Mothership,
+            a unit as large as a planet that is the hub for all cores and expeditions.
+            [green]Positive Attributes :
+                extraterrestrial units (units outside planet)
+                Depoless Grinders
+            [red]Negative Attributes :
+                Reliance on the Mothership
+                Requires a lot of Space
+            """;
             isExtraFaction = true;
         }};
     }

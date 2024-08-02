@@ -66,6 +66,7 @@ public class PvBlocks {
                     /*Drills*/harvestDrill,tetraDrill,spectrumDrill,rootHarvester,
                     /*Grinders*/harvestGrinder,behemothGrinder,oilGrinder,
                         /* Xeal */eradicarialGrinder,
+                        /* Unix */zirconiumRegrinder,
 
                     /*Power*/opticalNode,auditoryNode,compressedBattery,lifeForceConverter,oakDengerizer,
                     /*Power Production*/smallCarbonPanel,largeCarbonPanel,lithiumDegenerator,
@@ -357,6 +358,28 @@ public class PvBlocks {
                         new DrawRegion("-bottom"),
                         new DrawLiquidRegion() {{ this.suffix = "-liquid"; }},
                         new DrawDefault()
+                    );
+                }};
+                zirconiumRegrinder = new SpaceGrinder("zirconium-regrinder") {{
+                    requirements(Category.production, with(PvItems.zirconium,35));
+                    localizedName = "Zirconium Regrinder";
+                    description = "Takes in Zirconium from the atmosphere, solid blocks hinder this grinder from working";
+                    squareSprite = false;
+                    health = 200;
+                    liquidCapacity = 20;
+                    consumeLiquid(PvLiquids.xenon,2f/60f).boost();
+                    boostMult = 4.6f;
+                    size = 2;
+                    range = 1;
+                    speedPerOre = 0.6f/60f/12f;
+                    faction.add(PvFactions.Unix);
+                    itemCapacity = 20;
+                    outputItem = new ItemStack(PvItems.zirconium,5);
+                    updateEffect = Fx.smokeCloud;
+                    drawer = new DrawMulti(
+                            new DrawRegion("-bottom"),
+                            new DrawLiquidRegion() {{ this.suffix = "-liquid"; }},
+                            new DrawDefault()
                     );
                 }};
                 harvestDrill = new Drill("harvest-drill")

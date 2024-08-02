@@ -84,8 +84,7 @@ public class PvCore extends CoreBlock {
                 return;
             }
             if(playerQue.contains(player)) return;
-            if (!Vars.net.client())
-                warmupEffect.at(tile);
+            warmupEffect.at(tile);
             playerQue.add(player);
             Timer.schedule(()->{
                 Call.playerSpawn(tile, player);
