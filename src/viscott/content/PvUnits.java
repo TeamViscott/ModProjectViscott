@@ -84,7 +84,8 @@ public class PvUnits {
                     vdoble,
                     ethanol,
                     siede,
-                    frire, /*swarm mini extra*/lilshts,
+                    frire, /*swarm mini extra*/
+                        frire_swarm,frire_pop,frire_wyrm,
                     zepz, baron, //kapzduke's twin bosses
                     omamori,
                     plays; //a guy's boss cuz why not.
@@ -2250,18 +2251,74 @@ public class PvUnits {
                 }}
             );
         }};
-        lilshts = new PvUnitType("lilshts") {{
-            health = 650;
-            armor = 20;
-            localizedName = "Lil shizz";
+        frire_wyrm = new PvUnitType("wyrm") {{
+            health = Integer.MAX_VALUE;
+            armor = Integer.MAX_VALUE;
+            speed = 2f/7.5f;
+            localizedName = "Wyrm";
             constructor = EntityMapping.map("CrawlUnit");
             aiController = HugAI::new;
-            controller = p -> new HugAI();
             segments = 3;
+            segmentMag = 0.5f;
+            segmentScl = 2f;
+            segmentPhase = 1f;
+            omniMovement = false;
+            drawCell = false;
+            drawBody = false;
+            crushDamage = Integer.MAX_VALUE;
+        }};
+        frire_swarm = new PvUnitType("frire-mite-swarm") {{
+            health = 650;
+            armor = 20;
+            localizedName = "Swarming Frire Mite";
+            constructor = EntityMapping.map("CrawlUnit");
+            aiController = HugAI::new;
+            segments = 3;
+            segmentMag = 1f;
             omniMovement = false;
             drawCell = false;
             drawBody = false;
             crushDamage = 0.5f;
+        }};
+        frire_pop = new PvUnitType("frire-mite-pop") {{
+            health = 650;
+            armor = 20;
+            localizedName = "Popping Frire Mite";
+            constructor = EntityMapping.map("CrawlUnit");
+            aiController = HugAI::new;
+            segments = 3;
+            segmentMag = 1f;
+            omniMovement = false;
+            drawCell = false;
+            drawBody = false;
+            crushDamage = 0f;
+
+            weapons.add(new Weapon(){{
+                shootOnDeath = true;
+                reload = 24f;
+                shootCone = 180f;
+                ejectEffect = Fx.none;
+                shootSound = Sounds.explosion;
+                x = shootY = 0f;
+                mirror = false;
+                bullet = new BulletType(){{
+                    collidesTiles = false;
+                    collides = false;
+                    hitSound = Sounds.explosion;
+
+                    rangeOverride = 30f;
+                    hitEffect = Fx.pulverize;
+                    speed = 0f;
+                    splashDamageRadius = 7*8f;
+                    instantDisappear = true;
+
+                    splashDamage = 180f;
+
+                    killShooter = true;
+                    hittable = false;
+                    collidesAir = true;
+                }};
+            }});
         }};
         frire = new PvUnitType("frire") {{
             localizedName = "FrireDragon";
@@ -2269,8 +2326,11 @@ public class PvUnits {
             armor = 35;
             constructor = EntityMapping.map("CrawlUnit");
             aiController = FrireAI::new;
-            segments = 3;
+            segments = 5;
+            segmentMag = 1.5f;
+            segmentScl = 3f;
             hitSize = 8 * 4;
+            speed = 5f / 7.5f;
             omniMovement = false;
             drawCell = false;
             rotateSpeed = 90/60f;
@@ -2306,7 +2366,25 @@ public class PvUnits {
                         bullet = new BulletType() {{
                             this.range = 8*16;
                             lifetime = 0;
-                            spawnUnit = PvUnits.lilshts;
+                            spawnUnit = PvUnits.frire_swarm;
+                            shootSound = hitSound = despawnSound = Sounds.none;
+                            ejectEffect = fallEffect = smokeEffect = shootEffect = despawnEffect = hitEffect = Fx.none;
+                        }};
+                    }},
+                    new Weapon("frireSpawn2") {{
+                        mirror = true;
+                        x = -8*1.4f;
+                        y = 0;
+                        shootCone = 360;
+                        alternate = true;
+                        reload = 60*2;
+                        rotate = false;
+                        controllable = false;
+                        autoTarget = true;
+                        bullet = new BulletType() {{
+                            this.range = 8*16;
+                            lifetime = 0;
+                            spawnUnit = PvUnits.frire_pop;
                             shootSound = hitSound = despawnSound = Sounds.none;
                             ejectEffect = fallEffect = smokeEffect = shootEffect = despawnEffect = hitEffect = Fx.none;
                         }};

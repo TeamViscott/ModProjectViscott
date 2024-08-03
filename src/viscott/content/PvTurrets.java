@@ -80,11 +80,6 @@ public class PvTurrets {
                     splashDamageRadius = 8*2f;
                     despawnEffect = hitEffect = Fx.wet;
                     ammoMultiplier = 10;
-                    fragBullet = new EffectAreaBulletType(){{
-                        voidRadius = 8*2;
-                        lifetime = 60*2;
-
-                    }};
                 }}
             );
             drawer = new DrawTurret(GetName("Pov")) {{

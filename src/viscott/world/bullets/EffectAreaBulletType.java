@@ -11,7 +11,7 @@ import viscott.world.chips.EffectAreaTags;
 
 public class EffectAreaBulletType extends BasicBulletType implements EffectAreaC {
     public float voidRadius = 8*5;
-    public StatusEffect voidEffectAlly = null;
+    public StatusEffect voidEffectAlly = PvStatusEffects.voidShield;
     public StatusEffect voidEffectEnemy = PvStatusEffects.voidDecay;
     public float voidDrawLayer = PvLayers.voidLayer;
     public EffectAreaTags areaTag = EffectAreaTags.voidEffects;

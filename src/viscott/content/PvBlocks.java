@@ -371,7 +371,7 @@ public class PvBlocks {
                     boostMult = 4.6f;
                     size = 2;
                     range = 1;
-                    speedPerOre = 0.6f/60f/12f;
+                    speedPerOre = 0.4f/60f/12f;
                     faction.add(PvFactions.Unix);
                     itemCapacity = 20;
                     outputItem = new ItemStack(PvItems.zirconium,5);

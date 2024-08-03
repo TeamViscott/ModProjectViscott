@@ -11,7 +11,7 @@ import static mindustry.content.Items.silicon;
 public class PvItems {
     public static Item
     zirconium,lithium,barium,nobelium,platinum,erbium,carbonFiber,copium,
-            rushAlloy,tideAlloy,bulkAlloy,singularityAlloy,darkMatter,hardenedOak
+            rushAlloy,tideAlloy,bulkAlloy,singularityAlloy,darkMatter,hardenedOak,quantumAlloy
     ;
     public static Seq<Item> vercilusItems = new Seq<Item>(),
                             vercilusOnlyItems = new Seq<Item>();
@@ -78,7 +78,7 @@ public class PvItems {
         singularityAlloy = new Item("singularity-alloy") {{
             localizedName = "Singularity Alloy";
             color = Color.black;
-            description = "The most dense metal forged directly infront of the Singularity event of a black hole with dark matter. its structure is unstable and unbreakable.";
+            description = "The most dense metal forged directly infront of the Singularity event of a black hole with dark matter. its structure is unstable yet unbreakable.";
             radioactivity = -1;
             flammability = -1;
             explosiveness = 1;
@@ -100,6 +100,16 @@ public class PvItems {
             explosiveness = -10;
             flammability = 2;
             radioactivity = -4;
+        }};
+        quantumAlloy = new Item("quantum-alloy") {{
+            localizedName = "Quantum Alloy";
+            color = Pal.sap;
+            description = "A strong yet light metal forged by the mother ship. So light and weightless that it causes time to warp around it.";
+            flammability = -5;
+            explosiveness = 1;
+            radioactivity = 5;
+            charge = 10;
+            //E
         }};
 
         vercilusItems.addAll(zirconium,lithium,barium,silicon,nobelium,platinum,erbium,carbonFiber,rushAlloy,tideAlloy,bulkAlloy);
