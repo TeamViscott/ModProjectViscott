@@ -73,6 +73,10 @@ public class PvUnits {
 
         /*yggdrasil path*/root,stick,branch,tree,cambrium,yggdrasil,
 
+        /*Unix Spooder path*/circuit,
+
+        /*Unix Worm path*/arrow,
+
         /*Nullis*/
             /*Storage Con Path*/pocket,container,capsule,vault,chamber, /* I u I */ symphony,
 
@@ -100,6 +104,7 @@ public class PvUnits {
         loadStoragePath();
 
         loadYggdrasilPath();
+        loadUnixPath();
         //Extra UnitLoads
         loadCorePath();
         loadExtra();
@@ -4624,5 +4629,129 @@ public class PvUnits {
             }});
         }};
 
+    }
+    public static void loadUnixPath() {
+        circuit = new PvUnitType("circuit") {{
+            constructor = EntityMapping.map("LegsUnit");
+            localizedName = "Circuit";
+            drag = 0.08f;
+            speed = 14f/7.5f;
+            rotateSpeed = 2.5f;
+            accel = 0.09f;
+            health = 600f;
+            armor = 6f;
+            hitSize = 8*1.25f;
+
+            range = 15*8;
+
+            stepShake = 0;
+            legCount = 4;
+            legLength = 16;
+            legExtension = 4;
+            legGroupSize = 2;
+            baseLegStraightness = 0.5f;
+            legMoveSpace = 1.5f;
+            legStraightness = 0.7f;
+
+            parts.add(
+                    new RegionPart("-arm"){{
+                            moveRot = -10;
+                            progress = PartProgress.warmup;
+                            under = true;
+                            mirror = true;
+                            moves.add(new PartMove(PartProgress.reload, 1f, -1f, 0f));
+                    }}
+            );
+
+            weapons.add(new Weapon(){{
+                x = 0f;
+                y = -2f;
+                shootY = 0f;
+                reload = 60f*1f;
+                mirror = false;
+                minWarmup = 0.95f;
+                shake = 3f;
+                cooldownTime = reload - 10f;
+
+                bullet = new BasicBulletType(6,18){{
+                    lifetime = PvUtil.GetRange(speed,15);
+                    knockback = 0.3f;
+                    width = 10f;
+                    height = 14f;
+                    ammoMultiplier = 2;
+                    hitColor = backColor = trailColor = Color.valueOf("6f6e80");
+                    frontColor = Color.valueOf("9a9aa6");
+                    hitEffect = despawnEffect = Fx.hitBulletColor;
+                    trailWidth = 2.5f;
+                    trailLength = 30;
+                    despawnEffect = hitEffect = Fx.explosion;
+                    splashDamage = 35f;
+                    splashDamageRadius = 3*8;
+                    splashDamagePierce = true;
+
+                }};
+
+            }});
+        }};
+
+        arrow = new PvUnitType("arrow") {{
+            constructor = EntityMapping.map("CrawlUnit");
+            localizedName = "Arrow";
+            drag = 0.08f;
+            speed = 12f/7.5f;
+            rotateSpeed = 2.5f;
+            accel = 0.09f;
+            health = 600f;
+            armor = 6f;
+            hitSize = 8*1.5f;
+            range = 22*8;
+
+            segments = 3;
+
+            omniMovement = false;
+
+            drawBody = false;
+            drawCell = false;
+            weapons.add(
+                    new Weapon(PvUtil.GetName("arrow")) {{
+                       shoot.shots = 0;
+                       rotate = true;
+                       rotateSpeed = 5;
+                       top = false;
+                       x = y = 0;
+
+                    }},
+                    new Weapon(PvUtil.GetName("arrow-arm")){{
+
+                x = 0f;
+                y = 0f;
+                shootX = 4f;
+                shootY = 1f;
+                reload = 60f*1f;
+                mirror = true;
+                top = false;
+                rotateSpeed = 5;
+                rotate = true;
+                minWarmup = 0.95f;
+                shake = 3f;
+                cooldownTime = reload - 10f;
+
+                bullet = new BasicBulletType(6,12){{
+                    lifetime = PvUtil.GetRange(speed,22);
+                    width = 10f;
+                    height = 14f;
+                    hitColor = backColor = trailColor = Pal.heal;
+                    frontColor = Color.white;
+                    hitEffect = despawnEffect = Fx.heal;
+                    trailWidth = 2.5f;
+                    trailLength = 30;
+                    collidesTeam = true;
+                    healPercent = 1.2f;
+                    healAmount = 4;
+
+                }};
+
+            }});
+        }};
     }
 }

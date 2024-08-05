@@ -17,6 +17,13 @@ public class PvWeathers {
         fleet = new FleetWeather("fleet")
         {{
             localizedName = "Fleet";
+            fleet.add(
+                    PvUnits.amp,
+                    PvUnits.branch,
+                    PvUnits.centi,
+                    PvUnits.puppet
+            );
+            fleetSize = 25;
         }};
         thunder = new ThunderWeather("thunder") {{
             localizedName = "Thunder";

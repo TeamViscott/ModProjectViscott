@@ -16,6 +16,7 @@ import mindustry.gen.Unit;
 import mindustry.graphics.Drawf;
 import mindustry.graphics.Layer;
 import mindustry.graphics.MultiPacker;
+import mindustry.input.Binding;
 import mindustry.world.blocks.defense.turrets.ItemTurret;
 import mindustry.world.blocks.defense.turrets.Turret;
 import mindustry.world.blocks.payloads.BuildPayload;
@@ -56,6 +57,8 @@ public class BuildUnitType extends PvUnitType{
 
         @Override
         public void update(Unit unit){
+            Core.input.keyTap(Binding.dropCargo);
+
             if (unit instanceof Payloadc p && p.hasPayload()) {
                 Payload pay = p.payloads().first();
                 if (pay instanceof BuildPayload buildPay && buildPay.build.block() instanceof Turret) {
