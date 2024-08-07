@@ -10,6 +10,7 @@ It's a Small Project me (<b>Siede</b>) and a few others are working on. <br>
     <li style="color:purple"><b>Manuwar</b></li>
     <li style="color:yellow"><b>Otamamori</b></li>
     <li style="color:lightgrey"><b>Kapzduke</b></li>
+    <li style="color:red"><b>FrireDragon</b></li>
     </ul>
     <li style="color:crimson"><h3>SFX/Music</h3></li>
     <ul>
@@ -20,6 +21,7 @@ It's a Small Project me (<b>Siede</b>) and a few others are working on. <br>
     <ul>
     <li style="color:lime"><b>Ethanol10</b></li>
     <li style="color:yellow"><b>ThomasThings</b></li>
+    <li style="color:red"><b>FrireDragon</b></li>
     </ul>
     <li style="color:crimson"><h3>Mappers</h3></li>
     <ul>

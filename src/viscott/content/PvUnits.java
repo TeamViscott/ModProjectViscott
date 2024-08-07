@@ -7,8 +7,10 @@ import arc.math.geom.Vec2;
 import arc.struct.Seq;
 import arc.util.Time;
 import mindustry.Vars;
+import mindustry.ai.UnitCommand;
 import mindustry.ai.types.HugAI;
 import mindustry.ai.types.MinerAI;
+import mindustry.ai.types.RepairAI;
 import mindustry.content.Fx;
 import mindustry.content.Items;
 import mindustry.content.StatusEffects;
@@ -38,6 +40,7 @@ import arc.math.geom.*;
 import arc.math.*;
 
 import mindustry.type.unit.MissileUnitType;
+import mindustry.type.weapons.RepairBeamWeapon;
 import viscott.content.shootpatterns.CyclicShootPattern;
 import viscott.gen.CoinUnit;
 import viscott.gen.weapons.RandWeapon;
@@ -76,6 +79,8 @@ public class PvUnits {
         /*Unix Spooder path*/circuit,
 
         /*Unix Worm path*/arrow,
+
+        /*Unix Air path*/celestial,
 
         /*Nullis*/
             /*Storage Con Path*/pocket,container,capsule,vault,chamber, /* I u I */ symphony,
@@ -4751,6 +4756,55 @@ public class PvUnits {
 
                 }};
 
+            }});
+        }};
+
+        celestial = new PvUnitType("celestial") {{
+            constructor = EntityMapping.map("UnitEntity");
+            localizedName = "Celestial";
+            drag = 0.03f;
+            speed = 26f/7.5f;
+            rotateSpeed = 7f;
+            accel = 0.2f;
+            health = 250f;
+            armor = 4f;
+            hitSize = 8*1.5f;
+            range = 14*8;
+            itemCapacity = 20;
+            flying = true;
+
+            aiController = RepairAI::new;
+            defaultCommand = UnitCommand.repairCommand;
+            mineTier = 1;
+            mineSpeed = 1.2f;
+            buildSpeed = 0.2f;
+
+            weapons.add(new RepairBeamWeapon(){{
+
+                widthSinMag = 0.14f;
+                reload = 10f;
+                x = 5f;
+                y = 4f;
+                rotate = false;
+                shootY = 0f;
+                beamWidth = 0.5f;
+                aimDst = 0f;
+                shootCone = 40f;
+                mirror = true;
+
+                repairSpeed = 0.6f / 2f;
+                fractionRepairSpeed = 0.02f;
+
+                targetUnits = false;
+                targetBuildings = true;
+                autoTarget = false;
+                controllable = true;
+                laserColor = Pal.heal;
+                healColor = Pal.heal;
+
+                bullet = new BulletType(){{
+                    maxRange = 14*8;
+                }};
             }});
         }};
     }
