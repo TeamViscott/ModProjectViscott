@@ -65,7 +65,8 @@ public class PvUnits {
             /*xeal*/amp,volt,watt,
             /*malakai*/substance,
             /*psy*/warden,
-            wood,
+            /*yggdrasil*/wood,
+            /*unix*/amcro,
         /*Flying Ion Path*/ particle, snippet, fragment, excerpt, pericope,
 
         /*Rocket Hover Path*/milli,centi,deci,hecto, kilo,
@@ -727,6 +728,99 @@ public class PvUnits {
                         bullet = new LaserBoltBulletType(14,22)
                         {{
                         }};
+                    }}
+            );
+        }};
+        amcro = new PvUnitType("amcro") {{
+            localizedName = "Amcro";
+            constructor = EntityMapping.map("alpha");
+            health = 200;
+            armor = 0;
+            flying = true;
+            buildSpeed = 0.6f;
+            mineSpeed = 4f;
+            itemCapacity = 30;
+            speed = 24f/7.5f;
+            drag = 0.2f;
+            range = 28*8;
+            hitSize = 8*1.5f;
+            weapons.add(
+                    new Weapon()
+                    {{
+                        mirror = false;
+                        top = false;
+                        x = 0;
+                        y = 0;
+                        reload = 60f*8f;
+                        alternate = false;
+                        bullet = new ArtilleryBulletType(4,75)
+                        {{
+                            buildingDamageMultiplier = 0.01f;
+                            trailWidth = 2;
+                            trailLength = 25;
+                            lifetime = PvUtil.GetRange(4,10);
+
+                            fragBullets = 1;
+                            fragSpread = 0;
+                            fragVelocityMin = 1;
+                            fragVelocityMax = 1;
+                            fragOnHit = false;
+                            fragBullet = new BasicBulletType(0, 75, "large-bomb")
+                            {{
+                               buildingDamageMultiplier = 0.01f;
+                               lifetime = 60f * 5f;
+                               spin = 2;
+                               pierce = true;
+                               pierceCap = 3;
+                               shrinkX = 0.3f;
+                               shrinkY = 0.3f;
+                               width = 24f;
+                               height = 24f;
+
+                               intervalBullets = 1;
+                               bulletInterval = 0.5f * 60f;
+                               intervalRandomSpread = 0;
+                               intervalSpread = 0;
+                               intervalAngle = 0;
+                               intervalBullet = new BulletType(0f,0)
+                               {{
+                                       buildingDamageMultiplier = 0.00001f;
+                                       lifetime = 30f;
+
+                                       homingRange = 28 * 8;
+                                       homingPower = 1;
+
+                                       fragBullets = 1;
+                                       fragVelocityMin = 1;
+                                       fragVelocityMax = 1;
+                                       fragRandomSpread = 0;
+                                       fragSpread = 0;
+                                       fragBullet = new BasicBulletType(6,25)
+                                       {{
+                                           buildingDamageMultiplier = 0.001f;
+                                           trailWidth = 2;
+                                           trailLength = 8;
+                                           lifetime = PvUtil.GetRange(6, 28);
+                                       }};
+                               }};
+                            }};
+                        }};
+
+                    }}
+            );
+
+            parts.addAll(
+                    new RegionPart("-plate")
+                    {{
+                        progress = PartProgress.warmup;
+                        mirror = true;
+
+                        x = 0;
+                        y = 0;
+                        moveX = -0.5f;
+                        moveY = 0.5f;
+
+                        moves.add(new PartMove(PartProgress.smoothReload, 1f, -1f, 0f));
                     }}
             );
         }};
@@ -2332,6 +2426,18 @@ public class PvUnits {
         }};
         frire = new PvUnitType("frire") {{
             localizedName = "FrireDragon";
+            description = "The [red]Frire[orange]Dragon [][]is a large worm like machine, with a primal hunger for metal and flesh.";
+            details = """
+                    The [red]Frire[orange]Dragon [][]is a mystical machine. It was made at some point, by some unknown person, but one thing is for sure. 
+                    That person held this machine as if it was a beast... which it was. But one thing led to another, and this machine hated its creator, so much it grew a hunger for their flesh.
+                    It broke free, consuming the very person who made it, before traveling the land.
+                    The [red]Frire[orange]Dragon [][]was docile to most other machines, even befriending select few factions. A magical faction called [purple]Unix []changed its programming to allow it to make its own drones to help attack.
+                    The [red]Frire[orange]Dragon [][]even helped factions it had befriended attack other factions, unless it was attacked first. In which case it attempted to do the very same thing it did to its owner, consume.
+                    The [red]Frire[orange]Dragon [][]now lays dormant after its most recent escapade where it worked alongside other machines like it, waiting for the one day it may return to smite down its enemies again...                    
+                    \n[orange]Usual Behaviour Between Factions : 
+                    [green]Ally Factions : []Unix, Xeal, Psy, Nullis
+                    [red]Enemy Factions : []Mortikai, Azulex,
+            """;
             health = 230000;
             armor = 35;
             constructor = EntityMapping.map("CrawlUnit");
