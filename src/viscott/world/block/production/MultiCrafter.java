@@ -202,6 +202,7 @@ public class MultiCrafter extends GenericCrafter {
 
     public void outputLiquid(Liquid liquid, float amount)
     {
+
         LiquidStack ls = new LiquidStack(liquid, amount);
         outputerLiquids.get(outputerLiquids.size - 1).add(ls);
     }
@@ -240,7 +241,7 @@ public class MultiCrafter extends GenericCrafter {
 
         public boolean gotLiquids()
         {
-
+            
             AtomicBoolean enough = new AtomicBoolean(true);
             consumerLiquids.get(selected).each(liquid -> {if (liquids.get(liquid.liquid) < liquid.amount) enough.set(false);});
             return enough.get();

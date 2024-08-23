@@ -1,7 +1,10 @@
 package viscott.types;
 
 import arc.math.Mathf;
+import arc.math.geom.Geometry;
+import arc.math.geom.Point2;
 import mindustry.content.Liquids;
+import mindustry.entities.Puddles;
 import mindustry.gen.Building;
 import mindustry.gen.Groups;
 import mindustry.gen.Puddle;
@@ -18,12 +21,6 @@ import viscott.world.statusEffects.PvStatusEffect;
 public class VoidLiquid extends CellLiquid {
     public float voidDamage = 5;
     public StatusEffect voidFlyingEffect = null;
-    public int[][] checks = {
-            {-1,0},
-            {0,-1},
-            {1,0},
-            {0,1}
-    };
     public VoidLiquid(String name) {
         super(name);
         canStayOn.addAll(Liquids.water);
@@ -44,22 +41,24 @@ public class VoidLiquid extends CellLiquid {
             build.handleLiquid(null,puddle.liquid,puddle.amount);
             puddle.remove();
         }
-        for(int rot = 0;rot < checks.length;rot++) {
-            int[] i = checks[rot];
-            Tile t = puddle.tile.nearby(i[0], i[1]);
-            Puddle np = Groups.puddle.find(p->p.tile == t);
+        for(Point2 offset : Geometry.d4) {
+            Tile t = puddle.tile.nearby(offset);
+            if (t == null) return;
+            Puddle np = Puddles.get(t);
+
             if (np != null && np.liquid == this) {
-                puddle.amount = (np.amount + puddle.amount) / 2;
-                np.amount = puddle.amount;
+                puddle.amount += 0.1f; // nearby puddles increase amount gain.
             }
+
             if ( t == null || t.block() == null ) continue;
-            if (t.block() instanceof Prop prop && !(prop instanceof StaticWall)) {
+            if (t.block() instanceof Prop prop && !(prop instanceof StaticWall)) { // Void eats props
                 t.removeNet();
-                prop.breakEffect.at(t.x,t.y,0,prop.lightColor);
+                prop.breakEffect.at(t.x,t.y,0,prop.mapColor);
                 puddle.amount += 100;
             }
+
             if (t.build instanceof Conduit.ConduitBuild cb) {
-                if(cb.rotation != rot && (cb.liquids.current() == this || cb.liquids.currentAmount() == 0)) {
+                if(cb.liquids.current() == this || cb.liquids.currentAmount() == 0) {
                     cb.liquids.add(this,puddle.amount);
                     cb.noSleep();
                     puddle.remove();
@@ -71,8 +70,6 @@ public class VoidLiquid extends CellLiquid {
             else
                 t.build.damage(voidDamage/60);
             puddle.amount += voidDamage/60;
-            rot++;
         }
-        super.update(puddle);
     }
 }

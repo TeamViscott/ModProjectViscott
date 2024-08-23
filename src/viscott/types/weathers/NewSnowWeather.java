@@ -21,6 +21,7 @@ import mindustry.graphics.Layer;
 import mindustry.graphics.Trail;
 import mindustry.type.unit.TankUnitType;
 import mindustry.type.weather.ParticleWeather;
+import mindustry.world.blocks.Autotiler;
 import mindustry.world.blocks.distribution.Conveyor;
 import mindustry.world.blocks.distribution.Duct;
 import mindustry.world.blocks.distribution.StackConveyor;
@@ -89,7 +90,11 @@ public class NewSnowWeather extends ParticleWeather {
                 teamData.buildings.each((building) -> {
                     int ns = Mathf.floor(Math.abs(Noise.noise(building.x,building.y,0xffff,0xffff)))%4;
 
-                    if (building.block instanceof Conveyor type ) {
+                    if (building.block instanceof Autotiler tile) {
+                        for(int i = 0;i < 4;i++)
+                            if (building.nearby(i) == null || !(building.rotation == i || building.nearby(i).block instanceof Conveyor && (building.nearby(i).rotation + 2) % 4 == i))
+                                Draw.rect(snowOverlayConveyor[i][ns],building.x,building.y);
+                    } else if (building.block instanceof Conveyor type ) {
                         for(int i = 0;i < 4;i++)
                             if (building.nearby(i) == null || !(building.rotation == i || building.nearby(i).block instanceof Conveyor && (building.nearby(i).rotation + 2) % 4 == i))
                                 Draw.rect(snowOverlayConveyor[i][ns],building.x,building.y);
@@ -106,10 +111,10 @@ public class NewSnowWeather extends ParticleWeather {
                                 Draw.rect(snowOverlayConveyor[i][ns],building.x,building.y);
 
                     } else if (building.block instanceof StackConveyor type) {
-                        for (int i = 0; i < 4; i++) {
+                        for (int i = 0; i < 4; i++)
                             if (building.nearby(i) == null || !(building.rotation == i || building.nearby(i).block instanceof StackConveyor && (building.nearby(i).rotation + 2) % 4 == i))
                                 Draw.rect(snowOverlayConveyor[i][ns], building.x, building.y);
-                        }
+
                     } else if (building instanceof PayloadConveyor.PayloadConveyorBuild cb) {
                         for (int i = 0; i < 4; i++) {
                             var pos = new Vec2[]{
@@ -122,13 +127,15 @@ public class NewSnowWeather extends ParticleWeather {
                             if (nb == null || (nb.tileX() != pos[i].x+cb.tileX() || nb.tileY() != pos[i].y+cb.tileY()) || !(cb.block instanceof PayloadRouter ? nb.block instanceof PayloadConveyor : (cb.rotation == i || nb.block instanceof PayloadConveyor && nb.block instanceof PayloadRouter ? true : (nb.rotation + 2) % 4 == i)))
                                 Draw.rect(snowOverlayPayConv[i], building.x, building.y);
                         }
-                    } else {
-                        if (maxSnowSize >= building.block.size)
+                    } else if (maxSnowSize >= building.block.size)
                             Draw.rect(snowOverlay[building.block.size - 1], building.x, building.y);
-                    }
+
+
                 });
             });
-            if (Vars.android) return; // Android cant support forEach and i dont wanna have android users crash. so yeah...
+
+            //if (Vars.android) return; // Android cant support forEach and i dont wanna have android users crash. so yeah...
+
             Groups.unit.each(u->{
                 if (u instanceof TankUnit tu) {
                     TankUnitType typeu = (TankUnitType) tu.type;
@@ -150,18 +157,18 @@ public class NewSnowWeather extends ParticleWeather {
                 if (!u.isGrounded()) return;
                 if (Vars.state.isPaused()) return;
                 var remD = new Seq<Unit>();
-                walkPrintDirectory.keySet().forEach(s->{
+                for (var s : walkPrintDirectory.keySet()) {
                     if (!s.isValid())
                         remD.add(s);
-                });
+                }
                 remD.each(un->{
                     walkPrintDirectory.remove(un);
                 });
                 var remD2 = new Seq<Unit>();
-                treadPrints.keySet().forEach(s->{
+                for (var s : treadPrints.keySet()) {
                     if (!s.isValid())
                         remD2.add(s);
-                });
+                };
                 remD2.each(un->{
                     treadPrints.remove(un);
                 });

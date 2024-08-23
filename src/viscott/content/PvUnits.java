@@ -2441,7 +2441,11 @@ public class PvUnits {
             health = 230000;
             armor = 35;
             constructor = EntityMapping.map("CrawlUnit");
+
+            controller = u -> new FrireAI();
+
             aiController = FrireAI::new;
+
             segments = 5;
             segmentMag = 1.5f;
             segmentScl = 3f;

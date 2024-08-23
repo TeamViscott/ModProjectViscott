@@ -6,6 +6,7 @@ import arc.util.Structs;
 import mindustry.Vars;
 import mindustry.game.Team;
 import mindustry.gen.Groups;
+import mindustry.type.LiquidStack;
 import mindustry.world.Block;
 import viscott.types.PvFaction;
 
@@ -19,8 +20,8 @@ public class PvBlock extends Block {
         super(name);
         solid = true;
         destructible = true;
-    }
 
+    }
     @Override
     public void loadIcon(){
         super.loadIcon();
