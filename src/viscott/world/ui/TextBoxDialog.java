@@ -1,63 +1,74 @@
 package viscott.world.ui;
 
+import arc.Core;
+import arc.Events;
+import arc.graphics.g2d.Draw;
 import arc.scene.style.TextureRegionDrawable;
 import arc.scene.ui.ImageButton;
 import arc.scene.ui.layout.Table;
-import mindustry.gen.Building;
-import mindustry.gen.Icon;
-import mindustry.gen.Tex;
+import arc.struct.Seq;
+import mindustry.Vars;
+import mindustry.game.EventType;
+import mindustry.gen.*;
+import mindustry.graphics.Layer;
 import mindustry.ui.Styles;
 import mindustry.ui.dialogs.BaseDialog;
 import viscott.world.block.logic.PvSelector;
 
 import static mindustry.Vars.control;
 
-public class TextBoxDialog extends BaseDialog {
-    String text = "";
+public class TextBoxDialog extends Table {
 
     Table dialogue = new Table();
+    Table buttons = new Table();
+
+    boolean vis;
     public TextBoxDialog(){
-        super("TextBox");
+
+        super(Tex.button);
+        vis = false;
+
+        setClip(false);
+
+        Events.run(EventType.Trigger.draw,()->{
+            if (visibility.get()) {
+                Draw.z(Layer.endPixeled);
+                setPosition(Core.camera.position.getX(),Core.camera.position.getY());
+                draw();
+            }
+        });
+
+
+        visible(() -> vis);
 
         clearChildren();
 
-        shouldPause = true;
 
-        addCloseListener();
 
-        shown(this::setup);
-        hidden(() -> {
-
-        });
-        onResize(() -> {
-            setup();
-        });
+        center();
 
         row();
 
-        add(dialogue).grow().name("Pcanvas");
+        setSize(640,320);
+
+        add(dialogue).grow().name("Dialogue");
 
         row();
 
-        add(buttons).growX().name("Pcanvas");
-    }
-    public void call(Building build)
-    {
-        show();
+        add(buttons).growX().name("Buttons");
     }
 
     public void show(String text) {
-        this.text = text;
-        show();
+        setup(text);
     }
 
-    public void setup()
+    public void setup(String text)
     {
+        vis = true;
         dialogue.clearChildren();
         dialogue.add(text);
         buttons.clearChildren();
-        buttons.defaults().size(160f, 64f);
-        buttons.button("@back", Icon.left, this::hide).name("back");
-        int index = 0;
+        buttons.button("@back", Icon.left, ()->{vis=false;}).name("back");
+        pack();
     }
 }

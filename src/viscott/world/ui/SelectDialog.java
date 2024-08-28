@@ -31,6 +31,7 @@ public class SelectDialog extends BaseDialog {
 
         shown(this::setup);
         hidden(() -> {
+            if (caller == null) return;
             if (selectedIcon != null)
                 caller.addIcon(selectedIcon);
         });

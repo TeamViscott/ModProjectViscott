@@ -20,7 +20,9 @@ public class PvAssembler extends LAssembler {
 
         Seq<LStatement> st = new PvParser(data,allStatement).parse();
 
-        asm.instructions = st.map(l -> l.build(asm)).filter(l -> l != null).toArray(LExecutor.LInstruction.class);
+        asm.instructions = st.map(
+                l -> l.build(asm))
+                .retainAll(l -> l != null).toArray(LExecutor.LInstruction.class);
         return asm;
     }
 

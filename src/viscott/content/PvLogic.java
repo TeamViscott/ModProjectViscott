@@ -152,7 +152,7 @@ public class PvLogic {
 
 
                 if(state.updateId != frameId){
-                    curTime += Time.delta / 60f * ((PvLogicBlock)exec.build.block).instructionsPerTick;
+                    curTime += Time.delta / (60f * ((PvLogicBlock)exec.build.block).instructionsPerTick);
                     frameId = state.updateId;
                 }
             }
@@ -247,7 +247,7 @@ public class PvLogic {
 
 
                 if(state.updateId != frameId){
-                    curTime += Time.delta / 60f * ((PvLogicBlock)exec.build.block).instructionsPerTick;
+                    curTime += Time.delta / (60f * ((PvLogicBlock)exec.build.block).instructionsPerTick);
                     frameId = state.updateId;
                 }
             }
@@ -459,14 +459,14 @@ public class PvLogic {
 
         @Override
         public LExecutor.LInstruction build(LAssembler builder) {
-            return null;
+            return new TextBoxI(textstr);
         }
 
         public static class TextBoxI implements LExecutor.LInstruction {
-            public int textID;
+            public String text;
 
-            public TextBoxI(int textID){
-                this.textID = textID;
+            public TextBoxI(String text){
+                this.text = text;
             }
 
             public TextBoxI(){
@@ -474,7 +474,6 @@ public class PvLogic {
 
             @Override
             public void run(LExecutor exec) {
-                var text = exec.var(textID).toString();
                 PvUIs.extraUI.textBoxDialog.show(text);
             }
         }
