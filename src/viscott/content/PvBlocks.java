@@ -74,7 +74,7 @@ public class PvBlocks {
                             /*Nullis*/harvestor,
                     /*Production*/siliconMassForge,particalAccelerator, keroseneMixer, carbonWeaver,oakCrystalizer,darkMatterAccelerator,
                             fractionIonizer,nitrogenDistiller,quadRushForge,
-                            /*Xeal*/cascadeForge,
+                            /*Xeal*/cascadeForge,siliconMegaForge,nobeliumLazerforge,carbonSynthesizer,
                             /*Mortikai*/uberbulkForge,
                             /*Nullis*/voidPressurizer,
 
@@ -106,6 +106,7 @@ public class PvBlocks {
 
                             /*Psy*/coreWarden,coreGuardian,coreSentinel,
                             /*Mortikai*/coreBunker,
+                            /*Special*/holder,
                     /*Effects*/utilityProjector,pocketContainer,hydroProjector,liquidProjector,
                             /*Nullis*/voidNode,voidBeacon,voidExpander,
                                     voidWall,voidWallLarge,
@@ -601,6 +602,7 @@ public class PvBlocks {
                     localizedName = "Silicon Mass Forge";
                     health = 175;
                     size = 2;
+                    hasLiquids = true;
                     consumeItems(with(PvItems.barium,3));
                     consumeLiquid(Liquids.oil,15f/60f);
                     consumePower(45f/60f);
@@ -616,9 +618,40 @@ public class PvBlocks {
                         }}
                     );
                 }};
+                siliconMegaForge = new PvGenericCrafter("silicon-mega-forge")
+                {{
+                    requirements(Category.crafting, with(PvItems.zirconium,35,PvItems.lithium,20)); //todo
+                    localizedName = "Silicon Mega Forge";
+                    health = 1075;
+                    size = 3;
+                    faction.add(PvFactions.Xeal);
+                    hasLiquids = true;
+                    liquidCapacity = 20;
+                    consumeItems(with(PvItems.barium,5));
+                    consumeLiquid(Liquids.oil,20f/60f);
+                    consumeLiquid(PvLiquids.kerosene,10f/60f);
+                    consumePower(160f/60f);
+                    itemCapacity = 30;
+                    craftTime = 3f*60f;
+                    craftEffect = Fx.absorb;
+                    outputItem = new ItemStack(Items.silicon,12);
+                    drawer = new DrawMulti(
+                            new DrawDefault(),
+                            new DrawLiquidRegion(Liquids.oil) {{
+                                suffix = "-oil" + suffix;
+                            }},
+                            new DrawLiquidRegion(PvLiquids.kerosene) {{
+                                suffix = "-kerosene" + suffix;
+                            }},
+                            new DrawArcSmelt() {{
+                                this.flameColor = Pal.darkMetal;
+                                this.flameRad = 1.2f;
+                            }}
+                    );
+                }};
                 particalAccelerator = new HeatCrafter("partical-accelerator")
                 {{
-                    requirements(Category.crafting, with(PvItems.zirconium,50,PvItems.platinum,30,Items.silicon,50));
+                    requirements(Category.crafting, with(PvItems.zirconium,50,PvItems.platinum,30,Items.silicon,50)); //TODO
                     localizedName = "Particle Accelerator";
                     health = 230;
                     size = 2;
@@ -638,6 +671,29 @@ public class PvBlocks {
                             new DrawDefault()
                     );
                 }};
+                nobeliumLazerforge = new PvHeatCrafter("nobelium-laserforge")
+                {{
+                    requirements(Category.crafting, with(PvItems.zirconium,50,PvItems.platinum,30,Items.silicon,50)); //TODO
+                    localizedName = "Nobelium Laserforge";
+                    health = 1100;
+                    size = 3;
+                    faction.add(PvFactions.Xeal);
+                    consumeItems(with(PvItems.zirconium,7,PvItems.erbium,3));
+                    consumePower(325f/60f);
+                    itemCapacity = 20;
+                    craftTime = 5.2f*60f;
+                    craftEffect = Fx.fire;
+                    heatRequirement = 10;
+                    maxEfficiency = 5;
+                    outputItem = new ItemStack(PvItems.nobelium,10);
+                    drawer = new DrawMulti(
+                            new DrawDefault(),
+                            new DrawFlame(Pal.darkFlame) {{
+                                this.flameRadius = 4;
+                                this.flameRadiusIn = 2;
+                            }}
+                    );
+                }};
                 nitrogenDistiller = new MultiCrafter("nitrogen-distiller")
                 {{
                     requirements(Category.crafting, with(PvItems.zirconium,50,PvItems.platinum,30,Items.silicon,50)); //Todo
@@ -653,8 +709,7 @@ public class PvBlocks {
                     craftEffect = Fx.bubble;
                 }};
                 keroseneMixer = new GenericCrafter("kerosene-mixer")
-                {
-                    {
+                {{
                         requirements(Category.crafting, with(PvItems.zirconium, 50, PvItems.platinum, 30, PvItems.lithium, 30));
                         localizedName = "Kerosene mixer";
                         health = 185;
@@ -676,30 +731,57 @@ public class PvBlocks {
                                 }},
                                 new DrawDefault()
                         );
-                    }};
-                    carbonWeaver = new GenericCrafter("carbon-weaver")
-                    {{
-                        requirements(Category.crafting, with(PvItems.zirconium,150,PvItems.platinum,80,Items.silicon,50));
-                        localizedName = "Carbon Weaver";
-                        health = 1300;
-                        size = 3;
-                        hasLiquids = true;
-                        consumeItems(with(PvItems.zirconium,7, Items.silicon, 5, PvItems.platinum, 5));
-                        consumeLiquid(PvLiquids.kerosene, 25/(60*6.7f));
-                        consumePower(280f/60f);
-                        itemCapacity = 14;
-                        liquidCapacity = 10;
-                        craftTime = 6.7f*60f;
-                        outputItem = new ItemStack(PvItems.carbonFiber, 3);
-                        craftEffect = Fx.fallSmoke;
-                        drawer = new DrawMulti(
-                                new DrawRegion("-bottom"),
-                                new DrawLiquidRegion(PvLiquids.kerosene),
-                                new DrawDefault(),
-                                new DrawArcSmelt(){{
-                                    flameRad = 4;
-                                }}
-                        );
+                }};
+                carbonWeaver = new GenericCrafter("carbon-weaver")
+                {{
+                            requirements(Category.crafting, with(PvItems.zirconium, 150, PvItems.platinum, 80, Items.silicon, 50));
+                            localizedName = "Carbon Weaver";
+                            health = 1300;
+                            size = 3;
+                            hasLiquids = true;
+                            consumeItems(with(PvItems.zirconium, 7, Items.silicon, 5, PvItems.platinum, 5));
+                            consumeLiquid(PvLiquids.kerosene, 25 / (60 * 6.7f));
+                            consumePower(280f / 60f);
+                            itemCapacity = 14;
+                            liquidCapacity = 10;
+                            craftTime = 6.7f * 60f;
+                            outputItem = new ItemStack(PvItems.carbonFiber, 3);
+                            craftEffect = Fx.fallSmoke;
+                            drawer = new DrawMulti(
+                                    new DrawRegion("-bottom"),
+                                    new DrawLiquidRegion(PvLiquids.kerosene),
+                                    new DrawDefault(),
+                                    new DrawArcSmelt() {{
+                                        flameRad = 4;
+                                    }}
+                            );
+                }};
+                carbonSynthesizer = new PvHeatCrafter("carbon-synthesizer")
+                {{
+                    requirements(Category.crafting, with(PvItems.zirconium, 150, PvItems.platinum, 80, Items.silicon, 50)); //TODO
+                    localizedName = "Carbon Synthesizer";
+                    health = 1850;
+                    size = 4;
+                    hasLiquids = true;
+                    faction.add(PvFactions.Xeal);
+                    consumeItems(with(PvItems.zirconium, 10, Items.silicon, 8, PvItems.platinum, 8));
+                    consumeLiquid(PvLiquids.xenon, 15 / 60f);
+                    consumePower(520f / 60f);
+                    itemCapacity = 20;
+                    liquidCapacity = 50;
+                    craftTime = 5.5f * 60f;
+                    heatRequirement = 10;
+                    maxEfficiency = 3;
+                    outputItem = new ItemStack(PvItems.carbonFiber, 8);
+                    craftEffect = Fx.fallSmoke;
+                    drawer = new DrawMulti(
+                            new DrawRegion("-bottom"),
+                            new DrawLiquidRegion(PvLiquids.xenon),
+                            new DrawDefault(),
+                            new DrawArcSmelt() {{
+                                flameRad = 4;
+                            }}
+                    );
                 }};
                     fractionIonizer = new HeatCrafter("fraction-ionizer")
                     {{
@@ -1089,6 +1171,29 @@ public class PvBlocks {
                     health = 100;
                     size = 1;
                     itemCapacity = 5;
+                }};
+                holder = new PvCore("holder") {{
+                    requirements(Category.effect, BuildVisibility.editorOnly, with(PvItems.zirconium,400));
+                    localizedName = "Holder";
+                    description = "A simple container?, can have cores placed on them.";
+                    details = """
+                            A relic of the past, used to hold a highly contagious virophage.
+                            
+                            Logs:
+                            [orange]Dec 21, 20XX[]
+                            [gray]The virophage known as XXXXX has been contained in the [gold]Holdern[].
+                            units took it here for study, however, when it arrived the virophage had broken loose
+                            infecting the base, turning the metalic fort into its nest. creatures spawned, taking on the
+                            units forms to fight, biomass developped, the base was taken over in a short span.
+                            With these notes, i warn to DESTROY the virophage known as XXXXX is ever encountered.[]
+                            [blue][End of logs][]
+                            """;
+                    alwaysUnlocked = true;
+                    unitType = PvUnits.shadow;
+                    health = 400;
+                    size = 1;
+                    unitCapModifier = 0;
+                    itemCapacity = 300;
                 }};
                 coreHover = new PvCore("core-hover")
                 {{
