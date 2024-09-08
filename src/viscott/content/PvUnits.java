@@ -53,6 +53,7 @@ import viscott.types.abilities.*;
 import viscott.world.bullets.*;
 import viscott.utilitys.PvUtil;
 import viscott.world.draw.ChangeRegionPart;
+import viscott.world.draw.FreeRegionPart;
 
 import static arc.graphics.g2d.Draw.color;
 import static arc.graphics.g2d.Lines.stroke;
@@ -668,7 +669,7 @@ public class PvUnits {
         }};
         substance = new PvUnitType("substance") {{
             localizedName = "Substance";
-            constructor = EntityMapping.map("LegsUnit");
+            constructor = EntityMapping.map("flare");
             health = 300;
             armor = 3;
             flying = false;
@@ -2157,12 +2158,13 @@ public class PvUnits {
                         shoot.shots = 5;
                         shoot.shotDelay = 5f;
                         mirror = true;
-                        x = 4*14;
-                        y = 2*8;
+                        x = 4*11;
+                        y = 4*16;
                         inaccuracy = 5f;
-                        bullet = new BasicBulletType(32,360) {{
+                        bullet = new BasicBulletType(24,360) {{
                             trailLength = 60;
                             trailWidth = 1;
+                            drag = -0.01f;
                             trailColor = backColor = lightColor = Pal.heal;
                             frontColor = Color.white;
                             homingDelay = 0;
@@ -2175,6 +2177,8 @@ public class PvUnits {
                             statusDuration = 180;
                             splashDamage = 100;
                             splashDamageRadius = 7.5f * 4;
+                            trailEffect = Fx.vaporSmall;
+                            trailInterval = 1;
                         }};
                     }},
                     new Weapon() {{
@@ -2197,21 +2201,22 @@ public class PvUnits {
                         }};
                     }}
                 );
+                var swing = new Interp.Swing(2f);
                 parts.addAll(
-                        new RegionPart("-arm-l") {{
-                            progress = PartProgress.reload;
+                        new FreeRegionPart("-arm-l") {{
+                            progress = (r) -> swing.apply(r.smoothReload);
                             mirror = false;
-                            x = 0;
+                            x = -10;
                             y = 0;
-                            moveRot = 5;
+                            moveRot = 15;
                             weaponIndex = 1;
                         }},
-                        new RegionPart("-arm-r") {{
-                            progress = PartProgress.reload;
+                        new FreeRegionPart("-arm-r") {{
+                            progress = (r) -> Interp.swing.apply(r.smoothReload);
                             mirror = false;
-                            x = 0;
+                            x = 10;
                             y = 0;
-                            moveRot = -5;
+                            moveRot = -15;
                             weaponIndex = 0;
                         }}
                 );

@@ -114,7 +114,7 @@ public class ViscottMod extends Mod {
                 ----------------------------
                 [crimson]Sfx/Music : [cyan]Vdoble MSG [yellow], [green]TempoAlch3mist[]
                 ----------------------------
-                [crimson]Programmers : [orange]Si[red]ede ,[purple]Manuwar [yellow],Otamamori [lightgrey],Kapzduke[yellow]
+                [crimson]Programmers : [orange]Si[red]ede ,[purple]Manuwar [yellow],Otamamori [lightgrey],Kapzduke[yellow], [white]EyeOfDarkness[yellow]
                 ----------------------------
                 [crimson]Mappers : [purple]Nicodium[yellow]
                 ----------------------------
