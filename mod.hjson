@@ -11,10 +11,10 @@ author: "[yellow]CREDITS[]: \n[yellow]Spriters : Ethanol10, ThomasThings, TB1, F
 main: "viscott.ViscottMod"
 
 #the mod description as seen in the mod dialog
-description: "[00ffbf]Project viscott[] is a mindustry mod that adds a \nnew Planet to the campaign, [f8ff78]Vercilus[], and gives the player a new and unique gameplay experience \n\nThis mod is [yellow]still in development[]. \n Expect it to have some[scarlet] slight balancing issues[]"
+description: "Project viscott[] is a mindustry mod that adds a \nnew Planet to the campaign, Vercilus, and gives the player a new and unique gameplay experience \n\nThis mod is still in development. \n Expect it to have some[scarlet] slight balancing issues"
 
 #the mod version
-version: 0.1.9.7
+version: 0.1.9.8
 
 #the minimum game build required to run this mod
 minGameVersion: 142

@@ -5,6 +5,7 @@ import arc.graphics.g2d.Lines;
 import arc.math.Mathf;
 import arc.math.geom.Vec2;
 import arc.struct.Seq;
+import arc.util.Log;
 import arc.util.Time;
 import mindustry.Vars;
 import mindustry.ai.UnitCommand;
@@ -43,6 +44,7 @@ import mindustry.type.unit.MissileUnitType;
 import mindustry.type.weapons.RepairBeamWeapon;
 import viscott.content.shootpatterns.CyclicShootPattern;
 import viscott.gen.CoinUnit;
+import viscott.gen.weapons.LinkedWeapon;
 import viscott.gen.weapons.RandWeapon;
 import viscott.types.abilities.EnemyStatusFieldAbility;
 import viscott.content.shootpatterns.ShootSpreadBounce;
@@ -2147,59 +2149,103 @@ public class PvUnits {
                 speed = 5.1f/7.5f;
                 engineOffset = 40;
                 engineSize = 8*5;
+                lowAltitude = true;
+                fogRadius = 70;
                 hitSize = 8*14;
                 range = 60*8;
+
                 abilities.add(
                         new StatusFieldAbility(StatusEffects.overdrive,360,300,8*14)
                 );
-                weapons.add(
-                    new Weapon() {{
-                        reload = 60f;
-                        shoot.shots = 5;
-                        shoot.shotDelay = 5f;
-                        mirror = true;
-                        x = 4*11;
-                        y = 4*16;
-                        inaccuracy = 5f;
-                        bullet = new BasicBulletType(24,360) {{
-                            trailLength = 60;
-                            trailWidth = 1;
-                            drag = -0.01f;
-                            trailColor = backColor = lightColor = Pal.heal;
-                            frontColor = Color.white;
-                            homingDelay = 0;
-                            homingPower =  0.08f;
-                            homingRange = 8*30;
-                            lifetime = PvUtil.GetRange(32,60);
-                            pierce = true;
-                            pierceCap = 3;
-                            status = StatusEffects.shocked;
-                            statusDuration = 180;
-                            splashDamage = 100;
-                            splashDamageRadius = 7.5f * 4;
-                            trailEffect = Fx.vaporSmall;
-                            trailInterval = 1;
-                        }};
-                    }},
-                    new Weapon() {{
-                        reload = 60f/0.05f;
-                        x = 0;
-                        y = 2*8;
-                        mirror = false;
-                        
-                        shoot.firstShotDelay = Fx.greenLaserCharge.lifetime;
-                        bullet = new BasicBulletType(8,2300) {{
-                            chargeEffect = Fx.greenLaserCharge;
-                            trailLength = 30;
-                            trailWidth = 1;
-                            trailColor = backColor = lightColor = Pal.lancerLaser;
-                            frontColor = Color.white;
-                            lifetime = PvUtil.GetRange(8,44);
-                            splashDamage = 100;
-                            splashDamageRadius = 18*8;
-                            despawnEffect = hitEffect = Fx.massiveExplosion;
-                        }};
-                    }}
+
+                var cannonCharge = Fx.greenLaserCharge;
+                var armWeapon = new LinkedWeapon() {{
+                    reload = 60f;
+                    shoot.shots = 5;
+                    shoot.shotDelay = 5f;
+                    mirror = true;
+                    x = 4*11;
+                    y = 4*16;
+                    inaccuracy = 5f;
+                    bullet = new BasicBulletType(24,360) {{
+                        trailLength = 30;
+                        trailWidth = 1;
+                        drag = -0.01f;
+                        trailColor = backColor = lightColor = Pal.heal;
+                        frontColor = Color.white;
+                        homingDelay = 0;
+                        homingPower =  0.08f;
+                        homingRange = 8*30;
+                        lifetime = PvUtil.GetRange(32,60);
+                        pierce = true;
+                        pierceCap = 3;
+                        status = StatusEffects.shocked;
+                        statusDuration = 180;
+                        splashDamage = 100;
+                        splashDamageRadius = 7.5f * 4;
+                        trailEffect = Fx.vaporSmall;
+                        trailInterval = 1;
+                    }};
+                }};
+                var cannonWeapon = new LinkedWeapon() {{
+                    reload = 60f/0.05f;
+                    x = 0;
+                    y = 3.5f*8;
+                    mirror = false;
+                    timeout = 60f*4;
+
+                    shoot.firstShotDelay = cannonCharge.lifetime;
+                    shootStatus = StatusEffects.slow;
+                    shootStatusDuration = cannonCharge.lifetime;
+                    bullet = new BasicBulletType(8,2300) {{
+                        chargeEffect = cannonCharge;
+                        trailLength = 30;
+                        trailWidth = 1;
+                        trailColor = backColor = lightColor = Pal.lancerLaser;
+                        frontColor = Color.white;
+                        lifetime = PvUtil.GetRange(8,44);
+                        splashDamage = 2300;
+                        splashDamageRadius = 18*8;
+                        splashDamagePierce = true;
+                        trailEffect = Fx.smokeCloud;
+                        trailInterval = 1;
+                        despawnEffect = hitEffect = Fx.impactReactorExplosion;
+                    }};
+                }};
+                armWeapon.setLink(cannonWeapon);
+                weapons.add(armWeapon,cannonWeapon,
+                        new Weapon(PvUtil.GetName( "ethanol-weapon")) {{
+                            reload = 40f;
+                            shoot.shots = 3;
+                            shoot.shotDelay = 5f;
+                            mirror = true;
+                            x = -4*12;
+                            y = 4*-4;
+                            recoil = 8;
+                            recoilPow = 2;
+                            shootY = 8;
+                            rotate = true;
+                            rotationLimit = 90;
+                            inaccuracy = 5f;
+                            bullet = new BasicBulletType(32,120) {{
+                                trailLength = 30;
+                                trailWidth = 0.5f;
+                                trailColor = backColor = lightColor = Pal.heal;
+                                frontColor = Color.white;
+                                homingDelay = 0;
+                                homingPower =  0.08f;
+                                homingRange = 8*30;
+                                lifetime = PvUtil.GetRange(32,60);
+                                pierce = true;
+                                pierceCap = 3;
+                                status = StatusEffects.shocked;
+                                statusDuration = 180;
+                                splashDamage = 100;
+                                splashDamageRadius = 7.5f * 4;
+                                trailEffect = Fx.vaporSmall;
+                                trailInterval = 1;
+                            }};
+                        }}
                 );
                 var swing = new Interp.Swing(2f);
                 parts.addAll(
@@ -2210,6 +2256,22 @@ public class PvUnits {
                             y = 0;
                             moveRot = 15;
                             weaponIndex = 1;
+
+                            moves.add(
+                                    new PartMove() {{
+                                        rot = -10;
+                                        this.progress = (r) -> {
+                                            var point = (cannonCharge.lifetime / cannonWeapon.timeout);
+                                            if (r.charge < point)
+                                                return Interp.circleIn.apply(r.charge * (1/point));
+                                            var newCharge = (r.charge - point) * (1/(1-point)) * 2;
+                                            if (newCharge < 1)
+                                                return -Interp.swingOut.apply(newCharge);
+                                            return Interp.circleOut.apply(newCharge-1)-1;
+                                        };
+                                    }}
+                            );
+
                         }},
                         new FreeRegionPart("-arm-r") {{
                             progress = (r) -> Interp.swing.apply(r.smoothReload);
@@ -2218,6 +2280,20 @@ public class PvUnits {
                             y = 0;
                             moveRot = -15;
                             weaponIndex = 0;
+                            moves.add(
+                                    new PartMove() {{
+                                        rot = 10;
+                                        this.progress = (r) -> {
+                                            var point = (cannonCharge.lifetime / cannonWeapon.timeout);
+                                            if (r.charge < point)
+                                                return Interp.circleIn.apply(r.charge * (1/point));
+                                            var newCharge = (r.charge - point) * (1/(1-point)) * 2;
+                                            if (newCharge < 1)
+                                                return -Interp.swingOut.apply(newCharge);
+                                            return Interp.circleOut.apply(newCharge-1)-1;
+                                        };
+                                    }}
+                            );
                         }}
                 );
         }};
