@@ -6,7 +6,7 @@ import viscott.types.VoidLiquid;
 
 public class PvLiquids {
     public static Liquid
-    kerosene,xenon,liquidNitrogen,
+    kerosene,xenon,liquidNitrogen,nothing,
     /*Nullis*/concentratedVoid,
 
     /*FUNI*/concentratedSource
@@ -18,6 +18,11 @@ public class PvLiquids {
             localizedName = "Liquid Nitrogen";
             color = Color.valueOf("ECDCF5");
             heatCapacity = 2;
+        }};
+        nothing = new Liquid("nothing") {{
+            // do not remove its nothing it needed for liquids in units to operate
+            hidden = true;
+            color = Color.black;
         }};
         kerosene = new Liquid("liquid-kerosene")
         {{

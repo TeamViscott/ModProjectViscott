@@ -1678,7 +1678,7 @@ public class PvUnits {
             drag = 0.03f;
             lowAltitude = true;
             pickupUnits = true;
-            payloadCapacity = tilePayload * (2 * 2);
+            payloadCapacity = tilePayload * 8;
             range = 12*8;
             engineSize = 0;
             /*
