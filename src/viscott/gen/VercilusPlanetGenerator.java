@@ -88,30 +88,39 @@ public class VercilusPlanetGenerator extends SerpuloPlanetGenerator {
             }
 
             void join(int x1, int y1, int x2, int y2){
-                float nscl = rand.random(100f, 140f) * 6f;
-                int stroke = rand.random(3, 9);
+                float nscl = rand.random(100f, 140f) * 6f; // values from 600 to 840 in intervals of 6
+                int stroke = rand.random(3, 9); // value from 3 to 9,
                 brush(pathfind(x1, y1, x2, y2, tile -> (tile.solid() ? 50f : 0f) + noise(tile.x, tile.y, 2, 0.4f, 1f / nscl) * 500, Astar.manhattan), stroke);
+                //it uses a brush with a stroke radius, what it brushes? air i assume.
+
             }
 
             void connect(Room to){
+                // never realized, interesting.
                 if(!connected.add(to) || to == this) return;
 
                 Vec2 midpoint = Tmp.v1.set(to.x, to.y).add(x, y).scl(0.5f);
+                // equivilent to x1 + x2 * 0.5 and y1 + y2 * 0.5
+
+                //sets the rand to be used in other things.
                 rand.nextFloat();
 
                 if(alt){
+                    //differently worded setToRandomDirection
                     midpoint.add(Tmp.v2.set(1, 0f).setAngle(Angles.angle(to.x, to.y, x, y) + 90f * (rand.chance(0.5) ? 1f : -1f)).scl(Tmp.v1.dst(x, y) * 2f));
                 }else{
                     //add randomized offset to avoid straight lines
                     midpoint.add(Tmp.v2.setToRandomDirection(rand).scl(Tmp.v1.dst(x, y)));
                 }
 
+                // limits the midpoint t somewhere in the middle of the width and height of the room generation.
                 midpoint.sub(width/2f, height/2f).limit(width / 2f / Mathf.sqrt3).add(width/2f, height/2f);
 
                 int mx = (int)midpoint.x, my = (int)midpoint.y;
 
                 join(x, y, mx, my);
                 join(mx, my, to.x, to.y);
+                // opens a path to the middle
             }
 
             void joinLiquid(int x1, int y1, int x2, int y2){
@@ -127,10 +136,13 @@ public class VercilusPlanetGenerator extends SerpuloPlanetGenerator {
 
                     for(int x = -rad; x <= rad; x++){
                         for(int y = -rad; y <= rad; y++){
+                            // itterates through each tile in the radius... in each tile...
                             int wx = t.x + x, wy = t.y + y;
                             if(Structs.inBounds(wx, wy, width, height) && Mathf.within(x, y, rad)){
+                                // in map & circular
                                 Tile other = tiles.getn(wx, wy);
                                 other.setBlock(Blocks.air);
+                                // leave a 1 block gap between liquids and walls.
                                 if(Mathf.within(x, y, rad - 1) && !other.floor().isLiquid){
                                     Floor floor = other.floor();
                                     //TODO does not respect tainted floors
@@ -143,6 +155,7 @@ public class VercilusPlanetGenerator extends SerpuloPlanetGenerator {
             }
 
             void connectLiquid(Room to){
+                // same as connect but for liquids.
                 if(to == this) return;
 
                 Vec2 midpoint = Tmp.v1.set(to.x, to.y).add(x, y).scl(0.5f);
@@ -158,8 +171,11 @@ public class VercilusPlanetGenerator extends SerpuloPlanetGenerator {
                 joinLiquid(mx, my, to.x, to.y);
             }
         }
-        /*
+
+        // sets some walls/air
         cells(4);
+
+        // scrambles the blocks around.
         distort(10f, 12f);
 
         float constraint = 1.3f;
@@ -167,21 +183,24 @@ public class VercilusPlanetGenerator extends SerpuloPlanetGenerator {
         int rooms = rand.random(2, 5);
         Seq<Room> roomseq = new Seq<>();
 
+        // creates n Rooms that serve to be sort of like nodes, letting you travel to and from them using pathways
         for(int i = 0; i < rooms; i++){
-            Tmp.v1.trns(rand.random(360f), rand.random(radius / constraint));
+            // rand of 0 - 360 and 0 - 0.22 * width
+            Tmp.v1.trns(rand.random(360f), rand.random(radius / constraint)); // each ~5 blocks, it can move 1 block away.
             float rx = (width/2f + Tmp.v1.x);
             float ry = (height/2f + Tmp.v1.y);
-            float maxrad = radius - Tmp.v1.len();
-            float rrad = Math.min(rand.random(9f, maxrad / 2f), 30f);
+            float maxrad = radius - Tmp.v1.len(); // a constant 0.28 per width. cannot be negative
+            float rrad = Math.min(rand.random(9f, maxrad / 2f), 30f); // caps at 30.
             roomseq.add(new Room((int)rx, (int)ry, (int)rrad));
+            // they hardly leave the middle on small maps, larger maps have them more or less near the center of the map.
         }
 
         //check positions on the map to place the player spawn. this needs to be in the corner of the map
         Room spawn = null;
         Seq<Room> enemies = new Seq<>();
-        int enemySpawns = rand.random(1, Math.max((int)(sector.threat * 4), 1));
-        int offset = rand.nextInt(360);
-        float length = width/2.55f - rand.random(13, 23);
+        int enemySpawns = rand.random(1, Math.max((int)(sector.threat * 4), 1)); // between 1-4 > 1-20 enemy spawns. may god have mercy uppon your soul.
+        int offset = rand.nextInt(360); //rotation offset, would also work with rand 5, since this is essencialy the same.
+        float length = width/2.55f - rand.random(13, 23); // length is a bit less than half of the map. ~0.78
         int angleStep = 5;
         int waterCheckRad = 5;
         for(int i = 0; i < 360; i+= angleStep){
@@ -195,17 +214,18 @@ public class VercilusPlanetGenerator extends SerpuloPlanetGenerator {
             for(int rx = -waterCheckRad; rx <= waterCheckRad; rx++){
                 for(int ry = -waterCheckRad; ry <= waterCheckRad; ry++){
                     Tile tile = tiles.get(cx + rx, cy + ry);
-                    if(tile == null || tile.floor().liquidDrop != null){
+                    if(tile == null || tile.floor().liquidDrop != null){ //could also be lava / oil , doesn't account for that.
                         waterTiles ++;
                     }
                 }
             }
 
-            if(waterTiles <= 4 || (i + angleStep >= 360)){
-                roomseq.add(spawn = new Room(cx, cy, rand.random(8, 15)));
+            if(waterTiles <= 4 || (i + angleStep >= 360)){ // if it went a full circle without water or found water.
+                // It will realy try to spawn the player core near a water source ;-;
+                roomseq.add(spawn = new Room(cx, cy, rand.random(8, 15))); // the player spawn
 
-                for(int j = 0; j < enemySpawns; j++){
-                    float enemyOffset = rand.range(60f);
+                for(int j = 0; j < enemySpawns; j++){ // Enemys swarm from a direction.
+                    float enemyOffset = rand.range(60f); // this is stupid. range 180-240, not all 360°
                     Tmp.v1.set(cx - width/2, cy - height/2).rotate(180f + enemyOffset).add(width/2, height/2);
                     Room espawn = new Room((int)Tmp.v1.x, (int)Tmp.v1.y, rand.random(8, 16));
                     roomseq.add(espawn);
@@ -224,15 +244,18 @@ public class VercilusPlanetGenerator extends SerpuloPlanetGenerator {
         //randomly connect rooms together
         int connections = rand.random(Math.max(rooms - 1, 1), rooms + 3);
         for(int i = 0; i < connections; i++){
+            // so there is a shot just 2 rooms will repeatedly connect with another? beautiful.
             roomseq.random(rand).connect(roomseq.random(rand));
         }
 
-        for(Room room : roomseq){
+        for(Room room : roomseq){ // every single room will connect with player spawn.
             spawn.connect(room);
         }
 
+        // Bro, why.
         Room fspawn = spawn;
 
+        // clears air pockets that are too seperate with too few air tiles around it to support it.
         cells(1);
 
         int tlen = tiles.width * tiles.height;
@@ -247,7 +270,8 @@ public class VercilusPlanetGenerator extends SerpuloPlanetGenerator {
                 }
             }
         }
-
+        // it gets the total amount of air and water here.
+        // if 19% or more of the map is water, its a naval map.
         boolean naval = (float)waters / total >= 0.19f;
 
         //create water pathway if the map is flooded
@@ -257,6 +281,7 @@ public class VercilusPlanetGenerator extends SerpuloPlanetGenerator {
             }
         }
 
+        // scatters stuff again with a magnitude of 3 blocks offset.
         distort(10f, 6f);
 
         //rivers
@@ -572,7 +597,7 @@ public class VercilusPlanetGenerator extends SerpuloPlanetGenerator {
 
         //spawn air only when spawn is blocked
         state.rules.spawns = Waves.generate(difficulty, new Rand(sector.id), state.rules.attackMode, state.rules.attackMode && spawner.countGroundSpawns() == 0, naval);
-         */
+        // */
     }
 
 }
