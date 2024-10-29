@@ -1,15 +1,16 @@
-package viscott.content;
+package viscott.audio;
 
 import arc.Core;
 import arc.audio.Music;
+import mindustry.gen.Musics;
 
 public class PvMusics {
     public static Music
-        orbit = new Music();
+        orbit;
 
     public static void load()
     {
-        Core.assets.load("music/outer.ogg", Music.class).loaded = (a) -> {
+        Core.assets.load("music/project-viscott-outer.ogg", Music.class).loaded = (a) -> {
             orbit = a;
         };
     }

@@ -2,27 +2,14 @@ package viscott.sounds;
 
 import arc.Events;
 import arc.audio.Music;
-import arc.audio.Sound;
 import arc.func.Cons;
-import arc.math.Mathf;
 import arc.struct.ObjectMap;
 import arc.struct.Seq;
 import arc.util.Log;
 import arc.util.Reflect;
-import arc.util.Time;
-import mindustry.Vars;
 import mindustry.audio.SoundControl;
-import mindustry.content.StatusEffects;
 import mindustry.game.EventType;
-import mindustry.game.SpawnGroup;
-import mindustry.gen.Groups;
-import mindustry.type.StatusEffect;
-import viscott.content.PvMusics;
-import viscott.content.PvPlanets;
-
-import java.util.List;
-
-import static mindustry.Vars.state;
+import viscott.audio.PvMusics;
 
 public class PvSoundControl extends SoundControl {
     public static SoundControl ogSoundControl;

@@ -29,7 +29,7 @@ import mindustry.world.blocks.liquid.Conduit;
 import mindustry.world.blocks.payloads.PayloadConveyor;
 import mindustry.world.blocks.payloads.PayloadRouter;
 import viscott.content.PvEffects;
-import viscott.content.PvSounds;
+import viscott.audio.PvSounds;
 import viscott.utilitys.PvUtil;
 
 import java.util.HashMap;
