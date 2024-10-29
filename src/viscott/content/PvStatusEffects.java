@@ -358,7 +358,7 @@ public class PvStatusEffects {
                 charges = 10;
             }};
 
-        torture = new PvStatusEffect("torture")
+        torture = new AllAffinityStatusEffect("torture")
          /*
          TODO
           KEEP THIS AT THE BOTTOM NEEDS TO ALWAYS BE LOADED LAST
@@ -371,84 +371,10 @@ public class PvStatusEffects {
             color = Color.valueOf("31343c");
             description = "Does nothing on it own deal great damage if you where to have another debuff";
             transitionDamage = 8000;
-            init(() -> {
-                affinity(StatusEffects.burning, (unit, result, time) -> {
-                    unit.damagePierce(transitionDamage);
-                    Fx.burning.at(unit.x + Mathf.range(unit.bounds() / 2f), unit.y + Mathf.range(unit.bounds() / 2f));
-                });
-                affinity(StatusEffects.freezing, (unit, result, time) -> {
-                    unit.damagePierce(transitionDamage);
-                    Fx.burning.at(unit.x + Mathf.range(unit.bounds() / 2f), unit.y + Mathf.range(unit.bounds() / 2f));
-                });
-                affinity(StatusEffects.electrified, (unit, result, time) -> {
-                    unit.damagePierce(transitionDamage);
-                    Fx.burning.at(unit.x + Mathf.range(unit.bounds() / 2f), unit.y + Mathf.range(unit.bounds() / 2f));
-                });
-                affinity(StatusEffects.shocked, (unit, result, time) -> {
-                    unit.damagePierce(transitionDamage);
-                    Fx.burning.at(unit.x + Mathf.range(unit.bounds() / 2f), unit.y + Mathf.range(unit.bounds() / 2f));
-                });
-                affinity(StatusEffects.wet, (unit, result, time) -> {
-                    unit.damagePierce(transitionDamage);
-                    Fx.burning.at(unit.x + Mathf.range(unit.bounds() / 2f), unit.y + Mathf.range(unit.bounds() / 2f));
-                });
-                affinity(StatusEffects.melting, (unit, result, time) -> {
-                    unit.damagePierce(transitionDamage);
-                    Fx.burning.at(unit.x + Mathf.range(unit.bounds() / 2f), unit.y + Mathf.range(unit.bounds() / 2f));
-                });
-                affinity(StatusEffects.sapped, (unit, result, time) -> {
-                    unit.damagePierce(transitionDamage);
-                    Fx.burning.at(unit.x + Mathf.range(unit.bounds() / 2f), unit.y + Mathf.range(unit.bounds() / 2f));
-                });
-                affinity(StatusEffects.tarred, (unit, result, time) -> {
-                    unit.damagePierce(transitionDamage);
-                    Fx.burning.at(unit.x + Mathf.range(unit.bounds() / 2f), unit.y + Mathf.range(unit.bounds() / 2f));
-                });
-                affinity(StatusEffects.sporeSlowed, (unit, result, time) -> {
-                    unit.damagePierce(transitionDamage);
-                    Fx.burning.at(unit.x + Mathf.range(unit.bounds() / 2f), unit.y + Mathf.range(unit.bounds() / 2f));
-                });
-                affinity(StatusEffects.blasted, (unit, result, time) -> {
-                    unit.damagePierce(transitionDamage);
-                    Fx.burning.at(unit.x + Mathf.range(unit.bounds() / 2f), unit.y + Mathf.range(unit.bounds() / 2f));
-                });
-                affinity(StatusEffects.corroded, (unit, result, time) -> {
-                    unit.damagePierce(transitionDamage);
-                    Fx.burning.at(unit.x + Mathf.range(unit.bounds() / 2f), unit.y + Mathf.range(unit.bounds() / 2f));
-                });
-                affinity(memoryExchange, (unit, result, time) -> {
-                    unit.damagePierce(transitionDamage);
-                    Fx.burning.at(unit.x + Mathf.range(unit.bounds() / 2f), unit.y + Mathf.range(unit.bounds() / 2f));
-                });
-                affinity(voidDecay, (unit, result, time) -> {
-                    unit.damagePierce(transitionDamage);
-                    Fx.burning.at(unit.x + Mathf.range(unit.bounds() / 2f), unit.y + Mathf.range(unit.bounds() / 2f));
-                });
-                affinity(voidDecayExpand, (unit, result, time) -> {
-                    unit.damagePierce(transitionDamage);
-                    Fx.burning.at(unit.x + Mathf.range(unit.bounds() / 2f), unit.y + Mathf.range(unit.bounds() / 2f));
-                });
-                affinity(voidConsume, (unit, result, time) -> {
-                    unit.damagePierce(transitionDamage);
-                    Fx.burning.at(unit.x + Mathf.range(unit.bounds() / 2f), unit.y + Mathf.range(unit.bounds() / 2f));
-                });
-                affinity(sourcePurify, (unit, result, time) -> {
-                    unit.damagePierce(transitionDamage);
-                    Fx.burning.at(unit.x + Mathf.range(unit.bounds() / 2f), unit.y + Mathf.range(unit.bounds() / 2f));
-                });
-                affinity(sourceRepel, (unit, result, time) -> {
-                    unit.damagePierce(transitionDamage);
-                    Fx.burning.at(unit.x + Mathf.range(unit.bounds() / 2f), unit.y + Mathf.range(unit.bounds() / 2f));
-                });
-                affinity(splintered, (unit, result, time) -> {
-                    unit.damagePierce(transitionDamage);
-                    Fx.burning.at(unit.x + Mathf.range(unit.bounds() / 2f), unit.y + Mathf.range(unit.bounds() / 2f));
-                });
-                affinity(reapingTouch, (unit, result, time) -> {
-                    unit.damagePierce(transitionDamage);
-                    Fx.burning.at(unit.x + Mathf.range(unit.bounds() / 2f), unit.y + Mathf.range(unit.bounds() / 2f));
-                });
-            });
+            affinityHandler = (unit, result, time) -> {
+                unit.damagePierce(transitionDamage);
+                Fx.burning.at(unit.x + Mathf.range(unit.bounds() / 2f), unit.y + Mathf.range(unit.bounds() / 2f));
+            };
         }};
         forceApply = new AbilityStatusEffect("force-apply") {{
             localizedName = "[orange]Force Apply";

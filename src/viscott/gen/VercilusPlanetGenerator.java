@@ -225,7 +225,7 @@ public class VercilusPlanetGenerator extends SerpuloPlanetGenerator {
                 roomseq.add(spawn = new Room(cx, cy, rand.random(8, 15))); // the player spawn
 
                 for(int j = 0; j < enemySpawns; j++){ // Enemys swarm from a direction.
-                    float enemyOffset = rand.range(60f); // this is stupid. range 180-240, not all 360°
+                    float enemyOffset = rand.range(60f); // this is stupid. range 180-240, not all 180° + 0-60° 180-240°
                     Tmp.v1.set(cx - width/2, cy - height/2).rotate(180f + enemyOffset).add(width/2, height/2);
                     Room espawn = new Room((int)Tmp.v1.x, (int)Tmp.v1.y, rand.random(8, 16));
                     roomseq.add(espawn);
