@@ -1,5 +1,6 @@
 package viscott;
 
+import arc.Core;
 import arc.Events;
 import arc.graphics.Color;
 import arc.graphics.g2d.Draw;
@@ -73,6 +74,7 @@ public class ViscottMod extends Mod {
         PvUnitMapper.load();
         PvMusics.load();
         PvSounds.load();
+
         PvLogic.load();
         PvFactions.load();
         PvUIs.load();
@@ -105,6 +107,7 @@ public class ViscottMod extends Mod {
     }
     @Override
     public void init(){
+
         loadSettings();
         Mods.LoadedMod tu = mods.locateMod("project-viscott");
         tu.meta.author = """
@@ -125,7 +128,7 @@ public class ViscottMod extends Mod {
                 [green]Project viscott[] is a mindustry mod that adds a 
                 new Planet to the campaign, [purple]Vercilus[], and gives the player a [orange]new[] and [red]unique[] gameplay experience 
                 It adds [blue]5 new Factions[], each with their own [orange]tech tree[]
-                To add to that, this mod makes a completely new progression and a new way to make units, [yellow]bulk factories[].
+                Also new, an actual [gold]Story[]. The Campaign follow's an alliance, exploration and defending. All to join the factions in fighting over the [cyan]ultimate weapon[] on this planet.
                 
                 This mod is [yellow]still in development[]. 
                 Expect it to have some[scarlet] slight balancing issues[]
