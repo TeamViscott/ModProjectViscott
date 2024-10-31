@@ -2,23 +2,32 @@ package viscott;
 
 import arc.Core;
 import arc.Events;
+import arc.KeyBinds;
 import arc.graphics.Color;
 import arc.graphics.g2d.Draw;
+import arc.struct.Seq;
 import arc.util.Log;
 import mindustry.Vars;
 import mindustry.content.TechTree;
 import mindustry.game.EventType;
+import mindustry.input.Binding;
 import mindustry.mod.Mod;
 import mindustry.mod.Mods;
 import viscott.audio.PvMusics;
 import viscott.audio.PvSounds;
 import viscott.content.*;
+import viscott.input.PvBinds;
 import viscott.maps.filters.PvFilterOption;
 import viscott.sounds.PvSoundControl;
 import viscott.types.PvFaction;
 import viscott.types.PvLayers;
 import viscott.utilitys.PvPacketHandler;
 import viscott.utilitys.PvWorldState;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 import static arc.Core.*;
 import static mindustry.Vars.*;
@@ -69,12 +78,13 @@ public class ViscottMod extends Mod {
     public void loadContent(){
         Log.info("Loading PV content");
 
+        PvBinds.load();
+
         PvPacketHandler.load();
         PvWorldState.load();
         PvUnitMapper.load();
         PvMusics.load();
         PvSounds.load();
-
         PvLogic.load();
         PvFactions.load();
         PvUIs.load();
