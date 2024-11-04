@@ -43,7 +43,7 @@ public class NewSnowWeather extends ParticleWeather {
     HashMap<Unit,Byte> walkPrintDirectory = new HashMap<>();
     HashMap<Unit, Trail[]> treadPrints = new HashMap<>();
 
-    public class Vec2Rot extends Vec2 {
+    public static class Vec2Rot extends Vec2 {
         public float rotation = 0;
         public Vec2Rot(Vec2 vec,float rot) {
             this(vec.x,vec.y,rot);

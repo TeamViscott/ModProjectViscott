@@ -3,13 +3,18 @@ package viscott.sounds;
 import arc.Events;
 import arc.audio.Music;
 import arc.func.Cons;
+import arc.math.Mathf;
 import arc.struct.ObjectMap;
 import arc.struct.Seq;
 import arc.util.Log;
 import arc.util.Reflect;
+import arc.util.Time;
+import mindustry.Vars;
 import mindustry.audio.SoundControl;
+import mindustry.content.StatusEffects;
 import mindustry.game.EventType;
 import viscott.audio.PvMusics;
+import viscott.content.PvPlanets;
 
 public class PvSoundControl extends SoundControl {
     public static SoundControl ogSoundControl;
@@ -17,31 +22,42 @@ public class PvSoundControl extends SoundControl {
     protected float fade; // .-.
     public PvSoundControl()
     {
-        super();
+        // Take out normal SoundController.
         ObjectMap<Object, Seq<Cons<?>>> events = Reflect.get(Events.class,"events");
-        if (events.get(EventType.WaveEvent.class).size == 5) {
-            try {
-                if (events.get(EventType.WaveEvent.class).get(3).toString().contains("SoundControl")) {
-                    events.get(EventType.WaveEvent.class).remove(3);
-                    loaded = true;
-                }
-            }
-            catch (Exception e) {
-                Log.err(e);
-            }
+        var waveEvents = events.get(EventType.WaveEvent.class);
+        try {
+            waveEvents.remove(waveEvents.find((a)->a.toString().contains("SoundControl")));
+            loaded = true;
         }
+        catch (Exception e) {
+            Log.err(e);
+        }
+
+        // now impliment urself :>
+        Events.on(EventType.ClientLoadEvent.class, (e) -> {
+            this.reload();
+        });
+        Events.on(EventType.WaveEvent.class, (e) -> {
+            Time.run(Mathf.random(8.0F, 15.0F) * 60.0F, () -> {
+                boolean boss = Vars.state.rules.spawns.contains((group) -> group.getSpawned(Vars.state.wave - 2) > 0 && group.effect == StatusEffects.boss);
+                if (boss) {
+                    this.playOnce(this.bossMusic.random(this.lastRandomPlayed));
+                } else if (Mathf.chance(this.musicWaveChance)) {
+                    this.playRandom();
+                }
+
+            });
+        });
+        setupFilters();
     }
     @Override
     public void playRandom(){
         if (!loaded) return;
-        playOnce(PvMusics.orbit);
-        /*
         if (Vars.state.getPlanet() == PvPlanets.vercilus)
             playOnce(PvMusics.orbit);
         else {
             super.playRandom();
         }
-         */
     }
 
     protected void playOnce(Music music){

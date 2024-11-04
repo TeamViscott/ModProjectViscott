@@ -90,6 +90,7 @@ public class ViscottMod extends Mod {
         PvUIs.load();
         PvShaders.init();
         PvAttributes.load();
+
         PvStats.load();
         PvEffects.load();
         PvItems.load();
@@ -104,6 +105,7 @@ public class ViscottMod extends Mod {
         PvSectorPresets.load();
         PvVanillaChanges.load();
         ProjectViscottTechTree.load();
+
         bTurrets.load();
 
         PvFilterOption.init();
@@ -111,8 +113,9 @@ public class ViscottMod extends Mod {
         Log.info("PV content load finished");
     }
     public void loadSettings() {
-        ui.settings.addCategory(bundle.get("setting.pv-title"), "test-utils-settings-icon", t -> {
+        ui.settings.addCategory(bundle.get("setting.pv-title"), "project-viscott-settings-icon", t -> {
             t.checkPref("pv-extra-factions", false);
+            t.checkPref("pv-strafe-double-tap",false);
         });
     }
     @Override

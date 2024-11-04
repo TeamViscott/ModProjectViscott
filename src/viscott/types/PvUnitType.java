@@ -15,6 +15,7 @@ import mindustry.gen.Crawlc;
 import mindustry.gen.MechUnit;
 import mindustry.gen.Unit;
 import mindustry.gen.UnitEntity;
+import mindustry.graphics.Pal;
 import mindustry.type.UnitType;
 import viscott.content.PvFactions;
 import viscott.world.draw.ChangeRegionPart;
@@ -23,9 +24,24 @@ import java.awt.*;
 
 public class PvUnitType extends UnitType {
     public Seq<PvFaction> factions = new Seq<>();
+
+    //chain code.
     private TextureRegion[] textureChain;
     private TextureRegion[] textureChainCells;
     DrawPart.PartParams partp = new DrawPart.PartParams();
+
+    //Dodge stuff
+    // how fast it basically should go.
+    public float strafeStrength = 7;
+    // the drag during the strafe.
+    public float strafeDrag = 0;
+    // the duration of the strafe.
+    public float strafeTime = 1;
+    // the strafe cooldown.
+    public float strafeCooldown = 2;
+    // a red tinted trail created while strafing.
+    public Color strafeTint = Pal.lancerLaser.cpy().a(0.4f);
+    public int strafeTrail = 0;
     public PvUnitType(String name)
     {
         super(name);
