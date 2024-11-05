@@ -21,6 +21,7 @@ import viscott.maps.filters.PvFilterOption;
 import viscott.sounds.PvSoundControl;
 import viscott.types.PvFaction;
 import viscott.types.PvLayers;
+import viscott.utilitys.PvOptions;
 import viscott.utilitys.PvPacketHandler;
 import viscott.utilitys.PvWorldState;
 
@@ -112,16 +113,10 @@ public class ViscottMod extends Mod {
 
         Log.info("PV content load finished");
     }
-    public void loadSettings() {
-        ui.settings.addCategory(bundle.get("setting.pv-title"), "project-viscott-settings-icon", t -> {
-            t.checkPref("pv-extra-factions", false);
-            t.checkPref("pv-strafe-double-tap",false);
-        });
-    }
     @Override
     public void init(){
 
-        loadSettings();
+        PvOptions.load();
         Mods.LoadedMod tu = mods.locateMod("project-viscott");
         tu.meta.author = """
                 [yellow]CREDITS[]:

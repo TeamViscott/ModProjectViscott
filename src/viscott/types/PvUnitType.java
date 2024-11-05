@@ -39,6 +39,8 @@ public class PvUnitType extends UnitType {
     public float strafeTime = 1;
     // the strafe cooldown.
     public float strafeCooldown = 2;
+    // the strafe damage taken multiplier. While strafing, damage taken is multiplied by x.
+    public float strafeDamageMultiplier = 1;
     // a red tinted trail created while strafing.
     public Color strafeTint = Pal.lancerLaser.cpy().a(0.4f);
     public int strafeTrail = 0;

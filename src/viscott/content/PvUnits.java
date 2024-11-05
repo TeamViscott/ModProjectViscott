@@ -1831,6 +1831,7 @@ public class PvUnits {
             strafeTime = 20;
             strafeTrail = 10;
             strafeStrength = 12;
+            strafeDamageMultiplier = 0.8f;
             drag = 0.1f;
             strafeDrag = 0.05f;
             flying = true;

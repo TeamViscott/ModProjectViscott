@@ -12,6 +12,9 @@ import arc.util.Time;
 import mindustry.Vars;
 import mindustry.gen.Player;
 import mindustry.gen.UnitEntity;
+import mindustry.graphics.Layer;
+import mindustry.input.DesktopInput;
+import mindustry.input.InputHandler;
 import mindustry.type.UnitType;
 import viscott.content.PvUnitMapper;
 import viscott.input.PvBinds;
@@ -23,15 +26,29 @@ public class DodgeUnit extends UnitEntity {
     float strafeCooldown;
     byte keyDir = 0;
     float lastKeyPress = 0;
+
+    Color trailCol;
+    float trailAlpha;
     Seq<NewSnowWeather.Vec2Rot> strafeTrail;
+    PvUnitType pvType;
 
     @Override
     public void setType(UnitType type) {
         super.setType(type);
 
-        var pvType = ((PvUnitType)type);
+        pvType = ((PvUnitType)type);
         strafeTrail = new Seq<>(pvType.strafeTrail);
         strafeCooldown = 0;
+        trailCol = ((PvUnitType) type).strafeTint.cpy();
+        trailAlpha = trailCol.a;
+    }
+
+    @Override
+    public void rawDamage(float amount) {
+        if (strafing)
+            super.rawDamage(pvType.strafeDamageMultiplier*amount);
+        else
+            super.rawDamage(amount);
     }
 
     @Override
@@ -71,18 +88,18 @@ public class DodgeUnit extends UnitEntity {
                 }
             }
 
-            Draw.color(((PvUnitType) type).strafeTint);
-            for (NewSnowWeather.Vec2Rot trailElem : strafeTrail)
-                Draw.rect(type.fullIcon, trailElem.x, trailElem.y, trailElem.rotation-90);
+            Draw.z(type.lowAltitude ? Layer.flyingUnitLow+0.0001f : Layer.flyingUnit+0.0001f);
+            for (int i = 0; i < strafeTrail.size;i++) {
+                NewSnowWeather.Vec2Rot trailElem = strafeTrail.get(i);
+                Draw.color(trailCol.a(trailAlpha*(1-Mathf.pow(1-(((float)i)/strafeTrail.size),3))));
+                Draw.rect(type.fullIcon, trailElem.x, trailElem.y, trailElem.rotation - 90);
+            }
         }
     }
 
     public void strafeUpdate() {
-        Log.info(strafeCooldown);
         strafeCooldown -= Time.delta;
-
         if (strafing) {
-            speedMultiplier = 0;
             if (strafeCooldown <= 0) { // strafe expired.
                 strafing = false;
                 drag = type.drag;
@@ -128,6 +145,17 @@ public class DodgeUnit extends UnitEntity {
                 var dir = rotation - 90;
                 strafeDir(dir);
             }
+        }
+    }
+
+    public void movePref(Vec2 movement) {
+        if (isLocal() && strafing) return; // no movePref updates while strafing.
+        if (isLocal() && Core.settings.getBool("pv-strafe-units-move-rotation")) {
+            var rot = rotation - 90;
+            movement.set(movement.x*Mathf.cosDeg(rot) - movement.y*Mathf.sinDeg(rot),movement.y*Mathf.cosDeg(rot) + movement.x*Mathf.sinDeg(rot));
+            super.movePref(movement);
+        } else {
+            super.movePref(movement);
         }
     }
 
