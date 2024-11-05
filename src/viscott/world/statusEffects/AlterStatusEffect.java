@@ -3,6 +3,7 @@ package viscott.world.statusEffects;
 import arc.util.Time;
 import mindustry.gen.Unit;
 import mindustry.type.StatusEffect;
+import viscott.content.PvStats;
 
 public class AlterStatusEffect extends PvStatusEffect {
     public AlterStatusEffect(String name)
@@ -16,6 +17,14 @@ public class AlterStatusEffect extends PvStatusEffect {
     {
         if (afterStatusEffect != null)
             unit.apply(afterStatusEffect,afterStatusEffectDuration);
+    }
+
+    @Override
+    public void setStats(){
+        super.setStats();
+        if (afterStatusEffect != null) {
+            stats.add(PvStats.onStatusEnd, afterStatusEffect.localizedName);
+        }
     }
 
     @Override

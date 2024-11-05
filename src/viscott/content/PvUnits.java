@@ -1827,10 +1827,10 @@ public class PvUnits {
             health = 140;
             armor = 0;
             hitSize = 8;
-            strafeCooldown = 60;
-            strafeTime = 20;
+            strafeCooldown = 1.2f*60;
+            strafeTime = 15;
             strafeTrail = 10;
-            strafeStrength = 12;
+            strafeStrength = 10;
             strafeDamageMultiplier = 0.8f;
             drag = 0.1f;
             strafeDrag = 0.05f;
