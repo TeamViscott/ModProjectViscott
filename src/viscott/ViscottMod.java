@@ -3,13 +3,16 @@ package viscott;
 import arc.Core;
 import arc.Events;
 import arc.KeyBinds;
+import arc.func.Cons;
 import arc.graphics.Color;
 import arc.graphics.g2d.Draw;
 import arc.struct.Seq;
 import arc.util.Log;
+import arc.util.Reflect;
 import mindustry.Vars;
 import mindustry.content.TechTree;
 import mindustry.game.EventType;
+import mindustry.game.Teams;
 import mindustry.input.Binding;
 import mindustry.mod.Mod;
 import mindustry.mod.Mods;
@@ -25,6 +28,8 @@ import viscott.utilitys.PvOptions;
 import viscott.utilitys.PvPacketHandler;
 import viscott.utilitys.PvWorldState;
 
+import java.lang.instrument.ClassFileTransformer;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -149,12 +154,18 @@ public class ViscottMod extends Mod {
             if (team.techTree != null && TechTree.roots.contains(team.techTree))
                 TechTree.roots.remove(team.techTree);
         });
+
+    }
+
+    public interface VoidFunc {
+        void get();
     }
 
     public void overRideOldSound()
     {
         PvSoundControl.ogSoundControl = control.sound;
         control.sound = new PvSoundControl();
+
     }
 
 }

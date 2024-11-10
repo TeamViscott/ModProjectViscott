@@ -17,8 +17,8 @@ import mindustry.gen.Groups;
 import mindustry.gen.Unit;
 import mindustry.world.Block;
 import mindustry.world.Tile;
-import viscott.gen.GridUnit;
-import viscott.types.GridUnitType;
+import viscott.gen.WorldUnit;
+import viscott.types.WorldUnitType;
 import viscott.types.PvFaction;
 
 import java.io.*;
@@ -27,7 +27,7 @@ import static mindustry.Vars.netClient;
 import static mindustry.Vars.world;
 
 public class PvPacketHandler {
-    public static void gridUnitLoad(GridUnit unit) {
+    public static void gridUnitLoad(WorldUnit unit) {
             if (unit == null) return;
             StringBuilder sb = new StringBuilder();
             Writes writer = new Writes(new DataOutput() {
@@ -300,9 +300,9 @@ public class PvPacketHandler {
             int unitid = reader.i();
             Unit u = Groups.unit.find(e->e.id == unitid);
             if (u == null) return;
-            GridUnit gu = (GridUnit) u;
+            WorldUnit gu = (WorldUnit) u;
             if (gu.gu == null) {
-                gu.gu = (GridUnitType) gu.type;
+                gu.gu = (WorldUnitType) gu.type;
                 gu.build();
             }
             World w = Vars.world;

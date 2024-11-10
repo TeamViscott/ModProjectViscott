@@ -1,7 +1,7 @@
 package viscott.world.block.storage;
 
 import mindustry.world.blocks.storage.StorageBlock;
-import viscott.gen.GridUnit;
+import viscott.gen.WorldUnit;
 
 public class GridUnitStoreLink extends StorageBlock {
     public GridUnitStoreLink(String name) {
@@ -9,7 +9,7 @@ public class GridUnitStoreLink extends StorageBlock {
         solid = false;
     }
     public class GridUnitStoreBuild extends StorageBuild {
-        public GridUnit gu;
+        public WorldUnit gu;
         boolean initialized = false;
         @Override
         public void update() {
