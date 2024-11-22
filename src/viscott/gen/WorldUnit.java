@@ -6,7 +6,6 @@ import arc.graphics.g2d.TextureRegion;
 import arc.math.*;
 import arc.math.geom.Point2;
 import arc.math.geom.QuadTree;
-import arc.math.geom.Vec2;
 import arc.struct.IntSeq;
 import arc.struct.Seq;
 import arc.util.Log;
@@ -26,10 +25,10 @@ import mindustry.gen.*;
 import mindustry.graphics.Drawf;
 import mindustry.graphics.Layer;
 import mindustry.type.Item;
+import mindustry.type.UnitType;
 import mindustry.world.Block;
 import mindustry.world.Tile;
 import mindustry.world.Tiles;
-import mindustry.world.blocks.Autotiler;
 import mindustry.world.blocks.defense.turrets.Turret;
 import mindustry.world.blocks.distribution.Conveyor;
 import mindustry.world.blocks.distribution.StackConveyor;
@@ -48,13 +47,11 @@ import static mindustry.Vars.itemSize;
 public class WorldUnit extends MechUnit {
     public World innerWorld = new World();
     public boolean built = false;
-    boolean contSwitch = false;
     public int buildSize = 0;
     // I forgot why but buildArea is [y][x] base. dont ask why.
     public boolean[][] buildArea = new boolean[0][0];
     private static DrawBatchRotate drawBatch = new DrawBatchRotate();
     public WorldUnitType gu;
-    public BlockUnitUnit bu;
 
     class Pos2 {
         int x = 0;
@@ -80,30 +77,21 @@ public class WorldUnit extends MechUnit {
     }
     public WorldUnit() {
         super();
-        bu = BlockUnitUnit.create();
+    }
+
+    @Override
+    public void type(UnitType type) {
+        super.type(type);
     }
 
     @Override
     public void resetController() {
-        this.controller(this.type.createController(this));
-        bu.controller(this.controller);
-        this.controller.unit(this);
+        super.resetController();
     }
 
     @Override
     public void controller(UnitController cont) {
-        if (contSwitch) {
-            contSwitch = false;
-            return;
-        }
-        this.controller = cont;
-        if (controller instanceof Player contPlayer) {
-
-            contSwitch = true;
-            bu.controller(this.controller);
-            contPlayer.justSwitchFrom = null;
-            contPlayer.unit(this);
-        }
+        super.controller(cont);
     }
 
     public void build() {
@@ -367,9 +355,6 @@ public class WorldUnit extends MechUnit {
                         proxupdate.add(b);
                         if (!buildOntoUnit(b)) {
                             continue;
-                        }
-                        if (b.block() instanceof Turret) {
-                            ((Turret.TurretBuild)b).unit = bu;
                         }
                     }
                 }
