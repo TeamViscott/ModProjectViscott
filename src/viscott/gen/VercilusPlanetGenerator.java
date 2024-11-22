@@ -14,6 +14,7 @@ import arc.struct.ObjectSet;
 import arc.struct.Seq;
 import arc.util.Structs;
 import arc.util.Tmp;
+import arc.util.noise.Noise;
 import arc.util.noise.Ridged;
 import arc.util.noise.Simplex;
 import mindustry.ai.Astar;
@@ -24,6 +25,7 @@ import mindustry.game.Schematics;
 import mindustry.game.Team;
 import mindustry.game.Waves;
 import mindustry.graphics.Pal;
+import mindustry.graphics.g3d.PlanetGrid;
 import mindustry.maps.generators.BaseGenerator;
 import mindustry.maps.generators.PlanetGenerator;
 import mindustry.maps.planet.SerpuloPlanetGenerator;
@@ -39,15 +41,33 @@ import viscott.content.PvCoreShematics;
 import static mindustry.Vars.*;
 /* SerpuloPlanetGenerator */
 public class VercilusPlanetGenerator extends SerpuloPlanetGenerator {
+
+    Block[][] arr;
     public VercilusPlanetGenerator() {
         super();
         defaultLoadout = PvCoreShematics.hover;
+
+        arr = new Block[][]{
+                {
+                    PvBlocks.tenebrousStone,Blocks.stone,PvBlocks.bariumPowder,Blocks.ice
+                },
+                {
+                    Blocks.ice,Blocks.snow,Blocks.iceSnow,Blocks.stone
+                },
+                {
+                    Blocks.water,Blocks.snow,Blocks.iceSnow,PvBlocks.bariumPowder
+                },
+                {
+                    Blocks.stone,Blocks.stone,Blocks.ice,PvBlocks.bariumPowder
+                }
+        };
     }
 
     BaseGenerator basegen = new BaseGenerator();
     float scl = 5f;
     float waterOffset = 0.07f;
     boolean genLakes = false;
+
 
     ObjectMap<Block, Block> dec = ObjectMap.of(
             Blocks.sporeMoss, Blocks.sporeCluster,
@@ -66,12 +86,65 @@ public class VercilusPlanetGenerator extends SerpuloPlanetGenerator {
         return Simplex.noise3d(seed,7,0.5f,1f/3f,position.x,position.y,position.z)*2f-2f;
     }
 
-    /*
+    @Override
+    public void genTile(Vec3 position, TileGen tile) {
+        tile.floor = this.getBlock(position);
+        tile.block = tile.floor.asFloor().wall;
+        if ((double)Ridged.noise3d(this.seed + 1, (double)position.x, (double)position.y, (double)position.z, 2, 22.0F) > 0.31) {
+            tile.block = Blocks.air;
+        }
+    }
+
     @Override
     public Color getColor(Vec3 position){
-        return Pal.heal.cpy().lerp(Pal.techBlue, Simplex.noise3d(seed,7,0.5f,1f/3f,position.x,position.y,position.z)*1f);
+        Block block = this.getBlock(position);
+        return block == Blocks.salt ? Blocks.sand.mapColor : Tmp.c1.set(block.mapColor).a(1.0F - block.albedo);
     }
-     */
+
+    Block getBlock(Vec3 position) {
+        float height = this.rawHeight(position);
+        Tmp.v31.set(position);
+        position = Tmp.v33.set(position).scl(this.scl);
+        float rad = this.scl;
+        float temp = Mathf.clamp(Math.abs(position.y * 2.0F) / rad);
+        float tnoise = Simplex.noise3d(this.seed, 7.0, 0.56, 0.3333333432674408, (double)position.x, (double)(position.y + 999.0F), (double)position.z);
+        temp = Mathf.lerp(temp, tnoise, 0.5F);
+        height *= 1.2F;
+        height = Mathf.clamp(height);
+        Block res = this.arr[Mathf.clamp((int)(temp * (float)this.arr.length), 0, this.arr[0].length - 1)][Mathf.clamp((int)(height * (float)this.arr[0].length), 0, this.arr[0].length - 1)];
+        return res;
+    }
+
+    @Override
+    public void generateSector(Sector sector) {
+        if (sector.id != 154 && sector.id != 0) {
+            PlanetGrid.Ptile tile = sector.tile;
+            boolean any = false;
+            float poles = Math.abs(tile.v.y);
+            float noise = Noise.snoise3(tile.v.x, tile.v.y, tile.v.z, 0.001F, 0.58F);
+            if ((double)noise + (double)poles / 7.1 > 0.12 && (double)poles > 0.23) {
+                any = true;
+            }
+
+            if ((double)noise < 0.16) {
+                PlanetGrid.Ptile[] var6 = tile.tiles;
+                int var7 = var6.length;
+
+                for(int var8 = 0; var8 < var7; ++var8) {
+                    PlanetGrid.Ptile other = var6[var8];
+                    Sector osec = sector.planet.getSector(other);
+                    if (osec.id == sector.planet.startSector || osec.generateEnemyBase && (double)poles < 0.85 || sector.preset != null && (double)noise < 0.11) {
+                        return;
+                    }
+                }
+            }
+
+            sector.generateEnemyBase = any;
+        } else {
+            sector.generateEnemyBase = true;
+        }
+    }
+
 
     @Override
     protected void generate(){
@@ -146,7 +219,7 @@ public class VercilusPlanetGenerator extends SerpuloPlanetGenerator {
                                 if(Mathf.within(x, y, rad - 1) && !other.floor().isLiquid){
                                     Floor floor = other.floor();
                                     //TODO does not respect tainted floors
-                                    other.setFloor((Floor)(floor == Blocks.sand || floor == Blocks.salt ? Blocks.sandWater : Blocks.darksandTaintedWater));
+                                    other.setFloor((Floor)(floor == PvBlocks.bariumPowder || floor == PvBlocks.tenebrousStone ? Blocks.water : Blocks.taintedWater));
                                 }
                             }
                         }
@@ -198,7 +271,7 @@ public class VercilusPlanetGenerator extends SerpuloPlanetGenerator {
         //check positions on the map to place the player spawn. this needs to be in the corner of the map
         Room spawn = null;
         Seq<Room> enemies = new Seq<>();
-        int enemySpawns = rand.random(1, Math.max((int)(sector.threat * 4), 1)); // between 1-4 > 1-20 enemy spawns. may god have mercy uppon your soul.
+        int enemySpawns = rand.random(1, Math.max((int)(sector.threat * 4), 1)); // between 1-4 > 1-12 enemy spawns. may god have mercy uppon your soul.
         int offset = rand.nextInt(360); //rotation offset, would also work with rand 5, since this is essencialy the same.
         float length = width/2.55f - rand.random(13, 23); // length is a bit less than half of the map. ~0.78
         int angleStep = 5;
@@ -225,7 +298,7 @@ public class VercilusPlanetGenerator extends SerpuloPlanetGenerator {
                 roomseq.add(spawn = new Room(cx, cy, rand.random(8, 15))); // the player spawn
 
                 for(int j = 0; j < enemySpawns; j++){ // Enemys swarm from a direction.
-                    float enemyOffset = rand.range(60f); // this is stupid. range 180-240, not all 180° + 0-60° 180-240°
+                    float enemyOffset = rand.range(60f)-30f; // this is stupid. range 180-240, not all 360°
                     Tmp.v1.set(cx - width/2, cy - height/2).rotate(180f + enemyOffset).add(width/2, height/2);
                     Room espawn = new Room((int)Tmp.v1.x, (int)Tmp.v1.y, rand.random(8, 16));
                     roomseq.add(espawn);
@@ -293,10 +366,10 @@ public class VercilusPlanetGenerator extends SerpuloPlanetGenerator {
             float rr = Simplex.noise2d(sector.id, (float)2, 0.6f, 1f / 7f, x, y) * 0.1f;
             float value = Ridged.noise3d(2, v.x, v.y, v.z, 1, 1f / 55f) + rr - rawHeight(v) * 0f;
             float rrscl = rr * 44 - 2;
-
+            // if noise calls for it and is not within a range of the spawn, create a river.
             if(value > 0.17f && !Mathf.within(x, y, fspawn.x, fspawn.y, 12 + rrscl)){
                 boolean deep = value > 0.17f + 0.1f && !Mathf.within(x, y, fspawn.x, fspawn.y, 15 + rrscl);
-                boolean spore = floor != Blocks.sand && floor != Blocks.salt;
+                boolean spore = floor != PvBlocks.bariumPowder && floor != PvBlocks.tenebrousStone;
                 //do not place rivers on ice, they're frozen
                 //ignore pre-existing liquids
                 if(!(floor == Blocks.ice || floor == Blocks.iceSnow || floor == Blocks.snow || floor.asFloor().isLiquid)){
@@ -327,7 +400,8 @@ public class VercilusPlanetGenerator extends SerpuloPlanetGenerator {
                         }
                     }
                 }
-
+                // must not be near liquid and block == air... ? what.
+                // ah. turns liquids into water?
                 floor = floor == Blocks.darksandTaintedWater ? Blocks.taintedWater : Blocks.water;
             }
         });
@@ -352,38 +426,33 @@ public class VercilusPlanetGenerator extends SerpuloPlanetGenerator {
                             }
                         }
                     }
-
+                    // makes it deep.
                     floor = floor == Blocks.water ? Blocks.deepwater : Blocks.taintedWater;
                 }
             });
         }
 
-        Seq<Block> ores = Seq.with(Blocks.oreCopper, Blocks.oreLead);
+        /* Ore generation */
+        Seq<Block> ores = Seq.with(PvBlocks.zirconiumOre, PvBlocks.lithiumOre);
         float poles = Math.abs(sector.tile.v.y);
         float nmag = 0.5f;
         float scl = 1f;
         float addscl = 1.3f;
 
-        if(Simplex.noise3d(seed, 2, 0.5, scl, sector.tile.v.x, sector.tile.v.y, sector.tile.v.z)*nmag + poles > 0.25f*addscl){
-            ores.add(Blocks.oreCoal);
+        // chance of adding based off the sectors random value
+        if(Simplex.noise3d(seed, 2, 0.5, scl, sector.tile.v.x, sector.tile.v.y, sector.tile.v.z)*nmag + poles <= 0.75f*addscl){ // ~75%
+            ores.add(PvBlocks.platinumOre);
         }
 
-        if(Simplex.noise3d(seed, 2, 0.5, scl, sector.tile.v.x + 1, sector.tile.v.y, sector.tile.v.z)*nmag + poles > 0.5f*addscl){
-            ores.add(Blocks.oreTitanium);
-        }
-
-        if(Simplex.noise3d(seed, 2, 0.5, scl, sector.tile.v.x + 2, sector.tile.v.y, sector.tile.v.z)*nmag + poles > 0.7f*addscl){
-            ores.add(Blocks.oreThorium);
-        }
-
-        if(rand.chance(0.25)){
-            ores.add(Blocks.oreScrap);
+        if(Simplex.noise3d(seed, 2, 0.5, scl, sector.tile.v.x + 1, sector.tile.v.y, sector.tile.v.z)*nmag + poles <= 0.5f*addscl){ // ~50%
+            ores.add(PvBlocks.erbiumOre);
         }
 
         FloatSeq frequencies = new FloatSeq();
         for(int i = 0; i < ores.size; i++){
             frequencies.add(rand.random(-0.1f, 0.01f) - i * 0.01f + poles * 0.04f);
         }
+        //finished setting up ores, till we actually generate it.
 
         pass((x, y) -> {
             if(!floor.asFloor().hasSurface()) return;
@@ -394,23 +463,26 @@ public class VercilusPlanetGenerator extends SerpuloPlanetGenerator {
                 float freq = frequencies.get(i);
                 if(Math.abs(0.5f - noise(offsetX, offsetY + i*999, 2, 0.7, (40 + i * 2))) > 0.22f + i*0.01 &&
                         Math.abs(0.5f - noise(offsetX, offsetY - i*999, 1, 1, (30 + i * 4))) > 0.37f + freq){
-                    ore = entry;
+                    ore = entry; // christ, this is wild randomness
                     break;
                 }
-            }
-
-            if(ore == Blocks.oreScrap && rand.chance(0.33)){
-                floor = Blocks.metalFloorDamaged;
             }
         });
 
         trimDark();
+        // idiotic function, only the last of the checks affect it.
+        // yet it works in filling out the dark space with blocks.
+        // only realy works with Geometry.d4's last direction.
 
         median(2);
+        // remedies air floors & ore, notably only up to a radius of 2.
+        // will also median if the floor is not set yet.
 
         inverseFloodFill(tiles.getn(spawn.x, spawn.y));
+        // any spaces will be drowned out. filling them if they are seperated.
 
-        tech();
+        tech(PvBlocks.densePlate,PvBlocks.densePlate2,PvBlocks.densePlate3);
+        // the grid like ruin tile aligning.
 
         pass((x, y) -> {
             //random moss
@@ -441,7 +513,8 @@ public class VercilusPlanetGenerator extends SerpuloPlanetGenerator {
                             all = false;
                         }
                     }
-                    if(all){
+                    if(all){ // 4 neighboring hotrocks make a magmarock. one hotrock may turn to basalt while generating,
+                            // causing it to be able to spawn with only 2 neighboring hot rocks.
                         floor = Blocks.magmarock;
                     }
                 }
@@ -490,11 +563,13 @@ public class VercilusPlanetGenerator extends SerpuloPlanetGenerator {
 
         float difficulty = sector.threat;
         ints.clear();
-        ints.ensureCapacity(width * height / 4);
+        ints.ensureCapacity(width * height / 4); // a capacity of 25% of the map.
 
+        /* ruins crash rn, idk why
         int ruinCount = rand.random(-2, 4);
         if(ruinCount > 0){
             int padding = 25;
+            // a good estimate, with a 50x50 area, its reasonable to assume the capacity.
 
             //create list of potential positions
             for(int x = padding; x < width - padding; x++){
@@ -559,13 +634,14 @@ public class VercilusPlanetGenerator extends SerpuloPlanetGenerator {
                             if(other.team() == Team.derelict && rand.chance(removeChance)){
                                 other.remove();
                             }else if(rand.chance(0.5)){
-                                other.build.health = other.build.health - rand.random(other.build.health * 0.9f);
+                                other.build.health = other.build.health - rand.random(other.build.health * 0.9f); // between 100% - 10%
                             }
                         }
                     });
                 }
             }
         }
+        // */
 
         //remove invalid ores
         for(Tile tile : tiles){
@@ -574,19 +650,24 @@ public class VercilusPlanetGenerator extends SerpuloPlanetGenerator {
             }
         }
 
+        // TODO replace with Viscott's loadout logic.
         Schematics.placeLaunchLoadout(spawn.x, spawn.y);
 
+
+        // Enemy generation
         for(Room espawn : enemies){
             tiles.getn(espawn.x, espawn.y).setOverlay(Blocks.spawn);
         }
 
+        /*
         if(sector.hasEnemyBase()){
             basegen.generate(tiles, enemies.map(r -> tiles.getn(r.x, r.y)), tiles.get(spawn.x, spawn.y), state.rules.waveTeam, sector, difficulty);
 
             state.rules.attackMode = sector.info.attack = true;
         }else{
+        // */
             state.rules.winWave = sector.info.winWave = 10 + 5 * (int)Math.max(difficulty * 10, 1);
-        }
+        // }
 
         float waveTimeDec = 0.4f;
 

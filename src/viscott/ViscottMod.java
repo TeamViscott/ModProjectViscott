@@ -100,14 +100,13 @@ public class ViscottMod extends Mod {
         PvUnits.load();
         PvWeathers.load();
         PvBlocks.load();
+        bTurrets.load();
         PvMaptools.load();
         PvTurrets.load();
         PvPlanets.load();
         PvSectorPresets.load();
         PvVanillaChanges.load();
         ProjectViscottTechTree.load();
-
-        bTurrets.load();
 
         PvFilterOption.init();
 
