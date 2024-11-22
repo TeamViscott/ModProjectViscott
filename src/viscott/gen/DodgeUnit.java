@@ -28,6 +28,7 @@ import viscott.types.weathers.NewSnowWeather;
 
 public class DodgeUnit extends UnitEntity {
     boolean strafing = false;
+    float strafeBursts = 1;
     float strafeCooldown;
     byte keyDir = 0;
     byte dodgeLevel = 1;
@@ -57,6 +58,7 @@ public class DodgeUnit extends UnitEntity {
         strafeCooldown = 0;
         trailCol = ((PvUnitType) type).strafeTint.cpy();
         trailAlpha = trailCol.a;
+        strafeBursts = pvType.strafeBursts;
     }
 
     @Override
@@ -168,14 +170,21 @@ public class DodgeUnit extends UnitEntity {
             if (strafeCooldown <= 0) { // strafe expired.
                 strafing = false;
                 drag = type.drag;
-                strafeCooldown = ((PvUnitType)type).strafeCooldown;
+                strafeCooldown = pvType.strafeCooldown / pvType.strafeBursts;
             }
 
             return; // don't run stuff past this if strafing.
         }
 
         if (!isLocal()) return; // player is controlling it.
-        if (strafeCooldown > 0) return;
+        if (strafeCooldown <= 0) {
+            if (strafeBursts < pvType.strafeBursts) {
+                strafeBursts++;
+                strafeCooldown = pvType.strafeCooldown / pvType.strafeBursts;
+            }
+        }
+        if (strafeBursts == 0) return;
+
 
         if (keyDir != 0)
             lastKeyPress += Math.min(10,Time.delta);
@@ -233,6 +242,7 @@ public class DodgeUnit extends UnitEntity {
         vel.x += norms.x;
         vel.y += norms.y;
         dragMultiplier = 0;
+        strafeBursts--;
     }
 
     @Override

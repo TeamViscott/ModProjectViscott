@@ -45,6 +45,8 @@ public class PvUnitType extends UnitType {
     public Color strafeTint = Pal.lancerLaser.cpy().a(0.4f);
     public int strafeTrail = 0;
 
+    public int strafeBursts = 1;
+
     public float directBoost = 1.5f;
     public float directDecay = 60;
     public PvUnitType(String name)

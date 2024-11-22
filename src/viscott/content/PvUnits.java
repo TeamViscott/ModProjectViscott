@@ -1915,7 +1915,7 @@ public class PvUnits {
             flying = true;
             speed = 22f/7.5f;
             canBoost = false;
-            itemCapacity = 15;
+            itemCapacity = 30;
             range = 20 * 8;
             deathExplosionEffect = PvEffects.particleDeath1;
             weapons.add(
@@ -1927,7 +1927,7 @@ public class PvUnits {
                         y = 0;
                         reload = 60f/2.5f;
                         bullet = new RailBulletType(){{
-                            length = 18*8f;
+                            length = 20*8f;
                             damage = 60f;
                             hitColor = Pal.lancerLaser;
                             hitEffect = endEffect = Fx.hitLancer;
@@ -1948,7 +1948,89 @@ public class PvUnits {
                                 color(e.color);
 
                                 for(int i : Mathf.signs){
-                                    Drawf.tri(e.x, e.y, w * 0.9f, 18f * e.fout(), e.rotation + i * 90f);
+                                    Drawf.tri(e.x, e.y, w * 0.9f, 20f * e.fout(), e.rotation + i * 90f);
+                                }
+
+                                Drawf.tri(e.x, e.y, w, 4f * e.fout(), e.rotation + 180f);
+                            });
+
+                            lineEffect = new Effect(20f, e -> {
+                                if(!(e.data instanceof Vec2 v)) return;
+
+                                color(e.color);
+                                stroke(e.fout() * 0.9f + 0.6f);
+
+                                Fx.rand.setSeed(e.id);
+                                for(int i = 0; i < 7; i++){
+                                    Fx.v.trns(e.rotation, Fx.rand.random(8f, v.dst(e.x, e.y) - 8f));
+                                    Lines.lineAngleCenter(e.x + Fx.v.x, e.y + Fx.v.y, e.rotation + e.finpow(), e.foutpowdown() * 18f * Fx.rand.random(0.5f, 1f) + 0.3f);
+                                }
+
+                                e.scaled(14f, b -> {
+                                    stroke(b.fout() * 1.5f);
+                                    color(e.color);
+                                    Lines.line(e.x, e.y, v.x, v.y);
+                                });
+                            });
+                        }};
+                    }}
+            );
+        }};
+
+        tempo = new PvUnitType("tempo")
+        {{
+            localizedName = "Tempo";
+            constructor = () -> new DodgeUnit(2);
+            health = 1000;
+            armor = 1;
+            hitSize = 8;
+            strafeCooldown = 3.6f*60;
+            strafeTime = 20;
+            strafeTrail = 18;
+            strafeStrength = 14;
+            strafeDamageMultiplier = 0.8f;
+            strafeBursts = 3;
+            drag = 0.1f;
+            strafeDrag = 0;
+            directBoost = 2;
+            directDecay = 20;
+            flying = true;
+            speed = 23f/7.5f;
+            canBoost = false;
+            itemCapacity = 40;
+            range = 22 * 8;
+            deathExplosionEffect = PvEffects.particleDeath1;
+            weapons.add(
+                    new Weapon()
+                    {{
+                        shootSound = Sounds.bolt;
+                        top = false;
+                        x = 0;
+                        y = 0;
+                        reload = 60f/2.5f;
+                        bullet = new RailBulletType(){{
+                            length = 22*8f;
+                            damage = 115f;
+                            hitColor = Pal.lancerLaser;
+                            hitEffect = endEffect = Fx.hitLancer;
+                            pierceDamageFactor = 0.8f;
+
+                            smokeEffect = Fx.colorSpark;
+
+                            endEffect = new Effect(14f, e -> {
+                                color(e.color);
+                                Drawf.tri(e.x, e.y, e.fout() * 1.5f, 5f, e.rotation);
+                            });
+
+                            shootEffect = new Effect(10, e -> {
+                                color(e.color);
+                                float w = 1.2f + 7 * e.fout();
+
+                                Drawf.tri(e.x, e.y, w, 30f * e.fout(), e.rotation);
+                                color(e.color);
+
+                                for(int i : Mathf.signs){
+                                    Drawf.tri(e.x, e.y, w * 0.9f, 22f * e.fout(), e.rotation + i * 90f);
                                 }
 
                                 Drawf.tri(e.x, e.y, w, 4f * e.fout(), e.rotation + 180f);
