@@ -2005,9 +2005,11 @@ public class PvUnits {
                     {{
                         shootSound = Sounds.bolt;
                         top = false;
-                        x = 0;
+                        mirror = true;
+                        alternate = true;
+                        x = 4;
                         y = 0;
-                        reload = 60f/2.5f;
+                        reload = 60f/4f;
                         bullet = new RailBulletType(){{
                             length = 22*8f;
                             damage = 115f;
