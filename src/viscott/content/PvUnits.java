@@ -365,6 +365,7 @@ public class PvUnits {
             speed = 30.8f / 7.5f;
             healColor = Color.black;
             drag = 0.3f;
+            mineRange = 8*8;
             range = 10*8;
             mineItems = Seq.with(PvItems.zirconium,PvItems.lithium,PvItems.platinum,PvItems.erbium);
             weapons.add(
