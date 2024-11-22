@@ -44,6 +44,9 @@ public class PvUnitType extends UnitType {
     // a red tinted trail created while strafing.
     public Color strafeTint = Pal.lancerLaser.cpy().a(0.4f);
     public int strafeTrail = 0;
+
+    public float directBoost = 1.5f;
+    public float directDecay = 60;
     public PvUnitType(String name)
     {
         super(name);

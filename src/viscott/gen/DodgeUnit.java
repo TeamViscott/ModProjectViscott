@@ -4,12 +4,17 @@ import arc.Core;
 import arc.graphics.Color;
 import arc.graphics.g2d.Draw;
 import arc.input.Controller;
+import arc.math.Angles;
+import arc.math.Mat;
 import arc.math.Mathf;
 import arc.math.geom.Vec2;
 import arc.struct.Seq;
 import arc.util.Log;
 import arc.util.Time;
+import arc.util.io.Reads;
+import arc.util.io.Writes;
 import mindustry.Vars;
+import mindustry.entities.units.AIController;
 import mindustry.gen.Player;
 import mindustry.gen.UnitEntity;
 import mindustry.graphics.Layer;
@@ -25,12 +30,23 @@ public class DodgeUnit extends UnitEntity {
     boolean strafing = false;
     float strafeCooldown;
     byte keyDir = 0;
+    byte dodgeLevel = 1;
     float lastKeyPress = 0;
 
     Color trailCol;
     float trailAlpha;
+    float a2_directBoost = 0;
+    boolean a2_directBoosting = false;
     Seq<NewSnowWeather.Vec2Rot> strafeTrail;
     PvUnitType pvType;
+
+    public DodgeUnit(int level) {
+        this();
+        dodgeLevel = (byte) level;
+    }
+    public DodgeUnit() {
+        super();
+    }
 
     @Override
     public void setType(UnitType type) {
@@ -65,14 +81,63 @@ public class DodgeUnit extends UnitEntity {
     @Override
     public void update() {
         strafeUpdate();
+        directBoostUpdate();
+        if (a2_directBoosting)
+            Log.info("boosting");
+        Vec2 additive = null;
+        if (a2_directBoosting) {
+            if (a2_directBoost == Float.POSITIVE_INFINITY)
+                additive = vel.cpy().mulAdd(vel, pvType.directBoost - 1);
+            else
+                additive = vel.cpy().mulAdd(vel, Mathf.lerp(-1f,pvType.directBoost - 1,a2_directBoost/pvType.directDecay));
+            vel.add(additive);
+        }
         super.update();
-        
+        if (a2_directBoosting)
+            vel.sub(additive);
+    }
+
+    public void directBoostUpdate() {
+        if (a2_directBoosting && a2_directBoost != Float.POSITIVE_INFINITY) {
+            a2_directBoost -= Time.delta;
+            if (a2_directBoost <= 0) {
+                a2_directBoost = 0;
+                a2_directBoosting = false;
+            }
+        }
+    }
+
+    @Override
+    public void lookAt(float angle) {
+        if (dodgeLevel < 2) {
+            super.lookAt(angle);
+            return;
+        }
+
+        if (Math.abs(angle - rotation) <= 2 && vel.len() >= type.speed / 2  && Math.abs(rotation - vel.angle()) <= 2) {
+            // needs to have little to no rotation edit and also be aligned with velocity.
+            if (!a2_directBoosting) {
+                a2_directBoost += Time.delta;
+                if (a2_directBoost >= 60*1) {
+                    a2_directBoost = Float.POSITIVE_INFINITY;
+                    a2_directBoosting = true;
+                }
+            }
+        } else {
+            if (a2_directBoosting) {
+                if (a2_directBoost == Float.POSITIVE_INFINITY)
+                    a2_directBoost = pvType.directDecay;
+            } else {
+                a2_directBoost = 0;
+            }
+        }
+        super.lookAt(angle);
     }
 
     public void strafeDraw() {
-        if (((PvUnitType) type).strafeTrail != 0) {
+        if (pvType.strafeTrail != 0) {
             if (!Vars.state.isPaused()) {
-                if (strafing == false) {
+                if (strafing == false && a2_directBoost != Float.POSITIVE_INFINITY) {
                     if (strafeTrail.size == 0)
                         return;
                     strafeTrail.remove(0);
@@ -170,4 +235,15 @@ public class DodgeUnit extends UnitEntity {
         dragMultiplier = 0;
     }
 
+    @Override
+    public void read(Reads read) {
+        super.read(read);
+        dodgeLevel = read.b();
+    }
+
+    @Override
+    public void write(Writes writes) {
+        super.write(writes);
+        writes.b(dodgeLevel);
+    }
 }
