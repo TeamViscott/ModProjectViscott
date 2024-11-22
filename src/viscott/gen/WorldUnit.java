@@ -5,6 +5,7 @@ import arc.graphics.g2d.Draw;
 import arc.graphics.g2d.TextureRegion;
 import arc.math.*;
 import arc.math.geom.Point2;
+import arc.math.geom.QuadTree;
 import arc.struct.IntSeq;
 import arc.struct.Seq;
 import arc.util.Log;
@@ -15,18 +16,16 @@ import arc.util.io.Writes;
 import mindustry.Vars;
 import mindustry.ai.UnitCommand;
 import mindustry.content.Blocks;
-import mindustry.core.NetServer;
 import mindustry.core.World;
 import mindustry.entities.abilities.Ability;
 import mindustry.entities.part.DrawPart;
+import mindustry.entities.units.UnitController;
 import mindustry.entities.units.WeaponMount;
-import mindustry.gen.Building;
-import mindustry.gen.EntityMapping;
-import mindustry.gen.Groups;
-import mindustry.gen.MechUnit;
+import mindustry.gen.*;
 import mindustry.graphics.Drawf;
 import mindustry.graphics.Layer;
 import mindustry.type.Item;
+import mindustry.type.UnitType;
 import mindustry.world.Block;
 import mindustry.world.Tile;
 import mindustry.world.Tiles;
@@ -34,36 +33,65 @@ import mindustry.world.blocks.defense.turrets.Turret;
 import mindustry.world.blocks.distribution.Conveyor;
 import mindustry.world.blocks.distribution.StackConveyor;
 import mindustry.world.blocks.environment.Prop;
-import mindustry.world.blocks.power.PowerBlock;
-import mindustry.world.blocks.power.PowerDiode;
-import mindustry.world.blocks.power.PowerNode;
 import mindustry.world.blocks.storage.CoreBlock;
 import mindustry.world.draw.DrawTurret;
 import viscott.content.PvBlocks;
 import viscott.content.PvUnitMapper;
-import viscott.types.GridUnitType;
+import viscott.types.WorldUnitType;
 import viscott.utilitys.PvPacketHandler;
 import viscott.world.draw.DrawBatchRotate;
 
 import static mindustry.Vars.*;
 import static mindustry.Vars.itemSize;
 
-public class GridUnit extends MechUnit {
+public class WorldUnit extends MechUnit {
     public World innerWorld = new World();
     public boolean built = false;
     public int buildSize = 0;
+    // I forgot why but buildArea is [y][x] base. dont ask why.
     public boolean[][] buildArea = new boolean[0][0];
     private static DrawBatchRotate drawBatch = new DrawBatchRotate();
-    public GridUnitType gu;
-    public GridUnit(GridUnitType type) {
+    public WorldUnitType gu;
+
+    class Pos2 {
+        int x = 0;
+        int y = 0;
+
+        public Pos2() {}
+        public Pos2(int x,int y) {
+            this.x = x;
+            this.y = y;
+        }
+
+        @Override
+        public String toString() {
+            return x + ", "+y;
+        }
+    }
+    Pos2 tilePos = new Pos2();
+    public WorldUnit(WorldUnitType type) {
         this();
 
         gu = type;
         build();
     }
-    public GridUnit() {
+    public WorldUnit() {
         super();
+    }
 
+    @Override
+    public void type(UnitType type) {
+        super.type(type);
+    }
+
+    @Override
+    public void resetController() {
+        super.resetController();
+    }
+
+    @Override
+    public void controller(UnitController cont) {
+        super.controller(cont);
     }
 
     public void build() {
@@ -87,56 +115,90 @@ public class GridUnit extends MechUnit {
 
     }
 
-    public boolean buildAt(Tile c,int x, int y, Building building, byte rotation) {
-        if (Vars.net.client()) return false;
-        int cx = c.x,
-                cy = c.y;
-        if (building == null || building.block() == null) return false;
-        if (building.block instanceof CoreBlock) return false;
-        World curWorld = Vars.world;
-        int s = buildSize-1;
-        Tile cT = building.tile;
-        Tile t = innerWorld.tile(0,0);
+    /**
+     * Returns true if the x and y are still in buildArea after accounting for placement rotation.
+     */
+    public boolean buildOntoUnit(Building building) {
+        // initiating some variables
+        byte blockRotation = (byte) Math.round(rotation / 90);
         int size = building.block().size;
-        int min = -Mathf.floor((size - 1) / 2),
-                max = Mathf.floor(size / 2);
+        int min = -(size-1) / 2,       // 1-1 = 0/2 = 0    | 2-1 = 1/2 = 0    | 3-1 = 2/2 = -1
+            max = size / 2 + 1;        // 1/2 = 0 + 1 = 1  | 2/2 = 1 + 1 = 2  | 3/2 = 1 + 1 = 2
+
+        World curWorld = Vars.world;
+
+
+        // returns a coordinate that would fit in the sub world.
+        Pos2 sub_tile = new Pos2(
+                building.tileX() - tilePos.x,
+                building.tileY() - tilePos.y
+        );
+
+        // check if its in bounds
+        if (sub_tile.x + min < 0 || sub_tile.y + min < 0)
+            return false; // bottom left check. tile bounds needs to be within the grid range.
+        if (sub_tile.x + max >= buildSize || sub_tile.y + max >= buildSize)
+            return false; // up right check.
+
+        Tile t;
+        int unitWorldSize = buildSize-1;
+        // offset is used to correct the center of 2x2 and any even squared block.
         int offset = (building.block().size-1) % 2;
-        switch(rotation%4) {
+        // rotates the block accordingly. accommodates for offset.
+        switch (blockRotation % 4) {
             case 0:
-                t = innerWorld.tile(cT.x - cx,cT.y - cy);
-                if (!buildArea[y][x]) return false;
+                // Right
+                t = innerWorld.tile(sub_tile.x,sub_tile.y);
                 break;
             case 1:
-                t = innerWorld.tile(cT.y - cy,s- (cT.x - cx)-offset);
-                if (!buildArea[x][y]) return false;
+                // Up
+                t = innerWorld.tile(sub_tile.y,unitWorldSize - sub_tile.x - offset);
                 break;
             case 2:
-                t = innerWorld.tile(s- (cT.x - cx)-offset,s- (cT.y - cy)-offset);
-                if (!buildArea[s-y][s-x]) return false;
+                // Left
+                t = innerWorld.tile(unitWorldSize - sub_tile.x - offset,unitWorldSize - sub_tile.y - offset);
                 break;
-            case 3:
-                t = innerWorld.tile(s- (cT.y - cy)-offset,cT.x - cx);
-                if (!buildArea[s-x][s-y]) return false;
+            default:  // also case 3
+                // Down
+                t = innerWorld.tile(unitWorldSize - sub_tile.y - offset,sub_tile.x);
                 break;
         }
-        if (t == null) return false;
-        if (t.x + min < 0 || t.y + min < 0) return false;
-        if (t.x + max >= buildSize || t.y + max >= buildSize) return false;
-        IntSeq enegyLinks = energyGet(building,t);
-        if (building.tile.build == building)
-            building.tile.setNet(Blocks.air);
+
+        // checks the range of the block for if its on the unit. all should return true. one false and it fails.
+        for (int o_x = min; o_x < max; o_x++) {
+            short current_x = (short) (t.x+o_x);
+
+            for (int o_y = min; o_y < max; o_y++) {
+                short current_y = (short) (t.y+o_y);
+
+                if (!buildArea[current_y][current_x])
+                    return false; // one of the tiles of the multiblock is not on the unit. cancel buildOn.
+            }
+        }
+
+        // moves building to the sub world. (with rotation.)
+        building.tile.setNet(Blocks.air);
+        building.rotation -= blockRotation;
+        building.rotation = (building.rotation+4)%4;
+
         Vars.world = innerWorld;
-        building.rotation -= rotation;
-        building.rotation %= 4;
+
         t.setBlock(building.block(),team,building.rotation,()->building);
+        // removes building from Groups.all so that it doesnt get updated. the unit will handle the update.
+        // this is because it needs to update in its own world.
         if (Groups.all.contains(b->b==building)) {
             building.setIndex__all(-1);
             Groups.all.remove(building);
         }
-        if (enegyLinks != null)
-            building.power.links = enegyLinks;
+
+        // return to actual world at the end. don't wanna accidentally put the player in the unit.
         Vars.world = curWorld;
         return true;
+    }
+
+    public void updateTilePos() {
+        tilePos.x = Mathf.ceil(x / 8) - buildSize / 2;
+        tilePos.y = Mathf.ceil(y / 8) - buildSize / 2;
     }
 
     public IntSeq energyGet(Building build,Tile newOrigin) {
@@ -204,7 +266,9 @@ public class GridUnit extends MechUnit {
         super.update();
         float   midX = Mathf.ceil(x / 8) * 8 - 4,
                 midY = Mathf.ceil(y / 8) * 8 - 4;
-        if (innerWorld == null) return;
+
+        if (innerWorld == null) return; // prevents crashes
+
         if (built && ((player != null && !player.boosting) || (isCommandable() && command().currentCommand() != UnitCommand.boostCommand))) {
             int bx = Mathf.ceil(midX / 8) - buildSize / 2,
                 by = Mathf.ceil(midY / 8) - buildSize / 2;
@@ -264,32 +328,39 @@ public class GridUnit extends MechUnit {
                     if (!b.isAdded())
                         b.add();
                     b.updateProximity();
+                    if (b instanceof Turret.TurretBuild tb) {
+                        tb.unit = BlockUnitUnit.create();
+                    }
                 });
                 built = false;
             }
         } else if (!built) {//building time
-            int bx = Mathf.ceil(x / 8) - buildSize / 2,
-                    by = Mathf.ceil(y / 8) - buildSize / 2;
-            Tile rt = Vars.world.tile(bx,by);
+            updateTilePos();
             Seq<Building> proxupdate = new Seq<>();
-            if (rt != null) {
-                for (int i1 = 0; i1 < buildSize; i1++) {
-                    for (int i2 = 0; i2 < buildSize; i2++) {
-                        Tile t = rt.nearby(i1, i2);
-                        if (t != null && t.block() != null && t.build != null && t.build.team == team) {
-                            proxupdate.add(t.build);
-                            buildAt(rt, i1, i2, t.build, (byte) Math.round(rotation / 90));
+            if (!Vars.net.client()) { //clients should get info from packages, not from itself. just to keep it synced.
+
+                Seq<Building> validBuildings = new Seq<>();
+                QuadTree<Building> buildings = team.data().buildingTree;
+                if (buildings == null) {
+                    Log.info("Ouch, team has no buildings");
+                } else {
+                    buildings.intersect(tilePos.x*8, tilePos.y*8, buildSize*8, buildSize*8, (b) -> {
+                        if (!(b.block() instanceof CoreBlock)) {
+                            validBuildings.add(b);
+                        }
+                    });
+
+                    for(var b : validBuildings) {
+
+                        proxupdate.add(b);
+                        if (!buildOntoUnit(b)) {
+                            continue;
                         }
                     }
                 }
             }
             World w = Vars.world;
             Vars.world = innerWorld;
-            proxupdate.each(b -> {
-                if (b.power != null) Log.info(b.power.links);
-                if (!b.isAdded())
-                    b.add();
-            });
             proxupdate.each(b -> {
                 b.onProximityUpdate();
             });
@@ -308,7 +379,7 @@ public class GridUnit extends MechUnit {
             if (tile.block() != null && !updated.contains(tile.build)) {
                 if (tile.build != null && tile.build.block() != null)
                     tile.build.update();
-                    updated.add(tile.build);
+                updated.add(tile.build);
             }
         });
         Vars.world = w;
@@ -498,7 +569,7 @@ public class GridUnit extends MechUnit {
         super.read(read);
         built = read.bool();
         int typeId = read.i();
-        if (content.units().find(u->u.id == typeId) instanceof GridUnitType g) {
+        if (content.units().find(u->u.id == typeId) instanceof WorldUnitType g) {
             gu = g;
             build();
         }

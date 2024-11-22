@@ -5,7 +5,6 @@ import arc.graphics.g2d.Lines;
 import arc.math.Mathf;
 import arc.math.geom.Vec2;
 import arc.struct.Seq;
-import arc.util.Log;
 import arc.util.Time;
 import mindustry.Vars;
 import mindustry.ai.UnitCommand;
@@ -1706,7 +1705,7 @@ public class PvUnits {
                 }});
             }
         }};
-        chamber = new GridUnitType("chamber")
+        chamber = new WorldUnitType("chamber")
         {{
             localizedName = "Chamber";
             description = "[#444444]Where the [crimson]End[] Begins...";
@@ -1758,7 +1757,7 @@ public class PvUnits {
                 }});
             }
         }};
-        symphony = new GridUnitType("symphony") {{
+        symphony = new WorldUnitType("symphony") {{
             localizedName = "Symphony";
             description = "[#b]The Giant of Giants. Its size is perfect for your entire base.";
             health = 428500;
