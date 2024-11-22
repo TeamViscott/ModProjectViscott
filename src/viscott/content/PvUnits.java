@@ -44,6 +44,7 @@ import mindustry.type.weapons.RepairBeamWeapon;
 import viscott.content.shootpatterns.CyclicShootPattern;
 import viscott.gen.CoinUnit;
 import viscott.gen.DodgeUnit;
+import viscott.gen.ai.SupportAI;
 import viscott.gen.weapons.LinkedWeapon;
 import viscott.gen.weapons.RandWeapon;
 import viscott.types.abilities.EnemyStatusFieldAbility;
@@ -353,7 +354,7 @@ public class PvUnits {
             abilities.add(new DamageAbility(0.05f/60f));
             localizedName = "Shadow";
             constructor = EntityMapping.map("mono");
-            controller = a -> new MinerAI();
+            controller = a -> new SupportAI();
             armor = 0;
             flying = true;
             buildSpeed = 1.2f;
@@ -365,6 +366,7 @@ public class PvUnits {
             healColor = Color.black;
             drag = 0.3f;
             range = 10*8;
+            mineItems = Seq.with(PvItems.zirconium,PvItems.lithium,PvItems.platinum,PvItems.erbium);
             weapons.add(
                     new Weapon()
                     {{
@@ -377,6 +379,8 @@ public class PvUnits {
                         rotationLimit = 30;
                         bullet = new VoidBulletType(1,20)
                         {{
+                            rangeOverride = 10*8;
+
                             recoil = 2f;
                             homingPower = 0.01f;
                             trailLength = 20;
