@@ -29,10 +29,13 @@ public class NullisSupportAI extends AIController {
     }
     @Override
     public void updateMovement() {
+        var cores = this.unit.team.cores();
+
         Building core = this.unit.closestCore();
 
-        if (core.wasRecentlyDamaged()) {
-            circle(core, core.block.size * 4);
+        if (cores.contains((c) -> c.wasRecentlyDamaged())) {
+            var damagedCore = cores.find((c) -> c.wasRecentlyDamaged());
+            circle(damagedCore, unit.range()-16);
             faceTarget();
             return;
         } else if (Units.nearEnemy(unit.team,unit.x,unit.y,unit.range(),unit.range())) {
