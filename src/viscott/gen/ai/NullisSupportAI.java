@@ -35,7 +35,9 @@ public class NullisSupportAI extends AIController {
 
         if (cores.contains((c) -> c.wasRecentlyDamaged())) {
             var damagedCore = cores.find((c) -> c.wasRecentlyDamaged());
-            circle(damagedCore, unit.range()-16);
+            var attacker = Units.closestEnemy(unit.team,damagedCore.x,damagedCore.y,8*50,(u)-> true);
+            if (target == null)
+                circle(attacker, unit.range()-16);
             faceTarget();
             return;
         } else if (Units.nearEnemy(unit.team,unit.x,unit.y,unit.range(),unit.range())) {
