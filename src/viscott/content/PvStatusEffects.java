@@ -34,6 +34,8 @@ public class PvStatusEffects {
     //visual statuses
     preventionFx,lastStandFx,basicFx,
 
+    //hidden effects
+    prepFire,
     //examples
             chainExcert, excert
             ;
@@ -386,6 +388,13 @@ public class PvStatusEffects {
                 y = 1;
                 angle = 120;
             }};
+        }};
+        prepFire = new PvStatusEffect("prep-fire") {{
+            localizedName = "Prep Fire";
+            description = "Disables the ability to fire just before an event.";
+            disarm = true;
+            show = false;
+            speedMultiplier = 0.5f;
         }};
 
         /*

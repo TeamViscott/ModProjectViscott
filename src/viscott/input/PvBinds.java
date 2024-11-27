@@ -12,7 +12,8 @@ import static arc.Core.keybinds;
 
 public enum PvBinds implements KeyBinds.KeyBind {
     strafe_left(KeyCode.q,"Special"),
-    strafe_right(KeyCode.e)
+    strafe_right(KeyCode.e),
+    special_ability(KeyCode.mouseRight)
     ;
 
     KeyBinds.KeybindValue k;

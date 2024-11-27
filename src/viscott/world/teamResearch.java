@@ -34,7 +34,7 @@ public class teamResearch extends Block {
 
     @Override
     public boolean isVisible(){
-        return super.isVisible() && (!refTeam.isExtraFaction || Core.settings.getBool("pv-extra-factions"));
+        return super.isVisible() && (!refTeam.isExtraFaction || Core.settings.getBool("pv-extra-stuff"));
     }
 
     @Override

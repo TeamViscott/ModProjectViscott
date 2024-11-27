@@ -5,8 +5,31 @@ import mindustry.world.meta.StatCat;
 
 public class PvStats {
     public static Stat
-    maxDamage,maxDamageMultiplier,maxHealthMultiplier,maxSpeedMultiplier,maxReloadSpeedMultiplier, maxBuildSpeedMultiplier,maxCharges,maxHealing,dragMultiplier,maxDragMultiplier,newTeam,
-    grinderTier,pierceReduction,shield,maxShield,hpLimit,maxConsumes,damageMultAtMaxPower,selectableAmount,onStatusEnd
+    // Effect Stats
+            maxDamage,
+            maxDamageMultiplier,
+            maxHealthMultiplier,
+            maxSpeedMultiplier,
+            maxReloadSpeedMultiplier,
+            maxBuildSpeedMultiplier,
+            maxCharges,
+            maxHealing,
+            dragMultiplier,
+            maxDragMultiplier,
+            newTeam,
+            shield,
+            maxShield,
+    // Other Stats
+            grinderTier,
+            pierceReduction,
+            hpLimit,
+            maxConsumes,
+            damageMultAtMaxPower,
+            selectableAmount,
+            onStatusEnd,
+    // DodgeUnit Stats
+            strafeStat,
+            directBoost
             ;
     public static void load()
     {
@@ -30,5 +53,7 @@ public class PvStats {
         damageMultAtMaxPower = new Stat("damageMultAtMaxPower",StatCat.power);
         selectableAmount = new Stat("selectableAmount",StatCat.general);
         onStatusEnd = new Stat("onStatusEnd",StatCat.general);
+        strafeStat = new Stat("strafeStat",StatCat.function);
+        directBoost = new Stat("directBoost",StatCat.function);
     }
 }

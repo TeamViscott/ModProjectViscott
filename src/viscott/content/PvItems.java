@@ -1,5 +1,6 @@
 package viscott.content;
 
+import arc.Core;
 import arc.graphics.Color;
 import arc.struct.Seq;
 import mindustry.game.Team;
@@ -12,6 +13,8 @@ public class PvItems {
     public static Item
     zirconium,lithium,barium,nobelium,platinum,erbium,carbonFiber,copium,
             rushAlloy,tideAlloy,bulkAlloy,singularityAlloy,darkMatter,hardenedOak,quantumAlloy
+
+            /*extra*/ ,cinnabar
     ;
     public static Seq<Item> vercilusItems = new Seq<Item>(),
                             vercilusOnlyItems = new Seq<Item>();
@@ -111,6 +114,21 @@ public class PvItems {
             charge = 10;
             //E
         }};
+
+        if (Core.settings.getBool("pv-extra-stuff")) {
+            cinnabar = new Item("cinnabar") {{
+                localizedName = "Cinnabar";
+                color = Pal.redderDust;
+                description = """
+                        A soft and flexable crystal composed out of mercury sulfide.
+                        It is quite soft compared to other crystals and decomposes under high temperature.
+                        A good counterractive about it however, is that it's quite dense, weighing in at ~8.1g/cm³.
+                        """;
+                flammability = 10;
+                charge = 1;
+            }};
+            vercilusItems.add(cinnabar);
+        }
 
         vercilusItems.addAll(zirconium,lithium,barium,silicon,nobelium,platinum,erbium,carbonFiber,rushAlloy,tideAlloy,bulkAlloy);
         vercilusOnlyItems = vercilusItems.copy();

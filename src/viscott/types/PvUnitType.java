@@ -6,9 +6,11 @@ import arc.graphics.g2d.Draw;
 import arc.graphics.g2d.TextureRegion;
 import arc.math.Angles;
 import arc.math.Mathf;
+import arc.scene.ui.layout.Table;
 import arc.struct.Seq;
 import arc.util.Time;
 import mindustry.Vars;
+import mindustry.entities.bullet.BulletType;
 import mindustry.entities.part.DrawPart;
 import mindustry.game.Gamemode;
 import mindustry.gen.Crawlc;
@@ -17,7 +19,9 @@ import mindustry.gen.Unit;
 import mindustry.gen.UnitEntity;
 import mindustry.graphics.Pal;
 import mindustry.type.UnitType;
+import mindustry.ui.Styles;
 import viscott.content.PvFactions;
+import viscott.content.PvStats;
 import viscott.world.draw.ChangeRegionPart;
 
 import java.awt.*;
@@ -46,7 +50,17 @@ public class PvUnitType extends UnitType {
     public int strafeTrail = 0;
 
     public int strafeBursts = 1;
+    // if above 1, enables strafe and Dodge unit params.
+    public int strafeLevel = 0;
 
+    // strafe slash, dodgeUnit's 3rd ability.
+    public float strafeSlashTime = 15;
+    public float strafeSlashStrength = 10;
+    public float strafeSlashCooldown = 10;
+    public float strafeSlashDelay = 8;
+    public BulletType strafeSlashBullet;
+
+    // direct boost, dodgeUnit's 2nd ability.
     public float directBoost = 1.5f;
     public float directDecay = 60;
     public PvUnitType(String name)
@@ -55,6 +69,36 @@ public class PvUnitType extends UnitType {
         outlineColor = Color.valueOf("#181a1b");
     }
 
+    @Override
+    public void setStats() {
+        super.setStats();
+        if (strafeLevel > 0) {
+            stats.add(PvStats.strafeStat,(t) -> {
+                strafeSideStat(t);
+            });
+            if (strafeLevel >= 2) {
+                stats.add(PvStats.directBoost,"+"+((directBoost-1)*100) + "%");
+            }
+        }
+    }
+    public void strafeSideStat(Table table) {
+        table.row();
+        table.table(Styles.grayPanel,(t) -> {
+            t.left().top().defaults().padRight(3.0F).left();
+
+            t.add("Duration: ",Pal.lightishGray);
+            t.add(Math.round(strafeTime/60*100)/100d+"s");
+            t.row();
+            t.add("Cooldown: ",Pal.lightishGray);
+            t.add(Mathf.round(strafeCooldown/60*100)/100d+"s");
+            if (strafeBursts > 1) {
+                t.row();
+                t.add("Charges: ",Pal.lightishGray);
+                t.add(strafeBursts+"");
+            }
+        }).growX().pad(5.0F).margin(10.0F);
+        table.row();
+    }
 
     @Override
     public void draw(Unit unit){

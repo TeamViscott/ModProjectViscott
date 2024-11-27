@@ -8,6 +8,7 @@ import mindustry.content.Fx;
 import mindustry.entities.bullet.ArtilleryBulletType;
 import mindustry.gen.Groups;
 import mindustry.graphics.Pal;
+import mindustry.world.meta.Stat;
 import viscott.content.PvEffects;
 
 
@@ -16,6 +17,12 @@ public class VoidWall extends PvWall{
     public VoidWall(String name) {
         super(name);
         update = true;
+    }
+
+    @Override
+    public void setStats() {
+        super.setStats();
+        stats.add(Stat.healing,regenRate+"/s");
     }
 
     public class VoidWallBuild extends PvWallBuild {
@@ -48,6 +55,7 @@ public class VoidWall extends PvWall{
                 }
             });
         }
+
 
         @Override
         public void draw() {
