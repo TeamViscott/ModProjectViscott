@@ -121,7 +121,7 @@ public class PvBlocks {
                          /* Xeal*/ zirconWallHuge,siliconWallHuge,platinumWallHuge,erbiumWallHuge,carbonWallHuge,tideWall,tideWallLarge,
                           /*Logic*/
                             piscoProcessor,memoryByte,statusSelector,labelHandler,
-                            /*Nullis*/voidReprocessingUnit,
+                            /*Nullis*/voidReprocessingUnit,nullProcessor,
                             /*Testing*/
                                     sus
                             ;
@@ -1780,12 +1780,69 @@ public class PvBlocks {
                     requirements(Category.logic, with(PvItems.zirconium,180,PvItems.lithium,120,Items.silicon,100,PvItems.nobelium,80));
                     localizedName = "Void Reprocessing Unit";
                     range = 8*32;
-                    health = 90;
+                    health = 420;
                     size = 2;
                     faction.add(PvFactions.Nullis);
                     instructionsPerTick = 5;
                     maxInstructionsPerTick = 20;
                     maxInstructionScale = 40;
+                    allStatements= Seq.with(
+                            new Prov[]{
+                                    //Input && Output
+                                    LStatements.WriteStatement::new,
+                                    LStatements.ReadStatement::new,
+                                    LStatements.PrintStatement::new,
+                                    //Unit Controll
+                                    LStatements.UnitBindStatement::new,
+                                    PvLogic.HealStatement::new,
+                                    PvLogic.ShieldStatement::new,
+                                    LStatements.UnitControlStatement::new,
+                                    LStatements.UnitLocateStatement::new,
+                                    LStatements.UnitRadarStatement::new,
+                                    //Block Controll
+                                    LStatements.PrintFlushStatement::new,
+                                    LStatements.SensorStatement::new,
+                                    LStatements.RadarStatement::new,
+                                    PvLogic.TransmitIptStatement::new,
+                                    LStatements.GetLinkStatement::new,
+                                    //Operator
+                                    LStatements.SetStatement::new,
+                                    LStatements.OperationStatement::new,
+                                    LStatements.LookupStatement::new,
+                                    //Flow Controll
+                                    LStatements.EndStatement::new,
+                                    LStatements.JumpStatement::new,
+                                    PvLogic.DynamicJumpStatement::new,
+                                    //Undefined
+                                    PvLogic.CommentStatement::new
+                            });
+                    drawer = new DrawMulti(
+                            new DrawLiquidStaticRegion(PvLiquids.concentratedVoid) {{
+                                padding = 2f;
+                                suffix = "-bottom";
+                            }},
+                            new DrawBubbles(Color.darkGray) {{
+                                amount = 10;
+                                radius = 3;
+                                spread = 2;
+                                timeScl = 120f;
+                                recurrence = 4f;
+                            }},
+                            new DrawDefault()
+                    );
+                }};
+                nullProcessor = new PvLogicBlock("null-processor") {{
+                    requirements(Category.logic, with(PvItems.zirconium,500,PvItems.lithium,400,Items.silicon,240,PvItems.nobelium,160,PvItems.erbium,100,PvItems.singularityAlloy,20));
+                    localizedName = "Null Processor";
+                    description = "Can do even the most complex of instructions within just a single tick.";
+                    range = 8*90;
+                    health = 1640;
+                    size = 3;
+                    faction.add(PvFactions.Nullis);
+                    consumeLiquid(PvLiquids.concentratedVoid,5.2f/60f);
+                    instructionsPerTick = 100;
+                    maxInstructionsPerTick = 400;
+                    maxInstructionScale = 10;
                     allStatements= Seq.with(
                             new Prov[]{
                                     //Input && Output

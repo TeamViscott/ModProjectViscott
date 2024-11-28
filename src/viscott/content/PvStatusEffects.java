@@ -391,10 +391,10 @@ public class PvStatusEffects {
         }};
         prepFire = new PvStatusEffect("prep-fire") {{
             localizedName = "Prep Fire";
-            description = "Disables the ability to fire just before an event.";
+            description = "Disables the ability to fire just before an event. Freezes the player too.";
             disarm = true;
             show = false;
-            speedMultiplier = 0.5f;
+            speedMultiplier = 0f;
         }};
 
         /*

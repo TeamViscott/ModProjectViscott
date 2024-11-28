@@ -17,6 +17,9 @@ import mindustry.ui.Styles;
 import mindustry.world.blocks.logic.LogicBlock;
 import mindustry.world.draw.DrawBlock;
 import mindustry.world.draw.DrawDefault;
+import mindustry.world.meta.Stat;
+import mindustry.world.meta.StatUnit;
+import viscott.content.PvStats;
 import viscott.types.PvFaction;
 import viscott.types.logic.PvAssembler;
 import viscott.world.ui.PvUI;
@@ -92,6 +95,14 @@ public class PvLogicBlock extends LogicBlock {
     @Override
     public boolean isPlaceable(){
         return Vars.net.server() || (!state.rules.isBanned(this) || state.rules.editor) && supportsEnv(state.rules.env);
+    }
+
+    @Override
+    public void setStats() {
+        super.setStats();
+        if (!this.privileged) {
+            this.stats.add(PvStats.maxInstructions, (float)(this.maxInstructionsPerTick * 60), StatUnit.perSecond);
+        }
     }
     public class PvLogicBuild extends LogicBuild
     {

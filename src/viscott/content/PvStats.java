@@ -27,6 +27,7 @@ public class PvStats {
             damageMultAtMaxPower,
             selectableAmount,
             onStatusEnd,
+            maxInstructions,
     // DodgeUnit Stats
             strafeStat,
             directBoost
@@ -55,5 +56,6 @@ public class PvStats {
         onStatusEnd = new Stat("onStatusEnd",StatCat.general);
         strafeStat = new Stat("strafeStat",StatCat.function);
         directBoost = new Stat("directBoost",StatCat.function);
+        maxInstructions = new Stat("maxInstructions",StatCat.crafting);
     }
 }
