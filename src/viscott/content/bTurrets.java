@@ -1,4 +1,7 @@
+/*
+Considering removing this from the mod as it is lazy content. For now, will be disabled
 package viscott.content;
+
 
 import arc.graphics.Color;
 import mindustry.content.Fx;
@@ -236,3 +239,4 @@ localizedName = "OverBurner";
         }};
     }
 }
+*/

@@ -126,9 +126,9 @@ public class PvEffects {
             Lines.circle(e.x,e.y,80*e.fout());
 
         });
-        sumayaImpact = new Effect(90,e->{
+        sumayaImpact = new Effect(150,e->{
             Color col = Color.valueOf("baf9ff");
-            DrawPseudo3d.tube(e.x,e.y,8,e.fout()*50,col,Color.clear);
+            DrawPseudo3d.tube(e.x,e.y,9,e.fout()*30,col,Color.clear);
             Lines.stroke(e.fout()*4,col);
             Lines.circle(e.x,e.y,80*e.fin());
         });

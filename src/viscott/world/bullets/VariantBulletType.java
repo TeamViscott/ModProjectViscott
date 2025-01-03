@@ -13,9 +13,9 @@ import mindustry.logic.LExecutor;
 
 public class VariantBulletType extends BasicBulletType {
  public Seq<BulletType> variants = new Seq<>();
- public VariantBulletType() {
+/* public VariantBulletType() {
   this(new BulletType(0,0));
- }
+ }*/
  public VariantBulletType(BulletType... bulletTypes) {
    variants.addAll(bulletTypes);
  }

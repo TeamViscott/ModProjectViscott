@@ -105,7 +105,7 @@ public class ViscottMod extends Mod {
         PvUnits.load();
         PvWeathers.load();
         PvBlocks.load();
-        bTurrets.load();
+        //bTurrets.load();  This class may be removed
         PvMaptools.load();
         PvTurrets.load();
         PvPlanets.load();
