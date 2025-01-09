@@ -2102,7 +2102,7 @@ public class PvUnits {
                 this.shootEffect = Fx.lancerLaserShoot;
 
             }};
-            strafeSlashCooldown = 120;
+            strafeSlashCooldown = 5.0f*60;
             strafeSlashDelay = 40;
             strafeSlashStrength = 18;
             drag = 0.1f;
@@ -2171,6 +2171,76 @@ public class PvUnits {
                                     Lines.line(e.x, e.y, v.x, v.y);
                                 });
                             });
+                        }};
+                    }}
+            );
+        }};
+
+        velocity = new PvUnitType("velocity")
+        {{
+            localizedName = "Velocity";
+            constructor = DodgeUnit::new;
+            strafeLevel = 4;
+            health = 20000;
+            armor = 3;
+            hitSize = 8;
+            strafeCooldown = 1f*60;
+            strafeTime = 20;
+            strafeTrail = 18;
+            strafeStrength = 20;
+            strafeDamageMultiplier = 0.8f;
+            strafeBursts = 3;
+            strafeSlashBullet = new LaserBulletType(30000) {{
+                this.chargeEffect = Fx.lancerLaserCharge;
+                length = 8*34;
+                width = 24;
+                lifetime = 50;
+                pierceCap = 99;
+                this.shootEffect = Fx.lancerLaserShoot;
+
+            }};
+            strafeSlashCooldown = 7.5f*60;
+            strafeSlashDelay = 1.5f*60f;
+            strafeSlashStrength = 30;
+            drag = 0.1f;
+            strafeDrag = 0;
+            directBoost = 2;
+            directDecay = 20;
+            flying = true;
+            speed = 28f/7.5f;
+            canBoost = false;
+            itemCapacity = 40;
+            range = 30 * 8;
+            deathExplosionEffect = PvEffects.particleDeath1;
+            weapons.add(
+                    new Weapon()
+                    {{
+                        shootSound = Sounds.bolt;
+                        top = false;
+                        mirror = true;
+                        alternate = true;
+                        x = 4;
+                        y = 0;
+                        reload = 60f/4f;
+                        bullet = new BreakShotBulletType(){{
+                            damage = 500f;
+                            speed = 6;
+                            hitColor = Pal.lancerLaser;
+                            hitEffect = Fx.hitLancer;
+                            pierceDamageFactor = 0.8f;
+
+                            smokeEffect = Fx.colorSpark;
+                            breakAwayRange = 8*16;
+                            fragRandomSpread = 30;
+                            fragAngle = 0;
+                            fragLifeMax = fragLifeMin = 1;
+                            fragVelocityMin = fragVelocityMax = 1.0f;
+                            fragBullets = 3;
+                            fragSpread = 10;
+                            fragBullet = new BasicBulletType(8,125) {{
+                                keepVelocity = false;
+                                smokeEffect = Fx.colorSpark;
+                            }};
                         }};
                     }}
             );
