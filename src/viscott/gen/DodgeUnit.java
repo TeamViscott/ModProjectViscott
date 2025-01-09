@@ -107,18 +107,20 @@ public class DodgeUnit extends UnitEntity {
 
     public void strafeSlashUpdate() {
         a3_strafeSlash_Timer -= Time.delta;
+
         if (a3_strafeSlash_Timer < 0) {
             switch(a3_strafeSlash_Stage) {
                 case 1:
                     a3_strafeSlash_Stage = 2;
                     a3_strafeSlash_Timer = pvType.strafeSlashBullet.chargeEffect.lifetime;
+                    pvType.strafeSlashBullet.chargeEffect.at(x,y,rotation);
                     rotation += 180;
                     break;
                 case 2:
                     a3_strafeSlash_Stage = 3;
                     if (pvType.strafeSlashBullet != null)
                     pvType.strafeSlashBullet.create(this,x,y,rotation);
-                    a3_strafeSlash_Timer = pvType.strafeSlashCooldown;
+                    a3_strafeSlash_Timer = pvType.strafeSlashDelay;
                     break;
                 case 3:
                     a3_strafeSlash_Stage = 0;

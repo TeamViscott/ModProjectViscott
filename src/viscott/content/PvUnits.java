@@ -2094,9 +2094,17 @@ public class PvUnits {
             strafeStrength = 20;
             strafeDamageMultiplier = 0.8f;
             strafeBursts = 3;
-            strafeSlashBullet = new BasicBulletType(8,8) {{
+            strafeSlashBullet = new LaserBulletType(8000) {{
+                this.chargeEffect = Fx.lancerLaserCharge;
+                length = 8*25;
+                lifetime = 30;
+                pierceCap = 99;
+                this.shootEffect = Fx.lancerLaserShoot;
 
             }};
+            strafeSlashCooldown = 120;
+            strafeSlashDelay = 40;
+            strafeSlashStrength = 18;
             drag = 0.1f;
             strafeDrag = 0;
             directBoost = 2;
