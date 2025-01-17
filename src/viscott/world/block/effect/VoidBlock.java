@@ -54,7 +54,7 @@ public class VoidBlock extends PvBlock {
         if(src == null || other == null) return true;
         return Intersector.overlaps(Tmp.cr1.set(src.worldx() + offset, src.worldy() + offset, voidRadius * tilesize), Tmp.r1.setSize(size * tilesize).setCenter(other.worldx() + offset, other.worldy() + offset));
     }
-    public class EffectBuildingC extends Building implements EffectAreaC
+    public class VoidBuilding extends Building implements EffectAreaC
     {
         float time = 0;
         @Override
@@ -77,6 +77,10 @@ public class VoidBlock extends PvBlock {
             time += Time.delta / 60;
             time %= 180;
             return (float)(Math.cos(time) * 0.2f + 1f);
+        }
+
+        public float voidRadius() {
+            return voidRadius;
         }
 
         @Override

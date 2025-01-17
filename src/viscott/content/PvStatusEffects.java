@@ -27,7 +27,7 @@ public class PvStatusEffects {
      frag,aoe,homing,memoryExchange,dataLeak,endlessAmp, endlessDot, prevention, lastStand, consume,splintered,torture,
              forceApply,
     /*Xeal*/timeRipple,
-    /*Void*/voidShield,voidDecay,voidConsume,voidDecayExpand, reapingTouch,
+    /*Void*/voidShield,voidLayer,voidDecay,voidConsume,voidDecayExpand, reapingTouch,
 
     /*Source*/sourceRepair,sourcePurify,sourceRepel,
 
@@ -166,17 +166,30 @@ public class PvStatusEffects {
         voidShield = new PvStatusEffect("void-shield")
         {{
              localizedName = "Void Shield";
-             color = Color.valueOf("000000");
-             description = "a shield made of Void that reduces taken damage by 5.\n[grey]Void enhanced the building speed by a lot.";
+             color = Color.black;
+             description = """
+             a shield made of Void that reduces taken damage by 5.
+             [grey]Void enhanced the building speed by a lot.
+             """;
              shield = 5;
              maxShield = 5;
              buildSpeedMultiplier = 30;
              damage = -0.1f/60f;
         }};
+        voidLayer = new PvStatusEffect("void-layer") {{
+            localizedName = "Void Layer";
+            color = Color.black;
+            description = """
+            a layer of Void that further protects the unit by increasing their max health.
+            [grey]Void building speed is further enhanced.
+            """;
+            this.healthMultiplier = 1.5f;
+            buildSpeedMultiplier = 5;
+        }};
         voidDecay = new PvStatusEffect("void-decay")
         {{
             localizedName = "Void Decay";
-            color = Color.valueOf("000000");
+            color = Color.black;
             description = "the result of a non void unit entering the void.";
             effect = Fx.breakProp;
             effectChance = 0.8f;

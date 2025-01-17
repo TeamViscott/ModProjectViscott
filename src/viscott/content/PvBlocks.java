@@ -6,10 +6,15 @@ import arc.math.Interp;
 import arc.math.Mathf;
 import arc.struct.Seq;
 import arc.util.Time;
+import mindustry.Vars;
 import mindustry.content.*;
 import mindustry.entities.bullet.MassDriverBolt;
 import mindustry.entities.effect.MultiEffect;
+import mindustry.game.Team;
+import mindustry.gen.Building;
+import mindustry.gen.Groups;
 import mindustry.gen.Sounds;
+import mindustry.gen.Unit;
 import mindustry.graphics.Pal;
 import mindustry.logic.LStatements;
 import mindustry.type.*;
@@ -26,6 +31,7 @@ import mindustry.world.blocks.production.*;
 import mindustry.world.blocks.storage.*;
 import mindustry.world.draw.*;
 import mindustry.world.meta.BuildVisibility;
+import mindustry.world.meta.Stat;
 import viscott.types.*;
 import viscott.types.drawer.PvDrawPulse;
 import viscott.world.block.defense.VoidWall;
@@ -40,6 +46,7 @@ import viscott.world.block.power.*;
 import viscott.world.block.production.*;
 import viscott.world.block.unit.*;
 import viscott.world.draw.*;
+import viscott.world.statusEffects.PvStatusEffect;
 
 import static mindustry.type.ItemStack.with;
 
@@ -1428,7 +1435,7 @@ public class PvBlocks {
                             new PvDrawPulse("-black")
                     );
                 }};
-                voidExpander = new VoidExpand("void-expander") {{
+                voidExpander = new VoidBeacon("void-expander") {{
                     requirements(Category.effect,with(PvItems.zirconium,3000,PvItems.lithium,1800,PvItems.nobelium,1000,PvItems.carbonFiber,500,PvItems.rushAlloy,250));
                     localizedName = "Void Expander";
                     description = "Grows. the More you feed it.";
@@ -1440,6 +1447,34 @@ public class PvBlocks {
                     itemDuration = 180;
                     voidGrowAmount = 1;
                     itemCapacity = 100;
+
+                    Seq<Building> b_seq = new Seq<>();
+                    beaconTask = (buildings) -> {
+                        Team team = buildings.get(0).team;
+                        Groups.unit.each(u -> {
+                            if (u.team() != team) { // enemy
+                                if (u.hasEffect(PvStatusEffects.voidDecay))
+                                    u.apply(PvStatusEffects.voidDecayExpand, 10);
+                            } else { // ally
+                                if (u.hasEffect(PvStatusEffects.voidShield))
+                                    u.apply(StatusEffects.shielded); // we protect.
+                            }
+                        });
+
+                        b_seq.clear();
+                        team.data().buildings.each(b -> b instanceof VoidBlock.VoidBuilding vb, (VoidBlock.VoidBuilding b) -> {
+                            Vars.indexer.eachBlock(team,b.x,b.y,b.voidRadius()*8,
+                                    a -> Mathf.len(a.x-b.x,a.y-b.x) < b.voidRadius() * 8,
+                                    b_seq::addUnique
+                            );
+                        });
+                        // do not have the void overlap on block
+                        b_seq.each(b -> {
+                            b.heal(0.5f * Time.delta);
+                            if (b.block.canOverdrive)
+                                b.applyBoost(20 + 10 * buildings.size,30); // 3 = 30+20 = 50 + 10 for each extra.
+                        });
+                    };
                     drawer = new DrawMulti(
                         new DrawLiquidStaticRegion(PvLiquids.concentratedVoid){{
                                 padding = 10;
