@@ -2,6 +2,7 @@ package viscott.utilitys;
 
 import arc.math.*;
 
+/** @author EyeOfDarkness */
 public class MultiInterp implements Interp{
     public static Interp fastfastslow = new MultiInterp(Interp.pow2In, Interp.pow2);
     Interp[] interps;

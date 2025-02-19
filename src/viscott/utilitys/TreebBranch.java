@@ -14,6 +14,7 @@ import mindustry.gen.*;
 import viscott.content.PvStatusEffects;
 import viscott.types.TreebUnitType;
 
+/** @author EyeOfDarkness */
 public class TreebBranch {
     FloatSeq points = new FloatSeq(), velocities = new FloatSeq();
 

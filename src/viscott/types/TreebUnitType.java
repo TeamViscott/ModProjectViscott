@@ -6,6 +6,7 @@ import mindustry.*;
 import mindustry.content.*;
 import mindustry.type.*;
 
+/** @author EyeOfDarkness */
 public class TreebUnitType extends PvUnitType{
     public TextureRegion[] branchRegions;
     public TextureRegion branchEndRegion;
