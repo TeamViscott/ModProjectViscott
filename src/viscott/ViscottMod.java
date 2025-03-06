@@ -7,6 +7,7 @@ import arc.func.Cons;
 import arc.graphics.Color;
 import arc.graphics.g2d.Draw;
 import arc.struct.Seq;
+import arc.util.CommandHandler;
 import arc.util.Log;
 import arc.util.Reflect;
 import mindustry.Vars;
@@ -39,7 +40,7 @@ import static arc.Core.*;
 import static mindustry.Vars.*;
 
 public class ViscottMod extends Mod {
-
+    
     public ViscottMod(){
         Events.run(EventType.Trigger.drawOver, () -> {
             if (Vars.renderer.animateShields && PvShaders.nullisAura != null)
@@ -154,10 +155,6 @@ public class ViscottMod extends Mod {
                 TechTree.roots.remove(team.techTree);
         });
 
-    }
-
-    public interface VoidFunc {
-        void get();
     }
 
     public void overRideOldSound()

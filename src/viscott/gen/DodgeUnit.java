@@ -15,7 +15,9 @@ import arc.util.io.Reads;
 import arc.util.io.Writes;
 import mindustry.Vars;
 import mindustry.entities.units.AIController;
+import mindustry.gen.EffectState;
 import mindustry.gen.Player;
+import mindustry.gen.Posc;
 import mindustry.gen.UnitEntity;
 import mindustry.graphics.Layer;
 import mindustry.input.DesktopInput;
@@ -113,7 +115,7 @@ public class DodgeUnit extends UnitEntity {
                 case 1:
                     a3_strafeSlash_Stage = 2;
                     a3_strafeSlash_Timer = pvType.strafeSlashBullet.chargeEffect.lifetime;
-                    pvType.strafeSlashBullet.chargeEffect.at(x,y,rotation);
+                    pvType.strafeSlashBullet.chargeEffect.at(this,true);
                     rotation += 180;
                     break;
                 case 2:

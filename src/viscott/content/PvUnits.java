@@ -9,7 +9,6 @@ import arc.util.Time;
 import mindustry.Vars;
 import mindustry.ai.UnitCommand;
 import mindustry.ai.types.HugAI;
-import mindustry.ai.types.MinerAI;
 import mindustry.ai.types.RepairAI;
 import mindustry.content.Fx;
 import mindustry.content.Items;
@@ -42,6 +41,7 @@ import arc.math.*;
 import mindustry.type.unit.MissileUnitType;
 import mindustry.type.weapons.RepairBeamWeapon;
 import viscott.content.shootpatterns.CyclicShootPattern;
+import viscott.content.shootpatterns.RandomShootpattern;
 import viscott.gen.CoinUnit;
 import viscott.gen.DodgeUnit;
 import viscott.gen.ai.NullisSupportAI;
@@ -2190,7 +2190,7 @@ public class PvUnits {
             strafeStrength = 20;
             strafeDamageMultiplier = 0.8f;
             strafeBursts = 3;
-            strafeSlashBullet = new LaserBulletType(30000) {{
+            strafeSlashBullet = new LaserBulletType(15000) {{
                 this.chargeEffect = Fx.lancerLaserCharge;
                 length = 8*34;
                 width = 24;
@@ -2219,25 +2219,32 @@ public class PvUnits {
                         top = false;
                         mirror = true;
                         alternate = true;
+
                         x = 4;
                         y = 0;
                         reload = 60f/4f;
-                        bullet = new BreakShotBulletType(){{
-                            damage = 500f;
-                            speed = 6;
-                            hitColor = Pal.lancerLaser;
-                            hitEffect = Fx.hitLancer;
+                        baseRotation = -90f;
+                        shoot = new RandomShootpattern() {{ randomSpread = 90; }};
+                        shootCone = 360f;
+
+                        bullet = new CrackShotBulletType(2,500){{
+                            hitColor = backColor = trailColor = Pal.lancerLaser;
                             pierceDamageFactor = 0.8f;
+                            trailLength = 10;
+                            trailWidth = 1;
+                            drag = 0.06f;
 
                             smokeEffect = Fx.colorSpark;
-                            breakAwayRange = 8*16;
-                            fragRandomSpread = 30;
                             fragAngle = 0;
-                            fragLifeMax = fragLifeMin = 1;
-                            fragVelocityMin = fragVelocityMax = 1.0f;
-                            fragBullets = 3;
-                            fragSpread = 10;
+                            fragLifeMax = fragLifeMin = fragVelocityMin = fragVelocityMax = 1.0f;
+                            fragBullets = 1;
+                            breakAwayRotationLock = true;
+                            breakAwayTarget = breakAwayTargetTypes.Cursor;
+                            despawnEffect = hitEffect = Fx.none;
                             fragBullet = new BasicBulletType(8,125) {{
+                                hitColor = backColor = trailColor = Pal.lancerLaser;
+                                trailLength = 10;
+                                trailWidth = 1;
                                 keepVelocity = false;
                                 smokeEffect = Fx.colorSpark;
                             }};
