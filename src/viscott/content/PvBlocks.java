@@ -1969,9 +1969,9 @@ public class PvBlocks {
                     requirements(Category.effect,with(PvItems.zirconium,100,PvItems.lithium,80,Items.silicon,50));
                     localizedName = "Hydro Projector";
                     health = 140;
-                    range = 7.3f*8;
+                    range = 8.5f*8;
                     defaultLiquid = Liquids.water;
-                    extinguishMultiplier = 100f;
+                    extinguishMultiplier = 200f;
                     consumePower(25f/60f);
                     size = 1;
                     drawer = new DrawMulti(

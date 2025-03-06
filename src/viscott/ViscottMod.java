@@ -40,7 +40,7 @@ import static arc.Core.*;
 import static mindustry.Vars.*;
 
 public class ViscottMod extends Mod {
-    
+
     public ViscottMod(){
         Events.run(EventType.Trigger.drawOver, () -> {
             if (Vars.renderer.animateShields && PvShaders.nullisAura != null)
