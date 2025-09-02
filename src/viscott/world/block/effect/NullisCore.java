@@ -17,8 +17,8 @@ import viscott.world.chips.EffectAreaC;
 
 public class NullisCore extends PvCore {
     public float voidRadius = 5;
-    public UnitType defaultMiner = null;
-    public int miners = 1;
+    public UnitType defaultUnit = null;
+    public int defaultUnits = 1;
     public NullisCore(String name)
     {
         super(name);
@@ -77,7 +77,7 @@ public class NullisCore extends PvCore {
                     }
             }
             updateVoid(this, 8 * voidRadius);
-            if (defaultMiner == null) return;
+            if (defaultUnit == null) return;
             for(Unit u : shadowMiner.list())
                 if (!u.isValid())
                     shadowMiner.remove(u);
@@ -89,9 +89,9 @@ public class NullisCore extends PvCore {
                 });
                 savedIds.clear();
             }
-            if (shadowMiner.size < miners)
+            if (shadowMiner.size < defaultUnits)
                 if (!Vars.net.client()) {
-                    shadowMiner.add(defaultMiner.spawn(team(), x(), y()));
+                    shadowMiner.add(defaultUnit.spawn(team(), x(), y()));
                     PvEffects.nullisDeath.get(size - 1).at(x(), y());
                 }
         }
