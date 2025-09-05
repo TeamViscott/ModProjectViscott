@@ -1,12 +1,15 @@
 package viscott.content;
 
 import arc.graphics.Color;
+import mindustry.content.Blocks;
 import mindustry.content.Planets;
 import mindustry.graphics.Pal;
 import mindustry.graphics.g3d.HexMesh;
 import mindustry.type.Planet;
+import mindustry.world.meta.Env;
 import viscott.gen.VercilusPlanetGenerator;
 import viscott.utilitys.PvUtil;
+import viscott.world.meta.PvEnv;
 
 import static mindustry.Vars.*;
 
@@ -16,7 +19,8 @@ public class PvPlanets{
             ;
     public static void load()
     {
-        content.planets().each(p->p.hiddenItems.addAll(PvItems.vercilusOnlyItems));
+        content.planets().each(p->{p.hiddenItems.addAll(PvItems.vercilusOnlyItems);});
+
         vercilus = new Planet("vercilus", Planets.sun,1f,2)
         {{
             localizedName = "Vercilus";
@@ -39,8 +43,9 @@ public class PvPlanets{
             iconColor = atmosphereColor = Pal.heal;
             alwaysUnlocked = true;
             ruleSetter = r -> {
-
+                r.bannedBlocks.add(Blocks.air);
             };
+            defaultEnv |= PvEnv.Viscott;
             defaultCore = PvBlocks.coreHover;
         }};
     }

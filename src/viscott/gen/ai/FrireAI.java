@@ -7,6 +7,7 @@ import mindustry.ai.Pathfinder;
 import mindustry.ai.types.HugAI;
 import mindustry.core.World;
 import mindustry.entities.Sized;
+import mindustry.entities.units.AIController;
 import mindustry.gen.Building;
 import mindustry.gen.Groups;
 import mindustry.world.Tile;
@@ -14,10 +15,14 @@ import mindustry.world.Tile;
 import static mindustry.Vars.state;
 import static mindustry.Vars.tilesize;
 
-public class FrireAI extends HugAI {
-    @Override
+public class FrireAI extends AIController {
+    public FrireAI() {
+
+    }
+
     public void updateMovement(){
 
+        if (unit.team.data().coreEnemies.length == 0) return;
         Building core = unit.closestEnemyCore();
 
         if(core != null && unit.within(core, unit.range() / 1.1f + core.block.size * tilesize / 2f)){
@@ -54,8 +59,9 @@ public class FrireAI extends HugAI {
             }
         }else {
             Groups.unit.each(u->u.within(unit,unit.type.range),u-> target = u);
+            if (target == null) return;
             if(move){
-                pathfind(Pathfinder.costLegs);
+                pathfind(0);
             }
         }
 

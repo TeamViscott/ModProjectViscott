@@ -21,7 +21,7 @@ public class ProjectViscottTechTree {
     public static void load()
     {
         PvPlanets.vercilus.techTree = nodeRoot("Vercilus",PvPlanets.vercilus,() -> {
-            node(PvFactions.Xeal.icon);
+            var xeal = node(PvFactions.Xeal.icon);
             node(PvFactions.Mortikai.icon);
             node(PvFactions.Nullis.icon);
             node(PvFactions.Azulex.icon);
@@ -143,7 +143,7 @@ public class ProjectViscottTechTree {
                         });
                     });
                 });
-                node(templateMolder,()->{
+                node(nueroSpawnPad,()->{
                     node(densePayloadConveyor,()->{
                         node(densePayloadRouter,()->{
                             node(denseConstructor,()-> {
@@ -154,37 +154,29 @@ public class ProjectViscottTechTree {
                             });
                         });
                     });
-                    node(nueroSpawnPad,()->{
-                        node(neuroRemolder,()->{
-                            node(grandRemolder);
-                            node(regularHousingUnit);
-                            node(forceModifier);
-
-                        });
-                        node(minimalHousingUnit);
-                        node(particle,()->{
-                            node(snippet,()->{
-                                node(fragment,()->{
-                                    node(excerpt,()->{
-                                        node(pericope);
-                                    });
+                    node(forceModifier);
+                    node(particle,()->{
+                        node(snippet,()->{
+                            node(fragment,()->{
+                                node(excerpt,()->{
+                                    node(pericope);
                                 });
                             });
                         });
-                        node(milli,()->{
-                            node(centi,()->{
-                                node(deci,()->{
-                                    node(hecto,()->{
-                                        node(kilo);
-                                    });
+                    });
+                    node(milli,()->{
+                        node(centi,()->{
+                            node(deci,()->{
+                                node(hecto,()->{
+                                    node(kilo);
                                 });
                             });
                         });
-                        node(chime,()->{
-                            node(carillon,()->{
-                                node(knell,()->{
-                                    node(peal);
-                                });
+                    });
+                    node(chime,()->{
+                        node(carillon,()->{
+                            node(knell,()->{
+                                node(peal);
                             });
                         });
                     });

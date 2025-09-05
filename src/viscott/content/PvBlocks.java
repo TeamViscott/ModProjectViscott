@@ -8,6 +8,7 @@ import arc.struct.Seq;
 import arc.util.Time;
 import mindustry.Vars;
 import mindustry.content.*;
+import mindustry.entities.bullet.BasicBulletType;
 import mindustry.entities.bullet.MassDriverBolt;
 import mindustry.entities.effect.MultiEffect;
 import mindustry.game.Team;
@@ -44,6 +45,8 @@ import viscott.world.block.power.*;
 import viscott.world.block.production.*;
 import viscott.world.block.unit.*;
 import viscott.world.draw.*;
+import viscott.world.meta.PvEnv;
+
 
 import static mindustry.type.ItemStack.with;
 
@@ -127,7 +130,7 @@ public class PvBlocks {
                             piscoProcessor,memoryByte,statusSelector,labelHandler,
                             /*Nullis*/voidReprocessingUnit,nullProcessor,
                             /*Testing*/
-                                    sus
+                                    sus, partCore
                             ;
             public static void load()
             {
@@ -614,6 +617,7 @@ public class PvBlocks {
                     size = 5;
                     powerProduction = 12700f/60f;
                     itemCapacity = 30;
+
                     liquidCapacity = 50;
                     consumeItem(PvItems.erbium,5);
                     consumeLiquid(PvLiquids.liquidNitrogen,25f/60f);
@@ -970,6 +974,7 @@ public class PvBlocks {
                     drawer = new DrawMulti(new DrawDefault(), new DrawHeatOutput(), new DrawHeatInput("-heat"));
                     regionRotated1 = 1;
                 }};
+                /*
                 airTempT1 = new PvTemplate("aerial-t1") {{
                     requirements = with(PvItems.zirconium,100); //Todo
                     localizedName = "Tier 1 Aerial Template";
@@ -1000,6 +1005,7 @@ public class PvBlocks {
                     health = 1780;
                     size = 7;
                 }};
+
                 templateMolder = new PvSelectiveConstructor("template-molder") {{
                     requirements(Category.units,with(PvItems.zirconium,250,Items.silicon,75)); //Todo
                     localizedName = "Template Molder";
@@ -1024,6 +1030,8 @@ public class PvBlocks {
                             airTempT1, airTempT2,airTempT3
                     );
                 }};
+
+                 */
                 nueroSpawnPad = new BulkUnitFactory("nuero-spawn-pad")
                 {{
                     requirements(Category.units,with(PvItems.zirconium,250,Items.silicon,75)); //Todo
@@ -1061,6 +1069,7 @@ public class PvBlocks {
                             new PvUnitPlan(PvUnits.root,20*60f,with(PvItems.hardenedOak,20,Items.silicon,10))
                     );
                 }};
+                /*
                 neuroRemolder = new RemolderFactory("neuro-remolder") {{
                     requirements(Category.units,with(PvItems.zirconium,500,PvItems.platinum,100,Items.silicon,40)); //Todo
                     localizedName = "Neuro Remolder";
@@ -1109,6 +1118,8 @@ public class PvBlocks {
                     consumePower(1200f/60f);
                     consumeItems(with(PvItems.barium,2000,PvItems.nobelium,200,PvItems.platinum,500,Items.silicon,200,PvItems.carbonFiber,60));
                 }};
+
+                 */
                 mythicalRemolder = new RemolderFactory("mythical-remolder") {{
                     requirements(Category.units,with(PvItems.zirconium,1000,PvItems.platinum,700,PvItems.erbium,300,Items.silicon,200,PvItems.nobelium,80)); //Todo
                     localizedName = "Mythical Remolder";
@@ -1135,6 +1146,7 @@ public class PvBlocks {
                     consumePower(210f/60f);
                     consumeItems(with(PvItems.erbium,25));
                 }};
+                /*
                 minimalHousingUnit = new HousingUnitBlock("minimal-housing-unit") {{
                     requirements(Category.units,with(PvItems.zirconium,400,PvItems.lithium,250,Items.silicon,50)); //Todo
                     localizedName = "Minimal Housing Unit";
@@ -1157,6 +1169,8 @@ public class PvBlocks {
                     consumeItems(with(PvItems.barium,160,Items.silicon,100,PvItems.nobelium,40));
                     constructTime = 60*70;
                 }};
+
+                 */
                 densePayloadConveyor = new PayloadConveyor("dense-payload-conveyor")
                 {{
                     requirements(Category.units,with(PvItems.carbonFiber,20)); //Todo
@@ -1556,8 +1570,11 @@ public class PvBlocks {
                     requirements(Category.defense, with(Items.silicon,4));
                     localizedName = "Silicon Wall";
                     health = 260;
+
                     damageMult = (power) -> Interp.circle.apply(power*-1+1)*0.5f+0.5f; /* 50% reduction */
                     consumePowerBuffered(500);
+
+                    envRequired = PvEnv.Viscott;
                 }};
                 siliconWallLarge = new PvBattery("silicon-wall-large")
                 {{
@@ -1567,6 +1584,7 @@ public class PvBlocks {
                     size = 2;
                     damageMult = (power) -> Interp.circle.apply(power*-1+1)*(1f/3f)+(2f/3f); /* 33% reduction */
                     consumePowerBuffered(2000);
+                    envRequired = PvEnv.Viscott;
                 }};
                 siliconWallHuge = new PvBattery("silicon-wall-huge") {{
                     requirements(Category.defense, with(Items.silicon,128,PvItems.tideAlloy,2));
@@ -1576,6 +1594,7 @@ public class PvBlocks {
                     size = 3;
                     damageMult = (power) -> Interp.circle.apply(power*-1+1)*0.2f+0.8f; /* 20% reduction */
                     consumePowerBuffered(8000); /*e*/
+                    envRequired = PvEnv.Viscott;
                 }};
                 platinumWall = new PvWall("platinum-wall")
                 {{
@@ -2016,6 +2035,19 @@ public class PvBlocks {
                             PvStatusEffects.shield,
                             StatusEffects.overclock
                     );
+                }};
+
+                partCore = new PartCore("part-core") {{
+                    requirements(Category.effect,with());
+                    size = 4;
+                    weapons = Seq.with(new BlockWeapon("part-core-weapon"){{
+                        reload = 30;
+                        x = y = 0;
+                        layerOffset = 50.0F;
+                        bullet = new BasicBulletType(8,50) {{
+                            lifetime = 120;
+                        }};
+                    }});
                 }};
             }
 }

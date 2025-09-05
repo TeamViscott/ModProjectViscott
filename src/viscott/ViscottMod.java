@@ -42,6 +42,7 @@ import static mindustry.Vars.*;
 public class ViscottMod extends Mod {
 
     public ViscottMod(){
+
         Events.run(EventType.Trigger.drawOver, () -> {
             if (Vars.renderer.animateShields && PvShaders.nullisAura != null)
                 Draw.drawRange(PvLayers.voidLayer, 0.1f, () -> {
@@ -149,6 +150,8 @@ public class ViscottMod extends Mod {
         super.init();
         overRideOldSound();
         PvUIs.init();
+
+
 
         PvFaction.all.each(team -> {
             if (team.techTree != null && TechTree.roots.contains(team.techTree))

@@ -15,6 +15,7 @@ public class NullisUnitType extends PvUnitType{
         super(name);
         healColor = Color.black;
         factions.add(PvFactions.Nullis);
+
     }
     @Override
     public Unit create(Team team){

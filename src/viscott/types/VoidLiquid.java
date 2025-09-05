@@ -33,6 +33,7 @@ public class VoidLiquid extends CellLiquid {
                 if (u.hovering || u.isFlying()) {
                     u.apply(voidFlyingEffect, 30);
                     u.apply(effect, 30);
+
                 }
                 puddle.amount += voidDamage/5;
             });

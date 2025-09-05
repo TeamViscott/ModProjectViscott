@@ -1,7 +1,9 @@
 package viscott.content;
 
+import mindustry.content.StatusEffects;
 import mindustry.content.Weathers;
 import mindustry.gen.Sounds;
+import mindustry.type.StatusEffect;
 import mindustry.type.Weather;
 import mindustry.world.meta.Attribute;
 import viscott.types.weathers.FleetWeather;

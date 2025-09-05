@@ -143,6 +143,7 @@ public class PvLogic {
                             unit.health += exec.numf(healing);
                             if (unit.health > unit.maxHealth)
                                 unit.health = unit.maxHealth;
+
                     }
                 }else{
                     //skip back to self.
@@ -474,7 +475,7 @@ public class PvLogic {
 
             @Override
             public void run(LExecutor exec) {
-                PvUIs.extraUI.textBoxDialog.show(text);
+                //PvUIs.extraUI.textBoxDialog.show(text);
             }
         }
     }
