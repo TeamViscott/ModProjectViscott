@@ -40,7 +40,8 @@ import java.util.stream.Stream;
 public class Grinder extends PvBlock {
 
     public int range = 1;
-    public float speedPerOre = 0.2f;
+    public float speed = 2f;
+    public int outputAmount = 2;
     public Effect updateEffect = null;
     public float tier = 1;
     public float boostMult = 1;
@@ -101,7 +102,7 @@ public class Grinder extends PvBlock {
         if (itemCapacity != 0) {
             int fix = (size % 2) * 4 + Mathf.floor((size - 1) / 2) * 8;
             Drawf.dashRect(Pal.lighterOrange, x * 8 - offset - range * 8 - fix, y * 8 - offset - range * 8 - fix, size * 8 + range * 16, size * 8 + range * 16);
-            float width = drawPlaceText(Core.bundle.format("bar.grindspeed", Strings.fixed(getMineSpeed(x, y) * getHardness(x, y), 2)), x, y + size / 2, true);
+            float width = drawPlaceText(Core.bundle.format("bar.grindspeed", Strings.fixed(getMineSpeed(x, y) * getHardness(x, y), 2) + "/s"), x, y + size / 2, true);
         }
     }
 
@@ -126,7 +127,9 @@ public class Grinder extends PvBlock {
     public float getMineSpeed(int x,int y)
     {
         Seq<Block> newBlockList = getBlocks(x,y);
-        return newBlockList.size * speedPerOre * 60;
+        if (newBlockList.isEmpty())
+            return 0;
+        return (speed * 60f) / (newBlockList.size * 0.5f + 0.5f);
     }
     public float getHardness(int x,int y)
     {
@@ -153,14 +156,19 @@ public class Grinder extends PvBlock {
         super.setStats();
         if (boostMult > 0)
             stats.addPercent(Stat.boostEffect,boostMult);
+        setStats_DrillResults();
+    }
+
+    protected void setStats_DrillResults() {
         stats.add(PvStats.grinderTier,StatValues.blocks(b -> b instanceof DepositWall d && d.tier <= tier));
     }
+
     @Override
     public void setBars(){
         super.setBars();
         if (itemCapacity != 0)
         addBar("grindspeed", (GrinderBuild e) ->
-                new Bar(() -> Core.bundle.format("bar.grindspeed", Strings.fixed((e.maxMineSpeed * e.hardness) * e.timeScale() * e.disEff, 2)), () -> Pal.lighterOrange, () -> e.progress));
+                new Bar(() -> Core.bundle.format("bar.grindspeed", Strings.fixed((e.maxMineSpeed * e.hardness) * e.timeScale() * e.disEff, 2) + "/s"), () -> Pal.lighterOrange, () -> e.progress));
     }
 
     public class GrinderBuild extends Building
@@ -222,7 +230,7 @@ public class Grinder extends PvBlock {
         public void craft(Block d)
         {
             if (hasItems && items.get(d.itemDrop) < itemCapacity) {
-                items.add(d.itemDrop, 1);
+                items.add(d.itemDrop, outputAmount);
                 if (items.get(d.itemDrop) == itemCapacity) //lul
                     dump();
             }

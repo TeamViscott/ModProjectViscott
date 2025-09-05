@@ -351,7 +351,9 @@ public class PvUnits {
         shadow = new NullisUnitType("shadow")
         {{
             health = 1f;
-            abilities.add(new DamageAbility(0.05f/60f));
+            abilities.add(new DamageAbility(0.05f/60f){{
+                blockStatusEffects = Seq.with(PvStatusEffects.voidShield);
+            }});
             localizedName = "Shadow";
             description = """
                     Small, weak and a 1 shot to anything. too bad Nullis had an endless amount of them.

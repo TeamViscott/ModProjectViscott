@@ -6,6 +6,10 @@ import mindustry.content.Blocks;
 import mindustry.type.ItemStack;
 import mindustry.world.Block;
 import mindustry.world.consumers.Consume;
+import mindustry.world.meta.Stat;
+import mindustry.world.meta.StatValues;
+import viscott.content.PvStats;
+import viscott.world.block.environment.DepositWall;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -40,7 +44,12 @@ public class SpaceGrinder extends Grinder{
     public float getMineSpeed(int x,int y)
     {
         int spaceCount = ScanRectEmpty.getFreeSpace.get(checkPattern,x,y,tier);
-        return spaceCount * speedPerOre * 60;
+        return spaceCount * speed * 60;
+    }
+
+    @Override
+    protected void setStats_DrillResults() {
+        stats.add(Stat.output, outputItem);
     }
 
     @Override

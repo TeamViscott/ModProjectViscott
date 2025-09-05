@@ -73,7 +73,7 @@ public class PvBlocks {
                     /*Drills*/harvestDrill,tetraDrill,spectrumDrill,rootHarvester,
                     /*Grinders*/harvestGrinder,behemothGrinder,oilGrinder,
                         /* Xeal */eradicarialGrinder,
-                        /* Unix */zirconiumRegrinder,
+                        /* Unix */zirconiumRegrinder,scrapRegrinder,
 
                     /*Power*/opticalNode,auditoryNode,compressedBattery,lifeForceConverter,oakDengerizer,
                     /*Power Production*/smallCarbonPanel,largeCarbonPanel,lithiumDegenerator,
@@ -341,8 +341,8 @@ public class PvBlocks {
                     size = 2;
                     tierMultiplier = 0.8f;
                     range = 2;
-                    speedPerOre = 0.15f/60f;
-                    itemCapacity = 20;
+                    speed = 0.6f/60f;
+                    itemCapacity = 40;
                     updateEffect = Fx.smokeCloud;
                     drawer = new DrawMulti(
                             new DrawRegion("-bottom"),
@@ -364,8 +364,8 @@ public class PvBlocks {
                     tier = 2;
                     tierMultiplier = 0.7f;
                     range = 4;
-                    speedPerOre = 0.18f/60f;
-                    itemCapacity = 40;
+                    speed = 0.8f/60f;
+                    itemCapacity = 80;
                     updateEffect = Fx.smeltsmoke;
                     drawer = new DrawMulti(
                             new DrawRegion("-bottom"),
@@ -386,8 +386,8 @@ public class PvBlocks {
                     tier = 3;
                     tierMultiplier = 0.6f;
                     range = 6;
-                    speedPerOre = 0.2f/60f;
-                    itemCapacity = 100;
+                    speed = 1.5f/60f;
+                    itemCapacity = 140;
                     updateEffect = Fx.smeltsmoke;
                     squareSprite = false;
                     drawer = new DrawMulti(
@@ -407,10 +407,32 @@ public class PvBlocks {
                     boostMult = 4.6f;
                     size = 2;
                     range = 1;
-                    speedPerOre = 0.4f/60f/12f;
+                    speed = 0.4f/60f/12f;
                     faction.add(PvFactions.Unix);
                     itemCapacity = 20;
                     outputItem = new ItemStack(PvItems.zirconium,5);
+                    updateEffect = Fx.smokeCloud;
+                    drawer = new DrawMulti(
+                            new DrawRegion("-bottom"),
+                            new DrawLiquidRegion() {{ this.suffix = "-liquid"; }},
+                            new DrawDefault()
+                    );
+                }};
+                scrapRegrinder = new SpaceGrinder("scrap-regrinder") {{
+                    requirements(Category.production, with(PvItems.zirconium,100));
+                    localizedName = "Zirconium Regrinder";
+                    description = "Gathers Scrap found in the atmosphere, solid blocks hinder this grinder from working";
+                    squareSprite = false;
+                    health = 200;
+                    liquidCapacity = 20;
+                    consumeLiquid(PvLiquids.xenon,2f/60f).boost();
+                    boostMult = 4.6f;
+                    size = 2;
+                    range = 2;
+                    speed = 0.5f/60f/32f;
+                    faction.add(PvFactions.Unix);
+                    itemCapacity = 20;
+                    outputItem = new ItemStack(Items.scrap,4);
                     updateEffect = Fx.smokeCloud;
                     drawer = new DrawMulti(
                             new DrawRegion("-bottom"),
@@ -1123,16 +1145,21 @@ public class PvBlocks {
                 mythicalRemolder = new RemolderFactory("mythical-remolder") {{
                     requirements(Category.units,with(PvItems.zirconium,1000,PvItems.platinum,700,PvItems.erbium,300,Items.silicon,200,PvItems.nobelium,80)); //Todo
                     localizedName = "Mythical Remolder";
-                    addUpgrade(PvUnits.excerpt,PvUnits.pericope, (PvTemplate) airTempT5);
+                    addUpgrade(PvUnits.excerpt,PvUnits.pericope);
                     addUpgrade(PvUnits.hecto,PvUnits.kilo);
                     addUpgrade(PvUnits.loch,PvUnits.atlantic);
                     templateUseCount = 2;
-                    health = 3150;
+                    health = 12640;
                     size = 9;
-                    itemCapacity = 1000;
                     constructTime = 60*60;
                     consumePower(1200f/60f);
-                    consumeItems(with(PvItems.barium,5000,PvItems.erbium,1400,PvItems.rushAlloy,80,PvItems.carbonFiber,150));
+                    consumeItems(with(
+                            PvItems.barium,6000,
+                            PvItems.erbium,3200,
+                            PvItems.nobelium,1800,
+                            PvItems.rushAlloy,400,
+                            PvItems.carbonFiber,1000
+                    ));
                 }};
                 forceModifier = new EffectRefabricator("force-modifier") {{
                     requirements(Category.units,BuildVisibility.sandboxOnly,with(PvItems.zirconium,1000,PvItems.platinum,700,PvItems.erbium,300,Items.silicon,200,PvItems.nobelium,80)); //Todo
@@ -1541,7 +1568,7 @@ public class PvBlocks {
                     range = 3;
                     tier = 2;
                     size = 2;
-                    speedPerOre = 0.15f/60f;
+                    speed = 0.15f/60f;
                     health = 190;
                     liquidCapacity = 40;
                 }};
