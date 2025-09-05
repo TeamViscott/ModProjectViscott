@@ -1,5 +1,6 @@
 package viscott.types.abilities;
 
+import arc.util.Time;
 import mindustry.entities.abilities.Ability;
 import mindustry.gen.Unit;
 
@@ -12,6 +13,6 @@ public class DamageAbility extends Ability {
 
     @Override
     public void update(Unit unit){
-        unit.health-=damage;
+        unit.health-=damage * Time.delta;
     }
 }
