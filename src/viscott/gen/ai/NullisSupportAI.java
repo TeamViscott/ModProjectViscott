@@ -72,7 +72,6 @@ public class NullisSupportAI extends AIController {
                     if (this.timer.get(2, 60.0F) && this.targetItem != null) {
                         ore = Vars.indexer.findClosestOre(this.unit, this.targetItem);
                     }
-                    Log.info(this.ore);
                     if (ore != null) {
                         this.moveTo(ore, this.unit.type.mineRange / 2.0F, 20.0F);
                         if (ore.block() == Blocks.air && this.unit.within(this.ore, this.unit.type.mineRange)) {

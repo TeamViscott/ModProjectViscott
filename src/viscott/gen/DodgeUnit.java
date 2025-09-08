@@ -92,8 +92,6 @@ public class DodgeUnit extends UnitEntity {
         }
         strafeUpdate();
         directBoostUpdate();
-        if (a2_directBoosting)
-            Log.info("boosting");
         Vec2 additive = null;
         if (a2_directBoosting) {
             if (a2_directBoost == Float.POSITIVE_INFINITY)

@@ -134,7 +134,6 @@ public class PvPacketHandler {
                 tile.build.write(writer);
             });
             Call.clientPacketReliable("gridUnitUpdate",sb.toString().substring(1));
-            Log.info(sb.toString().substring(1));
     };
     public static void load()
     {
@@ -168,7 +167,6 @@ public class PvPacketHandler {
         netClient.addPacketHandler("recFactions", cons1);
 
         Cons<String> cons2 = (s -> {
-            Log.info(s);
             Seq<String> ss = Seq.with(s.split(";"));
             Queue<Integer> il = new Queue<>();
             Queue<Boolean> xl = new Queue<>();

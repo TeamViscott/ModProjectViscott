@@ -162,7 +162,6 @@ public class BlockWeapon implements Cloneable {
         this.parts = new Seq(DrawPart.class);
 
         Mods.LoadedMod currentMod = Reflect.get(content,"currentMod");
-        Log.info(currentMod);
 
         this.name = currentMod.name + "-" + name;
         this.localizedName = this.name;
@@ -460,7 +459,6 @@ public class BlockWeapon implements Cloneable {
         float lastReload = mount.reload;
         mount.reload = Math.max(mount.reload - Time.delta * build.efficiency(), 0.0F);
         mount.recoil = Mathf.approachDelta(mount.recoil, 0.0F, build.efficiency() / this.recoilTime);
-        Log.info(build.efficiency() / this.recoilTime);
         if (this.recoils > 0) {
             if (mount.recoils == null) {
                 mount.recoils = new float[this.recoils];
