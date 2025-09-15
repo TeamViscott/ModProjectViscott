@@ -11,6 +11,7 @@ import mindustry.ui.Styles;
 import mindustry.world.blocks.logic.LogicBlock;
 import viscott.types.logic.PvParser;
 import viscott.world.block.logic.PvLogicBlock;
+import viscott.world.ui.DialogueManager;
 import viscott.world.ui.PvUI;
 
 import static mindustry.Vars.*;
@@ -475,7 +476,7 @@ public class PvLogic {
 
             @Override
             public void run(LExecutor exec) {
-                //PvUIs.extraUI.textBoxDialog.show(text);
+                DialogueManager.createdialogue(text);
             }
         }
     }

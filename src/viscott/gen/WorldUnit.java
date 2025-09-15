@@ -145,6 +145,11 @@ public class WorldUnit extends MechUnit {
         // offset is used to correct the center of 2x2 and any even squared block.
         int offset = (building.block().size-1) % 2;
         // rotates the block accordingly. accommodates for offset.
+
+        int origin_tile_x = building.tileX(),
+            origin_tile_y = building.tileY();
+        int transform_rotation = 0;
+
         switch (blockRotation % 4) {
             case 0:
                 // Right
@@ -153,14 +158,17 @@ public class WorldUnit extends MechUnit {
             case 1:
                 // Up
                 t = innerWorld.tile(sub_tile.y,unitWorldSize - sub_tile.x - offset);
+                transform_rotation = 1;
                 break;
             case 2:
                 // Left
                 t = innerWorld.tile(unitWorldSize - sub_tile.x - offset,unitWorldSize - sub_tile.y - offset);
+                transform_rotation = 2;
                 break;
             default:  // also case 3
                 // Down
                 t = innerWorld.tile(unitWorldSize - sub_tile.y - offset,sub_tile.x);
+                transform_rotation = 3;
                 break;
         }
 
@@ -184,6 +192,11 @@ public class WorldUnit extends MechUnit {
         Vars.world = innerWorld;
 
         t.setBlock(building.block(),team,building.rotation,()->building);
+
+        if (building.power != null) {
+            building.power.links = energyGet(building,tilePos.x,tilePos.y,unitWorldSize,transform_rotation);
+        }
+
         // removes building from Groups.all so that it doesnt get updated. the unit will handle the update.
         // this is because it needs to update in its own world.
         if (Groups.all.contains(b->b==building)) {
@@ -201,14 +214,31 @@ public class WorldUnit extends MechUnit {
         tilePos.y = Mathf.ceil(y / 8) - buildSize / 2;
     }
 
-    public IntSeq energyGet(Building build,Tile newOrigin) {
+    public IntSeq energyGet(Building build,int x_shift,int y_shift,int unitWorldSize,int rotation) {
         if (build.power != null) {
             Tile tileFrom = build.tile;
             IntSeq newLinks = new IntSeq();
             build.power.links.each(l -> {
-                int offX = Point2.x(l) - tileFrom.x,
-                    offY = Point2.y(l) - tileFrom.y;
-                newLinks.add(Point2.pack(newOrigin.x+offX,newOrigin.y+offY));
+                var linkPoint = Point2.unpack(l);
+                linkPoint.x -= x_shift;
+                linkPoint.y -= y_shift;
+                switch (rotation) {
+                    case 0:
+                        break;
+                    case 1:
+                        // Up
+                        linkPoint = new Point2(linkPoint.y, unitWorldSize - linkPoint.x);
+                        break;
+                    case 2:
+                        // Left
+                        linkPoint = new Point2(unitWorldSize - linkPoint.x, unitWorldSize - linkPoint.y);
+                        break;
+                    default:  // also case 3
+                        // Down
+                        linkPoint = new Point2(unitWorldSize - linkPoint.y, linkPoint.x);
+                        break;
+                }
+                newLinks.addUnique(linkPoint.pack());
             });
             return newLinks;
         }
@@ -253,6 +283,11 @@ public class WorldUnit extends MechUnit {
         b.rotation += rotation;
         b.rotation %= 4;
         t.setBlock(b.block(),team,b.rotation,()->b);
+
+        if (b.power != null) {
+            b.power.links = energyGet(b,-cT.x,-cT.y,innerWorld.width(),rotation%4);
+        }
+
         b.set(t.x * 8 + (b.block().size-1) % 2 * 4,t.y * 8 + (b.block().size-1) % 2 * 4);
         if(!Groups.all.contains(r->r == b)) {
             int i = Groups.all.addIndex(b);

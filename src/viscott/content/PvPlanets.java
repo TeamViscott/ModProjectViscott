@@ -48,5 +48,13 @@ public class PvPlanets{
             defaultEnv |= PvEnv.Viscott;
             defaultCore = PvBlocks.coreHover;
         }};
+
+        /*
+            new Planet("test0",Planets.sun,1f,0);
+            new Planet("test1",Planets.sun,1f,1);
+            new Planet("test2",Planets.sun,1f,2);
+            new Planet("test3",Planets.sun,1f,3);
+            new Planet("test4",Planets.sun,1f,4);
+         */
     }
 }
