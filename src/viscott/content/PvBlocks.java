@@ -19,6 +19,7 @@ import mindustry.graphics.Pal;
 import mindustry.logic.LStatements;
 import mindustry.type.*;
 import mindustry.world.Block;
+import mindustry.world.blocks.Attributes;
 import mindustry.world.blocks.defense.*;
 import mindustry.world.blocks.distribution.*;
 import mindustry.world.blocks.environment.*;
@@ -30,7 +31,9 @@ import mindustry.world.blocks.power.*;
 import mindustry.world.blocks.production.*;
 import mindustry.world.blocks.storage.*;
 import mindustry.world.draw.*;
+import mindustry.world.meta.Attribute;
 import mindustry.world.meta.BuildVisibility;
+import org.w3c.dom.Attr;
 import viscott.types.*;
 import viscott.types.drawer.PvDrawPulse;
 import viscott.world.block.defense.VoidWall;
@@ -130,13 +133,15 @@ public class PvBlocks {
                             piscoProcessor,memoryByte,statusSelector,labelHandler,
                             /*Nullis*/voidReprocessingUnit,nullProcessor,
                             /*Testing*/
-                                    sus, partCore
+                                    sus, partCore, attributionGrinder, oilwallorsmth
                             ;
             public static void load()
             {
                 /* Static walls */
                 denseMetalWall = new StaticWall("dense-metal-wall"){{variants = 3;mapColor = Color.valueOf("545864"); localizedName = "Dense Metal Wall";}};
                 tenebrousWall = new StaticWall("tenebrous-wall"){{variants = 3;mapColor = Color.valueOf("67607A"); localizedName = "Tenebrous Wall";}};
+
+                oilwallorsmth = new StaticWall("oilwallorsmth"){{variants = 0;mapColor = Color.black; attributes.set(Attribute.oil,1.5f); localizedName = "Oil wall or smth, idk";}};
                 /*Floor's Start*/
 
                 densePlate = new Floor("dense-plate",0){{
@@ -2075,6 +2080,17 @@ public class PvBlocks {
                             lifetime = 120;
                         }};
                     }});
+                }};
+
+                attributionGrinder = new WallAttributeCrafter("attribution-grinder") {{
+                    requirements(Category.effect,with());
+                    localizedName = "Attribution Grinder";
+                    size = 2;
+                    hasLiquids = true;
+                    hasItems = true;
+                    addCraftingAttribute(Attribute.sand,with(Items.sand,2),30f);
+                    addCraftingAttribute(Attribute.oil,new LiquidStack(Liquids.oil,1),1);
+                    addCraftingAttribute(Attribute.spores,with(Items.sporePod,1),new LiquidStack(Liquids.water,60),60);
                 }};
             }
 }
