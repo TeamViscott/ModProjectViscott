@@ -41,17 +41,17 @@ public class WallAttributeCrafter extends Block {
 
     public static class AttributeModule {
         public Attribute attribute;
-        public ItemSeq outputItems;
+        public Seq<ItemStack> outputItems;
         public LiquidStack outputLiquid;
         public float drillTime;
 
         public AttributeModule() {
             this.attribute = Attribute.sand;
-            this.outputItems = new ItemSeq(new Seq<>());
+            this.outputItems = new Seq<>();
             this.outputLiquid = new LiquidStack(Liquids.water,0);
             this.drillTime = 60;
         }
-        public AttributeModule(Attribute attribute, ItemSeq outputItems,LiquidStack outputLiquid,float drillTime) {
+        public AttributeModule(Attribute attribute, Seq<ItemStack> outputItems,LiquidStack outputLiquid,float drillTime) {
             this.attribute = attribute;
             this.outputItems = outputItems;
             this.outputLiquid = outputLiquid;
@@ -83,7 +83,7 @@ public class WallAttributeCrafter extends Block {
                 itemTable.add(Strings.fixed(itemStack.amount * (60f/drillTime),2) + "/s").left();
                 table.row();
             }
-            if (outputItems.total > 0)
+            if (!outputItems.any())
                 table.row();
 
             if (outputLiquid.amount > 0) {
@@ -99,7 +99,7 @@ public class WallAttributeCrafter extends Block {
             if (outputLiquid.amount > 0 && building.block.hasLiquids && building.liquids.currentAmount() < building.block.liquidCapacity) {
                 building.liquids.add(outputLiquid.liquid,outputLiquid.amount);
             }
-            if (outputItems.total > 0 && building.block.hasItems && building.items.total() < building.block.itemCapacity) {
+            if (outputItems.any() && building.block.hasItems && building.items.total() < building.block.itemCapacity) {
                 for (var itemStack : outputItems) {
                     building.items.add(itemStack.item,itemStack.amount);
                 }
@@ -145,42 +145,35 @@ public class WallAttributeCrafter extends Block {
     }
 
     public void addCraftingAttribute(Attribute attribute, Liquid liquid, float drillTime) {
-        this.addCraftingAttribute(attribute,new ItemSeq(new Seq<>()),new LiquidStack(liquid,1f/60f),drillTime);
+        this.addCraftingAttribute(attribute,new Seq<>(),new LiquidStack(liquid,1f/60f),drillTime);
     }
 
     public void addCraftingAttribute(Attribute attribute, LiquidStack liquidStack,float drillTime) {
-        this.addCraftingAttribute(attribute,new ItemSeq(new Seq<>()),liquidStack,drillTime);
+        this.addCraftingAttribute(attribute,new Seq<>(),liquidStack,drillTime);
     }
 
     public void addCraftingAttribute(Attribute attribute, Item outputItem,float drillTime) {
-        this.addCraftingAttribute(attribute,new ItemSeq(Seq.with(new ItemStack(outputItem,1))),new LiquidStack(Liquids.water,0),drillTime);
+        this.addCraftingAttribute(attribute,Seq.with(new ItemStack(outputItem,1)),new LiquidStack(Liquids.water,0),drillTime);
     }
 
     public void addCraftingAttribute(Attribute attribute, ItemStack[] outputItems,float drillTime) {
-        this.addCraftingAttribute(attribute,new ItemSeq(Seq.with(outputItems)),new LiquidStack(Liquids.water,0),drillTime);
+        this.addCraftingAttribute(attribute,Seq.with(outputItems),new LiquidStack(Liquids.water,0),drillTime);
     }
 
     public void addCraftingAttribute(Attribute attribute, ItemStack outputItems,float drillTime) {
-        this.addCraftingAttribute(attribute,new ItemSeq(Seq.with(outputItems)),new LiquidStack(Liquids.water,0),drillTime);
+        this.addCraftingAttribute(attribute,Seq.with(outputItems),new LiquidStack(Liquids.water,0),drillTime);
     }
 
     public void addCraftingAttribute(Attribute attribute, Seq<ItemStack> outputItems,float drillTime) {
-        this.addCraftingAttribute(attribute,new ItemSeq(outputItems),new LiquidStack(Liquids.water,0),drillTime);
-    }
-
-    public void addCraftingAttribute(Attribute attribute, ItemSeq outputItems,float drillTime) {
         this.addCraftingAttribute(attribute,outputItems,new LiquidStack(Liquids.water,0),drillTime);
     }
 
     public void addCraftingAttribute(Attribute attribute, ItemStack[] outputItems, LiquidStack liquidStack, float drillTime) {
-        this.addCraftingAttribute(attribute,new ItemSeq(Seq.with(outputItems)),liquidStack,drillTime);
+        this.addCraftingAttribute(attribute,Seq.with(outputItems),liquidStack,drillTime);
     }
 
-    public void addCraftingAttribute(Attribute attribute, LiquidStack liquidStack, ItemSeq outputItems,float drillTime) {
-        this.addCraftingAttribute(attribute,outputItems,liquidStack,drillTime);
-    }
 
-    public void addCraftingAttribute(Attribute attribute, ItemSeq outputItems,LiquidStack liquidStack,float drillTime) {
+    public void addCraftingAttribute(Attribute attribute, Seq<ItemStack> outputItems,LiquidStack liquidStack,float drillTime) {
         if (fromAttribute(attribute) != null)
             Log.warn("An Attribute Module overwrote another. attribute : " + attribute.name);
         this.craftTable.add(new AttributeModule(attribute,outputItems,liquidStack,drillTime));
@@ -333,7 +326,7 @@ public class WallAttributeCrafter extends Block {
             }
 
             public boolean canDeposit() {
-                return (hasItems && attributeModule.outputItems.total > 0 && items.total() < itemCapacity)
+                return (hasItems && attributeModule.outputItems.any() && items.total() < itemCapacity)
                         || (hasLiquids && attributeModule.outputLiquid.amount > 0 && liquids.currentAmount() < liquidCapacity);
             }
         }

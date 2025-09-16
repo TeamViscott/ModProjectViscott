@@ -10,30 +10,28 @@ import mindustry.ui.Styles;
 
 public class DialogueManager {
     public static Table createdialogue(String text) {
-        var table = new Table();
+        var frameTable = new Table(Tex.buttonEdge3);
 
-        table.setBackground(Styles.black3);
         float screenWidth = Core.scene.getWidth();
         float offset = screenWidth - 636f;
 
-        table.setPosition(318,50);
-        table.setSize(offset,250);
+        frameTable.setPosition(318,50);
+        frameTable.setSize(offset,250);
 
-        var textTable = new Table();
+        var table = frameTable.table().grow().pad(10).get();
 
-        textTable.add(text);
+        var textTable = table.table().grow().get();
 
-        table.add(textTable).grow();
+        textTable.add(text).left().top();
 
         table.row();
 
-        var buttonTable = new Table();
+        var buttonTable = table.table().growX().right().get();
+        buttonTable.right();
         var btn = buttonTable.button(Tex.buttonDown, Styles.clearNoneTogglei,40, table::remove).tooltip("Close").right().get();
         btn.getStyle().imageUp = Icon.cancel;
 
-        table.add(buttonTable).growX();
-
         Vars.ui.hudGroup.addChild(table);
-        return table;
+        return frameTable;
     }
 }
