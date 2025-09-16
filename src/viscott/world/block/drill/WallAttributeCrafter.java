@@ -1,8 +1,7 @@
 package viscott.world.block.drill;
 
 import arc.Core;
-import arc.func.Cons;
-import arc.func.Intc2;
+import arc.func.Cons2;
 import arc.graphics.g2d.Draw;
 import arc.graphics.g2d.TextureRegion;
 import arc.math.Mathf;
@@ -13,7 +12,6 @@ import arc.struct.Seq;
 import arc.util.*;
 import mindustry.Vars;
 import mindustry.content.Fx;
-import mindustry.content.Items;
 import mindustry.content.Liquids;
 import mindustry.entities.Effect;
 import mindustry.entities.units.BuildPlan;
@@ -24,13 +22,10 @@ import mindustry.ui.Styles;
 import mindustry.world.Block;
 import mindustry.world.Tile;
 import mindustry.world.blocks.Attributes;
-import mindustry.world.blocks.production.WallCrafter;
 import mindustry.world.meta.*;
-import org.w3c.dom.Attr;
 
-import java.util.Dictionary;
 import java.util.Hashtable;
-import java.util.Iterator;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class WallAttributeCrafter extends Block {
 
@@ -241,9 +236,50 @@ public class WallAttributeCrafter extends Block {
         return !this.getDrillEfficiency(tile.x, tile.y, rotation).isEmpty();
     }
 
+    void getEfficiencyBase(int tx, int ty, int rotation, Cons2<Tile,Float> ctile) {
+        int cornerX = tx - (this.size - 1) / 2;
+        int cornerY = ty - (this.size - 1) / 2;
+        int s = this.size;
+
+
+
+        for(int i = 0; i < this.size; ++i) {
+            int rx = 0;
+            int ry = switch (rotation) {
+                case 0 -> {
+                    rx = cornerX + s;
+                    yield cornerY + i;
+                }
+                case 1 -> {
+                    rx = cornerX + i;
+                    yield cornerY + s;
+                }
+                case 2 -> {
+                    rx = cornerX - 1;
+                    yield cornerY + i;
+                }
+                case 3 -> {
+                    rx = cornerX + i;
+                    yield cornerY - 1;
+                }
+                default -> 0;
+            };
+
+            Tile other = Vars.world.tile(rx, ry);
+            if (other != null && other.solid()) {
+                var attributeMods = fromAttribute(other.block().attributes);
+                float eff = 0;
+                for(var attributeMod : attributeMods) {
+                    eff += other.block().attributes.get(attributeMod.attribute) / size;
+                }
+
+                ctile.get(other,eff);
+            }
+        }
+    }
+
     Hashtable<AttributeModule, Float> getDrillEfficiency(int tx, int ty, int rotation) {
         Hashtable<AttributeModule, Float> modules = new Hashtable<>();
-        float eff = 0.0F;
         int cornerX = tx - (this.size - 1) / 2;
         int cornerY = ty - (this.size - 1) / 2;
         int s = this.size;
@@ -275,9 +311,9 @@ public class WallAttributeCrafter extends Block {
                 var attributeMods = fromAttribute(other.block().attributes);
                 for(var attributeMod : attributeMods) {
                     if (!modules.containsKey(attributeMod)) {
-                        modules.put(attributeMod,other.block().attributes.get(attributeMod.attribute));
+                        modules.put(attributeMod,other.block().attributes.get(attributeMod.attribute) / size);
                     } else {
-                        modules.replace(attributeMod,modules.get(attributeMod) + other.block().attributes.get(attributeMod.attribute));
+                        modules.replace(attributeMod,modules.get(attributeMod) + other.block().attributes.get(attributeMod.attribute) / size);
                     }
                 }
             }
@@ -303,6 +339,7 @@ public class WallAttributeCrafter extends Block {
         }
         float warmup = 0;
         public Seq<AttributeElement> craftElements = new Seq<>();
+        public float totalTime;
 
 
         @Override
@@ -336,21 +373,21 @@ public class WallAttributeCrafter extends Block {
             this.warmup = Mathf.approachDelta(this.warmup, (float)Mathf.num(this.efficiency > 0.0F), 0.025F);
             float dx = (float)Geometry.d4x(this.rotation) * 0.5F;
             float dy = (float)Geometry.d4y(this.rotation) * 0.5F;
-            /*
-            float eff = getEfficiency(this.tile.x, this.tile.y, this.rotation, (dest) -> {
-                if (this.wasVisible && cons && Mathf.chanceDelta((double)(WallCrafter.this.updateEffectChance * this.warmup))) {
-                    WallCrafter.this.updateEffect.at(dest.worldx() + Mathf.range(3.0F) - dx * 8.0F, dest.worldy() + Mathf.range(3.0F) - dy * 8.0F, dest.block().mapColor);
+            getEfficiencyBase(this.tile.x, this.tile.y, this.rotation, (dest,eff) -> {
+                if (this.wasVisible && cons && Mathf.chanceDelta((double)(updateEffectChance * this.warmup))) {
+                    updateEffect.at(dest.worldx() + Mathf.range(3.0F) - dx * 8.0F, dest.worldy() + Mathf.range(3.0F) - dy * 8.0F, dest.block().mapColor);
                 }
+            });
 
-            }, (Intc2)null);
-
-             */
             craftElements.each((element) -> {
                 if (cons && (element.progress += this.edelta() * element.efficiency) >= element.attributeModule.drillTime) {
                     element.attributeModule.craft(this);
+
                     element.progress %= element.attributeModule.drillTime;
                 }
             });
+
+            this.totalTime += this.edelta() * this.warmup;
 
             if (hasItems && this.timer(timerDump, 5.0F))
                 this.dump();
@@ -366,17 +403,17 @@ public class WallAttributeCrafter extends Block {
             float dx = (float) Geometry.d4x(this.rotation) * ds;
             float dy = (float)Geometry.d4y(this.rotation) * ds;
             int bs = this.rotation != 0 && this.rotation != 3 ? -1 : 1;
-            /* Grind wheels
-            WallCrafter.idx = 0;
-            getEfficiency(this.tile.x, this.tile.y, this.rotation, (Cons)null, (cx, cy) -> {
-                int sign = WallCrafter.idx++ >= size / 2 && size % 2 == 0 ? -1 : 1;
+            AtomicInteger idx = new AtomicInteger();
+            getEfficiencyBase(this.tile.x, this.tile.y, this.rotation, (tile, eff) -> {
+                int cx = tile.x;
+                int cy = tile.y;
+                int sign = idx.getAndIncrement() >= size / 2 && size % 2 == 0 ? -1 : 1;
                 float vx = ((float)cx - dx) * 8.0F;
                 float vy = ((float)cy - dy) * 8.0F;
                 Draw.z(35.0F);
                 Draw.rect(rotatorBottomRegion, vx, vy, this.totalTime * rotateSpeed * (float)sign * (float)bs);
                 Draw.rect(rotatorRegion, vx, vy);
             });
-             */
         }
 
     }
