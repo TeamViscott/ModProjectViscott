@@ -12,7 +12,6 @@ import mindustry.world.blocks.logic.LogicBlock;
 import viscott.types.logic.PvParser;
 import viscott.world.block.logic.PvLogicBlock;
 import viscott.world.ui.DialogueManager;
-import viscott.world.ui.PvUI;
 
 import static mindustry.Vars.*;
 import static mindustry.logic.LExecutor.varCounter;
@@ -425,13 +424,17 @@ public class PvLogic {
 
     public static class CreateTextBox extends LStatement {
         public String textstr = "";
+        public String titlestr = "";
+        public String imgstr = "";
 
         public CreateTextBox() {
             super();
         }
-        public CreateTextBox(String text) {
+        public CreateTextBox(String text,String title,String img) {
             super();
             this.textstr = text;
+            this.titlestr = title;
+            this.imgstr = img;
         }
 
         @Override
@@ -440,35 +443,51 @@ public class PvLogic {
         }
         @Override
         public void build(Table table){
+            var titleTable = table.table().growX().get();
+            titleTable.add("Title : ").left();
+            titleTable.field(titlestr,(s) -> titlestr = s).growX().padLeft(2).padRight(6).color(table.color);
+            table.row();
+            titleTable.add("Image : ").left();
+            titleTable.field(imgstr,(s) -> imgstr = s).growX().padLeft(2).padRight(6).color(table.color);
+            table.row();
             table.area(textstr, Styles.nodeArea, v -> textstr = v).growX().height(90f).padLeft(2).padRight(6).color(table.color);
         }
 
         @Override
         public LStatement copy()
         {
-            return new CreateTextBox(textstr);
+            return new CreateTextBox(textstr,titlestr,imgstr);
         }
 
         @Override
         public void write(StringBuilder builder){
-            builder.append("ctb "+ textstr.replace(' ','_').replace('\n','@'));
+            builder.append("ctb \""+ textstr.replace(' ','_').replace('\n','@') + "\" \"" + titlestr.replace(' ','_').replace('\n','@') + "\" \"" + imgstr + "\"");
         }
         @Override
         public void afterRead()
         {
             textstr = PvParser.allToken[1].replace('_',' ').replace('@','\n');
+            textstr = textstr.substring(1,textstr.length()-1);
+            titlestr = PvParser.allToken[2].replace('_',' ').replace('@','\n');
+            titlestr = titlestr.substring(1,titlestr.length()-1);
+            imgstr = PvParser.allToken[3];
+            imgstr = imgstr.substring(1,imgstr.length()-1);
         }
 
         @Override
         public LExecutor.LInstruction build(LAssembler builder) {
-            return new TextBoxI(textstr);
+            return new TextBoxI(textstr,titlestr,imgstr);
         }
 
         public static class TextBoxI implements LExecutor.LInstruction {
             public String text;
+            public String title;
+            public String image;
 
-            public TextBoxI(String text){
+            public TextBoxI(String text,String title,String image){
                 this.text = text;
+                this.title = title;
+                this.image = image;
             }
 
             public TextBoxI(){
@@ -476,7 +495,8 @@ public class PvLogic {
 
             @Override
             public void run(LExecutor exec) {
-                DialogueManager.createdialogue(text);
+                var a = DialogueManager.createDialogue(text,title,image);
+
             }
         }
     }
