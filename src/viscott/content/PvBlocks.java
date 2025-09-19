@@ -111,11 +111,12 @@ public class PvBlocks {
                     /*Core's*/coreHover,coreElevate,coreUpraise,yggdrasilsHeartwood,
 
                             bulkUnloader,
-                            /*Nullis*/coreNull, coreVoid, coreAbyss,
-                            /*Xeal*/coreSpark,coreCharge,coreSurge,
+                            /*Xeal*/coreSpark,coreCharge,coreSurge,coreBurnout,
+                            /*Mortikai*/coreBunker,coreStronghold,coreFortress,coreCitadel,coreEmpire,
+                            /*Psy*/coreWarden,coreGuardian,coreSentinel,coreHaven,
+                            /*Nullis*/coreNull, coreVoid, coreAbyss,coreSingularity,
+                            /*Azulex*/corePump,coreRiver,coreWaterfall,coreSea,
 
-                            /*Psy*/coreWarden,coreGuardian,coreSentinel,
-                            /*Mortikai*/coreBunker,
                             /*Special*/holder,
                     /*Effects*/utilityProjector,pocketContainer,hydroProjector,liquidProjector,
                             /*Nullis*/voidNode,voidBeacon,voidExpander,
@@ -1389,7 +1390,7 @@ public class PvBlocks {
 
                 coreBunker = new PvCore("core-bunker") {{
                     requirements(Category.effect, with(PvItems.zirconium,5000,PvItems.lithium,4000,Items.silicon,900)); //TODO : COST
-                    localizedName = "Core Warden";
+                    localizedName = "Core Bunker";
                     faction.add(PvFactions.Mortikai);
                     alwaysUnlocked = true;
                     unitType = PvUnits.watt; //TODO : makae an actual coreUnit.
@@ -2073,6 +2074,7 @@ public class PvBlocks {
                     requirements(Category.effect,with());
                     size = 4;
                     weapons = Seq.with(new BlockWeapon("part-core-weapon"){{
+                        itemCost = Items.copper;
                         reload = 30;
                         x = y = 0;
                         layerOffset = 50.0F;

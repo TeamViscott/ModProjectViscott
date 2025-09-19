@@ -38,8 +38,16 @@ public class PartCore extends CoreBlock {
         super.load();
         drawer.load(this);
         for (BlockWeapon weapon : weapons) {
-            weapon.load();
+            weapon.load(this);
         }
+    }
+
+    @Override
+    public void init() {
+        for (BlockWeapon weapon : weapons) {
+            weapon.init(this);
+        }
+        super.init();
     }
 
     public TextureRegion[] icons() {

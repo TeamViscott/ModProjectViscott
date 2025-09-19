@@ -3,6 +3,7 @@ package viscott.content;
 import arc.math.Mathf;
 import arc.scene.ui.Label;
 import arc.scene.ui.layout.Table;
+import arc.util.Log;
 import arc.util.Time;
 import mindustry.gen.Building;
 import mindustry.gen.Unit;
@@ -426,15 +427,17 @@ public class PvLogic {
         public String textstr = "";
         public String titlestr = "";
         public String imgstr = "";
+        public boolean pause = false;
 
         public CreateTextBox() {
             super();
         }
-        public CreateTextBox(String text,String title,String img) {
+        public CreateTextBox(String text,String title,String img,boolean pause) {
             super();
             this.textstr = text;
             this.titlestr = title;
             this.imgstr = img;
+            this.pause = pause;
         }
 
         @Override
@@ -451,17 +454,19 @@ public class PvLogic {
             titleTable.field(imgstr,(s) -> imgstr = s).growX().padLeft(2).padRight(6).color(table.color);
             table.row();
             table.area(textstr, Styles.nodeArea, v -> textstr = v).growX().height(90f).padLeft(2).padRight(6).color(table.color);
+            table.row();
+            table.check("Wait for closing",pause,(b) -> pause = b);
         }
 
         @Override
         public LStatement copy()
         {
-            return new CreateTextBox(textstr,titlestr,imgstr);
+            return new CreateTextBox(textstr,titlestr,imgstr,pause);
         }
 
         @Override
         public void write(StringBuilder builder){
-            builder.append("ctb \""+ textstr.replace(' ','_').replace('\n','@') + "\" \"" + titlestr.replace(' ','_').replace('\n','@') + "\" \"" + imgstr + "\"");
+            builder.append("ctb \""+ textstr.replace(' ','_').replace('\n','@') + "\" \"" + titlestr.replace(' ','_').replace('\n','@') + "\" \"" + imgstr + "\" " + (pause ? "true" : "false"));
         }
         @Override
         public void afterRead()
@@ -472,22 +477,30 @@ public class PvLogic {
             titlestr = titlestr.substring(1,titlestr.length()-1);
             imgstr = PvParser.allToken[3];
             imgstr = imgstr.substring(1,imgstr.length()-1);
+            pause = PvParser.allToken[4] == "true";
         }
 
         @Override
         public LExecutor.LInstruction build(LAssembler builder) {
-            return new TextBoxI(textstr,titlestr,imgstr);
+            return new TextBoxI(textstr,titlestr,imgstr,pause);
         }
 
         public static class TextBoxI implements LExecutor.LInstruction {
             public String text;
             public String title;
             public String image;
+            public boolean pause;
 
-            public TextBoxI(String text,String title,String image){
+            public boolean active;
+            public boolean closed;
+
+            public TextBoxI(String text,String title,String image,boolean pause){
                 this.text = text;
                 this.title = title;
                 this.image = image;
+                this.pause = pause;
+                active = false;
+                closed = true;
             }
 
             public TextBoxI(){
@@ -495,8 +508,18 @@ public class PvLogic {
 
             @Override
             public void run(LExecutor exec) {
-                var a = DialogueManager.createDialogue(text,title,image);
+                Log.info(pause + " " + closed + " " + active);
+                if (!active) {
+                    closed = false;
+                    active = true;
+                    DialogueManager.createDialogue(text, title, image, () -> {closed = true;});
+                }
 
+                if (pause && !closed) {
+                    exec.var(varCounter).numval --;
+                } else {
+                    active = false;
+                }
             }
         }
     }

@@ -2,10 +2,13 @@ package viscott.world.ui;
 
 import arc.Core;
 
+import arc.func.Cons;
+import arc.func.Func;
 import arc.scene.ui.Image;
 import arc.scene.ui.Label;
 import arc.scene.ui.ScrollPane;
 import arc.scene.ui.layout.Table;
+import arc.util.Nullable;
 import arc.util.Scaling;
 import mindustry.Vars;
 import mindustry.gen.Icon;
@@ -13,7 +16,11 @@ import mindustry.gen.Tex;
 import mindustry.ui.Styles;
 
 public class DialogueManager {
-    public static Table createDialogue(String text, String title, String image) {
+
+    public interface Hand {
+        void get();
+    }
+    public static Table createDialogue(String text, String title, String image, @Nullable Hand exit) {
         var scopeTable = new Table();
 
         float screenWidth = Core.scene.getWidth();
@@ -36,20 +43,10 @@ public class DialogueManager {
 
         var iconTable = frameTable.table().growY().pad(10).get();
 
-        var iconFrameTable = iconTable.table().margin(2).get();
+        var iconFrameTable = iconTable.table().margin(2).maxWidth(250 - 50).get();
 
         iconFrameTable.background(Tex.buttonEdge3);
-        var iconImage = new Image(Core.atlas.find(image)) {
-            @Override
-            public float getPrefWidth() {
-                return Math.min(super.getPrefWidth(), super.getPrefHeight());
-            }
-
-            @Override
-            public float getPrefHeight() {
-                return getPrefWidth(); // force square aspect
-            }
-        };
+        var iconImage = new Image(Core.atlas.find(image));
 
         iconImage.setScaling(Scaling.fit);
         iconImage.setFillParent(false);

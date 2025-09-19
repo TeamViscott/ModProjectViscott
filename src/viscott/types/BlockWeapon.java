@@ -110,15 +110,18 @@ public class BlockWeapon implements Cloneable {
     public float shootCone;
     public boolean parentizeEffects;
 
-    public Item itemCost;
+    @Nullable public Item itemCost;
 
     public Boolf<Building> canShootEvent;
     public Cons<Building> shotEvent;
 
     public String localizedName;
 
+    public boolean modname;
+
 
     public BlockWeapon(String name) {
+        this.modname = true;
         this.bullet = Bullets.placeholder;
         this.ejectEffect = Fx.none;
         this.display = true;
@@ -159,11 +162,10 @@ public class BlockWeapon implements Cloneable {
         this.chargeSound = Sounds.none;
         this.heatColor = Pal.turretHeat;
         this.mountType = BlockWeaponMount::new;
-        this.parts = new Seq(DrawPart.class);
+        this.parts = new Seq<>(DrawPart.class);
 
-        Mods.LoadedMod currentMod = Reflect.get(content,"currentMod");
 
-        this.name = currentMod.name + "-" + name;
+        this.name = name;
         this.localizedName = this.name;
         this.canShootEvent = (build) -> true;
         this.shotEvent = (build) -> {};
@@ -192,14 +194,13 @@ public class BlockWeapon implements Cloneable {
                 t.add("[lightgray]" + Stat.reload.localized() + ": " + "[white]" + Strings.autoFixed(60.0F / this.reload * (float)this.shoot.shots, 2) + " " + StatUnit.perSecond.localized());
             }
             if (itemCost == null) {
-                var table = t;
-                table.row();
+                t.row();
 
                 BulletType type = bullet;
                 if (type.spawnUnit != null && type.spawnUnit.weapons.size > 0) {
-                    StatValues.ammo(ObjectMap.of(new Object[]{t, ((Weapon)type.spawnUnit.weapons.first()).bullet}), 0, false).display(table);
+                    StatValues.ammo(ObjectMap.of(new Object[]{t, ((Weapon)type.spawnUnit.weapons.first()).bullet}), 0, false).display(t);
                 } else {
-                    table.table(Styles.grayPanel, (bt) -> {
+                    t.table(Styles.grayPanel, (bt) -> {
                         bt.left().top().defaults().padRight(3.0F).left();
                         if (localizedName != name) {
                             bt.table((title) -> {
@@ -347,7 +348,7 @@ public class BlockWeapon implements Cloneable {
                         }
 
                     }).padLeft((float)(0)).padTop(5.0F).padBottom(5.0F).growX().margin(10.0F);
-                    table.row();
+                    t.row();
                 }
             } else {
                 StatValues.ammo(ObjectMap.of(new Object[]{itemCost, this.bullet})).display(t);
@@ -378,7 +379,7 @@ public class BlockWeapon implements Cloneable {
 
     public void draw(Building build, BlockWeaponMount mount) {
         float z = Draw.z();
-        Draw.z(z + this.layerOffset);
+        Draw.z(50f);
         float rotation = build.rotdeg() - 90.0F;
         float realRecoil = Mathf.pow(mount.recoil, this.recoilPow) * this.recoil;
         float weaponRotation = rotation + mount.rotation;
@@ -389,7 +390,9 @@ public class BlockWeapon implements Cloneable {
         }
 
         if (this.top) {
+            Draw.z(49.99f);
             this.drawOutline(build, mount);
+            Draw.z(50f);
         }
 
         int i;
@@ -511,14 +514,14 @@ public class BlockWeapon implements Cloneable {
             mount.target = null;
         }
 
+
         wasFlipped = false;
         if (mount.target != null) {
             Teamc var10000 = mount.target;
             float var10003 = this.bullet.range + Math.abs(this.shootY);
             Teamc var14 = mount.target;
             float var10004;
-            if (var14 instanceof Sized) {
-                Sized s = (Sized)var14;
+            if (var14 instanceof Sized s) {
                 var10004 = s.hitSize() / 2.0F;
             } else {
                 var10004 = 0.0F;
@@ -580,7 +583,7 @@ public class BlockWeapon implements Cloneable {
                     return;
                 }
                 build.items.remove(itemCost,cost);
-                mount.cost -= cost * bullet.ammoMultiplier;
+                mount.cost = 0;
             }
         }
     }
@@ -668,25 +671,28 @@ public class BlockWeapon implements Cloneable {
     protected void handleBullet(Building build, BlockWeaponMount mount, Bullet bullet) {
     }
 
-    public void init() {
+    public void init(Block block) {
+        if (itemCost != null) {
+            block.consumeItem(itemCost);
+        }
+
         if (this.alwaysContinuous) {
             this.continuous = true;
         }
     }
 
-    public void load() {
+    public void load(Block block) {
+        if (block.minfo != null && modname)
+            this.name = block.minfo.mod.name + "-" + this.name;
 
         this.region = Core.atlas.find(this.name);
         this.heatRegion = Core.atlas.find(this.name + "-heat");
         this.cellRegion = Core.atlas.find(this.name + "-cell");
         this.outlineRegion = Core.atlas.find(this.name + "-outline");
-        Iterator var1 = this.parts.iterator();
-
-        while(var1.hasNext()) {
-            DrawPart part = (DrawPart)var1.next();
+        this.parts.each((part) -> {
             part.turretShading = false;
             part.load(this.name);
-        }
+        });
     }
 
     public String toString() {
