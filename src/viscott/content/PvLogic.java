@@ -477,7 +477,7 @@ public class PvLogic {
             titlestr = titlestr.substring(1,titlestr.length()-1);
             imgstr = PvParser.allToken[3];
             imgstr = imgstr.substring(1,imgstr.length()-1);
-            pause = PvParser.allToken[4] == "true";
+            pause = PvParser.allToken[4].equals("true");
         }
 
         @Override
@@ -512,7 +512,7 @@ public class PvLogic {
                 if (!active) {
                     closed = false;
                     active = true;
-                    DialogueManager.createDialogue(text, title, image, () -> {closed = true;});
+                    DialogueManager.createDialogue(text, title, image, () -> closed = true);
                 }
 
                 if (pause && !closed) {

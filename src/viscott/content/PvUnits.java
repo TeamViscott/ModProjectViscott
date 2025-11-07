@@ -91,6 +91,7 @@ public class PvUnits {
 
         /*Nullis*/
             /*Storage Con Path*/pocket,container,capsule,vault,chamber, /* I u I */ symphony,
+            /*Void Construct Path*/point,blob,consig,contrapt,construct,
 
         /*Extra Paths : */
         routerTank, routerBastion, box,blockHost, coin,
@@ -115,6 +116,7 @@ public class PvUnits {
         //Faction Based UnitLoads
         loadXeonNavalPath();
         loadStoragePath();
+        loadVoidConstructPath();
 
         loadYggdrasilPath();
         loadUnixPath();
@@ -1834,6 +1836,14 @@ public class PvUnits {
             engineSize = 0;
             abilities.add(new EffectAbilityC(70*8));
         }};
+    }
+
+    public static void loadVoidConstructPath() {
+        /*
+        point = new PvUnitType("point") {{
+
+        }};
+         */
     }
 
     public static void loadDodgePath() {
