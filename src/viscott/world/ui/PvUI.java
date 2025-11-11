@@ -11,5 +11,7 @@ public class PvUI implements ApplicationListener, Loadable {
     public void init() {
         customLogic = new PvLogicDialog();
         selectedDialog = new SelectDialog();
+
+        DialogueManager.initDialogueTimeline();
     }
 }

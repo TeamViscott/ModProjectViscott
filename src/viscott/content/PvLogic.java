@@ -5,6 +5,7 @@ import arc.scene.ui.Label;
 import arc.scene.ui.layout.Table;
 import arc.util.Log;
 import arc.util.Time;
+import mindustry.Vars;
 import mindustry.gen.Building;
 import mindustry.gen.Unit;
 import mindustry.logic.*;
@@ -428,24 +429,33 @@ public class PvLogic {
         public String titlestr = "";
         public String imgstr = "";
         public boolean pause = false;
+        public boolean small = false;
+        public String duration = "5";
 
         public CreateTextBox() {
             super();
         }
-        public CreateTextBox(String text,String title,String img,boolean pause) {
+        public CreateTextBox(String text,String title,String img,boolean pause,boolean small) {
             super();
             this.textstr = text;
             this.titlestr = title;
             this.imgstr = img;
             this.pause = pause;
+            this.small = small;
         }
 
         @Override
         public LCategory category() {
             return LCategory.world;
         }
+
         @Override
-        public void build(Table table){
+        public void build(Table table) {
+            this.rebuild(table);
+        }
+        void rebuild(Table table){
+            table.clearChildren();
+            table.left();
             var titleTable = table.table().growX().get();
             titleTable.add("Title : ").left();
             titleTable.field(titlestr,(s) -> titlestr = s).growX().padLeft(2).padRight(6).color(table.color);
@@ -455,18 +465,26 @@ public class PvLogic {
             table.row();
             table.area(textstr, Styles.nodeArea, v -> textstr = v).growX().height(90f).padLeft(2).padRight(6).color(table.color);
             table.row();
-            table.check("Wait for closing",pause,(b) -> pause = b);
+            var checkTable = table.table().get();
+            checkTable.check("Wait for closing",pause,(b) -> {pause = b;rebuild(table);}).padRight(10);
+            checkTable.check("Small Dialogue",small,(b) -> small = b).padLeft(10);
+            if (!pause) {
+                table.row();
+                var durTable = table.table().get();
+                durTable.add("Duration : ").padLeft(8).left();
+                durTable.field(duration,(s) -> duration = s).color(table.color);
+            }
         }
 
         @Override
         public LStatement copy()
         {
-            return new CreateTextBox(textstr,titlestr,imgstr,pause);
+            return new CreateTextBox(textstr,titlestr,imgstr,pause,small);
         }
 
         @Override
         public void write(StringBuilder builder){
-            builder.append("ctb \""+ textstr.replace(' ','_').replace('\n','@') + "\" \"" + titlestr.replace(' ','_').replace('\n','@') + "\" \"" + imgstr + "\" " + (pause ? "true" : "false"));
+            builder.append("ctb \""+ textstr.replace(' ','_').replace('\n','@') + "\" \"" + titlestr.replace(' ','_').replace('\n','@') + "\" \"" + imgstr + "\" " + (pause ? "true" : "false") + " " + (small ? "true" : "false"));
         }
         @Override
         public void afterRead()
@@ -478,11 +496,12 @@ public class PvLogic {
             imgstr = PvParser.allToken[3];
             imgstr = imgstr.substring(1,imgstr.length()-1);
             pause = PvParser.allToken[4].equals("true");
+            small = PvParser.allToken[5].equals("true");
         }
 
         @Override
         public LExecutor.LInstruction build(LAssembler builder) {
-            return new TextBoxI(textstr,titlestr,imgstr,pause);
+            return new TextBoxI(textstr,titlestr,imgstr,pause,small,builder.var(duration));
         }
 
         public static class TextBoxI implements LExecutor.LInstruction {
@@ -490,15 +509,22 @@ public class PvLogic {
             public String title;
             public String image;
             public boolean pause;
+            public boolean small;
 
             public boolean active;
             public boolean closed;
+            public int duration;
 
-            public TextBoxI(String text,String title,String image,boolean pause){
+            public float curTime;
+            public long frameId;
+
+            public TextBoxI(String text,String title,String image,boolean pause,boolean small,int duration){
                 this.text = text;
                 this.title = title;
                 this.image = image;
                 this.pause = pause;
+                this.small = small;
+                this.duration = duration;
                 active = false;
                 closed = true;
             }
@@ -508,17 +534,33 @@ public class PvLogic {
 
             @Override
             public void run(LExecutor exec) {
-                Log.info(pause + " " + closed + " " + active);
+
                 if (!active) {
                     closed = false;
                     active = true;
-                    DialogueManager.createDialogue(text, title, image, () -> closed = true);
+                    if (small)
+                        DialogueManager.createDialogue(text,title,image,() -> closed = true);
+                    else
+                        DialogueManager.createDialogue(text, title, image, () -> closed = true);
                 }
 
-                if (pause && !closed) {
-                    exec.var(varCounter).numval --;
+                if (pause) {
+                    if (closed)
+                        active = false;
+                    else
+                        exec.var(varCounter).numval--;
                 } else {
-                    active = false;
+                    if ((double)this.curTime >= exec.num(this.duration)) {
+                        this.curTime = 0.0F;
+                        active = false;
+                    } else {
+                        --exec.var(0).numval;
+                    }
+
+                    if (Vars.state.updateId != this.frameId) {
+                        this.curTime += Time.delta / 60.0F;
+                        this.frameId = Vars.state.updateId;
+                    }
                 }
             }
         }

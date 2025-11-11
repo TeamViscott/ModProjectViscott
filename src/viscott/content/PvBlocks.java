@@ -102,7 +102,7 @@ public class PvBlocks {
                             /*Yggdrasil*/branchMolder,
 
                     /*Nullis*/
-                        packer,
+                        packer,funnel,
 
                     /*Templates*/airTempT1,airTempT2,airTempT3,airTempT4, airTempT5,
 
@@ -1564,6 +1564,22 @@ public class PvBlocks {
                             PvUnits.pocket,
                             PvUnits.container,
                             PvUnits.capsule
+                    );
+                }};
+                funnel = new UnitPackerBlock("funnel")
+                {{
+                    requirements(Category.units,with(PvItems.zirconium,250,PvItems.platinum,50));
+                    localizedName = "Funnel";
+                    faction.add(PvFactions.Nullis);
+                    range = 16*4.5f;
+                    size = 2;
+                    itemCapacity = 200;
+                    quickCalledUnits = Seq.with(
+                            PvUnits.pocket,
+                            PvUnits.container,
+                            PvUnits.capsule,
+                            PvUnits.vault,
+                            PvUnits.chamber
                     );
                 }};
                 oilGrinder = new LiquidGrinder("oil-grinder")
