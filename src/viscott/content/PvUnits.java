@@ -127,12 +127,14 @@ public class PvUnits {
         //For Every UnitType loaded in loadBosses it shall do that.
         Seq<UnitType> l = Vars.content.units().copy();
         loadBosses(); // code around it is like a wrapper. it does things to units loaded in this function.
-        Vars.content.units().copy().removeAll(u->l.contains(u)).each(u->
-                u.immunities.addAll( // These are boss status effects that can be very powerfull if applied to a boss.
-                        PvStatusEffects.memoryExchange,
-                        PvStatusEffects.prevention,
-                        PvStatusEffects.lastStand
-                )
+        Vars.content.units().copy().removeAll(u->l.contains(u)).each(u-> {
+                    u.immunities.addAll( // These are boss status effects that can be very powerfull if applied to a boss.
+                            PvStatusEffects.memoryExchange,
+                            PvStatusEffects.prevention,
+                            PvStatusEffects.lastStand
+                    );
+                    ((PvUnitType) u).unlockOnDeath = true;
+                }
         );
     }
     public static void loadCorePath()
@@ -1839,11 +1841,67 @@ public class PvUnits {
     }
 
     public static void loadVoidConstructPath() {
-        /*
-        point = new PvUnitType("point") {{
+        point = new NullisUnitType("point") {{
+            localizedName = "Point";
+            constructor = EntityMapping.map("flare");
+            description = "Frail but fast, a recon unit of the Nullis faction.";
+            health = 120;
+            armor = -5;
+            flying = true;
+            hitSize = 8;
+            drag = 0.05f;
+            speed = 25f/7.5f;
 
+            weapons.add(
+                    new Weapon()
+                    {{
+                        x = 0;
+                        reload = 30f;
+                        recoil = 1;
+                        inaccuracy = 2;
+                        mirror = false;
+                        rotate = false;
+                        shootCone = 10F;
+                        bullet = new VoidBulletType(12,20)
+                        {{
+                            recoil = 0.5f;
+                            trailLength = 10;
+                            width = 6f;
+                            trailWidth = 1;
+                            lifetime = 2;
+                            homingDelay = 0;
+                            homingRange = 8*17f;
+                            homingPower = 0.001f;
+                            fragRandomSpread = 120;
+                            fragBullets = 3;
+                            ((EffectAreaBulletType)fragBullet).fragOnSpawn = true;
+                            fragBullet.fragOnHit = true;
+                            fragBullet.despawnHit = false;
+                            fragBullet.fragRandomSpread = 0;
+                            fragBullet.fragBullets = 1;
+                            fragBullet.fragBullet = new BasicBulletType(12,5){{
+                                recoil = 0.25f;
+                                trailLength = 5;
+                                width = 4f;
+                                trailWidth = 1;
+                                lifetime = 30f;
+                                backColor = frontColor = trailColor = lightColor = Color.lightGray;
+                            }};
+                        }};
+                    }}
+            );
+            parts.add(
+                    new FreeRegionPart("-weapon") {{
+                        progress = PartProgress.reload;
+                        mirror = true;
+                        moveRot = 30;
+                        x = -3;
+                        y = 0;
+                        weaponIndex = 0;
+                    }}
+            );
         }};
-         */
+
     }
 
     public static void loadDodgePath() {
@@ -2271,10 +2329,11 @@ public class PvUnits {
             localizedName = "Vdoble";
             constructor = EntityMapping.map("toxopid");
             drag = 0.1f;
-            speed = 3.2f / 7.5f;
-            hitSize = 26f;
-            health = 110000;
-            armor = 20f;
+            description = "Unfinished :3";
+            speed = 5.2f / 7.5f;
+            hitSize = 40f;
+            health = 240000;
+            armor = 30f;
             lightRadius = 140f;
 
             rotateSpeed = 1.9f;
@@ -2312,20 +2371,17 @@ public class PvUnits {
             groundLayer = Layer.legUnit;
 
             weapons.add(
-                    new Weapon(PvUtil.GetName("large-purple-mount-vdoble")) {{
-                        y = -5f;
-                        x = 13f;
-                        shootY = 7f;
+                    new Weapon() {{
+                        y = 8f;
+                        x = 0f;
+                        mirror = false;
                         reload = 60;
                         shake = 4f;
                         rotateSpeed = 2f;
                         ejectEffect = Fx.casing1;
                         shootSound = Sounds.shootBig;
-                        rotate = true;
-                        shadow = 12f;
+                        rotate = false;
                         recoil = 3f;
-                        immunities.add(PvStatusEffects.prevention);
-                        immunities.add(PvStatusEffects.lastStand);
 
                         shoot = new ShootSpread(5, 11f);
 
@@ -2343,156 +2399,6 @@ public class PvUnits {
                             shootEffect = smokeEffect = Fx.sparkShoot;
                         }};
                     }});
-
-            weapons.add(new Weapon(PvUtil.GetName("vdoble-cannon")) {{
-                y = -14f;
-                x = 0f;
-                shootY = 22f;
-                mirror = false;
-                reload = 300;
-                shake = 10f;
-                recoil = 10f;
-                rotateSpeed = 1f;
-                ejectEffect = Fx.casing3;
-                shootSound = Sounds.artillery;
-                rotate = true;
-                shadow = 30f;
-
-                rotationLimit = 80f;
-
-                bullet = new ArtilleryBulletType(5f, 80) {{
-                    hitEffect = Fx.sapExplosion;
-                    knockback = 0.8f;
-                    lifetime = 48f;
-                    width = height = 25f;
-                    collidesTiles = collides = true;
-                    ammoMultiplier = 4f;
-                    splashDamageRadius = 80f;
-                    splashDamage = 75f;
-                    backColor = Pal.sapBulletBack;
-                    frontColor = lightningColor = Pal.sapBullet;
-                    lightning = 8;
-                    lightningLength = 25;
-                    smokeEffect = Fx.shootBigSmoke2;
-                    hitShake = 10f;
-                    lightRadius = 40f;
-                    lightColor = Pal.sap;
-                    lightOpacity = 0.6f;
-
-                    status = StatusEffects.sapped;
-                    statusDuration = 60f * 10;
-
-                    fragLifeMin = 0.3f;
-                    fragBullets = 9;
-
-                    fragBullet = new ArtilleryBulletType(4.3f, 50) {{
-                        hitEffect = Fx.sapExplosion;
-                        knockback = 0.8f;
-                        lifetime = 60f;
-                        width = height = 20f;
-                        collidesTiles = false;
-                        splashDamageRadius = 70f;
-                        splashDamage = 40f;
-                        backColor = Pal.sapBulletBack;
-                        frontColor = lightningColor = Pal.sapBullet;
-                        lightning = 2;
-                        lightningLength = 5;
-                        smokeEffect = Fx.shootBigSmoke2;
-                        hitShake = 5f;
-                        lightRadius = 30f;
-                        lightColor = Pal.sap;
-                        lightOpacity = 0.5f;
-
-                        status = StatusEffects.sapped;
-                        statusDuration = 60f * 10;
-                        fragBullet = new ArtilleryBulletType(3.3f, 30) {{
-                            hitEffect = Fx.sapExplosion;
-                            knockback = 0.8f;
-                            lifetime = 15f;
-                            width = height = 20f;
-                            collidesTiles = false;
-                            splashDamageRadius = 70f;
-                            splashDamage = 40f;
-                            backColor = Pal.sapBulletBack;
-                            frontColor = lightningColor = Pal.sapBullet;
-                            lightning = 2;
-                            lightningLength = 5;
-                            smokeEffect = Fx.shootBigSmoke2;
-                            hitShake = 5f;
-                            lightRadius = 30f;
-                            lightColor = Pal.sap;
-                            lightOpacity = 0.5f;
-
-                            status = StatusEffects.sapped;
-                            statusDuration = 60f * 10;
-                        }};
-                    }};
-                }};
-            }});
-            weapons.add(new Weapon(PvUtil.GetName("vdoble-cannon")) {{
-                y = -18f;
-                x = 6f;
-                shootY = 22f;
-                mirror = true;
-                reload = 220;
-                shake = 10f;
-                recoil = 10f;
-                rotateSpeed = 1f;
-                ejectEffect = Fx.casing3;
-                shootSound = Sounds.artillery;
-                rotate = true;
-                shadow = 30f;
-
-                rotationLimit = 80f;
-
-                bullet = new ArtilleryBulletType(3f, 80) {{
-                    hitEffect = Fx.sapExplosion;
-                    knockback = 0.8f;
-                    lifetime = 80f;
-                    width = height = 25f;
-                    collidesTiles = collides = true;
-                    ammoMultiplier = 4f;
-                    splashDamageRadius = 80f;
-                    splashDamage = 75f;
-                    backColor = Pal.sapBulletBack;
-                    frontColor = lightningColor = Pal.sapBullet;
-                    lightning = 8;
-                    lightningLength = 25;
-                    smokeEffect = Fx.shootBigSmoke2;
-                    hitShake = 10f;
-                    lightRadius = 40f;
-                    lightColor = Pal.sap;
-                    lightOpacity = 0.6f;
-
-                    status = StatusEffects.sapped;
-                    statusDuration = 60f * 10;
-
-                    fragLifeMin = 0.3f;
-                    fragBullets = 9;
-
-                    fragBullet = new ArtilleryBulletType(3.3f, 50) {{
-                        hitEffect = Fx.sapExplosion;
-                        knockback = 0.8f;
-                        lifetime = 90f;
-                        width = height = 20f;
-                        collidesTiles = false;
-                        splashDamageRadius = 70f;
-                        splashDamage = 40f;
-                        backColor = Pal.sapBulletBack;
-                        frontColor = lightningColor = Pal.sapBullet;
-                        lightning = 2;
-                        lightningLength = 5;
-                        smokeEffect = Fx.shootBigSmoke2;
-                        hitShake = 5f;
-                        lightRadius = 30f;
-                        lightColor = Pal.sap;
-                        lightOpacity = 0.5f;
-
-                        status = StatusEffects.sapped;
-                        statusDuration = 60f * 10;
-                    }};
-                }};
-            }});
         }};
         charlie = new PvUnitType("charlie") {
             {

@@ -60,6 +60,8 @@ public class PvUnitType extends UnitType {
     public float strafeSlashDelay = 8;
     public BulletType strafeSlashBullet;
 
+    public boolean unlockOnDeath = false; //for boss units, to unlock their details after defeating them.
+
     // direct boost, dodgeUnit's 2nd ability.
     public float directBoost = 1.5f;
     public float directDecay = 60;
@@ -111,6 +113,11 @@ public class PvUnitType extends UnitType {
         super.draw(unit);
     }
 
+    @Override
+    public void killed(Unit u) {
+        if (unlockOnDeath && Vars.state.isCampaign())
+            unlock();
+    }
 
     @Override
     public void load() {
