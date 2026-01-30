@@ -128,12 +128,14 @@ public class PvUnits {
         Seq<UnitType> l = Vars.content.units().copy();
         loadBosses(); // code around it is like a wrapper. it does things to units loaded in this function.
         Vars.content.units().copy().removeAll(u->l.contains(u)).each(u-> {
-                    u.immunities.addAll( // These are boss status effects that can be very powerfull if applied to a boss.
-                            PvStatusEffects.memoryExchange,
-                            PvStatusEffects.prevention,
-                            PvStatusEffects.lastStand
-                    );
-                    ((PvUnitType) u).unlockOnDeath = true;
+                    if (u instanceof PvUnitType pu) {
+                        u.immunities.addAll( // These are boss status effects that can be very powerfull if applied to a boss.
+                                PvStatusEffects.memoryExchange,
+                                PvStatusEffects.prevention,
+                                PvStatusEffects.lastStand
+                        );
+                        pu.unlockOnDeath = true;
+                    }
                 }
         );
     }
