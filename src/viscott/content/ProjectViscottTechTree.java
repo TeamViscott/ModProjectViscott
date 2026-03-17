@@ -22,10 +22,10 @@ public class ProjectViscottTechTree {
     {
         PvPlanets.vercilus.techTree = nodeRoot("Vercilus",PvPlanets.vercilus,() -> {
             var xeal = node(PvFactions.Xeal.icon);
-            node(PvFactions.Mortikai.icon);
-            node(PvFactions.Nullis.icon);
-            node(PvFactions.Azulex.icon);
-            node(PvFactions.Psy.icon);
+            var mortikai = node(PvFactions.Mortikai.icon);
+            var nullis = node(PvFactions.Nullis.icon);
+            var azulex = node(PvFactions.Azulex.icon);
+            var psy = node(PvFactions.Psy.icon);
             node(zirconium,()->{
                 node(water,()->{
                     node(nitrogen,()->{

@@ -1903,7 +1903,126 @@ public class PvUnits {
                     }}
             );
         }};
+        blob = new NullisUnitType("blob") {{
+            localizedName = "Blob";
+            constructor = EntityMapping.map("flare");
+            description = "A trapper, plants void traps which last longer in Void Areas.";
+            health = 520;
+            armor = 2;
+            flying = true;
+            hitSize = 12;
+            drag = 0.08f;
+            speed = 18f/7.5f;
 
+            weapons.add(
+                    new Weapon()
+                    {{
+                        x = 0;
+                        reload = 60f;
+                        recoil = 1;
+                        inaccuracy = 2;
+                        mirror = false;
+                        rotate = false;
+                        shootCone = 10F;
+                        bullet = new VoidBulletType(12,40)
+                        {{
+                            shootEffect = Fx.shootLiquid;
+                            recoil = 0.5f;
+                            trailLength = 10;
+                            width = 6f;
+                            trailWidth = 1;
+                            voidPreservation = 0.9f;
+                            lifetime = 2;
+                            homingDelay = 0;
+                            homingRange = 8*17f;
+                            homingPower = 0.001f;
+                            fragRandomSpread = 120;
+                            fragBullets = 1;
+                            fragVelocityMax = fragVelocityMin = 0;
+                            fragBullet = new VoidBulletType(0,30) {{
+                                this.voidPreservation = 0.8f;
+                                this.hitSize = 12;
+                                this.spin = 1;
+                                this.despawnHit = false;
+                                this.lifetime = 60 * 4;
+                                this.splashDamage = 40;
+                                this.splashDamageRadius = 8 * 4;
+                                this.splashDamagePierce = true;
+                            }};
+                        }};
+                    }}
+            );
+            parts.add(
+                    new FreeRegionPart("-weapon") {{
+                        progress = PartProgress.reload;
+                        this.under = true;
+                        this.layerOffset -= 0.0001f;
+                        moveY = -6;
+                        x = 0;
+                        y = 0;
+                        weaponIndex = 0;
+                    }}
+            );
+        }};
+        consig = new NullisUnitType("consig") {{
+            localizedName = "Consig";
+            constructor = EntityMapping.map("flare");
+            description = "Ambush unit, it dashes into combat and creates chaos but has a bit of windup.";
+            health = 1060;
+            armor = 0;
+            flying = true;
+            hitSize = 16;
+            drag = 0.05f;
+            speed = 20f/7.5f;
+
+            weapons.add(
+                    new Weapon()
+                    {{
+                        x = 0;
+                        reload = 60f;
+                        recoil = 1;
+                        inaccuracy = 2;
+                        mirror = false;
+                        rotate = false;
+                        shootCone = 10F;
+                        bullet = new VoidBulletType(12,20)
+                        {{
+                            recoil = 0.5f;
+                            trailLength = 10;
+                            width = 6f;
+                            trailWidth = 1;
+                            lifetime = 2;
+                            homingDelay = 0;
+                            homingRange = 8*17f;
+                            homingPower = 0.001f;
+                            fragRandomSpread = 120;
+                            fragBullets = 3;
+                            ((EffectAreaBulletType)fragBullet).fragOnSpawn = true;
+                            fragBullet.fragOnHit = true;
+                            fragBullet.despawnHit = false;
+                            fragBullet.fragRandomSpread = 0;
+                            fragBullet.fragBullets = 1;
+                            fragBullet.fragBullet = new BasicBulletType(12,5){{
+                                recoil = 0.25f;
+                                trailLength = 5;
+                                width = 4f;
+                                trailWidth = 1;
+                                lifetime = 30f;
+                                backColor = frontColor = trailColor = lightColor = Color.lightGray;
+                            }};
+                        }};
+                    }}
+            );
+            parts.add(
+                    new FreeRegionPart("-part") {{
+                        mirror = true;
+                        moveRot = 30;
+                        x = -3;
+                        y = 0;
+                        weaponIndex = 0;
+                    }}
+            );
+        }};
     }
 
     public static void loadDodgePath() {

@@ -5,6 +5,7 @@ import arc.graphics.g2d.Draw;
 import arc.graphics.g2d.Fill;
 import arc.graphics.g2d.Lines;
 import arc.math.Mathf;
+import arc.util.Time;
 import mindustry.gen.*;
 import mindustry.type.StatusEffect;
 import viscott.content.PvStatusEffects;
@@ -31,7 +32,7 @@ public interface EffectAreaC {
         switch (tag) {
             case voidEffects:
                 Groups.bullet.each(b -> {
-                    if (b.type instanceof VoidBulletType && Mathf.len(t.x()-b.x,t.y()-b.y) <= radius)
+                    if (b.type instanceof VoidBulletType vb && Mathf.len(t.x()-b.x,t.y()-b.y) <= radius)
                         b.keepAlive = true;
                 });
                 break;
