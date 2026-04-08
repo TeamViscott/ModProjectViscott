@@ -1,6 +1,7 @@
 package viscott.content;
 
 import arc.graphics.Color;
+import arc.math.Interp;
 import arc.math.Mathf;
 import arc.struct.Seq;
 import mindustry.content.Fx;
@@ -39,7 +40,7 @@ public class PvTurrets {
     public static Turret
             splinter,shatter,euro,snap,hourglass,
             phantom,razor,rainmaker,striker,xero,
-            marksman, xacto,reaper,shuttle, nuero, jaeger, glaive,
+            marksman, xacto,reaper,shuttle, shikari, jaeger, glaive,
             xterminium,hel,falarica,spring,shredder, sumaya,
 
             fracture,javelin,
@@ -1494,25 +1495,26 @@ public class PvTurrets {
                 );
             }};
         }};
-        nuero = new ItemTurret("nuero")
+        shikari = new ItemTurret("shikari")
         {{
             requirements(Category.turret,with(PvItems.zirconium, 120,PvItems.lithium,100,PvItems.platinum,50,silicon,200)); //Todo 2
-            localizedName = "Nuero";
-            reload = 4*60;
+            localizedName = "Shikari";
+            reload = 480;
             inaccuracy = 2;
             recoilTime = 10;
             size = 4;
             health = 3000;
             minWarmup = 0.9f;
             range = 62*8;
-            shootY = 16;
-            recoil = 8;
+            shootY = 0;
+            recoil = 0;
             heatRequirement = 8;
-            maxHeatEfficiency = 4;
+            maxHeatEfficiency = 1.5f;
+            shootSound = Sounds.missileLaunch;
             shootCone = 30;
             coolant = consumeCoolant(0.1f);
             ammo(
-                    PvItems.carbonFiber, new BallisticMissileBulletType(GetName("nuero-missile")){{
+                    PvItems.carbonFiber, new BallisticMissileBulletType(GetName("shikari-missile")){{
                         splashDamage = 123f;
                         splashDamageRadius = 73f;
                         buildingDamageMultiplier = 0.5f;
@@ -1527,7 +1529,7 @@ public class PvTurrets {
                         trailWidth = 1f;
                         trailColor = targetColor = Color.yellow;
                     }},
-                    PvItems.darkMatter, new BallisticMissileBulletType(GetName("nuero-missile")){{
+                    PvItems.darkMatter, new BallisticMissileBulletType(GetName("shikari-missile")){{
                         //sandbox only for now
                         splashDamage = 423f;
                         splashDamageRadius = 123f;
@@ -1545,41 +1547,46 @@ public class PvTurrets {
                     }});
 
 
-
-            shoot = new ShootAlternate(20);
-            shoot.shotDelay = 10;
-            shoot.shots = 4;
-            recoils = 2;
+            shoot = new ShootBarrel(){{
+                barrels = new float[]{
+                        8f, 2f, 0,
+                        -8f, 2f, 0,
+                        8f, -4, 0,
+                        -8f, -4, 0,
+                        8f, -10f, 0,
+                        -8f, -10f, 0
+                };
+            }};
+            shoot.shotDelay = 5;
+            shoot.shots = 6;
             drawer = new DrawTurret(GetName("Pov")){{
 
                 for(int i = 0; i < 2; i++){
                     int f = i;
-                    parts.add(new RegionPart("-barrel-" + (i == 0 ? "l" : "r")){{
+                    parts.add(new RegionPart("-array-" + (i == 0 ? "l" : "r")){{
                         progress = PartProgress.recoil;
                         heatProgress = PartProgress.recoil;
                         heatColor = Color.valueOf("ff6214");
                         mirror = false;
-                        recoilIndex = f;
                         under = false;
+                        recoil = 0.6f;
                         moveY = -4f;
                     }});
                 }
                 parts.addAll(
-                        Seq.with(
-                                new RegionPart("-top"){{
-                                    progress = PartProgress.recoil;
-                                    heatProgress = PartProgress.recoil;
-                                    heatColor = Color.valueOf("ff6214");
-                                    mirror = false;
-                                    under = false;
-                                    moveY = 0f;
-                                    moveX = 0f;
-                                    moveRot = 0;
-                                }}
-                        )
-                );
-            }
-            };
+                    new RegionPart("-top"){{
+                        progress = PartProgress.recoil;
+                        heatProgress = PartProgress.recoil;
+                        heatColor = Color.valueOf("ff6214");
+                        mirror = false;
+                        under = false;
+                        moveY = 0f;
+                        moveX = 0f;
+                        moveRot = 0;
+
+                        layerOffset = -0.1f;
+                    }});
+            }};
             limitRange();
         }};
         hel = new LiquidTurret("hel")
@@ -2062,97 +2069,100 @@ public class PvTurrets {
             maxAmmo = 40;
             ammoPerShot = 10;
             reload = 60 / 0.12f;
-            inaccuracy = 10;
             recoilTime = 10;
+            inaccuracy = 6;
             size = 6;
             health = 7000;
             range = 98*8;
             shootY = 14;
-            soundPitchMin = 0.8f;
-            soundPitchMax = 0.85f;
+            shootSound = Sounds.missileLaunch;
             recoil = 8;
             heatRequirement = 40;
             maxHeatEfficiency = 2;
-            shake = 8;
+            shake = 1;
             shootCone = 40;
             coolant = consumeCoolant(0.1f);
             ammo(
-                    PvItems.carbonFiber, new BallisticMissileBulletType(GetName("jaeger-missile")){{
-                        splashDamage = 0f;
-                        splashDamageRadius = 60f;
-                        buildingDamageMultiplier = 0.5f;
-                        hitShake = 1f;
-                        homingRange = 24;
-                        homingPower = 0.03f;
-                        hitSoundVolume = 2;
-                        targetRadius = 8;
-                        speed = 7;
-                        lifetime = 40;
-                        height = 36f;
-                        trailLength = 25;
-                        trailWidth = 1f;
-                        trailColor = targetColor = Pal.techBlue;
-                        fragBullets = 6;
-                        soundPitchMin = 0.8f;
-                        soundPitchMax = 0.85f;
-                        fragSpread = 8;
-                        fragRandomSpread = 36;
-                        fragBullet = new BallisticMissileBulletType(GetName("nuero-missile")){{
-                            splashDamage = 30f;
-                            splashDamageRadius = 40f;
+                    PvItems.carbonFiber, new BallisticMissileBulletType(GetName("shikari-missile")){{
+                            splashDamage = 123f;
+                            splashDamageRadius = 73f;
                             buildingDamageMultiplier = 0.5f;
                             hitShake = 1f;
                             homingRange = 24;
                             homingPower = 0.03f;
-                            speed = 10;
-                            lifetime = 40;
+                            speed = 8;
+                            lifetime = 20;
                             height = 24f;
+                            //tfec
                             trailLength = 25;
                             trailWidth = 1f;
-                            trailColor = targetColor = Pal.techBlue;
-                        }};
+                            trailColor = targetColor = Color.yellow;
                     }},
-                    PvItems.darkMatter, new BallisticMissileBulletType(GetName("jaeger-missile")){{
-                        splashDamage = 0f;
-                        splashDamageRadius = 60f;
-                        buildingDamageMultiplier = 0.5f;
-                        hitShake = 1f;
-                        homingRange = 24;
-                        homingPower = 0.03f;
-                        hitSoundVolume = 2;
-                        targetRadius = 8;
-                        speed = 9;
-                        lifetime = 36;
-                        height = 36f;
-                        trailLength = 25;
-                        trailWidth = 1f;
-                        trailColor = targetColor = Color.valueOf("011414");
-                        fragBullets = 6;
-                        soundPitchMin = 0.8f;
-                        soundPitchMax = 0.85f;
-                        fragSpread = 8;
-                        fragRandomSpread = 36;
-                        fragBullet = new BallisticMissileBulletType(GetName("nuero-missile")){{
-                            splashDamage = 230f;
-                            splashDamageRadius = 140f;
+                    PvItems.darkMatter, new BallisticMissileBulletType(GetName("shikari-missile")) {{
+                            //sandbox only for now
+                            splashDamage = 423f;
+                            splashDamageRadius = 123f;
                             buildingDamageMultiplier = 0.5f;
-                            hitShake = 1f;
-                            homingRange = 24;
-                            homingPower = 0.03f;
-                            speed = 12;
-                            lifetime = 36;
+                            hitShake = 4f;
+                            homingRange = 84;
+                            homingPower = 0.01f;
+                            speed = 10;
+                            lifetime = 16;
                             height = 24f;
+                            //tfec
                             trailLength = 25;
                             trailWidth = 1f;
                             trailColor = targetColor = Color.valueOf("011414");
-                        }};
                     }});
 
 
-            shoot = new ShootAlternate(20);
-            shoot.shotDelay = 8;
-            shoot.shots = 4;
-            recoils = 8;
+            shoot = new ShootBarrel(){{
+                barrels = new float[]{
+                        8f, 2f, 0,
+                        -8f, 2f, 0,
+                        8f, -6, 0,
+                        -8f, -6, 0,
+                        8f, -14f, 0,
+                        -8f, -14f, 0,
+
+                        10f, 0f, 0,
+                        -10f, 0f, 0,
+                        10f, -8, 0,
+                        -10f, -8, 0,
+                        10f, -16f, 0,
+                        -10f, -16f, 0,
+
+                        12f, 2f, 0,
+                        -12f, 2f, 0,
+                        12f, -6, 0,
+                        -12f, -6, 0,
+                        12f, -14f, 0,
+                        -12f, -14f, 0,
+
+                        14f, 0f, 0,
+                        -14f, 0f, 0,
+                        14f, -8, 0,
+                        -14f, -8, 0,
+                        14f, -16f, 0,
+                        -14f, -16f, 0,
+
+                        16f, 2f, 0,
+                        -16f, 2f, 0,
+                        16f, -6, 0,
+                        -16f, -6, 0,
+                        16f, -14f, 0,
+                        -16f, -14f, 0,
+
+                        18f, 0f, 0,
+                        -18f, 0f, 0,
+                        18f, -8, 0,
+                        -18f, -8, 0,
+                        18f, -16f, 0,
+                        -18f, -16f, 0
+                };
+            }};
+            shoot.shotDelay = 5;
+            shoot.shots = 36;
             drawer = new DrawTurret(GetName("Pov")){{
 
                 for(int i = 0; i < 2; i++){

@@ -122,7 +122,7 @@ public class ProjectViscottTechTree {
                     node(euro,()->{
                         node(phantom);
                         node(marksman);
-                        node(nuero,()->{
+                        node(shikari,()->{
                             node(jaeger);
                             node(razor,()->{
                                 node(rainmaker);

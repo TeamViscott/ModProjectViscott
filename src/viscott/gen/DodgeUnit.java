@@ -101,7 +101,7 @@ public class DodgeUnit extends UnitEntity {
             vel.add(additive);
         }
         super.update();
-        if (a2_directBoosting)
+        if (a2_directBoosting && additive != null)
             vel.sub(additive);
     }
 
