@@ -5,6 +5,7 @@ import arc.math.Mathf;
 import arc.struct.Seq;
 import mindustry.Vars;
 import mindustry.entities.bullet.BulletType;
+import mindustry.entities.units.StatusEntry;
 import mindustry.game.EventType;
 import mindustry.gen.Bullet;
 import mindustry.gen.Groups;
@@ -35,9 +36,9 @@ public class CurseStatusEffect extends PvStatusEffect{
         });
     }
     @Override
-    public void update(Unit unit, float time){
+    public void update(Unit unit, StatusEntry status){
         if (!cursedUnits.contains(unit))
             cursedUnits.add(unit);
-        super.update(unit,time);
+        super.update(unit,status);
     }
 }

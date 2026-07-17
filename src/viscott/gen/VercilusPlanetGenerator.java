@@ -96,9 +96,9 @@ public class VercilusPlanetGenerator extends SerpuloPlanetGenerator {
     }
 
     @Override
-    public Color getColor(Vec3 position){
+    public void getColor(Vec3 position, Color out){
         Block block = this.getBlock(position);
-        return block == Blocks.salt ? Blocks.sand.mapColor : Tmp.c1.set(block.mapColor).a(1.0F - block.albedo);
+        out.set(block == Blocks.salt ? Blocks.sand.mapColor : Tmp.c1.set(block.mapColor).a(1.0F - block.albedo));
     }
 
     Block getBlock(Vec3 position) {
@@ -148,7 +148,6 @@ public class VercilusPlanetGenerator extends SerpuloPlanetGenerator {
 
     @Override
     protected void generate(){
-
         class Room{
             int x, y, radius;
             ObjectSet<Room> connected = new ObjectSet<>();
@@ -178,7 +177,7 @@ public class VercilusPlanetGenerator extends SerpuloPlanetGenerator {
                 //sets the rand to be used in other things.
                 rand.nextFloat();
 
-                if(alt){
+                if(indirectPaths){
                     //differently worded setToRandomDirection
                     midpoint.add(Tmp.v2.set(1, 0f).setAngle(Angles.angle(to.x, to.y, x, y) + 90f * (rand.chance(0.5) ? 1f : -1f)).scl(Tmp.v1.dst(x, y) * 2f));
                 }else{
@@ -562,8 +561,6 @@ public class VercilusPlanetGenerator extends SerpuloPlanetGenerator {
         });
 
         float difficulty = sector.threat;
-        ints.clear();
-        ints.ensureCapacity(width * height / 4); // a capacity of 25% of the map.
 
         /* ruins crash rn, idk why
         int ruinCount = rand.random(-2, 4);

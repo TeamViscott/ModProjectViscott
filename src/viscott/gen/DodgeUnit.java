@@ -3,7 +3,6 @@ package viscott.gen;
 import arc.Core;
 import arc.graphics.Color;
 import arc.graphics.g2d.Draw;
-import arc.input.Controller;
 import arc.math.Angles;
 import arc.math.Mat;
 import arc.math.Mathf;

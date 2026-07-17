@@ -7,6 +7,7 @@ import arc.struct.Seq;
 import arc.util.Time;
 import mindustry.Vars;
 import mindustry.entities.Units;
+import mindustry.entities.units.StatusEntry;
 import mindustry.game.EventType;
 import mindustry.gen.Bullet;
 import mindustry.gen.Groups;
@@ -60,7 +61,7 @@ public class HomingStatusEffect extends PvStatusEffect {
         });
     }
     @Override
-    public void update(Unit unit, float time){
+    public void update(Unit unit, StatusEntry status){
         Groups.bullet.each(b->{
             if (b.owner() == unit && !homingBullets.contains(b)){
                 homingBullets.add(b);

@@ -12,6 +12,7 @@ import mindustry.core.UI;
 import mindustry.core.World;
 import mindustry.gen.Building;
 import mindustry.gen.Icon;
+import mindustry.gen.Unit;
 import mindustry.logic.*;
 import mindustry.ui.Styles;
 import mindustry.world.blocks.logic.LogicBlock;
@@ -162,8 +163,6 @@ public class PvLogicBlock extends LogicBlock {
                 for(int i = 0; i < links.size; i++){
                     LogicLink l = links.get(i);
 
-                    if(!l.active) continue;
-
                     var cur = world.build(l.x, l.y);
 
                     boolean valid = validLink(cur);
@@ -209,62 +208,69 @@ public class PvLogicBlock extends LogicBlock {
 
         @Override
         public void updateCode(String str, boolean keep, Cons<LAssembler> assemble) {
-            if (str != null) {
+            if(str != null){
                 code = str;
 
-                try {
+                try{
                     //create assembler to store extra variables
-                    PvAssembler asm = PvAssembler.pvAssemble(str, privileged);
+                    LAssembler asm = LAssembler.assemble(str, privileged);
 
                     //store connections
-                    for (LogicLink link : links) {
-                        if (link.active && (link.valid = validLink(world.build(link.x, link.y)))) {
-                            asm.putConst(link.name, world.build(link.x, link.y));
+                    for(LogicLink link : links){
+                        link.valid = validLink(world.build(link.x, link.y));
+                        if(link.valid){
+                            link.logicVar = asm.putConst(link.name, world.build(link.x, link.y));
                         }
                     }
 
                     //store link objects
-                    executor.links = new Building[links.count(l -> l.valid && l.active)];
+                    executor.links = new Building[links.count(l -> l.valid)];
                     executor.linkIds.clear();
 
                     int index = 0;
-                    for (LogicLink link : links) {
-                        if (link.active && link.valid) {
+                    for(LogicLink link : links){
+                        if(link.valid){
                             Building build = world.build(link.x, link.y);
-                            executor.links[index++] = build;
-                            if (build != null) executor.linkIds.add(build.id);
+                            executor.links[index ++] = build;
+                            if(build != null) executor.linkIds.add(build.id);
                         }
                     }
 
-                    asm.putConst("@mapw", world.width());
-                    asm.putConst("@maph", world.height());
-                    asm.putConst("@links", executor.links.length);
-                    asm.putVar("@ipt").value = ipt;;
+                    linksVar = asm.putConst("@links", executor.links.length);
+                    asm.putConst("@ipt", ipt);
 
-                    if (keep) {
+                    Object oldUnit = null;
+
+                    if(keep){
+                        oldUnit = executor.unit.objval;
                         //store any older variables
-                        for (LExecutor.Var var : executor.vars) {
-                            boolean unit = var.name.equals("@unit");
-                            if (!var.constant || unit) {
-                                LAssembler.BVar dest = asm.getVar(var.name);
-                                if (dest != null && (!dest.constant || unit)) {
-                                    dest.value = var.isobj ? var.objval : var.numval;
+                        for(LVar var : executor.vars){
+                            if(!var.constant){
+                                LVar dest = asm.getVar(var.name);
+                                if(dest != null && !dest.constant){
+                                    dest.set(var);
                                 }
                             }
                         }
                     }
 
                     //inject any extra variables
-                    if (assemble != null) {
+                    if(assemble != null){
                         assemble.get(asm);
+
+                        if(oldUnit == null && asm.getVar("@unit") != null && asm.getVar("@unit").objval instanceof Unit u){
+                            oldUnit = u;
+                        }
                     }
 
-                    asm.getVar("@this").value = this;
+                    asm.getVar("@this").setconst(this);
                     asm.putConst("@thisx", World.conv(x));
                     asm.putConst("@thisy", World.conv(y));
 
                     executor.load(asm);
-                } catch (Exception e) {
+                    executor.unit.objval = oldUnit;
+                    executor.unit.isobj = true;
+                }catch(Exception e){
                     //handle malformed code and replace it with nothing
                     executor.load(LAssembler.assemble(code = "", privileged));
                 }

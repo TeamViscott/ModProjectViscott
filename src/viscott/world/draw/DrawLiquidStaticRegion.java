@@ -26,7 +26,7 @@ public class DrawLiquidStaticRegion extends DrawLiquidRegion {
     public void draw(Building build){
         TextureRegion region = renderer.fluidFrames[drawLiquid.gas ? 1 : 0][drawLiquid.getAnimationFrame()];
         TextureRegion toDraw = Tmp.tr1;
-        int size = build.block().size;
+        int size = build.block.size;
         float leftBounds = size/2f * tilesize - padding;
         float bottomBounds = size/2f * tilesize - padding;
         Color color = Tmp.c1.set(drawLiquid.color).a(1f);

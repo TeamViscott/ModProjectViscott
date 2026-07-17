@@ -56,19 +56,6 @@ public class DrawBatchRotate extends Batch {
     }
 
     @Override
-    protected void setColor(float r, float g, float b, float a){
-        Core.batch = source;
-        Draw.color(r,g,b,a);
-        Core.batch = this;
-    }
-
-    @Override
-    protected void setColor(Color tint){
-        Core.batch = source;
-        Draw.color(tint);
-        Core.batch = this;
-    }
-    @Override
     protected float getPackedColor(){
         Core.batch = source;
         Color c = Draw.getColor();

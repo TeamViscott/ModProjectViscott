@@ -195,7 +195,7 @@ public class PvMaptools {
             maxInstructionScale = 100;
             localizedName = "Universal Processor";
             description = "The Everything Processor basicaly.";
-            allStatements.addAll(
+            allStatements.add(
                     PvParser.customLogic
             );
         }};

@@ -17,23 +17,20 @@ import mindustry.gen.Building;
 import mindustry.gen.Sounds;
 import mindustry.gen.Tex;
 import mindustry.graphics.Pal;
-import mindustry.type.Item;
-import mindustry.type.ItemStack;
-import mindustry.type.Liquid;
-import mindustry.type.LiquidStack;
+import mindustry.type.*;
 import mindustry.ui.Bar;
-import mindustry.ui.ItemImage;
-import mindustry.ui.LiquidDisplay;
+import mindustry.ui.Displayable;
+import mindustry.ui.ItemsDisplay;
 import mindustry.world.blocks.ItemSelection;
 import mindustry.world.blocks.production.GenericCrafter;
 import mindustry.world.consumers.ConsumeItemDynamic;
 import mindustry.world.consumers.ConsumeItems;
 import mindustry.world.consumers.ConsumeLiquid;
 import mindustry.world.draw.DrawDefault;
-import mindustry.world.meta.BlockFlag;
-import mindustry.world.meta.Stat;
-import mindustry.world.meta.StatUnit;
+import mindustry.world.meta.*;
+import mindustry.world.modules.LiquidModule;
 
+import java.awt.image.ImageConsumer;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -58,7 +55,7 @@ public class MultiCrafter extends GenericCrafter {
         this.update = true;
         this.solid = true;
         this.hasItems = true;
-        this.ambientSound = Sounds.machine;
+        this.ambientSound = Sounds.loopElectricHum;
         this.outputsLiquid = false;
         this.sync = true;
         this.liquidCapacity = 25;
@@ -145,42 +142,7 @@ public class MultiCrafter extends GenericCrafter {
     }
 
     protected void buildIOEntry(Table table, int index, boolean isInput) {
-        Table t = new Table();
-        if (isInput) t.left();
-        else t.right();
-        Table mat = new Table();
-        Seq<ItemStack> entryItems = isInput ? consumerItems.get(index) : outputerItems.get(index);
-        Seq<LiquidStack> entryLiquids = isInput ? consumerLiquids.get(index) : outputerLiquids.get(index);
-        int i = 0;
-        for (ItemStack stack : entryItems) {
-            Cell<ItemImage> iconCell = mat.add(new ItemImage(stack.item.uiIcon, stack.amount))
-                    .pad(2f);
-            if (itemNameVisible) iconCell.tooltip(stack.item.localizedName);
-            if (isInput) iconCell.left();
-            else iconCell.right();
-            mat.row();
-            i++;
-        }
-        i++;
-        for (LiquidStack stack : entryLiquids) {
-            Cell<LiquidDisplay> iconCell = mat.add(new LiquidDisplay(stack.liquid, stack.amount * 60f,true))
-                    .pad(2f);
-            if (itemNameVisible) iconCell.tooltip(stack.liquid.localizedName);
-            if (isInput) iconCell.left();
-            else iconCell.right();
-            mat.row();
-            i++;
-        }
-        Cell<Table> matCell = t.add(mat);
-        if (isInput) matCell.left();
-        else matCell.right();
-        t.row();
-        // No redundant ui
-        Cell<Table> tCell = table.add(t).pad(12f).fill();
-        /*if(Vars.mobile)
-            tCell.width(100f);
-        else*/
-        tCell.width(120f);
+        // Todo. make anew.
     }
 
     public void newConsumer(UnlockableContent icon)
@@ -224,11 +186,11 @@ public class MultiCrafter extends GenericCrafter {
     @Override
     public void init()
     {
-        if (consumerLiquids.filter(liq -> liq.size != 0).size != 0) {
+        if (consumerLiquids.select(liq -> liq.size != 0).size != 0) {
             this.hasLiquids = true;
         }
         super.init();
-        if (consumerLiquids.filter(liq -> liq.size != 0).size != 0) {
+        if (consumerLiquids.select(liq -> liq.size != 0).size != 0) {
             this.outputsLiquid = true;
         }
 

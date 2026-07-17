@@ -172,10 +172,10 @@ public class BuildUnitType extends PvUnitType {
             Payload turret = unit.payloads().first();
             float layer = unit.isFlying() ? Layer.flyingUnitLow : Layer.groundUnit;
             Draw.z(layer + 5);
-            if (turret instanceof BuildPayload buildTurret && buildTurret.build.block() instanceof Turret)
+            if (turret instanceof BuildPayload buildTurret && buildTurret.build.block instanceof Turret)
             {
                 Turret.TurretBuild build = (Turret.TurretBuild)buildTurret.build;
-                float rot = unit.rotation - build.payloadRotation;
+                float rot = unit.rotation;
                 turret.set(unit.x, unit.y, unit.rotation);
                 build.rotation += rot;
                 drawBuild(build,unit,layer);
@@ -184,10 +184,10 @@ public class BuildUnitType extends PvUnitType {
                 Draw.rect(turret.content().fullIcon, unit.x, unit.y, unit.rotation - 90);
             }
             Payload module = unit.payloads().peek();
-            if (module instanceof BuildPayload buildModule && !(buildModule.build.block() instanceof Turret)){
+            if (module instanceof BuildPayload buildModule && !(buildModule.build.block instanceof Turret)){
                 if (buildModule.build.block instanceof MendProjector mend) {
                     MendProjector.MendBuild mendb = (MendProjector.MendBuild)buildModule.build;
-                    float rot = unit.rotation - mendb.payloadRotation;
+                    float rot = unit.rotation;
                     module.set(unit.x, unit.y, unit.rotation);
                     mendb.rotation += rot;
                     float f = 1.0F - Time.time / 100.0F % 1.0F;
@@ -201,7 +201,7 @@ public class BuildUnitType extends PvUnitType {
                 }
                 if (buildModule.build.block instanceof ForceProjector force) {
                     ForceProjector.ForceBuild forceb = (ForceProjector.ForceBuild)buildModule.build;
-                    float rot = unit.rotation - forceb.payloadRotation;
+                    float rot = unit.rotation;
                     module.set(unit.x, unit.y, unit.rotation);
                     forceb.rotation += rot;
                     if (forceb.buildup > 0.0F) {
@@ -218,7 +218,7 @@ public class BuildUnitType extends PvUnitType {
                 }
                 if (buildModule.build.block instanceof RepairTurret repair) {
                     RepairTurret.RepairPointBuild repairb = (RepairTurret.RepairPointBuild)buildModule.build;
-                    float rot = unit.rotation - repairb.payloadRotation;
+                    float rot = unit.rotation;
                     module.set(unit.x, unit.y, unit.rotation);
                     repairb.rotation += rot;
                     Draw.z(50.0F);
@@ -293,7 +293,7 @@ public class BuildUnitType extends PvUnitType {
         if (unit instanceof Payloadc p && p.hasPayload()) {
             Payload turret = p.payloads().first();
             Payload module = p.payloads().peek();
-            if (module instanceof BuildPayload buildModule && !(buildModule.build.block() instanceof Turret)){
+            if (module instanceof BuildPayload buildModule && !(buildModule.build.block instanceof Turret)){
                 if(buildModule.build.block.hasLiquids && buildModule.build.liquids != null && liquidType.get(unit) != null) {
                     if(buildModule.build.acceptLiquid(null,liquidType.get(unit)) && liquidAmount.get(unit) != 0){
                         if (buildModule.build.liquids.currentAmount() < buildModule.build.block.liquidCapacity){
@@ -320,7 +320,7 @@ public class BuildUnitType extends PvUnitType {
                 }
 
             }
-            if (turret instanceof BuildPayload buildTurret && buildTurret.build.block() instanceof Turret) {
+            if (turret instanceof BuildPayload buildTurret && buildTurret.build.block instanceof Turret) {
                 Turret.TurretBuild build = (Turret.TurretBuild)buildTurret.build;
                 build.x(unit.x);
                 build.y(unit.y);

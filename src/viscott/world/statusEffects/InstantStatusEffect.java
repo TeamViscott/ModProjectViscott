@@ -1,6 +1,7 @@
 package viscott.world.statusEffects;
 
 import arc.util.Time;
+import mindustry.entities.units.StatusEntry;
 import mindustry.gen.Unit;
 import mindustry.type.StatusEffect;
 
@@ -14,8 +15,8 @@ public class InstantStatusEffect extends PvStatusEffect {
         super(name);
     }
     @Override
-    public void update(Unit unit, float time){
-        super.update(unit,time);
+    public void update(Unit unit, StatusEntry status){
+        super.update(unit,status);
         unit.unapply(this);
     }
 

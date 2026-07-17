@@ -17,7 +17,7 @@ public class VariantBulletType extends BasicBulletType {
   this(new BulletType(0,0));
  }*/
  public VariantBulletType(BulletType... bulletTypes) {
-   variants.addAll(bulletTypes);
+   variants.add(bulletTypes);
  }
  @Override
  public void init(Bullet bullet){

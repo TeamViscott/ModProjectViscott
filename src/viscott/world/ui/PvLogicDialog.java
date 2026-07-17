@@ -64,7 +64,7 @@ public class PvLogicDialog extends BaseDialog {
         add(buttons).growX().name("Pcanvas");
     }
 
-    private Color typeColor(LExecutor.Var s, Color color){
+    private Color typeColor(LVar s, Color color){
         return color.set(
                 !s.isobj ? Pal.place :
                 s.objval == null ? Color.darkGray :
@@ -79,7 +79,7 @@ public class PvLogicDialog extends BaseDialog {
         );
     }
 
-    private String typeName(LExecutor.Var s){
+    private String typeName(LVar s){
         return
                 !s.isobj ? "number" :
                 s.objval == null ? "null" :

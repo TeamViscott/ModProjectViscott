@@ -92,14 +92,5 @@ public class PartCore extends CoreBlock {
             }
         }
 
-        @Override
-        public float efficiency() {
-            return 1.0F;
-        }
-
-        @Override
-        public boolean enabled() {
-            return true;
-        }
     }
 }

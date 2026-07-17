@@ -158,7 +158,7 @@ public class BlockWeapon implements Cloneable {
         this.soundPitchMin = 0.8F;
         this.soundPitchMax = 1.0F;
         this.layerOffset = 0.001F;
-        this.shootSound = Sounds.pew;
+        this.shootSound = Sounds.shoot;
         this.chargeSound = Sounds.none;
         this.heatColor = Pal.turretHeat;
         this.mountType = BlockWeaponMount::new;
@@ -198,7 +198,7 @@ public class BlockWeapon implements Cloneable {
 
                 BulletType type = bullet;
                 if (type.spawnUnit != null && type.spawnUnit.weapons.size > 0) {
-                    StatValues.ammo(ObjectMap.of(new Object[]{t, ((Weapon)type.spawnUnit.weapons.first()).bullet}), 0, false).display(t);
+                    StatValues.ammo(ObjectMap.of(new Object[]{t, ((Weapon)type.spawnUnit.weapons.first()).bullet}), false).display(t);
                 } else {
                     t.table(Styles.grayPanel, (bt) -> {
                         bt.left().top().defaults().padRight(3.0F).left();
@@ -310,7 +310,7 @@ public class BlockWeapon implements Cloneable {
                         if (type.intervalBullet != null) {
                             bt.row();
                             fc = new Table();
-                            StatValues.ammo(ObjectMap.of(new Object[]{t, type.intervalBullet}), 1, false).display(fc);
+                            StatValues.ammo(ObjectMap.of(new Object[]{t, type.intervalBullet}), false).display(fc);
                             coll = new Collapser(fc, true);
                             coll.setDuration(0.1F);
                             Collapser finalColl = coll;
@@ -330,7 +330,7 @@ public class BlockWeapon implements Cloneable {
                         if (type.fragBullet != null) {
                             bt.row();
                             fc = new Table();
-                            StatValues.ammo(ObjectMap.of(new Object[]{t, type.fragBullet}), 1, false).display(fc);
+                            StatValues.ammo(ObjectMap.of(new Object[]{t, type.fragBullet}), false).display(fc);
                             coll = new Collapser(fc, true);
                             coll.setDuration(0.1F);
                             Collapser finalColl = coll;
@@ -458,17 +458,17 @@ public class BlockWeapon implements Cloneable {
     }
 
     public void update(Building build, BlockWeaponMount mount) {
-        boolean can = build.enabled() && canShootEvent.get(build);
+        boolean can = build.enabled && canShootEvent.get(build);
         float lastReload = mount.reload;
-        mount.reload = Math.max(mount.reload - Time.delta * build.efficiency(), 0.0F);
-        mount.recoil = Mathf.approachDelta(mount.recoil, 0.0F, build.efficiency() / this.recoilTime);
+        mount.reload = Math.max(mount.reload - Time.delta * build.efficiency, 0.0F);
+        mount.recoil = Mathf.approachDelta(mount.recoil, 0.0F, build.efficiency / this.recoilTime);
         if (this.recoils > 0) {
             if (mount.recoils == null) {
                 mount.recoils = new float[this.recoils];
             }
 
             for(int i = 0; i < this.recoils; ++i) {
-                mount.recoils[i] = Mathf.approachDelta(mount.recoils[i], 0.0F, build.efficiency() / this.recoilTime);
+                mount.recoils[i] = Mathf.approachDelta(mount.recoils[i], 0.0F, build.efficiency / this.recoilTime);
             }
         }
 
@@ -567,7 +567,7 @@ public class BlockWeapon implements Cloneable {
                 mount.bullet = null;
             }
         } else {
-            mount.heat = Math.max(mount.heat - Time.delta * build.efficiency() / this.cooldownTime, 0.0F);
+            mount.heat = Math.max(mount.heat - Time.delta * build.efficiency / this.cooldownTime, 0.0F);
             if (mount.sound != null) {
                 mount.sound.update(bulletX, bulletY, false);
             }

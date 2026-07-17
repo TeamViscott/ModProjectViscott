@@ -23,14 +23,14 @@ public class VoidLiquid extends CellLiquid {
     public StatusEffect voidFlyingEffect = null;
     public VoidLiquid(String name) {
         super(name);
-        canStayOn.addAll(Liquids.water);
+        canStayOn.add(Liquids.water);
         spreadTarget = null;
     }
     @Override
     public void update(Puddle puddle){
         if (voidFlyingEffect != null)
             Groups.unit.each(u-> Math.abs(u.x - puddle.x) < 8 && Math.abs(u.y - puddle.y) < 8,u-> {
-                if (u.hovering || u.isFlying()) {
+                if (u.type.hovering || u.isFlying()) {
                     u.apply(voidFlyingEffect, 30);
                     u.apply(effect, 30);
 

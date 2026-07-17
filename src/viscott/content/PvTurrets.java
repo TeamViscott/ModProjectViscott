@@ -19,6 +19,7 @@ import mindustry.type.Category;
 import mindustry.type.Weapon;
 import mindustry.type.unit.MissileUnitType;
 import mindustry.world.blocks.defense.turrets.*;
+import mindustry.world.draw.DrawRegion;
 import mindustry.world.draw.DrawTurret;
 import mindustry.world.meta.BuildVisibility;
 import viscott.audio.PvSounds;
@@ -172,7 +173,7 @@ public class PvTurrets {
             coolant = consumeCoolant(0.1f);
             researchCostMultiplier = 0.05f;
             drawer = new DrawTurret(GetName("Pov")){{
-                parts.addAll(
+                parts.add(
                         parts.add(
                                 new RegionPart("-l"){{
                                     progress = PartProgress.recoil;
@@ -246,10 +247,10 @@ public class PvTurrets {
                     waveStroke = 4f;
                     waveRad = 40f;
                 }};
-                despawnSound = Sounds.dullExplosion;
+                despawnSound = Sounds.explosionDull;
 
                 //TODO shoot sound
-                shootSound = Sounds.cannon;
+                shootSound = Sounds.shoot;
 
                 fragBullet = intervalBullet = new BasicBulletType(3f, 6){{
                     width = 9f;
@@ -285,7 +286,7 @@ public class PvTurrets {
             }};
 
             drawer = new DrawTurret(GetName("Pov")){{
-                parts.addAll(
+                parts.add(
                         parts.add(
                                 new RegionPart("-l"){{
                                     progress = PartProgress.recoil;
@@ -339,9 +340,9 @@ public class PvTurrets {
                             trailLength = 18;
                             missileAccelTime = 50f;
                             lowAltitude = true;
-                            loopSound = Sounds.missileTrail;
-                            loopSoundVolume = 0.6f;
-                            deathSound = Sounds.largeExplosion;
+                            ambientSound = Sounds.loopMissileTrail;
+                            ambientSoundVolume = 0.6f;
+                            deathSound = Sounds.explosionArtillery;
                             targetAir = false;
                             collidesAir = false;
 
@@ -416,9 +417,9 @@ public class PvTurrets {
                             trailLength = 18;
                             missileAccelTime = 50f;
                             lowAltitude = true;
-                            loopSound = Sounds.missileTrail;
-                            loopSoundVolume = 0.6f;
-                            deathSound = Sounds.largeExplosion;
+                            ambientSound = Sounds.loopMissileTrail;
+                            ambientSoundVolume = 0.6f;
+                            deathSound = Sounds.explosionArtillery;
                             targetAir = false;
                             collidesAir = false;
 
@@ -477,7 +478,7 @@ public class PvTurrets {
             );
 
             drawer = new DrawTurret(GetName("Pov")){{
-                parts.addAll(
+                parts.add(
                         parts.add(
                                 new RegionPart("-l"){{
                                     progress = PartProgress.recoil;
@@ -548,7 +549,7 @@ public class PvTurrets {
                     }}
             );
             drawer = new DrawTurret(GetName("Pov")){{
-                parts.addAll(
+                parts.add(
                         parts.add(
                                 new RegionPart("-l"){{
                                     progress = PartProgress.recoil;
@@ -733,7 +734,7 @@ public class PvTurrets {
                     }}
             );
             drawer = new DrawTurret(GetName("Pov")){{
-                parts.addAll(
+                parts.add(
                         parts.add(
                                 new RegionPart("-l"){{
                                     progress = PartProgress.recoil;
@@ -817,7 +818,7 @@ public class PvTurrets {
                     }}
             );
             drawer = new DrawTurret(GetName("Pov")){{
-                parts.addAll(
+                parts.add(
                         parts.add(
                                 new RegionPart("-l"){{
                                     progress = PartProgress.recoil;
@@ -885,7 +886,7 @@ public class PvTurrets {
                 }};
             }};
             drawer = new DrawTurret(GetName("Pov")){{
-                parts.addAll(
+                parts.add(
                         parts.add(
                                 new RegionPart("-l"){{
                                     progress = PartProgress.warmup;
@@ -941,7 +942,7 @@ public class PvTurrets {
                     }}
             );
             drawer = new DrawTurret(GetName("Pov")){{
-                parts.addAll(
+                parts.add(
                         parts.add(
                                 new RegionPart("-barrel"){{
                                     progress = PartProgress.recoil;
@@ -1034,7 +1035,7 @@ public class PvTurrets {
                     }}
             );
             drawer = new DrawTurret(GetName("Pov")){{
-                parts.addAll(
+                parts.add(
                         parts.add(
                                 new RegionPart("-arm-l"){{
                                     progress = PartProgress.recoil;
@@ -1182,7 +1183,7 @@ public class PvTurrets {
             coolant = consumeCoolant(0.1f);
             researchCostMultiplier = 0.05f;
             drawer = new DrawTurret(GetName("Pov")){{
-                parts.addAll(
+                parts.add(
                         parts.add(
                                 new RegionPart("-l"){{
                                     progress = PartProgress.recoil;
@@ -1257,11 +1258,11 @@ public class PvTurrets {
                     }};
                     splashDamage = 35;
                     splashDamageRadius = 8 * 2.5f;
-                    despawnSound = Sounds.dullExplosion;
+                    despawnSound = Sounds.explosionDull;
                     fragBullets = 5;
 
                     //TODO shoot sound
-                    shootSound = Sounds.cannon;
+                    shootSound = Sounds.shoot;
                     fragBullet = new BasicBulletType(5,40) {{
                         shootEffect = new MultiEffect(Fx.shootTitan, new WaveEffect() {{
                             colorTo = Pal.lancerLaser;
@@ -1294,10 +1295,10 @@ public class PvTurrets {
                         }};
                         splashDamage = 35;
                         splashDamageRadius = 8 * 2.5f;
-                        despawnSound = Sounds.dullExplosion;
+                        despawnSound = Sounds.explosionDull;
 
                         //TODO shoot sound
-                        shootSound = Sounds.cannon;
+                        shootSound = Sounds.shoot;
 
                         fragBullet = intervalBullet = new BasicBulletType(3f, 6) {{
                             width = 9f;
@@ -1365,7 +1366,7 @@ public class PvTurrets {
                 }};
 
             drawer = new DrawTurret(GetName("Pov")){{
-                parts.addAll(
+                parts.add(
                         parts.add(
                                 new RegionPart("-barrel"){{
                                     progress = PartProgress.recoil;
@@ -1411,7 +1412,7 @@ public class PvTurrets {
                     }}
             );
             drawer = new DrawTurret(GetName("Pov")){{
-                parts.addAll(
+                parts.add(
                         parts.add(
                                 new RegionPart("-down"){{
                                     progress = PartProgress.recoil;
@@ -1469,7 +1470,7 @@ public class PvTurrets {
                         buildingDamageMultiplier = 0.001f;
                     }};
             drawer = new DrawTurret(GetName("Pov")){{
-                parts.addAll(
+                parts.add(
                         parts.add(
                                 new RegionPart("-l"){{
                                     progress = PartProgress.warmup;
@@ -1510,7 +1511,7 @@ public class PvTurrets {
             recoil = 0;
             heatRequirement = 8;
             maxHeatEfficiency = 1.5f;
-            shootSound = Sounds.missileLaunch;
+            shootSound = Sounds.shootMissile;
             shootCone = 30;
             coolant = consumeCoolant(0.1f);
             ammo(
@@ -1573,20 +1574,23 @@ public class PvTurrets {
                         moveY = -4f;
                     }});
                 }
-                parts.addAll(
-                    new RegionPart("-top"){{
-                        progress = PartProgress.recoil;
-                        heatProgress = PartProgress.recoil;
-                        heatColor = Color.valueOf("ff6214");
-                        mirror = false;
-                        under = false;
-                        moveY = 0f;
-                        moveX = 0f;
-                        moveRot = 0;
+                parts.add(
+                        Seq.with(
+                                new RegionPart("-top"){{
+                                    progress = PartProgress.recoil;
+                                    heatProgress = PartProgress.recoil;
+                                    heatColor = Color.valueOf("ff6214");
+                                    mirror = false;
+                                    under = false;
+                                    moveY = 0f;
+                                    moveX = 0f;
+                                    moveRot = 0;
+                                }}
+                        )
+                );
+            }
+            };
 
-                        layerOffset = -0.1f;
-                    }});
-            }};
             limitRange();
         }};
         hel = new LiquidTurret("hel")
@@ -1639,7 +1643,7 @@ public class PvTurrets {
                         }}
                 );
                 drawer = new DrawTurret(GetName("Pov")) {{
-                    parts.addAll(
+                    parts.add(
                             Seq.with(
                                     new RegionPart("-l"){{
                                         progress = PartProgress.warmup;
@@ -1738,7 +1742,7 @@ public class PvTurrets {
                 }};
             }};
             drawer = new DrawTurret(GetName("Pov")){{
-                parts.addAll(
+                parts.add(
                         parts.add(
                                 new RegionPart("-l"){{
                                     progress = PartProgress.warmup;
@@ -1810,7 +1814,7 @@ public class PvTurrets {
                         }}
             );
             drawer = new DrawTurret(GetName("Pov")){{
-                parts.addAll(
+                parts.add(
                         parts.add(
                                 new RegionPart("-l"){{
                                     progress = PartProgress.recoil;
@@ -1910,7 +1914,7 @@ public class PvTurrets {
                     }}
             );
             drawer = new DrawTurret(GetName("Pov")){{
-                parts.addAll(
+                parts.add(Seq.with(
                         new RegionPart("-l"){{
                             progress = PartProgress.warmup;
                             heatProgress = PartProgress.recoil;
@@ -1981,7 +1985,7 @@ public class PvTurrets {
                             layer = Layer.effect;
                             y = -25;
                         }}
-                );
+                ));
             }};
         }};
         chronos = new PvLiquidTurret("chronos"){{
@@ -2013,7 +2017,7 @@ public class PvTurrets {
                     }}
             );
             drawer = new DrawTurret(GetName("Pov")){{
-                parts.addAll(
+                parts.add(
                         parts.add(
                                 new RegionPart("-arm-l"){{
                                     progress = PartProgress.recoil;
@@ -2075,7 +2079,7 @@ public class PvTurrets {
             health = 7000;
             range = 98*8;
             shootY = 14;
-            shootSound = Sounds.missileLaunch;
+            shootSound = Sounds.shootMissile;
             recoil = 8;
             heatRequirement = 40;
             maxHeatEfficiency = 2;
@@ -2292,7 +2296,7 @@ public class PvTurrets {
                     }}
             );
             drawer = new DrawTurret(GetName("Pov")){{
-                parts.addAll(
+                parts.add(
                         Seq.with(
                                 //Arms and Barrels
                                 new RegionPart("-l1"){{
@@ -2421,7 +2425,7 @@ public class PvTurrets {
             predictTarget = false;
             health = 12000;
             shootCone = 360f;
-            shootSound = Sounds.lasershoot;
+            shootSound = Sounds.shootLancer;
             shake = 10;
             shootEffect = PvEffects.sumayaShoot;
             range = 8*70f;
@@ -2436,7 +2440,6 @@ public class PvTurrets {
                         shootEffect = PvEffects.sumayaShoot;
                         despawnEffect = PvEffects.sumayaImpact;
                         trailChance = 0;
-                        despawnSound = Sounds.laserbig;
                         hitSize = 16;
                         trailEffect = Fx.none;
                         knockback = 10f;
@@ -2522,7 +2525,7 @@ public class PvTurrets {
             );
             recoils = 2;
             drawer = new DrawTurret(GetName("Pov")){{
-                parts.addAll(
+                parts.add(
                         new RegionPart("-l") {{
                             this.recoilIndex = 0;
                             moveX = -4;

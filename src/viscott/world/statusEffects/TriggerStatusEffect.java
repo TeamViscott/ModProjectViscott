@@ -1,6 +1,7 @@
 package viscott.world.statusEffects;
 
 import mindustry.content.StatusEffects;
+import mindustry.entities.units.StatusEntry;
 import mindustry.gen.Unit;
 import mindustry.type.StatusEffect;
 import viscott.content.PvStatusEffects;
@@ -15,7 +16,7 @@ public class TriggerStatusEffect extends PvStatusEffect {
     public TriggerStatusEffect(String name) {super(name);}
 
     @Override
-    public void update(Unit unit, float time) {
+    public void update(Unit unit, StatusEntry status) {
         if (unit.health < unit.maxHealth() / activationThreshold) {
             unit.apply(activationStatusFx);
             if (activationRepair) {

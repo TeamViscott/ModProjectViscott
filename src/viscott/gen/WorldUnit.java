@@ -15,6 +15,7 @@ import arc.util.io.Reads;
 import arc.util.io.Writes;
 import mindustry.Vars;
 import mindustry.ai.UnitCommand;
+import mindustry.ai.UnitStance;
 import mindustry.content.Blocks;
 import mindustry.core.World;
 import mindustry.entities.abilities.Ability;
@@ -121,7 +122,7 @@ public class WorldUnit extends MechUnit {
     public boolean buildOntoUnit(Building building) {
         // initiating some variables
         byte blockRotation = (byte) Math.round(rotation / 90);
-        int size = building.block().size;
+        int size = building.block.size;
         int min = -(size-1) / 2,       // 1-1 = 0/2 = 0    | 2-1 = 1/2 = 0    | 3-1 = 2/2 = -1
             max = size / 2 + 1;        // 1/2 = 0 + 1 = 1  | 2/2 = 1 + 1 = 2  | 3/2 = 1 + 1 = 2
 
@@ -143,7 +144,7 @@ public class WorldUnit extends MechUnit {
         Tile t;
         int unitWorldSize = buildSize-1;
         // offset is used to correct the center of 2x2 and any even squared block.
-        int offset = (building.block().size-1) % 2;
+        int offset = (building.block.size-1) % 2;
         // rotates the block accordingly. accommodates for offset.
 
         int origin_tile_x = building.tileX(),
@@ -191,7 +192,7 @@ public class WorldUnit extends MechUnit {
 
         Vars.world = innerWorld;
 
-        t.setBlock(building.block(),team,building.rotation,()->building);
+        t.setBlock(building.block,team,building.rotation,()->building);
 
         if (building.power != null) {
             building.power.links = energyGet(building,tilePos.x,tilePos.y,unitWorldSize,transform_rotation);
@@ -249,19 +250,19 @@ public class WorldUnit extends MechUnit {
         int bx = c.x,
                 by = c.y;
         Building b = innerWorld.tile(x,y).build;
-        if (b == null || b.block() == null) return false;
+        if (b == null || b.block == null) return false;
 
-        int size = b.block().size;
+        int size = b.block.size;
         int min = -Mathf.floor((size - 1) / 2),
                 max = Mathf.floor(size / 2);
 
-        Tile cT = b.tile();
+        Tile cT = b.tile;
         for(int i1 = min;i1 <= max;i1++)
             for(int i2 = min;i2 <= max;i2++)
                 innerWorld.tile(cT.x+i1,cT.y+i2).setBlock(Blocks.air);
         int s = buildSize-1;
         Tile t = Vars.world.tile(0,0);
-        int offset = (b.block().size-1) % 2;
+        int offset = (b.block.size-1) % 2;
         switch(rotation%4) {
             case 0:
                 t = Vars.world.tile(bx + cT.x,by + cT.y);
@@ -282,13 +283,13 @@ public class WorldUnit extends MechUnit {
         }
         b.rotation += rotation;
         b.rotation %= 4;
-        t.setBlock(b.block(),team,b.rotation,()->b);
+        t.setBlock(b.block,team,b.rotation,()->b);
 
         if (b.power != null) {
             b.power.links = energyGet(b,-cT.x,-cT.y,innerWorld.width(),rotation%4);
         }
 
-        b.set(t.x * 8 + (b.block().size-1) % 2 * 4,t.y * 8 + (b.block().size-1) % 2 * 4);
+        b.set(t.x * 8 + (b.block.size-1) % 2 * 4,t.y * 8 + (b.block.size-1) % 2 * 4);
         if(!Groups.all.contains(r->r == b)) {
             int i = Groups.all.addIndex(b);
             b.setIndex__all(i);
@@ -304,7 +305,7 @@ public class WorldUnit extends MechUnit {
 
         if (innerWorld == null) return; // prevents crashes
 
-        if (built && ((player != null && !player.boosting) || (isCommandable() && command().currentCommand() != UnitCommand.boostCommand))) {
+        if (built && ((player != null && !player.boosting) || (isCommandable() && !command().hasStance(UnitStance.boost)))) {
             int bx = Mathf.ceil(midX / 8) - buildSize / 2,
                 by = Mathf.ceil(midY / 8) - buildSize / 2;
             int rot = (Math.round(rotation / 90) + 4) % 4;
@@ -380,7 +381,7 @@ public class WorldUnit extends MechUnit {
                     Log.info("Ouch, team has no buildings");
                 } else {
                     buildings.intersect(tilePos.x*8, tilePos.y*8, buildSize*8, buildSize*8, (b) -> {
-                        if (!(b.block() instanceof CoreBlock)) {
+                        if (!(b.block instanceof CoreBlock)) {
                             validBuildings.add(b);
                         }
                     });
@@ -412,7 +413,7 @@ public class WorldUnit extends MechUnit {
         innerWorld.tiles.each((x,y) -> {
             Tile tile = tiles.get(x,y);
             if (tile.block() != null && !updated.contains(tile.build)) {
-                if (tile.build != null && tile.build.block() != null)
+                if (tile.build != null && tile.build.block != null)
                     tile.build.update();
                 updated.add(tile.build);
             }
@@ -422,9 +423,11 @@ public class WorldUnit extends MechUnit {
     @Override
     public void draw() {
         float z = isFlying() ? Layer.flyingUnitLow : Layer.block-1;
-        if(controller().isBeingControlled(player.unit())){
+        /*
+        if(isPlayer()){
             type.drawControl(this);
         }
+        */
         if((isFlying() || type.shadowElevation > 0)){
             Draw.z(Math.min(Layer.darkness, z - 1f));
             type.drawShadow(this);
@@ -491,15 +494,14 @@ public class WorldUnit extends MechUnit {
             float yOffset = (y -  buildSize / 2) * 8 + 4;
             Building build = t.get(x,y).build;
             if (build != null && !drawed.contains(build)) {
-                var block = build.block();
-                if (build.block() == null) return;
-                int size = build.block().size;
+                var block = build.block;
+                if (build.block == null) return;
+                int size = build.block.size;
                 float off = Mathf.floor((size - 1) * 4);
                 float Dx = this.x + Angles.trnsx(rotation, xOffset + off, yOffset + off);
                 float Dy = this.y + Angles.trnsy(rotation, xOffset + off, yOffset + off);
                 build.x = Dx;
                 build.y = Dy;
-                build.payloadRotation = rotation;
                 Draw.z(z+1);
                 if (build instanceof Turret.TurretBuild tb) { //Turrets require a custom Drawer
                     Turret turret = (Turret) tb.block;
@@ -574,7 +576,7 @@ public class WorldUnit extends MechUnit {
     }
 
     void drawTurretParts(Turret.TurretBuild tb, float x, float y) {
-        DrawTurret drawer = (DrawTurret) ((Turret) tb.block()).drawer;
+        DrawTurret drawer = (DrawTurret) ((Turret) tb.block).drawer;
         if(drawer.parts.size > 0){
             Draw.z(Layer.flyingUnitLow+1.18f);
             if(drawer.outline.found()){
@@ -646,7 +648,7 @@ public class WorldUnit extends MechUnit {
                 if (t.build == null || t != t.build.tile)
                     write.i(-1);
                 else {
-                    write.i(t.build.block().id);
+                    write.i(t.build.block.id);
                     write.b(t.build.rotation);
                     t.build.write(write);
                 }

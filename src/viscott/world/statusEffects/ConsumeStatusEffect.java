@@ -1,5 +1,6 @@
 package viscott.world.statusEffects;
 
+import mindustry.entities.units.StatusEntry;
 import mindustry.gen.Unit;
 import mindustry.world.Tile;
 import viscott.content.PvStats;
@@ -28,8 +29,8 @@ public class ConsumeStatusEffect extends PvStatusEffect{
     }
 
     @Override
-    public void update(Unit unit, float time){
-        super.update(unit,time);
+    public void update(Unit unit, StatusEntry status){
+        super.update(unit,status);
         Tile t = unit.tileOn();
         if (t == null) return;
         for(int xo = -radius;xo <= radius;xo++)

@@ -130,7 +130,7 @@ public class PvItems {
             vercilusItems.add(cinnabar);
         }
 
-        vercilusItems.addAll(zirconium,lithium,barium,silicon,nobelium,platinum,erbium,carbonFiber,rushAlloy,tideAlloy,bulkAlloy);
+        vercilusItems.add(Seq.with(zirconium,lithium,barium,silicon,nobelium,platinum,erbium,carbonFiber,rushAlloy,tideAlloy,bulkAlloy));
         vercilusOnlyItems = vercilusItems.copy();
         vercilusOnlyItems.remove(silicon);
     }

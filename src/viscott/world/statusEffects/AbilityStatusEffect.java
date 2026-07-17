@@ -4,6 +4,7 @@ import arc.Events;
 import arc.struct.Seq;
 import mindustry.entities.abilities.Ability;
 import mindustry.entities.abilities.ShieldArcAbility;
+import mindustry.entities.units.StatusEntry;
 import mindustry.game.EventType;
 import mindustry.gen.Unit;
 import mindustry.world.meta.Stat;
@@ -56,8 +57,8 @@ public class AbilityStatusEffect extends PvStatusEffect{
     }
 
     @Override
-    public void update(Unit unit, float time){
-        super.update(unit,time);
+    public void update(Unit unit, StatusEntry status){
+        super.update(unit,status);
         if (ability != null && uAbilitys.containsKey(unit))
             uAbilitys.get(unit).update(unit);
     }

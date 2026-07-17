@@ -16,7 +16,6 @@ import viscott.world.block.logic.PvLogicBlock;
 import viscott.world.ui.DialogueManager;
 
 import static mindustry.Vars.*;
-import static mindustry.logic.LExecutor.varCounter;
 
 public class PvLogic {
     public static void load()
@@ -120,12 +119,12 @@ public class PvLogic {
         }
 
         public static class HealI implements LExecutor.LInstruction {
-            public int unit, healing;
+            public LVar unit, healing;
 
             public float curTime;
             public long frameId;
 
-            public HealI(int damage, int unit){
+            public HealI(LVar damage, LVar unit){
                 this.unit = unit;
                 this.healing = damage;
             }
@@ -135,21 +134,21 @@ public class PvLogic {
 
             @Override
             public void run(LExecutor exec) {
-                if(curTime >= exec.num(healing)/5f){
+                if(curTime >= healing.num()/5f){
                     curTime = 0f;
 
-                    if (exec.obj(unit) instanceof Unit unit && unit.team == exec.team) {
+                    if (unit.obj() instanceof Unit unit && unit.team == exec.team) {
                         float x = exec.build.x;
                         float y = exec.build.y;
-                        if (Mathf.len(x-unit.x,y-unit.y) <= (exec.build.range()) && exec.numf(healing) > 0)
-                            unit.health += exec.numf(healing);
+                        if (Mathf.len(x-unit.x,y-unit.y) <= (exec.build.range()) && healing.numf() > 0)
+                            unit.health += healing.numf();
                             if (unit.health > unit.maxHealth)
                                 unit.health = unit.maxHealth;
 
                     }
                 }else{
                     //skip back to self.
-                    exec.var(varCounter).numval --;
+                    exec.counter.numval --;
                 }
 
 
@@ -214,12 +213,12 @@ public class PvLogic {
         }
 
         public static class ShieldI implements LExecutor.LInstruction {
-            public int unit, shieldGiven,result;
+            public LVar unit, shieldGiven,result;
 
             public float curTime;
             public long frameId;
 
-            public ShieldI(int damage, int unit,int result){
+            public ShieldI(LVar damage, LVar unit,LVar result){
                 this.unit = unit;
                 this.shieldGiven = damage;
                 this.result = result;
@@ -230,21 +229,21 @@ public class PvLogic {
 
             @Override
             public void run(LExecutor exec) {
-                if(curTime >= exec.num(shieldGiven)/5f){
+                if(curTime >= shieldGiven.num()/5f){
                     curTime = 0f;
 
-                    if (exec.obj(unit) instanceof Unit unit && unit.team == exec.team) {
+                    if (unit.obj() instanceof Unit unit && unit.team == exec.team) {
                         float x = exec.build.x;
                         float y = exec.build.y;
                         float shieldDiff = unit.health*0.1f - unit.shield;
                         if (Mathf.len(x-unit.x,y-unit.y) <= (exec.build.range()))
                             if (shieldDiff > 0)
-                                unit.shield += Math.min(exec.numf(shieldGiven),shieldDiff);
-                        exec.setnum(result,unit.shield);
+                                unit.shield += Math.min(shieldGiven.numf(),shieldDiff);
+                        result.setnum(unit.shield);
                     }
                 }else{
                     //skip back to self.
-                    exec.var(varCounter).numval --;
+                    exec.counter.numval --;
                 }
 
 
@@ -300,12 +299,12 @@ public class PvLogic {
         }
 
         public static class DJumpI implements LExecutor.LInstruction {
-            public int jump;
+            public LVar jump;
 
             public float curTime;
             public long frameId;
 
-            public DJumpI(int jump){
+            public DJumpI(LVar jump){
                 this.jump = jump;
             }
 
@@ -314,7 +313,7 @@ public class PvLogic {
 
             @Override
             public void run(LExecutor exec) {
-                exec.var(varCounter).numval += exec.numi(jump);
+                exec.counter.numval += jump.numi();
             }
         }
     }
@@ -384,22 +383,21 @@ public class PvLogic {
 
         public static class ITPTrans implements LExecutor.LInstruction {
             public int type = 0;
-            public int amount = 0;
-            public int build = 0;
-            public ITPTrans(int type,int amount,int build) {
+            public LVar amount, build;
+            public ITPTrans(int type,LVar amount,LVar build) {
                 this.type = type;
                 this.amount = amount;
                 this.build = build;
             }
             @Override
             public void run(LExecutor exec) {
-                int tpsAmount = exec.numi(amount);
+                int tpsAmount = amount.numi();
                 if (tpsAmount == 0) return;
-                Building building = exec.building(build);
+                Building building = build.building();
                 if (exec.build.team != building.team) return;
                 if (building instanceof LogicBlock.LogicBuild logicBuild) {
-                    LogicBlock execBlock = (LogicBlock) exec.build.block();
-                    LogicBlock lblock = (LogicBlock) logicBuild.block();
+                    LogicBlock execBlock = (LogicBlock) exec.build.block;
+                    LogicBlock lblock = (LogicBlock) logicBuild.block;
                     int lipt,diff;
                     switch (swapNames.all[type]) {
                         case give:
@@ -417,8 +415,8 @@ public class PvLogic {
                             logicBuild.ipt -= diff;
                             break;
                     }
-                    exec.setnum(exec.iptIndex,exec.build.ipt);
-                    logicBuild.executor.setnum(logicBuild.executor.iptIndex,logicBuild.ipt);
+                    exec.ipt.setnum(exec.build.ipt);
+                    logicBuild.executor.ipt.setnum(logicBuild.ipt);
                 }
             }
         }
@@ -513,12 +511,12 @@ public class PvLogic {
 
             public boolean active;
             public boolean closed;
-            public int duration;
+            public LVar duration;
 
             public float curTime;
             public long frameId;
 
-            public TextBoxI(String text,String title,String image,boolean pause,boolean small,int duration){
+            public TextBoxI(String text,String title,String image,boolean pause,boolean small,LVar duration){
                 this.text = text;
                 this.title = title;
                 this.image = image;
@@ -548,13 +546,13 @@ public class PvLogic {
                     if (closed)
                         active = false;
                     else
-                        exec.var(varCounter).numval--;
+                        exec.counter.numval--;
                 } else {
-                    if ((double)this.curTime >= exec.num(this.duration)) {
+                    if ((double)this.curTime >= this.duration.num()) {
                         this.curTime = 0.0F;
                         active = false;
                     } else {
-                        --exec.var(0).numval;
+                        --exec.counter.numval;
                     }
 
                     if (Vars.state.updateId != this.frameId) {

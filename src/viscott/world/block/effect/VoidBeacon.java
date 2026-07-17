@@ -48,7 +48,7 @@ public class VoidBeacon extends VoidBlock{
                 return;
             emptyRunTask.clear();
             runtask.each((team,handler) -> {
-                var buildings = team.data().buildings.select(b -> b.team() == team && b.block() == this);
+                var buildings = team.data().buildings.select(b -> b.team() == team && b.block == this);
                 if (buildings.size == 0) {
                     emptyRunTask.add(team);
                     return;
@@ -87,7 +87,7 @@ public class VoidBeacon extends VoidBlock{
                 if (itemConsume.get(i) > 0)
                     flowRate *= items.get(i) / itemConsume.get(i);
             consumeTime += delta() * flowRate;
-            int beacons = team.data().buildings.count(b -> b.block() == this.block() && b.team() == this.team());
+            int beacons = team.data().buildings.count(b -> b.block == this.block && b.team() == this.team());
             if (beacons < beaconMin) {
                 updateVoid(this, 8 * voidRadius);
             } else {

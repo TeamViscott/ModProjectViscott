@@ -141,7 +141,6 @@ public class PvBlocks {
                 /* Static walls */
                 denseMetalWall = new StaticWall("dense-metal-wall"){{variants = 3;mapColor = Color.valueOf("545864"); localizedName = "Dense Metal Wall";}};
                 tenebrousWall = new StaticWall("tenebrous-wall"){{variants = 3;mapColor = Color.valueOf("67607A"); localizedName = "Tenebrous Wall";}};
-
                 oilwallorsmth = new StaticWall("oilwallorsmth"){{variants = 0;mapColor = Color.black; attributes.set(Attribute.oil,1.5f); localizedName = "Oil wall or smth, idk";}};
                 /*Floor's Start*/
 
@@ -879,7 +878,7 @@ public class PvBlocks {
                     heatRequirement = 15;
                     maxEfficiency = 2;
                     craftTime = 60*2.5f;
-                    loopSound = Sounds.spellLoop;
+                    ambientSound = Sounds.loopMalign;
                     craftEffect = new MultiEffect(PvEffects.quadRushCraft,Fx.smokeCloud);
                     consumeItems(with(PvItems.carbonFiber,1,Items.silicon,5));
                     outputItem = new ItemStack(PvItems.rushAlloy,1);
@@ -890,7 +889,7 @@ public class PvBlocks {
                     faction.add(PvFactions.Xeal);
                     health = 920;
                     size = 4;
-                    loopSound = Sounds.lasercharge2;
+                    ambientSound = Sounds.chargeLancer;
                     consumePower(250f/60f);
                     itemCapacity = 20;
                     liquidCapacity = 50;
@@ -907,7 +906,7 @@ public class PvBlocks {
                     faction.add(PvFactions.Mortikai);
                     health = 1420;
                     size = 4;
-                    loopSound = Sounds.lasercharge2;
+                    ambientSound = Sounds.chargeLancer;
                     consumePower(1200f/60f);
                     itemCapacity = 200;
                     liquidCapacity = 50;
@@ -927,7 +926,7 @@ public class PvBlocks {
                     faction.add(PvFactions.Nullis);
                     health = 1400;
                     size = 4;
-                    loopSound = Sounds.pulse;
+                    ambientSound = Sounds.loopPulse;
                     consumePower(1260f/60f);
                     squareSprite = false;
                     itemCapacity = 50;
@@ -953,7 +952,7 @@ public class PvBlocks {
                     localizedName = "Kerosene Heater";
                     heatOutput = 4f;
                     regionRotated1 = 1;
-                    ambientSound = Sounds.hum;
+                    ambientSound = Sounds.loopHum;
                     liquidCapacity = 10;
                     craftTime = 5.8f*60;
                     consumeLiquid(PvLiquids.kerosene, 5/(60*5.8f));
@@ -1285,7 +1284,7 @@ public class PvBlocks {
                     unitCapModifier = 30;
                     itemCapacity = 6000;
                     blackListFactions = true;
-                    faction.addAll(PvFactions.Xeal,PvFactions.Nullis,PvFactions.Psy);
+                    faction.add(PvFactions.Xeal,PvFactions.Nullis,PvFactions.Psy);
                 }};
                 coreElevate = new PvCore("core-elevate")
                 {{
@@ -1297,7 +1296,7 @@ public class PvBlocks {
                     unitCapModifier = 50;
                     itemCapacity = 11000;
                     blackListFactions = true;
-                    faction.addAll(PvFactions.Xeal,PvFactions.Nullis,PvFactions.Psy);
+                    faction.add(PvFactions.Xeal,PvFactions.Nullis,PvFactions.Psy);
                 }};
                 coreUpraise = new PvCore("core-upraise")
                 {{
@@ -1309,7 +1308,7 @@ public class PvBlocks {
                     unitCapModifier = 84;
                     itemCapacity = 16000;
                     blackListFactions = true;
-                    faction.addAll(PvFactions.Xeal,PvFactions.Nullis,PvFactions.Psy);
+                    faction.add(PvFactions.Xeal,PvFactions.Nullis,PvFactions.Psy);
                 }};
                 coreSpark = new PvCore("core-spark")
                 {{
@@ -2079,7 +2078,7 @@ public class PvBlocks {
                     range = 28*8;
                     consumePower(180f/60f);
                     localizedName = "Utility Projector";
-                    statusEffects.addAll(
+                    statusEffects.add(
                             PvStatusEffects.mend,
                             PvStatusEffects.shield,
                             StatusEffects.overclock

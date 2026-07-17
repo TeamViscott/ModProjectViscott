@@ -2,7 +2,6 @@ package viscott;
 
 import arc.Core;
 import arc.Events;
-import arc.KeyBinds;
 import arc.func.Cons;
 import arc.graphics.Color;
 import arc.graphics.g2d.Draw;
@@ -87,7 +86,6 @@ public class ViscottMod extends Mod {
         Log.info("Loading PV content");
 
         PvBinds.load();
-
         PvPacketHandler.load();
         PvWorldState.load();
         PvUnitMapper.load();

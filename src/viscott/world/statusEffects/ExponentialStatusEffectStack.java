@@ -6,6 +6,7 @@ import arc.util.Time;
 import arc.util.Tmp;
 import mindustry.Vars;
 import mindustry.content.Fx;
+import mindustry.entities.units.StatusEntry;
 import mindustry.game.EventType;
 import mindustry.game.Team;
 import mindustry.gen.Unit;
@@ -149,12 +150,12 @@ public class ExponentialStatusEffectStack extends StatusEffectStack {
     }
 
     @Override
-    public void update(Unit unit, float time){
+    public void update(Unit unit, StatusEntry status){
         if (!unitCharges.containsKey(unit))
-            start(unit,time);
-        if (unitTime.get(unit) < time)
-            start(unit,time);
-        unitTime.replace(unit,time);
+            start(unit,status.time);
+        if (unitTime.get(unit) < status.time)
+            start(unit,status.time);
+        unitTime.replace(unit,status.time);
         unit.damageMultiplier *= 1+(statsStatic.get(0)-1)*Mathf.pow(2f, unitCharges.get(unit)-1);
         unit.healthMultiplier *= 1+(statsStatic.get(1)-1)*Mathf.pow(2f, unitCharges.get(unit)-1);
         unit.speedMultiplier *= 1+(statsStatic.get(2)-1)*Mathf.pow(2f, unitCharges.get(unit)-1);

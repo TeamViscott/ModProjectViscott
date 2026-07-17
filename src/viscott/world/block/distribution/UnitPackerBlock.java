@@ -9,6 +9,7 @@ import arc.scene.ui.ImageButton;
 import arc.scene.ui.layout.Table;
 import arc.struct.Seq;
 import mindustry.ai.UnitCommand;
+import mindustry.ai.UnitStance;
 import mindustry.gen.*;
 import mindustry.graphics.Drawf;
 import mindustry.graphics.Pal;
@@ -74,7 +75,7 @@ public class UnitPackerBlock extends PvBlock {
                     Unit c = Groups.unit.find(g -> g.team() == team() && g.type == u && g.isCommandable() && !g.isFlying());
                     if (c == null) return;
                     c.flag(1);
-                    c.command().command(UnitCommand.boostCommand);
+                    c.command().setStance(UnitStance.boost,true);
                     c.command().commandPosition(new Vec2(this.x, this.y));
                 }).tooltip(u.localizedName).get();
                 b.changed(()->b.setChecked(false));

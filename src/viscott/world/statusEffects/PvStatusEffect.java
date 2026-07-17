@@ -7,6 +7,7 @@ import arc.util.Log;
 import arc.util.Time;
 import mindustry.ctype.Content;
 import mindustry.ctype.ContentType;
+import mindustry.entities.units.StatusEntry;
 import mindustry.gen.Unit;
 import mindustry.graphics.MultiPacker;
 import mindustry.graphics.Pal;
@@ -52,7 +53,7 @@ public class PvStatusEffect extends StatusEffect {
     }
 
     @Override
-    public void update(Unit unit, float time){
+    public void update(Unit unit, StatusEntry status){
         if (!effectOn.contains(unit))
         {
             start(unit);
@@ -80,8 +81,8 @@ public class PvStatusEffect extends StatusEffect {
         float shieldDiff = maxShield - unit.shield;
         if (shieldDiff > 0)
             unit.shield += Math.min(shield,shieldDiff);
-        super.update(unit,time);
-        if (time <= Time.delta * 2f && !permanent)
+        super.update(unit,status);
+        if (status.time <= Time.delta * 2f && !permanent)
             end(unit);
     }
 

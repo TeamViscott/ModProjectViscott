@@ -33,7 +33,7 @@ import mindustry.graphics.Layer;
 import mindustry.graphics.Pal;
 import mindustry.type.UnitType;
 import mindustry.type.Weapon;
-import mindustry.type.ammo.ItemAmmoType;
+
 
 import arc.math.geom.*;
 import arc.math.*;
@@ -129,11 +129,11 @@ public class PvUnits {
         loadBosses(); // code around it is like a wrapper. it does things to units loaded in this function.
         Vars.content.units().copy().removeAll(u->l.contains(u)).each(u-> {
                     if (u instanceof PvUnitType pu) {
-                        u.immunities.addAll( // These are boss status effects that can be very powerfull if applied to a boss.
+                        u.immunities.addAll(Seq.with( // These are boss status effects that can be very powerfull if applied to a boss.
                                 PvStatusEffects.memoryExchange,
                                 PvStatusEffects.prevention,
                                 PvStatusEffects.lastStand
-                        );
+                        ));
                         pu.unlockOnDeath = true;
                     }
                 }
@@ -547,7 +547,7 @@ public class PvUnits {
                         }};
                     }}
             );
-            parts.addAll(
+            parts.add(
                 new RegionPart("-arm") {{
                     mirror = true;
                     moveRot = 30;
@@ -839,7 +839,7 @@ public class PvUnits {
                     }}
             );
 
-            parts.addAll(
+            parts.add(
                     new RegionPart("-plate")
                     {{
                         progress = PartProgress.warmup;
@@ -917,7 +917,7 @@ public class PvUnits {
                         y = 0;
                         continuous = true;
                         reload = 5f;
-                        shootSound = Sounds.laserbeam;
+                        shootSound = Sounds.beamLustre;
                         bullet = new SapBulletType()
                         {{
                             incendChance = 0;
@@ -1096,7 +1096,7 @@ public class PvUnits {
             weapons.add(
                 new Weapon("side-shooters")
                 {{
-                    shootSound = Sounds.shockBlast;
+                    shootSound = Sounds.shootPulsar;
                     x = 0f;
                     y = -2f;
                     shootY = 0f;
@@ -1120,7 +1120,7 @@ public class PvUnits {
                         }});
                         smokeEffect = Fx.shootSmokeTitan;
                         hitColor = Pal.sapBullet;
-                        despawnSound = Sounds.spark;
+                        despawnSound = Sounds.shootArc;
 
                         sprite = "large-orb";
                         trailEffect = Fx.missileTrail;
@@ -1178,7 +1178,7 @@ public class PvUnits {
                 }},
             new Weapon("mid-bullet")
             {{
-                shootSound = Sounds.shockBlast;
+                shootSound = Sounds.shootPulsar;
                 x = 0f;
                 y = -2f;
                 shootY = 0f;
@@ -1198,7 +1198,7 @@ public class PvUnits {
                     }});
                     smokeEffect = Fx.shootSmokeTitan;
                     hitColor = Pal.sapBullet;
-                    despawnSound = Sounds.spark;
+                    despawnSound = Sounds.shootArc;
 
                     sprite = "large-orb";
                     trailEffect = Fx.missileTrail;
@@ -1258,7 +1258,7 @@ public class PvUnits {
             abilities.add(
                     new EnemyStatusFieldAbility(PvStatusEffects.timeWarped, 60*5, 90, 37*8)
             );
-            parts.addAll(
+            parts.add(Seq.with(
                 new RegionPart("-arm-1")
                 {{
                     progress = PartProgress.warmup;
@@ -1331,7 +1331,7 @@ public class PvUnits {
                         layer = Layer.effect;
                         under = false;
                     }}
-            );
+            ));
         }};
 
     }
@@ -1371,6 +1371,7 @@ public class PvUnits {
                             splashDamage = 100;
                             despawnEffect = hitEffect = Fx.massiveExplosion;
                             hitShake = despawnShake = 1;
+
                             shake = 1;
                             spin = 4f;
                         }};
@@ -1784,6 +1785,11 @@ public class PvUnits {
         symphony = new WorldUnitType("symphony") {{
             localizedName = "Symphony";
             description = "[#b]The Giant of Giants. Its size is perfect for your entire base.";
+            details = """
+            The Symphony is one of Nullis's Grand \"Baseplates\" which serve as a base on new planets.
+            This one in particular is #7, the Symphony, a Mothership Baseplate capable of both offense assult aswell as acting as a central carrier.
+            
+            """;
             health = 428500;
             deathExplosionEffect = PvEffects.nullisDeath.get(7);
             factions.add(PvFactions.Nullis);
@@ -2050,7 +2056,7 @@ public class PvUnits {
             weapons.add(
                     new Weapon()
                     {{
-                        shootSound = Sounds.bolt;
+                        shootSound = Sounds.shootPulsar;
                         top = false;
                         x = 0;
                         y = 0;
@@ -2130,7 +2136,7 @@ public class PvUnits {
             weapons.add(
                     new Weapon()
                     {{
-                        shootSound = Sounds.bolt;
+                        shootSound = Sounds.shootPulsar;
                         top = false;
                         x = 0;
                         y = 0;
@@ -2213,7 +2219,7 @@ public class PvUnits {
             weapons.add(
                     new Weapon()
                     {{
-                        shootSound = Sounds.bolt;
+                        shootSound = Sounds.shootPulsar;
                         top = false;
                         mirror = true;
                         alternate = true;
@@ -2309,7 +2315,7 @@ public class PvUnits {
             weapons.add(
                     new Weapon()
                     {{
-                        shootSound = Sounds.bolt;
+                        shootSound = Sounds.shootPulsar;
                         top = false;
                         mirror = true;
                         alternate = true;
@@ -2406,7 +2412,7 @@ public class PvUnits {
             weapons.add(
                     new Weapon()
                     {{
-                        shootSound = Sounds.bolt;
+                        shootSound = Sounds.shootPulsar;
                         top = false;
                         mirror = true;
                         alternate = true;
@@ -2470,7 +2476,6 @@ public class PvUnits {
             legLengthScl = 0.93f;
             rippleScale = 3f;
             legSpeed = 0.19f;
-            ammoType = new ItemAmmoType(Items.graphite, 8);
 
             deathExplosionEffect = PvEffects.nullisDeath.get(3);
             legSplashDamage = 80;
@@ -2500,7 +2505,7 @@ public class PvUnits {
                         shake = 4f;
                         rotateSpeed = 2f;
                         ejectEffect = Fx.casing1;
-                        shootSound = Sounds.shootBig;
+                        shootSound = Sounds.shootArtillery;
                         rotate = false;
                         recoil = 3f;
 
@@ -2545,7 +2550,6 @@ public class PvUnits {
                 legLengthScl = 0.93f;
                 rippleScale = 3f;
                 legSpeed = 0.19f;
-                ammoType = new ItemAmmoType(Items.graphite, 8);
 
                 deathExplosionEffect = PvEffects.nullisDeath.get(7);
                 legSplashDamage = 200;
@@ -2565,7 +2569,7 @@ public class PvUnits {
                             shake = 4f;
                             rotateSpeed = 2f;
                             ejectEffect = Fx.casing1;
-                            shootSound = Sounds.shootBig;
+                            shootSound = Sounds.shootArtillery;
                             rotate = true;
                             recoil = 3f;
                             immunities.add(PvStatusEffects.prevention);
@@ -2727,7 +2731,7 @@ public class PvUnits {
                         }}
                 );
                 var swing = new Interp.Swing(2f);
-                parts.addAll(
+                parts.add(
                         new FreeRegionPart("-arm-l") {{
                             progress = (r) -> swing.apply(r.smoothReload);
                             mirror = false;
@@ -2833,7 +2837,7 @@ public class PvUnits {
                 );
                 float swingTime = 60;
                 float swingTime2 = 50;
-                parts.addAll(
+                parts.add(
                         new RegionPart("-l1") {{
                             progress = p -> Mathf.cos(Time.time / swingTime) / 2 + 0.5f;
                             mirror = true;
@@ -3120,14 +3124,14 @@ public class PvUnits {
                         x = 0f;
                         mirror = false;
                         reload = 300;
-                        shootSound = Sounds.shootAltLong;
+                        shootSound = Sounds.shootMissileLong;
 
                         shoot = new ShootSpread(10, 1f);
 
                         bullet = new BulletType()
                         {{
 
-                                despawnSound = Sounds.shootAltLong;
+                                despawnSound = Sounds.shootMissileLong;
                                 hittable = false;
                                 reflectable = false;
                                 absorbable = false;
@@ -3158,7 +3162,7 @@ public class PvUnits {
                                     fragBullets = 1;
                                     fragBullet = new BulletType()
                                     {{
-                                        despawnSound = Sounds.shootAltLong;
+                                        despawnSound = Sounds.shootMissileLong;
                                         hittable = false;
                                         reflectable = false;
                                         absorbable = false;
@@ -3189,7 +3193,7 @@ public class PvUnits {
                                             fragBullets = 1;
                                             fragBullet = new BulletType()
                                             {{
-                                                despawnSound = Sounds.shootAltLong;
+                                                despawnSound = Sounds.shootMissileLong;
                                                 hittable = false;
                                                 reflectable = false;
                                                 absorbable = false;
@@ -3219,7 +3223,7 @@ public class PvUnits {
                                                     fragBullets = 1;
                                                     fragBullet = new BulletType()
                                                     {{
-                                                            despawnSound = Sounds.shootAltLong;
+                                                            despawnSound = Sounds.shootMissileLong;
                                                             hittable = false;
                                                             reflectable = false;
                                                             absorbable = false;
@@ -3260,7 +3264,7 @@ public class PvUnits {
                 localizedName = "[green]Omamori[]";
                 description = "Omamori protects his allies to the very end. His many Attributes are [orange]\n1. Revive Allys\n2. Last stand for allies.\n3. Spawn Omais.";
                 Seq<String> detailList = new Seq<>();
-                detailList.addAll(
+                detailList.add(Seq.with(
                         "[green]Omamori[].The Large Tank Run by a peaceful [green]Medusa AI[] Know to only attack when its place of rest has been disrespected",
                         "the gentle giant that Omamori is makes him greatly feared but he ins't one prone to attack",
                         "he gained the power to protect his allies with [green]Prevention[] & [blue]Last Stand[], [green]He can give a ally a second life[] and [blue]Great resistance at low health.",
@@ -3268,7 +3272,7 @@ public class PvUnits {
                         "[green]Allianced Factions : []Xeal , Psy , Yggdrasil",
                         "[grey]Neutral Factions :[] Nullis, Azulex",
                         "[red]Enemy Factions : []Mortikai"
-                );
+                ));
                 StringBuilder sb = new StringBuilder();
                 detailList.each(cs -> sb.append(cs + "\n"));
                 sb.replace(sb.length() - 1, sb.length(), "");
@@ -3284,7 +3288,6 @@ public class PvUnits {
                 rotateSpeed = 0.8f;
                 drownTimeMultiplier = 0.5f;
                 buildSpeed = 0.2f;
-                ammoType = new ItemAmmoType(PvItems.darkMatter, 8);
                 treadPullOffset = 5;
                 treadRects = new Rect[]{new Rect(-120f, -140f, 55f, 280)};
                 treadFrames = 2*28;
@@ -3304,10 +3307,10 @@ public class PvUnits {
                     targetAir = true;
                     targetGround = true;
                     inaccuracy = 10f;
-                    chargeSound = Sounds.plasmadrop;
+                    chargeSound = Sounds.explosionQuad;
                     shootStatusDuration = 200f;
                     shootStatus = StatusEffects.slow;
-                    shootSound = Sounds.plasmaboom;
+                    shootSound = Sounds.explosionQuad;
                     cooldownTime = 300f;
                     heatColor = Color.valueOf("addada");
                     recoil = 0f;
@@ -3352,7 +3355,7 @@ public class PvUnits {
                     mirror = true;
                     reload = 10f;
                     inaccuracy = 0f;
-                    shootSound = Sounds.malignShoot;
+                    shootSound = Sounds.shootMalign;
                     cooldownTime = 300f;
                     heatColor = Color.valueOf("addada");
                     recoil = 2f;
@@ -3407,7 +3410,7 @@ public class PvUnits {
                     mirror = true;
                     reload = 10f;
                     inaccuracy = 0f;
-                    shootSound = Sounds.malignShoot;
+                    shootSound = Sounds.shootMalign;
                     cooldownTime = 300f;
                     heatColor = Color.valueOf("addada");
                     recoil = 2f;
@@ -3465,14 +3468,13 @@ public class PvUnits {
                     mirror = false;
                     reload = 800f;
                     inaccuracy = 360f;
-                    shootSound = Sounds.plasmadrop;
+                    shootSound = Sounds.shootMissilePlasma;
                     cooldownTime = 300f;
                     heatColor = Color.valueOf("addada");
                     recoil = 0f;
                     shootCone = 360;
                     shoot.shots = 180;
                     shoot.shotDelay = 0f;
-                    useAmmo = false;
                     controllable = false;
                     autoTarget = true;
                     bullet = new BulletType(2.5f, 20f) {{
@@ -3509,7 +3511,6 @@ public class PvUnits {
                     alternate = false;
                     shootX = 40f;
                     reload = 1200f;
-                    shootSound = Sounds.respawn;
                     recoil = 0f;
                     shootCone = 360f;
                     layerOffset = 0.06f;
@@ -3556,7 +3557,6 @@ public class PvUnits {
                             drownTimeMultiplier = 0.5f;
                             treadPullOffset = 5;
                             treadRects = new Rect[]{new Rect(17 - 96f / 2f, 10 - 96f / 2f, 19, 76)};
-                            ammoType = new ItemAmmoType(PvItems.darkMatter, 8);
                             weapons.add(
                             new Weapon(name + "-weapon") {{
                                 shootY = 3f;
@@ -3566,10 +3566,10 @@ public class PvUnits {
                                 mirror = false;
                                 reload = 100f;
                                 inaccuracy = 10f;
-                                chargeSound = Sounds.plasmadrop;
+                                chargeSound = Sounds.shootMissilePlasma;
                                 shootStatusDuration = 200f;
                                 shootStatus = StatusEffects.slow;
-                                shootSound = Sounds.plasmaboom;
+                                shootSound = Sounds.explosionPlasmaSmall;
                                 cooldownTime = 300f;
                                 heatColor = Color.valueOf("addada");
                                 recoil = 0f;
@@ -3617,14 +3617,13 @@ public class PvUnits {
                                 mirror = false;
                                 reload = 800f;
                                 inaccuracy = 360f;
-                                shootSound = Sounds.plasmadrop;
+                                shootSound = Sounds.shootMissilePlasma;
                                 cooldownTime = 300f;
                                 heatColor = Color.valueOf("addada");
                                 recoil = 0f;
                                 shootCone = 360;
                                 shoot.shots = 180;
                                 shoot.shotDelay = 0f;
-                                useAmmo = false;
                                 controllable = false;
                                 autoTarget = true;
                                 bullet = new BulletType(2.5f, 2f) {{
@@ -3998,10 +3997,10 @@ public class PvUnits {
                                 waveStroke = 4f;
                                 waveRad = 40f;
                             }};
-                            despawnSound = Sounds.dullExplosion;
+                            despawnSound = Sounds.explosionDull;
 
                             //TODO shoot sound
-                            shootSound = Sounds.cannon;
+                            shootSound = Sounds.shoot;
 
                             fragBullet = intervalBullet = new BasicBulletType(3f, 35){{
                                 width = 9f;
@@ -4707,7 +4706,7 @@ public class PvUnits {
                         shootCone = 90;
                         minWarmup = 0.9f;
                         shootWarmupSpeed = 0.02f;
-                        shootSound = Sounds.mineDeploy;
+                        shootSound = Sounds.shootArtillerySmall;
                         shootStatus = StatusEffects.slow;
                         shootStatusDuration = 30;
                         inaccuracy = 15;
@@ -4775,7 +4774,7 @@ public class PvUnits {
                 recoil = 0;
                 baseRotation = -45f;
                 shootCone = 140;
-                shootSound = Sounds.mineDeploy;
+                shootSound = Sounds.beamPlasmaSmall;
 
                 shoot = new ShootSpread(5, 4f);
                 bullet = new BasicBulletType(2.5f, 18f) {{
@@ -4800,7 +4799,7 @@ public class PvUnits {
                 reload = 300f;
                 inaccuracy = 0f;
                 recoil = 0;
-                shootSound = Sounds.dullExplosion;
+                shootSound = Sounds.explosionDull;
                 bullet = new BulletType(){{
                     shootEffect = new MultiEffect(Fx.shootBigColor, new Effect(9, e -> {
                         color(Color.white, Pal.neoplasm1, e.fin());
@@ -4893,7 +4892,7 @@ public class PvUnits {
                         recoil = 0;
                         baseRotation = -45f;
                         shootCone = 140;
-                        shootSound = Sounds.mineDeploy;
+                        shootSound = Sounds.shootAtrax;
 
                         shoot = new ShootSpread(5, 4f);
                         bullet = new BasicBulletType(2.5f, 18f) {{
@@ -4935,7 +4934,7 @@ public class PvUnits {
                 mirror = true;
                 reload = 100f;
                 inaccuracy = 10f;
-                shootSound = Sounds.mud;
+                shootSound = Sounds.stepMud;
                 shoot.shots = 4;
                 shoot.shotDelay = 20f;
                 rotate = true;
@@ -5027,7 +5026,7 @@ public class PvUnits {
                         mirror = true;
                         reload = 100f;
                         inaccuracy = 10f;
-                        shootSound = Sounds.mud;
+                        shootSound = Sounds.stepMud;
                         shoot.shots = 4;
                         shoot.shotDelay = 20f;
                         rotate = true;
@@ -5277,7 +5276,7 @@ public class PvUnits {
                         drag = 0.1f;
                     }};
                 }};
-                parts.addAll(
+                parts.add(
                         Seq.with(
                                 new RegionPart("-l"){{
                                     progress = PartProgress.warmup;

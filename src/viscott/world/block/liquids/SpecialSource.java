@@ -20,7 +20,7 @@ public class SpecialSource extends PvBlock {
 
         @Override
         public void update() {
-            Puddles.deposit(tile(),liquid,liquidAmount);
+            Puddles.deposit(tile,liquid,liquidAmount);
         }
 
         @Override

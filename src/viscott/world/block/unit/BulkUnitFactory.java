@@ -18,9 +18,10 @@ import mindustry.graphics.Drawf;
 import mindustry.graphics.Layer;
 import mindustry.graphics.Pal;
 import mindustry.type.Item;
+import mindustry.type.ItemSeq;
 import mindustry.type.ItemStack;
 import mindustry.type.UnitType;
-import mindustry.ui.ItemDisplay;
+import mindustry.ui.ItemsDisplay;
 import mindustry.ui.Styles;
 import mindustry.world.Block;
 import mindustry.world.blocks.ItemSelection;
@@ -111,8 +112,10 @@ public class BulkUnitFactory extends Reconstructor {
             if (pvPlan.template != null)
                 cT.image(pvPlan.template.region).size(32).tooltip("template").right().padRight(8f);
         }
-        for(ItemStack is : plan.requirements) {
-            cT.add(new ItemDisplay(is.item, is.amount, false)).right().padRight(5f).tooltip(  is.item.localizedName+" [lightgrey]"+ ((is.amount*60)/plan.time) + " items/second" );
+        {
+            var iD = new ItemsDisplay();
+            iD.rebuild(new ItemSeq(new Seq(plan.requirements)));
+            cT.add(iD);
         }
         t.row();
         t.add(cT).left();
@@ -134,7 +137,7 @@ public class BulkUnitFactory extends Reconstructor {
         Block curTemplate = null;
         @Override
         public void buildConfiguration(Table table){
-            Seq<UnitType> units = Seq.with(plans).map(u -> u.unit).filter(u -> u.unlockedNow() && !u.isBanned());
+            Seq<UnitType> units = Seq.with(plans).map(u -> u.unit).retainAll(u -> u.unlockedNow() && !u.isBanned());
 
             if(units.any()){
                 ItemSelection.buildTable(BulkUnitFactory.this, table, units, () -> currentPlan < 0 ? null : plans.get(currentPlan).unit, unit -> configure(plans.indexOf(u -> u.unit == unit)), selectionRows, selectionColumns);

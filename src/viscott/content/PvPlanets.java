@@ -19,7 +19,6 @@ public class PvPlanets{
             ;
     public static void load()
     {
-        content.planets().each(p->{p.hiddenItems.addAll(PvItems.vercilusOnlyItems);});
 
         vercilus = new Planet("vercilus", Planets.sun,1f,2)
         {{
@@ -39,7 +38,6 @@ public class PvPlanets{
             atmosphereRadOut = 0.5f;
             landCloudColor = Color.valueOf("ffffff");
             bloom = true;
-            hiddenItems.addAll(content.items()).removeAll(PvItems.vercilusItems);
             iconColor = atmosphereColor = Pal.heal;
             alwaysUnlocked = true;
             ruleSetter = r -> {

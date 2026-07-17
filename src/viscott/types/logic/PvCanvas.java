@@ -54,7 +54,6 @@ public class PvCanvas extends LCanvas {
     @Override
     public void load(String asm){
         setDialog();
-        jumps.clear();
 
         Seq<LStatement> statements = PvAssembler.pvRead(asm, false);
         statements.truncate(LExecutor.maxInstructions);
