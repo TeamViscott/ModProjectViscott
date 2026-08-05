@@ -22,7 +22,7 @@ public class VariantBulletType extends BasicBulletType {
  @Override
  public void init(Bullet bullet){
   super.init(bullet);
-  /* This is not used when creation of a bullet is made. its used to initialize with test bullet */
+  /* This is not used when creation of a bullet is made. it's used to initialize with test bullet */
  }
 
  @Override

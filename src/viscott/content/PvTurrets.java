@@ -47,7 +47,7 @@ public class PvTurrets {
             fracture,javelin,
                     /*Nullis*/ quantum,
                     /*Xeal*/ focus,chronos,
-                    /*mortikai?*/ partition
+                    /*mortikai?*/ partition, bombardment
             ;
 
     public static void load(){
@@ -1087,20 +1087,46 @@ public class PvTurrets {
             localizedName = "Partition";
             size = 3; //Size is not final
             health = 2175; //Health is not final
-            range = 30*8; //Range is not final
+            range = 15*8; //Range is not final
             liquidCapacity = 20; //Liquid capacity may be removed
             targetAir = true; //Don't touch these two
             targetGround = true;
-            reload = 60f/4.8f; //Reload is also subject to changes
-            recoil = 3; //This is only visual soooooo no need to change it yet
+            reload = 60f; //Reload is also subject to changes
+            recoil = 0; //This is only visual soooooo no need to change it yet
             coolant = consumeCoolant(0.1f);
             ammo(
                     PvItems.platinum /*TODO change the ammo + balancing*/,new VariantBulletType()
                     {{
 
-                        variants.add(new BasicBulletType(1, 100));
-                        variants.add(new BasicBulletType(2, 50));
-                        variants.add(new BasicBulletType(3, 25));
+                        variants.add(new BallisticMissileBulletType(GetName("shikari-missile")){{
+                            splashDamage = 50f;
+                            splashDamageRadius = 8f;
+                            buildingDamageMultiplier = 0.5f;
+                            hitShake = 1f;
+                            collidesAir = false;
+                            homingRange = 48;
+                            homingPower = 5f;
+                            speed = 10;
+                            lifetime = 10;
+                            height = 24f;
+                            //tfec
+                            trailLength = 25;
+                            trailWidth = 1f;
+                            trailColor = targetColor = Color.teal;
+                        }});
+                        variants.add(new LightningBulletType(){{
+                            damage = 25;
+                            lightningLength = 6*4;
+                            lightningLengthRand = 5;
+                            lightningAngle = 30;
+                            lightningColor = Color.teal;
+                        }});
+                        variants.add(new BasicBulletType(3, 35){{
+                            size = 4;
+                            pierce = true;
+                            pierceCap = 10;
+
+                        }});
                     }}
             );
             drawer = new DrawTurret(GetName("Pov")){{
