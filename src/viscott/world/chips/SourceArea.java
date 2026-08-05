@@ -22,7 +22,7 @@ import static mindustry.Vars.renderer;
 public interface SourceArea {
     default void updateVoid(Building building,float radius)
     {
-        Groups.bullet.intersect(building.x, building.y, radius*2, radius*2, b -> {
+        Groups.bullet.intersect(building.x-radius, building.y-radius, radius*2, radius*2, b -> {
             if (b.type instanceof VoidBulletType && Mathf.len(building.x-b.x,building.y-b.y) <= radius)
                 b.absorb(); //now it destroys void bullets
         });
@@ -44,11 +44,11 @@ public interface SourceArea {
     }
     default void updateVoid(Unit u, float radius)
     {
-        Groups.bullet.intersect(u.x, u.y, radius*2, radius*2,b -> {
+        Groups.bullet.intersect(u.x -radius, u.y-radius, radius*2, radius*2,b -> {
             if (b.type instanceof VoidBulletType && Mathf.len(u.x-b.x,u.y-b.y) <= radius)
                 b.absorb(); //same as last one
         });
-        Groups.unit.intersect(u.x, u.y, radius*2, radius*2,unit ->
+        Groups.unit.intersect(u.x-radius, u.y-radius, radius*2, radius*2,unit ->
                 {
                     if (unit.team == u.team) {
                         if (Mathf.len(u.x-unit.x,u.y-unit.y) <= radius) {

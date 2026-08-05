@@ -62,7 +62,7 @@ public class HomingStatusEffect extends PvStatusEffect {
     }
     @Override
     public void update(Unit unit, StatusEntry status){
-        Groups.bullet.intersect(unit.x, unit.y, 32, 32,b->{
+        Groups.bullet.intersect(unit.x-16, unit.y-16, 32, 32,b->{
             if (b.owner() == unit && !homingBullets.contains(b)){
                 homingBullets.add(b);
             }

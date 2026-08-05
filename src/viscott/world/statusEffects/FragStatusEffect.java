@@ -39,7 +39,7 @@ public class FragStatusEffect extends PvStatusEffect {
     @Override
     public void update(Unit unit, StatusEntry status){
         if (fragBullet != null && !Vars.net.client())
-            Groups.bullet.intersect(unit.x, unit.y, 32, 32, b->{
+            Groups.bullet.intersect(unit.x-16, unit.y-16, 32, 32, b->{
                 if (b.owner() == unit && !fragTaggedBullets.contains(b)){
                     fragTaggedBullets.add(b);
                 }
