@@ -31,13 +31,13 @@ public interface EffectAreaC {
     {
         switch (tag) {
             case voidEffects:
-                Groups.bullet.each(b -> {
+                Groups.bullet.intersect(t.x(), t.y(), radius*2,radius*2,b -> {
                     if (b.type instanceof VoidBulletType vb && Mathf.len(t.x()-b.x,t.y()-b.y) <= radius)
                         b.keepAlive = true;
                 });
                 break;
             case timeRippleEffects:
-                Groups.bullet.each(b -> {
+                Groups.bullet.intersect(t.x(), t.y(), radius*2,radius*2,b -> {
                     if (b.type instanceof VoidBulletType && Mathf.len(t.x()-b.x,t.y()-b.y) <= radius) {
                         b.vel.x *= 0.99;
                         b.vel.y *= 0.99;

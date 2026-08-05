@@ -10,15 +10,16 @@ import mindustry.gen.Unit;
 import mindustry.gen.UnitEntity;
 import mindustry.graphics.Pal;
 import mindustry.world.blocks.defense.turrets.Turret;
+import mindustry.world.meta.Stat;
 
 import java.util.Random;
 
 public class CoinUnit extends UnitEntity {
 
-    int nextTeam;
-    int oldTeam;
+    Team nextTeam;
+    Team oldTeam;
     static BasicBulletType ricoShot = new BasicBulletType(4,10){{
-        homingPower = 1;
+        homingPower = 20;
         homingRange = 1600;
         lifetime = 600;
         trailLength = 20;
@@ -28,12 +29,18 @@ public class CoinUnit extends UnitEntity {
     }};
 
     public CoinUnit(){
+        //to do increase cap of team()
         super();
         ricoShot.load();
-        oldTeam = this.team.id;
-        this.nextTeam = 10 + Mathf.random(10);
-        this.team = Team.get(nextTeam);
+        oldTeam = team();
+        nextTeam = Team.get(10 + Mathf.random(10));
+        //to do increase cap of nextteam & reduce cap of team()
+        team(nextTeam);
     }
+
+    //TODO now the coins switch teams, but instantly break due to unit cap.
+    // simple solution: increase unit cap when needed, and reduce it afterwards
+
     @Override
     public void update(){
         super.update();
@@ -41,8 +48,12 @@ public class CoinUnit extends UnitEntity {
     @Override
     public void damage(float damage){
         ricoShot.damage = 10 + damage;
-        this.team = Team.get(oldTeam);
-        ricoShot.create(this, x, y, rotation);
+        //to do decrease cap of nextteam & increase cap of oldTeam
+        team(oldTeam);
+        Bullet bullet = ricoShot.create(this, team(), this.x, this.y, 0f);
         super.damage(damage);
+        ricoShot.updateHoming(bullet);
+        //to do decrease cap of oldteam
+
     }
 }
