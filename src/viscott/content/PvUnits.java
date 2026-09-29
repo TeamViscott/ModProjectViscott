@@ -5,6 +5,7 @@ import arc.graphics.g2d.Lines;
 import arc.math.Mathf;
 import arc.math.geom.Vec2;
 import arc.struct.Seq;
+import arc.util.Log;
 import arc.util.Time;
 import mindustry.Vars;
 import mindustry.ai.UnitCommand;
@@ -2424,12 +2425,17 @@ public class PvUnits {
                         shoot = new RandomShootpattern() {{ randomSpread = 90; }};
                         shootCone = 360f;
 
-                        bullet = new CrackShotBulletType(2,500){{
+                        bullet = new CrackShotBulletType(2.5f,500){{
                             hitColor = backColor = trailColor = Pal.lancerLaser;
                             pierceDamageFactor = 0.8f;
                             trailLength = 10;
                             trailWidth = 1;
                             drag = 0.06f;
+
+                            frames = 10;
+                            frameTime = 8;
+                            name = "project-viscott-gamma-ball";
+                            width = height = 5;
 
                             smokeEffect = Fx.colorSpark;
                             fragAngle = 0;
@@ -2438,6 +2444,57 @@ public class PvUnits {
                             breakAwayRotationLock = true;
                             breakAwayTarget = breakAwayTargetTypes.Cursor;
                             despawnEffect = hitEffect = Fx.none;
+
+                            intervalBullets = 1;
+                            intervalDelay = 4;
+                            Log.info(lifetime);
+                            intervalBullet = new RailBulletType() {{
+                                length = 80;
+                                damage = 85f;
+                                hitColor = Pal.lancerLaser;
+                                hitEffect = endEffect = Fx.hitLancer;
+                                pierceDamageFactor = 0.8f;
+
+                                smokeEffect = Fx.colorSpark;
+
+                                endEffect = new Effect(14f, e -> {
+                                    color(e.color);
+                                    Drawf.tri(e.x, e.y, e.fout() * 1.5f, 5f, e.rotation);
+                                });
+
+                                shootEffect = new Effect(10, e -> {
+                                    color(e.color);
+                                    float w = 1.2f + 7 * e.fout();
+
+                                    Drawf.tri(e.x, e.y, w, 30f * e.fout(), e.rotation);
+                                    color(e.color);
+
+                                    for (int i : Mathf.signs) {
+                                        Drawf.tri(e.x, e.y, w * 0.9f, 22f * e.fout(), e.rotation + i * 90f);
+                                    }
+
+                                    Drawf.tri(e.x, e.y, w, 4f * e.fout(), e.rotation + 180f);
+                                });
+
+                                lineEffect = new Effect(20f, e -> {
+                                    if (!(e.data instanceof Vec2 v)) return;
+
+                                    color(e.color);
+                                    stroke(e.fout() * 0.9f + 0.6f);
+
+                                    Fx.rand.setSeed(e.id);
+                                    for (int i = 0; i < 7; i++) {
+                                        Fx.v.trns(e.rotation, Fx.rand.random(8f, v.dst(e.x, e.y) - 8f));
+                                        Lines.lineAngleCenter(e.x + Fx.v.x, e.y + Fx.v.y, e.rotation + e.finpow(), e.foutpowdown() * 18f * Fx.rand.random(0.5f, 1f) + 0.3f);
+                                    }
+
+                                    e.scaled(14f, b -> {
+                                        stroke(b.fout() * 1.5f);
+                                        color(e.color);
+                                        Lines.line(e.x, e.y, v.x, v.y);
+                                    });
+                                });
+                            }};
                             fragBullet = new BasicBulletType(8,125) {{
                                 hitColor = backColor = trailColor = Pal.lancerLaser;
                                 trailLength = 10;

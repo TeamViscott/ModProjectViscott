@@ -1,18 +1,19 @@
 package viscott.world.bullets;
 
+import arc.audio.Sound;
 import arc.graphics.Color;
 import arc.graphics.g2d.Draw;
 import arc.math.Angles;
 import arc.math.Mathf;
 import arc.util.Tmp;
 import mindustry.entities.Units;
-import mindustry.entities.bullet.BasicBulletType;
 import mindustry.gen.Bullet;
 import mindustry.gen.Posc;
-import mindustry.gen.Teamc;
+import mindustry.gen.Sounds;
 import mindustry.gen.Unit;
+import mindustry.world.blocks.defense.turrets.Turret;
 
-public class CrackShotBulletType extends BasicBulletType {
+public class CrackShotBulletType extends AnimationBulletType {
 
     public CrackShotBulletType() {
         super();
@@ -23,7 +24,9 @@ public class CrackShotBulletType extends BasicBulletType {
     }
     public float breakAwayRange = 8*4;
     public breakAwayTargetTypes breakAwayTarget = breakAwayTargetTypes.Enemies;
-    public boolean breakAwayRotationLock = false; // forces to bullets sprite to be facing the target.
+    /// forces to bullets sprite to be facing the target. only works if {@link CrackShotBulletType#name} is null
+    public boolean breakAwayRotationLock = false;
+    public Sound breakAwaySound = Sounds.drillImpact;
     public enum breakAwayTargetTypes {
         Allies,
         Enemies,
@@ -33,26 +36,30 @@ public class CrackShotBulletType extends BasicBulletType {
 
     @Override
     public void draw(Bullet b) {
-        this.drawTrail(b);
-        this.drawParts(b);
-        float shrink = this.shrinkInterp.apply(b.fout());
-        float height = this.height * (1.0F - this.shrinkY + this.shrinkY * shrink);
-        float width = this.width * (1.0F - this.shrinkX + this.shrinkX * shrink);
-        float offset;
-        if (breakAwayRotationLock)
-            offset = -90.0F + Angles.angle(b.x,b.y,target.x,target.y);
-        else
-            offset = -90.0F + (this.spin != 0.0F ? Mathf.randomSeed(b.id, 360.0F) + b.time * this.spin : 0.0F) + this.rotationOffset;
-        Color mix = Tmp.c1.set(this.mixColorFrom).lerp(this.mixColorTo, b.fin());
-        Draw.mixcol(mix, mix.a);
-        if (this.backRegion.found()) {
-            Draw.color(this.backColor);
-            Draw.rect(this.backRegion, b.x, b.y, width, height, b.rotation() + offset);
-        }
+        if(name == null){
+            this.drawTrail(b);
+            this.drawParts(b);
+            float shrink = this.shrinkInterp.apply(b.fout());
+            float height = this.height * (1.0F - this.shrinkY + this.shrinkY * shrink);
+            float width = this.width * (1.0F - this.shrinkX + this.shrinkX * shrink);
+            float offset;
+            if (breakAwayRotationLock)
+                offset = -90.0F + Angles.angle(b.x,b.y,target.x,target.y);
+            else
+                offset = -90.0F + (this.spin != 0.0F ? Mathf.randomSeed(b.id, 360.0F) + b.time * this.spin : 0.0F) + this.rotationOffset;
+            Color mix = Tmp.c1.set(this.mixColorFrom).lerp(this.mixColorTo, b.fin());
+            Draw.mixcol(mix, mix.a);
+            if (this.backRegion.found()) {
+                Draw.color(this.backColor);
+                Draw.rect(this.backRegion, b.x, b.y, width, height, b.rotation() + offset);
+            }
 
-        Draw.color(this.frontColor);
-        Draw.rect(this.frontRegion, b.x, b.y, width, height, b.rotation() + offset);
-        Draw.reset();
+            Draw.color(this.frontColor);
+            Draw.rect(this.frontRegion, b.x, b.y, width, height, b.rotation() + offset);
+            Draw.reset();
+        }else{
+            super.draw(b);
+        }
     }
     @Override
     public void update(Bullet b) {
@@ -73,14 +80,24 @@ public class CrackShotBulletType extends BasicBulletType {
                 target.set(pos);
                 break;
             case Cursor:
-                var owner = (Unit)b.owner;
-                if (owner.isPlayer()) {
-                    target.x = owner.getPlayer().mouseX;
-                    target.y = owner.getPlayer().mouseY;
-                } else {
-                    target.x = owner.aimX;
-                    target.y = owner.aimY;
+                if(b.owner instanceof Unit owner){
+                    if (owner.isPlayer()) {
+                        target.x = owner.getPlayer().mouseX;
+                        target.y = owner.getPlayer().mouseY;
+                    } else {
+                        target.x = owner.aimX;
+                        target.y = owner.aimY;
+                    }
+                } else if (b.owner instanceof Turret.TurretBuild owner) {
+                    if (owner.unit.isPlayer()) {
+                        target.x = owner.unit.getPlayer().mouseX;
+                        target.y = owner.unit.getPlayer().mouseY;
+                    } else if (owner.target != null) {
+                        target.x = owner.target.x();
+                        target.y = owner.target.y();
+                    }
                 }
+
                 break;
         }
     }
@@ -105,8 +122,9 @@ public class CrackShotBulletType extends BasicBulletType {
             for(int i = 0; i < this.fragBullets; ++i) {
                 float a =
                         (Float.isNaN(direction) ? b.rotation() + Mathf.range(this.fragRandomSpread / 2.0F) : direction) +
-                        this.fragAngle +
-                        (float)(i - this.fragBullets / 2) * this.fragSpread;
+                                this.fragAngle +
+                                (float)(i - this.fragBullets / 2) * this.fragSpread;
+                breakAwaySound.at(b);
                 this.fragBullet.create(b,
                         x+Angles.trnsx(a, len),
                         y+Angles.trnsy(a, len),
@@ -117,5 +135,24 @@ public class CrackShotBulletType extends BasicBulletType {
             }
         }
 
+    }
+
+    @Override
+    public void updateBulletInterval(Bullet b){
+        if(intervalBullet != null && b.time >= intervalDelay && b.timer.get(2, bulletInterval)){
+            float direction = Float.NaN;
+
+            if (target != null)
+                direction = Angles.angle(b.x,b.y,target.x,target.y);
+            ;
+            for(int i = 0; i < intervalBullets; i++){
+                breakAwaySound.at(b);
+                intervalBullet.create(
+                        b, b.x, b.y,
+                        (Float.isNaN(direction) ? b.rotation() + Mathf.range(this.intervalRandomSpread / 2.0F) : direction)
+                                + intervalAngle + ((i - (intervalBullets - 1f)/2f) * intervalSpread)
+                );
+            }
+        }
     }
 }
